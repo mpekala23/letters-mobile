@@ -1,8 +1,9 @@
 # Env stuff
 .env
 
-# Ignore internal documentation
+# Internal documentation
 docs/
+out/
 
 # OSX
 #

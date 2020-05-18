@@ -1,3 +1,4 @@
 import HomeScreen from './Home/Home.react';
+import LoginScreen from './Login/Login.react';
 
-export default HomeScreen;
+export { HomeScreen, LoginScreen };

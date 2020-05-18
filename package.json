@@ -1,18 +1,28 @@
 {
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "bufferutil": "^4.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "expo": "37.0.7",
     "expo-font": "8.1.1",
+    "jest-serializer-enzyme": "^1.0.0",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
-    "react-dom": "16.9.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "^1.8.0",
+    "react-native-safe-area-context": "^1.0.2",
     "react-native-screens": "^2.7.0",
     "react-native-web": "0.11.7",
     "react-navigation": "^4.3.9",
+    "react-navigation-stack": "^2.5.1",
     "react-navigation-tabs": "^2.8.13",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -21,6 +31,7 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-preset-react-native": "^4.0.1",
     "better-docs": "^2.0.1",
+    "enzyme-to-json": "^3.4.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -55,7 +66,10 @@
     ]
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "private": true
 }

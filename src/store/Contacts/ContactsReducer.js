@@ -1,13 +1,13 @@
-import * as ContactActions from './ContactActions';
+import * as ContactsActions from './ContactsActions';
 
 const INITIAL_STATE = {
   contacts: [],
 };
 
-const ContactReducer = (state = INITIAL_STATE, action) => {
+const ContactsReducer = (state = INITIAL_STATE, action) => {
   const newContacts = [...state.contacts];
   switch (action.type) {
-    case ContactActions.ADD_CONTACT:
+    case ContactsActions.ADD_CONTACT:
       newContacts.push(action.payload.data);
       return { ...state, contacts: newContacts };
     default:
@@ -15,4 +15,4 @@ const ContactReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default ContactReducer;
+export default ContactsReducer;

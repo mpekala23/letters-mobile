@@ -1,14 +1,16 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 
-import { HomeScreen } from 'views';
+import AppNavigator from './AppNavigator.react';
+import AuthNavigator from './AuthNavigator.react';
 
 const RootNavigator = createBottomTabNavigator(
   {
-    Home: HomeScreen,
+    App: AppNavigator,
+    Auth: AuthNavigator,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Auth',
     animationEnabled: false,
     tabBarOptions: {
       showLabel: false,
@@ -18,7 +20,4 @@ const RootNavigator = createBottomTabNavigator(
   }
 );
 
-/**
-The root navigator that ties everything together
-*/
 export default createAppContainer(RootNavigator);
