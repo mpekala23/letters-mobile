@@ -1,6 +1,9 @@
 # Env stuff
 .env
 
+# Ignore internal documentation
+docs/
+
 # OSX
 #
 .DS_Store

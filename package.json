@@ -20,6 +20,7 @@
     "babel-jest": "^26.0.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-preset-react-native": "^4.0.1",
+    "better-docs": "^2.0.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -31,6 +32,8 @@
     "husky": "^0.14.3",
     "jest": "^26.0.1",
     "jest-react-native": "^18.0.0",
+    "jsdoc": "^3.6.4",
+    "jsdocs": "^1.0.0",
     "lint-staged": "^10.2.3",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1"
@@ -42,7 +45,8 @@
     "web": "expo web",
     "eject": "expo eject",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "gendocs": "jsdoc -c jsdoc.conf.json"
   },
   "lint-staged": {
     "*.{js,jsx}": [
