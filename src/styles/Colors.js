@@ -1,0 +1,17 @@
+// MAIN SCHEME
+export const AMEELIO_BLUE = '#4082E6';
+export const AMEELIO_RED = '#D05760';
+export const AMEELIO_BLACK = '#282828';
+export const AMEELIO_GRAY = '#6E757C';
+
+// ACTIONS
+export const SUCCESS = 'rgba(20,200,50,0.5)';
+export const WARNING = '#ffae00';
+export const ALERT = 'rgba(200,20,50,0.5)';
+export const ALERT_FULL = '#cc4b37';
+
+// GRAYSCALE
+export const GRAY_LIGHT = '#e6e6e6';
+export const GRAY_MEDIUM = '#cacaca';
+export const GRAY_DARK = '#8a8a8a';
+export const GRAY_DARKER = '#6a6a6a';
