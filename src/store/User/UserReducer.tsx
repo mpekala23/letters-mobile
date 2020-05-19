@@ -26,7 +26,7 @@ const initialState: UserState = {
   },
 };
 
-export function UserReducer(
+export default function UserReducer(
   state = initialState,
   action: UserActionTypes
 ): UserState {

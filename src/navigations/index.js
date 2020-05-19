@@ -1,10 +1,10 @@
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
 import AppNavigator from './AppNavigator.react';
 import AuthNavigator from './AuthNavigator.react';
 
-const RootNavigator = createBottomTabNavigator(
+const RootNavigator = createStackNavigator(
   {
     App: AppNavigator,
     Auth: AuthNavigator,

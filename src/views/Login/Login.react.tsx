@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Button } from "@components";
 
-const LoginScreen: React.FC = (props) => {
+const LoginScreenBase: React.FC = (props) => {
+  console.log(props);
   return (
     <Button
       buttonText="login"
@@ -11,5 +13,10 @@ const LoginScreen: React.FC = (props) => {
     />
   );
 };
+
+const mapStateToProps = (state: any) => ({ user: state.user });
+const mapDispatchToProps = () => {};
+
+const LoginScreen = connect(mapStateToProps)(LoginScreenBase);
 
 export default LoginScreen;
