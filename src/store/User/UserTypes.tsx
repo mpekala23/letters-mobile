@@ -15,6 +15,7 @@ export interface User {
   zipcode: string;
   city: string;
   state: string;
+  imageUri?: string;
 }
 
 export interface AuthInfo {

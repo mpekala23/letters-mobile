@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "@styles";
 
 const barHeight = 50;
 
@@ -7,8 +8,11 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: barHeight,
-    borderBottomWidth: 1,
+    borderColor: Colors.GRAY_MEDIUM,
+    borderBottomWidth: 0.5,
     paddingHorizontal: 10,
+    paddingBottom: 5,
+    marginBottom: 5,
   },
   logoContainer: {
     flex: 1,

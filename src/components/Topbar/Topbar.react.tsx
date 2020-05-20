@@ -1,18 +1,21 @@
 import React from "react";
-import { connect } from "redux-store";
+import { connect } from "react-redux";
 import { AppState } from "@store/types";
 import Styles from "./Topbar.styles";
 import { View, Image } from "react-native";
+import ProfilePic from "../ProfilePic/ProfilePic.react";
 
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
 const Topbar: React.FC = () => {
   return (
     <View style={Styles.barContainer}>
-      <View sylte={Styles.logoContainer}>
+      <View style={Styles.logoContainer}>
         <Image style={Styles.logo} source={AmeelioLogo} />
       </View>
-      <View></View>
+      <View>
+        <ProfilePic />
+      </View>
     </View>
   );
 };
