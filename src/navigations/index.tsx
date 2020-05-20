@@ -1,9 +1,11 @@
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen, LoginScreen, SplashScreen } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
+import { Topbar } from "@components";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,12 @@ const fadeTransition = (data: InterTranstion) => ({
 });
 
 const NavigatorBase: React.FC<Props> = (props) => {
+  // Only render the topbar if not loading token
+  let topSection = <View />;
+  if (!props.authInfo.isLoadingToken) {
+    topSection = <Topbar />;
+  }
+  // Determine which views should be accessible
   const screens = props.authInfo.isLoadingToken ? (
     <Stack.Screen
       name="Splash"
@@ -48,13 +56,16 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   );
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {screens}
-    </Stack.Navigator>
+    <>
+      {topSection}
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {screens}
+      </Stack.Navigator>
+    </>
   );
 };
 
