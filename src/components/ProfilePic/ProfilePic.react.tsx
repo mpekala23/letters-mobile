@@ -22,7 +22,6 @@ const ProfilePicBase: React.FC<Props> = (props) => {
   if (props.userState.user.imageUri) {
     insideCircle = <Image style={Styles.pic} source={ExamplePic} />;
   }
-  console.log(props);
   return (
     <TouchableOpacity style={Styles.background}>
       {insideCircle}
