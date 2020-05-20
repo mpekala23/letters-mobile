@@ -11,9 +11,17 @@ export interface Props {
   authInfo: AuthInfo;
 }
 
-const fadeTransition = ({ current, closing }) => ({
+export interface InterTranstion {
+  current: any;
+  next?: any;
+  index?: any;
+  closing: any;
+  layouts: any;
+}
+
+const fadeTransition = (data: InterTranstion) => ({
   cardStyle: {
-    opacity: current.progress,
+    opacity: data.current.progress,
   },
 });
 
