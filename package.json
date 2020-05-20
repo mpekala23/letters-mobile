@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.4.2",
+    "@react-navigation/stack": "^5.3.9",
     "@types/react-redux": "^7.1.9",
     "bufferutil": "^4.0.1",
     "enzyme": "^3.11.0",
@@ -22,6 +24,7 @@
     "react-navigation-stack": "^2.5.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "url": "^0.11.0",
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {

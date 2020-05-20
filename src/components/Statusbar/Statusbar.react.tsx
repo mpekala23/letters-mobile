@@ -8,13 +8,7 @@ A component to go at the top of the screen behind native status bar on different
 const Statusbar: React.FC = () => {
   return (
     <View style={{ height: STATUS_BAR_HEIGHT, zIndex: 999 }}>
-      <StatusBar
-        barStyle="dark-content"
-        style={{
-          height: STATUS_BAR_HEIGHT,
-          zIndex: 999,
-        }}
-      />
+      <StatusBar barStyle="dark-content" />
     </View>
   );
 };

@@ -44,7 +44,7 @@ export default function UserReducer(
       return {
         authInfo: {
           isLoadingToken: false,
-          isLoggedIn: true,
+          isLoggedIn: false,
           userToken: null,
         },
         user: {

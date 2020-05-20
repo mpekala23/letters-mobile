@@ -1,22 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
+import { login } from "@api";
 import { Button } from "@components";
 
-const LoginScreenBase: React.FC = (props) => {
+const LoginScreen: React.FC = (props) => {
   console.log(props);
   return (
     <Button
       buttonText="login"
       onPress={() => {
-        console.log("login pressed");
+        login();
       }}
     />
   );
 };
-
-const mapStateToProps = (state: any) => ({ user: state.user });
-const mapDispatchToProps = () => {};
-
-const LoginScreen = connect(mapStateToProps)(LoginScreenBase);
 
 export default LoginScreen;
