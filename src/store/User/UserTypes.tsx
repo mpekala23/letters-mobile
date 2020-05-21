@@ -20,7 +20,7 @@ export interface User {
 export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
-  userToken: any;
+  userToken?: string;
 }
 
 export interface UserState {

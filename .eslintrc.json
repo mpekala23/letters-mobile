@@ -8,7 +8,7 @@
   ],
   "parser": "babel-eslint",
   "rules": {
-    "import/no-unresolved": "off",
+    "import/no-unresolved": "on",
     "react/jsx-filename-extension": [
       1,
       {

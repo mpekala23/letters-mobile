@@ -23,7 +23,7 @@ export function loadToken() {
     state: "Minnesota",
   };
   setTimeout(() => {
-    if (Math.random() >= 0.5) {
+    if (Math.random() >= 1.1) {
       store.dispatch(loginUser(dummyData));
     } else {
       store.dispatch(logoutUser());
