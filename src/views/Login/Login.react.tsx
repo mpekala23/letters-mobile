@@ -7,7 +7,15 @@ const LoginScreen: React.FC = (props) => {
     <Button
       buttonText="login"
       onPress={() => {
-        login();
+        login()
+          .then((data) => {
+            console.log("data received");
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log("nope it went wrong");
+            console.log(err.message);
+          });
       }}
     />
   );

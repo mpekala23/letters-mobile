@@ -3,7 +3,7 @@ import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User } from "@store/User/UserTypes";
 import url from "url";
 
-export const API_URL = "http://192.168.1.54:9000/api/login";
+export const API_URL = "http://192.168.1.54:9000/api/";
 
 url.resolve(API_URL, "fill later");
 
@@ -28,39 +28,41 @@ export function loadToken() {
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
-export async function login() {
-  fetch("http://192.168.1.54:9000/api/login", {
+export function login() {
+  return fetch(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      username: "evan",
+      email: "eleg@college",
       password: "password",
     }),
   })
-    .then((response) => response.json())
-    .then((res) => {
-      console.log("success");
-      console.log(res);
+    .then((response) => {
+      return response.json();
     })
-    .catch((err) => {
-      console.log("failure");
-      console.log(err);
+    .then((res) => {
+      if (res.type == "error") {
+        console.log("login failure");
+        throw Error(res.data);
+      }
+      console.log("login success");
+      const userData: User = {
+        id: res.data.id,
+        firstName: res.data.firstName,
+        lastName: res.data.lastName,
+        email: res.data.email,
+        cell: res.data.cell,
+        address1: res.data.address1,
+        address2: res.data.address2 || null,
+        country: res.data.country,
+        zipcode: res.data.zipCode,
+        city: res.data.city,
+        state: res.data.state,
+      };
+      store.dispatch(loginUser(userData));
+      return userData;
     });
-  const dummyData: User = {
-    id: "1",
-    firstName: "Evan",
-    lastName: "Legrand",
-    email: "eleg@college",
-    cell: "6127038623",
-    address1: "place",
-    address2: "",
-    country: "USA",
-    zipcode: "55419",
-    city: "Minneapolis",
-    state: "Minnesota",
-  };
-  store.dispatch(loginUser(dummyData));
 }
