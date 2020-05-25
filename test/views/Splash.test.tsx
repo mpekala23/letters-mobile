@@ -16,8 +16,6 @@ describe("splash screen", () => {
 
   test("renders logo", () => {
     const splash = shallow(<SplashScreen />);
-    const renderedPath = splash.find("Image").prop("source").testUri;
-    const actualPath = AmeelioLogo.testUri;
-    expect(renderedPath).toEqual(actualPath);
+    expect(splash.find("Image").prop("source")).toEqual(AmeelioLogo);
   });
 });
