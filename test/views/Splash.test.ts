@@ -1,10 +1,10 @@
 import * as React from "react";
-import { SplashScreen } from "views";
+import { SplashScreen } from "@views";
 import renderer from "react-test-renderer";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
-const AmeelioLogo = require("assets/Ameelio_Logo.png");
+const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
 Enzyme.configure({ adapter: new Adapter() });
 

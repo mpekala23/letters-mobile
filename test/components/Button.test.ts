@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button } from "components";
+import { Button } from "@components";
 import renderer from "react-test-renderer";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
