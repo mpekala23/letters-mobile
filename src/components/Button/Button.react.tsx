@@ -7,6 +7,7 @@ export interface Props {
   containerStyle?: object;
   textStyle?: object;
   buttonText: string;
+  reverse?: boolean;
   onPress?: () => void;
 }
 
@@ -14,10 +15,22 @@ const Button: React.FC<Props> = (props) => {
   const { containerStyle, onPress, textStyle, buttonText } = props;
   return (
     <TouchableOpacity
-      style={[Styles.buttonBackground, containerStyle]}
+      style={[
+        props.reverse
+          ? Styles.buttonBackgroundReverse
+          : Styles.buttonBackground,
+        containerStyle,
+      ]}
       onPress={onPress}
     >
-      <Text style={[Styles.buttonText, textStyle]}>{buttonText}</Text>
+      <Text
+        style={[
+          props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
+          textStyle,
+        ]}
+      >
+        {buttonText}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -26,12 +39,14 @@ Button.propTypes = {
   containerStyle: PropTypes.objectOf(PropTypes.string),
   textStyle: PropTypes.objectOf(PropTypes.string),
   buttonText: PropTypes.string.isRequired,
+  reverse: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
   containerStyle: {},
   textStyle: {},
+  reverse: false,
   onPress: () => {},
 };
 

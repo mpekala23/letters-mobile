@@ -7,6 +7,15 @@ export const API_URL = "http://192.168.1.54:9000/api/";
 
 url.resolve(API_URL, "fill later");
 
+export function fetchTimeout(url, options, timeout = 10000) {
+  return Promise.race([
+    fetch(url, options),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("timeout")), timeout)
+    ),
+  ]);
+}
+
 /** Dummy function atm, once I implement persistent storage I will replace. */
 export function loadToken() {
   const dummyData: User = {
@@ -29,7 +38,7 @@ export function loadToken() {
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
 export function login() {
-  return fetch(url.resolve(API_URL, "login"), {
+  return fetchTimeout(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
       Accept: "application/json",
