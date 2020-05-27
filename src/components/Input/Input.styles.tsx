@@ -18,5 +18,16 @@ export default StyleSheet.create({
     padding: 10,
     fontSize: 18,
     color: Colors.AMEELIO_BLACK,
+    borderColor: Colors.AMEELIO_BLACK,
+  },
+  inputStyleFocused: {
+    flex: 1,
+    height: inputHeight,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 18,
+    color: Colors.AMEELIO_BLACK,
+    borderColor: Colors.AMEELIO_BLUE,
   },
 });

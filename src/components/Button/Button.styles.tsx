@@ -32,4 +32,8 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_BLUE,
     padding: 6,
   },
+  linkText: {
+    color: Colors.AMEELIO_BLUE,
+    textDecorationLine: "underline",
+  },
 });

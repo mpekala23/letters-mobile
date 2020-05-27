@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 
@@ -12,6 +12,8 @@ export interface Props {
 }
 
 const Input: React.FC<Props> = (props) => {
+  const [focused, setFocused] = useState(false);
+
   const { parentStyle, scrollStyle, inputStyle, placeholder } = props;
   return (
     <View style={[Styles.parentStyle, parentStyle]}>
@@ -22,7 +24,16 @@ const Input: React.FC<Props> = (props) => {
       >
         <TextInput
           placeholder={placeholder}
-          style={[Styles.inputStyle, inputStyle]}
+          onFocus={() => {
+            setFocused(true);
+          }}
+          onBlur={() => {
+            setFocused(false);
+          }}
+          style={[
+            focused ? Styles.inputStyleFocused : Styles.inputStyle,
+            inputStyle,
+          ]}
         />
       </ScrollView>
     </View>
