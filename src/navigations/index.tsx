@@ -1,7 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackCardInterpolationProps,
+  StackCardInterpolatedStyle,
+} from "@react-navigation/stack";
 import { HomeScreen, LoginScreen, SplashScreen } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
@@ -14,18 +18,26 @@ export interface Props {
 }
 
 export interface InterTranstion {
-  current: any;
-  next?: any;
-  index?: any;
+  current: {
+    progress: typeof test;
+  };
+  next?: {
+    progress: typeof test;
+  };
+  index?: number;
   closing: any;
   layouts: any;
 }
 
-const fadeTransition = (data: InterTranstion) => ({
-  cardStyle: {
-    opacity: data.current.progress,
-  },
-});
+const fadeTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      opacity: data.current.progress,
+    },
+  };
+};
 
 const NavigatorBase: React.FC<Props> = (props) => {
   // Only render the topbar if not loading token

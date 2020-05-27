@@ -3,6 +3,7 @@ import { TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 import Styles from "./Button.styles";
 import { Typography } from "@styles";
+import { StyleType } from "@utils";
 
 export interface Props {
   containerStyle?: object;
@@ -53,8 +54,8 @@ const Button: React.FC<Props> = (props) => {
 };
 
 Button.propTypes = {
-  containerStyle: PropTypes.objectOf(PropTypes.string),
-  textStyle: PropTypes.objectOf(PropTypes.string),
+  containerStyle: StyleType,
+  textStyle: StyleType,
   buttonText: PropTypes.string.isRequired,
   reverse: PropTypes.bool,
   link: PropTypes.bool,
