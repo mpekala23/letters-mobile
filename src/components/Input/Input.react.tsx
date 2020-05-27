@@ -9,12 +9,21 @@ export interface Props {
   scrollStyle?: object;
   inputStyle?: object;
   placeholder?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const Input: React.FC<Props> = (props) => {
   const [focused, setFocused] = useState(false);
 
-  const { parentStyle, scrollStyle, inputStyle, placeholder } = props;
+  const {
+    onFocus,
+    onBlur,
+    parentStyle,
+    scrollStyle,
+    inputStyle,
+    placeholder,
+  } = props;
   return (
     <View style={[Styles.parentStyle, parentStyle]}>
       <ScrollView
@@ -26,9 +35,11 @@ const Input: React.FC<Props> = (props) => {
           placeholder={placeholder}
           onFocus={() => {
             setFocused(true);
+            onFocus();
           }}
           onBlur={() => {
             setFocused(false);
+            onBlur();
           }}
           style={[
             focused ? Styles.inputStyleFocused : Styles.inputStyle,
@@ -45,6 +56,8 @@ Input.propTypes = {
   scrollStyle: PropTypes.objectOf(PropTypes.string),
   inputStyle: PropTypes.objectOf(PropTypes.string),
   placeholder: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -52,6 +65,8 @@ Input.defaultProps = {
   scrollStyle: {},
   inputStyle: {},
   placeholder: "",
+  onFocus: () => {},
+  onBlur: () => {},
 };
 
 export default Input;

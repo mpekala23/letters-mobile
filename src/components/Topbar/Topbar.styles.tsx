@@ -12,7 +12,6 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5,
     paddingHorizontal: 10,
     paddingBottom: 5,
-    marginBottom: 5,
   },
   logoContainer: {
     flex: 1,

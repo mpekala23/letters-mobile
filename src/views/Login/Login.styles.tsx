@@ -5,15 +5,12 @@ import { AMEELIO_BLUE } from "styles/Colors";
 export default StyleSheet.create({
   loginBackground: {
     flex: 1,
-    padding: 10,
-    paddingTop: 60,
-    backgroundColor: "white",
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   avoidingBackground: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-end",
   },
   fullWidth: {
     width: "100%",
@@ -21,6 +18,7 @@ export default StyleSheet.create({
   forgotContainer: {
     backgroundColor: "white",
     marginBottom: 30,
+    width: "60%",
   },
   forgotText: {
     color: Colors.AMEELIO_BLUE,
@@ -30,5 +28,6 @@ export default StyleSheet.create({
   termsContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
+    justifyContent: "center",
   },
 });
