@@ -17,3 +17,9 @@ export const FONT_BOLD = {
   fontFamily: FONT_FAMILY_BOLD,
   fontWeight: FONT_WEIGHT_BOLD,
 };
+
+export const FONT_ITALIC = {
+  fontFamily: FONT_FAMILY_REGULAR,
+  fontWeight: FONT_WEIGHT_REGULAR,
+  fontStyle: "italic",
+};

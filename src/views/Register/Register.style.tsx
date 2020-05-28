@@ -5,13 +5,27 @@ export default StyleSheet.create({
   trueBackground: {
     flex: 1,
     backgroundColor: "white",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   backgroundScroll: {
     flex: 1,
-    margin: 10,
+    marginHorizontal: 10,
+  },
+  scrollContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 50,
+    paddingBottom: 100,
   },
   fullWidth: {
     width: "100%",
+  },
+  picContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
   },
   privacyBackground: {
     width: "100%",
@@ -23,11 +37,11 @@ export default StyleSheet.create({
     borderColor: "#BEDAFC",
     borderRadius: 4,
     padding: 10,
-    marginBottom: 30,
+    marginBottom: 15,
   },
   privacyText: {
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "400",
     color: "#124181",
   },
 });

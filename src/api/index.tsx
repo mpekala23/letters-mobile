@@ -75,3 +75,39 @@ export function login(cred) {
       return userData;
     });
 }
+
+export function register(data) {
+  return fetchTimeout(url.resolve(API_URL, "register"), {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      if (res.type === "error") {
+        console.log("register failure");
+        throw Error(res.data);
+      }
+      console.log("register success");
+      const userData: User = {
+        id: res.data.id,
+        firstName: res.data.firstName,
+        lastName: res.data.lastName,
+        email: res.data.email,
+        cell: res.data.cell,
+        address1: res.data.address1,
+        address2: res.data.address2 || null,
+        country: res.data.country,
+        zipcode: res.data.zipcode,
+        city: res.data.city,
+        state: res.data.state,
+      };
+      store.dispatch(loginUser(userData));
+      return userData;
+    });
+}

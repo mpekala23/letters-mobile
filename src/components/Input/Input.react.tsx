@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
+import { validateFormat, Validation } from "@utils";
 
 import Styles from "./Input.styles";
 
@@ -11,12 +12,18 @@ export interface Props {
   placeholder?: string;
   onFocus?: () => void;
   onBlur?: () => void;
-  secure: boolean;
+  onValid?: () => void;
+  onInvalid?: () => void;
+  secure?: boolean;
+  required?: boolean;
+  validate?: Validation;
 }
 
 export interface State {
   value: string;
   focused: boolean;
+  valid: boolean;
+  dirty: boolean;
 }
 
 class Input extends React.Component<Props, {}> {
@@ -25,8 +32,42 @@ class Input extends React.Component<Props, {}> {
     this.state = {
       value: "",
       focused: false,
+      valid: props.validate || props.required ? false : true,
+      dirty: false,
     };
   }
+
+  set = (newValue) => {
+    this.setState({ value: newValue }, this.doValidate);
+  };
+
+  doValidate = () => {
+    const { value } = this.state;
+    const { required, validate, onValid, onInvalid } = this.props;
+
+    let result = true;
+    if (validate) {
+      result = validateFormat(validate, value);
+    }
+    if (required && value.length === 0) {
+      result = false;
+    }
+    if (result === this.state.valid) {
+      return;
+    }
+    this.setState(
+      {
+        valid: result,
+      },
+      () => {
+        if (result) {
+          onValid();
+        } else {
+          onInvalid();
+        }
+      }
+    );
+  };
 
   render() {
     const {
@@ -37,6 +78,8 @@ class Input extends React.Component<Props, {}> {
       inputStyle,
       placeholder,
       secure,
+      validate,
+      required,
     } = this.props;
     return (
       <View style={[Styles.parentStyle, parentStyle]}>
@@ -48,21 +91,27 @@ class Input extends React.Component<Props, {}> {
           <TextInput
             secureTextEntry={secure}
             placeholder={placeholder}
-            onChangeText={(val) => {
-              this.setState({ value: val });
-            }}
+            onChangeText={this.set}
             onFocus={() => {
-              this.setState({ focused: true });
+              this.setState({ focused: true, dirty: true });
               onFocus();
             }}
             onBlur={() => {
               this.setState({ focused: false });
+              if (validate || required) {
+                this.doValidate();
+              }
               onBlur();
             }}
             style={[
-              this.state.focused ? Styles.inputStyleFocused : Styles.inputStyle,
+              this.state.focused
+                ? Styles.inputStyleFocused
+                : !this.state.dirty || this.state.valid
+                ? Styles.inputStyle
+                : Styles.invalidStyle,
               inputStyle,
             ]}
+            value={this.state.value}
           />
         </ScrollView>
       </View>
@@ -77,6 +126,8 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  onValid: PropTypes.func,
+  onInvalid: PropTypes.func,
   secure: PropTypes.bool,
 };
 
@@ -87,6 +138,8 @@ Input.defaultProps = {
   placeholder: "",
   onFocus: () => {},
   onBlur: () => {},
+  onValid: () => {},
+  onInvalid: () => {},
   secure: false,
 };
 

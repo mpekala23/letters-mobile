@@ -28,3 +28,45 @@ export const StyleType = PropTypes.objectOf(
     return null;
   }
 );
+
+export enum Validation {
+  Email = "Email",
+  Cell = "Cell",
+  Password = "Password",
+  Zipcode = "Zipcode",
+}
+
+export function isValidEmail(email) {
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+}
+
+export function isValidCell(cell) {
+  return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(cell);
+}
+
+export function isValidPassword(password) {
+  return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(
+    password
+  );
+}
+
+export function isValidZipcode(zipcode) {
+  return /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
+}
+
+export function validateFormat(format: Validation, value: string) {
+  switch (format) {
+    case Validation.Email:
+      return isValidEmail(value);
+    case Validation.Cell:
+      return isValidCell(value);
+    case Validation.Password:
+      return isValidPassword(value);
+    case Validation.State:
+      return isValidState(value);
+    case Validation.Zipcode:
+      return isValidZipcode(value);
+    default:
+      return false;
+  }
+}

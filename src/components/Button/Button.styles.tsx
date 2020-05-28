@@ -20,6 +20,14 @@ export default StyleSheet.create({
     borderColor: Colors.AMEELIO_BLUE,
     marginVertical: 5,
   },
+  buttonBackgroundDisabled: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    backgroundColor: "grey",
+    marginVertical: 5,
+  },
   buttonText: {
     fontSize: 20,
     fontWeight: "700",
@@ -30,6 +38,12 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: Colors.AMEELIO_BLUE,
+    padding: 6,
+  },
+  buttonTextDisabled: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "white",
     padding: 6,
   },
   linkText: {

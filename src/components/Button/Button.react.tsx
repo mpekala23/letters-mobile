@@ -8,34 +8,49 @@ import { StyleType } from "@utils";
 export interface Props {
   containerStyle?: object;
   textStyle?: object;
+  disabledContainerStyle?: object;
+  disabledTextStyle?: object;
   buttonText: string;
   reverse?: boolean;
   link?: boolean;
+  enabled?: boolean;
   onPress?: () => void;
 }
 
 const Button: React.FC<Props> = (props) => {
   const {
     containerStyle,
+    disabledContainerStyle,
+    disabledTextStyle,
     onPress,
     textStyle,
     buttonText,
     reverse,
     link,
+    enabled,
   } = props;
   if (!link) {
     return (
       <TouchableOpacity
         style={[
           reverse ? Styles.buttonBackgroundReverse : Styles.buttonBackground,
+          enabled ? {} : Styles.buttonBackgroundDisabled,
           containerStyle,
+          enabled ? {} : disabledContainerStyle,
         ]}
-        onPress={onPress}
+        activeOpacity={enabled ? 0.7 : 1.0}
+        onPress={() => {
+          if (enabled) {
+            onPress();
+          }
+        }}
       >
         <Text
           style={[
             props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
+            enabled ? {} : Styles.buttonTextDisabled,
             textStyle,
+            enabled ? {} : disabledTextStyle,
           ]}
         >
           {buttonText}
@@ -44,7 +59,14 @@ const Button: React.FC<Props> = (props) => {
     );
   } else {
     return (
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity
+        onPress={() => {
+          if (enabled) {
+            onPress();
+          }
+        }}
+        style={containerStyle}
+      >
         <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
           {buttonText}
         </Text>
@@ -56,17 +78,23 @@ const Button: React.FC<Props> = (props) => {
 Button.propTypes = {
   containerStyle: StyleType,
   textStyle: StyleType,
+  disabledContainerStyle: StyleType,
+  disabledTextStyle: StyleType,
   buttonText: PropTypes.string.isRequired,
   reverse: PropTypes.bool,
   link: PropTypes.bool,
+  enabled: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
   containerStyle: {},
   textStyle: {},
+  disabledContainerStyle: {},
+  disabledTextStyle: {},
   reverse: false,
   link: false,
+  enabled: true,
   onPress: () => {},
 };
 

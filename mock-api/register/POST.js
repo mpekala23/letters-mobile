@@ -1,21 +1,38 @@
 module.exports = (req, res) => {
-  const { username, password } = req.body;
+  const {
+    email,
+    firstName,
+    lastName,
+    cell,
+    address1,
+    address2,
+    country,
+    zipcode,
+    city,
+    state,
+  } = req.body;
 
-  if (username === 'invalid' || password !== 'password') {
-    return res.sendStatus(409);
+  if (email === 'used@gmail.com') {
+    return res.status(401).send({
+      type: 'error',
+      data: 'Email in use',
+    });
   }
 
   return res.status(201).send({
-    id: '6',
-    firstName: 'Evan',
-    lastName: 'Legrand',
-    email: 'eleg@college',
-    cell: '6127038623',
-    address1: 'Address1',
-    address2: 'Address2',
-    country: 'USA',
-    zipcode: '55419',
-    city: 'Minneapolis',
-    state: 'MN',
+    type: 'success',
+    data: {
+      id: '6',
+      firstName,
+      lastName,
+      email,
+      cell,
+      address1,
+      address2,
+      country,
+      zipcode,
+      city,
+      state,
+    },
   });
 };

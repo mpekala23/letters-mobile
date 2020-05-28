@@ -29,5 +29,17 @@ export default StyleSheet.create({
     fontSize: 18,
     color: Colors.AMEELIO_BLACK,
     borderColor: Colors.AMEELIO_BLUE,
+    backgroundColor: "white",
+  },
+  invalidStyle: {
+    flex: 1,
+    height: inputHeight,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 18,
+    color: Colors.AMEELIO_BLACK,
+    borderColor: Colors.AMEELIO_RED,
+    backgroundColor: Colors.ALERT_LIGHT,
   },
 });

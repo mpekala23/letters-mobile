@@ -111,11 +111,11 @@ class LoginScreen extends React.Component<{}, LoginState> {
                         console.log(data);
                       })
                       .catch((err) => {
-                        console.log(err.message);
                         console.log("nope it went wrong");
+                        console.log(err.message);
                         if (err.message === "Incorrect credentials") {
                           Alert.alert("Incorrect username or password");
-                        } else {
+                        } else if (err.message === "timeout") {
                           // time out
                           this.dropdownRef.alertWithType(
                             "error",

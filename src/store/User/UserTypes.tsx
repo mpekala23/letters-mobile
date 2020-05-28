@@ -16,6 +16,7 @@ export interface User {
   city: string;
   state: string;
   imageUri?: string;
+  password?: string;
 }
 
 export interface AuthInfo {
