@@ -11,45 +11,64 @@ export interface Props {
   placeholder?: string;
   onFocus?: () => void;
   onBlur?: () => void;
+  secure: boolean;
 }
 
-const Input: React.FC<Props> = (props) => {
-  const [focused, setFocused] = useState(false);
+export interface State {
+  value: string;
+  focused: boolean;
+}
 
-  const {
-    onFocus,
-    onBlur,
-    parentStyle,
-    scrollStyle,
-    inputStyle,
-    placeholder,
-  } = props;
-  return (
-    <View style={[Styles.parentStyle, parentStyle]}>
-      <ScrollView
-        keyboardShouldPersistTaps="never"
-        scrollEnabled={false}
-        style={[Styles.scrollStyle, scrollStyle]}
-      >
-        <TextInput
-          placeholder={placeholder}
-          onFocus={() => {
-            setFocused(true);
-            onFocus();
-          }}
-          onBlur={() => {
-            setFocused(false);
-            onBlur();
-          }}
-          style={[
-            focused ? Styles.inputStyleFocused : Styles.inputStyle,
-            inputStyle,
-          ]}
-        />
-      </ScrollView>
-    </View>
-  );
-};
+class Input extends React.Component<Props, {}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      focused: false,
+    };
+  }
+
+  render() {
+    const {
+      onFocus,
+      onBlur,
+      parentStyle,
+      scrollStyle,
+      inputStyle,
+      placeholder,
+      secure,
+    } = this.props;
+    return (
+      <View style={[Styles.parentStyle, parentStyle]}>
+        <ScrollView
+          keyboardShouldPersistTaps="never"
+          scrollEnabled={false}
+          style={[Styles.scrollStyle, scrollStyle]}
+        >
+          <TextInput
+            secureTextEntry={secure}
+            placeholder={placeholder}
+            onChangeText={(val) => {
+              this.setState({ value: val });
+            }}
+            onFocus={() => {
+              this.setState({ focused: true });
+              onFocus();
+            }}
+            onBlur={() => {
+              this.setState({ focused: false });
+              onBlur();
+            }}
+            style={[
+              this.state.focused ? Styles.inputStyleFocused : Styles.inputStyle,
+              inputStyle,
+            ]}
+          />
+        </ScrollView>
+      </View>
+    );
+  }
+}
 
 Input.propTypes = {
   parentStyle: PropTypes.objectOf(PropTypes.string),
@@ -58,6 +77,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  secure: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -67,6 +87,7 @@ Input.defaultProps = {
   placeholder: "",
   onFocus: () => {},
   onBlur: () => {},
+  secure: false,
 };
 
 export default Input;

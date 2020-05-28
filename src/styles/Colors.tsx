@@ -3,6 +3,7 @@ export const AMEELIO_BLACK = "#282828";
 export const AMEELIO_GRAY = "#6E757C";
 export const AMEELIO_WHITE = "#f8fafc";
 export const AMEELIO_BLUE = "#3490dc";
+export const AMEELIO_LIGHT_BLUE = "#D0E5FD";
 export const AMEELIO_INDIGO = "#6574cd";
 export const AMEELIO_PURPLE = "#9561e2";
 export const AMEELIO_PINK = "#f66d9b";

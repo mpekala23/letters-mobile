@@ -1,10 +1,10 @@
 // FONT FAMILY
 export const FONT_FAMILY_REGULAR = "System";
-export const FONT_FAMILY_BOLD = "OpenSans-Bold";
+export const FONT_FAMILY_BOLD = "System";
 
 // FONT WEIGHT
 export const FONT_WEIGHT_REGULAR = "400";
-export const FONT_WEIGHT_BOLD = "700";
+export const FONT_WEIGHT_BOLD = "600";
 
 // FONT STYLE
 export const FONT_REGULAR = {

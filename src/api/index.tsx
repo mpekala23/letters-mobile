@@ -3,7 +3,7 @@ import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User } from "@store/User/UserTypes";
 import url from "url";
 
-export const API_URL = "http://192.168.1.54:9000/api/";
+export const API_URL = "http://192.168.7.73:9000/api/";
 
 url.resolve(API_URL, "fill later");
 
@@ -37,7 +37,7 @@ export function loadToken() {
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
-export function login() {
+export function login(cred) {
   return fetchTimeout(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
@@ -45,8 +45,8 @@ export function login() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: "eleg@college",
-      password: "password",
+      email: cred.email,
+      password: cred.password,
     }),
   })
     .then((response) => {

@@ -6,7 +6,7 @@ import {
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
-import { HomeScreen, LoginScreen, SplashScreen } from "@views";
+import { HomeScreen, LoginScreen, RegisterScreen, SplashScreen } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
@@ -15,18 +15,6 @@ const Stack = createStackNavigator();
 
 export interface Props {
   authInfo: AuthInfo;
-}
-
-export interface InterTranstion {
-  current: {
-    progress: typeof test;
-  };
-  next?: {
-    progress: typeof test;
-  };
-  index?: number;
-  closing: any;
-  layouts: any;
 }
 
 const fadeTransition = (
@@ -61,11 +49,18 @@ const NavigatorBase: React.FC<Props> = (props) => {
       />
     </>
   ) : (
-    <Stack.Screen
-      name="Login"
-      component={LoginScreen}
-      options={{ cardStyleInterpolator: fadeTransition }}
-    />
+    <>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+    </>
   );
   return (
     <>
