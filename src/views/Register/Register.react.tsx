@@ -6,105 +6,150 @@ import {
   Text,
   View,
 } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AuthStackParamList } from "@navigations";
 import { Button, Input, PicUpload } from "@components";
 import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
+import { Validation } from "@utils";
+import { User, UserInfo } from "@store/User/UserTypes";
+
+type RegisterScreenNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  "Register"
+>;
+
+export interface Props {
+  navigation: RegisterScreenNavigationProp;
+}
 
 export interface State {
   valid: boolean;
 }
 
-class RegisterScreen extends React.Component<{}, State> {
-  constructor(props) {
+class RegisterScreen extends React.Component<Props, State> {
+  private firstName = createRef<Input>();
+  private lastName = createRef<Input>();
+  private cell = createRef<Input>();
+  private address1 = createRef<Input>();
+  private address2 = createRef<Input>();
+  private country = createRef<Input>();
+  private zipcode = createRef<Input>();
+  private city = createRef<Input>();
+  private phyState = createRef<Input>();
+  private email = createRef<Input>();
+  private password = createRef<Input>();
+  private dropdownRef = createRef<DropdownAlert>();
+
+  constructor(props: Props) {
     super(props);
-    this.firstName = createRef();
-    this.lastName = createRef();
-    this.cell = createRef();
-    this.address1 = createRef();
-    this.address2 = createRef();
-    this.country = createRef();
-    this.zipcode = createRef();
-    this.city = createRef();
-    this.phyState = createRef();
-    this.email = createRef();
-    this.password = createRef();
-    this.dropdownRef = getDropdownRef();
     this.state = {
       valid: false,
     };
   }
 
   devSkip = () => {
-    console.log("here");
-    this.firstName.current.set("Mark");
-    this.lastName.current.set("Pekala");
-    this.cell.current.set("6127038623");
-    this.address1.current.set("210 W Diamond Lake Road");
-    this.country.current.set("USA");
-    this.zipcode.current.set("55419");
-    this.city.current.set("Minneapolis");
-    this.phyState.current.set("MN");
-    this.email.current.set("mpekala@college.harvard.edu");
-    this.password.current.set("ThisGoodPassword1#");
+    if (this.firstName.current) this.firstName.current.set("Mark");
+    if (this.lastName.current) this.lastName.current.set("Pekala");
+    if (this.cell.current) this.cell.current.set("6127038623");
+    if (this.address1.current)
+      this.address1.current.set("210 W Diamond Lake Road");
+    if (this.country.current) this.country.current.set("USA");
+    if (this.zipcode.current) this.zipcode.current.set("55419");
+    if (this.city.current) this.city.current.set("Minneapolis");
+    if (this.phyState.current) this.phyState.current.set("MN");
+    if (this.email.current)
+      this.email.current.set("mpekala@college.harvard.edu");
+    if (this.password.current) this.password.current.set("ThisGoodPassword1#");
   };
 
   updateValid = () => {
-    const result =
-      this.firstName.current.state.valid &&
-      this.lastName.current.state.valid &&
-      this.cell.current.state.valid &&
-      this.address1.current.state.valid &&
-      this.country.current.state.valid &&
-      this.zipcode.current.state.valid &&
-      this.city.current.state.valid &&
-      this.phyState.current.state.valid &&
-      this.email.current.state.valid &&
-      this.password.current.state.valid;
-    this.setState({ valid: result });
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.cell.current &&
+      this.address1.current &&
+      this.country.current &&
+      this.zipcode.current &&
+      this.city.current &&
+      this.phyState.current &&
+      this.email.current &&
+      this.password.current
+    ) {
+      const result =
+        this.firstName.current.state.valid &&
+        this.lastName.current.state.valid &&
+        this.cell.current.state.valid &&
+        this.address1.current.state.valid &&
+        this.country.current.state.valid &&
+        this.zipcode.current.state.valid &&
+        this.city.current.state.valid &&
+        this.phyState.current.state.valid &&
+        this.email.current.state.valid &&
+        this.password.current.state.valid;
+      this.setState({ valid: result });
+    }
   };
 
   doRegister = () => {
-    const data: User = {
-      firstName: this.firstName.current.state.value,
-      lastName: this.lastName.current.state.value,
-      cell: this.cell.current.state.value,
-      address1: this.address1.current.state.value,
-      address2: this.address2.current.state.value,
-      country: this.country.current.state.value,
-      zipcode: this.zipcode.current.state.value,
-      city: this.city.current.state.value,
-      state: this.phyState.current.state.value,
-      email: this.email.current.state.value,
-      password: this.password.current.state.value,
-    };
-    register(data)
-      .then((data) => {
-        console.log("data received");
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log("nope it went wrong");
-        console.log(err.message);
-        if (err.message === "Email in use") {
-          Alert.alert("Email already in use");
-        } else if (err.message === "timeout") {
-          // time out
-          this.dropdownRef.alertWithType(
-            "error",
-            "Network Error",
-            "The request timed out."
-          );
-        } else {
-          // catch all
-          this.dropdownRef.alertWithType(
-            "error",
-            "Network Error",
-            "The request could not be completed."
-          );
-        }
-      });
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.cell.current &&
+      this.address1.current &&
+      this.address2.current &&
+      this.country.current &&
+      this.zipcode.current &&
+      this.city.current &&
+      this.phyState.current &&
+      this.email.current &&
+      this.password.current
+    ) {
+      const data: UserInfo = {
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        cell: this.cell.current.state.value,
+        address1: this.address1.current.state.value,
+        address2: this.address2.current.state.value,
+        country: this.country.current.state.value,
+        zipcode: this.zipcode.current.state.value,
+        city: this.city.current.state.value,
+        state: this.phyState.current.state.value,
+        email: this.email.current.state.value,
+        password: this.password.current.state.value,
+      };
+      register(data)
+        .then((data) => {
+          console.log("data received");
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log("nope it went wrong");
+          console.log(err.message);
+          if (err.message === "Email in use") {
+            Alert.alert("Email already in use");
+          } else if (err.message === "timeout") {
+            // time out
+            if (this.dropdownRef.current)
+              this.dropdownRef.current.alertWithType(
+                "error",
+                "Network Error",
+                "The request timed out."
+              );
+          } else {
+            // catch all
+            if (this.dropdownRef.current)
+              this.dropdownRef.current.alertWithType(
+                "error",
+                "Network Error",
+                "The request could not be completed."
+              );
+          }
+        });
+    }
   };
 
   render() {
@@ -160,7 +205,7 @@ class RegisterScreen extends React.Component<{}, State> {
             parentStyle={Styles.fullWidth}
             placeholder={"Cell Phone Number"}
             required
-            validate={"Cell"}
+            validate={Validation.Cell}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -190,7 +235,7 @@ class RegisterScreen extends React.Component<{}, State> {
             parentStyle={Styles.fullWidth}
             placeholder={"Zip Code"}
             required
-            validate={"Zipcode"}
+            validate={Validation.Zipcode}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -215,7 +260,7 @@ class RegisterScreen extends React.Component<{}, State> {
             parentStyle={Styles.fullWidth}
             placeholder={"Email"}
             required
-            validate={"Email"}
+            validate={Validation.Email}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -225,7 +270,7 @@ class RegisterScreen extends React.Component<{}, State> {
             placeholder={"Password"}
             required
             secure
-            validate={"Password"}
+            validate={Validation.Password}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -234,8 +279,6 @@ class RegisterScreen extends React.Component<{}, State> {
             buttonText="Register"
             enabled={this.state.valid}
             onPress={this.doRegister}
-            onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
           />
         </ScrollView>
       </KeyboardAvoidingView>

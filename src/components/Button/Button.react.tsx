@@ -14,7 +14,7 @@ export interface Props {
   reverse?: boolean;
   link?: boolean;
   enabled?: boolean;
-  onPress?: () => void;
+  onPress: () => void;
 }
 
 const Button: React.FC<Props> = (props) => {

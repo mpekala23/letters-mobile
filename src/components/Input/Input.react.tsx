@@ -10,10 +10,10 @@ export interface Props {
   scrollStyle?: object;
   inputStyle?: object;
   placeholder?: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onValid?: () => void;
-  onInvalid?: () => void;
+  onFocus: () => void;
+  onBlur: () => void;
+  onValid: () => void;
+  onInvalid: () => void;
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
@@ -26,8 +26,20 @@ export interface State {
   dirty: boolean;
 }
 
-class Input extends React.Component<Props, {}> {
-  constructor(props) {
+class Input extends React.Component<Props, State> {
+  static defaultProps = {
+    parentStyle: {},
+    scrollStyle: {},
+    inputStyle: {},
+    placeholder: "",
+    onFocus: () => {},
+    onBlur: () => {},
+    onValid: () => {},
+    onInvalid: () => {},
+    secure: false,
+  };
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       value: "",
@@ -37,7 +49,7 @@ class Input extends React.Component<Props, {}> {
     };
   }
 
-  set = (newValue) => {
+  set = (newValue: string) => {
     this.setState({ value: newValue }, this.doValidate);
   };
 
@@ -118,29 +130,5 @@ class Input extends React.Component<Props, {}> {
     );
   }
 }
-
-Input.propTypes = {
-  parentStyle: PropTypes.objectOf(PropTypes.string),
-  scrollStyle: PropTypes.objectOf(PropTypes.string),
-  inputStyle: PropTypes.objectOf(PropTypes.string),
-  placeholder: PropTypes.string,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onValid: PropTypes.func,
-  onInvalid: PropTypes.func,
-  secure: PropTypes.bool,
-};
-
-Input.defaultProps = {
-  parentStyle: {},
-  scrollStyle: {},
-  inputStyle: {},
-  placeholder: "",
-  onFocus: () => {},
-  onBlur: () => {},
-  onValid: () => {},
-  onInvalid: () => {},
-  secure: false,
-};
 
 export default Input;

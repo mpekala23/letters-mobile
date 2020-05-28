@@ -1,7 +1,10 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React, { createRef } from "react";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
+import * as Permissions from "expo-permissions";
 import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./PicUpload.style";
 import { StyleType } from "@utils";
 
@@ -11,8 +14,10 @@ export interface State {
   image: any;
 }
 
-class PicUpload extends React.Component<{}, State> {
-  constructor(props) {
+class PicUpload extends React.Component<Props, State> {
+  dropdownRef = createRef<DropdownAlert>();
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       image: null,
@@ -21,10 +26,10 @@ class PicUpload extends React.Component<{}, State> {
   }
 
   getPermissionAsync = async () => {
-    if (Constants.platform.ios) {
+    if (Constants.platform && Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== "granted") {
-        alert(
+        Alert.alert(
           "We need permission to access your camera roll to upload a profile picture."
         );
       }
@@ -43,11 +48,12 @@ class PicUpload extends React.Component<{}, State> {
         this.setState({ image: result.uri });
       }
     } catch (E) {
-      this.dropdownRef.alertWithType(
-        "error",
-        "Photo Error",
-        "Unable to access the photo library."
-      );
+      if (this.dropdownRef.current)
+        this.dropdownRef.current.alertWithType(
+          "error",
+          "Photo Error",
+          "Unable to access the photo library."
+        );
     }
   };
 

@@ -1,16 +1,25 @@
 import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
-import { User } from "@store/User/UserTypes";
+import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
 
 export const API_URL = "http://192.168.7.73:9000/api/";
 
 url.resolve(API_URL, "fill later");
 
-export function fetchTimeout(url, options, timeout = 10000) {
+export interface UserResponse {
+  type: string;
+  data: User;
+}
+
+export function fetchTimeout<T>(
+  url: string,
+  options: object,
+  timeout = 10000
+): Promise<Response | T> {
   return Promise.race([
     fetch(url, options),
-    new Promise((_, reject) =>
+    new Promise<Response | T>((_, reject) =>
       setTimeout(() => reject(new Error("timeout")), timeout)
     ),
   ]);
@@ -37,8 +46,8 @@ export function loadToken() {
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
-export function login(cred) {
-  return fetchTimeout(url.resolve(API_URL, "login"), {
+export function login(cred: UserCredentials) {
+  return fetchTimeout<Response>(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -49,7 +58,7 @@ export function login(cred) {
       password: cred.password,
     }),
   })
-    .then((response) => {
+    .then((response: Response) => {
       return response.json();
     })
     .then((res) => {
@@ -76,8 +85,8 @@ export function login(cred) {
     });
 }
 
-export function register(data) {
-  return fetchTimeout(url.resolve(API_URL, "register"), {
+export function register(data: UserInfo) {
+  return fetchTimeout<Response>(url.resolve(API_URL, "register"), {
     method: "POST",
     headers: {
       Accept: "application/json",

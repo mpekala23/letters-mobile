@@ -10,19 +10,36 @@ import {
   View,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AuthStackParamList } from "@navigations";
 import { login } from "@api";
 import { Button, GrayBar, Input } from "@components";
 import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
+import { UserCredentials } from "@store/User/UserTypes";
 
-export interface LoginState {
+type LoginScreenNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  "Login"
+>;
+
+export interface Props {
+  navigation: LoginScreenNavigationProp;
+}
+
+export interface State {
   remember: boolean;
   inputting: boolean;
 }
 
-class LoginScreen extends React.Component<{}, LoginState> {
-  constructor(props) {
+class LoginScreen extends React.Component<Props, State> {
+  private emailRef = createRef<Input>();
+  private passwordRef = createRef<Input>();
+  private dropdownRef = createRef<DropdownAlert>();
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       remember: false,
@@ -100,30 +117,37 @@ class LoginScreen extends React.Component<{}, LoginState> {
                   onPress={() => {
                     Keyboard.dismiss();
                     console.log("login pressed");
-                    const cred = {
-                      email: this.emailRef.current.state.value,
-                      password: this.passwordRef.current.state.value,
-                      remember: this.state.remember,
-                    };
-                    login(cred)
-                      .then((data) => {
-                        console.log("data received");
-                        console.log(data);
-                      })
-                      .catch((err) => {
-                        console.log("nope it went wrong");
-                        console.log(err.message);
-                        if (err.message === "Incorrect credentials") {
-                          Alert.alert("Incorrect username or password");
-                        } else if (err.message === "timeout") {
-                          // time out
-                          this.dropdownRef.alertWithType(
-                            "error",
-                            "Network Error",
-                            "The request timed out."
-                          );
-                        }
-                      });
+                    if (this.emailRef.current && this.passwordRef.current) {
+                      const cred: UserCredentials = {
+                        email:
+                          this.emailRef.current &&
+                          this.emailRef.current.state.value,
+                        password:
+                          this.passwordRef.current &&
+                          this.passwordRef.current.state.value,
+                        remember: this.state.remember,
+                      };
+                      login(cred)
+                        .then((data) => {
+                          console.log("data received");
+                          console.log(data);
+                        })
+                        .catch((err) => {
+                          console.log("nope it went wrong");
+                          console.log(err.message);
+                          if (err.message === "Incorrect credentials") {
+                            Alert.alert("Incorrect username or password");
+                          } else if (err.message === "timeout") {
+                            // time out
+                            if (this.dropdownRef.current)
+                              this.dropdownRef.current.alertWithType(
+                                "error",
+                                "Network Error",
+                                "The request timed out."
+                              );
+                          }
+                        });
+                    }
                   }}
                 />
                 <Button
@@ -153,9 +177,17 @@ class LoginScreen extends React.Component<{}, LoginState> {
                   </Text>
                 </View>
                 <View style={Styles.termsContainer}>
-                  <Button link buttonText={"Terms of Service "} />
+                  <Button
+                    link
+                    buttonText={"Terms of Service "}
+                    onPress={() => {}}
+                  />
                   <Text style={Typography.FONT_REGULAR}>and</Text>
-                  <Button link buttonText={" Privacy Policy"} />
+                  <Button
+                    link
+                    buttonText={" Privacy Policy"}
+                    onPress={() => {}}
+                  />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
                 </View>
                 <View style={{ width: "100%", height: 100 }} />

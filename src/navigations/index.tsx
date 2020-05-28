@@ -11,6 +11,11 @@ import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
 
+export type AuthStackParamList = {
+  Login: LoginScreen;
+  Register: RegisterScreen;
+};
+
 const Stack = createStackNavigator();
 
 export interface Props {

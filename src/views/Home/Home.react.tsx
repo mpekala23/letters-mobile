@@ -6,7 +6,7 @@ const HomeScreen: React.FC = () => {
   return (
     <View>
       <Text>Hello</Text>
-      <Button buttonText="Press Me" />
+      <Button buttonText="Press Me" onPress={() => {}} />
     </View>
   );
 };

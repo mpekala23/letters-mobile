@@ -36,21 +36,21 @@ export enum Validation {
   Zipcode = "Zipcode",
 }
 
-export function isValidEmail(email) {
+export function isValidEmail(email: string) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
-export function isValidCell(cell) {
+export function isValidCell(cell: string) {
   return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(cell);
 }
 
-export function isValidPassword(password) {
+export function isValidPassword(password: string) {
   return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(
     password
   );
 }
 
-export function isValidZipcode(zipcode) {
+export function isValidZipcode(zipcode: string) {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
 }
 
@@ -62,8 +62,6 @@ export function validateFormat(format: Validation, value: string) {
       return isValidCell(value);
     case Validation.Password:
       return isValidPassword(value);
-    case Validation.State:
-      return isValidState(value);
     case Validation.Zipcode:
       return isValidZipcode(value);
     default:
