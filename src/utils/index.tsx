@@ -41,13 +41,14 @@ export function isValidEmail(email: string) {
 }
 
 export function isValidCell(cell: string) {
-  return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(cell);
+  var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+  var digits = cell.replace(/\D/g, "");
+  return phoneRe.test(digits);
 }
 
 export function isValidPassword(password: string) {
-  return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(
-    password
-  );
+  // at least 8 characters, one uppercase, one lowercase, one number
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
 }
 
 export function isValidZipcode(zipcode: string) {

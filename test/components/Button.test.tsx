@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Button } from "@components";
 import renderer from "react-test-renderer";
 import Enzyme from "enzyme";

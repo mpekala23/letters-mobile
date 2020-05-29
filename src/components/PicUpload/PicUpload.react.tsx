@@ -1,12 +1,10 @@
 import React, { createRef } from "react";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
 import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./PicUpload.style";
-import { StyleType } from "@utils";
 
 export interface Props {}
 
@@ -26,13 +24,11 @@ class PicUpload extends React.Component<Props, State> {
   }
 
   getPermissionAsync = async () => {
-    if (Constants.platform && Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== "granted") {
-        Alert.alert(
-          "We need permission to access your camera roll to upload a profile picture."
-        );
-      }
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== "granted") {
+      Alert.alert(
+        "We need permission to access your camera roll to upload a profile picture."
+      );
     }
   };
 

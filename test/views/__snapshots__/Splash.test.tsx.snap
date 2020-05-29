@@ -5,17 +5,14 @@ exports[`splash screen displays whole screen 1`] = `
   style={
     Object {
       "alignItems": "center",
+      "backgroundColor": "white",
       "flex": 1,
       "justifyContent": "center",
     }
   }
 >
   <Image
-    source={
-      Object {
-        "testUri": "../../../src/assets/Ameelio_Logo.png",
-      }
-    }
+    source={1}
     style={
       Object {
         "aspectRatio": 2.2768361581920904,

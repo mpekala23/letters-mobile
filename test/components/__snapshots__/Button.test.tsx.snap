@@ -14,7 +14,12 @@ exports[`renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "alignItems": "center",
       "backgroundColor": "white",
+      "borderRadius": 4,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "marginVertical": 5,
       "opacity": 1,
     }
   }
@@ -23,11 +28,16 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Object {
+          "color": "white",
           "fontSize": 20,
+          "fontWeight": "700",
+          "padding": 6,
         },
+        Object {},
         Object {
           "fontSize": 10,
         },
+        Object {},
       ]
     }
   >

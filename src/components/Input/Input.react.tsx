@@ -47,6 +47,12 @@ class Input extends React.Component<Props, State> {
       valid: props.validate || props.required ? false : true,
       dirty: false,
     };
+    // initial call to signal validity
+    if (this.state.valid) {
+      props.onValid();
+    } else {
+      props.onInvalid();
+    }
   }
 
   set = (newValue: string) => {
