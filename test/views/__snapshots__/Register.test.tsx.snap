@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register screen renders 1`] = `ShallowWrapper {}`;

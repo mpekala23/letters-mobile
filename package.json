@@ -19,6 +19,7 @@
     "expo-font": "8.1.1",
     "expo-image-picker": "^8.1.0",
     "expo-permissions": "^8.1.0",
+    "fetch-mock": "^9.10.1",
     "jest": "^25.5.4",
     "jest-expo": "^37.0.0",
     "jest-serializer-enzyme": "^1.0.0",
@@ -38,6 +39,7 @@
     "react-navigation-stack": "^2.5.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "redux-mock-store": "^1.5.4",
     "url": "^0.11.0",
     "utf-8-validate": "^5.0.2"
   },
@@ -61,6 +63,7 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "express": "^4.17.1",
     "husky": "^0.14.3",
+    "jest-fetch-mock": "^3.0.3",
     "jest-react-native": "^18.0.0",
     "jsdoc": "^3.6.4",
     "jsdocs": "^1.0.0",
@@ -89,6 +92,9 @@
     "preset": "jest-expo",
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./test/setupJest.ts"
     ]
   },
   "private": true

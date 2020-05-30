@@ -32,6 +32,7 @@ export interface Props {
 export interface State {
   remember: boolean;
   inputting: boolean;
+  loggedIn: boolean;
 }
 
 class LoginScreen extends React.Component<Props, State> {
@@ -44,11 +45,47 @@ class LoginScreen extends React.Component<Props, State> {
     this.state = {
       remember: false,
       inputting: false,
+      loggedIn: false,
     };
     this.emailRef = createRef();
     this.passwordRef = createRef();
     this.dropdownRef = getDropdownRef();
   }
+
+  onLogin = async () => {
+    Keyboard.dismiss();
+    console.log("login pressed");
+    if (this.emailRef.current && this.passwordRef.current) {
+      const cred: UserCredentials = {
+        email: this.emailRef.current && this.emailRef.current.state.value,
+        password:
+          this.passwordRef.current && this.passwordRef.current.state.value,
+        remember: this.state.remember,
+      };
+      await login(cred)
+        .then((data) => {
+          console.log("data received");
+          console.log(data);
+          this.setState({ loggedIn: true });
+        })
+        .catch((err) => {
+          console.log("nope it went wrong");
+          console.log(err.message);
+          if (err.message === "Incorrect credentials") {
+            Alert.alert("Incorrect username or password");
+          } else if (err.message === "timeout") {
+            // time out
+            if (this.dropdownRef.current)
+              this.dropdownRef.current.alertWithType(
+                "error",
+                "Network Error",
+                "The request timed out."
+              );
+          }
+          this.setState({ loggedIn: false });
+        });
+    }
+  };
 
   render() {
     return (
@@ -98,6 +135,8 @@ class LoginScreen extends React.Component<Props, State> {
                   secure={true}
                 />
                 <CheckBox
+                  checkedIcon={<Text>X</Text>}
+                  uncheckedIcon={<Text>O</Text>}
                   center
                   title="Remember Me"
                   containerStyle={{
@@ -114,41 +153,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Button
                   containerStyle={Styles.fullWidth}
                   buttonText="Login"
-                  onPress={() => {
-                    Keyboard.dismiss();
-                    console.log("login pressed");
-                    if (this.emailRef.current && this.passwordRef.current) {
-                      const cred: UserCredentials = {
-                        email:
-                          this.emailRef.current &&
-                          this.emailRef.current.state.value,
-                        password:
-                          this.passwordRef.current &&
-                          this.passwordRef.current.state.value,
-                        remember: this.state.remember,
-                      };
-                      login(cred)
-                        .then((data) => {
-                          console.log("data received");
-                          console.log(data);
-                        })
-                        .catch((err) => {
-                          console.log("nope it went wrong");
-                          console.log(err.message);
-                          if (err.message === "Incorrect credentials") {
-                            Alert.alert("Incorrect username or password");
-                          } else if (err.message === "timeout") {
-                            // time out
-                            if (this.dropdownRef.current)
-                              this.dropdownRef.current.alertWithType(
-                                "error",
-                                "Network Error",
-                                "The request timed out."
-                              );
-                          }
-                        });
-                    }
-                  }}
+                  onPress={this.onLogin}
                 />
                 <Button
                   containerStyle={Styles.fullWidth}

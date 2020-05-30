@@ -28,6 +28,7 @@ export interface Props {
 
 export interface State {
   valid: boolean;
+  registered: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -48,6 +49,7 @@ class RegisterScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
+      registered: false,
     };
   }
 
@@ -63,7 +65,8 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.phyState.current) this.phyState.current.set("MN");
     if (this.email.current)
       this.email.current.set("mpekala@college.harvard.edu");
-    if (this.password.current) this.password.current.set("ThisGoodPassword1#");
+    if (this.password.current) this.password.current.set("ThisGood1");
+    this.updateValid();
   };
 
   updateValid = () => {
@@ -94,7 +97,7 @@ class RegisterScreen extends React.Component<Props, State> {
     }
   };
 
-  doRegister = () => {
+  doRegister = async () => {
     if (
       this.firstName.current &&
       this.lastName.current &&
@@ -121,10 +124,11 @@ class RegisterScreen extends React.Component<Props, State> {
         email: this.email.current.state.value,
         password: this.password.current.state.value,
       };
-      register(data)
+      await register(data)
         .then((data) => {
           console.log("data received");
           console.log(data);
+          this.setState({ registered: true });
         })
         .catch((err) => {
           console.log("nope it went wrong");
@@ -148,6 +152,7 @@ class RegisterScreen extends React.Component<Props, State> {
                 "The request could not be completed."
               );
           }
+          this.setState({ registered: false });
         });
     }
   };
