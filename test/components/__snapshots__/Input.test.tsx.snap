@@ -1,3 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Input component renders 1`] = `ShallowWrapper {}`;
+exports[`Input component should render correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "height": 50,
+        "marginVertical": 5,
+      },
+      Object {},
+    ]
+  }
+>
+  <RCTScrollView
+    keyboardShouldPersistTaps="never"
+    scrollEnabled={false}
+    style={
+      Array [
+        Object {},
+        Object {},
+      ]
+    }
+  >
+    <View>
+      <TextInput
+        allowFontScaling={true}
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholder=""
+        rejectResponderTermination={true}
+        secureTextEntry={false}
+        style={
+          Array [
+            Object {
+              "borderColor": "#282828",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "color": "#282828",
+              "flex": 1,
+              "fontSize": 18,
+              "height": 50,
+              "padding": 10,
+            },
+            Object {},
+          ]
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;
