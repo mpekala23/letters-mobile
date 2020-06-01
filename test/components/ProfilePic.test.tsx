@@ -65,16 +65,15 @@ const setupInstance = (authOverrides, userOverrides) => {
   const user = Object.assign(
     {
       id: "6",
-      firstName: "Mark",
-      lastName: "Pekala",
-      email: "mpekala@college.harvard.edu",
-      cell: "6127038623",
-      address1: "210 W Diamond Lake Road",
-      address2: "",
+      firstName: "Team",
+      lastName: "Ameelio",
+      email: "team@ameelio.org",
+      cell: "4324324432",
+      address1: "Somewhere",
       country: "USA",
-      zipcode: "55419",
-      city: "Minneapolis",
-      state: "MN",
+      zipcode: "12345",
+      city: "New Haven",
+      state: "CT",
     },
     userOverrides
   );
@@ -115,7 +114,7 @@ describe("ProfilePic component", () => {
     const profilePic = element.root;
     const text = profilePic.findByType(Text);
     expect(text).toBeDefined();
-    expect(text.props.children).toEqual("MP");
+    expect(text.props.children).toEqual("TA");
   });
   test("image when user is logged in with picture", () => {
     const { element, store } = setupInstance(

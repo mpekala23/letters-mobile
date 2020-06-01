@@ -50,6 +50,7 @@ const setupInstance = (propOverrides) => {
 describe("Input component", () => {
   test("renders", () => {
     const { wrapper } = setupShallow();
+    console.log(wrapper.instance());
     expect(wrapper).toMatchSnapshot();
   });
   test("focus and dirty set correctly", () => {

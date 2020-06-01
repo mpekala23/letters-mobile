@@ -33,7 +33,6 @@ const fadeTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props) => {
-  // Only render the topbar if not loading token
   let topSection = <View />;
   if (!props.authInfo.isLoadingToken) {
     topSection = <Topbar />;

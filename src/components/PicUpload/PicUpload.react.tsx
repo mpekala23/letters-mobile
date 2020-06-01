@@ -23,7 +23,7 @@ class PicUpload extends React.Component<Props, State> {
     this.dropdownRef = getDropdownRef();
   }
 
-  getPermissionAsync = async () => {
+  getCameraRollPermission = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== "granted") {
       Alert.alert(

@@ -54,17 +54,15 @@ class RegisterScreen extends React.Component<Props, State> {
   }
 
   devSkip = () => {
-    if (this.firstName.current) this.firstName.current.set("Mark");
-    if (this.lastName.current) this.lastName.current.set("Pekala");
-    if (this.cell.current) this.cell.current.set("6127038623");
-    if (this.address1.current)
-      this.address1.current.set("210 W Diamond Lake Road");
+    if (this.firstName.current) this.firstName.current.set("Team");
+    if (this.lastName.current) this.lastName.current.set("Ameelio");
+    if (this.cell.current) this.cell.current.set("4324324432");
+    if (this.address1.current) this.address1.current.set("Somewhere");
     if (this.country.current) this.country.current.set("USA");
-    if (this.zipcode.current) this.zipcode.current.set("55419");
-    if (this.city.current) this.city.current.set("Minneapolis");
-    if (this.phyState.current) this.phyState.current.set("MN");
-    if (this.email.current)
-      this.email.current.set("mpekala@college.harvard.edu");
+    if (this.zipcode.current) this.zipcode.current.set("12345");
+    if (this.city.current) this.city.current.set("New Haven");
+    if (this.phyState.current) this.phyState.current.set("CT");
+    if (this.email.current) this.email.current.set("team@ameelio.org");
     if (this.password.current) this.password.current.set("ThisGood1");
     this.updateValid();
   };
@@ -124,36 +122,30 @@ class RegisterScreen extends React.Component<Props, State> {
         email: this.email.current.state.value,
         password: this.password.current.state.value,
       };
-      await register(data)
-        .then((data) => {
-          console.log("data received");
-          console.log(data);
-          this.setState({ registered: true });
-        })
-        .catch((err) => {
-          console.log("nope it went wrong");
-          console.log(err.message);
-          if (err.message === "Email in use") {
-            Alert.alert("Email already in use");
-          } else if (err.message === "timeout") {
-            // time out
-            if (this.dropdownRef.current)
-              this.dropdownRef.current.alertWithType(
-                "error",
-                "Network Error",
-                "The request timed out."
-              );
-          } else {
-            // catch all
-            if (this.dropdownRef.current)
-              this.dropdownRef.current.alertWithType(
-                "error",
-                "Network Error",
-                "The request could not be completed."
-              );
-          }
-          this.setState({ registered: false });
-        });
+      try {
+        const res = await register(data);
+        this.setState({ registered: true });
+      } catch (err) {
+        if (err.message === "Email in use") {
+          Alert.alert("Email already in use");
+        } else if (err.message === "timeout") {
+          if (this.dropdownRef.current)
+            this.dropdownRef.current.alertWithType(
+              "error",
+              "Network Error",
+              "The request timed out."
+            );
+        } else {
+          // catch all
+          if (this.dropdownRef.current)
+            this.dropdownRef.current.alertWithType(
+              "error",
+              "Network Error",
+              "The request could not be completed."
+            );
+        }
+        this.setState({ registered: false });
+      }
     }
   };
 
@@ -205,15 +197,17 @@ class RegisterScreen extends React.Component<Props, State> {
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
-          <Input
-            ref={this.cell}
-            parentStyle={Styles.fullWidth}
-            placeholder={"Cell Phone Number"}
-            required
-            validate={Validation.Cell}
-            onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
-          />
+          <View style={{ flexDirection: "row" }}>
+            <Input
+              ref={this.cell}
+              parentStyle={Styles.fullWidth}
+              placeholder={"Cell Phone Number"}
+              required
+              validate={Validation.Cell}
+              onValid={this.updateValid}
+              onInvalid={() => this.setState({ valid: false })}
+            />
+          </View>
           <Input
             ref={this.address1}
             parentStyle={Styles.fullWidth}

@@ -54,7 +54,6 @@ class LoginScreen extends React.Component<Props, State> {
 
   onLogin = async () => {
     Keyboard.dismiss();
-    console.log("login pressed");
     if (this.emailRef.current && this.passwordRef.current) {
       const cred: UserCredentials = {
         email: this.emailRef.current && this.emailRef.current.state.value,
@@ -62,28 +61,22 @@ class LoginScreen extends React.Component<Props, State> {
           this.passwordRef.current && this.passwordRef.current.state.value,
         remember: this.state.remember,
       };
-      await login(cred)
-        .then((data) => {
-          console.log("data received");
-          console.log(data);
-          this.setState({ loggedIn: true });
-        })
-        .catch((err) => {
-          console.log("nope it went wrong");
-          console.log(err.message);
-          if (err.message === "Incorrect credentials") {
-            Alert.alert("Incorrect username or password");
-          } else if (err.message === "timeout") {
-            // time out
-            if (this.dropdownRef.current)
-              this.dropdownRef.current.alertWithType(
-                "error",
-                "Network Error",
-                "The request timed out."
-              );
-          }
-          this.setState({ loggedIn: false });
-        });
+      try {
+        const data = await login(cred);
+        this.setState({ loggedIn: true });
+      } catch (err) {
+        if (err.message === "Incorrect credentials") {
+          Alert.alert("Incorrect username or password");
+        } else if (err.message === "timeout") {
+          if (this.dropdownRef.current)
+            this.dropdownRef.current.alertWithType(
+              "error",
+              "Network Error",
+              "The request timed out."
+            );
+        }
+        this.setState({ loggedIn: false });
+      }
     }
   };
 
@@ -161,7 +154,6 @@ class LoginScreen extends React.Component<Props, State> {
                   reverse
                   onPress={() => {
                     Keyboard.dismiss();
-                    console.log("register pressed");
                     this.props.navigation.navigate("Register");
                   }}
                 />
@@ -171,7 +163,6 @@ class LoginScreen extends React.Component<Props, State> {
                   buttonText="Forgot Your Password?"
                   onPress={() => {
                     Keyboard.dismiss();
-                    console.log("forgot pressed");
                   }}
                 />
                 <View

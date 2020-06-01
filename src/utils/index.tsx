@@ -1,10 +1,12 @@
 import { Dimensions } from "react-native";
 import PropTypes from "prop-types";
+import * as EmailValidator from "email-validator";
+import PhoneNumber from "awesome-phonenumber";
 
 // Global constants
 export const STATUS_BAR_HEIGHT = 20;
 export const STATUS_BAR_WIDTH = 100;
-export const WINDOW_WIDTHr = Dimensions.get("window").width;
+export const WINDOW_WIDTH = Dimensions.get("window").width;
 export const WINDOW_HEIGHT = Dimensions.get("window").height;
 
 /** A custom function to validate the type of an object passed for styling.
@@ -37,13 +39,14 @@ export enum Validation {
 }
 
 export function isValidEmail(email: string) {
-  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  return EmailValidator.validate(email);
 }
 
 export function isValidCell(cell: string) {
-  var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
-  var digits = cell.replace(/\D/g, "");
-  return phoneRe.test(digits);
+  const pn = new PhoneNumber(cell);
+  const pnPlus = new PhoneNumber("+" + cell);
+  const pnPlusUs = new PhoneNumber("+1" + cell);
+  return pn.isValid() || pnPlus.isValid() || pnPlusUs.isValid();
 }
 
 export function isValidPassword(password: string) {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 import { validateFormat, Validation } from "@utils";
-
 import Styles from "./Input.styles";
 
 export interface Props {
@@ -47,7 +46,6 @@ class Input extends React.Component<Props, State> {
       valid: props.validate || props.required ? false : true,
       dirty: false,
     };
-    // initial call to signal validity
     if (this.state.valid) {
       props.onValid();
     } else {

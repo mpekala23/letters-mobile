@@ -37,15 +37,15 @@ describe("Login screen", () => {
     const { element } = setupInstance({
       data: {
         id: "6",
-        firstName: "Mark",
-        lastName: "Pekala",
-        email: "mpekala@college.harvard.edu",
-        cell: "6127038623",
-        addresss1: "210 W Diamond Lake Road",
+        firstName: "Team",
+        lastName: "Ameelio",
+        email: "team@ameelio.org",
+        cell: "4324324432",
+        address1: "Somewhere",
         country: "USA",
-        zipcode: "55419",
-        city: "Minneapolis",
-        state: "MN",
+        zipcode: "12345",
+        city: "New Haven",
+        state: "CT",
       },
       type: "success",
     });
