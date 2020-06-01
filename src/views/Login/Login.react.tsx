@@ -52,6 +52,14 @@ class LoginScreen extends React.Component<Props, State> {
     this.dropdownRef = getDropdownRef();
   }
 
+  devSkip = async () => {
+    if (this.emailRef.current) this.emailRef.current.set("team@ameelio.org");
+    if (this.passwordRef.current) this.passwordRef.current.set("password");
+    setTimeout(() => {
+      this.onLogin();
+    }, 10);
+  };
+
   onLogin = async () => {
     Keyboard.dismiss();
     if (this.emailRef.current && this.passwordRef.current) {
@@ -104,6 +112,7 @@ class LoginScreen extends React.Component<Props, State> {
             >
               <View style={{ width: "100%", height: 60 }} />
               <View style={Styles.loginBackground}>
+                <Button onPress={this.devSkip} buttonText="Dev Skip" />
                 <Input
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}

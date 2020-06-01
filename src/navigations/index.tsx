@@ -6,7 +6,13 @@ import {
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
-import { HomeScreen, LoginScreen, RegisterScreen, SplashScreen } from "@views";
+import {
+  ContactInfoScreen,
+  HomeScreen,
+  LoginScreen,
+  RegisterScreen,
+  SplashScreen,
+} from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
@@ -46,6 +52,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   ) : props.authInfo.isLoggedIn ? (
     <>
+      <Stack.Screen
+        name="ContactInfo"
+        component={ContactInfoScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
