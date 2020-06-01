@@ -2,36 +2,15 @@ import React from "react";
 import { Button } from "@components";
 import { RegisterScreen } from "@views";
 import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import fetchMock from "jest-fetch-mock";
 
-Enzyme.configure({ adapter: new Adapter() });
-jest.useFakeTimers();
-
-const setupShallow = () => {
-  const navigation = { navigate: jest.fn() };
-  const wrapper = shallow(<RegisterScreen navigation={navigation} />);
-  return {
-    wrapper,
-  };
-};
-
-const setupBlankInstance = () => {
+const setup = (response = {}) => {
   const navigation = { navigate: jest.fn() };
   const element = renderer.create(<RegisterScreen navigation={navigation} />);
   const instance = element.getInstance();
-  return {
-    element,
-    instance,
-  };
-};
-
-const setupInstance = (response) => {
-  const navigation = { navigate: jest.fn() };
-  const element = renderer.create(<RegisterScreen navigation={navigation} />);
-  const instance = element.getInstance();
-  fetchMock.mockOnce(JSON.stringify(response));
+  if (Object.keys(response).length > 0) {
+    fetchMock.mockOnce(JSON.stringify(response));
+  }
   return {
     element,
     instance,
@@ -39,31 +18,32 @@ const setupInstance = (response) => {
 };
 
 describe("Register screen", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should render", () => {
+    const { element } = setup();
+    const tree = element.toJSON();
+    expect(tree).toMatchSnapshot();
   });
-  test("register disabled until all fields valid", async () => {
-    const { element } = setupBlankInstance();
+  it("should have register button be disabled until all fields are valid", async () => {
+    const { element, instance } = setup();
     const registerScreen = element.root;
     const registerButton = registerScreen.findAllByType(Button)[2];
     expect(registerButton.props.enabled).toBe(false);
-    registerScreen._fiber.stateNode.devSkip();
+    instance.devSkip();
     expect(registerButton.props.enabled).toBe(true);
   });
-  test("error registration", async () => {
-    const { element } = setupInstance({
+  it("should give an error and not submit on bad register", async () => {
+    const { element, instance } = setup({
       type: "error",
       data: "email in use",
     });
     const registerScreen = element.root;
     const registerButton = registerScreen.findAllByType(Button)[2];
-    registerScreen._fiber.stateNode.devSkip();
+    instance.devSkip();
     await registerButton.props.onPress();
-    expect(registerScreen._fiber.stateNode.state.registered).toBe(false);
+    expect(instance.state.registered).toBe(false);
   });
-  test("successful registration", async () => {
-    const { element } = setupInstance({
+  it("should successfully register a new user on good register", async () => {
+    const { element, instance } = setup({
       data: {
         id: "6",
         firstName: "Mark",
@@ -80,7 +60,7 @@ describe("Register screen", () => {
     });
     const registerScreen = element.root;
     const registerButton = registerScreen.findAllByType(Button)[2];
-    registerScreen._fiber.stateNode.devSkip();
+    instance.devSkip();
     await registerButton.props.onPress();
     expect(registerScreen._fiber.stateNode.state.registered).toBe(true);
   });

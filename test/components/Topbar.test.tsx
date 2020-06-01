@@ -1,22 +1,52 @@
 import React from "react";
-import { Topbar } from "@components";
+import { ProfilePic } from "@components";
 import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 
-Enzyme.configure({ adapter: new Adapter() });
+const mockStore = configureStore([]);
 
-const setupShallow = () => {
-  const wrapper = shallow(<Topbar />);
+const setup = () => {
+  const authInfo = {
+    isLoadingToken: true,
+    isLoggedIn: false,
+    userToken: "",
+  };
+  const user = {
+    id: "6",
+    firstName: "Team",
+    lastName: "Ameelio",
+    email: "team@ameelio.org",
+    cell: "4324324432",
+    address1: "Somewhere",
+    country: "USA",
+    zipcode: "12345",
+    city: "New Haven",
+    state: "CT",
+  };
+  const store = mockStore({
+    user: {
+      authInfo,
+      user,
+    },
+  });
+
+  const element = renderer.create(
+    <Provider store={store}>
+      <ProfilePic />
+    </Provider>
+  );
 
   return {
-    wrapper,
+    store,
+    element,
   };
 };
 
 describe("Topbar component", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should render", () => {
+    const { element } = setup();
+    const tree = element.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

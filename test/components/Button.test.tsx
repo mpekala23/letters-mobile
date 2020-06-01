@@ -1,31 +1,10 @@
 import React from "react";
 import { Button } from "@components";
 import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import { Text, TouchableOpacity } from "react-native";
 import { Colors } from "@styles";
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const setupShallow = (propOverrides) => {
-  const props = Object.assign(
-    {
-      onPress: jest.fn(),
-      buttonText: "press me",
-    },
-    propOverrides
-  );
-
-  const wrapper = shallow(<Button {...props} />);
-
-  return {
-    props,
-    wrapper,
-  };
-};
-
-const setupInstance = (propOverrides) => {
+const setup = (propOverrides = {}) => {
   const props = Object.assign(
     {
       onPress: jest.fn(),
@@ -43,14 +22,15 @@ const setupInstance = (propOverrides) => {
 };
 
 describe("Button component", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should render", () => {
+    const { element } = setup();
+    const tree = element.toJSON();
+    expect(tree).toMatchSnapshot();
   });
-  test("style props implemented correctly when enabled", () => {
+  it("should implement style props when enabled", () => {
     const containerStyle = { backgroundColor: "green" };
     const textStyle = { color: "red" };
-    const { element } = setupInstance({
+    const { element } = setup({
       containerStyle: containerStyle,
       textStyle: textStyle,
     });
@@ -60,18 +40,18 @@ describe("Button component", () => {
     expect(touchable.props.style[2]).toEqual(containerStyle);
     expect(text.props.style[2]).toEqual(textStyle);
   });
-  test("style props implemented correctly when reverse", () => {
-    const { element } = setupInstance({
+  it("should implement a reverse style", () => {
+    const { element } = setup({
       reverse: true,
     });
     const input = element.root;
     const text = input.findByType(Text);
     expect(text.props.style[0].color).toEqual(Colors.AMEELIO_BLUE);
   });
-  test("style props implemented correctly when disabled", () => {
+  it("should implement a disabled style", () => {
     const disabledContainerStyle = { backgroundColor: "green" };
     const disabledTextStyle = { color: "red" };
-    const { element } = setupInstance({
+    const { element } = setup({
       disabledContainerStyle: disabledContainerStyle,
       disabledTextStyle: disabledTextStyle,
       enabled: false,
@@ -82,9 +62,9 @@ describe("Button component", () => {
     expect(touchable.props.style[3]).toEqual(disabledContainerStyle);
     expect(text.props.style[3]).toEqual(disabledTextStyle);
   });
-  test("style props implemented correctly when link", () => {
+  it("should implement a link style", () => {
     const containerStyle = { backgroundColor: "green" };
-    const { element } = setupInstance({
+    const { element } = setup({
       containerStyle: containerStyle,
       link: true,
     });
@@ -93,8 +73,8 @@ describe("Button component", () => {
     const text = input.findByType(Text);
     expect(touchable.props.style).toEqual(containerStyle);
   });
-  test("onPress works when enabled", () => {
-    const { element } = setupInstance({
+  it("should have a functioning onPress when enabled", () => {
+    const { element } = setup({
       enabled: true,
     });
     const input = element.root;
@@ -102,8 +82,8 @@ describe("Button component", () => {
     touchable.props.onPress();
     expect(input.props.onPress).toHaveBeenCalledTimes(1);
   });
-  test("onPress doesn't work when disabled", () => {
-    const { element } = setupInstance({
+  it("should not have a functioning onPress when disabled", () => {
+    const { element } = setup({
       enabled: false,
     });
     const input = element.root;

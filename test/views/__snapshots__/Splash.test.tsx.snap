@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`splash screen displays whole screen 1`] = `
+exports[`Splash screen should render 1`] = `
 <View
   style={
     Object {

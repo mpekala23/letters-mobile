@@ -2,26 +2,15 @@ import React from "react";
 import { Button } from "@components";
 import { LoginScreen } from "@views";
 import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import fetchMock from "jest-fetch-mock";
 
-Enzyme.configure({ adapter: new Adapter() });
-jest.useFakeTimers();
-
-const setupShallow = () => {
-  const navigation = { navigate: jest.fn() };
-  const wrapper = shallow(<LoginScreen navigation={navigation} />);
-  return {
-    wrapper,
-  };
-};
-
-const setupInstance = (response) => {
+const setup = (response = {}) => {
   const navigation = { navigate: jest.fn() };
   const element = renderer.create(<LoginScreen navigation={navigation} />);
   const instance = element.getInstance();
-  fetchMock.mockOnce(JSON.stringify(response));
+  if (Object.keys(response).length > 0) {
+    fetchMock.mockOnce(JSON.stringify(response));
+  }
   return {
     element,
     instance,
@@ -29,12 +18,13 @@ const setupInstance = (response) => {
 };
 
 describe("Login screen", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should render", () => {
+    const { element } = setup();
+    const tree = element.toJSON();
+    expect(tree).toMatchSnapshot();
   });
-  test("makes successfully api call on successful login press", async () => {
-    const { element } = setupInstance({
+  it("should successfully make an api call on good login", async () => {
+    const { element, instance } = setup({
       data: {
         id: "6",
         firstName: "Team",
@@ -52,10 +42,10 @@ describe("Login screen", () => {
     const login = element.root;
     const loginButton = login.findAllByType(Button)[0];
     await loginButton.props.onPress();
-    expect(login._fiber.stateNode.state.loggedIn).toBe(true);
+    expect(instance.state.loggedIn).toBe(true);
   });
-  test("makes failure api call on failure login press", async () => {
-    const { element } = setupInstance({
+  it("should fail an api call on bad login", async () => {
+    const { element } = setup({
       data: "bad",
       type: "error",
     });

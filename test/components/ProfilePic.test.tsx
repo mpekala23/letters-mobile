@@ -1,59 +1,13 @@
 import React from "react";
 import { ProfilePic } from "@components";
 import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { UserState } from "@store/User/UserTypes";
-import { Colors } from "@styles";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
-Enzyme.configure({ adapter: new Adapter() });
-
 const mockStore = configureStore([]);
 
-const setupShallow = (authOverrides) => {
-  const authInfo = Object.assign(
-    {
-      isLoadingToken: true,
-      isLoggedIn: false,
-      userToken: "",
-    },
-    authOverrides
-  );
-  const store = mockStore({
-    userState: {
-      authInfo,
-      user: {
-        id: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        cell: "",
-        address1: "",
-        address2: "",
-        country: "",
-        zipcode: "",
-        city: "",
-        state: "",
-      },
-    },
-  });
-
-  const wrapper = shallow(
-    <Provider store={store}>
-      <ProfilePic />
-    </Provider>
-  );
-
-  return {
-    store,
-    wrapper,
-  };
-};
-
-const setupInstance = (authOverrides, userOverrides) => {
+const setup = (authOverrides = {}, userOverrides = {}) => {
   const authInfo = Object.assign(
     {
       isLoadingToken: true,
@@ -89,35 +43,34 @@ const setupInstance = (authOverrides, userOverrides) => {
       <ProfilePic />
     </Provider>
   );
-  const instance = element.getInstance();
 
   return {
     store,
     element,
-    instance,
   };
 };
 
 describe("ProfilePic component", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should render", () => {
+    const { element } = setup();
+    const tree = element.toJSON();
+    expect(tree).toMatchSnapshot();
   });
-  test("blank when user is logged out", () => {
-    const { element, store } = setupInstance();
+  it("should be blank when user is logged out", () => {
+    const { element } = setup();
     const profilePic = element.root;
     const view = profilePic.findByType(View);
     expect(view).toBeDefined();
   });
-  test("initials when user is logged in without picture", () => {
-    const { element, store } = setupInstance({ isLoggedIn: true });
+  it("should display initials when a user is logged in without a profile picture", () => {
+    const { element } = setup({ isLoggedIn: true });
     const profilePic = element.root;
     const text = profilePic.findByType(Text);
     expect(text).toBeDefined();
     expect(text.props.children).toEqual("TA");
   });
-  test("image when user is logged in with picture", () => {
-    const { element, store } = setupInstance(
+  it("should show an image when a user is logged in with a profile picture", () => {
+    const { element } = setup(
       {
         isLoggedIn: true,
       },

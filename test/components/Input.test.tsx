@@ -25,7 +25,7 @@ const setup = (propOverrides = {}) => {
 };
 
 describe("Input component", () => {
-  it("should render correctly", () => {
+  it("should render", () => {
     const { element } = setup();
     const tree = element.toJSON();
     expect(tree).toMatchSnapshot();
