@@ -60,6 +60,7 @@ class PicUpload extends React.Component<Props, State> {
       <TouchableOpacity
         style={Styles.shapeBackground}
         onPress={this._pickImage}
+        testID="clickable"
       >
         {image && (
           <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />

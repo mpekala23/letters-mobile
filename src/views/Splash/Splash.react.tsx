@@ -15,6 +15,7 @@ const SplashScreen: React.FC = () => {
       <Image
         style={{ height: 120, aspectRatio: 2015 / 885 }}
         source={AmeelioLogo}
+        accessibilityLabel="AmeelioLogo"
       />
     </View>
   );

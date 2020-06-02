@@ -1,30 +1,29 @@
 import React from "react";
-import { Button } from "@components";
 import { LoginScreen } from "@views";
-import renderer from "react-test-renderer";
+import { login } from "@api";
+import { render, fireEvent, toJSON } from "@testing-library/react-native";
 import fetchMock from "jest-fetch-mock";
+
+jest.mock("@api", () => ({
+  login: jest.fn(),
+}));
 
 const setup = (response = {}) => {
   const navigation = { navigate: jest.fn() };
-  const element = renderer.create(<LoginScreen navigation={navigation} />);
-  const instance = element.getInstance();
   if (Object.keys(response).length > 0) {
     fetchMock.mockOnce(JSON.stringify(response));
   }
-  return {
-    element,
-    instance,
-  };
+  return render(<LoginScreen navigation={navigation} />);
 };
 
 describe("Login screen", () => {
-  it("should render", () => {
-    const { element } = setup();
-    const tree = element.toJSON();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
-  it("should successfully make an api call on good login", async () => {
-    const { element, instance } = setup({
+  it("should make an api call on login", async () => {
+    const { getByText, getByTestId } = setup({
       data: {
         id: "6",
         firstName: "Team",
@@ -39,19 +38,8 @@ describe("Login screen", () => {
       },
       type: "success",
     });
-    const login = element.root;
-    const loginButton = login.findAllByType(Button)[0];
-    await loginButton.props.onPress();
-    //expect(instance.state.loggedIn).toBe(true);
-  });
-  it("should fail an api call on bad login", async () => {
-    const { element } = setup({
-      data: "bad",
-      type: "error",
-    });
-    const login = element.root;
-    const loginButton = login.findAllByType(Button)[0];
-    await loginButton.props.onPress();
-    //expect(login._fiber.stateNode.state.loggedIn).toBe(false);
+    const loginButton = getByText("Login");
+    fireEvent.press(getByText("Login"));
+    expect(login).toHaveBeenCalledTimes(1);
   });
 });

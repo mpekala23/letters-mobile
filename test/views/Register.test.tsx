@@ -1,67 +1,50 @@
 import React from "react";
-import { Button } from "@components";
 import { RegisterScreen } from "@views";
-import renderer from "react-test-renderer";
+import { register } from "@api";
+import {
+  render,
+  fireEvent,
+  toJSON,
+  getByPlaceholderText,
+} from "@testing-library/react-native";
 import fetchMock from "jest-fetch-mock";
+
+jest.mock("@api", () => ({
+  register: jest.fn(),
+}));
 
 const setup = (response = {}) => {
   const navigation = { navigate: jest.fn() };
-  const element = renderer.create(<RegisterScreen navigation={navigation} />);
-  const instance = element.getInstance();
   if (Object.keys(response).length > 0) {
     fetchMock.mockOnce(JSON.stringify(response));
   }
-  return {
-    element,
-    instance,
-  };
+  return render(<RegisterScreen navigation={navigation} />);
 };
 
 describe("Register screen", () => {
-  it("should render", () => {
-    const { element } = setup();
-    const tree = element.toJSON();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
   it("should have register button be disabled until all fields are valid", async () => {
-    const { element, instance } = setup();
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    expect(registerButton.props.enabled).toBe(false);
-    instance.devSkip();
-    expect(registerButton.props.enabled).toBe(true);
-  });
-  it("should give an error and not submit on bad register", async () => {
-    const { element, instance } = setup({
-      type: "error",
-      data: "email in use",
-    });
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    instance.devSkip();
-    await registerButton.props.onPress();
-    //expect(instance.state.registered).toBe(false);
-  });
-  it("should successfully register a new user on good register", async () => {
-    const { element, instance } = setup({
-      data: {
-        id: "6",
-        firstName: "Mark",
-        lastName: "Pekala",
-        email: "mpekala@college.harvard.edu",
-        cell: "6127038623",
-        addresss1: "210 W Diamond Lake Road",
-        country: "USA",
-        zipcode: "55419",
-        city: "Minneapolis",
-        state: "MN",
-      },
-      type: "success",
-    });
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    instance.devSkip();
-    await registerButton.props.onPress();
-    //expect(instance.state.registered).toBe(true);
+    const { getByPlaceholderText, getByText } = setup();
+    fireEvent.press(getByText("Register"));
+    expect(register).toHaveBeenCalledTimes(0);
+    fireEvent.changeText(getByPlaceholderText("First Name"), "Team");
+    fireEvent.changeText(getByPlaceholderText("Last Name"), "Ameelio");
+    fireEvent.changeText(
+      getByPlaceholderText("Cell Phone Number"),
+      "4324324432"
+    );
+    fireEvent.changeText(getByPlaceholderText("Address Line 1"), "Address");
+    fireEvent.changeText(getByPlaceholderText("Country"), "USA");
+    fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
+    fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
+    fireEvent.changeText(getByPlaceholderText("State"), "CT");
+    fireEvent.changeText(getByPlaceholderText("Email"), "team@ameelio.org");
+    fireEvent.changeText(getByPlaceholderText("Password"), "GoodPassword1");
+    fireEvent.press(getByText("Register"));
+    expect(register).toHaveBeenCalledTimes(1);
   });
 });

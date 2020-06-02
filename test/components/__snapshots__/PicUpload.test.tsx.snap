@@ -1,17 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PicUpload component should render 1`] = `
-<TouchableOpacity
-  activeOpacity={0.2}
-  onPress={[Function]}
+exports[`PicUpload component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
   style={
     Object {
-      "backgroundColor": "#3490dc",
-      "borderRadius": 50,
-      "height": 100,
-      "overflow": "hidden",
-      "width": 100,
+      "flex": 1,
     }
   }
-/>
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    style={
+      Object {
+        "backgroundColor": "#3490dc",
+        "borderRadius": 50,
+        "height": 100,
+        "overflow": "hidden",
+        "width": 100,
+      }
+    }
+    testID="clickable"
+  />
+</View>
 `;

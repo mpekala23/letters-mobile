@@ -1,7 +1,6 @@
 import React from "react";
 import { ProfilePic } from "@components";
-import renderer from "react-test-renderer";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { render, toJSON } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -38,46 +37,36 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     },
   });
 
-  const element = renderer.create(
-    <Provider store={store}>
-      <ProfilePic />
-    </Provider>
-  );
+  const StoreProvider = ({ children }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
 
   return {
-    store,
-    element,
+    ...render(<ProfilePic />, { wrapper: StoreProvider }),
   };
 };
 
 describe("ProfilePic component", () => {
-  it("should render", () => {
-    const { element } = setup();
-    const tree = element.toJSON();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
   it("should be blank when user is logged out", () => {
-    const { element } = setup();
-    const profilePic = element.root;
-    const view = profilePic.findByType(View);
-    expect(view).toBeDefined();
+    const { getByTestId } = setup();
+    expect(getByTestId("blank").children.length).toBe(0);
   });
   it("should display initials when a user is logged in without a profile picture", () => {
-    const { element } = setup({ isLoggedIn: true });
-    const profilePic = element.root;
-    const text = profilePic.findByType(Text);
-    expect(text).toBeDefined();
-    expect(text.props.children).toEqual("TA");
+    const { getAllByText } = setup({ isLoggedIn: true });
+    expect(getAllByText("TA").length).toBe(1);
   });
   it("should show an image when a user is logged in with a profile picture", () => {
-    const { element } = setup(
+    const { getByLabelText } = setup(
       {
         isLoggedIn: true,
       },
       { imageUri: "placeholder" }
     );
-    const profilePic = element.root;
-    const image = profilePic.findByType(Image);
-    expect(image).toBeDefined();
+    expect(getByLabelText("ProfilePicture")).toBeDefined();
   });
 });

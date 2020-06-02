@@ -98,7 +98,7 @@ class Input extends React.Component<Props, State> {
       required,
     } = this.props;
     return (
-      <View style={[Styles.parentStyle, parentStyle]}>
+      <View style={[Styles.parentStyle, parentStyle]} testID="parent">
         <ScrollView
           keyboardShouldPersistTaps="never"
           scrollEnabled={false}

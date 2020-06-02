@@ -1,24 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Splash screen should render 1`] = `
+exports[`Splash screen should match snapshot 1`] = `
 <View
+  collapsable={true}
+  pointerEvents="box-none"
   style={
     Object {
-      "alignItems": "center",
-      "backgroundColor": "white",
       "flex": 1,
-      "justifyContent": "center",
     }
   }
 >
-  <Image
-    source={1}
+  <View
     style={
       Object {
-        "aspectRatio": 2.2768361581920904,
-        "height": 120,
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "justifyContent": "center",
       }
     }
-  />
+  >
+    <Image
+      accessibilityLabel="AmeelioLogo"
+      source={1}
+      style={
+        Object {
+          "aspectRatio": 2.2768361581920904,
+          "height": 120,
+        }
+      }
+    />
+  </View>
 </View>
 `;

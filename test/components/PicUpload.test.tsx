@@ -1,27 +1,20 @@
 import React from "react";
 import { PicUpload } from "@components";
-import renderer from "react-test-renderer";
+import { render, toJSON } from "@testing-library/react-native";
 import { Image, TouchableOpacity } from "react-native";
 
 const setup = () => {
-  const element = renderer.create(<PicUpload />);
-  return {
-    element,
-  };
+  return render(<PicUpload />);
 };
 
 describe("PicUpload component", () => {
-  it("should render", () => {
-    const { element } = setup();
-    const tree = element.toJSON();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
   it("should display blank with no image", () => {
-    const { element } = setup();
-    const picUpload = element.root;
-    const touchable = picUpload.findByType(TouchableOpacity);
-    expect(touchable).toBeDefined();
-    const image = picUpload.findAllByType(Image);
-    expect(image.length).toBe(0);
+    const { getByTestId } = setup();
+    expect(getByTestId("clickable").children.length).toBe(0);
   });
 });

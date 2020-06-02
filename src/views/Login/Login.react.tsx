@@ -75,6 +75,7 @@ class LoginScreen extends React.Component<Props, State> {
               "The request timed out."
             );
         }
+        console.log("here");
         this.setState({ loggedIn: false });
       }
     }

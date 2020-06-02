@@ -1,20 +1,18 @@
 import React from "react";
 import { Dropdown } from "@components";
 import renderer from "react-test-renderer";
+import { render, toJSON } from "@testing-library/react-native";
 
 const setup = () => {
-  const element = renderer.create(<Dropdown />);
-  const instance = element.getInstance();
   return {
-    element,
-    instance,
+    ...render(<Dropdown />),
   };
 };
 
 describe("Dropdown component", () => {
-  it("should render", () => {
-    const { element } = setup();
-    const tree = element.toJSON();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 });
