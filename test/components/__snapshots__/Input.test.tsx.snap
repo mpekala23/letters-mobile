@@ -12,7 +12,7 @@ exports[`Input component should render 1`] = `
     ]
   }
 >
-  <RCTScrollView
+  <ScrollView
     keyboardShouldPersistTaps="never"
     scrollEnabled={false}
     style={
@@ -22,34 +22,32 @@ exports[`Input component should render 1`] = `
       ]
     }
   >
-    <View>
-      <TextInput
-        allowFontScaling={true}
-        onBlur={[Function]}
-        onChangeText={[Function]}
-        onFocus={[Function]}
-        placeholder=""
-        rejectResponderTermination={true}
-        secureTextEntry={false}
-        style={
-          Array [
-            Object {
-              "borderColor": "#282828",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "color": "#282828",
-              "flex": 1,
-              "fontSize": 18,
-              "height": 50,
-              "padding": 10,
-            },
-            Object {},
-          ]
-        }
-        underlineColorAndroid="transparent"
-        value=""
-      />
-    </View>
-  </RCTScrollView>
+    <TextInput
+      allowFontScaling={true}
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholder=""
+      rejectResponderTermination={true}
+      secureTextEntry={false}
+      style={
+        Array [
+          Object {
+            "borderColor": "#282828",
+            "borderRadius": 4,
+            "borderWidth": 2,
+            "color": "#282828",
+            "flex": 1,
+            "fontSize": 18,
+            "height": 50,
+            "padding": 10,
+          },
+          Object {},
+        ]
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </ScrollView>
 </View>
 `;

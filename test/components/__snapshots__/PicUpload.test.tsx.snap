@@ -1,23 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PicUpload component should render 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
   style={
     Object {
       "backgroundColor": "#3490dc",
       "borderRadius": 50,
       "height": 100,
-      "opacity": 1,
       "overflow": "hidden",
       "width": 100,
     }

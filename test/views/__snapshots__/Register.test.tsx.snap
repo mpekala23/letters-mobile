@@ -17,7 +17,7 @@ exports[`Register screen should render 1`] = `
     ]
   }
 >
-  <RCTScrollView
+  <ScrollView
     contentContainerStyle={
       Object {
         "alignItems": "center",
@@ -33,138 +33,113 @@ exports[`Register screen should render 1`] = `
       }
     }
   >
-    <View>
-      <View
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "marginBottom": 20,
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "column",
-            "justifyContent": "center",
-            "marginBottom": 20,
+            "backgroundColor": "#3490dc",
+            "borderRadius": 50,
+            "height": 100,
+            "overflow": "hidden",
+            "width": 100,
           }
         }
-      >
-        <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
+      />
+      <Text
+        style={
+          Array [
             Object {
-              "backgroundColor": "#3490dc",
-              "borderRadius": 50,
-              "height": 100,
-              "opacity": 1,
-              "overflow": "hidden",
-              "width": 100,
-            }
-          }
-        />
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "System",
-                "fontStyle": "italic",
-                "fontWeight": "400",
-              },
-              Object {
-                "marginTop": 5,
-              },
-            ]
-          }
-        >
-          Click to upload profile image.
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#D0E5FD",
-            "borderColor": "#BEDAFC",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginBottom": 15,
-            "padding": 10,
-            "width": "100%",
-          }
+              "fontFamily": "System",
+              "fontStyle": "italic",
+              "fontWeight": "400",
+            },
+            Object {
+              "marginTop": 5,
+            },
+          ]
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "System",
-                "fontWeight": "600",
-              },
-              Object {
-                "color": "#124181",
-                "fontSize": 18,
-                "fontWeight": "400",
-              },
-            ]
-          }
-        >
-          We value your privacy. We will only use your address information as the return address for the mailed letter.
-        </Text>
-      </View>
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        Click to upload profile image.
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#D0E5FD",
+          "borderColor": "#BEDAFC",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 15,
+          "padding": 10,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
         style={
-          Object {
-            "marginBottom": 10,
-            "opacity": 1,
-          }
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "color": "#124181",
+              "fontSize": 18,
+              "fontWeight": "400",
+            },
+          ]
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "System",
-                "fontSize": 16,
-                "fontWeight": "400",
-              },
-              Object {
-                "color": "#3490dc",
-                "textDecorationLine": "underline",
-              },
-            ]
-          }
-        >
-          Already have an account?
-        </Text>
-      </View>
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        We value your privacy. We will only use your address information as the return address for the mailed letter.
+      </Text>
+    </View>
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+      testID="clickable"
+    >
+      <Text
         style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "400",
+            },
+            Object {
+              "color": "#3490dc",
+              "textDecorationLine": "underline",
+            },
+          ]
+        }
+      >
+        Already have an account?
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={[Function]}
+      style={
+        Array [
           Object {
             "alignItems": "center",
             "backgroundColor": "#3490dc",
@@ -172,631 +147,614 @@ exports[`Register screen should render 1`] = `
             "flexDirection": "row",
             "justifyContent": "center",
             "marginVertical": 5,
-            "opacity": 1,
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {},
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          Dev Skip
-        </Text>
-      </View>
-      <View
+          },
+          Object {},
+          Object {},
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
         style={
           Array [
             Object {
-              "height": 50,
-              "marginVertical": 5,
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
             },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
-          style={
-            Array [
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="First Name"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
-        }
-      >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
-          style={
-            Array [
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Last Name"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
+        Dev Skip
+      </Text>
+    </TouchableOpacity>
+    <View
+      style={
+        Array [
           Object {
-            "flexDirection": "row",
-          }
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
         }
       >
-        <View
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="First Name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
                 "height": 50,
-                "marginVertical": 5,
+                "padding": 10,
               },
+              Object {},
+            ]
+          }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Last Name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
+          style={
+            Array [
               Object {
-                "width": "100%",
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
               },
+              Object {},
+            ]
+          }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "height": 50,
+              "marginVertical": 5,
+            },
+            Object {
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <ScrollView
+          keyboardShouldPersistTaps="never"
+          scrollEnabled={false}
+          style={
+            Array [
+              Object {},
+              Object {},
             ]
           }
         >
-          <RCTScrollView
-            keyboardShouldPersistTaps="never"
-            scrollEnabled={false}
+          <TextInput
+            allowFontScaling={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            placeholder="Cell Phone Number"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
             style={
               Array [
-                Object {},
+                Object {
+                  "borderColor": "#282828",
+                  "borderRadius": 4,
+                  "borderWidth": 2,
+                  "color": "#282828",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "height": 50,
+                  "padding": 10,
+                },
                 Object {},
               ]
             }
-          >
-            <View>
-              <TextInput
-                allowFontScaling={true}
-                onBlur={[Function]}
-                onChangeText={[Function]}
-                onFocus={[Function]}
-                placeholder="Cell Phone Number"
-                rejectResponderTermination={true}
-                secureTextEntry={false}
-                style={
-                  Array [
-                    Object {
-                      "borderColor": "#282828",
-                      "borderRadius": 4,
-                      "borderWidth": 2,
-                      "color": "#282828",
-                      "flex": 1,
-                      "fontSize": 18,
-                      "height": 50,
-                      "padding": 10,
-                    },
-                    Object {},
-                  ]
-                }
-                underlineColorAndroid="transparent"
-                value=""
-              />
-            </View>
-          </RCTScrollView>
-        </View>
+            underlineColorAndroid="transparent"
+            value=""
+          />
+        </ScrollView>
       </View>
-      <View
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Address Line 1"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Address Line 1"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Address Line 2"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Address Line 2"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Country"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Country"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Zip Code"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Zip Code"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="City"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="City"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="State"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="State"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Email"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Email"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "height": 50,
+            "marginVertical": 5,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="never"
+        scrollEnabled={false}
         style={
           Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
+            Object {},
+            Object {},
           ]
         }
       >
-        <RCTScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Password"
+          rejectResponderTermination={true}
+          secureTextEntry={true}
           style={
             Array [
-              Object {},
+              Object {
+                "borderColor": "#282828",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "color": "#282828",
+                "flex": 1,
+                "fontSize": 18,
+                "height": 50,
+                "padding": 10,
+              },
               Object {},
             ]
           }
-        >
-          <View>
-            <TextInput
-              allowFontScaling={true}
-              onBlur={[Function]}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Password"
-              rejectResponderTermination={true}
-              secureTextEntry={true}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "#282828",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "color": "#282828",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "height": 50,
-                    "padding": 10,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </ScrollView>
+    </View>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3490dc",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
           Object {
             "alignItems": "center",
             "backgroundColor": "grey",
@@ -804,35 +762,38 @@ exports[`Register screen should render 1`] = `
             "flexDirection": "row",
             "justifyContent": "center",
             "marginVertical": 5,
-            "opacity": 1,
+          },
+          Object {
             "width": "100%",
-          }
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+          ]
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          Register
-        </Text>
-      </View>
-    </View>
-  </RCTScrollView>
+        Register
+      </Text>
+    </TouchableOpacity>
+  </ScrollView>
 </View>
 `;

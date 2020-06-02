@@ -1,45 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button component should render 1`] = `
+exports[`Button component should match snapshot 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  collapsable={true}
+  pointerEvents="box-none"
   style={
     Object {
-      "alignItems": "center",
-      "backgroundColor": "#3490dc",
-      "borderRadius": 4,
-      "flexDirection": "row",
-      "justifyContent": "center",
-      "marginVertical": 5,
-      "opacity": 1,
+      "flex": 1,
     }
   }
 >
-  <Text
+  <TouchableOpacity
+    activeOpacity={0.7}
     style={
       Array [
         Object {
-          "color": "white",
-          "fontSize": 20,
-          "fontWeight": "700",
-          "padding": 6,
+          "alignItems": "center",
+          "backgroundColor": "#3490dc",
+          "borderRadius": 4,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginVertical": 5,
         },
         Object {},
         Object {},
         Object {},
       ]
     }
+    testID="clickable"
   >
-    press me
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 20,
+            "fontWeight": "700",
+            "padding": 6,
+          },
+          Object {},
+          Object {},
+          Object {},
+        ]
+      }
+    >
+      press me
+    </Text>
+  </TouchableOpacity>
 </View>
 `;
