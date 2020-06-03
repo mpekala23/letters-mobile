@@ -27,6 +27,6 @@
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
 * Version used:
-* Environment name and version (e.g. Node 12.18.0, npm 6.14.5, Expo ):
+* Environment name and version (e.g. Node 12.18.0, npm 6.14.5, Expo SDK 37):
 * Operating System and version:
 * Link to your project:
