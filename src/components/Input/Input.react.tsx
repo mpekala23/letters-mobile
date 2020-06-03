@@ -25,7 +25,7 @@ export interface Props {
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
-  options: string[];
+  options: string[] | string[][];
 }
 
 export interface State {
@@ -66,6 +66,7 @@ class Input extends React.Component<Props, State> {
     }
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.getFilteredOptions = this.getFilteredOptions.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
   }
 
@@ -106,7 +107,7 @@ class Input extends React.Component<Props, State> {
     if (this.props.options.length > 0) {
       Animated.timing(this.state.dropHeight, {
         toValue: DROP_HEIGHT,
-        duration: 200,
+        duration: 500,
         useNativeDriver: false,
       }).start();
     }
@@ -121,33 +122,63 @@ class Input extends React.Component<Props, State> {
     if (this.props.options.length > 0) {
       Animated.timing(this.state.dropHeight, {
         toValue: INPUT_HEIGHT,
-        duration: 200,
+        duration: 300,
         useNativeDriver: false,
       }).start();
     }
     this.props.onBlur();
   }
 
+  getFilteredOptions(): string[] {
+    const value = this.state.value;
+    const options = this.props.options;
+    let results: string[] = [];
+    for (let ix = 0; ix < options.length; ++ix) {
+      const option: string | string[] = options[ix];
+      if (typeof option === "string") {
+        // simple options, just a list of strings
+        if (
+          option.toLowerCase().substring(0, value.length) ===
+          value.toLowerCase()
+        ) {
+          results.push(option);
+        }
+      } else {
+        // complex options, a list of list of strings, first string in each list will be shown and chose,
+        // the rest are additional matches to autocomplete
+        for (let jx = 0; jx < option.length; ++jx) {
+          const match: string = option[jx];
+          if (
+            match.toLowerCase().substring(0, value.length) ===
+            value.toLowerCase()
+          ) {
+            results.push(option[0]);
+            break;
+          }
+        }
+      }
+    }
+    return results;
+  }
+
   renderOptions() {
+    const results = this.getFilteredOptions();
     return this.state.focused ? (
       <ScrollView
         style={Styles.optionScroll}
         keyboardShouldPersistTaps="always"
       >
-        {this.props.options?.map((option) => {
-          return this.state.value.toLowerCase() ===
-            option.toLowerCase().substring(0, this.state.value.length) ? (
+        {results.map((result: string) => {
+          return (
             <TouchableOpacity
               style={Styles.optionContainer}
               onPress={() => {
-                this.set(option);
+                this.set(result);
                 Keyboard.dismiss();
               }}
             >
-              <Text style={Typography.FONT_REGULAR}>{option}</Text>
+              <Text style={Typography.FONT_REGULAR}>{result}</Text>
             </TouchableOpacity>
-          ) : (
-            <View />
           );
         })}
       </ScrollView>

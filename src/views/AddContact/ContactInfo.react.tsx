@@ -103,6 +103,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                 <Input
                   parentStyle={Styles.fullWidth}
                   placeholder="State"
+                  options={["Minnesota", "California", "Massachusetts"]}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
