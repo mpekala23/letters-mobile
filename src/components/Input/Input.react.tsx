@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, TextInput, View } from "react-native";
+import {
+  Animated,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Text,
+  Keyboard,
+} from "react-native";
 import PropTypes from "prop-types";
 import { validateFormat, Validation } from "@utils";
-import Styles from "./Input.styles";
+import Styles, { INPUT_HEIGHT, DROP_HEIGHT } from "./Input.styles";
+import { Typography } from "styles";
 
 export interface Props {
   parentStyle?: object;
@@ -16,6 +25,7 @@ export interface Props {
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
+  options: string[];
 }
 
 export interface State {
@@ -23,6 +33,7 @@ export interface State {
   focused: boolean;
   valid: boolean;
   dirty: boolean;
+  dropHeight: Animated.Value;
 }
 
 class Input extends React.Component<Props, State> {
@@ -36,6 +47,7 @@ class Input extends React.Component<Props, State> {
     onValid: () => {},
     onInvalid: () => {},
     secure: false,
+    options: [],
   };
 
   constructor(props: Props) {
@@ -45,12 +57,16 @@ class Input extends React.Component<Props, State> {
       focused: false,
       valid: props.validate || props.required ? false : true,
       dirty: false,
+      dropHeight: new Animated.Value(INPUT_HEIGHT),
     };
     if (this.state.valid) {
       props.onValid();
     } else {
       props.onInvalid();
     }
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
   }
 
   set = (newValue: string) => {
@@ -85,10 +101,63 @@ class Input extends React.Component<Props, State> {
     );
   };
 
+  onFocus() {
+    this.setState({ focused: true, dirty: true });
+    if (this.props.options.length > 0) {
+      Animated.timing(this.state.dropHeight, {
+        toValue: DROP_HEIGHT,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+    }
+    this.props.onFocus();
+  }
+
+  onBlur() {
+    this.setState({ focused: false });
+    if (this.props.validate || this.props.required) {
+      this.doValidate();
+    }
+    if (this.props.options.length > 0) {
+      Animated.timing(this.state.dropHeight, {
+        toValue: INPUT_HEIGHT,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+    }
+    this.props.onBlur();
+  }
+
+  renderOptions() {
+    return this.state.focused ? (
+      <ScrollView
+        style={Styles.optionScroll}
+        keyboardShouldPersistTaps="always"
+      >
+        {this.props.options?.map((option) => {
+          return this.state.value.toLowerCase() ===
+            option.toLowerCase().substring(0, this.state.value.length) ? (
+            <TouchableOpacity
+              style={Styles.optionContainer}
+              onPress={() => {
+                this.set(option);
+                Keyboard.dismiss();
+              }}
+            >
+              <Text style={Typography.FONT_REGULAR}>{option}</Text>
+            </TouchableOpacity>
+          ) : (
+            <View />
+          );
+        })}
+      </ScrollView>
+    ) : (
+      <View />
+    );
+  }
+
   render() {
     const {
-      onFocus,
-      onBlur,
       parentStyle,
       scrollStyle,
       inputStyle,
@@ -98,38 +167,38 @@ class Input extends React.Component<Props, State> {
       required,
     } = this.props;
     return (
-      <View style={[Styles.parentStyle, parentStyle]}>
-        <ScrollView
-          keyboardShouldPersistTaps="never"
-          scrollEnabled={false}
-          style={[Styles.scrollStyle, scrollStyle]}
+      <View>
+        <Animated.View
+          style={[
+            Styles.parentStyle,
+            parentStyle,
+            { height: this.state.dropHeight },
+          ]}
         >
-          <TextInput
-            secureTextEntry={secure}
-            placeholder={placeholder}
-            onChangeText={this.set}
-            onFocus={() => {
-              this.setState({ focused: true, dirty: true });
-              onFocus();
-            }}
-            onBlur={() => {
-              this.setState({ focused: false });
-              if (validate || required) {
-                this.doValidate();
-              }
-              onBlur();
-            }}
-            style={[
-              this.state.focused
-                ? Styles.inputStyleFocused
-                : !this.state.dirty || this.state.valid
-                ? Styles.inputStyle
-                : Styles.invalidStyle,
-              inputStyle,
-            ]}
-            value={this.state.value}
-          />
-        </ScrollView>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={false}
+            style={[Styles.scrollStyle, scrollStyle]}
+          >
+            <TextInput
+              secureTextEntry={secure}
+              placeholder={placeholder}
+              onChangeText={this.set}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              style={[
+                this.state.focused
+                  ? Styles.inputStyleFocused
+                  : !this.state.dirty || this.state.valid
+                  ? Styles.inputStyle
+                  : Styles.invalidStyle,
+                inputStyle,
+              ]}
+              value={this.state.value}
+            />
+            <View style={Styles.optionBackground}>{this.renderOptions()}</View>
+          </ScrollView>
+        </Animated.View>
       </View>
     );
   }
