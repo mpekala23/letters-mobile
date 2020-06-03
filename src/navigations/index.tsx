@@ -6,7 +6,7 @@ import {
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
-import { HomeScreen, LoginScreen, ReferFriendsScreen, RegisterScreen, SplashScreen } from "@views";
+import { HomeScreen, LoginScreen, RegisterScreen, SplashScreen } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
@@ -54,11 +54,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
     </>
   ) : (
     <>
-      <Stack.Screen
-        name="Refer Friends"
-        component={ReferFriendsScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
