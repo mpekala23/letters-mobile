@@ -67,6 +67,7 @@
     "eject": "expo eject",
     "precommit": "lint-staged",
     "test": "jest",
+    "test:coverage": "jest --coverage --watchAll=false",
     "gendocs": "jsdoc -c jsdoc.conf.json"
   },
   "lint-staged": {
