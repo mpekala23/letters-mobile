@@ -1,14 +1,36 @@
 import React from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Text,
   View,
 } from "react-native";
 import { Button } from "@components";
+import { Linking } from 'react-native';
 import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
 
 class ReferFriendsScreen extends React.Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+  }
+
+  onShare = async () => {
+    const ameelioUrl = "ameelio.org";
+    // TO-DO: Edit message content once we have the content copy
+    const shareMessage = "Insert share message";
+
+    const sharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + ameelioUrl + "&quote=" + shareMessage;
+    const supportedUrl = await Linking.canOpenURL(sharingUrl);
+
+    if (supportedUrl) {
+      await Linking.openURL(sharingUrl);
+    } else {
+      Alert.alert("Sharing URL is not supported"); x
+    }
+  }
+
   render() {
     return (
       <KeyboardAvoidingView
@@ -49,9 +71,7 @@ class ReferFriendsScreen extends React.Component<Props, State> {
               buttonText="Share"
               containerStyle={{ width: 80 }}
               textStyle={{ fontSize: 16 }}
-              onPress={() => {
-                console.log("pressed share button");
-              }}
+              onPress={this.onShare}
             />
           </View>
         </View>
