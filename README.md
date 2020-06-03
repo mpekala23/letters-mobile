@@ -1,5 +1,7 @@
 # Ameelio Letters Mobile
 
+![Tests](https://github.com/AmeelioDev/letters-mobile/workflows/Tests/badge.svg)
+
 ![Ameelio Letters Logo](./src/assets/Ameelio_Logo.png)
 
 A free and open-source platform for sending physical mail to your incarcerated loved-ones.
@@ -46,6 +48,12 @@ node ./mock-api/app.js
 
 ```
 npm run test
+```
+
+### Viewing test coverage
+
+```
+npm run test:coverage
 ```
 
 ## Built With
