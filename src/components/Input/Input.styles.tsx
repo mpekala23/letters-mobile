@@ -6,12 +6,12 @@ export const INPUT_HEIGHT = 50;
 export const DROP_HEIGHT = 250;
 export const OPTION_HEIGHT = 50;
 export const NUM_OPTIONS = 4;
+export const VERTICAL_MARGIN = 5;
 
 export default StyleSheet.create({
   parentStyle: {
     width: "100%",
-    height: INPUT_HEIGHT,
-    marginVertical: 5,
+    marginBottom: VERTICAL_MARGIN * 2,
   },
   scrollStyle: {
     flex: 1,
@@ -49,7 +49,6 @@ export default StyleSheet.create({
   },
   optionBackground: {
     width: "100%",
-    height: DROP_HEIGHT - INPUT_HEIGHT,
     zIndex: 5,
   },
   optionScroll: {

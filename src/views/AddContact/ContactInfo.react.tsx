@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -28,11 +28,22 @@ export interface State {
 }
 
 class ContactInfoScreen extends React.Component<Props, State> {
+  private stateRef = createRef<Input>();
+  private firstName = createRef<Input>();
+  private lastName = createRef<Input>();
+  private inmateNumber = createRef<Input>();
+  private relationship = createRef<Input>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
       inputting: false,
     };
+    this.stateRef = createRef();
+    this.firstName = createRef();
+    this.lastName = createRef();
+    this.inmateNumber = createRef();
+    this.relationship = createRef();
   }
 
   render() {
@@ -101,6 +112,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   </Text>
                 </Button>
                 <Input
+                  ref={this.stateRef}
                   parentStyle={Styles.fullWidth}
                   placeholder="State"
                   options={["Minnesota", "California", "Massachusetts"]}
@@ -110,8 +122,10 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  next={this.firstName}
                 />
                 <Input
+                  ref={this.firstName}
                   parentStyle={Styles.fullWidth}
                   placeholder="First Name"
                   onFocus={() => {
@@ -122,6 +136,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   }}
                 />
                 <Input
+                  ref={this.lastName}
                   parentStyle={Styles.fullWidth}
                   placeholder="Last Name"
                   onFocus={() => {
@@ -132,6 +147,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   }}
                 />
                 <Input
+                  ref={this.inmateNumber}
                   parentStyle={Styles.fullWidth}
                   placeholder="Inmate Number"
                   onFocus={() => {
@@ -142,6 +158,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   }}
                 />
                 <Input
+                  ref={this.relationship}
                   parentStyle={Styles.fullWidth}
                   placeholder="Relationship to Inmate"
                   onFocus={() => {

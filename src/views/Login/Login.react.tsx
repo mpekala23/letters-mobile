@@ -47,8 +47,6 @@ class LoginScreen extends React.Component<Props, State> {
       inputting: false,
       loggedIn: false,
     };
-    this.emailRef = createRef();
-    this.passwordRef = createRef();
     this.dropdownRef = getDropdownRef();
   }
 

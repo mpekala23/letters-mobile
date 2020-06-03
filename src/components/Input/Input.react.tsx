@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { createRef, RefObject } from "react";
 import {
   Animated,
   ScrollView,
@@ -8,9 +8,14 @@ import {
   Text,
   Keyboard,
 } from "react-native";
-import PropTypes from "prop-types";
+import PropTypes, { any } from "prop-types";
 import { validateFormat, Validation } from "@utils";
-import Styles, { INPUT_HEIGHT, DROP_HEIGHT } from "./Input.styles";
+import Styles, {
+  INPUT_HEIGHT,
+  DROP_HEIGHT,
+  OPTION_HEIGHT,
+  VERTICAL_MARGIN,
+} from "./Input.styles";
 import { Typography } from "styles";
 
 export interface Props {
@@ -26,6 +31,7 @@ export interface Props {
   required?: boolean;
   validate?: Validation;
   options: string[] | string[][];
+  next?: RefObject<Input>;
 }
 
 export interface State {
@@ -33,7 +39,8 @@ export interface State {
   focused: boolean;
   valid: boolean;
   dirty: boolean;
-  dropHeight: Animated.Value;
+  currentHeight: Animated.Value;
+  results: string[];
 }
 
 class Input extends React.Component<Props, State> {
@@ -48,7 +55,10 @@ class Input extends React.Component<Props, State> {
     onInvalid: () => {},
     secure: false,
     options: [],
+    next: any,
   };
+
+  private inputRef = createRef<TextInput>();
 
   constructor(props: Props) {
     super(props);
@@ -57,7 +67,11 @@ class Input extends React.Component<Props, State> {
       focused: false,
       valid: props.validate || props.required ? false : true,
       dirty: false,
-      dropHeight: new Animated.Value(INPUT_HEIGHT),
+      currentHeight:
+        this.props.options.length > 0
+          ? new Animated.Value(INPUT_HEIGHT + VERTICAL_MARGIN * 2)
+          : new Animated.Value(INPUT_HEIGHT),
+      results: [],
     };
     if (this.state.valid) {
       props.onValid();
@@ -66,13 +80,107 @@ class Input extends React.Component<Props, State> {
     }
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.getFilteredOptions = this.getFilteredOptions.bind(this);
+    this.onSubmitEditing = this.onSubmitEditing.bind(this);
+    this.set = this.set.bind(this);
+    this.updateResults = this.updateResults.bind(this);
+    this.updateHeight = this.updateHeight.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
   }
 
-  set = (newValue: string) => {
-    this.setState({ value: newValue }, this.doValidate);
-  };
+  componentDidMount() {
+    this.set("");
+  }
+
+  onFocus() {
+    this.setState({ focused: true, dirty: true }, () => {
+      if (this.props.options.length > 0) {
+        this.updateHeight();
+      }
+      this.props.onFocus();
+    });
+  }
+
+  onBlur() {
+    this.setState({ focused: false }, () => {
+      if (this.props.validate || this.props.required) {
+        this.doValidate();
+      }
+      if (this.props.options.length > 0) {
+        this.updateHeight();
+      }
+      this.props.onBlur();
+    });
+  }
+
+  onSubmitEditing() {
+    console.log("here");
+    if (this.props.next) {
+      this.props.next.current?.forceFocus();
+    }
+  }
+
+  forceFocus() {
+    this.inputRef.current?.focus();
+  }
+
+  set(newValue: string) {
+    this.setState({ value: newValue }, () => {
+      this.doValidate();
+      if (this.props.options.length > 0) this.updateResults();
+    });
+  }
+
+  updateResults() {
+    const value = this.state.value;
+    const options = this.props.options;
+    let results: string[] = [];
+    for (let ix = 0; ix < options.length; ++ix) {
+      const option: string | string[] = options[ix];
+      if (typeof option === "string") {
+        // simple options, just a list of strings
+        if (
+          option.toLowerCase().substring(0, value.length) ===
+          value.toLowerCase()
+        ) {
+          results.push(option);
+        }
+      } else {
+        // complex options, a list of list of strings, first string in each list will be shown and chose,
+        // the rest are additional matches to autocomplete
+        for (let jx = 0; jx < option.length; ++jx) {
+          const match: string = option[jx];
+          if (
+            match.toLowerCase().substring(0, value.length) ===
+            value.toLowerCase()
+          ) {
+            results.push(option[0]);
+            break;
+          }
+        }
+      }
+    }
+    let pastLength = this.state.results.length;
+    this.setState({ results: results }, () => {
+      if (pastLength !== results.length) this.updateHeight();
+    });
+  }
+
+  updateHeight() {
+    let target: number;
+    if (this.state.focused) {
+      target = Math.min(
+        DROP_HEIGHT,
+        INPUT_HEIGHT + this.state.results.length * OPTION_HEIGHT
+      );
+    } else {
+      target = INPUT_HEIGHT + VERTICAL_MARGIN * 2;
+    }
+    Animated.timing(this.state.currentHeight, {
+      toValue: target,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }
 
   doValidate = () => {
     const { value } = this.state;
@@ -102,67 +210,8 @@ class Input extends React.Component<Props, State> {
     );
   };
 
-  onFocus() {
-    this.setState({ focused: true, dirty: true });
-    if (this.props.options.length > 0) {
-      Animated.timing(this.state.dropHeight, {
-        toValue: DROP_HEIGHT,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-    }
-    this.props.onFocus();
-  }
-
-  onBlur() {
-    this.setState({ focused: false });
-    if (this.props.validate || this.props.required) {
-      this.doValidate();
-    }
-    if (this.props.options.length > 0) {
-      Animated.timing(this.state.dropHeight, {
-        toValue: INPUT_HEIGHT,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
-    this.props.onBlur();
-  }
-
-  getFilteredOptions(): string[] {
-    const value = this.state.value;
-    const options = this.props.options;
-    let results: string[] = [];
-    for (let ix = 0; ix < options.length; ++ix) {
-      const option: string | string[] = options[ix];
-      if (typeof option === "string") {
-        // simple options, just a list of strings
-        if (
-          option.toLowerCase().substring(0, value.length) ===
-          value.toLowerCase()
-        ) {
-          results.push(option);
-        }
-      } else {
-        // complex options, a list of list of strings, first string in each list will be shown and chose,
-        // the rest are additional matches to autocomplete
-        for (let jx = 0; jx < option.length; ++jx) {
-          const match: string = option[jx];
-          if (
-            match.toLowerCase().substring(0, value.length) ===
-            value.toLowerCase()
-          ) {
-            results.push(option[0]);
-            break;
-          }
-        }
-      }
-    }
-    return results;
-  }
-
   renderOptions() {
-    const results = this.getFilteredOptions();
+    const results = this.state.results;
     return this.state.focused ? (
       <ScrollView
         style={Styles.optionScroll}
@@ -175,7 +224,9 @@ class Input extends React.Component<Props, State> {
               onPress={() => {
                 this.set(result);
                 Keyboard.dismiss();
+                this.onSubmitEditing();
               }}
+              key={result}
             >
               <Text style={Typography.FONT_REGULAR}>{result}</Text>
             </TouchableOpacity>
@@ -201,8 +252,9 @@ class Input extends React.Component<Props, State> {
       <Animated.View
         style={[
           Styles.parentStyle,
+          this.props.options.length > 0 ? { marginBottom: 0 } : {},
           parentStyle,
-          { height: this.state.dropHeight },
+          { height: this.state.currentHeight },
         ]}
       >
         <ScrollView
@@ -211,11 +263,13 @@ class Input extends React.Component<Props, State> {
           style={[Styles.scrollStyle, scrollStyle]}
         >
           <TextInput
+            ref={this.inputRef}
             secureTextEntry={secure}
             placeholder={placeholder}
             onChangeText={this.set}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
+            onSubmitEditing={this.onSubmitEditing}
             style={[
               this.state.focused
                 ? Styles.inputStyleFocused
@@ -226,7 +280,19 @@ class Input extends React.Component<Props, State> {
             ]}
             value={this.state.value}
           />
-          <View style={Styles.optionBackground}>{this.renderOptions()}</View>
+          <Animated.View
+            style={[
+              Styles.optionBackground,
+              {
+                height: Math.min(
+                  DROP_HEIGHT - INPUT_HEIGHT,
+                  this.state.results.length * OPTION_HEIGHT
+                ),
+              },
+            ]}
+          >
+            {this.renderOptions()}
+          </Animated.View>
         </ScrollView>
       </Animated.View>
     );
