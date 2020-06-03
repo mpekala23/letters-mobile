@@ -113,13 +113,16 @@ class Input extends React.Component<Props, State> {
   }
 
   onSubmitEditing() {
-    if (this.props.nextInput) {
+    if (typeof this.props.nextInput != "boolean" && this.props.nextInput) {
       this.props.nextInput.current?.forceFocus();
     }
+    this.setState({ focused: false });
   }
 
   forceFocus() {
     this.inputRef.current?.focus();
+    console.log(this.inputRef.current);
+    console.log("here");
   }
 
   set(newValue: string) {
@@ -225,7 +228,7 @@ class Input extends React.Component<Props, State> {
               style={Styles.optionContainer}
               onPress={() => {
                 this.set(result);
-                if (!this.props.nextInput) Keyboard.dismiss();
+                if (!this.props.nextInput) this.inputRef.current?.blur();
                 this.onSubmitEditing();
               }}
               key={result}
@@ -258,6 +261,7 @@ class Input extends React.Component<Props, State> {
           parentStyle,
           { height: this.state.currentHeight },
         ]}
+        testID="parent"
       >
         <ScrollView
           keyboardShouldPersistTaps="always"

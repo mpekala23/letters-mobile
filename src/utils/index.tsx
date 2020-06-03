@@ -61,7 +61,6 @@ export function isValidZipcode(zipcode: string) {
 }
 
 export function isValidState(state: string) {
-  console.log(state);
   return States.RAW_ABBREVS.indexOf(state) !== -1;
 }
 
