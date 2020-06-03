@@ -8,6 +8,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  password?: string;
   cell: string;
   address1: string;
   address2?: string;
@@ -15,6 +16,28 @@ export interface User {
   zipcode: string;
   city: string;
   state: string;
+  imageUri?: string;
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
+
+export interface UserInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  cell: string;
+  address1: string;
+  address2?: string;
+  country: string;
+  zipcode: string;
+  city: string;
+  state: string;
+  imageUri?: string;
 }
 
 export interface AuthInfo {

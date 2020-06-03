@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Topbar component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#cacaca",
+        "flexDirection": "row",
+        "height": 50,
+        "paddingBottom": 5,
+        "paddingHorizontal": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "height": 50,
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "aspectRatio": 2.2768361581920904,
+            "height": 55,
+            "marginTop": -5,
+          }
+        }
+      />
+    </View>
+    <View>
+      <View
+        testID="blank"
+      />
+    </View>
+  </View>
+</View>
+`;

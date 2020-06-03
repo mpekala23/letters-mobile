@@ -1,30 +1,25 @@
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
-import { HomeScreen, LoginScreen, SplashScreen } from "@views";
+import { HomeScreen, LoginScreen, RegisterScreen, SplashScreen } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
+import { Topbar } from "@components";
+
+export type AuthStackParamList = {
+  Login: LoginScreen;
+  Register: RegisterScreen;
+};
 
 const Stack = createStackNavigator();
 
 export interface Props {
   authInfo: AuthInfo;
-}
-
-export interface InterTranstion {
-  current: {
-    progress: typeof test;
-  };
-  next?: {
-    progress: typeof test;
-  };
-  index?: number;
-  closing: any;
-  layouts: any;
 }
 
 const fadeTransition = (
@@ -38,6 +33,11 @@ const fadeTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props) => {
+  let topSection = <View />;
+  if (!props.authInfo.isLoadingToken) {
+    topSection = <Topbar />;
+  }
+  // Determine which views should be accessible
   const screens = props.authInfo.isLoadingToken ? (
     <Stack.Screen
       name="Splash"
@@ -53,20 +53,30 @@ const NavigatorBase: React.FC<Props> = (props) => {
       />
     </>
   ) : (
-    <Stack.Screen
-      name="Login"
-      component={LoginScreen}
-      options={{ cardStyleInterpolator: fadeTransition }}
-    />
+    <>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+    </>
   );
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {screens}
-    </Stack.Navigator>
+    <>
+      {topSection}
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {screens}
+      </Stack.Navigator>
+    </>
   );
 };
 
