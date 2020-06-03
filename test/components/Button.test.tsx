@@ -69,7 +69,7 @@ describe("Button component", () => {
     fireEvent.press(getByTestId("clickable"));
     expect(props.onPress).toHaveBeenCalledTimes(1);
   });
-  it("should not have a functioning onPress when disabled", () => {
+  it("should not call onPress() when pressed and disabled", () => {
     const { props, getByTestId } = setup({
       enabled: false,
     });
