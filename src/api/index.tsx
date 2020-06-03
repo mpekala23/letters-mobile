@@ -58,22 +58,22 @@ export async function login(cred: UserCredentials) {
       password: cred.password,
     }),
   });
-  const res = await response.json();
-  if (res.type == "error") {
+  const body = await response.json();
+  if (body.type == "error") {
     throw Error(res.data);
   }
   const userData: User = {
-    id: res.data.id,
-    firstName: res.data.firstName,
-    lastName: res.data.lastName,
-    email: res.data.email,
-    cell: res.data.cell,
-    address1: res.data.address1,
-    address2: res.data.address2 || null,
-    country: res.data.country,
-    zipcode: res.data.zipCode,
-    city: res.data.city,
-    state: res.data.state,
+    id: body.data.id,
+    firstName: body.data.firstName,
+    lastName: body.data.lastName,
+    email: body.data.email,
+    cell: body.data.cell,
+    address1: body.data.address1,
+    address2: body.data.address2 || null,
+    country: body.data.country,
+    zipcode: body.data.zipCode,
+    city: body.data.city,
+    state: body.data.state,
   };
   store.dispatch(loginUser(userData));
   return userData;
@@ -91,22 +91,22 @@ export async function register(data: UserInfo) {
       body: JSON.stringify(data),
     }
   );
-  const res = await response.json();
-  if (res.type == "error") {
+  const body = await response.json();
+  if (body.type == "error") {
     throw Error(res.data);
   }
   const userData: User = {
-    id: res.data.id,
-    firstName: res.data.firstName,
-    lastName: res.data.lastName,
-    email: res.data.email,
-    cell: res.data.cell,
-    address1: res.data.address1,
-    address2: res.data.address2 || null,
-    country: res.data.country,
-    zipcode: res.data.zipcode,
-    city: res.data.city,
-    state: res.data.state,
+    id: body.data.id,
+    firstName: body.data.firstName,
+    lastName: body.data.lastName,
+    email: body.data.email,
+    cell: body.data.cell,
+    address1: body.data.address1,
+    address2: body.data.address2 || null,
+    country: body.data.country,
+    zipcode: body.data.zipcode,
+    city: body.data.city,
+    state: body.data.state,
   };
   store.dispatch(loginUser(userData));
   return userData;
