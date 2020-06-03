@@ -14,7 +14,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
-import { Validation } from "@utils";
+import { States, Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -159,6 +159,7 @@ class RegisterScreen extends React.Component<Props, State> {
         <ScrollView
           style={Styles.backgroundScroll}
           contentContainerStyle={Styles.scrollContent}
+          keyboardShouldPersistTaps={"handled"}
         >
           <View style={Styles.picContainer}>
             <PicUpload />
@@ -188,6 +189,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.lastName}
           />
           <Input
             ref={this.lastName}
@@ -196,6 +198,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.cell}
           />
           <View style={{ flexDirection: "row" }}>
             <Input
@@ -206,6 +209,7 @@ class RegisterScreen extends React.Component<Props, State> {
               validate={Validation.Cell}
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
+              nextInput={this.address1}
             />
           </View>
           <Input
@@ -215,11 +219,13 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.address2}
           />
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
             placeholder={"Address Line 2"}
+            nextInput={this.country}
           />
           <Input
             ref={this.country}
@@ -228,6 +234,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.zipcode}
           />
           <Input
             ref={this.zipcode}
@@ -237,6 +244,7 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.Zipcode}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.city}
           />
           <Input
             ref={this.city}
@@ -245,14 +253,18 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.phyState}
           />
           <Input
             ref={this.phyState}
             parentStyle={Styles.fullWidth}
             placeholder={"State"}
+            validate={Validation.State}
+            options={States.STATES}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.email}
           />
           <Input
             ref={this.email}
@@ -262,6 +274,7 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.Email}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.password}
           />
           <Input
             ref={this.password}

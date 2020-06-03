@@ -13,6 +13,7 @@ import Styles from "./ContactInfo.styles";
 import { AMEELIO_BLACK } from "styles/Colors";
 import { AuthStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { States, Validation } from "@utils";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -70,7 +71,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
             >
               <View style={{ width: "100%", height: 40 }} />
               <View style={Styles.contactbackground}>
-                <Typography.PageHeader text="Hello" />
+                <Typography.PageHeader text="Add Contact" />
                 <Button
                   link
                   buttonText="Need help finding your inmate ID?"
@@ -115,36 +116,41 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   ref={this.stateRef}
                   parentStyle={Styles.fullWidth}
                   placeholder="State"
-                  options={["Minnesota", "California", "Massachusetts"]}
+                  options={States.STATES}
+                  validate={Validation.State}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
-                  next={this.firstName}
+                  nextInput={this.firstName}
                 />
                 <Input
                   ref={this.firstName}
                   parentStyle={Styles.fullWidth}
                   placeholder="First Name"
+                  required
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  nextInput={this.lastName}
                 />
                 <Input
                   ref={this.lastName}
                   parentStyle={Styles.fullWidth}
                   placeholder="Last Name"
+                  required
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  nextInput={this.inmateNumber}
                 />
                 <Input
                   ref={this.inmateNumber}
@@ -156,11 +162,27 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  nextInput={this.relationship}
                 />
                 <Input
                   ref={this.relationship}
                   parentStyle={Styles.fullWidth}
                   placeholder="Relationship to Inmate"
+                  options={[
+                    "Mother",
+                    "Father",
+                    "Brother",
+                    "Sister",
+                    "Sibling",
+                    "Daughter",
+                    "Son",
+                    "Grandmother",
+                    "Grandfather",
+                    "Grandaughter",
+                    "Grandson",
+                    "Friend",
+                    "Other",
+                  ]}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}

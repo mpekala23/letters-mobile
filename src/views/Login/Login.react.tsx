@@ -121,6 +121,7 @@ class LoginScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  next={this.passwordRef}
                 />
                 <Input
                   ref={this.passwordRef}

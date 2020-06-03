@@ -31,7 +31,7 @@ export interface Props {
   required?: boolean;
   validate?: Validation;
   options: string[] | string[][];
-  next?: RefObject<Input>;
+  nextInput?: RefObject<Input> | boolean;
 }
 
 export interface State {
@@ -55,7 +55,7 @@ class Input extends React.Component<Props, State> {
     onInvalid: () => {},
     secure: false,
     options: [],
-    next: any,
+    nextInput: false,
   };
 
   private inputRef = createRef<TextInput>();
@@ -113,9 +113,8 @@ class Input extends React.Component<Props, State> {
   }
 
   onSubmitEditing() {
-    console.log("here");
-    if (this.props.next) {
-      this.props.next.current?.forceFocus();
+    if (this.props.nextInput) {
+      this.props.nextInput.current?.forceFocus();
     }
   }
 
@@ -168,9 +167,12 @@ class Input extends React.Component<Props, State> {
   updateHeight() {
     let target: number;
     if (this.state.focused) {
-      target = Math.min(
-        DROP_HEIGHT,
-        INPUT_HEIGHT + this.state.results.length * OPTION_HEIGHT
+      target = Math.max(
+        Math.min(
+          DROP_HEIGHT,
+          INPUT_HEIGHT + this.state.results.length * OPTION_HEIGHT
+        ),
+        INPUT_HEIGHT + VERTICAL_MARGIN * 2
       );
     } else {
       target = INPUT_HEIGHT + VERTICAL_MARGIN * 2;
@@ -223,7 +225,7 @@ class Input extends React.Component<Props, State> {
               style={Styles.optionContainer}
               onPress={() => {
                 this.set(result);
-                Keyboard.dismiss();
+                if (!this.props.nextInput) Keyboard.dismiss();
                 this.onSubmitEditing();
               }}
               key={result}
