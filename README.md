@@ -48,6 +48,12 @@ node ./mock-api/app.js
 npm run test
 ```
 
+### Viewing test coverage
+
+```
+npm run test:coverage
+```
+
 ## Built With
 
 * [React Native](https://reactnative.dev/) - The cross-platform framework used
