@@ -11,13 +11,13 @@ import { Button, Input } from "@components";
 import { Typography } from "@styles";
 import Styles from "./ContactInfo.styles";
 import { AMEELIO_BLACK } from "styles/Colors";
-import { AuthStackParamList } from "navigations";
+import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { States, Validation } from "@utils";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
-  AuthStackParamList,
-  "Login"
+  AppStackParamList,
+  "ContactInfo"
 >;
 
 export interface Props {
@@ -198,7 +198,9 @@ class ContactInfoScreen extends React.Component<Props, State> {
                     containerStyle={Styles.bottomButton}
                   />
                   <Button
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.navigation.navigate("FacilityDirectory");
+                    }}
                     buttonText="Next"
                     containerStyle={Styles.bottomButton}
                   />

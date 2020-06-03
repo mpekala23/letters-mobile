@@ -121,8 +121,6 @@ class Input extends React.Component<Props, State> {
 
   forceFocus() {
     this.inputRef.current?.focus();
-    console.log(this.inputRef.current);
-    console.log("here");
   }
 
   set(newValue: string) {

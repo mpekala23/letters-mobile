@@ -80,8 +80,9 @@ class LoginScreen extends React.Component<Props, State> {
               "Network Error",
               "The request timed out."
             );
+        } else {
+          console.log(err);
         }
-        console.log("here");
         this.setState({ loggedIn: false });
       }
     }

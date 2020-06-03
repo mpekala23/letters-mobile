@@ -8,6 +8,7 @@ import {
 } from "@react-navigation/stack";
 import {
   ContactInfoScreen,
+  FacilityDirectoryScreen,
   HomeScreen,
   LoginScreen,
   RegisterScreen,
@@ -20,6 +21,11 @@ import { Topbar } from "@components";
 export type AuthStackParamList = {
   Login: LoginScreen;
   Register: RegisterScreen;
+};
+
+export type AppStackParamList = {
+  ContactInfo: ContactInfoScreen;
+  FacilityDirectory: FacilityDirectoryScreen;
 };
 
 const Stack = createStackNavigator();
@@ -55,6 +61,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="ContactInfo"
         component={ContactInfoScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="FacilityDirectory"
+        component={FacilityDirectoryScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
