@@ -167,39 +167,37 @@ class Input extends React.Component<Props, State> {
       required,
     } = this.props;
     return (
-      <View>
-        <Animated.View
-          style={[
-            Styles.parentStyle,
-            parentStyle,
-            { height: this.state.dropHeight },
-          ]}
+      <Animated.View
+        style={[
+          Styles.parentStyle,
+          parentStyle,
+          { height: this.state.dropHeight },
+        ]}
+      >
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          scrollEnabled={false}
+          style={[Styles.scrollStyle, scrollStyle]}
         >
-          <ScrollView
-            keyboardShouldPersistTaps="always"
-            scrollEnabled={false}
-            style={[Styles.scrollStyle, scrollStyle]}
-          >
-            <TextInput
-              secureTextEntry={secure}
-              placeholder={placeholder}
-              onChangeText={this.set}
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              style={[
-                this.state.focused
-                  ? Styles.inputStyleFocused
-                  : !this.state.dirty || this.state.valid
-                  ? Styles.inputStyle
-                  : Styles.invalidStyle,
-                inputStyle,
-              ]}
-              value={this.state.value}
-            />
-            <View style={Styles.optionBackground}>{this.renderOptions()}</View>
-          </ScrollView>
-        </Animated.View>
-      </View>
+          <TextInput
+            secureTextEntry={secure}
+            placeholder={placeholder}
+            onChangeText={this.set}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            style={[
+              this.state.focused
+                ? Styles.inputStyleFocused
+                : !this.state.dirty || this.state.valid
+                ? Styles.inputStyle
+                : Styles.invalidStyle,
+              inputStyle,
+            ]}
+            value={this.state.value}
+          />
+          <View style={Styles.optionBackground}>{this.renderOptions()}</View>
+        </ScrollView>
+      </Animated.View>
     );
   }
 }
