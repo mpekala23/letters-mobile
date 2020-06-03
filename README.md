@@ -12,6 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * Install [Node.js](https://nodejs.org/en/)
 * Install [npm](https://www.npmjs.com/get-npm)
+* Install [Expo CLI](https://docs.expo.io/workflow/expo-cli/)
 
 ### Installing
 
