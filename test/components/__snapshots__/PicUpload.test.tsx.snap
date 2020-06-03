@@ -1,3 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PicUpload component renders 1`] = `ShallowWrapper {}`;
+exports[`PicUpload component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    style={
+      Object {
+        "backgroundColor": "#3490dc",
+        "borderRadius": 50,
+        "height": 100,
+        "overflow": "hidden",
+        "width": 100,
+      }
+    }
+    testID="clickable"
+  />
+</View>
+`;

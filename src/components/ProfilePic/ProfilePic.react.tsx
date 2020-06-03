@@ -13,14 +13,20 @@ export interface Props {
 
 const ProfilePicBase: React.FC<Props> = (props) => {
   if (!props.userState.authInfo.isLoggedIn) {
-    return <View></View>;
+    return <View testID="blank"></View>;
   }
   let initials =
     props.userState.user.firstName[0].toUpperCase() +
     props.userState.user.lastName[0].toUpperCase();
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
   if (props.userState.user.imageUri) {
-    insideCircle = <Image style={Styles.pic} source={ExamplePic} />;
+    insideCircle = (
+      <Image
+        style={Styles.pic}
+        source={ExamplePic}
+        accessibilityLabel="ProfilePicture"
+      />
+    );
   }
   return (
     <TouchableOpacity style={Styles.background}>

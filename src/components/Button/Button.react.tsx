@@ -44,6 +44,7 @@ const Button: React.FC<Props> = (props) => {
             onPress();
           }
         }}
+        testID="clickable"
       >
         <Text
           style={[
@@ -66,6 +67,7 @@ const Button: React.FC<Props> = (props) => {
           }
         }}
         style={containerStyle}
+        testID="clickable"
       >
         <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
           {buttonText || props.children}

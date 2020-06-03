@@ -2,6 +2,7 @@ import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
+import { fetch } from "isomorphic-fetch";
 
 // this will change when running locally!
 export const API_URL = "http://192.168.7.73:9000/api/";
@@ -60,7 +61,7 @@ export async function login(cred: UserCredentials) {
   });
   const body = await response.json();
   if (body.type == "error") {
-    throw Error(res.data);
+    throw Error(body.data);
   }
   const userData: User = {
     id: body.data.id,
@@ -93,7 +94,7 @@ export async function register(data: UserInfo) {
   );
   const body = await response.json();
   if (body.type == "error") {
-    throw Error(res.data);
+    throw Error(body.data);
   }
   const userData: User = {
     id: body.data.id,

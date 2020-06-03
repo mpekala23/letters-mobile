@@ -1,87 +1,50 @@
 import React from "react";
-import { Button } from "@components";
 import { RegisterScreen } from "@views";
-import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { register } from "@api";
+import {
+  render,
+  fireEvent,
+  toJSON,
+  getByPlaceholderText,
+} from "@testing-library/react-native";
 import fetchMock from "jest-fetch-mock";
 
-Enzyme.configure({ adapter: new Adapter() });
-jest.useFakeTimers();
+jest.mock("@api", () => ({
+  register: jest.fn(),
+}));
 
-const setupShallow = () => {
+const setup = (response = {}) => {
   const navigation = { navigate: jest.fn() };
-  const wrapper = shallow(<RegisterScreen navigation={navigation} />);
-  return {
-    wrapper,
-  };
-};
-
-const setupBlankInstance = () => {
-  const navigation = { navigate: jest.fn() };
-  const element = renderer.create(<RegisterScreen navigation={navigation} />);
-  const instance = element.getInstance();
-  return {
-    element,
-    instance,
-  };
-};
-
-const setupInstance = (response) => {
-  const navigation = { navigate: jest.fn() };
-  const element = renderer.create(<RegisterScreen navigation={navigation} />);
-  const instance = element.getInstance();
-  fetchMock.mockOnce(JSON.stringify(response));
-  return {
-    element,
-    instance,
-  };
+  if (Object.keys(response).length > 0) {
+    fetchMock.mockOnce(JSON.stringify(response));
+  }
+  return render(<RegisterScreen navigation={navigation} />);
 };
 
 describe("Register screen", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
+    expect(tree).toMatchSnapshot();
   });
-  test("register disabled until all fields valid", async () => {
-    const { element } = setupBlankInstance();
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    expect(registerButton.props.enabled).toBe(false);
-    registerScreen._fiber.stateNode.devSkip();
-    expect(registerButton.props.enabled).toBe(true);
-  });
-  test("error registration", async () => {
-    const { element } = setupInstance({
-      type: "error",
-      data: "email in use",
-    });
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    registerScreen._fiber.stateNode.devSkip();
-    await registerButton.props.onPress();
-    expect(registerScreen._fiber.stateNode.state.registered).toBe(false);
-  });
-  test("successful registration", async () => {
-    const { element } = setupInstance({
-      data: {
-        id: "6",
-        firstName: "Mark",
-        lastName: "Pekala",
-        email: "mpekala@college.harvard.edu",
-        cell: "6127038623",
-        addresss1: "210 W Diamond Lake Road",
-        country: "USA",
-        zipcode: "55419",
-        city: "Minneapolis",
-        state: "MN",
-      },
-      type: "success",
-    });
-    const registerScreen = element.root;
-    const registerButton = registerScreen.findAllByType(Button)[2];
-    registerScreen._fiber.stateNode.devSkip();
-    await registerButton.props.onPress();
-    expect(registerScreen._fiber.stateNode.state.registered).toBe(true);
+  it("should have register button be disabled until all fields are valid", async () => {
+    const { getByPlaceholderText, getByText } = setup();
+    fireEvent.press(getByText("Register"));
+    expect(register).toHaveBeenCalledTimes(0);
+    fireEvent.changeText(getByPlaceholderText("First Name"), "Team");
+    fireEvent.changeText(getByPlaceholderText("Last Name"), "Ameelio");
+    fireEvent.changeText(
+      getByPlaceholderText("Cell Phone Number"),
+      "4324324432"
+    );
+    fireEvent.changeText(getByPlaceholderText("Address Line 1"), "Address");
+    fireEvent.changeText(getByPlaceholderText("Country"), "USA");
+    fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
+    fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
+    fireEvent.changeText(getByPlaceholderText("State"), "CT");
+    fireEvent.changeText(getByPlaceholderText("Email"), "team@ameelio.org");
+    fireEvent.changeText(getByPlaceholderText("Password"), "GoodPassword1");
+    fireEvent.press(getByText("Register"));
+    expect(register).toHaveBeenCalledTimes(1);
   });
 });

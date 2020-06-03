@@ -1,21 +1,19 @@
 import * as React from "react";
 import { SplashScreen } from "@views";
-import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { render, toJSON } from "@testing-library/react-native";
+import { Image } from "react-native";
 
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
-Enzyme.configure({ adapter: new Adapter() });
-
-describe("splash screen", () => {
-  test("displays whole screen", () => {
-    const tree = renderer.create(<SplashScreen />).toJSON();
+describe("Splash screen", () => {
+  it("should match snapshot", () => {
+    const { container } = render(<SplashScreen />);
+    const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 
-  test("renders logo", () => {
-    const splash = shallow(<SplashScreen />);
-    expect(splash.find("Image").prop("source")).toEqual(AmeelioLogo);
+  it("should show the logo", () => {
+    const { getByLabelText } = render(<SplashScreen />);
+    expect(getByLabelText("AmeelioLogo")).toBeDefined();
   });
 });

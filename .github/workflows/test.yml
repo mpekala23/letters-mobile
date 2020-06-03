@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  pull_request:
+
+jobs:
+  unit:
+    name: Unit
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE_FILE: .coverage.unit
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Application
+      run: npm run build --if-present
+      
+    - name: Run Tests
+      run: npm run test:coverage
+      env:
+        CI: true
+
+# TODO: Enable coverage report uploads once we open source the repo
+#     - name: Upload coverage to Codecov
+#       uses: codecov/codecov-action@v1.0.5
+#       with:
+#         token: ${{ secrets.CODECOV_TOKEN }}
+#         file: ./coverage/coverage-final.json
+#         flags: unit
+#         fail_ci_if_error: true

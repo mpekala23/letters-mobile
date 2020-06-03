@@ -1,22 +1,55 @@
 import React from "react";
 import { Topbar } from "@components";
-import renderer from "react-test-renderer";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { render, toJSON } from "@testing-library/react-native";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 
-Enzyme.configure({ adapter: new Adapter() });
+const mockStore = configureStore([]);
 
-const setupShallow = () => {
-  const wrapper = shallow(<Topbar />);
+const setup = (authOverrides = {}, userOverrides = {}) => {
+  const authInfo = Object.assign(
+    {
+      isLoadingToken: true,
+      isLoggedIn: false,
+      userToken: "",
+    },
+    authOverrides
+  );
+  const user = Object.assign(
+    {
+      id: "6",
+      firstName: "Team",
+      lastName: "Ameelio",
+      email: "team@ameelio.org",
+      cell: "4324324432",
+      address1: "Somewhere",
+      country: "USA",
+      zipcode: "12345",
+      city: "New Haven",
+      state: "CT",
+    },
+    userOverrides
+  );
+  const store = mockStore({
+    user: {
+      authInfo,
+      user,
+    },
+  });
+
+  const StoreProvider = ({ children }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
 
   return {
-    wrapper,
+    ...render(<Topbar />, { wrapper: StoreProvider }),
   };
 };
 
 describe("Topbar component", () => {
-  test("renders", () => {
-    const { wrapper } = setupShallow();
-    expect(wrapper).toMatchSnapshot();
+  it("should match snapshot", () => {
+    const { container } = setup();
+    const tree = toJSON(container);
+    expect(tree).toMatchSnapshot();
   });
 });

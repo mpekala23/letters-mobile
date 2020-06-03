@@ -1,3 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button component renders 1`] = `ShallowWrapper {}`;
+exports[`Button component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.7}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#3490dc",
+          "borderRadius": 4,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginVertical": 5,
+        },
+        Object {},
+        Object {},
+        Object {},
+      ]
+    }
+    testID="clickable"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 20,
+            "fontWeight": "700",
+            "padding": 6,
+          },
+          Object {},
+          Object {},
+          Object {},
+        ]
+      }
+    >
+      press me
+    </Text>
+  </TouchableOpacity>
+</View>
+`;
