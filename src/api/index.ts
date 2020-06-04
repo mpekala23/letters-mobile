@@ -2,9 +2,9 @@ import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
-import { MOCK_API_IP } from "react-native-dotenv";
 
-// this will change when running locally!
+const MOCK_API_IP = process.env.MOCK_API_IP;
+
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
 export interface UserResponse {
