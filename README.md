@@ -10,9 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* Install [Node.js](https://nodejs.org/en/)
-* Install [npm](https://www.npmjs.com/get-npm)
-* Install [Expo CLI](https://docs.expo.io/workflow/expo-cli/)
+- Install [Node.js](https://nodejs.org/en/)
+- Install [npm](https://www.npmjs.com/get-npm)
+- Install [Expo CLI](https://docs.expo.io/workflow/expo-cli/)
 
 ### Installing
 
@@ -24,6 +24,14 @@ To install dependencies run
 npm install
 ```
 
+#### Configuring Environment Variables
+
+Create a file .env in the project root. In that file, add the line
+
+`MOCK_API_IP = [your IPv4 local IP address]`
+
+This will make it so that during development your app can successfully connect to the mock API backend.
+
 #### Starting the Project
 
 To start the local development server run
@@ -34,11 +42,13 @@ npm run start
 
 Visit http://localhost:19002/ in your browser and you should see the Metro Bundler page. From here you can follow the instructions in your terminal to launch the app with live reloading on your device. Hooray, you've successfully installed and run the Ameelio Letters mobile application!
 
-You should also start the mock backend API with
+You should also start the mock backend API by running
 
 ```
 node ./mock-api/app.js
 ```
+
+in a separate terminal from the root directory.
 
 ## Running the tests
 
@@ -50,8 +60,8 @@ npm run test
 
 ## Built With
 
-* [React Native](https://reactnative.dev/) - The cross-platform framework used
-* [npm](https://reactnative.dev/) - Dependency Management
+- [React Native](https://reactnative.dev/) - The cross-platform framework used
+- [npm](https://reactnative.dev/) - Dependency Management
 
 ## Contributing
 
