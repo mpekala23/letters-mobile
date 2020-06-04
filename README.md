@@ -1,5 +1,7 @@
 # Ameelio Letters Mobile
 
+![Tests](https://github.com/AmeelioDev/letters-mobile/workflows/Tests/badge.svg)
+
 ![Ameelio Letters Logo](./src/assets/Ameelio_Logo.png)
 
 A free and open-source platform for sending physical mail to your incarcerated loved-ones.
@@ -40,13 +42,7 @@ npm run start
 
 Visit http://localhost:19002/ in your browser and you should see the Metro Bundler page. From here you can follow the instructions in your terminal to launch the app with live reloading on your device. Hooray, you've successfully installed and run the Ameelio Letters mobile application!
 
-You should also start the mock backend API by running
-
-```
-node ./mock-api/app.js
-```
-
-in a separate terminal from the root directory.
+Start the mock backend API in another terminal by running
 
 ## Running the tests
 
@@ -54,6 +50,12 @@ in a separate terminal from the root directory.
 
 ```
 npm run test
+```
+
+### Viewing test coverage
+
+```
+npm run test:coverage
 ```
 
 ## Built With
