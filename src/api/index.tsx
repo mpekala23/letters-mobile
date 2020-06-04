@@ -1,4 +1,5 @@
 import store from "@store";
+import { Linking } from 'react-native';
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
@@ -111,4 +112,14 @@ export async function register(data: UserInfo) {
   };
   store.dispatch(loginUser(userData));
   return userData;
+}
+
+
+export async function facebookShare(shareUrl: string) {
+  const supportedUrl = await Linking.canOpenURL(shareUrl);
+  if (supportedUrl) {
+    await Linking.openURL(shareUrl);
+  } else {
+    throw Error("Share Url not supported");
+  }
 }

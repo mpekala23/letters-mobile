@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 import { Button } from "@components";
+import { facebookShare } from "@api";
 import { Linking } from 'react-native';
 import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
@@ -14,14 +15,9 @@ class ReferFriendsScreen extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      pressedSkip: false,
-      shareableLink: false,
-    }
   }
 
   onSkip = async () => {
-    this.setState({ pressedSkip: true });
     console.log("pressed skip button");
   }
 
@@ -29,16 +25,8 @@ class ReferFriendsScreen extends React.Component<Props, State> {
     const ameelioUrl = "letters.ameelio.org";
     // TO-DO: Edit message content once we have the content copy
     const shareMessage = "Insert share message";
-
     const sharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + ameelioUrl + "&quote=" + shareMessage;
-    const supportedUrl = await Linking.canOpenURL(sharingUrl);
-
-    if (supportedUrl) {
-      this.setState({ shareableLink: true });
-      await Linking.openURL(sharingUrl);
-    } else {
-      Alert.alert("Sharing URL is not supported");
-    }
+    await facebookShare(sharingUrl);
   }
 
   render() {
