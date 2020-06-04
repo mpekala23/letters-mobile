@@ -111,3 +111,5 @@ export async function register(data: UserInfo) {
   store.dispatch(loginUser(userData));
   return userData;
 }
+
+export async function getFacilities(text: string) {}

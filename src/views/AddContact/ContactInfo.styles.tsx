@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { WINDOW_WIDTH } from "@utils";
 
 export default StyleSheet.create({
   contactbackground: {
@@ -11,7 +12,9 @@ export default StyleSheet.create({
   },
   bottomButtonContainer: {
     marginTop: 30,
+    marginBottom: 15,
     flexDirection: "row",
+    width: WINDOW_WIDTH * 0.95,
   },
   bottomButton: {
     flex: 1,

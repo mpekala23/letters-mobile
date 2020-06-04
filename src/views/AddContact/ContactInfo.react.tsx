@@ -63,11 +63,13 @@ class ContactInfoScreen extends React.Component<Props, State> {
             style={{
               flex: 1,
               justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <ScrollView
               keyboardShouldPersistTaps="handled"
               scrollEnabled={this.state.inputting}
+              style={{ width: "100%" }}
             >
               <View style={{ width: "100%", height: 40 }} />
               <View style={Styles.contactbackground}>
@@ -190,24 +192,23 @@ class ContactInfoScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                 />
-                <View style={Styles.bottomButtonContainer}>
-                  <Button
-                    onPress={() => {}}
-                    buttonText="Back"
-                    reverse
-                    containerStyle={Styles.bottomButton}
-                  />
-                  <Button
-                    onPress={() => {
-                      this.props.navigation.navigate("FacilityDirectory");
-                    }}
-                    buttonText="Next"
-                    containerStyle={Styles.bottomButton}
-                  />
-                </View>
               </View>
-              <View style={{ width: "100%", height: 100 }} />
             </ScrollView>
+            <View style={Styles.bottomButtonContainer}>
+              <Button
+                onPress={() => {}}
+                buttonText="Back"
+                reverse
+                containerStyle={Styles.bottomButton}
+              />
+              <Button
+                onPress={() => {
+                  this.props.navigation.navigate("FacilityDirectory");
+                }}
+                buttonText="Next"
+                containerStyle={Styles.bottomButton}
+              />
+            </View>
           </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>
