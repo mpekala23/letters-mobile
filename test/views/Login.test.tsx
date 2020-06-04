@@ -1,6 +1,5 @@
 import React from "react";
 import { LoginScreen } from "@views";
-process.env.MOCK_API_IP = "test_mock_api";
 import { login } from "@api";
 import { render, fireEvent, toJSON } from "@testing-library/react-native";
 import fetchMock from "jest-fetch-mock";
