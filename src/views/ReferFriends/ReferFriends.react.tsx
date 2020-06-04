@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { Button } from "@components";
 import { facebookShare } from "@api";
-import { Linking } from 'react-native';
 import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
 

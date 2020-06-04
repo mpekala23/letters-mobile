@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { render, fireEvent, toJSON } from "@testing-library/react-native";
 import { ReferFriendsScreen } from "@views";
 import { facebookShare } from "@api";
