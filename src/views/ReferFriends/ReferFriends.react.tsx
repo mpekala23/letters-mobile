@@ -14,10 +14,19 @@ class ReferFriendsScreen extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      pressedSkip: false,
+      shareableLink: false,
+    }
+  }
+
+  onSkip = async () => {
+    this.setState({ pressedSkip: true });
+    console.log("pressed skip button");
   }
 
   onShare = async () => {
-    const ameelioUrl = "ameelio.org";
+    const ameelioUrl = "letters.ameelio.org";
     // TO-DO: Edit message content once we have the content copy
     const shareMessage = "Insert share message";
 
@@ -25,9 +34,10 @@ class ReferFriendsScreen extends React.Component<Props, State> {
     const supportedUrl = await Linking.canOpenURL(sharingUrl);
 
     if (supportedUrl) {
+      this.setState({ shareableLink: true });
       await Linking.openURL(sharingUrl);
     } else {
-      Alert.alert("Sharing URL is not supported"); x
+      Alert.alert("Sharing URL is not supported");
     }
   }
 
@@ -63,9 +73,7 @@ class ReferFriendsScreen extends React.Component<Props, State> {
               reverse
               containerStyle={{ width: 80 }}
               textStyle={{ fontSize: 16 }}
-              onPress={() => {
-                console.log("pressed skip button");
-              }}
+              onPress={this.onSkip}
             />
             <Button
               buttonText="Share"
