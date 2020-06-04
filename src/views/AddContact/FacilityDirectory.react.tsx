@@ -1,10 +1,10 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import { View, FlatList, Text, TouchableOpacity, Keyboard } from "react-native";
 import { Colors, Typography } from "@styles";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Styles from "./FacilityDirectory.styles";
-import { Button } from "components";
+import { Button, Input } from "@components";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -57,8 +57,19 @@ class FacilityDirectoryScreen extends React.Component<Props> {
 
   render() {
     return (
-      <View style={Styles.facilityBackground}>
+      <TouchableOpacity
+        style={Styles.facilityBackground}
+        onPress={Keyboard.dismiss}
+        activeOpacity={1.0}
+      >
         <Typography.PageHeader text="Facility Directory" />
+        <Input
+          parentStyle={Styles.searchParent}
+          inputStyle={Styles.searchInput}
+          onChangeText={(val: string) => {
+            console.log(val);
+          }}
+        />
         <FlatList
           data={[example]}
           renderItem={this.renderItem}
@@ -83,7 +94,7 @@ class FacilityDirectoryScreen extends React.Component<Props> {
             containerStyle={Styles.bottomButton}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

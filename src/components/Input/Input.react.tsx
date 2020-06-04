@@ -27,6 +27,7 @@ export interface Props {
   onBlur: () => void;
   onValid: () => void;
   onInvalid: () => void;
+  onChangeText: (val: string) => void;
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
@@ -53,6 +54,7 @@ class Input extends React.Component<Props, State> {
     onBlur: () => {},
     onValid: () => {},
     onInvalid: () => {},
+    onChangeText: () => {},
     secure: false,
     options: [],
     nextInput: false,
@@ -127,6 +129,7 @@ class Input extends React.Component<Props, State> {
     this.setState({ value: newValue }, () => {
       this.doValidate();
       if (this.props.options.length > 0) this.updateResults();
+      this.props.onChangeText(newValue);
     });
   }
 

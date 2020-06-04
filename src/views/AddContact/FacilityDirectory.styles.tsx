@@ -52,4 +52,11 @@ export default StyleSheet.create({
     flex: 1,
     margin: 10,
   },
+  searchParent: {
+    marginTop: 20,
+  },
+  searchInput: {
+    padding: 10,
+    borderRadius: 20,
+  },
 });
