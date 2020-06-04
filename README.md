@@ -10,9 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Install [Node.js](https://nodejs.org/en/)
-- Install [npm](https://www.npmjs.com/get-npm)
-- Install [Expo CLI](https://docs.expo.io/workflow/expo-cli/)
+* Install [Node.js](https://nodejs.org/en/)
+* Install [npm](https://www.npmjs.com/get-npm)
+* Install [Expo CLI](https://docs.expo.io/workflow/expo-cli/)
 
 ### Installing
 
@@ -29,8 +29,6 @@ npm install
 Create a file .env in the project root. In that file, add the line
 
 `MOCK_API_IP = [your IPv4 local IP address]`
-
-This will make it so that during development your app can successfully connect to the mock API backend.
 
 #### Starting the Project
 
@@ -60,8 +58,8 @@ npm run test
 
 ## Built With
 
-- [React Native](https://reactnative.dev/) - The cross-platform framework used
-- [npm](https://reactnative.dev/) - Dependency Management
+* [React Native](https://reactnative.dev/) - The cross-platform framework used
+* [npm](https://reactnative.dev/) - Dependency Management
 
 ## Contributing
 
