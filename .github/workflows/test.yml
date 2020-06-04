@@ -1,7 +1,6 @@
 name: Tests
 
-on:
-  pull_request:
+on: pull_request
 
 jobs:
   unit:
@@ -29,11 +28,10 @@ jobs:
       env:
         CI: true
 
-# TODO: Enable coverage report uploads once we open source the repo
-#     - name: Upload coverage to Codecov
-#       uses: codecov/codecov-action@v1.0.5
-#       with:
-#         token: ${{ secrets.CODECOV_TOKEN }}
-#         file: ./coverage/coverage-final.json
-#         flags: unit
-#         fail_ci_if_error: true
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage/coverage-final.json
+        flags: unit
+        fail_ci_if_error: true
