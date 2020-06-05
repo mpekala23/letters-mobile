@@ -1,6 +1,5 @@
 import React from "react";
 import { Dropdown } from "@components";
-import renderer from "react-test-renderer";
 import { render, toJSON } from "@testing-library/react-native";
 
 const setup = () => {
