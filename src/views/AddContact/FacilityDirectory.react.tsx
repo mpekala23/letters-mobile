@@ -4,7 +4,9 @@ import { Colors, Typography } from "@styles";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Styles from "./FacilityDirectory.styles";
+import CommonStyles from "./AddContact.styles";
 import { Button, Input } from "@components";
+import { Facility } from "types";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -15,22 +17,45 @@ export interface Props {
   navigation: ContactInfoScreenNavigationProp;
 }
 
-const example = {
+export interface State {
+  selected: Facility | null;
+}
+
+const example: Facility = {
   name: "Yukon Kskokwim Correctional Center",
   type: "State Prison",
-  address: "P.O. Box 400 - Bethel, AK 99559",
+  address: "P.O. Box 400",
+  city: "Bethel",
+  state: "AK",
+  postal: "99559",
 };
 
-class FacilityDirectoryScreen extends React.Component<Props> {
+class FacilityDirectoryScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      selected: null,
+    };
     this.renderItem = this.renderItem.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
   }
 
   renderItem({ item }) {
     return (
-      <TouchableOpacity style={[Styles.shadow, Styles.itemBackground]}>
+      <TouchableOpacity
+        style={[
+          Styles.shadow,
+          Styles.itemBackground,
+          this.state.selected === item ? Styles.selectedBackground : {},
+        ]}
+        onPress={() => {
+          if (this.state.selected === item) {
+            this.setState({ selected: null });
+          } else {
+            this.setState({ selected: item });
+          }
+        }}
+      >
         <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
           {item.name}
         </Text>
@@ -38,7 +63,7 @@ class FacilityDirectoryScreen extends React.Component<Props> {
           {item.type}
         </Text>
         <Text style={[Typography.FONT_ITALIC, Styles.itemInfo]}>
-          {item.address}
+          {item.address} - {item.city}, {item.state} {item.postal}
         </Text>
       </TouchableOpacity>
     );
@@ -50,7 +75,12 @@ class FacilityDirectoryScreen extends React.Component<Props> {
         <Text style={[Typography.FONT_REGULAR, { marginBottom: 20 }]}>
           Don't see the facility you're looking for?
         </Text>
-        <Button buttonText="Add Manually" />
+        <Button
+          buttonText="Add Manually"
+          onPress={() => {
+            this.props.navigation.navigate("AddManually");
+          }}
+        />
       </View>
     );
   }
@@ -77,21 +107,22 @@ class FacilityDirectoryScreen extends React.Component<Props> {
           ListFooterComponent={this.renderFooter}
           keyExtractor={(item) => item.name}
         />
-        <View style={Styles.bottomButtonContainer}>
+        <View style={CommonStyles.bottomButtonContainer}>
           <Button
             onPress={() => {
               this.props.navigation.navigate("ContactInfo");
             }}
             buttonText="Back"
             reverse
-            containerStyle={Styles.bottomButton}
+            containerStyle={CommonStyles.bottomButton}
           />
           <Button
             onPress={() => {
-              this.props.navigation.navigate("FacilityDirectory");
+              this.props.navigation.navigate("ReviewContact");
             }}
             buttonText="Next"
-            containerStyle={Styles.bottomButton}
+            enabled={this.state.selected !== null}
+            containerStyle={CommonStyles.bottomButton}
           />
         </View>
       </TouchableOpacity>

@@ -7,12 +7,14 @@ import {
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
 import {
+  AddManuallyScreen,
   ContactInfoScreen,
   FacilityDirectoryScreen,
   HomeScreen,
   LoginScreen,
   RegisterScreen,
   SplashScreen,
+  ReviewContactScreen,
 } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
@@ -24,8 +26,10 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  AddManually: AddManuallyScreen;
   ContactInfo: ContactInfoScreen;
   FacilityDirectory: FacilityDirectoryScreen;
+  ReviewContact: ReviewContactScreen;
 };
 
 const Stack = createStackNavigator();
@@ -66,6 +70,16 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="FacilityDirectory"
         component={FacilityDirectoryScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="AddManually"
+        component={AddManuallyScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReviewContact"
+        component={ReviewContactScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen

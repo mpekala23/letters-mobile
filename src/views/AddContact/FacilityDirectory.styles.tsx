@@ -33,6 +33,9 @@ export default StyleSheet.create({
     borderRadius: 30,
     marginBottom: 10,
   },
+  selectedBackground: {
+    backgroundColor: Colors.SELECT,
+  },
   itemTitle: {
     fontSize: 16,
   },
@@ -41,16 +44,6 @@ export default StyleSheet.create({
   },
   footerBackground: {
     marginTop: 20,
-  },
-  bottomButtonContainer: {
-    marginTop: 30,
-    marginBottom: 15,
-    flexDirection: "row",
-    width: WINDOW_WIDTH * 0.95,
-  },
-  bottomButton: {
-    flex: 1,
-    margin: 10,
   },
   searchParent: {
     marginTop: 20,

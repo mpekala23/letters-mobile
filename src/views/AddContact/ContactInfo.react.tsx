@@ -10,6 +10,7 @@ import {
 import { Button, Input } from "@components";
 import { Typography } from "@styles";
 import Styles from "./ContactInfo.styles";
+import CommonStyles from "./AddContact.styles";
 import { AMEELIO_BLACK } from "styles/Colors";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -26,6 +27,7 @@ export interface Props {
 
 export interface State {
   inputting: boolean;
+  valid: boolean;
 }
 
 class ContactInfoScreen extends React.Component<Props, State> {
@@ -39,12 +41,27 @@ class ContactInfoScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       inputting: false,
+      valid: false,
     };
-    this.stateRef = createRef();
-    this.firstName = createRef();
-    this.lastName = createRef();
-    this.inmateNumber = createRef();
-    this.relationship = createRef();
+    this.updateValid = this.updateValid.bind(this);
+  }
+
+  updateValid() {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current &&
+      this.relationship.current
+    ) {
+      const result =
+        this.stateRef.current.state.valid &&
+        this.firstName.current.state.valid &&
+        this.lastName.current.state.valid &&
+        this.inmateNumber.current.state.valid &&
+        this.relationship.current.state.valid;
+      this.setState({ valid: result });
+    }
   }
 
   render() {
@@ -72,7 +89,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
               style={{ width: "100%" }}
             >
               <View style={{ width: "100%", height: 40 }} />
-              <View style={Styles.contactbackground}>
+              <View style={CommonStyles.contactbackground}>
                 <Typography.PageHeader text="Add Contact" />
                 <Button
                   link
@@ -116,7 +133,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                 </Button>
                 <Input
                   ref={this.stateRef}
-                  parentStyle={Styles.fullWidth}
+                  parentStyle={CommonStyles.fullWidth}
                   placeholder="State"
                   options={States.STATES}
                   validate={Validation.State}
@@ -126,11 +143,13 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.firstName}
                 />
                 <Input
                   ref={this.firstName}
-                  parentStyle={Styles.fullWidth}
+                  parentStyle={CommonStyles.fullWidth}
                   placeholder="First Name"
                   required
                   onFocus={() => {
@@ -139,11 +158,13 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.lastName}
                 />
                 <Input
                   ref={this.lastName}
-                  parentStyle={Styles.fullWidth}
+                  parentStyle={CommonStyles.fullWidth}
                   placeholder="Last Name"
                   required
                   onFocus={() => {
@@ -152,11 +173,13 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.inmateNumber}
                 />
                 <Input
                   ref={this.inmateNumber}
-                  parentStyle={Styles.fullWidth}
+                  parentStyle={CommonStyles.fullWidth}
                   placeholder="Inmate Number"
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -164,11 +187,13 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.relationship}
                 />
                 <Input
                   ref={this.relationship}
-                  parentStyle={Styles.fullWidth}
+                  parentStyle={CommonStyles.fullWidth}
                   placeholder="Relationship to Inmate"
                   options={[
                     "Mother",
@@ -191,22 +216,25 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                 />
               </View>
             </ScrollView>
-            <View style={Styles.bottomButtonContainer}>
+            <View style={CommonStyles.bottomButtonContainer}>
               <Button
                 onPress={() => {}}
                 buttonText="Back"
                 reverse
-                containerStyle={Styles.bottomButton}
+                containerStyle={CommonStyles.bottomButton}
               />
               <Button
                 onPress={() => {
                   this.props.navigation.navigate("FacilityDirectory");
                 }}
                 buttonText="Next"
-                containerStyle={Styles.bottomButton}
+                enabled={this.state.valid}
+                containerStyle={CommonStyles.bottomButton}
               />
             </View>
           </View>
