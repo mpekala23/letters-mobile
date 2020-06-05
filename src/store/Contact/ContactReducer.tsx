@@ -21,11 +21,15 @@ export default function ContactReducer(
   state = initialState,
   action: ContactActionTypes
 ): ContactState {
+  console.log("here");
+  const currentState = { ...state };
   switch (action.type) {
     case SET_ADDING:
-      return state;
+      currentState.adding = action.payload;
+      return currentState;
     case SET_EXISTING:
-      return state;
+      currentState.existing = action.payload;
+      return currentState;
     default:
       return state;
   }

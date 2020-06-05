@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef, Dispatch } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -15,6 +15,14 @@ import { AMEELIO_BLACK } from "styles/Colors";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { States, Validation } from "@utils";
+import { connect } from "react-redux";
+import { AppState } from "@store/types";
+import { setAdding } from "@store/Contact/ContactActions";
+import {
+  ContactState,
+  Contact,
+  ContactActionTypes,
+} from "@store/Contact/ContactTypes";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -23,6 +31,8 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ContactInfoScreenNavigationProp;
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
@@ -30,12 +40,14 @@ export interface State {
   valid: boolean;
 }
 
-class ContactInfoScreen extends React.Component<Props, State> {
+class ContactInfoScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
   private firstName = createRef<Input>();
   private lastName = createRef<Input>();
   private inmateNumber = createRef<Input>();
   private relationship = createRef<Input>();
+  private unsubscribeFocus: () => void;
+  private unsubscribeBlur: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -44,7 +56,37 @@ class ContactInfoScreen extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      "focus",
+      this.onNavigationFocus
+    );
+    this.unsubscribeBlur = props.navigation.addListener(
+      "blur",
+      this.onNavigationBlur
+    );
   }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
+  }
+
+  onNavigationFocus() {
+    const addingContact = this.props.contactState.adding;
+    if (this.stateRef.current) this.stateRef.current.set(addingContact.state);
+    if (this.firstName.current)
+      this.firstName.current.set(addingContact.firstName);
+    if (this.lastName.current)
+      this.lastName.current.set(addingContact.lastName);
+    if (this.inmateNumber.current)
+      this.inmateNumber.current.set(addingContact.inmateNumber);
+    if (this.relationship.current)
+      this.relationship.current.set(addingContact.relationship);
+  }
+
+  onNavigationBlur() {}
 
   updateValid() {
     if (
@@ -181,6 +223,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   ref={this.inmateNumber}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Inmate Number"
+                  required
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -195,6 +238,7 @@ class ContactInfoScreen extends React.Component<Props, State> {
                   ref={this.relationship}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Relationship to Inmate"
+                  required
                   options={[
                     "Mother",
                     "Father",
@@ -223,13 +267,32 @@ class ContactInfoScreen extends React.Component<Props, State> {
             </ScrollView>
             <View style={CommonStyles.bottomButtonContainer}>
               <Button
-                onPress={() => {}}
+                onPress={() => {
+                  console.log(this.props);
+                }}
                 buttonText="Back"
                 reverse
                 containerStyle={CommonStyles.bottomButton}
               />
               <Button
                 onPress={() => {
+                  if (
+                    this.stateRef.current &&
+                    this.firstName.current &&
+                    this.lastName.current &&
+                    this.inmateNumber.current &&
+                    this.relationship.current
+                  ) {
+                    const contact: Contact = {
+                      state: this.stateRef.current.state.value,
+                      firstName: this.firstName.current.state.value,
+                      lastName: this.lastName.current.state.value,
+                      inmateNumber: this.inmateNumber.current.state.value,
+                      relationship: this.relationship.current.state.value,
+                      facility: null,
+                    };
+                    this.props.setAdding(contact);
+                  }
                   this.props.navigation.navigate("FacilityDirectory");
                 }}
                 buttonText="Next"
@@ -243,5 +306,18 @@ class ContactInfoScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const ContactInfoScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContactInfoScreenBase);
 
 export default ContactInfoScreen;
