@@ -18,16 +18,18 @@ describe("ReferFriends screen", () => {
 	 	const tree = toJSON(container);
 	 	expect(tree).toMatchSnapshot();
 	 })
-	// // TO-DO: Update test when actual skip press action is hooked in
-	it("on skip press", async() => {
-		const { getByText } = setup();
+	it("should open the home screen when skip is pressed", async() => {
+		const { container, getByText } = setup();
+		const navigation = container.props.children.props.navigation;
 		const skipButton = getByText("Skip");
 		fireEvent.press(skipButton);
+		expect(navigation.navigate).toHaveBeenCalledWith("Home");
 	})
 	it("should make api call on share press", async() => {
-		const { getByText } = setup();
+		const { container, getByText } = setup();
+		const shareUrl = "https://www.facebook.com/sharer/sharer.php?u=letters.ameelio.org&quote=Insert share message";
 		const shareButton = getByText("Share");
 		fireEvent.press(shareButton);
-		expect(facebookShare).toHaveBeenCalledTimes(1);
+		expect(facebookShare).toHaveBeenCalledWith(shareUrl);
 	})
 });

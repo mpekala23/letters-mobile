@@ -55,7 +55,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
             ]
           }
         >
-           DATE
+           
         </Text>
       </Text>
       <Text
@@ -69,7 +69,8 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           ]
         }
       >
-        Your letter to NAME is on the way! Thanks for trusting us to deliver your messages.
+        Your letter to 
+         is on the way! Thanks for trusting us to deliver your messages.
       </Text>
       <Text
         style={
