@@ -21,6 +21,7 @@
     "expo-image-picker": "^8.1.0",
     "expo-permissions": "^8.1.0",
     "fetch-mock": "^9.10.1",
+    "i18n-js": "^3.7.0",
     "jest": "^25.5.4",
     "jest-expo": "^37.0.0",
     "jest-serializer-enzyme": "^1.0.0",
