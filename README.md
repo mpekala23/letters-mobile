@@ -1,6 +1,7 @@
 # Ameelio Letters Mobile
 
-![Tests](https://github.com/AmeelioDev/letters-mobile/workflows/Tests/badge.svg)
+[![Tests](https://github.com/AmeelioDev/letters-mobile/workflows/Tests/badge.svg)](https://github.com/AmeelioDev/letters-mobile/actions?query=workflow%3ATests+branch%3A+master)
+[![codecov](https://codecov.io/gh/AmeelioDev/letters-mobile/branch/master/graph/badge.svg)](https://codecov.io/gh/AmeelioDev/letters-mobile)
 
 ![Ameelio Letters Logo](./src/assets/Ameelio_Logo.png)
 
