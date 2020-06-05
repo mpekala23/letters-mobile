@@ -47,7 +47,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   private inmateNumber = createRef<Input>();
   private relationship = createRef<Input>();
   private unsubscribeFocus: () => void;
-  private unsubscribeBlur: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -62,15 +61,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       "focus",
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = props.navigation.addListener(
-      "blur",
-      this.onNavigationBlur
-    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
@@ -267,9 +261,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             </ScrollView>
             <View style={CommonStyles.bottomButtonContainer}>
               <Button
-                onPress={() => {
-                  console.log(this.props);
-                }}
+                onPress={() => {}}
                 buttonText="Back"
                 reverse
                 containerStyle={CommonStyles.bottomButton}
@@ -289,7 +281,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                       lastName: this.lastName.current.state.value,
                       inmateNumber: this.inmateNumber.current.state.value,
                       relationship: this.relationship.current.state.value,
-                      facility: null,
+                      facility: this.props.contactState.adding.facility,
                     };
                     this.props.setAdding(contact);
                   }

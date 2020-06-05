@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { View, FlatList, Text, TouchableOpacity, Keyboard } from "react-native";
 import { Colors, Typography } from "@styles";
 import { AppStackParamList } from "navigations";
@@ -6,7 +6,15 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Styles from "./FacilityDirectory.styles";
 import CommonStyles from "./AddContact.styles";
 import { Button, Input } from "@components";
-import { Facility } from "types";
+import { Facility, NullableFacility } from "types";
+import { connect } from "react-redux";
+import { AppState } from "@store/types";
+import { setAdding } from "@store/Contact/ContactActions";
+import {
+  ContactState,
+  Contact,
+  ContactActionTypes,
+} from "@store/Contact/ContactTypes";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -14,11 +22,18 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 >;
 
 export interface Props {
+  facilityData: Contact[];
   navigation: ContactInfoScreenNavigationProp;
+  route: {
+    params: { newFacility: NullableFacility };
+  };
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
   selected: Facility | null;
+  manual: Facility | null;
 }
 
 const example: Facility = {
@@ -30,17 +45,45 @@ const example: Facility = {
   postal: "99559",
 };
 
-class FacilityDirectoryScreen extends React.Component<Props, State> {
+class FacilityDirectoryScreenBase extends React.Component<Props, State> {
+  private unsubscribeFocus: () => void;
+
+  static defaultProps = {
+    facilityData: [example],
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
       selected: null,
+      manual: null,
     };
     this.renderItem = this.renderItem.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      "focus",
+      this.onNavigationFocus
+    );
   }
 
-  renderItem({ item }) {
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
+  }
+
+  onNavigationFocus() {
+    if (this.props.route.params && this.props.route.params.newFacility) {
+      this.setState({
+        manual: this.props.route.params.newFacility,
+        selected: this.props.route.params.newFacility,
+      });
+    } else {
+      this.setState({ selected: this.props.contactState.adding.facility });
+    }
+  }
+
+  renderItem({ item }: { item: Facility }) {
     return (
       <TouchableOpacity
         style={[
@@ -70,14 +113,31 @@ class FacilityDirectoryScreen extends React.Component<Props, State> {
   }
 
   renderFooter() {
+    const manualEntry = this.state.manual ? (
+      <View>
+        <View
+          style={{
+            width: "100%",
+            height: 1,
+            backgroundColor: Colors.GRAY_LIGHT,
+            marginBottom: 30,
+          }}
+        />
+        {this.renderItem({ item: this.state.manual })}
+      </View>
+    ) : (
+      <View />
+    );
     return (
       <View style={Styles.footerBackground}>
+        {manualEntry}
         <Text style={[Typography.FONT_REGULAR, { marginBottom: 20 }]}>
           Don't see the facility you're looking for?
         </Text>
         <Button
           buttonText="Add Manually"
           onPress={() => {
+            this.setState({ selected: null });
             this.props.navigation.navigate("AddManually");
           }}
         />
@@ -96,12 +156,10 @@ class FacilityDirectoryScreen extends React.Component<Props, State> {
         <Input
           parentStyle={Styles.searchParent}
           inputStyle={Styles.searchInput}
-          onChangeText={(val: string) => {
-            console.log(val);
-          }}
+          onChangeText={(val: string) => {}}
         />
         <FlatList
-          data={[example]}
+          data={this.props.facilityData}
           renderItem={this.renderItem}
           contentContainerStyle={Styles.flatBackground}
           ListFooterComponent={this.renderFooter}
@@ -110,6 +168,12 @@ class FacilityDirectoryScreen extends React.Component<Props, State> {
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
             onPress={() => {
+              const contact = this.props.contactState.adding;
+              contact.facility = this.state.selected;
+              this.props.setAdding(contact);
+              this.props.navigation.setParams({
+                newFacility: null,
+              });
               this.props.navigation.navigate("ContactInfo");
             }}
             buttonText="Back"
@@ -118,6 +182,13 @@ class FacilityDirectoryScreen extends React.Component<Props, State> {
           />
           <Button
             onPress={() => {
+              const contact = this.props.contactState.adding;
+              contact.facility = this.state.selected;
+
+              this.props.setAdding(contact);
+              this.props.navigation.setParams({
+                newFacility: null,
+              });
               this.props.navigation.navigate("ReviewContact");
             }}
             buttonText="Next"
@@ -129,5 +200,18 @@ class FacilityDirectoryScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const FacilityDirectoryScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FacilityDirectoryScreenBase);
 
 export default FacilityDirectoryScreen;

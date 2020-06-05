@@ -15,6 +15,7 @@ import Styles from "./FacilityDirectory.styles";
 import CommonStyles from "./AddContact.styles";
 import { Button, Input } from "@components";
 import { Validation } from "utils";
+import { Facility } from "types";
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -163,7 +164,26 @@ class AddManuallyScreen extends React.Component<Props, State> {
           />
           <Button
             onPress={() => {
-              this.props.navigation.navigate("FacilityDirectory");
+              if (
+                this.facilityName.current &&
+                this.facilityAddress.current &&
+                this.facilityCity.current &&
+                this.facilityPostal.current
+              ) {
+                const facility: Facility = {
+                  name: this.facilityName.current.state.value,
+                  type: "State Prison",
+                  address: this.facilityAddress.current.state.value,
+                  city: this.facilityCity.current.state.value,
+                  state: "MN",
+                  postal: this.facilityPostal.current.state.value,
+                };
+                this.props.navigation.navigate("FacilityDirectory", {
+                  newFacility: facility,
+                });
+              } else {
+                this.props.navigation.navigate("FacilityDirectory");
+              }
             }}
             buttonText="Next"
             enabled={this.state.valid}

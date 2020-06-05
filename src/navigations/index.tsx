@@ -19,20 +19,21 @@ import {
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
+import { NullableFacility } from "types";
 
 export type AuthStackParamList = {
-  Login: LoginScreen;
-  Register: RegisterScreen;
+  Login: undefined;
+  Register: undefined;
 };
 
 export type AppStackParamList = {
-  AddManually: AddManuallyScreen;
-  ContactInfo: ContactInfoScreen;
-  FacilityDirectory: FacilityDirectoryScreen;
-  ReviewContact: ReviewContactScreen;
+  AddManually: undefined;
+  ContactInfo: undefined;
+  FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  ReviewContact: undefined;
 };
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AuthStackParamList & AppStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;

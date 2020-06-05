@@ -8,3 +8,5 @@ export interface Facility {
   state: string;
   postal: string;
 }
+
+export type NullableFacility = Facility | null;

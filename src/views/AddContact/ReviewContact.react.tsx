@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef, Dispatch } from "react";
 import {
   KeyboardAvoidingView,
   View,
@@ -16,6 +16,14 @@ import CommonStyles from "./AddContact.styles";
 import { Button, Input, PicUpload } from "@components";
 import { Validation } from "utils";
 import { States } from "@utils";
+import { AppState } from "store/types";
+import {
+  Contact,
+  ContactActionTypes,
+  ContactState,
+} from "store/Contact/ContactTypes";
+import { setAdding } from "store/Contact/ContactActions";
+import { connect } from "react-redux";
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -24,13 +32,15 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
   valid: boolean;
 }
 
-class ReviewContactScreen extends React.Component<Props, State> {
+class ReviewContactScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
   private firstName = createRef<Input>();
   private lastName = createRef<Input>();
@@ -39,6 +49,7 @@ class ReviewContactScreen extends React.Component<Props, State> {
   private facilityAddress = createRef<Input>();
   private unit = createRef<Input>();
   private dorm = createRef<Input>();
+  private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -46,6 +57,38 @@ class ReviewContactScreen extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      "focus",
+      this.onNavigationFocus
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus() {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.props.contactState.adding.facility
+    ) {
+      this.stateRef.current.set(this.props.contactState.adding.state);
+      this.firstName.current.set(this.props.contactState.adding.firstName);
+      this.lastName.current.set(this.props.contactState.adding.lastName);
+      this.postal.current.set(this.props.contactState.adding.facility.postal);
+      this.facilityName.current.set(
+        this.props.contactState.adding.facility.name
+      );
+      this.facilityAddress.current.set(
+        this.props.contactState.adding.facility.address
+      );
+    }
   }
 
   updateValid() {
@@ -188,5 +231,18 @@ class ReviewContactScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const ReviewContactScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReviewContactScreenBase);
 
 export default ReviewContactScreen;
