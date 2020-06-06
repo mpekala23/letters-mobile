@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from "react-native";
 import { Button, Input } from "@components";
 import { Typography } from "@styles";
@@ -109,7 +110,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
-          behavior="padding"
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
           enabled
         >
           <View

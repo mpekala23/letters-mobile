@@ -97,7 +97,7 @@ class LoginScreen extends React.Component<Props, State> {
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
-          behavior="padding"
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
           enabled
         >
           <View

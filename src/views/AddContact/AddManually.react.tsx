@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
+  Platform,
 } from "react-native";
 import { Colors, Typography } from "@styles";
 import { AppStackParamList } from "navigations";
@@ -71,7 +72,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
-          behavior="padding"
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
           enabled
         >
           <View

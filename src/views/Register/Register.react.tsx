@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   View,
+  Platform,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "@navigations";
@@ -153,7 +154,7 @@ class RegisterScreen extends React.Component<Props, State> {
     return (
       <KeyboardAvoidingView
         style={Styles.trueBackground}
-        behavior="padding"
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
         enabled
       >
         <ScrollView
