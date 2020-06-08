@@ -184,6 +184,6 @@ describe("Facility Directory Screen", () => {
     setTimeout(() => {
       expect(facility.props.style[2].backgroundColor).toBe(Colors.SELECT);
     }, 1);
-    expect(navigation.setParams).toHaveBeenCalledWith(null);
+    expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
   });
 });
