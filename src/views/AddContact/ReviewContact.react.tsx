@@ -165,7 +165,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   onInvalid={() => this.setState({ valid: false })}
                 />
                 <Input
-                  ref={this.stateRef}
+                  ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Last Name"
                   required
@@ -206,6 +206,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Dorm (optional, only if needed)"
                 />
+                <View style={{ width: "100%", height: 80 }} />
               </View>
             </ScrollView>
           </View>

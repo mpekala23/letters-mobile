@@ -57,11 +57,14 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
-    this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       "focus",
       this.onNavigationFocus
     );
+  }
+
+  componentDidMount() {
+    this.onNavigationFocus();
   }
 
   componentWillUnmount() {
@@ -80,8 +83,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     if (this.relationship.current)
       this.relationship.current.set(addingContact.relationship);
   }
-
-  onNavigationBlur() {}
 
   updateValid() {
     if (

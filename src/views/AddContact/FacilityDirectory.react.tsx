@@ -22,7 +22,7 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 >;
 
 export interface Props {
-  facilityData: Contact[];
+  facilityData: Facility[];
   navigation: ContactInfoScreenNavigationProp;
   route: {
     params: { newFacility: NullableFacility };
@@ -32,6 +32,7 @@ export interface Props {
 }
 
 export interface State {
+  search: string;
   selected: Facility | null;
   manual: Facility | null;
 }
@@ -55,16 +56,22 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      search: "",
       selected: null,
       manual: null,
     };
     this.renderItem = this.renderItem.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.filterData = this.filterData.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       "focus",
       this.onNavigationFocus
     );
+  }
+
+  componentDidMount() {
+    this.onNavigationFocus();
   }
 
   componentWillUnmount() {
@@ -80,6 +87,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     } else {
       this.setState({ selected: this.props.contactState.adding.facility });
     }
+    this.props.navigation.setParams({ newFacility: null });
   }
 
   renderItem({ item }: { item: Facility }) {
@@ -144,6 +152,23 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     );
   }
 
+  filterData() {
+    const result = [];
+    for (let ix = 0; ix < this.props.facilityData.length; ++ix) {
+      const facility = this.props.facilityData[ix];
+      const search = this.state.search.toLowerCase();
+      if (
+        facility.name.toLowerCase().indexOf(search) > -1 ||
+        facility.city.toLowerCase().indexOf(search) > -1 ||
+        facility.postal.toLowerCase().indexOf(search) > -1 ||
+        facility.state.toLowerCase().indexOf(search) > -1
+      ) {
+        result.push(facility);
+      }
+    }
+    return result;
+  }
+
   render() {
     return (
       <TouchableOpacity
@@ -155,10 +180,12 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <Input
           parentStyle={Styles.searchParent}
           inputStyle={Styles.searchInput}
-          onChangeText={(val: string) => {}}
+          onChangeText={(val: string) => {
+            this.setState({ search: val });
+          }}
         />
         <FlatList
-          data={this.props.facilityData}
+          data={this.filterData()}
           renderItem={this.renderItem}
           contentContainerStyle={Styles.flatBackground}
           ListFooterComponent={this.renderFooter}
