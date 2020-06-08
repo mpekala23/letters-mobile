@@ -1,23 +1,265 @@
 import React, { createRef } from "react";
 import DropdownAlert from "react-native-dropdownalert";
+import { StatusBar, Text, View } from "react-native";
+import { Animated, TouchableOpacity } from "react-native";
+import { STATUS_BAR_HEIGHT } from "@utils";
+import { Typography, Colors } from "@styles";
+import { Icon } from "react-native-elements";
 
-let dropdownRef = createRef<DropdownAlert>();
+const DROPDOWN_HEIGHT = 100;
+const ANIM_DURATION = 500;
+const DROP_DURATION = 4000;
 
-export function getDropdownRef() {
-  return dropdownRef;
+export interface DropNotif {
+  title: string;
+  body: string;
+  icon?: string;
+  onPress?: () => void;
+  backgroundStyle?: object;
+  id?: number;
 }
 
-class Dropdown extends React.Component {
+interface State {
+  dropped: boolean;
+  height: Animated.Value;
+  notifQ: DropNotif[];
+  animating: boolean;
+}
+
+interface Props {}
+
+export class Dropdown extends React.Component<Props, State> {
+  private numNotifs = 1;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      dropped: false,
+      height: new Animated.Value(-DROPDOWN_HEIGHT),
+      notifQ: [],
+      animating: false,
+    };
+    this.qNotif = this.qNotif.bind(this);
+    this._flushNotif = this._flushNotif.bind(this);
+    this._endNotif = this._endNotif.bind(this);
+    this.renderNotif = this.renderNotif.bind(this);
+  }
+
+  qNotif(notif: DropNotif) {
+    notif.id = this.numNotifs;
+    this.numNotifs += 1;
+    const currentNotifs = this.state.notifQ;
+    currentNotifs.push(notif);
+    this.setState({ notifQ: currentNotifs }, () => {
+      this._flushNotif();
+    });
+  }
+
+  // convenient info dropdown
+  qInfo(infoString: string, body: string, onPress = () => {}) {
+    const errorNotif: DropNotif = {
+      title: "Info: " + infoString,
+      body: body,
+      onPress: onPress,
+      icon: "poll",
+      backgroundStyle: { backgroundColor: Colors.AMEELIO_BLUE },
+    };
+    this.qNotif(errorNotif);
+  }
+
+  // convenient success dropdown
+  qSuccess(successString: string, body: string, onPress = () => {}) {
+    const errorNotif: DropNotif = {
+      title: "Success: " + successString,
+      body: body,
+      onPress: onPress,
+      icon: "done",
+      backgroundStyle: { backgroundColor: Colors.SUCCESS },
+    };
+    this.qNotif(errorNotif);
+  }
+
+  // convenient warning dropdown
+  qWarning(warningString: string, body: string, onPress = () => {}) {
+    const errorNotif: DropNotif = {
+      title: "Warning: " + warningString,
+      body: body,
+      onPress: onPress,
+      icon: "warning",
+      backgroundStyle: { backgroundColor: Colors.WARNING },
+    };
+    this.qNotif(errorNotif);
+  }
+
+  // convenient error dropdown
+  qError(errorString: string, body: string, onPress = () => {}) {
+    const errorNotif: DropNotif = {
+      title: "Error: " + errorString,
+      body: body,
+      onPress: onPress,
+      icon: "error",
+      backgroundStyle: { backgroundColor: Colors.ERROR },
+    };
+    this.qNotif(errorNotif);
+  }
+
+  _flushNotif() {
+    if (
+      this.state.dropped ||
+      this.state.animating ||
+      this.state.notifQ.length === 0
+    )
+      return;
+    this.setState({ dropped: true, animating: true }, () => {
+      const currentId = this.state.notifQ[0].id || -1;
+      Animated.timing(this.state.height, {
+        toValue: 0,
+        duration: ANIM_DURATION,
+        useNativeDriver: false,
+      }).start(() => {
+        this.setState({ animating: false });
+        // when the animation finishes
+        setTimeout(() => {
+          this._endNotif(currentId);
+        }, DROP_DURATION);
+      });
+    });
+  }
+
+  _endNotif(id: number) {
+    if (
+      !this.state.dropped ||
+      this.state.animating ||
+      this.state.notifQ.length === 0 ||
+      this.state.notifQ[0].id != id
+    )
+      return;
+    console.log(this.state.notifQ[0].id, id);
+    this.setState({ animating: true }, () => {
+      Animated.timing(this.state.height, {
+        toValue: -DROPDOWN_HEIGHT,
+        duration: ANIM_DURATION,
+        useNativeDriver: false,
+      }).start(() => {
+        // when the animation finishes
+        this.setState(
+          {
+            notifQ: this.state.notifQ.slice(1),
+            dropped: false,
+            animating: false,
+          },
+          () => {
+            // when the notifQ has been updated
+            if (this.state.notifQ.length > 0) {
+              this._flushNotif();
+            }
+          }
+        );
+      });
+    });
+  }
+
+  renderNotif() {
+    const notif = this.state.notifQ[0];
+    if (!notif) return <View />;
+    const icon =
+      notif.icon || true ? (
+        <Icon
+          size={DROPDOWN_HEIGHT - STATUS_BAR_HEIGHT * 2}
+          name={notif.icon || ""}
+        ></Icon>
+      ) : (
+        <View />
+      );
+    return this.state.dropped ? (
+      <TouchableOpacity
+        style={[
+          {
+            flex: 1,
+            backgroundColor: "yellow",
+            zIndex: 999,
+            padding: STATUS_BAR_HEIGHT,
+            justifyContent: "center",
+          },
+          notif.backgroundStyle,
+        ]}
+        onPress={() => {
+          if (notif.onPress) notif.onPress();
+          if (notif.id) this._endNotif(notif.id);
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {icon}
+          <View
+            style={{ justifyContent: "center", marginLeft: STATUS_BAR_HEIGHT }}
+          >
+            <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
+              {this.state.notifQ[0].title}
+            </Text>
+            <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
+              {this.state.notifQ[0].body}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    ) : (
+      <View />
+    );
+  }
+
   render() {
     return (
-      <DropdownAlert
-        wrapperStyle={{
-          zIndex: 20,
+      <Animated.View
+        style={{
+          position: "absolute",
+          zIndex: 999,
+          top: this.state.height,
+          width: "100%",
         }}
-        ref={dropdownRef}
-      />
+      >
+        {this.renderNotif()}
+      </Animated.View>
     );
   }
 }
 
-export default Dropdown;
+let dropdownRef = createRef<Dropdown>();
+const DropdownInstance = () => <Dropdown ref={dropdownRef} />;
+
+export function dropdownInfo(
+  infoString: string,
+  body: string,
+  onPress = () => {}
+) {
+  dropdownRef.current?.qInfo(infoString, body, onPress);
+}
+
+export function dropdownSuccess(
+  successString: string,
+  body: string,
+  onPress = () => {}
+) {
+  dropdownRef.current?.qSuccess(successString, body, onPress);
+}
+
+export function dropdownWarning(
+  warningString: string,
+  body: string,
+  onPress = () => {}
+) {
+  dropdownRef.current?.qWarning(warningString, body, onPress);
+}
+
+export function dropdownError(
+  errorString: string,
+  body: string,
+  onPress = () => {}
+) {
+  dropdownRef.current?.qError(errorString, body, onPress);
+}
+
+export function customDropdown(notif: DropNotif) {
+  dropdownRef.current?.qNotif(notif);
+}
+
+export default DropdownInstance;

@@ -9,13 +9,13 @@ import {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "@navigations";
 import { Button, Input, PicUpload } from "@components";
-import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
 import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
 import { Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
+import { dropdownError } from "components/Dropdown/Dropdown.react";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -43,7 +43,6 @@ class RegisterScreen extends React.Component<Props, State> {
   private phyState = createRef<Input>();
   private email = createRef<Input>();
   private password = createRef<Input>();
-  private dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Props) {
     super(props);
@@ -129,20 +128,9 @@ class RegisterScreen extends React.Component<Props, State> {
         if (err.message === "Email in use") {
           Alert.alert("Email already in use");
         } else if (err.message === "timeout") {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              "Network Error",
-              "The request timed out."
-            );
+          dropdownError("Network", "The request timed out.");
         } else {
-          // catch all
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              "Network Error",
-              "The request could not be completed."
-            );
+          dropdownError("Network", "The request could not be completed.");
         }
         this.setState({ registered: false });
       }

@@ -14,7 +14,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "@navigations";
 import { login } from "@api";
 import { Button, GrayBar, Input } from "@components";
-import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
@@ -38,7 +38,6 @@ export interface State {
 class LoginScreen extends React.Component<Props, State> {
   private emailRef = createRef<Input>();
   private passwordRef = createRef<Input>();
-  private dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Props) {
     super(props);
@@ -49,7 +48,6 @@ class LoginScreen extends React.Component<Props, State> {
     };
     this.emailRef = createRef();
     this.passwordRef = createRef();
-    this.dropdownRef = getDropdownRef();
   }
 
   onLogin = async () => {
@@ -68,19 +66,9 @@ class LoginScreen extends React.Component<Props, State> {
         if (err.message === "Incorrect credentials") {
           Alert.alert("Incorrect username or password");
         } else if (err.message === "timeout") {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              "Network Error",
-              "The request timed out."
-            );
+          dropdownError("Network", "The request timed out.");
         } else {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              "Network Error",
-              "The request could not be completed."
-            );
+          dropdownError("Network", "The request could not be completed.");
         }
         this.setState({ loggedIn: false });
       }

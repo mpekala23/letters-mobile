@@ -14,25 +14,28 @@ module.exports = (req, res) => {
 
   if (email === 'used@gmail.com') {
     return res.status(401).send({
-      type: 'error',
-      data: 'Email in use',
+      status: 'ERROR',
+      message: 'Email in use',
+      data: [],
     });
   }
 
   return res.status(201).send({
-    type: 'success',
-    data: {
-      id: '6',
-      firstName,
-      lastName,
-      email,
-      cell,
-      address1,
-      address2,
-      country,
-      zipcode,
-      city,
-      state,
-    },
+    status: 'OK',
+    data: [
+      {
+        id: '6',
+        firstName,
+        lastName,
+        email,
+        cell,
+        address1,
+        address2,
+        country,
+        zipcode,
+        city,
+        state,
+      },
+    ],
   });
 };
