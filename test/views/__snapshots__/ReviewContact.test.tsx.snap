@@ -1,0 +1,724 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review Contact Screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={1}
+    style={
+      Object {
+        "backgroundColor": "white",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+          },
+          Object {
+            "paddingBottom": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "width": "100%",
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "white",
+                "flex": 1,
+                "paddingHorizontal": 10,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#3490dc",
+                    "borderBottomRightRadius": 5,
+                    "borderTopRightRadius": 5,
+                    "height": 10,
+                    "marginRight": 10,
+                    "width": 20,
+                  }
+                }
+              />
+              <Text
+                style={
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 30,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                Review Contact
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "marginVertical": 10,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignSelf": "center",
+                  }
+                }
+              >
+                <TouchableOpacity
+                  activeOpacity={0.2}
+                  style={
+                    Object {
+                      "backgroundColor": "#3490dc",
+                      "borderRadius": 50,
+                      "height": 100,
+                      "overflow": "hidden",
+                      "width": 100,
+                    }
+                  }
+                  testID="clickable"
+                />
+              </View>
+              <Text
+                style={
+                  Object {
+                    "fontFamily": "System",
+                    "fontStyle": "italic",
+                    "fontWeight": "400",
+                  }
+                }
+              >
+                Click to upload contact's image.
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 60,
+                  "marginBottom": 0,
+                  "marginTop": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="State"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="MN"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 50,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="First Name"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="First"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Last Name"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="Last"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Postal"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="23232"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Facility Name"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="Facility Name"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Facility Address"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value="Address"
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Unit (optional, only if needed)"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value=""
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 50,
+                  "marginBottom": 10,
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                scrollEnabled={false}
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  placeholder="Dorm (optional, only if needed)"
+                  rejectResponderTermination={true}
+                  secureTextEntry={false}
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#282828",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#282828",
+                        "fontSize": 18,
+                        "height": 50,
+                        "padding": 10,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                  underlineColorAndroid="transparent"
+                  value=""
+                />
+                <View
+                  style={
+                    Object {
+                      "height": 0,
+                      "width": "100%",
+                      "zIndex": 5,
+                    }
+                  }
+                >
+                  <View />
+                </View>
+              </ScrollView>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 80,
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+        </ScrollView>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "marginBottom": 15,
+          "marginTop": 0,
+          "width": 712.5,
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "flex": 1,
+              "margin": 10,
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          Back
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "flex": 1,
+              "margin": 10,
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          Add Contact
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </TouchableOpacity>
+</View>
+`;

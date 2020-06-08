@@ -65,6 +65,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
     );
   }
 
+  componentDidMount() {
+    this.onNavigationFocus();
+  }
+
   componentWillUnmount() {
     this.unsubscribeFocus();
   }
