@@ -16,6 +16,7 @@ import { Typography } from "@styles";
 import { register } from "@api";
 import { Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
+import i18n from '../../i18n/i18n';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -127,21 +128,21 @@ class RegisterScreen extends React.Component<Props, State> {
         this.setState({ registered: true });
       } catch (err) {
         if (err.message === "Email in use") {
-          Alert.alert("Email already in use");
+          Alert.alert(i18n.t("Error.invalidEmail"));
         } else if (err.message === "timeout") {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              "Network Error",
-              "The request timed out."
+              i18n.t("Error.nework"),
+              i18n.t("Error.timedOut")
             );
         } else {
           // catch all
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              "Network Error",
-              "The request could not be completed."
+              i18n.t("Error.nework"),
+              i18n.t("Error.incomplete")
             );
         }
         this.setState({ registered: false });
@@ -163,18 +164,17 @@ class RegisterScreen extends React.Component<Props, State> {
           <View style={Styles.picContainer}>
             <PicUpload />
             <Text style={[Typography.FONT_ITALIC, { marginTop: 5 }]}>
-              Click to upload profile image.
+              {i18n.t("Register.uploadImage")}
             </Text>
           </View>
           <View style={Styles.privacyBackground}>
             <Text style={[Typography.FONT_BOLD, Styles.privacyText]}>
-              We value your privacy. We will only use your address information
-              as the return address for the mailed letter.
+              {i18n.t("Register.privacy")}
             </Text>
           </View>
           <Button
             link
-            buttonText="Already have an account?"
+            buttonText={i18n.t("Register.accountExists")}
             containerStyle={{ marginBottom: 10 }}
             onPress={() => {
               this.props.navigation.navigate("Login");
@@ -184,7 +184,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.firstName}
             parentStyle={Styles.fullWidth}
-            placeholder={"First Name"}
+            placeholder={i18n.t("Register.firstName")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -192,7 +192,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.lastName}
             parentStyle={Styles.fullWidth}
-            placeholder={"Last Name"}
+            placeholder={i18n.t("Register.lastName")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -201,7 +201,7 @@ class RegisterScreen extends React.Component<Props, State> {
             <Input
               ref={this.cell}
               parentStyle={Styles.fullWidth}
-              placeholder={"Cell Phone Number"}
+              placeholder={i18n.t("Register.cellphoneNumber")}
               required
               validate={Validation.Cell}
               onValid={this.updateValid}
@@ -211,7 +211,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address1}
             parentStyle={Styles.fullWidth}
-            placeholder={"Address Line 1"}
+            placeholder={i18n.t("Register.addressLine1")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -219,12 +219,12 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
-            placeholder={"Address Line 2"}
+            placeholder={i18n.t("Register.addressLine2")}
           />
           <Input
             ref={this.country}
             parentStyle={Styles.fullWidth}
-            placeholder={"Country"}
+            placeholder={i18n.t("Register.country")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -232,7 +232,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.zipcode}
             parentStyle={Styles.fullWidth}
-            placeholder={"Zip Code"}
+            placeholder={i18n.t("Register.zipcode")}
             required
             validate={Validation.Zipcode}
             onValid={this.updateValid}
@@ -241,7 +241,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.city}
             parentStyle={Styles.fullWidth}
-            placeholder={"City"}
+            placeholder={i18n.t("Register.city")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -249,7 +249,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.phyState}
             parentStyle={Styles.fullWidth}
-            placeholder={"State"}
+            placeholder={i18n.t("Register.state")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -257,7 +257,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.email}
             parentStyle={Styles.fullWidth}
-            placeholder={"Email"}
+            placeholder={i18n.t("Register.emailAddress")}
             required
             validate={Validation.Email}
             onValid={this.updateValid}
@@ -266,7 +266,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.password}
             parentStyle={Styles.fullWidth}
-            placeholder={"Password"}
+            placeholder={i18n.t("Register.password")}
             required
             secure
             validate={Validation.Password}
@@ -275,7 +275,7 @@ class RegisterScreen extends React.Component<Props, State> {
           />
           <Button
             containerStyle={Styles.fullWidth}
-            buttonText="Register"
+            buttonText={i18n.t("Register.register")}
             enabled={this.state.valid}
             onPress={this.doRegister}
           />

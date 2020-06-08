@@ -4,6 +4,12 @@
     "login": "Login",
     "register": "Register"
   },
+  "Error": {
+  	"network": "Network Error",
+  	"timedOut": "The request timed out.",
+  	"incomplete": "The request could not be completed.",
+  	"invalidEmail": "Email already in use."
+  },
   "Login": {
   	"emailAddress": "E-mail Address",
     "password": "Password",
@@ -11,7 +17,10 @@
     "login": "Login",
     "register": "Register",
     "forgotPassword": "Forgot Your Password?",
-    "termsCondition": "By creating an account, you agree to the Terms of Service and Privacy Policy."
+    "termsCondition": "By creating an account, you agree to the",
+    "termsConditionAnd": " and ",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
   },
   "Register": {
   	"uploadImage": "Click to upload profile image.",
@@ -19,7 +28,7 @@
   	"accountExists": "Already have an account?",
   	"firstName": "First Name",
   	"lastName": "Last Name",
-  	"cellPhoneNumber": "Cell Phone Number",
+  	"cellphoneNumber": "Cell Phone Number",
   	"addressLine1": "Address Line 1",
   	"addressLine2": "Address Line 2",
   	"country": "Country",
@@ -29,5 +38,5 @@
   	"emailAddress": "E-mail Address",
     "password": "Password",
   	"register": "Register",
-  }
+  },
 }

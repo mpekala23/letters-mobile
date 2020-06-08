@@ -19,6 +19,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
 import { UserCredentials } from "@store/User/UserTypes";
+import i18n from '../../i18n/i18n';
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -71,8 +72,8 @@ class LoginScreen extends React.Component<Props, State> {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              "Network Error",
-              "The request timed out."
+              i18n.t("Error.nework"),
+              i18n.t("Error.timedOut")
             );
         }
         console.log("here");
@@ -108,7 +109,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={"E-Mail Address"}
+                  placeholder={i18n.t("Login.emailAddress")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -119,7 +120,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.passwordRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={"Password"}
+                  placeholder={i18n.t("Login.password")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -132,7 +133,7 @@ class LoginScreen extends React.Component<Props, State> {
                   checkedIcon={<Text>X</Text>}
                   uncheckedIcon={<Text>O</Text>}
                   center
-                  title="Remember Me"
+                  title={i18n.t("Login.rememberMe")}
                   containerStyle={{
                     backgroundColor: "white",
                     width: "50%",
@@ -146,12 +147,12 @@ class LoginScreen extends React.Component<Props, State> {
                 <GrayBar />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText="Login"
+                  buttonText={i18n.t("Login.login")}
                   onPress={this.onLogin}
                 />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText="Register"
+                  buttonText={i18n.t("Login.register")}
                   reverse
                   onPress={() => {
                     Keyboard.dismiss();
@@ -161,7 +162,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Button
                   containerStyle={Styles.forgotContainer}
                   textStyle={Styles.forgotText}
-                  buttonText="Forgot Your Password?"
+                  buttonText={i18n.t("Login.forgotPassword")}
                   onPress={() => {
                     Keyboard.dismiss();
                   }}
@@ -170,19 +171,19 @@ class LoginScreen extends React.Component<Props, State> {
                   style={{ flexDirection: "row", justifyContent: "center" }}
                 >
                   <Text style={Typography.FONT_REGULAR}>
-                    By creating an account, you agree to the
+                    {i18n.t("Login.termsCondition")}
                   </Text>
                 </View>
                 <View style={Styles.termsContainer}>
                   <Button
                     link
-                    buttonText={"Terms of Service "}
+                    buttonText={i18n.t("Login.termsOfService")}
                     onPress={() => {}}
                   />
-                  <Text style={Typography.FONT_REGULAR}>and</Text>
+                  <Text style={Typography.FONT_REGULAR}>{i18n.t("Login.termsConditionAnd")}</Text>
                   <Button
                     link
-                    buttonText={" Privacy Policy"}
+                    buttonText={i18n.t("Login.privacyPolicy")}
                     onPress={() => {}}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
