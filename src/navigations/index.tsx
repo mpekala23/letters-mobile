@@ -31,6 +31,8 @@ export type AppStackParamList = {
   ContactInfo: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   ReviewContact: undefined;
+  Home: undefined;
+  Splash: undefined;
 };
 
 const Stack = createStackNavigator<AuthStackParamList & AppStackParamList>();
