@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import { Button } from "@components";
 import { facebookShare } from "@api";
+import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
 
@@ -24,17 +26,8 @@ const ReferFriendsScreen: React.FC<Props> = (props) => {
     deliveryDate,
   } = props;
 
-  const onShare = async () => {
-    const ameelioUrl = "letters.ameelio.org";
-    // TO-DO: Edit message content once we have the content copy
-    const shareMessage = "Insert share message";
-    const sharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + ameelioUrl + "&quote=" + shareMessage;
-    try {
-      await facebookShare(sharingUrl)
-    } catch (err) {
-      Alert.alert(err.message);
-    }
-  }
+  var dropdownRef = React.useRef(DropdownAlert);
+  dropdownRef = getDropdownRef();
 
   return (
     <KeyboardAvoidingView
@@ -73,12 +66,30 @@ const ReferFriendsScreen: React.FC<Props> = (props) => {
             buttonText="Share"
             containerStyle={{ width: 80 }}
             textStyle={{ fontSize: 16 }}
-            onPress={onShare}
+            onPress={() => onShare(dropdownRef)}
           />
         </View>
       </View>
     </KeyboardAvoidingView>
   );
+}
+
+const onShare = async (dropdownRef: Ref) => {
+  const ameelioUrl = "letters.ameelio.org";
+  // TO-DO: Edit message content once we have the content copy
+  const shareMessage = "Insert share message";
+  const sharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + ameelioUrl + "&quote=" + shareMessage;
+  try {
+    await facebookShare(sharingUrl)
+  } catch (err) {
+    if (dropdownRef.current) {
+      dropdownRef.current.alertWithType(
+        "error",
+        "Network Error",
+        "The request could not be completed."
+      );
+    }
+  }
 }
 
 export default ReferFriendsScreen;
