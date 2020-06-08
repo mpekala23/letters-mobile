@@ -81,6 +81,12 @@ class LoginScreen extends React.Component<Props, State> {
               "The request timed out."
             );
         } else {
+          if (this.dropdownRef.current)
+            this.dropdownRef.current.alertWithType(
+              "error",
+              "Network Error",
+              "The request could not be completed."
+            );
         }
         this.setState({ loggedIn: false });
       }

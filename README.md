@@ -1,5 +1,8 @@
 # Ameelio Letters Mobile
 
+[![Tests](https://github.com/AmeelioDev/letters-mobile/workflows/Tests/badge.svg)](https://github.com/AmeelioDev/letters-mobile/actions?query=workflow%3ATests+branch%3A+master)
+[![codecov](https://codecov.io/gh/AmeelioDev/letters-mobile/branch/master/graph/badge.svg)](https://codecov.io/gh/AmeelioDev/letters-mobile)
+
 ![Ameelio Letters Logo](./src/assets/Ameelio_Logo.png)
 
 A free and open-source platform for sending physical mail to your incarcerated loved-ones.
@@ -24,6 +27,12 @@ To install dependencies run
 npm install
 ```
 
+#### Configuring Environment Variables
+
+Create a file .env in the project root. In that file, add the line
+
+`MOCK_API_IP = [your IPv4 local IP address]`
+
 #### Starting the Project
 
 To start the local development server run
@@ -34,11 +43,7 @@ npm run start
 
 Visit http://localhost:19002/ in your browser and you should see the Metro Bundler page. From here you can follow the instructions in your terminal to launch the app with live reloading on your device. Hooray, you've successfully installed and run the Ameelio Letters mobile application!
 
-You should also start the mock backend API with
-
-```
-node ./mock-api/app.js
-```
+Start the mock backend API in another terminal by running
 
 ## Running the tests
 
@@ -46,6 +51,12 @@ node ./mock-api/app.js
 
 ```
 npm run test
+```
+
+### Viewing test coverage
+
+```
+npm run test:coverage
 ```
 
 ## Built With
