@@ -63,7 +63,7 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
 
 describe("Facility Directory Screen", () => {
   it("should match snapshot", () => {
-    const { container } = setup(<FacilityDirectoryScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
