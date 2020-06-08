@@ -1,10 +1,9 @@
 import React, { createRef } from "react";
-import DropdownAlert from "react-native-dropdownalert";
 import { StatusBar, Text, View } from "react-native";
 import { Animated, TouchableOpacity } from "react-native";
 import { STATUS_BAR_HEIGHT } from "@utils";
 import { Typography, Colors } from "@styles";
-import { Icon } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const DROPDOWN_HEIGHT = 100;
 const ANIM_DURATION = 500;
@@ -164,19 +163,19 @@ export class Dropdown extends React.Component<Props, State> {
     if (!notif) return <View />;
     const icon =
       notif.icon || true ? (
-        <Icon
+        /*<Icon
           size={DROPDOWN_HEIGHT - STATUS_BAR_HEIGHT * 2}
           name={notif.icon || ""}
-        ></Icon>
+        ></Icon>*/ <View />
       ) : (
         <View />
       );
     return this.state.dropped ? (
       <TouchableOpacity
+        testID="touchable"
         style={[
           {
             flex: 1,
-            backgroundColor: "yellow",
             zIndex: 999,
             padding: STATUS_BAR_HEIGHT,
             justifyContent: "center",
@@ -224,7 +223,7 @@ export class Dropdown extends React.Component<Props, State> {
 }
 
 let dropdownRef = createRef<Dropdown>();
-const DropdownInstance = () => <Dropdown ref={dropdownRef} />;
+const DropdownInstance = () => <Dropdown ref={dropdownRef} key="Dropdown" />;
 
 export function dropdownInfo(
   infoString: string,
