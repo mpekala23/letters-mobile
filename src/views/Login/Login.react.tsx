@@ -51,7 +51,6 @@ class LoginScreen extends React.Component<Props, State> {
   }
 
   onLogin = async () => {
-    dropdownError("test", "vibe");
     Keyboard.dismiss();
     if (this.emailRef.current && this.passwordRef.current) {
       const cred: UserLoginInfo = {
