@@ -133,7 +133,6 @@ export class Dropdown extends React.Component<Props, State> {
       this.state.notifQ[0].id != id
     )
       return;
-    console.log(this.state.notifQ[0].id, id);
     this.setState({ animating: true }, () => {
       Animated.timing(this.state.height, {
         toValue: -DROPDOWN_HEIGHT,
@@ -186,6 +185,7 @@ export class Dropdown extends React.Component<Props, State> {
           if (notif.onPress) notif.onPress();
           if (notif.id) this._endNotif(notif.id);
         }}
+        activeOpacity={0.9}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           {icon}

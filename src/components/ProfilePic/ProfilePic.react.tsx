@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { AppState } from "@store/types";
 import { UserState } from "@store/User/UserTypes";
 import Styles from "./ProfilePic.styles";
+import { logout } from "@api";
+import { dropdownError } from "components/Dropdown/Dropdown.react";
 
 const ExamplePic = require("@assets/ExamplePic.jpg");
 
@@ -29,7 +31,16 @@ const ProfilePicBase: React.FC<Props> = (props) => {
     );
   }
   return (
-    <TouchableOpacity style={Styles.background}>
+    <TouchableOpacity
+      style={Styles.background}
+      onPress={async () => {
+        try {
+          await logout();
+        } catch (err) {
+          dropdownError("Storage", "Unable to successfully log out the user.");
+        }
+      }}
+    >
       {insideCircle}
     </TouchableOpacity>
   );

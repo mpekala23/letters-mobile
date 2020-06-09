@@ -14,11 +14,11 @@ module.exports = (req, res) => {
     data: [
       {
         id: '6',
-        firstName: 'Team',
-        lastName: 'Ameelio',
+        first_name: 'Team',
+        last_name: 'Ameelio',
         email: 'team@ameelio.org',
         phone: '4324324432',
-        address1: 'Somewhere',
+        addr_line_1: 'Somewhere',
         country: 'USA',
         postal: '12345',
         city: 'New Haven',

@@ -1,9 +1,14 @@
 import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
+import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import url from "url";
+import * as SecureStore from "expo-secure-store";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
+enum Storage {
+  Email = "Ameelio-Email",
+}
 
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
@@ -25,26 +30,33 @@ export function fetchTimeout<T>(
   ]);
 }
 
-/** Dummy function atm, once I implement persistent storage I will replace. */
-export function loadToken() {
-  const dummyData: User = {
-    id: "6",
-    firstName: "Team",
-    lastName: "Ameelio",
-    email: "team@ameelio.org",
-    phone: "4324324432",
-    address1: "Somewhere",
-    country: "USA",
-    postal: "12345",
-    city: "New Haven",
-    state: "CT",
-  };
-  setTimeout(() => {
-    store.dispatch(logoutUser());
-  }, 2000);
+export async function saveToken(user: UserLoginInfo) {
+  try {
+    await SecureStore.setItemAsync(Storage.Email, user.email);
+    return;
+  } catch (err) {
+    throw Error(err);
+  }
 }
 
-/** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
+export async function loadToken() {
+  try {
+    const email = await SecureStore.getItemAsync(Storage.Email);
+    if (!email) {
+      store.dispatch(logoutUser());
+      throw Error("Cannot load token");
+    }
+    // TODO: After API meeting, determine exactly what this stored token will look like, and how
+    // It will be passed to the server on load here to get user data
+    // For now this is just a dummy login call
+    login({ email: email, password: "password", remember: true });
+    return;
+  } catch (err) {
+    store.dispatch(logoutUser());
+    throw Error(err);
+  }
+}
+
 export async function login(cred: UserLoginInfo) {
   const response = await fetchTimeout<Response>(url.resolve(API_URL, "login"), {
     method: "POST",
@@ -61,6 +73,16 @@ export async function login(cred: UserLoginInfo) {
   if (body.status == "ERROR") {
     throw Error(body.message);
   }
+  if (cred.remember) {
+    try {
+      await saveToken(cred);
+    } catch (err) {
+      dropdownError(
+        "Storage",
+        "Unable to save login credentials for next time"
+      );
+    }
+  }
   const userData: User = {
     id: body.data[0].id,
     firstName: body.data[0].first_name,
@@ -76,6 +98,16 @@ export async function login(cred: UserLoginInfo) {
   };
   store.dispatch(loginUser(userData));
   return userData;
+}
+
+export async function logout() {
+  try {
+    await SecureStore.deleteItemAsync(Storage.Email);
+    store.dispatch(logoutUser());
+    return;
+  } catch (err) {
+    throw Error(err);
+  }
 }
 
 export async function register(data: UserRegisterInfo) {

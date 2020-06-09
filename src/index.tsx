@@ -8,8 +8,10 @@ import { Dropdown, Statusbar } from "@components";
 import { loadToken } from "@api";
 
 export default class App extends React.Component {
-  componentDidMount() {
-    loadToken();
+  async componentDidMount() {
+    try {
+      await loadToken();
+    } catch (err) {}
   }
 
   render() {
