@@ -1,7 +1,7 @@
 import React, { useEffect }from "react";
 import { Image, View, StyleSheet, NativeModules, Platform } from "react-native";
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
-import i18n from 'i18n-js';
+import { i18n } from "@i18n";
 
 const SplashScreen: React.FC = () => {
   useEffect(() => {

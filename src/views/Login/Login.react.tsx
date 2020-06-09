@@ -19,7 +19,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
 import { UserCredentials } from "@store/User/UserTypes";
-import i18n from '../../i18n/i18n';
+import { i18n } from "@i18n";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -72,7 +72,7 @@ class LoginScreen extends React.Component<Props, State> {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              i18n.t("Error.nework"),
+              i18n.t("Error.network"),
               i18n.t("Error.timedOut")
             );
         }

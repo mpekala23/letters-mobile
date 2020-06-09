@@ -22,6 +22,7 @@ module.exports = function (api) {
             '@api': './src/api',
             '@assets': './src/assets',
             '@components': './src/components',
+            '@i18n': './src/i18n',
             '@navigations': './src/navigations',
             '@src': './src',
             '@store': './src/store',

@@ -16,7 +16,7 @@ import { Typography } from "@styles";
 import { register } from "@api";
 import { Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
-import i18n from '../../i18n/i18n';
+import { i18n } from "@i18n";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -133,7 +133,7 @@ class RegisterScreen extends React.Component<Props, State> {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              i18n.t("Error.nework"),
+              i18n.t("Error.network"),
               i18n.t("Error.timedOut")
             );
         } else {
@@ -141,7 +141,7 @@ class RegisterScreen extends React.Component<Props, State> {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              i18n.t("Error.nework"),
+              i18n.t("Error.network"),
               i18n.t("Error.incomplete")
             );
         }
