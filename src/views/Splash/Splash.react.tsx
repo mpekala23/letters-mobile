@@ -5,6 +5,7 @@ const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 const SplashScreen: React.FC = () => {
   return (
     <View
+      accessible={false}
       style={{
         flex: 1,
         justifyContent: "center",
