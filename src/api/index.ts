@@ -1,6 +1,6 @@
 import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
-import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
+import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
 import url from "url";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
@@ -32,10 +32,10 @@ export function loadToken() {
     firstName: "Team",
     lastName: "Ameelio",
     email: "team@ameelio.org",
-    cell: "4324324432",
+    phone: "4324324432",
     address1: "Somewhere",
     country: "USA",
-    zipcode: "12345",
+    postal: "12345",
     city: "New Haven",
     state: "CT",
   };
@@ -45,7 +45,7 @@ export function loadToken() {
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
-export async function login(cred: UserCredentials) {
+export async function login(cred: UserLoginInfo) {
   const response = await fetchTimeout<Response>(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
@@ -63,14 +63,14 @@ export async function login(cred: UserCredentials) {
   }
   const userData: User = {
     id: body.data[0].id,
-    firstName: body.data[0].firstName,
-    lastName: body.data[0].lastName,
+    firstName: body.data[0].first_name,
+    lastName: body.data[0].last_name,
     email: body.data[0].email,
-    cell: body.data[0].cell,
-    address1: body.data[0].address1,
-    address2: body.data[0].address2 || null,
+    phone: body.data[0].phone,
+    address1: body.data[0].addr_line_1,
+    address2: body.data[0].addr_line_2 || "",
     country: body.data[0].country,
-    zipcode: body.data[0].zipCode,
+    postal: body.data[0].postal,
     city: body.data[0].city,
     state: body.data[0].state,
   };
@@ -78,7 +78,7 @@ export async function login(cred: UserCredentials) {
   return userData;
 }
 
-export async function register(data: UserInfo) {
+export async function register(data: UserRegisterInfo) {
   const response = await fetchTimeout<Response>(
     url.resolve(API_URL, "register"),
     {
@@ -96,14 +96,14 @@ export async function register(data: UserInfo) {
   }
   const userData: User = {
     id: body.data[0].id,
-    firstName: body.data[0].firstName,
-    lastName: body.data[0].lastName,
+    firstName: body.data[0].first_name,
+    lastName: body.data[0].last_name,
     email: body.data[0].email,
-    cell: body.data[0].cell,
-    address1: body.data[0].address1,
-    address2: body.data[0].address2 || null,
+    phone: body.data[0].phone,
+    address1: body.data[0].addr_line_1,
+    address2: body.data[0].addr_line_2 || null,
     country: body.data[0].country,
-    zipcode: body.data[0].zipcode,
+    postal: body.data[0].postal,
     city: body.data[0].city,
     state: body.data[0].state,
   };

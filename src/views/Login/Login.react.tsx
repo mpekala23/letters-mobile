@@ -18,7 +18,7 @@ import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
-import { UserCredentials } from "@store/User/UserTypes";
+import { UserLoginInfo } from "@store/User/UserTypes";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -53,7 +53,7 @@ class LoginScreen extends React.Component<Props, State> {
   onLogin = async () => {
     Keyboard.dismiss();
     if (this.emailRef.current && this.passwordRef.current) {
-      const cred: UserCredentials = {
+      const cred: UserLoginInfo = {
         email: this.emailRef.current && this.emailRef.current.state.value,
         password:
           this.passwordRef.current && this.passwordRef.current.state.value,

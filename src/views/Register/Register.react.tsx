@@ -14,7 +14,7 @@ import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
 import { Validation } from "@utils";
-import { User, UserInfo } from "@store/User/UserTypes";
+import { User, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "components/Dropdown/Dropdown.react";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -34,11 +34,11 @@ export interface State {
 class RegisterScreen extends React.Component<Props, State> {
   private firstName = createRef<Input>();
   private lastName = createRef<Input>();
-  private cell = createRef<Input>();
+  private phone = createRef<Input>();
   private address1 = createRef<Input>();
   private address2 = createRef<Input>();
   private country = createRef<Input>();
-  private zipcode = createRef<Input>();
+  private postal = createRef<Input>();
   private city = createRef<Input>();
   private phyState = createRef<Input>();
   private email = createRef<Input>();
@@ -55,10 +55,10 @@ class RegisterScreen extends React.Component<Props, State> {
   devSkip = () => {
     if (this.firstName.current) this.firstName.current.set("Team");
     if (this.lastName.current) this.lastName.current.set("Ameelio");
-    if (this.cell.current) this.cell.current.set("4324324432");
+    if (this.phone.current) this.phone.current.set("4324324432");
     if (this.address1.current) this.address1.current.set("Somewhere");
     if (this.country.current) this.country.current.set("USA");
-    if (this.zipcode.current) this.zipcode.current.set("12345");
+    if (this.postal.current) this.postal.current.set("12345");
     if (this.city.current) this.city.current.set("New Haven");
     if (this.phyState.current) this.phyState.current.set("CT");
     if (this.email.current) this.email.current.set("team@ameelio.org");
@@ -70,10 +70,10 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.cell.current &&
+      this.phone.current &&
       this.address1.current &&
       this.country.current &&
-      this.zipcode.current &&
+      this.postal.current &&
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
@@ -82,10 +82,10 @@ class RegisterScreen extends React.Component<Props, State> {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.cell.current.state.valid &&
+        this.phone.current.state.valid &&
         this.address1.current.state.valid &&
         this.country.current.state.valid &&
-        this.zipcode.current.state.valid &&
+        this.postal.current.state.valid &&
         this.city.current.state.valid &&
         this.phyState.current.state.valid &&
         this.email.current.state.valid &&
@@ -98,24 +98,24 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.cell.current &&
+      this.phone.current &&
       this.address1.current &&
       this.address2.current &&
       this.country.current &&
-      this.zipcode.current &&
+      this.postal.current &&
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
       this.password.current
     ) {
-      const data: UserInfo = {
+      const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
-        cell: this.cell.current.state.value,
+        phone: this.phone.current.state.value,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
         country: this.country.current.state.value,
-        zipcode: this.zipcode.current.state.value,
+        postal: this.postal.current.state.value,
         city: this.city.current.state.value,
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
@@ -187,11 +187,11 @@ class RegisterScreen extends React.Component<Props, State> {
           />
           <View style={{ flexDirection: "row" }}>
             <Input
-              ref={this.cell}
+              ref={this.phone}
               parentStyle={Styles.fullWidth}
               placeholder={"Cell Phone Number"}
               required
-              validate={Validation.Cell}
+              validate={Validation.Phone}
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
             />
@@ -218,11 +218,11 @@ class RegisterScreen extends React.Component<Props, State> {
             onInvalid={() => this.setState({ valid: false })}
           />
           <Input
-            ref={this.zipcode}
+            ref={this.postal}
             parentStyle={Styles.fullWidth}
             placeholder={"Zip Code"}
             required
-            validate={Validation.Zipcode}
+            validate={Validation.Postal}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />

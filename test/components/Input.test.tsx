@@ -65,9 +65,9 @@ describe("Input component", () => {
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
     expect(textInput.props.style[0].borderColor).toBe(Colors.AMEELIO_RED);
   });
-  it("should validate cell phone numbers correctly", () => {
+  it("should validate phone numbers correctly", () => {
     const { props, getByPlaceholderText } = setup({
-      validate: Validation.Cell,
+      validate: Validation.Phone,
     });
     const textInput = getByPlaceholderText("placeholder");
     expect(props.onInvalid).toHaveBeenCalledTimes(1);
@@ -109,9 +109,9 @@ describe("Input component", () => {
     textInput.props.onChangeText("newvalid@aol.org");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
-  it("should validate zipcodes", () => {
+  it("should validate postal zipcodes", () => {
     const { props, getByPlaceholderText } = setup({
-      validate: Validation.Zipcode,
+      validate: Validation.Postal,
     });
     const textInput = getByPlaceholderText("placeholder");
     expect(props.onInvalid).toHaveBeenCalledTimes(1);
