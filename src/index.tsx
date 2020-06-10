@@ -12,7 +12,6 @@ export default class App extends React.Component {
     try {
       await loadToken();
     } catch (err) {}
-    Notifs.setup();
   }
 
   componentWillUnmount() {

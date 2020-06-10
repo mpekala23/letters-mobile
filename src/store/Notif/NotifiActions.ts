@@ -3,7 +3,9 @@ import {
   ADD_NOTIF,
   HANDLE_NOTIF,
   SET_CURRENT_NOTIF,
-  SET_ALL_NOTIFS,
+  SET_PAST_NOTIFS,
+  FutureNotif,
+  SET_FUTURE_NOTIFS,
 } from "./NotifTypes";
 
 export function addNotif(notif: Notif) {
@@ -27,9 +29,16 @@ export function setCurrentNotif(notif: Notif) {
   };
 }
 
-export function setAllNotifs(notifs: Notif[]) {
+export function setPastNotifs(notifs: Notif[]) {
   return {
-    type: SET_ALL_NOTIFS,
+    type: SET_PAST_NOTIFS,
     payload: notifs,
+  };
+}
+
+export function setFutureNotifs(futureNotifs: FutureNotif[]) {
+  return {
+    type: SET_FUTURE_NOTIFS,
+    payload: futureNotifs,
   };
 }

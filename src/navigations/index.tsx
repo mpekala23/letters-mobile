@@ -21,12 +21,9 @@ import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
 import { NavigationContainerRef } from "@react-navigation/native";
 import { Notif } from "store/Notif/NotifTypes";
+import { navigationRef, navigate } from "@notifications";
 
-export const navigationRef = createRef<NavigationContainerRef>();
-
-export function navigate(name: string, params = {}) {
-  navigationRef.current?.navigate(name, params);
-}
+export { navigationRef, navigate };
 
 export type AuthStackParamList = {
   Splash: undefined;
