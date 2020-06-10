@@ -1,5 +1,6 @@
 import React from "react";
 import { RegisterScreen } from "@views";
+process.env.MOCK_API_IP = "test_mock_api";
 import { register } from "@api";
 import {
   render,
