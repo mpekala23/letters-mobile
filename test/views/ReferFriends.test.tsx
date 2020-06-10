@@ -18,6 +18,7 @@ describe("ReferFriends screen", () => {
 	 	const tree = toJSON(container);
 	 	expect(tree).toMatchSnapshot();
 	 })
+
 	it("should open the home screen when skip is pressed", async() => {
 		const { container, getByText } = setup();
 		const navigation = container.props.children.props.navigation;
@@ -25,6 +26,7 @@ describe("ReferFriends screen", () => {
 		fireEvent.press(skipButton);
 		expect(navigation.navigate).toHaveBeenCalledWith("Home");
 	})
+	
 	it("should make api call on share press", async() => {
 		const { container, getByText } = setup();
 		const shareUrl = "https://www.facebook.com/sharer/sharer.php?u=letters.ameelio.org&quote=Insert share message";
