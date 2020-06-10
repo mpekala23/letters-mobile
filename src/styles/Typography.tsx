@@ -1,3 +1,5 @@
+import React from "react";
+import { Text } from "react-native";
 import { TextStyle } from "react-native";
 
 // FONT FAMILY
@@ -24,4 +26,19 @@ export const FONT_ITALIC: TextStyle = {
   fontFamily: FONT_FAMILY_REGULAR,
   fontWeight: FONT_WEIGHT_REGULAR,
   fontStyle: "italic",
+};
+
+interface TextProps {
+  text: string;
+  style?: object;
+}
+
+export const ReportQuestion: React.FC<TextProps> = (props) => {
+  return (
+    <Text
+      style={[FONT_BOLD, { fontSize: 23, textAlign: "center" }, props.style]}
+    >
+      {props.text || props.children}
+    </Text>
+  );
 };
