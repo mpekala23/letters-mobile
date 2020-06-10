@@ -161,7 +161,7 @@ class RegisterScreen extends React.Component<Props, State> {
           contentContainerStyle={Styles.scrollContent}
         >
           <View 
-            accessible={true}
+            accessible
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
           >

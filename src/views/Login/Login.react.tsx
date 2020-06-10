@@ -168,7 +168,7 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                 />
                 <View
-                  accessible={true}
+                  accessible
                   accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
                   style={{ flexDirection: "row", justifyContent: "center" }}
                 >
