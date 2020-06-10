@@ -35,6 +35,7 @@ describe("Input component", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have black border when not focused and valid, blue border when focused", () => {
     const { container, getByPlaceholderText } = setup();
     expect(getByPlaceholderText("placeholder").props.style[0].borderColor).toBe(
@@ -49,11 +50,13 @@ describe("Input component", () => {
       Colors.AMEELIO_BLACK
     );
   });
+
   it("should accept input", () => {
     const { getByPlaceholderText } = setup();
     fireEvent.changeText(getByPlaceholderText("placeholder"), "New Text");
     expect(getByPlaceholderText("placeholder").props.value).toBe("New Text");
   });
+
   it("should validate required fields correctly", () => {
     const { props, getByPlaceholderText } = setup({ required: true });
     const textInput = getByPlaceholderText("placeholder");
@@ -66,6 +69,7 @@ describe("Input component", () => {
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
     expect(textInput.props.style[0].borderColor).toBe(Colors.AMEELIO_RED);
   });
+
   it("should validate cell phone numbers correctly", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Cell,
@@ -91,6 +95,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("(612) 703 8623");
     expect(props.onValid).toHaveBeenCalledTimes(3);
   });
+
   it("should validate emails", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Email,
@@ -110,6 +115,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("newvalid@aol.org");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should validate zipcodes", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Zipcode,
@@ -129,6 +135,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("55419-1234");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should validate passwords", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Password,
@@ -148,6 +155,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("AbcDef66");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should validate states", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.State,
@@ -167,6 +175,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("CT");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should implement style props", () => {
     const parentStyle = { backgroundColor: "green" };
     const scrollStyle = { backgroundColor: "red" };
@@ -186,6 +195,7 @@ describe("Input component", () => {
       inputStyle
     );
   });
+
   it("should implement secure", () => {
     const { getByPlaceholderText } = setup({ secure: true });
     expect(getByPlaceholderText("placeholder").props.secureTextEntry).toBe(
@@ -204,6 +214,7 @@ describe("Input component", () => {
     expect(input.props.value).toBe("Option 1");
     expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
   });
+
   it("should implement complex dropdowns", () => {
     const { getByPlaceholderText, getByText } = setup({
       options: [
@@ -220,6 +231,7 @@ describe("Input component", () => {
     expect(input.props.value).toBe("Option 2");
     expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
   });
+
   it("should implement nextInput", () => {
     const dummyRef = createRef<Input>();
     const { getByPlaceholderText } = render(

@@ -1,7 +1,7 @@
 import { Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import * as EmailValidator from "email-validator";
-import * as States from "./States";
+import { STATES, STATES_DROPDOWN } from "./States";
 import PhoneNumber from "awesome-phonenumber";
 
 // Global constants
@@ -61,7 +61,7 @@ export function isValidZipcode(zipcode: string) {
 }
 
 export function isValidState(state: string) {
-  return States.RAW_ABBREVS.indexOf(state) !== -1;
+  return Object.values(STATES).indexOf(state) > -1;
 }
 
 export function validateFormat(format: Validation, value: string) {
@@ -81,4 +81,4 @@ export function validateFormat(format: Validation, value: string) {
   }
 }
 
-export { States };
+export { STATES, STATES_DROPDOWN };

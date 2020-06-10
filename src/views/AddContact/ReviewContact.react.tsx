@@ -15,8 +15,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Styles from "./ReviewContact.styles";
 import CommonStyles from "./AddContact.styles";
 import { Button, Input, PicUpload } from "@components";
-import { Validation } from "utils";
-import { States } from "@utils";
+import { STATES_DROPDOWN, Validation } from "@utils";
 import { AppState } from "store/types";
 import {
   Contact,
@@ -154,7 +153,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   ref={this.stateRef}
                   parentStyle={[CommonStyles.fullWidth, { marginTop: 10 }]}
                   placeholder="State"
-                  options={States.STATES}
+                  options={STATES_DROPDOWN}
                   validate={Validation.State}
                   required
                   onValid={this.updateValid}

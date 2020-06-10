@@ -60,6 +60,7 @@ describe("Review Contact Screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have next button be enabled only when all fields are valid", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const addButton = getByText("Add Contact");
@@ -67,6 +68,7 @@ describe("Review Contact Screen", () => {
     fireEvent.changeText(getByPlaceholderText("State"), "");
     expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
   });
+
   it("should load initial values for fields from the redux store", () => {
     const { getByPlaceholderText } = setup({
       state: "AK",
@@ -79,6 +81,7 @@ describe("Review Contact Screen", () => {
     expect(getByPlaceholderText("First Name").props.value).toBe("First test");
     expect(getByPlaceholderText("Last Name").props.value).toBe("Last test");
   });
+
   it("should navigate to the facility directory screen when the back button is pressed", () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText("Back"));

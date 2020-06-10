@@ -28,6 +28,7 @@ describe("Register screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have register button be disabled until all fields are valid", async () => {
     const { getByPlaceholderText, getByText } = setup();
     fireEvent.press(getByText("Register"));

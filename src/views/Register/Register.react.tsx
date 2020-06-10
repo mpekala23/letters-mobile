@@ -15,7 +15,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
-import { States, Validation } from "@utils";
+import { STATES_DROPDOWN, Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -261,7 +261,7 @@ class RegisterScreen extends React.Component<Props, State> {
             parentStyle={Styles.fullWidth}
             placeholder={"State"}
             validate={Validation.State}
-            options={States.STATES}
+            options={STATES_DROPDOWN}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}

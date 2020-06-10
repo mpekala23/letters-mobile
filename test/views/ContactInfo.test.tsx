@@ -50,6 +50,7 @@ describe("Contact Info Screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have next button be disabled until all fields are valid", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
@@ -70,6 +71,7 @@ describe("Contact Info Screen", () => {
     expect(getByText("Next").parentNode.props.style[1]).toEqual({});
     expect(navigation.navigate).toHaveBeenCalledTimes(1);
   });
+
   it("should dispatch contact info to the redux store when the next button is pressed", () => {
     const { store, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
@@ -97,6 +99,7 @@ describe("Contact Info Screen", () => {
       },
     });
   });
+
   it("should navigate to the facility directory screen when the next button is pressed", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
@@ -111,6 +114,7 @@ describe("Contact Info Screen", () => {
     fireEvent.press(nextButton);
     expect(navigation.navigate).toHaveBeenCalledWith("FacilityDirectory");
   });
+
   it("should load initial values for fields from the redux store", () => {
     const { getByPlaceholderText } = setup({
       state: "MN",

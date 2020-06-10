@@ -50,6 +50,7 @@ describe("Add Manually Screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have next button be disabled until all fields are valid", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
@@ -69,6 +70,7 @@ describe("Add Manually Screen", () => {
     expect(getByText("Next").parentNode.props.style[1]).toEqual({});
     expect(navigation.navigate).toHaveBeenCalledTimes(1);
   });
+
   it("should navigate to the facility directory screen with data when the next button is pressed", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
@@ -91,6 +93,7 @@ describe("Add Manually Screen", () => {
       },
     });
   });
+
   it("should navigate to the facility directory screen when the back button is pressed", () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText("Back"));

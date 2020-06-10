@@ -15,7 +15,7 @@ import CommonStyles from "./AddContact.styles";
 import { AMEELIO_BLACK } from "styles/Colors";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { States, Validation } from "@utils";
+import { STATES_DROPDOWN, Validation } from "@utils";
 import { connect } from "react-redux";
 import { AppState } from "@store/types";
 import { setAdding } from "@store/Contact/ContactActions";
@@ -173,7 +173,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   ref={this.stateRef}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="State"
-                  options={States.STATES}
+                  options={STATES_DROPDOWN}
                   validate={Validation.State}
                   onFocus={() => {
                     this.setState({ inputting: true });

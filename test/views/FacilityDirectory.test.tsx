@@ -67,6 +67,7 @@ describe("Facility Directory Screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have next button be disabled until facility selected", () => {
     const { navigation, getByText } = setup();
     const nextButton = getByText("Next");
@@ -80,6 +81,7 @@ describe("Facility Directory Screen", () => {
     expect(getByText("Next").parentNode.props.style[1]).toEqual({});
     expect(navigation.navigate).toHaveBeenCalledTimes(1);
   });
+
   it("should have the selected facility have a blue background", () => {
     const { navigation, getByText } = setup();
     const facility = getByText("State Prison").parentNode;
@@ -91,6 +93,7 @@ describe("Facility Directory Screen", () => {
     expect(facility.props.style[1].backgroundColor).toBe("white");
     expect(facility.props.style[2]).toEqual({});
   });
+
   it("should dispatch facility info to the redux store when the next button is pressed", () => {
     const { store, getByText } = setup();
     const nextButton = getByText("Next");
@@ -118,16 +121,19 @@ describe("Facility Directory Screen", () => {
       },
     });
   });
+
   it("should navigate to the contact info screen when the back button is pressed", () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText("Back"));
     expect(navigation.navigate).toHaveBeenCalledWith("ContactInfo");
   });
+
   it("should navigate to the add manually screen when the add manually button is pressed", () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText("Add Manually"));
     expect(navigation.navigate).toHaveBeenCalledWith("AddManually");
   });
+
   it("should navigate to the facility directory screen when the next button is pressed", () => {
     const { navigation, getByText } = setup();
     const nextButton = getByText("Next");
@@ -135,6 +141,7 @@ describe("Facility Directory Screen", () => {
     fireEvent.press(nextButton);
     expect(navigation.navigate).toHaveBeenCalledWith("ReviewContact");
   });
+
   it("should load initial facility value from the redux store", async () => {
     const { getByText } = setup({
       state: "MN",
@@ -157,6 +164,7 @@ describe("Facility Directory Screen", () => {
       expect(facility.props.style[2].backgroundColor).toBe(Colors.SELECT);
     }, 1);
   });
+
   it("should load initial facility from manual add", async () => {
     const { navigation, getByText } = setup(
       {
