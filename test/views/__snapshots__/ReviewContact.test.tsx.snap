@@ -185,7 +185,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     ]
                   }
                   underlineColorAndroid="transparent"
-                  value="MN"
+                  value="Minnesota"
                 />
                 <View
                   style={

@@ -163,7 +163,7 @@ describe("Input component", () => {
     const textInput = getByPlaceholderText("placeholder");
     expect(props.onInvalid).toHaveBeenCalledTimes(1);
     fireEvent.focus(textInput);
-    fireEvent.changeText(textInput, "MN");
+    fireEvent.changeText(textInput, "Minnesota");
     fireEvent.blur(textInput);
     expect(props.onValid).toHaveBeenCalledTimes(1);
     textInput.props.onChangeText("Not State");
@@ -172,7 +172,7 @@ describe("Input component", () => {
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
     textInput.props.onChangeText("Nah");
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
-    textInput.props.onChangeText("CT");
+    textInput.props.onChangeText("Utah");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
 

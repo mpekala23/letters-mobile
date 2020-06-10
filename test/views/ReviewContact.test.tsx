@@ -11,7 +11,7 @@ const setup = (contactOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = Object.assign(
     {
-      state: "MN",
+      state: "Minnesota",
       firstName: "First",
       lastName: "Last",
       inmateNumber: "6",
@@ -71,13 +71,13 @@ describe("Review Contact Screen", () => {
 
   it("should load initial values for fields from the redux store", () => {
     const { getByPlaceholderText } = setup({
-      state: "AK",
+      state: "Minnesota",
       firstName: "First test",
       lastName: "Last test",
       inmateNumber: "8",
       relationship: "Brother",
     });
-    expect(getByPlaceholderText("State").props.value).toBe("AK");
+    expect(getByPlaceholderText("State").props.value).toBe("Minnesota");
     expect(getByPlaceholderText("First Name").props.value).toBe("First test");
     expect(getByPlaceholderText("Last Name").props.value).toBe("Last test");
   });

@@ -59,7 +59,7 @@ describe("Contact Info Screen", () => {
       getByText("Next").parentNode.props.style[1].backgroundColor
     ).toBeDefined();
     expect(navigation.navigate).toHaveBeenCalledTimes(0);
-    fireEvent.changeText(getByPlaceholderText("State"), "MN");
+    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
     fireEvent.changeText(getByPlaceholderText("First Name"), "First");
     fireEvent.changeText(getByPlaceholderText("Last Name"), "Last");
     fireEvent.changeText(getByPlaceholderText("Inmate Number"), "2");
@@ -77,7 +77,7 @@ describe("Contact Info Screen", () => {
     const nextButton = getByText("Next");
     fireEvent.press(nextButton);
     expect(store.getActions().length).toBe(0);
-    fireEvent.changeText(getByPlaceholderText("State"), "MN");
+    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
     fireEvent.changeText(getByPlaceholderText("First Name"), "First");
     fireEvent.changeText(getByPlaceholderText("Last Name"), "Last");
     fireEvent.changeText(getByPlaceholderText("Inmate Number"), "2");
@@ -90,7 +90,7 @@ describe("Contact Info Screen", () => {
     expect(store.getActions()[0]).toEqual({
       type: SET_ADDING,
       payload: {
-        state: "MN",
+        state: "Minnesota",
         firstName: "First",
         lastName: "Last",
         inmateNumber: "2",
@@ -103,7 +103,7 @@ describe("Contact Info Screen", () => {
   it("should navigate to the facility directory screen when the next button is pressed", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const nextButton = getByText("Next");
-    fireEvent.changeText(getByPlaceholderText("State"), "MN");
+    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
     fireEvent.changeText(getByPlaceholderText("First Name"), "First");
     fireEvent.changeText(getByPlaceholderText("Last Name"), "Last");
     fireEvent.changeText(getByPlaceholderText("Inmate Number"), "2");
@@ -117,13 +117,13 @@ describe("Contact Info Screen", () => {
 
   it("should load initial values for fields from the redux store", () => {
     const { getByPlaceholderText } = setup({
-      state: "MN",
+      state: "Minnesota",
       firstName: "First",
       lastName: "Last",
       inmateNumber: "6",
       relationship: "Sister",
     });
-    expect(getByPlaceholderText("State").props.value).toBe("MN");
+    expect(getByPlaceholderText("State").props.value).toBe("Minnesota");
     expect(getByPlaceholderText("First Name").props.value).toBe("First");
     expect(getByPlaceholderText("Last Name").props.value).toBe("Last");
     expect(getByPlaceholderText("Inmate Number").props.value).toBe("6");
