@@ -67,7 +67,7 @@ class LoginScreen extends React.Component<Props, State> {
         this.setState({ loggedIn: true });
       } catch (err) {
         if (err.message === "Incorrect credentials") {
-          Alert.alert("Incorrect username or password");
+          Alert.alert(i18n.t("LoginScreen.incorrectUsernameOrPassword"));
         } else if (err.message === "timeout") {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
@@ -109,7 +109,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={i18n.t("Login.emailAddress")}
+                  placeholder={i18n.t("LoginScreen.emailAddress")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -120,7 +120,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.passwordRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={i18n.t("Login.password")}
+                  placeholder={i18n.t("LoginScreen.password")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -133,7 +133,7 @@ class LoginScreen extends React.Component<Props, State> {
                   checkedIcon={<Text>X</Text>}
                   uncheckedIcon={<Text>O</Text>}
                   center
-                  title={i18n.t("Login.rememberMe")}
+                  title={i18n.t("LoginScreen.rememberMe")}
                   containerStyle={{
                     backgroundColor: "white",
                     width: "50%",
@@ -147,12 +147,12 @@ class LoginScreen extends React.Component<Props, State> {
                 <GrayBar />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText={i18n.t("Login.login")}
+                  buttonText={i18n.t("LoginScreen.login")}
                   onPress={this.onLogin}
                 />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText={i18n.t("Login.register")}
+                  buttonText={i18n.t("LoginScreen.register")}
                   reverse
                   onPress={() => {
                     Keyboard.dismiss();
@@ -162,7 +162,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Button
                   containerStyle={Styles.forgotContainer}
                   textStyle={Styles.forgotText}
-                  buttonText={i18n.t("Login.forgotPassword")}
+                  buttonText={i18n.t("LoginScreen.forgotYourPassword")}
                   onPress={() => {
                     Keyboard.dismiss();
                   }}
@@ -171,19 +171,19 @@ class LoginScreen extends React.Component<Props, State> {
                   style={{ flexDirection: "row", justifyContent: "center" }}
                 >
                   <Text style={Typography.FONT_REGULAR}>
-                    {i18n.t("Login.termsCondition")}
+                    {i18n.t("LoginScreen.termsCondition")}
                   </Text>
                 </View>
                 <View style={Styles.termsContainer}>
                   <Button
                     link
-                    buttonText={i18n.t("Login.termsOfService")}
+                    buttonText={i18n.t("LoginScreen.termsOfService")}
                     onPress={() => {}}
                   />
-                  <Text style={Typography.FONT_REGULAR}>{i18n.t("Login.termsConditionAnd")}</Text>
+                  <Text style={Typography.FONT_REGULAR}>{i18n.t("LoginScreen.termsConditionAnd")}</Text>
                   <Button
                     link
-                    buttonText={i18n.t("Login.privacyPolicy")}
+                    buttonText={i18n.t("LoginScreen.privacyPolicy")}
                     onPress={() => {}}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
