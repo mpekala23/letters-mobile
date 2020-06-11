@@ -90,6 +90,7 @@ class LoginScreen extends React.Component<Props, State> {
   render() {
     return (
       <TouchableOpacity
+        accessible={false}
         style={{ flex: 1, backgroundColor: "white" }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
@@ -173,6 +174,8 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                 />
                 <View
+                  accessible
+                  accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
                   style={{ flexDirection: "row", justifyContent: "center" }}
                 >
                   <Text style={Typography.FONT_REGULAR}>
@@ -185,7 +188,7 @@ class LoginScreen extends React.Component<Props, State> {
                     buttonText={"Terms of Service "}
                     onPress={() => {}}
                   />
-                  <Text style={Typography.FONT_REGULAR}>and</Text>
+                  <Text accessible={false} style={Typography.FONT_REGULAR}>and</Text>
                   <Button
                     link
                     buttonText={" Privacy Policy"}
