@@ -1,13 +1,14 @@
 import React from "react";
 import { SvgXml } from "react-native-svg";
+import { ViewStyle } from "react-native";
 
 interface Props {
   svg: string;
-  style?: object;
+  style?: ViewStyle;
 }
 
-const Svg: React.FC<Props> = (props) => {
+const Icon: React.FC<Props> = (props) => {
   return <SvgXml xml={props.svg} style={props.style} />;
 };
 
-export default Svg;
+export default Icon;

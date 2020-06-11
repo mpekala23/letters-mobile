@@ -5,7 +5,7 @@ import Input from "./Input/Input.react";
 import PicUpload from "./PicUpload/PicUpload.react";
 import ProfilePic from "./ProfilePic/ProfilePic.react";
 import Statusbar from "./Statusbar/Statusbar.react";
-import Svg from "./Svg/Svg.react";
+import Icon from "./Icon/Icon.react";
 import Topbar from "./Topbar/Topbar.react";
 
 export {
@@ -16,6 +16,6 @@ export {
   PicUpload,
   ProfilePic,
   Statusbar,
-  Svg,
+  Icon,
   Topbar,
 };

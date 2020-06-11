@@ -1,8 +1,8 @@
 import React, { useCallback, Dispatch } from "react";
 import { Text, View } from "react-native";
 import { Colors, Typography } from "@styles";
-import { Button, Svg } from "@components";
-import Mail from "assets/views/Report/MailLoud";
+import { Button, Icon } from "@components";
+import Mail from "@assets/views/Report/MailLoud";
 import Styles from "./FirstLetter.styles";
 import ReportStyles from "./Report.styles";
 import { useFocusEffect } from "@react-navigation/native";
@@ -38,7 +38,7 @@ class FirstLetterScreenBase extends React.Component<Props> {
       <View style={Styles.background}>
         <View style={Styles.innerBack}>
           <Typography.ReportQuestion text="How was your first letter?" />
-          <Svg svg={Mail} style={{ marginVertical: 30, left: 14 }} />
+          <Icon svg={Mail} style={{ marginVertical: 30, left: 14 }} />
           <Text
             style={[
               Typography.FONT_REGULAR,
