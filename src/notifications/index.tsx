@@ -1,12 +1,6 @@
 import React, { createRef, ReactText } from "react";
-import {
-  Alert,
-  Platform,
-  Vibration,
-  PushNotificationIOS,
-  View,
-  Linking,
-} from "react-native";
+import { Alert, Platform, Linking } from "react-native";
+import { EventSubscription } from "fbemitter";
 import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
@@ -35,11 +29,14 @@ export function navigate(name: string, params = {}) {
 
 class NotifsBase {
   private expoPushToken = "";
-  private notificationSubscription: any;
+  private notificationSubscription: EventSubscription;
 
   constructor() {
     this.notifHandler = this.notifHandler.bind(this);
     this.purgeFutureNotifs = this.purgeFutureNotifs.bind(this);
+    this.notificationSubscription = Notifications.addListener(
+      this.notifHandler
+    );
   }
 
   subscribe() {
@@ -63,7 +60,6 @@ class NotifsBase {
 
   async setup() {
     await this.registerForPushNotifications();
-    this.subscribe();
   }
 
   async registerForPushNotifications() {
