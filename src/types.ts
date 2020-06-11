@@ -10,3 +10,7 @@ export interface Facility {
 }
 
 export type NullableFacility = Facility | null;
+
+export enum Storage {
+  RememberToken = "Ameelio-Token",
+}

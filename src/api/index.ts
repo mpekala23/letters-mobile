@@ -5,11 +5,9 @@ import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import url from "url";
 import * as SecureStore from "expo-secure-store";
+import { Storage } from "types";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
-enum Storage {
-  RememberToken = "Ameelio-Token",
-}
 
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
