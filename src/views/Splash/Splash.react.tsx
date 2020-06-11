@@ -28,7 +28,7 @@ const SplashScreen: React.FC = () => {
 };
 
 const getDeviceLocale = () => {
-  // returns locale in format of "en_US" (eng.) or "es_US" (sp.)
+  // returns locale in format of "en" (eng.) or "es" (sp.)
   const locale = Platform.OS === 'ios'
     ? NativeModules.SettingsManager.settings.AppleLocale
     : NativeModules.I18nManager.localeIdentifier;

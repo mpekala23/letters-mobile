@@ -5,12 +5,12 @@
     "register": "Register"
   },
   "Error": {
-  	"network": "Network Error",
-  	"requestTimedOut": "The request timed out.",
-  	"requestIncomplete": "The request could not be completed.",
+    "network": "Network Error",
+    "requestTimedOut": "The request timed out.",
+    "requestIncomplete": "The request could not be completed.",
   },
   "LoginScreen": {
-  	"emailAddress": "E-mail Address",
+    "emailAddress": "E-mail Address",
     "password": "Password",
     "rememberMe": "Remember Me",
     "login": "Login",
