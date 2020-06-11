@@ -85,7 +85,7 @@ class NotifsBase {
     if (finalStatus !== "granted") {
       Alert.alert(
         "Enable Notifications",
-        "Go to settings to receive notifications about you letters.",
+        "Go to settings to receive notifications about your letters.",
         [{ text: "Dismiss" }, { text: "Settings", onPress: this.goToSettings }]
       );
       return;
