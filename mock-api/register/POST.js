@@ -25,16 +25,17 @@ module.exports = (req, res) => {
     data: [
       {
         id: '6',
-        firstName,
-        lastName,
+        first_name: firstName,
+        last_name: lastName,
         email,
         phone,
-        address1,
-        address2,
+        addr_line_1: address1,
+        addr_line_2: address2,
         country,
         postal,
         city,
         state,
+        token: 'dummy token',
       },
     ],
   });

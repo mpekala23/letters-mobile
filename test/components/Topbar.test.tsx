@@ -11,7 +11,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     {
       isLoadingToken: true,
       isLoggedIn: false,
-      userToken: "",
+      apiToken: "",
     },
     authOverrides
   );

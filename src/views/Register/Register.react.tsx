@@ -17,6 +17,7 @@ import { register } from "@api";
 import { User, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "components/Dropdown/Dropdown.react";
 import { STATES_DROPDOWN, Validation } from "@utils";
+import { CheckBox } from "react-native-elements";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -30,6 +31,7 @@ export interface Props {
 export interface State {
   valid: boolean;
   registered: boolean;
+  remember: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -121,6 +123,7 @@ class RegisterScreen extends React.Component<Props, State> {
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
         password: this.password.current.state.value,
+        remember: this.state.remember,
       };
       try {
         const res = await register(data);
@@ -187,7 +190,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.cell}
+            nextInput={this.phone}
           />
           <View style={{ flexDirection: "row" }}>
             <Input
@@ -223,7 +226,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.zipcode}
+            nextInput={this.postal}
           />
           <Input
             ref={this.postal}
@@ -274,6 +277,21 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.Password}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+          />
+          <CheckBox
+            checkedIcon={<Text>X</Text>}
+            uncheckedIcon={<Text>O</Text>}
+            center
+            title="Remember Me"
+            containerStyle={{
+              backgroundColor: "white",
+              width: "50%",
+              borderWidth: 0,
+            }}
+            checked={this.state.remember}
+            onPress={() => {
+              this.setState({ remember: !this.state.remember });
+            }}
           />
           <Button
             containerStyle={Styles.fullWidth}

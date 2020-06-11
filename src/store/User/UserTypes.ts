@@ -15,6 +15,7 @@ export interface UserRegisterInfo {
   city: string;
   state: string;
   imageUri?: string;
+  remember?: boolean;
 }
 
 export interface UserLoginInfo {
@@ -42,7 +43,7 @@ export interface User {
 export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
-  userToken?: string;
+  apiToken?: string;
 }
 
 export interface UserState {

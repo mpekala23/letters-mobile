@@ -5,12 +5,12 @@ import { Provider } from "react-redux";
 import store from "@store";
 import Navigator from "@navigations";
 import { Dropdown, Statusbar } from "@components";
-import { loadToken } from "@api";
+import { loginWithToken } from "@api";
 
 export default class App extends React.Component {
   async componentDidMount() {
     try {
-      await loadToken();
+      await loginWithToken();
     } catch (err) {}
   }
 
