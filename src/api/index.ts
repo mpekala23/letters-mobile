@@ -1,11 +1,12 @@
 import store from "@store";
 import { Linking } from "react-native";
-import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import url from "url";
 import * as SecureStore from "expo-secure-store";
 import { Storage } from "types";
+import { loginUser, logoutUser } from "@store/User/UserActions";
+import { clearContacts } from "store/Contact/ContactActions";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
 
@@ -122,6 +123,7 @@ export async function login(cred: UserLoginInfo) {
 
 export async function logout() {
   store.dispatch(logoutUser());
+  store.dispatch(clearContacts());
   return await deleteToken();
 }
 
