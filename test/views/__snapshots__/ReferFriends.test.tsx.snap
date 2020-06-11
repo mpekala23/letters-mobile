@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReferFriends screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "flex": 1,
+          "flexDirection": "column",
+          "padding": 24,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            undefined,
+            Object {
+              "marginBottom": 24,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Estimated delivery date:
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "System",
+                "fontWeight": "600",
+              },
+            ]
+          }
+        >
+           
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            undefined,
+            Object {
+              "marginBottom": 36,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Your letter to 
+         is on the way! Thanks for trusting us to deliver your messages.
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "marginBottom": 24,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Do you know anyone that could benefit from Ameelio's free services?
+      </Text>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "#3490dc",
+                "borderRadius": 4,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {},
+              Object {
+                "width": 80,
+              },
+              Object {},
+            ]
+          }
+          testID="clickable"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#3490dc",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {
+                  "fontSize": 16,
+                },
+                Object {},
+              ]
+            }
+          >
+            Skip
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#3490dc",
+                "borderRadius": 4,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {},
+              Object {
+                "width": 80,
+              },
+              Object {},
+            ]
+          }
+          testID="clickable"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {
+                  "fontSize": 16,
+                },
+                Object {},
+              ]
+            }
+          >
+            Share
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</View>
+`;
