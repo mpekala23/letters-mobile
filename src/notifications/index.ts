@@ -60,6 +60,7 @@ class NotifsBase {
 
   async setup() {
     await this.registerForPushNotifications();
+    this.purgeFutureNotifs();
   }
 
   async registerForPushNotifications() {

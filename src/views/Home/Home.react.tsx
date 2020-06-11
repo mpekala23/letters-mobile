@@ -21,7 +21,6 @@ const HomeScreenBase: React.FC<Props> = (props) => {
   useEffect(() => {
     async function doSetup() {
       await Notifs.setup();
-      Notifs.purgeFutureNotifs();
     }
     doSetup();
   }, []);

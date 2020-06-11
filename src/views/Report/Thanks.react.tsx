@@ -19,10 +19,15 @@ interface Props {
 const ThanksScreen: React.FC<Props> = (props) => {
   return (
     <View style={ReportStyles.background}>
-      <Typography.ReportQuestion
-        text="Thanks for giving us feedback! We'll get in touch with you soon."
-        style={{ marginHorizontal: 40 }}
-      />
+      <Text
+        style={[
+          Typography.FONT_BOLD,
+          ReportStyles.question,
+          { marginHorizontal: 40 },
+        ]}
+      >
+        Thanks for giving us feedback! We'll get in touch with you soon.
+      </Text>
       <Icon svg={MailHearts} style={{ marginTop: 30, left: 15 }} />
       <Button
         buttonText="Return home"

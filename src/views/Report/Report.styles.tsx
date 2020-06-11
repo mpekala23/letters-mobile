@@ -8,6 +8,7 @@ export default StyleSheet.create({
     paddingTop: 40,
     alignItems: "center",
   },
+  question: { fontSize: 23, textAlign: "center" },
   textAreaBox: {
     width: "100%",
     height: "50%",

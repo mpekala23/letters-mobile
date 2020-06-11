@@ -22,6 +22,7 @@ interface Props {
   navigation: ExplainProblemScreenNavigationProp;
 }
 
+// TODO: Refine this View once coordinating with copy
 const ExplainProblemScreen: React.FC<Props> = (props) => {
   return (
     <TouchableOpacity
@@ -30,7 +31,9 @@ const ExplainProblemScreen: React.FC<Props> = (props) => {
       style={{ flex: 1 }}
     >
       <View style={ReportStyles.background}>
-        <Typography.ReportQuestion text="Report problem" />
+        <Text style={[Typography.FONT_BOLD, ReportStyles.question]}>
+          Report problem
+        </Text>
         <View style={ReportStyles.textAreaBox}>
           <TextInput
             style={[Typography.FONT_REGULAR, ReportStyles.textAreaText]}

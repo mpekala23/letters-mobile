@@ -25,10 +25,15 @@ const IssuesScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={ReportStyles.background}>
-      <Typography.ReportQuestion
-        text="Did you have one of these issues?"
-        style={{ marginHorizontal: 10, marginBottom: 50 }}
-      />
+      <Text
+        style={[
+          Typography.FONT_BOLD,
+          ReportStyles.question,
+          { marginHorizontal: 10, marginBottom: 50 },
+        ]}
+      >
+        Did you have one of these issues?
+      </Text>
       <Button
         buttonText={Problems.wasntReceived}
         onPress={() =>

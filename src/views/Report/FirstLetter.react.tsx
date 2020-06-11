@@ -37,7 +37,9 @@ class FirstLetterScreenBase extends React.Component<Props> {
     return (
       <View style={Styles.background}>
         <View style={Styles.innerBack}>
-          <Typography.ReportQuestion text="How was your first letter?" />
+          <Text style={[Typography.FONT_BOLD, ReportStyles.question]}>
+            How was your first letter?
+          </Text>
           <Icon svg={Mail} style={{ marginVertical: 30, left: 14 }} />
           <Text
             style={[
