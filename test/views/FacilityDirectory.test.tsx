@@ -134,7 +134,7 @@ describe("Facility Directory Screen", () => {
     expect(navigation.navigate).toHaveBeenCalledWith("AddManually");
   });
 
-  it("should navigate to the facility directory screen when the next button is pressed", () => {
+  it("should navigate to the review contact screen when the next button is pressed", () => {
     const { navigation, getByText } = setup();
     const nextButton = getByText("Next");
     fireEvent.press(getByText("State Prison"));
