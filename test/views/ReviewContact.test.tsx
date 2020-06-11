@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ReviewContactScreen } from "@views";
 import { render, toJSON, fireEvent } from "@testing-library/react-native";
-import { SET_ADDING } from "@store/Contact/ContactTypes";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -61,12 +60,33 @@ describe("Review Contact Screen", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("should have next button be enabled only when all fields are valid", () => {
+  it("should have add contact button be enabled only when all fields are valid", () => {
     const { navigation, getByPlaceholderText, getByText } = setup();
     const addButton = getByText("Add Contact");
     expect(addButton.parentNode.props.style[1]).toEqual({});
     fireEvent.changeText(getByPlaceholderText("State"), "");
     expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
+    fireEvent.changeText(getByPlaceholderText("First Name"), "");
+    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(getByPlaceholderText("First Name"), "First name");
+    fireEvent.changeText(getByPlaceholderText("Last Name"), "");
+    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(getByPlaceholderText("Last Name"), "Last name");
+    fireEvent.changeText(getByPlaceholderText("Postal"), "213");
+    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(getByPlaceholderText("Postal"), "21389");
+    fireEvent.changeText(getByPlaceholderText("Facility Name"), "");
+    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(getByPlaceholderText("Facility Name"), "A facility");
+    fireEvent.changeText(getByPlaceholderText("Facility Address"), "");
+    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    fireEvent.changeText(
+      getByPlaceholderText("Facility Address"),
+      "An address"
+    );
+    // now all fields are valid again, should be enabled
+    expect(addButton.parentNode.props.style[1]).toEqual({});
   });
 
   it("should load initial values for fields from the redux store", () => {
