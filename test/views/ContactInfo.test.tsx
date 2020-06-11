@@ -7,7 +7,7 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
-const setup = (contactOverrides = {}) => {
+const setup = (contactOverrides = {}, userOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = Object.assign(
     {
@@ -20,12 +20,35 @@ const setup = (contactOverrides = {}) => {
     },
     contactOverrides
   );
+  const user = Object.assign(
+    {
+      id: "6",
+      firstName: "Team",
+      lastName: "Ameelio",
+      email: "team@ameelio.org",
+      cell: "4324324432",
+      address1: "Somewhere",
+      country: "USA",
+      zipcode: "12345",
+      city: "New Haven",
+      state: "CT",
+    },
+    userOverrides
+  );
+  const authInfo = {
+    isLoadingToken: false,
+    isLoggedIn: true,
+  };
   const initialState = {
     adding: contact,
     existing: [],
   };
   const store = mockStore({
     contact: initialState,
+    user: {
+      authInfo,
+      user,
+    },
   });
 
   const StoreProvider = ({ children }) => {
@@ -130,5 +153,24 @@ describe("Contact Info Screen", () => {
     expect(getByPlaceholderText("Relationship to Inmate").props.value).toBe(
       "Sister"
     );
+  });
+
+  it("should prompt users to search their home state databases initially", () => {
+    const { getByText } = setup({}, { state: "Iowa" });
+    expect(getByText("Iowa")).toBeDefined();
+  });
+
+  it("should update the state databases to search when user inputs a valid state", () => {
+    const { queryByText, getByText, getByPlaceholderText } = setup(
+      {},
+      { state: "Iowa" }
+    );
+    expect(getByText("Iowa")).toBeDefined();
+    const stateInput = getByPlaceholderText("State");
+    fireEvent.changeText(stateInput, "Not a valid state");
+    expect(getByText("Iowa")).toBeDefined();
+    fireEvent.changeText(stateInput, "Kansas");
+    expect(queryByText("Iowa")).toBeFalsy();
+    expect(getByText("Kansas")).toBeDefined();
   });
 });

@@ -24,6 +24,7 @@ import {
   Contact,
   ContactActionTypes,
 } from "@store/Contact/ContactTypes";
+import { UserState } from "@store/User/UserTypes";
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -32,6 +33,7 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ContactInfoScreenNavigationProp;
+  userState: UserState;
   contactState: ContactState;
   setAdding: (contact: Contact) => void;
 }
@@ -39,6 +41,7 @@ export interface Props {
 export interface State {
   inputting: boolean;
   valid: boolean;
+  stateToSearch: string;
 }
 
 class ContactInfoScreenBase extends React.Component<Props, State> {
@@ -54,6 +57,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     this.state = {
       inputting: false,
       valid: false,
+      stateToSearch: props.userState.user.state,
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -145,7 +149,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     <Text
                       style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
                     >
-                      Arizona
+                      {this.state.stateToSearch}
                     </Text>{" "}
                     database.
                   </Text>
@@ -181,7 +185,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   onBlur={() => {
                     this.setState({ inputting: false });
                   }}
-                  onValid={this.updateValid}
+                  onValid={() => {
+                    if (this.stateRef.current)
+                      this.setState({
+                        stateToSearch: this.stateRef.current?.state.value,
+                      });
+                    this.updateValid();
+                  }}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.firstName}
                 />
@@ -302,6 +312,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
+  userState: state.user,
   contactState: state.contact,
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
