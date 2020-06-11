@@ -43,11 +43,6 @@ interface AddNotifAction {
   payload: Notif;
 }
 
-interface HandleNotifAction {
-  type: "notification/handle_notif";
-  payload: null;
-}
-
 interface SetCurrentNotifAction {
   type: "notification/set_current_notif";
   payload: Notif | null;
@@ -61,6 +56,11 @@ interface SetPastNotifsAction {
 interface SetFutureNotifsAction {
   type: "notification/set_future_notifs";
   payload: FutureNotif[];
+}
+
+interface HandleNotifAction {
+  type: "notification/handle_notif";
+  payload: null;
 }
 
 export type NotifActionTypes =

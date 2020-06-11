@@ -9,7 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { AppState } from "@store/types";
 import { connect } from "react-redux";
 import { handleNotif } from "@store/Notif/NotifiActions";
-import { NotifActionTypes, Notif } from "@store/Notif/NotifTypes";
+import { NotifActionTypes, Notif, HANDLE_NOTIF } from "@store/Notif/NotifTypes";
 import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -24,53 +24,56 @@ interface Props {
   navigation: FirstLetterScreenNavigationProp;
 }
 
-const FirstLetterScreenBase: React.FC<Props> = (props) => {
-  useFocusEffect(
-    useCallback(() => {
-      if (props.currentNotif && props.currentNotif.screen === "FirstLetter")
-        props.handleNotif();
-    }, [])
-  );
+class FirstLetterScreenBase extends React.Component<Props> {
+  componentDidMount() {
+    if (
+      this.props.currentNotif &&
+      this.props.currentNotif.screen === "FirstLetter"
+    )
+      this.props.handleNotif();
+  }
 
-  return (
-    <View style={Styles.background}>
-      <View style={Styles.innerBack}>
-        <Typography.ReportQuestion text="How was your first letter?" />
-        <Svg svg={Mail} style={{ marginVertical: 30, left: 14 }} />
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              fontSize: 16,
-              textAlign: "center",
-              color: "#515151",
-              marginHorizontal: 20,
-              marginBottom: 30,
-            },
-          ]}
-        >
-          If there was a problem with delivery and your loved one didn't receive
-          the letter, let us know.
-        </Text>
-        <Button
-          buttonText="It was fire"
-          onPress={() => {
-            props.navigation.navigate("Home");
-          }}
-          containerStyle={{ width: "100%" }}
-        />
-        <Button
-          buttonText="Something went wrong"
-          onPress={() => {
-            props.navigation.navigate("Issues");
-          }}
-          containerStyle={{ width: "100%" }}
-          reverse
-        />
+  render() {
+    return (
+      <View style={Styles.background}>
+        <View style={Styles.innerBack}>
+          <Typography.ReportQuestion text="How was your first letter?" />
+          <Svg svg={Mail} style={{ marginVertical: 30, left: 14 }} />
+          <Text
+            style={[
+              Typography.FONT_REGULAR,
+              {
+                fontSize: 16,
+                textAlign: "center",
+                color: "#515151",
+                marginHorizontal: 20,
+                marginBottom: 30,
+              },
+            ]}
+          >
+            If there was a problem with delivery and your loved one didn't
+            receive the letter, let us know.
+          </Text>
+          <Button
+            buttonText="It was fire"
+            onPress={() => {
+              this.props.navigation.navigate("Home");
+            }}
+            containerStyle={{ width: "100%" }}
+          />
+          <Button
+            buttonText="Something went wrong"
+            onPress={() => {
+              this.props.navigation.navigate("Issues");
+            }}
+            containerStyle={{ width: "100%" }}
+            reverse
+          />
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = function (state: AppState) {
   return {
@@ -80,7 +83,7 @@ const mapStateToProps = function (state: AppState) {
 
 const mapDispatchToProps = function (dispatch: Dispatch<NotifActionTypes>) {
   return {
-    handleNotif: () => dispatch(handleNotif()),
+    handleNotif: () => dispatch({ type: HANDLE_NOTIF, payload: null }),
   };
 };
 
@@ -89,4 +92,5 @@ const FirstLetterScreen = connect(
   mapDispatchToProps
 )(FirstLetterScreenBase);
 
+export { FirstLetterScreenBase };
 export default FirstLetterScreen;
