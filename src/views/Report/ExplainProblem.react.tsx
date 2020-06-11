@@ -7,7 +7,7 @@ import {
   Keyboard,
 } from "react-native";
 import { Colors, Typography } from "@styles";
-import { Button, Svg } from "@components";
+import { Button } from "@components";
 import MailHearts from "assets/views/Report/MailHearts";
 import ReportStyles from "./Report.styles";
 import { AppStackParamList } from "navigations";

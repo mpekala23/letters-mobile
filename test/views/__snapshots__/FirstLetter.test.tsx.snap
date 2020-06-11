@@ -44,7 +44,6 @@ exports[`First Letter screen should match snapshot 1`] = `
               "fontSize": 23,
               "textAlign": "center",
             },
-            undefined,
           ]
         }
       >
