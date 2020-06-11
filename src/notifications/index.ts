@@ -99,8 +99,10 @@ class NotifsBase {
   }
 
   purgeFutureNotifs() {
-    // offset to account for notifications received in app
-    const currentTime = new Date().getTime() + 1000;
+    // in order to make it so that a notification which was just acted upon is properly purged
+    // from future notifications, a one second offset on the current time is needed
+    const ONE_SECOND = 1000;
+    const currentTime = new Date().getTime() + ONE_SECOND;
     const futureNotifs = store.getState().notif.futureNotifs;
     const newFuture = [];
     for (let ix = 0; ix < futureNotifs.length; ++ix) {
