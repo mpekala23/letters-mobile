@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Thanks screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "paddingHorizontal": 30,
+        "paddingTop": 40,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "fontSize": 23,
+            "textAlign": "center",
+          },
+          Object {
+            "marginHorizontal": 40,
+          },
+        ]
+      }
+    >
+      Thanks for giving us feedback! We'll get in touch with you soon.
+    </Text>
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={140}
+      bbWidth={168}
+      fill="none"
+      focusable={false}
+      height={140}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "left": 15,
+            "marginTop": 30,
+          },
+          Object {
+            "flex": 0,
+            "height": 140,
+            "width": 168,
+          },
+        ]
+      }
+      vbHeight={140}
+      vbWidth={168}
+      width={168}
+      xml="<svg width=\\"168\\" height=\\"140\\" viewBox=\\"0 0 168 140\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<g clip-path=\\"url(#clip0)\\">
+<path d=\\"M4.04999 78.96V54.52C4.04999 49.68 6.00999 45.39 8.92999 43.84L62.8 15.34C64.23 14.59 65.77 14.56 67.2 15.25L120.93 41.33C123.93 42.79 125.98 47.15 125.98 52.09V78.95C125.98 85.17 122.77 90.22 118.81 90.22H11.21C7.25999 90.22 4.04999 85.18 4.04999 78.96Z\\" fill=\\"white\\" stroke=\\"#6589B5\\" stroke-width=\\"8\\" stroke-miterlimit=\\"10\\"/>
+<path d=\\"M143.24 21.78C143.24 24 142.4 26.23 140.7 27.92L138.24 30.38L126.48 42.13C126.32 42.29 126.15 42.45 125.98 42.59C125.81 42.45 125.64 42.3 125.48 42.13L113.72 30.37L111.26 27.91C109.56 26.21 108.72 23.99 108.72 21.77C108.72 19.55 109.57 17.33 111.26 15.63C114.65 12.24 120.15 12.24 123.53 15.63L125.97 18.07L128.41 15.63C131.8 12.24 137.3 12.24 140.69 15.63C142.4 17.33 143.24 19.56 143.24 21.78Z\\" fill=\\"#FF7070\\"/>
+<path d=\\"M167.6 4.34C167.6 5.45 167.18 6.56 166.33 7.41L165.1 8.64L159.22 14.52C159.14 14.6 159.06 14.68 158.97 14.75C158.88 14.68 158.8 14.6 158.72 14.52L152.84 8.64L151.61 7.41C150.76 6.56 150.34 5.45 150.34 4.34C150.34 3.23 150.76 2.12 151.61 1.27C153.31 -0.430005 156.05 -0.430005 157.75 1.27L158.97 2.49L160.19 1.27C161.89 -0.430005 164.63 -0.430005 166.33 1.27C167.18 2.12 167.6 3.23 167.6 4.34Z\\" fill=\\"#FF7070\\"/>
+<path d=\\"M115.24 62.1C115.24 68.57 112.78 75.05 107.85 79.98L100.68 87.15L66.45 121.36C65.98 121.83 65.49 122.28 65 122.69C64.5 122.27 64.02 121.83 63.54 121.36L29.32 87.14L22.15 79.99C17.21 75.05 14.75 68.58 14.75 62.11C14.75 55.65 17.22 49.18 22.15 44.24C32.02 34.37 48.03 34.37 57.89 44.24L64.99 51.34L72.09 44.24C81.96 34.37 97.97 34.37 107.84 44.24C112.78 49.17 115.24 55.64 115.24 62.1Z\\" fill=\\"#FF7070\\"/>
+<path d=\\"M118.71 69.5C122.37 68.49 125.99 71.25 125.99 75.04V120.98C125.99 129.04 119.85 135.58 112.27 135.58H17.95C10.4 135.58 4.26999 129.1 4.22999 121.07L3.99999 76.61C3.97999 72.86 7.48999 70.1 11.13 71L63.52 83.94C64.48 84.18 65.48 84.16 66.43 83.9L118.71 69.5Z\\" fill=\\"white\\" stroke=\\"#6589B5\\" stroke-width=\\"8\\" stroke-miterlimit=\\"10\\"/>
+<path d=\\"M4.17001 109.05L52.14 81.13\\" stroke=\\"#6589B5\\" stroke-width=\\"8\\" stroke-miterlimit=\\"10\\"/>
+<path d=\\"M125.98 109.05L78.01 81.13\\" stroke=\\"#6589B5\\" stroke-width=\\"8\\" stroke-miterlimit=\\"10\\"/>
+</g>
+<defs>
+<clipPath id=\\"clip0\\">
+<rect width=\\"167.6\\" height=\\"139.57\\" fill=\\"white\\"/>
+</clipPath>
+</defs>
+</svg>
+"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <RNSVGGroup
+        fill={null}
+        propList={
+          Array [
+            "fill",
+          ]
+        }
+      >
+        <RNSVGGroup
+          clipPath="clip0"
+        >
+          <RNSVGPath
+            d="M4.04999 78.96V54.52C4.04999 49.68 6.00999 45.39 8.92999 43.84L62.8 15.34C64.23 14.59 65.77 14.56 67.2 15.25L120.93 41.33C123.93 42.79 125.98 47.15 125.98 52.09V78.95C125.98 85.17 122.77 90.22 118.81 90.22H11.21C7.25999 90.22 4.04999 85.18 4.04999 78.96Z"
+            fill={4294967295}
+            propList={
+              Array [
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "strokeMiterlimit",
+              ]
+            }
+            stroke={4284844469}
+            strokeMiterlimit={10}
+            strokeWidth={8}
+          />
+          <RNSVGPath
+            d="M143.24 21.78C143.24 24 142.4 26.23 140.7 27.92L138.24 30.38L126.48 42.13C126.32 42.29 126.15 42.45 125.98 42.59C125.81 42.45 125.64 42.3 125.48 42.13L113.72 30.37L111.26 27.91C109.56 26.21 108.72 23.99 108.72 21.77C108.72 19.55 109.57 17.33 111.26 15.63C114.65 12.24 120.15 12.24 123.53 15.63L125.97 18.07L128.41 15.63C131.8 12.24 137.3 12.24 140.69 15.63C142.4 17.33 143.24 19.56 143.24 21.78Z"
+            fill={4294930544}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="M167.6 4.34C167.6 5.45 167.18 6.56 166.33 7.41L165.1 8.64L159.22 14.52C159.14 14.6 159.06 14.68 158.97 14.75C158.88 14.68 158.8 14.6 158.72 14.52L152.84 8.64L151.61 7.41C150.76 6.56 150.34 5.45 150.34 4.34C150.34 3.23 150.76 2.12 151.61 1.27C153.31 -0.430005 156.05 -0.430005 157.75 1.27L158.97 2.49L160.19 1.27C161.89 -0.430005 164.63 -0.430005 166.33 1.27C167.18 2.12 167.6 3.23 167.6 4.34Z"
+            fill={4294930544}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="M115.24 62.1C115.24 68.57 112.78 75.05 107.85 79.98L100.68 87.15L66.45 121.36C65.98 121.83 65.49 122.28 65 122.69C64.5 122.27 64.02 121.83 63.54 121.36L29.32 87.14L22.15 79.99C17.21 75.05 14.75 68.58 14.75 62.11C14.75 55.65 17.22 49.18 22.15 44.24C32.02 34.37 48.03 34.37 57.89 44.24L64.99 51.34L72.09 44.24C81.96 34.37 97.97 34.37 107.84 44.24C112.78 49.17 115.24 55.64 115.24 62.1Z"
+            fill={4294930544}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="M118.71 69.5C122.37 68.49 125.99 71.25 125.99 75.04V120.98C125.99 129.04 119.85 135.58 112.27 135.58H17.95C10.4 135.58 4.26999 129.1 4.22999 121.07L3.99999 76.61C3.97999 72.86 7.48999 70.1 11.13 71L63.52 83.94C64.48 84.18 65.48 84.16 66.43 83.9L118.71 69.5Z"
+            fill={4294967295}
+            propList={
+              Array [
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "strokeMiterlimit",
+              ]
+            }
+            stroke={4284844469}
+            strokeMiterlimit={10}
+            strokeWidth={8}
+          />
+          <RNSVGPath
+            d="M4.17001 109.05L52.14 81.13"
+            propList={
+              Array [
+                "stroke",
+                "strokeWidth",
+                "strokeMiterlimit",
+              ]
+            }
+            stroke={4284844469}
+            strokeMiterlimit={10}
+            strokeWidth={8}
+          />
+          <RNSVGPath
+            d="M125.98 109.05L78.01 81.13"
+            propList={
+              Array [
+                "stroke",
+                "strokeWidth",
+                "strokeMiterlimit",
+              ]
+            }
+            stroke={4284844469}
+            strokeMiterlimit={10}
+            strokeWidth={8}
+          />
+        </RNSVGGroup>
+        <RNSVGDefs>
+          <RNSVGClipPath
+            name="clip0"
+          >
+            <RNSVGRect
+              fill={4294967295}
+              height={139.57}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width={167.6}
+              x={0}
+              y={0}
+            />
+          </RNSVGClipPath>
+        </RNSVGDefs>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3490dc",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {},
+          Object {
+            "marginTop": 30,
+            "width": "100%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Return home
+      </Text>
+    </TouchableOpacity>
+  </View>
+</View>
+`;

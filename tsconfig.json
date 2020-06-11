@@ -11,6 +11,7 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "*": ["src/*"],
       "@*": ["src/*"],
@@ -31,6 +32,7 @@
     "babel.config.js",
     "metro.config.js",
     "jest.config.js",
+    "node_modules/expo/build",
     "test"
   ]
 }
