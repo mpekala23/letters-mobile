@@ -2,12 +2,10 @@ import store from "@store";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
-import { fetch } from "isomorphic-fetch";
 
-// this will change when running locally!
-export const API_URL = "http://192.168.7.73:9000/api/";
+const MOCK_API_IP = process.env.MOCK_API_IP;
 
-url.resolve(API_URL, "fill later");
+export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
 export interface UserResponse {
   type: string;
