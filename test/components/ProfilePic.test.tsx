@@ -52,14 +52,17 @@ describe("ProfilePic component", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should be blank when user is logged out", () => {
     const { getByTestId } = setup();
     expect(getByTestId("blank").children.length).toBe(0);
   });
+
   it("should display initials when a user is logged in without a profile picture", () => {
     const { getAllByText } = setup({ isLoggedIn: true });
     expect(getAllByText("TA").length).toBe(1);
   });
+
   it("should show an image when a user is logged in with a profile picture", () => {
     const { getByLabelText } = setup(
       {

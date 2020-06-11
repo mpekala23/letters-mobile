@@ -1,4 +1,5 @@
 import store from "@store";
+import { Linking } from "react-native";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "@components/Dropdown/Dropdown.react";
@@ -141,4 +142,15 @@ export async function register(data: UserRegisterInfo) {
   };
   store.dispatch(loginUser(userData));
   return userData;
+}
+
+export async function getFacilities(text: string) {}
+
+export async function facebookShare(shareUrl: string) {
+  const supportedUrl = await Linking.canOpenURL(shareUrl);
+  if (supportedUrl) {
+    await Linking.openURL(shareUrl);
+  } else {
+    throw Error("Share Url not supported");
+  }
 }

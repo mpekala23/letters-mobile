@@ -1,6 +1,7 @@
 import { Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import * as EmailValidator from "email-validator";
+import { STATES, STATES_DROPDOWN } from "./States";
 import PhoneNumber from "awesome-phonenumber";
 
 // Global constants
@@ -36,6 +37,7 @@ export enum Validation {
   Phone = "Phone",
   Password = "Password",
   Postal = "Postal",
+  State = "State",
 }
 
 export function isValidEmail(email: string) {
@@ -58,6 +60,10 @@ export function isValidPostal(zipcode: string) {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
 }
 
+export function isValidState(state: string) {
+  return Object.values(STATES).indexOf(state) > -1;
+}
+
 export function validateFormat(format: Validation, value: string) {
   switch (format) {
     case Validation.Email:
@@ -68,7 +74,11 @@ export function validateFormat(format: Validation, value: string) {
       return isValidPassword(value);
     case Validation.Postal:
       return isValidPostal(value);
+    case Validation.State:
+      return isValidState(value);
     default:
       return false;
   }
 }
+
+export { STATES, STATES_DROPDOWN };

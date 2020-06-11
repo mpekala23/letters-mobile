@@ -22,6 +22,7 @@ describe("Login screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should make an api call on login", async () => {
     const { getByText, getByTestId } = setup({
       data: {
