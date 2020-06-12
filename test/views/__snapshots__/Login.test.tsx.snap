@@ -10,12 +10,15 @@ exports[`Login screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={1}
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
     style={
       Object {
         "backgroundColor": "white",
         "flex": 1,
+        "opacity": 1,
       }
     }
   >
@@ -41,296 +44,34 @@ exports[`Login screen should match snapshot 1`] = `
           }
         }
       >
-        <ScrollView
+        <RCTScrollView
           keyboardShouldPersistTaps="handled"
           scrollEnabled={false}
         >
-          <View
-            style={
-              Object {
-                "height": 60,
-                "width": "100%",
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "justifyContent": "center",
-                "paddingHorizontal": 10,
-              }
-            }
-          >
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {},
-                  Object {},
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
-                }
-              >
-                Dev Skip
-              </Text>
-            </TouchableOpacity>
+          <View>
             <View
               style={
                 Object {
-                  "height": 50,
-                  "marginBottom": 10,
-                  "width": "100%",
-                }
-              }
-              testID="parent"
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                scrollEnabled={false}
-                style={
-                  Array [
-                    Object {
-                      "flex": 1,
-                      "width": "100%",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  placeholder="E-Mail Address"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
-                        "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                    ]
-                  }
-                  underlineColorAndroid="transparent"
-                  value=""
-                />
-                <View
-                  style={
-                    Object {
-                      "height": 0,
-                      "width": "100%",
-                      "zIndex": 5,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </ScrollView>
-            </View>
-            <View
-              style={
-                Object {
-                  "height": 50,
-                  "marginBottom": 10,
-                  "width": "100%",
-                }
-              }
-              testID="parent"
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                scrollEnabled={false}
-                style={
-                  Array [
-                    Object {
-                      "flex": 1,
-                      "width": "100%",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  placeholder="Password"
-                  rejectResponderTermination={true}
-                  secureTextEntry={true}
-                  style={
-                    Array [
-                      Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
-                        "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                    ]
-                  }
-                  underlineColorAndroid="transparent"
-                  value=""
-                />
-                <View
-                  style={
-                    Object {
-                      "height": 0,
-                      "width": "100%",
-                      "zIndex": 5,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </ScrollView>
-            </View>
-            <TouchableOpacity
-              accessibilityRole="checkbox"
-              accessibilityState={
-                Object {
-                  "checked": false,
-                }
-              }
-              activeOpacity={0.2}
-              checkedIcon={
-                <Text>
-                  X
-                </Text>
-              }
-              size={24}
-              style={
-                Object {
-                  "backgroundColor": "white",
-                  "borderColor": "#ededed",
-                  "borderRadius": 3,
-                  "borderWidth": 0,
-                  "margin": 5,
-                  "marginLeft": 10,
-                  "marginRight": 10,
-                  "padding": 10,
-                  "width": "50%",
-                }
-              }
-              testID="checkbox"
-              uncheckedColor="#bfbfbf"
-              uncheckedIcon={
-                <Text>
-                  O
-                </Text>
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text>
-                  O
-                </Text>
-                <Text
-                  style={
-                    Object {
-                      "color": "#43484d",
-                      "fontWeight": "bold",
-                      "marginLeft": 10,
-                      "marginRight": 10,
-                    }
-                  }
-                  testID="checkboxTitle"
-                  theme={
-                    Object {
-                      "colors": Object {
-                        "disabled": "hsl(208, 8%, 90%)",
-                        "divider": "#bcbbc1",
-                        "error": "#ff190c",
-                        "grey0": "#393e42",
-                        "grey1": "#43484d",
-                        "grey2": "#5e6977",
-                        "grey3": "#86939e",
-                        "grey4": "#bdc6cf",
-                        "grey5": "#e1e8ee",
-                        "greyOutline": "#bbb",
-                        "platform": Object {
-                          "android": Object {
-                            "error": "#f44336",
-                            "primary": "#2196f3",
-                            "secondary": "#9C27B0",
-                            "success": "#4caf50",
-                            "warning": "#ffeb3b",
-                          },
-                          "ios": Object {
-                            "error": "#ff3b30",
-                            "primary": "#007aff",
-                            "secondary": "#5856d6",
-                            "success": "#4cd964",
-                            "warning": "#ffcc00",
-                          },
-                        },
-                        "primary": "#2089dc",
-                        "searchBg": "#303337",
-                        "secondary": "#8F0CE8",
-                        "success": "#52c41a",
-                        "warning": "#faad14",
-                      },
-                    }
-                  }
-                >
-                  Remember Me
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "#e6e6e6",
-                  "height": 1,
-                  "marginVertical": 8,
+                  "height": 60,
                   "width": "100%",
                 }
               }
             />
-            <TouchableOpacity
-              activeOpacity={0.7}
+            <View
               style={
-                Array [
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "paddingHorizontal": 10,
+                }
+              }
+            >
+              <View
+                accessible={true}
+                focusable={true}
+                isTVSelectable={true}
+                style={
                   Object {
                     "alignItems": "center",
                     "backgroundColor": "#3490dc",
@@ -338,38 +79,292 @@ exports[`Login screen should match snapshot 1`] = `
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {
-                    "width": "100%",
-                  },
-                  Object {},
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
+                    "opacity": 1,
+                  }
                 }
+                testID="clickable"
               >
-                Login
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={
-                Array [
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 20,
+                        "fontWeight": "700",
+                        "padding": 6,
+                      },
+                      Object {},
+                      Object {},
+                      Object {},
+                    ]
+                  }
+                >
+                  Dev Skip
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "height": 50,
+                    "marginBottom": 10,
+                    "width": "100%",
+                  }
+                }
+                testID="parent"
+              >
+                <RCTScrollView
+                  keyboardShouldPersistTaps="always"
+                  scrollEnabled={false}
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  <View>
+                    <TextInput
+                      allowFontScaling={true}
+                      placeholder="E-Mail Address"
+                      rejectResponderTermination={true}
+                      secureTextEntry={false}
+                      style={
+                        Array [
+                          Object {
+                            "borderColor": "#282828",
+                            "borderRadius": 4,
+                            "borderWidth": 2,
+                            "color": "#282828",
+                            "fontSize": 18,
+                            "height": 50,
+                            "padding": 10,
+                            "width": "100%",
+                          },
+                          Object {},
+                        ]
+                      }
+                      underlineColorAndroid="transparent"
+                      value=""
+                    />
+                    <View
+                      style={
+                        Object {
+                          "height": 0,
+                          "width": "100%",
+                          "zIndex": 5,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </RCTScrollView>
+              </View>
+              <View
+                style={
+                  Object {
+                    "height": 50,
+                    "marginBottom": 10,
+                    "width": "100%",
+                  }
+                }
+                testID="parent"
+              >
+                <RCTScrollView
+                  keyboardShouldPersistTaps="always"
+                  scrollEnabled={false}
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "width": "100%",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  <View>
+                    <TextInput
+                      allowFontScaling={true}
+                      placeholder="Password"
+                      rejectResponderTermination={true}
+                      secureTextEntry={true}
+                      style={
+                        Array [
+                          Object {
+                            "borderColor": "#282828",
+                            "borderRadius": 4,
+                            "borderWidth": 2,
+                            "color": "#282828",
+                            "fontSize": 18,
+                            "height": 50,
+                            "padding": 10,
+                            "width": "100%",
+                          },
+                          Object {},
+                        ]
+                      }
+                      underlineColorAndroid="transparent"
+                      value=""
+                    />
+                    <View
+                      style={
+                        Object {
+                          "height": 0,
+                          "width": "100%",
+                          "zIndex": 5,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </RCTScrollView>
+              </View>
+              <View
+                accessibilityRole="checkbox"
+                accessibilityState={
+                  Object {
+                    "checked": false,
+                  }
+                }
+                accessible={true}
+                focusable={true}
+                isTVSelectable={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderColor": "#ededed",
+                    "borderRadius": 3,
+                    "borderWidth": 0,
+                    "margin": 5,
+                    "marginLeft": 10,
+                    "marginRight": 10,
+                    "opacity": 1,
+                    "padding": 10,
+                    "width": "50%",
+                  }
+                }
+                testID="checkbox"
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Text>
+                    O
+                  </Text>
+                  <Text
+                    style={
+                      Object {
+                        "color": "#43484d",
+                        "fontWeight": "bold",
+                        "marginLeft": 10,
+                        "marginRight": 10,
+                      }
+                    }
+                    testID="checkboxTitle"
+                    theme={
+                      Object {
+                        "colors": Object {
+                          "disabled": "hsl(208, 8%, 90%)",
+                          "divider": "#bcbbc1",
+                          "error": "#ff190c",
+                          "grey0": "#393e42",
+                          "grey1": "#43484d",
+                          "grey2": "#5e6977",
+                          "grey3": "#86939e",
+                          "grey4": "#bdc6cf",
+                          "grey5": "#e1e8ee",
+                          "greyOutline": "#bbb",
+                          "platform": Object {
+                            "android": Object {
+                              "error": "#f44336",
+                              "primary": "#2196f3",
+                              "secondary": "#9C27B0",
+                              "success": "#4caf50",
+                              "warning": "#ffeb3b",
+                            },
+                            "ios": Object {
+                              "error": "#ff3b30",
+                              "primary": "#007aff",
+                              "secondary": "#5856d6",
+                              "success": "#4cd964",
+                              "warning": "#ffcc00",
+                            },
+                          },
+                          "primary": "#2089dc",
+                          "searchBg": "#303337",
+                          "secondary": "#8F0CE8",
+                          "success": "#52c41a",
+                          "warning": "#faad14",
+                        },
+                      }
+                    }
+                  >
+                    Remember Me
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#e6e6e6",
+                    "height": 1,
+                    "marginVertical": 8,
+                    "width": "100%",
+                  }
+                }
+              />
+              <View
+                accessible={true}
+                focusable={true}
+                isTVSelectable={true}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#3490dc",
+                    "borderRadius": 4,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "marginVertical": 5,
+                    "opacity": 1,
+                    "width": "100%",
+                  }
+                }
+                testID="clickable"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 20,
+                        "fontWeight": "700",
+                        "padding": 6,
+                      },
+                      Object {},
+                      Object {},
+                      Object {},
+                    ]
+                  }
+                >
+                  Login
+                </Text>
+              </View>
+              <View
+                accessible={true}
+                focusable={true}
+                isTVSelectable={true}
+                style={
                   Object {
                     "alignItems": "center",
                     "backgroundColor": "white",
@@ -379,189 +374,194 @@ exports[`Login screen should match snapshot 1`] = `
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {
+                    "opacity": 1,
                     "width": "100%",
-                  },
-                  Object {},
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#3490dc",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
+                  }
                 }
+                testID="clickable"
               >
-                Register
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={
-                Array [
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#3490dc",
+                        "fontSize": 20,
+                        "fontWeight": "700",
+                        "padding": 6,
+                      },
+                      Object {},
+                      Object {},
+                      Object {},
+                    ]
+                  }
+                >
+                  Register
+                </Text>
+              </View>
+              <View
+                accessible={true}
+                focusable={true}
+                isTVSelectable={true}
+                style={
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#3490dc",
+                    "backgroundColor": "white",
                     "borderRadius": 4,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {
-                    "backgroundColor": "white",
                     "marginBottom": 30,
+                    "marginVertical": 5,
+                    "opacity": 1,
                     "width": "60%",
-                  },
-                  Object {},
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
+                  }
+                }
+                testID="clickable"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 20,
+                        "fontWeight": "700",
+                        "padding": 6,
+                      },
+                      Object {},
+                      Object {
+                        "color": "#3490dc",
+                        "fontSize": 16,
+                        "fontWeight": "500",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  Forgot Your Password?
+                </Text>
+              </View>
+              <View
                 style={
-                  Array [
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
                     Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {
-                      "color": "#3490dc",
+                      "fontFamily": "System",
                       "fontSize": 16,
-                      "fontWeight": "500",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                Forgot Your Password?
-              </Text>
-            </TouchableOpacity>
-            <View
-              style={
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                  }
-                }
-              >
-                By creating an account, you agree to the
-              </Text>
-            </View>
-            <View
-              style={
-                Object {
-                  "alignItems": "flex-end",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
-              }
-            >
-              <TouchableOpacity
-                activeOpacity={0.2}
-                style={Object {}}
-                testID="clickable"
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "System",
-                        "fontSize": 16,
-                        "fontWeight": "400",
-                      },
-                      Object {
-                        "color": "#3490dc",
-                        "textDecorationLine": "underline",
-                      },
-                    ]
+                      "fontWeight": "400",
+                    }
                   }
                 >
-                  Terms of Service 
+                  By creating an account, you agree to the
                 </Text>
-              </TouchableOpacity>
-              <Text
+              </View>
+              <View
                 style={
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "alignItems": "flex-end",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   }
                 }
               >
-                and
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
-                style={Object {}}
-                testID="clickable"
-              >
+                <View
+                  accessible={true}
+                  focusable={true}
+                  isTVSelectable={true}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                  testID="clickable"
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "System",
+                          "fontSize": 16,
+                          "fontWeight": "400",
+                        },
+                        Object {
+                          "color": "#3490dc",
+                          "textDecorationLine": "underline",
+                        },
+                      ]
+                    }
+                  >
+                    Terms of Service 
+                  </Text>
+                </View>
                 <Text
                   style={
-                    Array [
-                      Object {
-                        "fontFamily": "System",
-                        "fontSize": 16,
-                        "fontWeight": "400",
-                      },
-                      Object {
-                        "color": "#3490dc",
-                        "textDecorationLine": "underline",
-                      },
-                    ]
+                    Object {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                    }
                   }
                 >
-                   Privacy Policy
+                  and
                 </Text>
-              </TouchableOpacity>
-              <Text
+                <View
+                  accessible={true}
+                  focusable={true}
+                  isTVSelectable={true}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                  testID="clickable"
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "System",
+                          "fontSize": 16,
+                          "fontWeight": "400",
+                        },
+                        Object {
+                          "color": "#3490dc",
+                          "textDecorationLine": "underline",
+                        },
+                      ]
+                    }
+                  >
+                     Privacy Policy
+                  </Text>
+                </View>
+                <Text
+                  style={
+                    Object {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                    }
+                  }
+                >
+                  .
+                </Text>
+              </View>
+              <View
                 style={
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "height": 100,
+                    "width": "100%",
                   }
                 }
-              >
-                .
-              </Text>
+              />
             </View>
-            <View
-              style={
-                Object {
-                  "height": 100,
-                  "width": "100%",
-                }
-              }
-            />
           </View>
-        </ScrollView>
+        </RCTScrollView>
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
 </View>
 `;

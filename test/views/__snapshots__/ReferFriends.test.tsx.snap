@@ -36,7 +36,11 @@ exports[`ReferFriends screen should match snapshot 1`] = `
       <Text
         style={
           Array [
-            undefined,
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "400",
+            },
             Object {
               "marginBottom": 24,
               "textAlign": "center",
@@ -61,7 +65,11 @@ exports[`ReferFriends screen should match snapshot 1`] = `
       <Text
         style={
           Array [
-            undefined,
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "400",
+            },
             Object {
               "marginBottom": 36,
               "textAlign": "center",
@@ -96,26 +104,23 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           }
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "#3490dc",
-                "borderRadius": 4,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-              },
-              Object {},
-              Object {
-                "width": 80,
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "opacity": 1,
+              "width": 80,
+            }
           }
           testID="clickable"
         >
@@ -138,25 +143,22 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Skip
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#3490dc",
-                "borderRadius": 4,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-              },
-              Object {},
-              Object {
-                "width": 80,
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "opacity": 1,
+              "width": 80,
+            }
           }
           testID="clickable"
         >
@@ -179,7 +181,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Share
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   </View>

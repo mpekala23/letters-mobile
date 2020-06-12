@@ -26,7 +26,6 @@
     "expo-secure-store": "^8.1.0",
     "fetch-mock": "^9.10.1",
     "jest": "^25.5.4",
-    "jest-expo": "^37.0.0",
     "jest-serializer-enzyme": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
@@ -54,6 +53,7 @@
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@types/react-test-renderer": "^16.9.2",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -97,13 +97,7 @@
     ]
   },
   "jest": {
-    "preset": "jest-expo",
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "./test/setupJest.ts"
-    ]
+    "preset": "jest-expo"
   },
   "private": true
 }

@@ -3,7 +3,7 @@ import { Linking } from "react-native";
 import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
 import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import url from "url";
-import * as SecureStore from "expo-secure-store";
+import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { Storage } from "types";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { clearContacts } from "store/Contact/ContactActions";
@@ -31,16 +31,16 @@ export function fetchTimeout(
 }
 
 export async function saveToken(token: string) {
-  return await SecureStore.setItemAsync(Storage.RememberToken, token);
+  return await setItemAsync(Storage.RememberToken, token);
 }
 
 export async function deleteToken() {
-  return await SecureStore.deleteItemAsync(Storage.RememberToken);
+  return await deleteItemAsync(Storage.RememberToken);
 }
 
 export async function loginWithToken() {
   try {
-    const rememberToken = await SecureStore.getItemAsync(Storage.RememberToken);
+    const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
       store.dispatch(logoutUser());
       throw Error("Cannot load token");
