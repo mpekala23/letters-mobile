@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, View, StyleSheet } from "react-native";
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 

@@ -7,6 +7,7 @@ import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { Storage } from "types";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { clearContacts } from "store/Contact/ContactActions";
+import "isomorphic-fetch";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
 
@@ -42,7 +43,6 @@ export async function loginWithToken() {
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
-      store.dispatch(logoutUser());
       throw Error("Cannot load token");
     }
     const response = await fetchTimeout(url.resolve(API_URL, "login/token"), {
@@ -56,6 +56,7 @@ export async function loginWithToken() {
       }),
     });
     const body = await response.json();
+    if (body.status === "ERROR") throw Error("Invalid token");
     const userData: User = {
       id: body.data[0].id,
       firstName: body.data[0].first_name,
