@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.4.2",
     "@react-navigation/stack": "^5.3.9",
@@ -26,6 +27,7 @@
     "expo-secure-store": "^8.1.0",
     "fetch-mock": "^9.10.1",
     "jest": "^25.5.4",
+    "jest-expo": "^37.0.0",
     "jest-serializer-enzyme": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
@@ -46,7 +48,6 @@
     "redux": "^4.0.5",
     "redux-mock-store": "^1.5.4",
     "redux-persist": "^6.0.0",
-    "redux-persist-expo-securestore": "^2.0.0",
     "url": "^0.11.0",
     "utf-8-validate": "^5.0.2"
   },
@@ -95,9 +96,6 @@
       "eslint --fix",
       "git add"
     ]
-  },
-  "jest": {
-    "preset": "jest-expo"
   },
   "private": true
 }

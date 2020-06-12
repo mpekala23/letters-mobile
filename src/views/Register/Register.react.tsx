@@ -52,6 +52,7 @@ class RegisterScreen extends React.Component<Props, State> {
     this.state = {
       valid: false,
       registered: false,
+      remember: false,
     };
   }
 

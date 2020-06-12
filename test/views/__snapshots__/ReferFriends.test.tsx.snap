@@ -104,23 +104,26 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           }
         }
       >
-        <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "opacity": 1,
-              "width": 80,
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "#3490dc",
+                "borderRadius": 4,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {},
+              Object {
+                "width": 80,
+              },
+              Object {},
+            ]
           }
           testID="clickable"
         >
@@ -143,22 +146,25 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Skip
           </Text>
-        </View>
-        <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "opacity": 1,
-              "width": 80,
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#3490dc",
+                "borderRadius": 4,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {},
+              Object {
+                "width": 80,
+              },
+              Object {},
+            ]
           }
           testID="clickable"
         >
@@ -181,7 +187,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Share
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   </View>

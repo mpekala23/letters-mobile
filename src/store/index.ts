@@ -3,13 +3,11 @@ import { AppState } from "./types";
 import UserReducer from "./User/UserReducer";
 import ContactReducer from "./Contact/ContactReducer";
 import { persistStore, persistReducer } from "redux-persist";
-import createSecureStore from "redux-persist-expo-securestore";
-
-const storage = createSecureStore();
+import { AsyncStorage } from "react-native";
 
 const config = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
 };
 
 const combinedReducers = combineReducers<AppState>({
@@ -18,8 +16,7 @@ const combinedReducers = combineReducers<AppState>({
 });
 
 const persistedReducers = persistReducer(config, combinedReducers);
-
 const store = createStore(persistedReducers);
-export const persistor = persistStore(store);
 
+export const persistor = persistStore(store);
 export default store;

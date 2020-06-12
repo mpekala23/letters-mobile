@@ -5,8 +5,16 @@ import { facebookShare } from "@api";
 import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamList } from "navigations";
+
+type AddManuallyScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  "ReferFriends"
+>;
 
 export interface Props {
+  navigation: AddManuallyScreenNavigationProp;
   userName: string;
   deliveryDate: string;
 }

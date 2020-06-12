@@ -30,6 +30,7 @@ export type AppStackParamList = {
   AddManually: undefined;
   ContactInfo: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  ReferFriends: undefined;
   ReviewContact: undefined;
   Home: undefined;
   Splash: undefined;
