@@ -34,6 +34,7 @@ exports[`Register screen should match snapshot 1`] = `
           "paddingTop": 50,
         }
       }
+      keyboardShouldPersistTaps="handled"
       style={
         Object {
           "flex": 1,
@@ -183,24 +184,23 @@ exports[`Register screen should match snapshot 1`] = `
       </TouchableOpacity>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -217,10 +217,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -228,28 +228,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -266,10 +276,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -277,6 +287,17 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
@@ -288,24 +309,23 @@ exports[`Register screen should match snapshot 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
-                "height": 50,
-                "marginVertical": 5,
-              },
-              Object {
-                "width": "100%",
-              },
-            ]
+            Object {
+              "height": 50,
+              "marginBottom": 10,
+              "width": "100%",
+            }
           }
           testID="parent"
         >
           <ScrollView
-            keyboardShouldPersistTaps="never"
+            keyboardShouldPersistTaps="always"
             scrollEnabled={false}
             style={
               Array [
-                Object {},
+                Object {
+                  "flex": 1,
+                  "width": "100%",
+                },
                 Object {},
               ]
             }
@@ -322,10 +342,10 @@ exports[`Register screen should match snapshot 1`] = `
                     "borderRadius": 4,
                     "borderWidth": 2,
                     "color": "#282828",
-                    "flex": 1,
                     "fontSize": 18,
                     "height": 50,
                     "padding": 10,
+                    "width": "100%",
                   },
                   Object {},
                 ]
@@ -333,29 +353,39 @@ exports[`Register screen should match snapshot 1`] = `
               underlineColorAndroid="transparent"
               value=""
             />
+            <View
+              style={
+                Object {
+                  "height": 0,
+                  "width": "100%",
+                  "zIndex": 5,
+                }
+              }
+            >
+              <View />
+            </View>
           </ScrollView>
         </View>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -372,10 +402,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -383,28 +413,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -421,10 +461,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -432,28 +472,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -470,10 +520,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -481,28 +531,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -519,10 +579,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -530,28 +590,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -568,10 +638,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -579,28 +649,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 60,
+            "marginBottom": 0,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -617,10 +697,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -628,28 +708,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 200,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -666,10 +756,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -677,28 +767,38 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <View
         style={
-          Array [
-            Object {
-              "height": 50,
-              "marginVertical": 5,
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "height": 50,
+            "marginBottom": 10,
+            "width": "100%",
+          }
         }
         testID="parent"
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="always"
           scrollEnabled={false}
           style={
             Array [
-              Object {},
+              Object {
+                "flex": 1,
+                "width": "100%",
+              },
               Object {},
             ]
           }
@@ -715,10 +815,10 @@ exports[`Register screen should match snapshot 1`] = `
                   "borderRadius": 4,
                   "borderWidth": 2,
                   "color": "#282828",
-                  "flex": 1,
                   "fontSize": 18,
                   "height": 50,
                   "padding": 10,
+                  "width": "100%",
                 },
                 Object {},
               ]
@@ -726,6 +826,17 @@ exports[`Register screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <View />
+          </View>
         </ScrollView>
       </View>
       <TouchableOpacity

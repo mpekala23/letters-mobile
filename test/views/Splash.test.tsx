@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SplashScreen } from "@views";
 import { render, toJSON } from "@testing-library/react-native";
-import { Image } from "react-native";
 
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
