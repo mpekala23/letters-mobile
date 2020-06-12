@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { Input } from "@components";
 import { Validation } from "@utils";
 import { Colors } from "@styles";
@@ -10,6 +10,7 @@ import {
   findByText,
   findByPlaceholderText,
 } from "@testing-library/react-native";
+import { TextInput, View } from "react-native";
 
 const setup = (propOverrides = {}) => {
   const props = Object.assign(
@@ -34,6 +35,7 @@ describe("Input component", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have black border when not focused and valid, blue border when focused", () => {
     const { container, getByPlaceholderText } = setup();
     expect(getByPlaceholderText("placeholder").props.style[0].borderColor).toBe(
@@ -48,11 +50,13 @@ describe("Input component", () => {
       Colors.AMEELIO_BLACK
     );
   });
+
   it("should accept input", () => {
     const { getByPlaceholderText } = setup();
     fireEvent.changeText(getByPlaceholderText("placeholder"), "New Text");
     expect(getByPlaceholderText("placeholder").props.value).toBe("New Text");
   });
+
   it("should validate required fields correctly", () => {
     const { props, getByPlaceholderText } = setup({ required: true });
     const textInput = getByPlaceholderText("placeholder");
@@ -65,6 +69,7 @@ describe("Input component", () => {
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
     expect(textInput.props.style[0].borderColor).toBe(Colors.AMEELIO_RED);
   });
+
   it("should validate cell phone numbers correctly", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Cell,
@@ -90,6 +95,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("(612) 703 8623");
     expect(props.onValid).toHaveBeenCalledTimes(3);
   });
+
   it("should validate emails", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Email,
@@ -109,6 +115,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("newvalid@aol.org");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should validate zipcodes", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Zipcode,
@@ -128,6 +135,7 @@ describe("Input component", () => {
     textInput.props.onChangeText("55419-1234");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
   it("should validate passwords", () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Password,
@@ -147,6 +155,27 @@ describe("Input component", () => {
     textInput.props.onChangeText("AbcDef66");
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
+
+  it("should validate states", () => {
+    const { props, getByPlaceholderText } = setup({
+      validate: Validation.State,
+    });
+    const textInput = getByPlaceholderText("placeholder");
+    expect(props.onInvalid).toHaveBeenCalledTimes(1);
+    fireEvent.focus(textInput);
+    fireEvent.changeText(textInput, "Minnesota");
+    fireEvent.blur(textInput);
+    expect(props.onValid).toHaveBeenCalledTimes(1);
+    textInput.props.onChangeText("Not State");
+    expect(props.onInvalid).toHaveBeenCalledTimes(2);
+    textInput.props.onChangeText("Nope");
+    expect(props.onInvalid).toHaveBeenCalledTimes(2);
+    textInput.props.onChangeText("Nah");
+    expect(props.onInvalid).toHaveBeenCalledTimes(2);
+    textInput.props.onChangeText("Utah");
+    expect(props.onValid).toHaveBeenCalledTimes(2);
+  });
+
   it("should implement style props", () => {
     const parentStyle = { backgroundColor: "green" };
     const scrollStyle = { backgroundColor: "red" };
@@ -156,7 +185,9 @@ describe("Input component", () => {
       scrollStyle: scrollStyle,
       inputStyle: inputStyle,
     });
-    expect(getByTestId("parent").props.style[1]).toEqual(parentStyle);
+    expect(getByTestId("parent").props.style.backgroundColor).toEqual(
+      parentStyle.backgroundColor
+    );
     expect(
       getByPlaceholderText("placeholder").parent.parent.props.style[1]
     ).toEqual(scrollStyle);
@@ -164,10 +195,57 @@ describe("Input component", () => {
       inputStyle
     );
   });
+
   it("should implement secure", () => {
     const { getByPlaceholderText } = setup({ secure: true });
     expect(getByPlaceholderText("placeholder").props.secureTextEntry).toBe(
       true
     );
+  });
+  it("should implement simple dropdowns", () => {
+    const { getByPlaceholderText, getByText } = setup({
+      options: ["Option 1", "Option 2"],
+    });
+    const input = getByPlaceholderText("placeholder");
+    fireEvent.focus(input);
+    const option1 = getByText("Option 1");
+    expect(option1).toBeDefined();
+    fireEvent.press(option1);
+    expect(input.props.value).toBe("Option 1");
+    expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
+  });
+
+  it("should implement complex dropdowns", () => {
+    const { getByPlaceholderText, getByText } = setup({
+      options: [
+        ["Option 1", "option one"],
+        ["Option 2", "option two"],
+      ],
+    });
+    const input = getByPlaceholderText("placeholder");
+    fireEvent.focus(input);
+    fireEvent.changeText(input, "option tw");
+    const option2 = getByText("Option 2");
+    expect(option2).toBeDefined();
+    fireEvent.press(option2);
+    expect(input.props.value).toBe("Option 2");
+    expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
+  });
+
+  it("should implement nextInput", () => {
+    const dummyRef = createRef<Input>();
+    const { getByPlaceholderText } = render(
+      <View>
+        <Input placeholder="placeholder" nextInput={dummyRef}></Input>
+        <Input ref={dummyRef} placeholder="dummy" onFocus={dummyFocus} />
+      </View>
+    );
+    const dummyFocus = jest.fn();
+    dummyRef.current.forceFocus = dummyFocus;
+    const input = getByPlaceholderText("placeholder");
+    fireEvent.press(input);
+    fireEvent.changeText(input, "value");
+    fireEvent.submitEditing(input);
+    expect(dummyFocus).toHaveBeenCalledTimes(1);
   });
 });

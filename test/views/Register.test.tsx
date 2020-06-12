@@ -28,6 +28,7 @@ describe("Register screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should have register button be disabled until all fields are valid", async () => {
     const { getByPlaceholderText, getByText } = setup();
     fireEvent.press(getByText("Register"));
@@ -42,7 +43,7 @@ describe("Register screen", () => {
     fireEvent.changeText(getByPlaceholderText("Country"), "USA");
     fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
     fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
-    fireEvent.changeText(getByPlaceholderText("State"), "CT");
+    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
     fireEvent.changeText(getByPlaceholderText("Email"), "team@ameelio.org");
     fireEvent.changeText(getByPlaceholderText("Password"), "GoodPassword1");
     fireEvent.press(getByText("Register"));
