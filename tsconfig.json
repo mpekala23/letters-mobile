@@ -24,7 +24,8 @@
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
       "@views/*": ["src/views/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",
