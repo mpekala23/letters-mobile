@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
+import { Colors, Typography } from '@styles';
 
 export default StyleSheet.create({
   trueBackground: {
@@ -12,8 +12,13 @@ export default StyleSheet.create({
   contactCard: {
     backgroundColor: 'white',
     borderRadius: 10,
-    height: 115,
+    height: 135,
     marginBottom: 16,
+  },
+  contactCardInfo: {
+    color: Colors.GRAY_DARKER,
+    fontSize: 16,
+    paddingBottom: 6,
   },
   addContactButton: {
     marginBottom: 24,

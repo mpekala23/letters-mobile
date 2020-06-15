@@ -61,29 +61,12 @@ const ContactSelectorScreenBase: React.FC = (props) => {
             >
               {contact.firstName}
             </Text>
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                {
-                  color: Colors.GRAY_DARKER,
-                  fontSize: 16,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              Letter streak: 5 days
+            <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>💌 received:</Text>
+            <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>
+              📅 last heard from you:
             </Text>
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                {
-                  color: Colors.GRAY_DARKER,
-                  fontSize: 16,
-                  paddingBottom: 50,
-                },
-              ]}
-            >
-              Miles traveled: 3,598
+            <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo, { paddingBottom: 16 }]}>
+              ✈️ letters traveled:
             </Text>
           </View>
         </View>
@@ -106,7 +89,7 @@ const ContactSelectorScreenBase: React.FC = (props) => {
           },
         ]}
       >
-        LOVED ONES
+        YOUR LOVED ONES
       </Text>
       <ScrollView keyboardShouldPersistTaps="handled">{contactSelectorList}</ScrollView>
       <View style={{ alignItems: 'flex-end' }}>
