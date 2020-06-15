@@ -1,11 +1,11 @@
-import React, { createRef } from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
+import React from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
 import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 import {
   AddManuallyScreen,
   ContactInfoScreen,
@@ -19,6 +19,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SingleContactScreen,
   SplashScreen,
   ThanksScreen,
 } from "@views";
@@ -47,6 +48,7 @@ export type AppStackParamList = {
   Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
+  SingleContactScreen: { contact: Contact } | undefined;
   Splash: undefined;
   Thanks: undefined;
 };
@@ -60,9 +62,7 @@ export interface Props {
   currentNotif: Notif | null;
 }
 
-const fadeTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
+const fadeTransition = (data: StackCardInterpolationProps): StackCardInterpolatedStyle => {
   return {
     cardStyle: {
       opacity: data.current.progress,
@@ -113,6 +113,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
         name="ContactSelector"
         component={ContactSelectorScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="SingleContact"
+        component={SingleContactScreen}
+         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
         name="ExplainProblem"
