@@ -117,7 +117,7 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="SingleContact"
         component={SingleContactScreen}
-         options={{ cardStyleInterpolator: fadeTransition }}
+        options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
         name="ExplainProblem"
