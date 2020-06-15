@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import CardStyles from "./Card.styles";
-import { Colors, Typography } from "@styles";
 import { PrisonTypes } from "types";
 
 interface Props {
@@ -14,14 +13,17 @@ interface Props {
 
 const PrisonCard: React.FC<Props> = (props) => {
   return (
-    <TouchableOpacity style={[CardStyles.cardBase, CardStyles.shadow]}>
+    <TouchableOpacity
+      style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
+      onPress={props.onPress}
+    >
       <Text style={CardStyles.cardTitle}>{props.name}</Text>
-      <Text style={[CardStyles.cardPrisonData, { marginVertical: 6 }]}>
+      <Text style={[CardStyles.cardData, { marginVertical: 6 }]}>
         {props.type === PrisonTypes.StatePrison
           ? "State Prison"
           : "Federal Prison"}
       </Text>
-      <Text style={CardStyles.cardPrisonData}>{props.address}</Text>
+      <Text style={CardStyles.cardData}>{props.address}</Text>
     </TouchableOpacity>
   );
 };
