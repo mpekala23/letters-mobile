@@ -163,7 +163,11 @@ class RegisterScreen extends React.Component<Props, State> {
           contentContainerStyle={Styles.scrollContent}
           keyboardShouldPersistTaps={"handled"}
         >
-          <View style={Styles.picContainer}>
+          <View 
+            accessible
+            accessibilityLabel="Tap to upload profile image"
+            style={Styles.picContainer}
+          >
             <PicUpload />
             <Text style={[Typography.FONT_ITALIC, { marginTop: 5 }]}>
               {i18n.t("RegisterScreen.clickToUploadProfileImage")}

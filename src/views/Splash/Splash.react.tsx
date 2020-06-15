@@ -13,6 +13,7 @@ const SplashScreen: React.FC = () => {
 
   return (
     <View
+      accessible={false}
       style={{
         flex: 1,
         justifyContent: "center",
@@ -23,7 +24,8 @@ const SplashScreen: React.FC = () => {
       <Image
         style={{ height: 120, aspectRatio: 2015 / 885 }}
         source={AmeelioLogo}
-        accessibilityLabel="AmeelioLogo"
+        accessible
+        accessibilityLabel="Ameelio Logo"
       />
     </View>
   );
