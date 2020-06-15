@@ -5,7 +5,7 @@ import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 import {
   AddManuallyScreen,
   ContactInfoScreen,
@@ -19,6 +19,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SingleContactScreen
   SplashScreen,
   ThanksScreen,
 } from "@views";
@@ -49,6 +50,7 @@ export type AppStackParamList = {
   ReviewContact: undefined;
   Splash: undefined;
   Thanks: undefined;
+  SingleContact: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -60,9 +62,7 @@ export interface Props {
   currentNotif: Notif | null;
 }
 
-const fadeTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
+const fadeTransition = (data: StackCardInterpolationProps): StackCardInterpolatedStyle => {
   return {
     cardStyle: {
       opacity: data.current.progress,
@@ -132,6 +132,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="Thanks"
         component={ThanksScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="SingleContact"
+        component={SingleContactScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen

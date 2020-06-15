@@ -42,6 +42,24 @@ const ContactSelectorScreenBase: React.FC<Props> = (props) => {
               style={[
                 {
                   flex: 1,
+                  flexDirection: 'row',
+                  paddingLeft: 16,
+                  paddingTop: 16,
+                },
+              ]}
+            >
+              <ProfilePic
+                firstName={contact.firstName}
+                lastName={contact.lastName}
+                imageUri={contact.imageUri}
+                displayContact
+              />
+            </View>
+            <View style={[{ paddingLeft: 112 }]}>
+              <Text
+              style={[
+                {
+                  flex: 1,
                   flexDirection: "row",
                   paddingLeft: 16,
                   paddingTop: 16,
