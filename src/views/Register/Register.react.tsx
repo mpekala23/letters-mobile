@@ -63,7 +63,7 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.country.current) this.country.current.set("USA");
     if (this.zipcode.current) this.zipcode.current.set("12345");
     if (this.city.current) this.city.current.set("New Haven");
-    if (this.phyState.current) this.phyState.current.set("CT");
+    if (this.phyState.current) this.phyState.current.set("Conneticut");
     if (this.email.current) this.email.current.set("team@ameelio.org");
     if (this.password.current) this.password.current.set("ThisGood1");
     this.updateValid();
@@ -90,7 +90,7 @@ class RegisterScreen extends React.Component<Props, State> {
         this.country.current.state.valid &&
         this.zipcode.current.state.valid &&
         this.city.current.state.valid &&
-        this.phyState.current.state.valid &&
+        // this.phyState.current.state.valid &&
         this.email.current.state.valid &&
         this.password.current.state.valid;
       this.setState({ valid: result });
