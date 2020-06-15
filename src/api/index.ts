@@ -2,6 +2,8 @@ import store from "@store";
 import { Linking } from "react-native";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
+import { Contact } from "@store/Contact/ContactTypes";
+import { setExisting } from "@store/Contact/ContactActions";
 import url from "url";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
@@ -113,6 +115,36 @@ export async function register(data: UserInfo) {
 }
 
 export async function getFacilities(text: string) {}
+
+export async function addContact(data: Contact) {
+  const response = await fetchTimeout<Response>(
+    url.resolve(API_URL, "contacts"),
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  const body = await response.json();
+  if (body.type == "error") {
+    throw Error(body.data);
+  }
+  const contactData: Contact = {
+    firstName: body.data.firstName,
+    lastName: body.data.lastName,
+    inmateNumber: body.data.inmateNumber,
+    state: body.data.state,
+    relationship: body.data.relationship,
+    facility: body.data.facility,
+  };
+  var existingContacts = store.getState().contact.existing;
+  existingContacts.push(contactData);
+  store.dispatch(setExisting(existingContacts));
+  return existingContacts;
+}
 
 export async function facebookShare(shareUrl: string) {
   const supportedUrl = await Linking.canOpenURL(shareUrl);

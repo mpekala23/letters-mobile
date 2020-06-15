@@ -1,5 +1,6 @@
 import React, { createRef, Dispatch } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   View,
   FlatList,
@@ -22,6 +23,10 @@ import {
   ContactActionTypes,
   ContactState,
 } from "store/Contact/ContactTypes";
+import { Facility } from "types";
+import { addContact } from "@api";
+import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
+import DropdownAlert from "react-native-dropdownalert";
 import { setAdding } from "store/Contact/ContactActions";
 import { connect } from "react-redux";
 
@@ -50,6 +55,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   private unit = createRef<Input>();
   private dorm = createRef<Input>();
   private unsubscribeFocus: () => void;
+  private dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Props) {
     super(props);
@@ -62,6 +68,8 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       "focus",
       this.onNavigationFocus
     );
+    this.dropdownRef = getDropdownRef();
+    this.doAddContact = this.doAddContact.bind(this);
   }
 
   componentDidMount() {
@@ -112,6 +120,42 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid;
       this.setState({ valid: result });
+    }
+  }
+
+  doAddContact = async () => {
+    if (this.state.valid) {
+      const facility: Facility = {
+        name: this.facilityName.current.state.value,
+        type: this.props.contactState.adding.facility.type,
+        address: this.facilityAddress.current.state.value,
+        city: this.props.contactState.adding.facility.city,
+        state: this.props.contactState.adding.facility.state,
+        postal: this.postal.current.state.value,
+      };
+      const contact: Contact = {
+        state: this.stateRef.current.state.value,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contactState.adding.inmateNumber,
+        relationship: this.props.contactState.adding.relationship,
+        facility: facility,
+      };
+      try {
+        const data = await addContact(contact);
+        this.props.navigation.navigate("ContactSelector");
+      } catch(err) {
+        if (err.message === "Invalid inmate number") {
+          Alert.alert("Invalid inmante number");
+        } else {
+          if (this.dropdownRef.current)
+            this.dropdownRef.current.alertWithType(
+              "error",
+              "Network Error",
+              "The request could not be completed."
+            );
+        }
+      };
     }
   }
 
@@ -225,9 +269,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             containerStyle={CommonStyles.bottomButton}
           />
           <Button
-            onPress={() => {
-              this.props.navigation.navigate("ReviewContact");
-            }}
+            onPress={this.doAddContact}
             buttonText="Add Contact"
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}

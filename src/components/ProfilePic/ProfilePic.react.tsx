@@ -8,36 +8,43 @@ import Styles from "./ProfilePic.styles";
 const ExamplePic = require("@assets/ExamplePic.jpg");
 
 export interface Props {
-  userState: UserState;
+  firstName: String;
+  lastName: String;
+  imageUri: String;
+  displayUser?: Boolean;
+  displayContact?: Boolean;
 }
 
-const ProfilePicBase: React.FC<Props> = (props) => {
-  if (!props.userState.authInfo.isLoggedIn) {
-    return <View testID="blank"></View>;
-  }
+const ProfilePic: React.FC<Props> = (props) => {
   let initials =
-    props.userState.user.firstName[0].toUpperCase() +
-    props.userState.user.lastName[0].toUpperCase();
+    props.firstName[0].toUpperCase() +
+    props.lastName[0].toUpperCase();
+  
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
-  if (props.userState.user.imageUri) {
+
+  if (props.imageUri) {
     insideCircle = (
-      <Image
-        style={Styles.pic}
-        source={ExamplePic}
-        accessibilityLabel="ProfilePicture"
-      />
+        <Image
+          style={[ 
+            props.displayContact ? Styles.contactPic : {},
+            props.displayUser  ? Styles.userPic : {},
+          ]}
+          source={ExamplePic}
+          accessibilityLabel="Profile Picture"
+        />
     );
   }
+
   return (
-    <TouchableOpacity style={Styles.background}>
+    <TouchableOpacity 
+      style={[ 
+        props.displayContact ? Styles.contactBackground : {},
+        props.displayUser  ? Styles.userBackground : {},
+      ]}
+    >
       {insideCircle}
     </TouchableOpacity>
   );
 };
-
-const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
-});
-const ProfilePic = connect(mapStateToProps)(ProfilePicBase);
 
 export default ProfilePic;

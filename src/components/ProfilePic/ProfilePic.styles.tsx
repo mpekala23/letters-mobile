@@ -2,15 +2,25 @@ import { StyleSheet } from "react-native";
 import { Colors } from "@styles";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
 
-const size = 45;
+const userSize = 45;
+const contactSize = 80;
 
 export default StyleSheet.create({
-  background: {
+  contactBackground: {
     alignItems: "center",
     justifyContent: "center",
-    width: size,
-    height: size,
-    borderRadius: size / 2,
+    width: contactSize,
+    height: contactSize,
+    borderRadius: contactSize / 2,
+    overflow: "hidden",
+    backgroundColor: Colors.AMEELIO_ORANGE,
+  },
+  userBackground: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: userSize,
+    height: userSize,
+    borderRadius: userSize / 2,
     overflow: "hidden",
     backgroundColor: Colors.AMEELIO_ORANGE,
   },
@@ -19,8 +29,12 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: "white",
   },
-  pic: {
-    width: size,
-    height: size,
+  contactPic: {
+    width: contactSize,
+    height: contactSize,
+  },
+  userPic: {
+    width: userSize,
+    height: userSize,
   },
 });

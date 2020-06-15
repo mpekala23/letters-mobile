@@ -9,6 +9,7 @@ import {
 import {
   AddManuallyScreen,
   ContactInfoScreen,
+  ContactSelectorScreen,
   FacilityDirectoryScreen,
   HomeScreen,
   LoginScreen,
@@ -29,6 +30,7 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   AddManually: undefined;
   ContactInfo: undefined;
+  ContactSelector: undefined,
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   ReviewContact: undefined;
   Home: undefined;
@@ -83,6 +85,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="ReviewContact"
         component={ReviewContactScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ContactSelector"
+        component={ContactSelectorScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
