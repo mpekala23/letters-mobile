@@ -19,6 +19,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
 import { UserLoginInfo } from "@store/User/UserTypes";
+import { i18n } from "@i18n";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -72,11 +73,14 @@ class LoginScreen extends React.Component<Props, State> {
         this.setState({ loggedIn: true });
       } catch (err) {
         if (err.message === "Incorrect credentials") {
-          Alert.alert("Incorrect username or password");
+          Alert.alert(i18n.t("LoginScreen.incorrectUsernameOrPassword"));
         } else if (err.message === "timeout") {
-          dropdownError("Network", "The request timed out.");
+          dropdownError(i18n.t("Error.network"), i18n.t("Error.timedOut"));
         } else {
-          dropdownError("Network", "The request could not be completed.");
+          dropdownError(
+            i18n.t("Error.network"),
+            i18n.t("Error.requestIncomplete")
+          );
         }
         this.setState({ loggedIn: false });
       }
@@ -86,6 +90,7 @@ class LoginScreen extends React.Component<Props, State> {
   render() {
     return (
       <TouchableOpacity
+        accessible={false}
         style={{ flex: 1, backgroundColor: "white" }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
@@ -111,7 +116,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={"E-Mail Address"}
+                  placeholder={i18n.t("LoginScreen.emailAddress")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -123,7 +128,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.passwordRef}
                   parentStyle={Styles.fullWidth}
-                  placeholder={"Password"}
+                  placeholder={i18n.t("LoginScreen.password")}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -136,7 +141,7 @@ class LoginScreen extends React.Component<Props, State> {
                   checkedIcon={<Text>X</Text>}
                   uncheckedIcon={<Text>O</Text>}
                   center
-                  title="Remember Me"
+                  title={i18n.t("LoginScreen.rememberMe")}
                   containerStyle={{
                     backgroundColor: "white",
                     width: "50%",
@@ -150,12 +155,12 @@ class LoginScreen extends React.Component<Props, State> {
                 <GrayBar />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText="Login"
+                  buttonText={i18n.t("LoginScreen.login")}
                   onPress={this.onLogin}
                 />
                 <Button
                   containerStyle={Styles.fullWidth}
-                  buttonText="Register"
+                  buttonText={i18n.t("LoginScreen.register")}
                   reverse
                   onPress={() => {
                     Keyboard.dismiss();
@@ -165,28 +170,32 @@ class LoginScreen extends React.Component<Props, State> {
                 <Button
                   containerStyle={Styles.forgotContainer}
                   textStyle={Styles.forgotText}
-                  buttonText="Forgot Your Password?"
+                  buttonText={i18n.t("LoginScreen.forgotYourPassword")}
                   onPress={() => {
                     Keyboard.dismiss();
                   }}
                 />
                 <View
+                  accessible
+                  accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
                   style={{ flexDirection: "row", justifyContent: "center" }}
                 >
                   <Text style={Typography.FONT_REGULAR}>
-                    By creating an account, you agree to the
+                    {i18n.t("LoginScreen.termsCondition")}
                   </Text>
                 </View>
                 <View style={Styles.termsContainer}>
                   <Button
                     link
-                    buttonText={"Terms of Service "}
+                    buttonText={i18n.t("LoginScreen.termsOfService")}
                     onPress={() => {}}
                   />
-                  <Text style={Typography.FONT_REGULAR}>and</Text>
+                  <Text accessible={false} style={Typography.FONT_REGULAR}>
+                    {i18n.t("LoginScreen.termsConditionAnd")}
+                  </Text>
                   <Button
                     link
-                    buttonText={" Privacy Policy"}
+                    buttonText={i18n.t("LoginScreen.privacyPolicy")}
                     onPress={() => {}}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>

@@ -8,13 +8,13 @@ import { Typography } from "@styles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "navigations";
 
-type AddManuallyScreenNavigationProp = StackNavigationProp<
+type ReferFriendsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "ReferFriends"
 >;
 
 export interface Props {
-  navigation: AddManuallyScreenNavigationProp;
+  navigation: ReferFriendsScreenNavigationProp;
   userName: string;
   deliveryDate: string;
 }

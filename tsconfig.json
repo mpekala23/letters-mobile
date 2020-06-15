@@ -18,12 +18,14 @@
       "@api/*": ["src/api/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
+      "@i18n/*": ["src/i18n/*"],
       "@navigations/*": ["src/navigations/*"],
       "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
       "@views/*": ["src/views/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",
