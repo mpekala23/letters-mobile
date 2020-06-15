@@ -3,6 +3,7 @@ import { Colors } from '@styles';
 
 const userSize = 45;
 const contactSize = 80;
+const singleContactSize = 150;
 
 export default StyleSheet.create({
   contactBackground: {
@@ -11,6 +12,15 @@ export default StyleSheet.create({
     width: contactSize,
     height: contactSize,
     borderRadius: contactSize / 2,
+    overflow: 'hidden',
+    backgroundColor: Colors.AMEELIO_ORANGE,
+  },
+  singleContactBackground: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: singleContactSize,
+    height: singleContactSize,
+    borderRadius: singleContactSize / 2,
     overflow: 'hidden',
     backgroundColor: Colors.AMEELIO_ORANGE,
   },
@@ -31,6 +41,10 @@ export default StyleSheet.create({
   contactPic: {
     width: contactSize,
     height: contactSize,
+  },
+  singleContactPic: {
+    width: singleContactSize,
+    height: singleContactSize,
   },
   userPic: {
     width: userSize,

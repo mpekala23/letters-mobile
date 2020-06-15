@@ -13,6 +13,7 @@ export interface Props {
   imageUri: String;
   displayUser?: Boolean;
   displayContact?: Boolean;
+  displaySingleContact?: Boolean;
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
@@ -25,6 +26,7 @@ const ProfilePic: React.FC<Props> = (props) => {
       <Image
         style={[
           props.displayContact ? Styles.contactPic : {},
+          props.displaySingleContact ? Styles.singleContactPic : {},
           props.displayUser ? Styles.userPic : {},
         ]}
         source={ExamplePic}
@@ -37,6 +39,7 @@ const ProfilePic: React.FC<Props> = (props) => {
     <TouchableOpacity
       style={[
         props.displayContact ? Styles.contactBackground : {},
+        props.displaySingleContact ? Styles.singleContactBackground : {},
         props.displayUser ? Styles.userBackground : {},
       ]}
     >
