@@ -11,6 +11,7 @@ exports[`Login screen should match snapshot 1`] = `
   }
 >
   <TouchableOpacity
+    accessible={false}
     activeOpacity={1}
     style={
       Object {
@@ -125,7 +126,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
-                  placeholder="E-Mail Address"
+                  placeholder="E-mail Address"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
@@ -453,6 +454,8 @@ exports[`Login screen should match snapshot 1`] = `
               </Text>
             </TouchableOpacity>
             <View
+              accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
+              accessible={true}
               style={
                 Object {
                   "flexDirection": "row",
@@ -501,10 +504,11 @@ exports[`Login screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                  Terms of Service 
+                  Terms of Service
                 </Text>
               </TouchableOpacity>
               <Text
+                accessible={false}
                 style={
                   Object {
                     "fontFamily": "System",
@@ -513,7 +517,7 @@ exports[`Login screen should match snapshot 1`] = `
                   }
                 }
               >
-                and
+                 and 
               </Text>
               <TouchableOpacity
                 activeOpacity={0.2}
@@ -535,7 +539,7 @@ exports[`Login screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                   Privacy Policy
+                  Privacy Policy
                 </Text>
               </TouchableOpacity>
               <Text
