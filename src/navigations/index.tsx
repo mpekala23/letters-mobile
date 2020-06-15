@@ -43,6 +43,7 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  ReferFriends: undefined;
   ReviewContact: undefined;
   Splash: undefined;
   Thanks: undefined;
@@ -94,6 +95,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="AddManually"
         component={AddManuallyScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReferFriends"
+        component={ReferFriendsScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
