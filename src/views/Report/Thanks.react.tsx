@@ -2,9 +2,9 @@ import React, { useCallback, Dispatch, useState } from "react";
 import { Text, View } from "react-native";
 import { Colors, Typography } from "@styles";
 import { Button, Icon } from "@components";
-import MailHearts from "assets/views/Report/MailHearts";
+import MailHearts from "@assets/views/Report/MailHearts";
 import ReportStyles from "./Report.styles";
-import { AppStackParamList } from "navigations";
+import { AppStackParamList } from "@navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 type ThanksScreenNavigationProp = StackNavigationProp<
@@ -28,7 +28,9 @@ const ThanksScreen: React.FC<Props> = (props) => {
       >
         Thanks for giving us feedback! We'll get in touch with you soon.
       </Text>
-      <Icon svg={MailHearts} style={{ marginTop: 30, left: 15 }} />
+      <View testID="thanksSVG">
+        <Icon svg={MailHearts} style={{ marginTop: 30, left: 15 }} />
+      </View>
       <Button
         buttonText="Return home"
         onPress={() => {
