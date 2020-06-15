@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { RefObject } from "react";
-=======
-import React, { RefObject, MutableRefObject } from "react";
->>>>>>> master
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "@components";
 import { facebookShare } from "@api";
