@@ -42,6 +42,8 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined,
   ExplainProblem: undefined;
+  ContactInfo: undefined;
+  ContactSelector: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
   Home: undefined;
