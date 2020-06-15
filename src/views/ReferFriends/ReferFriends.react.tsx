@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { RefObject } from "react";
+=======
+import React, { RefObject, MutableRefObject } from "react";
+>>>>>>> master
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "@components";
 import { facebookShare } from "@api";
@@ -9,13 +13,13 @@ import { Typography } from "@styles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "navigations";
 
-type LoginScreenNavigationProp = StackNavigationProp<
+type ReferFriendsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "ReferFriends"
 >;
 
 export interface Props {
-  navigation: LoginScreenNavigationProp;
+  navigation: ReferFriendsScreenNavigationProp;
   userName: string;
   deliveryDate: string;
 }

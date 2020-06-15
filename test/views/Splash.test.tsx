@@ -13,6 +13,6 @@ describe("Splash screen", () => {
 
   it("should show the logo", () => {
     const { getByLabelText } = render(<SplashScreen />);
-    expect(getByLabelText("AmeelioLogo")).toBeDefined();
+    expect(getByLabelText("Ameelio Logo")).toBeDefined();
   });
 });

@@ -83,6 +83,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
   ) : props.authInfo.isLoggedIn ? (
     <>
       <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
         name="ContactInfo"
         component={ContactInfoScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -108,8 +113,8 @@ const NavigatorBase: React.FC<Props> = (props) => {
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ReferFriends"
+        component={ReferFriendsScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen

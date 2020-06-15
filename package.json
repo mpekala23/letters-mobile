@@ -73,7 +73,7 @@
     "jest-react-native": "^18.0.0",
     "jsdoc": "^3.6.4",
     "jsdocs": "^1.0.0",
-    "lint-staged": "^10.2.3",
+    "lint-staged": "^10.2.9",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "typescript": "^3.9.2"
@@ -92,8 +92,13 @@
   "lint-staged": {
     "*.{js,jsx}": [
       "eslint --fix",
-      "git add"
+      "prettier --write"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "jest": {
     "preset": "jest-expo",
