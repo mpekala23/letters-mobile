@@ -1,11 +1,11 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { UserState } from "@store/User/UserTypes";
-import Styles from "./ProfilePic.styles";
+import React from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { UserState } from '@store/User/UserTypes';
+import Styles from './ProfilePic.styles';
 
-const ExamplePic = require("@assets/ExamplePic.jpg");
+const ExamplePic = require('@assets/ExamplePic.jpg');
 
 export interface Props {
   firstName: String;
@@ -16,30 +16,28 @@ export interface Props {
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
-  let initials =
-    props.firstName[0].toUpperCase() +
-    props.lastName[0].toUpperCase();
-  
+  const initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
+
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
 
   if (props.imageUri) {
     insideCircle = (
-        <Image
-          style={[ 
-            props.displayContact ? Styles.contactPic : {},
-            props.displayUser  ? Styles.userPic : {},
-          ]}
-          source={ExamplePic}
-          accessibilityLabel="Profile Picture"
-        />
+      <Image
+        style={[
+          props.displayContact ? Styles.contactPic : {},
+          props.displayUser ? Styles.userPic : {},
+        ]}
+        source={ExamplePic}
+        accessibilityLabel="Profile Picture"
+      />
     );
   }
 
   return (
-    <TouchableOpacity 
-      style={[ 
+    <TouchableOpacity
+      style={[
         props.displayContact ? Styles.contactBackground : {},
-        props.displayUser  ? Styles.userBackground : {},
+        props.displayUser ? Styles.userBackground : {},
       ]}
     >
       {insideCircle}

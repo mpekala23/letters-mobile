@@ -1,12 +1,12 @@
-import store from "@store";
-import { Linking } from "react-native";
-import { loginUser, logoutUser } from "@store/User/UserActions";
-import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
-import { Contact } from "@store/Contact/ContactTypes";
-import { setExisting } from "@store/Contact/ContactActions";
-import url from "url";
+import store from '@store';
+import { Linking } from 'react-native';
+import { loginUser, logoutUser } from '@store/User/UserActions';
+import { User, UserCredentials, UserInfo } from '@store/User/UserTypes';
+import { Contact } from '@store/Contact/ContactTypes';
+import { setExisting } from '@store/Contact/ContactActions';
+import url from 'url';
 
-const MOCK_API_IP = process.env.MOCK_API_IP;
+const { MOCK_API_IP } = process.env;
 
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
@@ -23,7 +23,7 @@ export function fetchTimeout<T>(
   return Promise.race([
     fetch(url, options),
     new Promise<Response | T>((_, reject) =>
-      setTimeout(() => reject(new Error("timeout")), timeout)
+      setTimeout(() => reject(new Error('timeout')), timeout)
     ),
   ]);
 }
@@ -31,16 +31,16 @@ export function fetchTimeout<T>(
 /** Dummy function atm, once I implement persistent storage I will replace. */
 export function loadToken() {
   const dummyData: User = {
-    id: "6",
-    firstName: "Team",
-    lastName: "Ameelio",
-    email: "team@ameelio.org",
-    cell: "4324324432",
-    address1: "Somewhere",
-    country: "USA",
-    zipcode: "12345",
-    city: "New Haven",
-    state: "CT",
+    id: '6',
+    firstName: 'Team',
+    lastName: 'Ameelio',
+    email: 'team@ameelio.org',
+    cell: '4324324432',
+    address1: 'Somewhere',
+    country: 'USA',
+    zipcode: '12345',
+    city: 'New Haven',
+    state: 'CT',
   };
   setTimeout(() => {
     store.dispatch(logoutUser());
@@ -49,11 +49,11 @@ export function loadToken() {
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
 export async function login(cred: UserCredentials) {
-  const response = await fetchTimeout<Response>(url.resolve(API_URL, "login"), {
-    method: "POST",
+  const response = await fetchTimeout<Response>(url.resolve(API_URL, 'login'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: cred.email,
@@ -61,7 +61,7 @@ export async function login(cred: UserCredentials) {
     }),
   });
   const body = await response.json();
-  if (body.type == "error") {
+  if (body.type == 'error') {
     throw Error(body.data);
   }
   const userData: User = {
@@ -82,19 +82,16 @@ export async function login(cred: UserCredentials) {
 }
 
 export async function register(data: UserInfo) {
-  const response = await fetchTimeout<Response>(
-    url.resolve(API_URL, "register"),
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetchTimeout<Response>(url.resolve(API_URL, 'register'), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
   const body = await response.json();
-  if (body.type == "error") {
+  if (body.type == 'error') {
     throw Error(body.data);
   }
   const userData: User = {
@@ -117,19 +114,16 @@ export async function register(data: UserInfo) {
 export async function getFacilities(text: string) {}
 
 export async function addContact(data: Contact) {
-  const response = await fetchTimeout<Response>(
-    url.resolve(API_URL, "contacts"),
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetchTimeout<Response>(url.resolve(API_URL, 'contacts'), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
   const body = await response.json();
-  if (body.type == "error") {
+  if (body.type == 'error') {
     throw Error(body.data);
   }
   const contactData: Contact = {
@@ -140,7 +134,7 @@ export async function addContact(data: Contact) {
     relationship: body.data.relationship,
     facility: body.data.facility,
   };
-  var existingContacts = store.getState().contact.existing;
+  const existingContacts = store.getState().contact.existing;
   existingContacts.push(contactData);
   store.dispatch(setExisting(existingContacts));
   return existingContacts;
@@ -151,6 +145,6 @@ export async function facebookShare(shareUrl: string) {
   if (supportedUrl) {
     await Linking.openURL(shareUrl);
   } else {
-    throw Error("Share Url not supported");
+    throw Error('Share Url not supported');
   }
 }
