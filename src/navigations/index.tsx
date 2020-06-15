@@ -51,6 +51,7 @@ export type AppStackParamList = {
   SingleContactScreen: { contact: Contact } | undefined;
   Splash: undefined;
   Thanks: undefined;
+  SingleContact: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -137,6 +138,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="Thanks"
         component={ThanksScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="SingleContact"
+        component={SingleContactScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
