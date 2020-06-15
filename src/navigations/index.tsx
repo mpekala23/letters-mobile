@@ -7,23 +7,27 @@ import {
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
 import {
+  AddManuallyScreen,
+  ContactInfoScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
+  FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
   LoginScreen,
+  ReferFriendsScreen,
   RegisterScreen,
+  ReviewContactScreen,
   SplashScreen,
   ThanksScreen,
 } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
-import { Topbar } from "@components";
-import { NavigationContainerRef } from "@react-navigation/native";
-import { Notif } from "store/Notif/NotifTypes";
 import { navigationRef, navigate } from "@notifications";
-
 export { navigationRef, navigate };
+import { Notif } from "store/Notif/NotifTypes";
+import { NullableFacility } from "types";
+import { Topbar } from "@components";
 
 export type AuthStackParamList = {
   Splash: undefined;
@@ -32,10 +36,15 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  AddManually: undefined;
+  ContactInfo: undefined;
   ExplainProblem: undefined;
+  FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  ReviewContact: undefined;
+  Splash: undefined;
   Thanks: undefined;
 };
 
@@ -72,6 +81,26 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   ) : props.authInfo.isLoggedIn ? (
     <>
+      <Stack.Screen
+        name="ContactInfo"
+        component={ContactInfoScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="FacilityDirectory"
+        component={FacilityDirectoryScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="AddManually"
+        component={AddManuallyScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReviewContact"
+        component={ReviewContactScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}

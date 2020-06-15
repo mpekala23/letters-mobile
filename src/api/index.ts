@@ -1,5 +1,5 @@
 import store from "@store";
-import { Linking } from 'react-native';
+import { Linking } from "react-native";
 import { loginUser, logoutUser } from "@store/User/UserActions";
 import { User, UserCredentials, UserInfo } from "@store/User/UserTypes";
 import url from "url";
@@ -110,6 +110,7 @@ export async function register(data: UserInfo) {
   return userData;
 }
 
+export async function getFacilities(text: string) {}
 
 export async function facebookShare(shareUrl: string) {
   const supportedUrl = await Linking.canOpenURL(shareUrl);

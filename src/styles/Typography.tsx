@@ -1,6 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { TextStyle } from "react-native";
+import * as Colors from "./Colors";
 
 // FONT FAMILY
 export const FONT_FAMILY_REGULAR = "System";
@@ -28,7 +29,40 @@ export const FONT_ITALIC: TextStyle = {
   fontStyle: "italic",
 };
 
-interface TextProps {
+export interface TextProps {
   text: string;
-  style?: object;
+  size?: number;
+  color?: string;
 }
+
+const PageHeader: React.FC<TextProps> = (props: TextProps) => {
+  const text = props.text;
+  const size = props.size || 20;
+  const color = props.color || Colors.AMEELIO_BLUE;
+
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          width: size,
+          height: size / 2,
+          borderTopRightRadius: size / 4,
+          borderBottomRightRadius: size / 4,
+          backgroundColor: color,
+          marginRight: 10,
+        }}
+      />
+      <Text
+        style={{
+          fontSize: size * 1.5,
+          fontFamily: FONT_FAMILY_BOLD,
+          fontWeight: FONT_WEIGHT_BOLD,
+        }}
+      >
+        {props.text}
+      </Text>
+    </View>
+  );
+};
+
+export { PageHeader };
