@@ -28,6 +28,7 @@ interface Props {
   navigation: ContactSelectorScreenNavigationProp;
 }
 
+<<<<<<< HEAD
 const ContactSelectorScreenBase: React.FC<Props> = (props) => {
   const contactSelectorList = props.contactState.map(
     (contact: Contact, key: any) => {
@@ -57,6 +58,38 @@ const ContactSelectorScreenBase: React.FC<Props> = (props) => {
             </View>
             <View style={[{ paddingLeft: 112 }]}>
               <Text
+=======
+const ContactSelectorScreenBase: React.FC = (props) => {
+  const contactSelectorList = props.contactState.map((contact, key) => {
+    return (
+      <TouchableOpacity
+        style={Styles.contactCard}
+        onPress={() => {
+          props.navigation.navigate('SingleContact', { contact });
+        }}
+        key={key}
+      >
+        <View style={Styles.contactCard}>
+          <View
+            style={[
+              {
+                flex: 1,
+                flexDirection: 'row',
+                paddingLeft: 16,
+                paddingTop: 16,
+              },
+            ]}
+          >
+            <ProfilePic
+              firstName={contact.firstName}
+              lastName={contact.lastName}
+              imageUri={contact.imageUri}
+              type={ProfilePicTypes.ContactProfile}
+            />
+          </View>
+          <View style={[{ paddingLeft: 112 }]}>
+            <Text
+>>>>>>> [1/x] add in SingleContact view
               style={[
                 {
                   flex: 1,
