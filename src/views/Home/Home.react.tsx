@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from "react";
-import { View, Text, Linking } from "react-native";
-import { Button } from "@components";
-import { Notif, NotifType } from "@store/Notif/NotifTypes";
+import { View, Text } from "react-native";
+import { Notif } from "@store/Notif/NotifTypes";
 import { useFocusEffect } from "@react-navigation/native";
 import { AppState } from "store/types";
 import { connect } from "react-redux";
-import { RootStackParamList, AppStackParamList } from "navigations";
+import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Notifs from "@notifications";
 
