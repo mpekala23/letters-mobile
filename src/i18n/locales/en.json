@@ -1,0 +1,43 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "login": "Login",
+    "register": "Register"
+  },
+  "Error": {
+    "network": "Network Error",
+    "requestTimedOut": "The request timed out.",
+    "requestIncomplete": "The request could not be completed."
+  },
+  "LoginScreen": {
+    "emailAddress": "E-mail Address",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "login": "Login",
+    "register": "Register",
+    "forgotYourPassword": "Forgot Your Password?",
+    "termsCondition": "By creating an account, you agree to the",
+    "termsConditionAnd": " and ",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "incorrectUsernameOrPassword": "Incorrect username or password"
+  },
+  "RegisterScreen": {
+  	"clickToUploadProfileImage": "Click to upload profile image.",
+  	"privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",
+  	"alreadyHaveAnAccount": "Already have an account?",
+  	"firstName": "First Name",
+  	"lastName": "Last Name",
+  	"cellphoneNumber": "Cell Phone Number",
+  	"addressLine1": "Address Line 1",
+  	"addressLine2": "Address Line 2",
+  	"country": "Country",
+  	"zipcode": "Zip Code",
+  	"city": "City",
+  	"state": "State",
+  	"emailAddress": "E-mail Address",
+    "password": "Password",
+  	"register": "Register",
+    "emailAlreadyInUse": "Email already in use."
+  }
+}
