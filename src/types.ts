@@ -9,4 +9,9 @@ export interface Facility {
   postal: string;
 }
 
+export enum PrisonTypes {
+  StatePrison = "StatePrison",
+  FederalPrison = "FederalPrison",
+}
+
 export type NullableFacility = Facility | null;

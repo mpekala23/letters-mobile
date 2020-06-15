@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown/Dropdown.react";
 import GrayBar from "./GrayBar/GrayBar.react";
 import Input from "./Input/Input.react";
 import PicUpload from "./PicUpload/PicUpload.react";
+import PrisonCard from "./Card/PrisonCard.react";
 import ProfilePic from "./ProfilePic/ProfilePic.react";
 import Statusbar from "./Statusbar/Statusbar.react";
 import Topbar from "./Topbar/Topbar.react";
@@ -13,6 +14,7 @@ export {
   GrayBar,
   Input,
   PicUpload,
+  PrisonCard,
   ProfilePic,
   Statusbar,
   Topbar,
