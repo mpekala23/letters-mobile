@@ -1,10 +1,17 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
-import { AppState } from 'store/types';
+import { AppState } from '@store/types';
 import { ContactState } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
 import Styles from './ContactSelector.styles';

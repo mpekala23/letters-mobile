@@ -43,6 +43,8 @@ exports[`Register screen should match snapshot 1`] = `
       }
     >
       <View
+        accessibilityLabel="Tap to upload profile image"
+        accessible={true}
         style={
           Object {
             "alignItems": "center",

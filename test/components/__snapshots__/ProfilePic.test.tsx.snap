@@ -10,8 +10,26 @@ exports[`ProfilePic component should match snapshot 1`] = `
     }
   }
 >
-  <View
-    testID="blank"
-  />
+  <TouchableOpacity
+    activeOpacity={0.2}
+    style={
+      Array [
+        Object {},
+        Object {},
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 22,
+          "fontWeight": "500",
+        }
+      }
+    >
+      TA
+    </Text>
+  </TouchableOpacity>
 </View>
 `;

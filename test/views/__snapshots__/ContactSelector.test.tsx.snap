@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact Selector Screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#EDEDED",
+          "flex": 1,
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "padding": 16,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "color": "#6a6a6a",
+            "fontSize": 20,
+            "paddingBottom": 16,
+          },
+        ]
+      }
+    >
+      LOVED ONES
+    </Text>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+    >
+      <TouchableOpacity
+        activeOpacity={0.2}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 10,
+            "height": 115,
+            "marginBottom": 16,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderRadius": 10,
+              "height": 115,
+              "marginBottom": 16,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 16,
+                  "paddingTop": 16,
+                },
+              ]
+            }
+          >
+            <TouchableOpacity
+              activeOpacity={0.2}
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#f6993f",
+                    "borderRadius": 40,
+                    "height": 80,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "width": 80,
+                  },
+                  Object {},
+                ]
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "white",
+                    "fontSize": 22,
+                    "fontWeight": "500",
+                  }
+                }
+              >
+                FL
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "paddingLeft": 112,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontWeight": "600",
+                  },
+                  Object {
+                    "color": "#282828",
+                    "fontSize": 22,
+                    "paddingBottom": 8,
+                  },
+                ]
+              }
+            >
+              First
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 16,
+                    "paddingBottom": 4,
+                  },
+                ]
+              }
+            >
+              Letter streak: 5 days
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 16,
+                    "paddingBottom": 50,
+                  },
+                ]
+              }
+            >
+              Miles traveled: 3,598
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FC7272",
+              "borderRadius": 50,
+              "bottom": 0,
+              "height": 65,
+              "marginBottom": 24,
+              "marginRight": 12,
+              "paddingLeft": 2,
+              "position": "absolute",
+              "right": 0,
+              "width": 65,
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "fontSize": 30,
+              },
+              Object {},
+            ]
+          }
+        >
+          +
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+`;
