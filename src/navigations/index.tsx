@@ -6,17 +6,38 @@ import {
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from "@react-navigation/stack";
-import { HomeScreen, LoginScreen, RegisterScreen, SplashScreen } from "@views";
+import {
+  AddManuallyScreen,
+  ContactInfoScreen,
+  FacilityDirectoryScreen,
+  HomeScreen,
+  LoginScreen,
+  RegisterScreen,
+  ReferFriendsScreen,
+  SplashScreen,
+  ReviewContactScreen,
+} from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { Topbar } from "@components";
+import { NullableFacility } from "types";
 
 export type AuthStackParamList = {
-  Login: LoginScreen;
-  Register: RegisterScreen;
+  Login: undefined;
+  Register: undefined;
 };
 
-const Stack = createStackNavigator();
+export type AppStackParamList = {
+  AddManually: undefined;
+  ContactInfo: undefined;
+  FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  ReferFriends: undefined;
+  ReviewContact: undefined;
+  Home: undefined;
+  Splash: undefined;
+};
+
+const Stack = createStackNavigator<AuthStackParamList & AppStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;
@@ -49,6 +70,31 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ContactInfo"
+        component={ContactInfoScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="FacilityDirectory"
+        component={FacilityDirectoryScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="AddManually"
+        component={AddManuallyScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReviewContact"
+        component={ReviewContactScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReferFriends"
+        component={ReferFriendsScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
     </>

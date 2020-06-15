@@ -20,7 +20,7 @@ module.exports = (req, res) => {
       country: 'USA',
       zipcode: '12345',
       city: 'New Haven',
-      state: 'CT',
+      state: 'Connecticut',
     },
   });
 };

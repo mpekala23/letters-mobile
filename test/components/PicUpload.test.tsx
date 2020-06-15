@@ -13,6 +13,7 @@ describe("PicUpload component", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should display blank with no image", () => {
     const { getByTestId } = setup();
     expect(getByTestId("clickable").children.length).toBe(0);

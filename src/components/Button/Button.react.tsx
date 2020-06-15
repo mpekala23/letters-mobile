@@ -10,7 +10,7 @@ export interface Props {
   textStyle?: object;
   disabledContainerStyle?: object;
   disabledTextStyle?: object;
-  buttonText: string;
+  buttonText?: string;
   reverse?: boolean;
   link?: boolean;
   enabled?: boolean;
@@ -70,7 +70,7 @@ const Button: React.FC<Props> = (props) => {
         testID="clickable"
       >
         <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
-          {buttonText}
+          {buttonText || props.children}
         </Text>
       </TouchableOpacity>
     );
@@ -82,7 +82,7 @@ Button.propTypes = {
   textStyle: StyleType,
   disabledContainerStyle: StyleType,
   disabledTextStyle: StyleType,
-  buttonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.string,
   reverse: PropTypes.bool,
   link: PropTypes.bool,
   enabled: PropTypes.bool,
