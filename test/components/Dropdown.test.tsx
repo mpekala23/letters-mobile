@@ -22,6 +22,7 @@ describe("Dropdown component", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should implement info dropdowns", () => {
     const { getByText, getByTestId } = setup();
     dropdownInfo("title", "body");
@@ -30,6 +31,7 @@ describe("Dropdown component", () => {
     const touchable = getByTestId("touchable");
     expect(touchable.props.style[1].backgroundColor).toBe(Colors.AMEELIO_BLUE);
   });
+
   it("should implement success dropdowns", () => {
     const { getByText, getByTestId } = setup();
     dropdownSuccess("title", "body");
@@ -38,6 +40,7 @@ describe("Dropdown component", () => {
     const touchable = getByTestId("touchable");
     expect(touchable.props.style[1].backgroundColor).toBe(Colors.SUCCESS);
   });
+
   it("should implement warning dropdowns", () => {
     const { getByText, getByTestId } = setup();
     dropdownWarning("title", "body");
@@ -46,6 +49,7 @@ describe("Dropdown component", () => {
     const touchable = getByTestId("touchable");
     expect(touchable.props.style[1].backgroundColor).toBe(Colors.WARNING);
   });
+
   it("should implement error dropdowns", () => {
     const { getByText, getByTestId } = setup();
     dropdownError("title", "body");
@@ -54,6 +58,7 @@ describe("Dropdown component", () => {
     const touchable = getByTestId("touchable");
     expect(touchable.props.style[1].backgroundColor).toBe(Colors.ERROR);
   });
+
   it("should queue dropdowns", () => {
     const { getByText, queryByText } = setup();
     dropdownError("title1", "body1");
