@@ -1,8 +1,16 @@
-import React from "react";
-import { Image, View, StyleSheet } from "react-native";
+import React, { useEffect }from "react";
+import { Image, View, StyleSheet, NativeModules, Platform } from "react-native";
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
+import { i18n } from "@i18n";
+import * as Localization from 'expo-localization';
 
 const SplashScreen: React.FC = () => {
+  useEffect(() => {
+    // Localization returns locale in "en-US" format
+    const locale = Localization.locale.substring(0, 2);
+    i18n.locale = locale;
+  });
+
   return (
     <View
       accessible={false}
