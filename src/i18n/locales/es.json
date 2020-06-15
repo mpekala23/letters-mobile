@@ -7,7 +7,7 @@
   "Error": {
     "network": "Network Error",
     "requestTimedOut": "The request timed out.",
-    "requestIncomplete": "The request could not be completed.",
+    "requestIncomplete": "The request could not be completed."
   },
   "LoginScreen": {
     "emailAddress": "E-mail Address",
@@ -20,7 +20,7 @@
     "termsConditionAnd": " and ",
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
-    "incorrectUsernameOrPassword": "Incorrect username or password",
+    "incorrectUsernameOrPassword": "Incorrect username or password"
   },
   "RegisterScreen": {
     "clickToUploadProfileImage": "Click to upload profile image.",
@@ -32,12 +32,12 @@
     "addressLine1": "Address Line 1",
     "addressLine2": "Address Line 2",
     "country": "Country",
-    "zipcode": "Zipcode",
+    "zipcode": "Zip Code",
     "city": "City",
     "state": "State",
     "emailAddress": "E-mail Address",
     "password": "Password",
     "register": "Register",
-    "emailAlreadyInUse": "Email already in use.",
-  },
+    "emailAlreadyInUse": "Email already in use."
+  }
 }

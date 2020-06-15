@@ -89,7 +89,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
-                  placeholder="E-Mail Address"
+                  placeholder="E-mail Address"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
@@ -444,7 +444,7 @@ exports[`Login screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                  Terms of Service 
+                  Terms of Service
                 </Text>
               </TouchableOpacity>
               <Text
@@ -456,7 +456,7 @@ exports[`Login screen should match snapshot 1`] = `
                   }
                 }
               >
-                and
+                 and 
               </Text>
               <TouchableOpacity
                 activeOpacity={0.2}
@@ -478,7 +478,7 @@ exports[`Login screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                   Privacy Policy
+                  Privacy Policy
                 </Text>
               </TouchableOpacity>
               <Text

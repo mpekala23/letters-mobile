@@ -43,7 +43,7 @@ describe("Register screen", () => {
     fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
     fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
     fireEvent.changeText(getByPlaceholderText("State"), "CT");
-    fireEvent.changeText(getByPlaceholderText("Email"), "team@ameelio.org");
+    fireEvent.changeText(getByPlaceholderText("E-mail Address"), "team@ameelio.org");
     fireEvent.changeText(getByPlaceholderText("Password"), "GoodPassword1");
     fireEvent.press(getByText("Register"));
     expect(register).toHaveBeenCalledTimes(1);
