@@ -30,7 +30,13 @@ export interface Props {
 const ContactSelectorScreenBase: React.FC = (props) => {
   const contactSelectorList = props.contactState.map((contact, key) => {
     return (
-      <TouchableOpacity style={Styles.contactCard} onPress={() => {}} key={key}>
+      <TouchableOpacity
+        style={Styles.contactCard}
+        onPress={() => {
+          props.navigation.navigate('SingleContact', { contact });
+        }}
+        key={key}
+      >
         <View style={Styles.contactCard}>
           <View
             style={[

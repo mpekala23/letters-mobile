@@ -1,11 +1,11 @@
-import React from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
+import React from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
 import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 import {
   AddManuallyScreen,
   ContactInfoScreen,
@@ -15,13 +15,14 @@ import {
   LoginScreen,
   RegisterScreen,
   ReferFriendsScreen,
+  SingleContactScreen,
   SplashScreen,
   ReviewContactScreen,
-} from "@views";
-import { AppState } from "@store/types";
-import { AuthInfo } from "@store/User/UserTypes";
-import { Topbar } from "@components";
-import { NullableFacility } from "types";
+} from '@views';
+import { AppState } from '@store/types';
+import { AuthInfo } from '@store/User/UserTypes';
+import { Topbar } from '@components';
+import { NullableFacility } from 'types';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -31,12 +32,13 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   AddManually: undefined;
   ContactInfo: undefined;
-  ContactSelector: undefined,
+  ContactSelector: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
   Home: undefined;
   Splash: undefined;
+  SingleContactScreen: undefined;
 };
 
 const Stack = createStackNavigator<AuthStackParamList & AppStackParamList>();
@@ -45,9 +47,7 @@ export interface Props {
   authInfo: AuthInfo;
 }
 
-const fadeTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
+const fadeTransition = (data: StackCardInterpolationProps): StackCardInterpolatedStyle => {
   return {
     cardStyle: {
       opacity: data.current.progress,
@@ -92,6 +92,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="ContactSelector"
         component={ContactSelectorScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="SingleContact"
+        component={SingleContactScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
