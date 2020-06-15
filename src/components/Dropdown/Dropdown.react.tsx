@@ -3,7 +3,6 @@ import { StatusBar, Text, View } from "react-native";
 import { Animated, TouchableOpacity } from "react-native";
 import { STATUS_BAR_HEIGHT } from "@utils";
 import { Typography, Colors } from "@styles";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const DROPDOWN_HEIGHT = 100;
 const ANIM_DURATION = 500;
@@ -38,13 +37,13 @@ export class Dropdown extends React.Component<Props, State> {
       notifQ: [],
       animating: false,
     };
-    this.qNotif = this.qNotif.bind(this);
+    this.queueNotif = this.queueNotif.bind(this);
     this._flushNotif = this._flushNotif.bind(this);
     this._endNotif = this._endNotif.bind(this);
     this.renderNotif = this.renderNotif.bind(this);
   }
 
-  qNotif(notif: DropNotif) {
+  queueNotif(notif: DropNotif) {
     notif.id = this.numNotifs;
     this.numNotifs += 1;
     const currentNotifs = this.state.notifQ;
@@ -55,7 +54,7 @@ export class Dropdown extends React.Component<Props, State> {
   }
 
   // convenient info dropdown
-  qInfo(infoString: string, body: string, onPress = () => {}) {
+  queueInfo(infoString: string, body: string, onPress = () => {}) {
     const errorNotif: DropNotif = {
       title: "Info: " + infoString,
       body: body,
@@ -63,11 +62,11 @@ export class Dropdown extends React.Component<Props, State> {
       icon: "poll",
       backgroundStyle: { backgroundColor: Colors.AMEELIO_BLUE },
     };
-    this.qNotif(errorNotif);
+    this.queueNotif(errorNotif);
   }
 
   // convenient success dropdown
-  qSuccess(successString: string, body: string, onPress = () => {}) {
+  queueSuccess(successString: string, body: string, onPress = () => {}) {
     const errorNotif: DropNotif = {
       title: "Success: " + successString,
       body: body,
@@ -75,11 +74,11 @@ export class Dropdown extends React.Component<Props, State> {
       icon: "done",
       backgroundStyle: { backgroundColor: Colors.SUCCESS },
     };
-    this.qNotif(errorNotif);
+    this.queueNotif(errorNotif);
   }
 
   // convenient warning dropdown
-  qWarning(warningString: string, body: string, onPress = () => {}) {
+  queueWarning(warningString: string, body: string, onPress = () => {}) {
     const errorNotif: DropNotif = {
       title: "Warning: " + warningString,
       body: body,
@@ -87,11 +86,11 @@ export class Dropdown extends React.Component<Props, State> {
       icon: "warning",
       backgroundStyle: { backgroundColor: Colors.WARNING },
     };
-    this.qNotif(errorNotif);
+    this.queueNotif(errorNotif);
   }
 
   // convenient error dropdown
-  qError(errorString: string, body: string, onPress = () => {}) {
+  queueError(errorString: string, body: string, onPress = () => {}) {
     const errorNotif: DropNotif = {
       title: "Error: " + errorString,
       body: body,
@@ -99,7 +98,7 @@ export class Dropdown extends React.Component<Props, State> {
       icon: "error",
       backgroundStyle: { backgroundColor: Colors.ERROR },
     };
-    this.qNotif(errorNotif);
+    this.queueNotif(errorNotif);
   }
 
   _flushNotif() {
@@ -230,7 +229,7 @@ export function dropdownInfo(
   body: string,
   onPress = () => {}
 ) {
-  dropdownRef.current?.qInfo(infoString, body, onPress);
+  dropdownRef.current?.queueInfo(infoString, body, onPress);
 }
 
 export function dropdownSuccess(
@@ -238,7 +237,7 @@ export function dropdownSuccess(
   body: string,
   onPress = () => {}
 ) {
-  dropdownRef.current?.qSuccess(successString, body, onPress);
+  dropdownRef.current?.queueSuccess(successString, body, onPress);
 }
 
 export function dropdownWarning(
@@ -246,7 +245,7 @@ export function dropdownWarning(
   body: string,
   onPress = () => {}
 ) {
-  dropdownRef.current?.qWarning(warningString, body, onPress);
+  dropdownRef.current?.queueWarning(warningString, body, onPress);
 }
 
 export function dropdownError(
@@ -254,11 +253,11 @@ export function dropdownError(
   body: string,
   onPress = () => {}
 ) {
-  dropdownRef.current?.qError(errorString, body, onPress);
+  dropdownRef.current?.queueError(errorString, body, onPress);
 }
 
 export function customDropdown(notif: DropNotif) {
-  dropdownRef.current?.qNotif(notif);
+  dropdownRef.current?.queueNotif(notif);
 }
 
 export default DropdownInstance;
