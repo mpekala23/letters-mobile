@@ -92,7 +92,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 <Typography.PageHeader text="Add A Facility" />
                 <Input
                   ref={this.facilityName}
-                  parentStyle={[CommonStyles.fullWidth, { marginTop: 10 }]}
+                  parentStyle={{ ...CommonStyles.fullWidth, marginTop: 10 }}
                   placeholder="Facility Name"
                   required
                   onFocus={() => {
