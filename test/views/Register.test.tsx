@@ -39,13 +39,13 @@ describe("Register screen", () => {
       getByPlaceholderText("Cell Phone Number"),
       "4324324432"
     );
-    fireEvent.changeText(getByPlaceholderText("Address Line 1"), "Address");
+    fireEvent.changeText(getByPlaceholderText("Address Line 1"), "Somewhere");
     fireEvent.changeText(getByPlaceholderText("Country"), "USA");
     fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
     fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
-    fireEvent.changeText(getByPlaceholderText("State"), "Minnesota");
-    fireEvent.changeText(getByPlaceholderText("Email"), "team@ameelio.org");
-    fireEvent.changeText(getByPlaceholderText("Password"), "GoodPassword1");
+    fireEvent.changeText(getByPlaceholderText("State"), "CT");
+    fireEvent.changeText(getByPlaceholderText("E-mail Address"), "team@ameelio.org");
+    fireEvent.changeText(getByPlaceholderText("Password"), "ThisGood1");
     fireEvent.press(getByText("Register"));
     expect(register).toHaveBeenCalledTimes(1);
   });

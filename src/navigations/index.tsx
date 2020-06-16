@@ -14,6 +14,7 @@ import {
   HomeScreen,
   LoginScreen,
   RegisterScreen,
+  ReferFriendsScreen,
   SplashScreen,
   ReviewContactScreen,
 } from "@views";
@@ -32,6 +33,7 @@ export type AppStackParamList = {
   ContactInfo: undefined;
   ContactSelector: undefined,
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  ReferFriends: undefined;
   ReviewContact: undefined;
   Home: undefined;
   Splash: undefined;
@@ -68,6 +70,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
   ) : props.authInfo.isLoggedIn ? (
     <>
       <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
         name="ContactInfo"
         component={ContactInfoScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -95,6 +102,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
+       options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ReferFriends"
+        component={ReferFriendsScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
     </>
