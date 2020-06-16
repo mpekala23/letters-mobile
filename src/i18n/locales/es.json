@@ -39,5 +39,9 @@
     "password": "Password",
     "register": "Register",
     "emailAlreadyInUse": "Email already in use."
+  },
+  "PrisonTypes": {
+    "state": "State Prison (Spanish)",
+    "federal": "Federal Prison (Spanish)"
   }
 }

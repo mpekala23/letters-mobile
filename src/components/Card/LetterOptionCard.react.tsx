@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import CardStyles from "./Card.styles";
-import { PrisonTypes } from "types";
+import LettersIcon from "@assets/components/Card/Letters";
+import PostCardsIcon from "@assets/components/Card/PostCards";
+import { Icon } from "@components";
 
 interface Props {
-  title: string;
+  title: "Post cards" | "Letters";
   description: string;
   onPress: () => void;
   style?: ViewStyle;
@@ -21,6 +23,10 @@ const LetterOptionCard: React.FC<Props> = (props) => {
       ]}
       onPress={props.onPress}
     >
+      <Icon
+        svg={props.title === "Post cards" ? PostCardsIcon : LettersIcon}
+        style={{ position: "absolute", right: 0, bottom: 0 }}
+      />
       <Text style={CardStyles.cardTitle}>{props.title}</Text>
       <Text style={CardStyles.cardData}>{props.description}</Text>
     </TouchableOpacity>

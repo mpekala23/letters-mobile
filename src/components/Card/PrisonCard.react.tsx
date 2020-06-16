@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import CardStyles from "./Card.styles";
 import { PrisonTypes } from "types";
+import { i18n } from "i18n";
 
 interface Props {
   name: string;
@@ -19,9 +20,9 @@ const PrisonCard: React.FC<Props> = (props) => {
     >
       <Text style={CardStyles.cardTitle}>{props.name}</Text>
       <Text style={[CardStyles.cardData, { marginVertical: 6 }]}>
-        {props.type === PrisonTypes.StatePrison
-          ? "State Prison"
-          : "Federal Prison"}
+        {props.type === PrisonTypes.State
+          ? i18n.t("PrisonTypes.state")
+          : i18n.t("PrisonTypes.federal")}
       </Text>
       <Text style={CardStyles.cardData}>{props.address}</Text>
     </TouchableOpacity>

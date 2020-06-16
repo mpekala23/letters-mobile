@@ -14,6 +14,7 @@ import LetterStatusCard from "@components/Card/LetterStatusCard.react";
 import MemoryLaneCard from "@components/Card/MemoryLaneCard.react";
 import LetterOptionCard from "@components/Card/LetterOptionCard.react";
 import DeliveryStatusCard from "@components/Card/DeliveryStatusCard.react";
+import { PrisonTypes, DeliveryProgress } from "types";
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
 
@@ -47,7 +48,7 @@ const HomeScreenBase: React.FC<Props> = (props) => {
       <ScrollView style={{ width: "100%", padding: 10 }}>
         <PrisonCard
           name="Connecticut State Prison"
-          type={PrisonTypes.StatePrison}
+          type={PrisonTypes.State}
           address="P.O. Box 400 - CT 99559"
           onPress={() => {}}
         />
@@ -70,32 +71,44 @@ const HomeScreenBase: React.FC<Props> = (props) => {
           description="1 photo, 50 words"
           onPress={() => {}}
         />
-        <DeliveryStatusCard
-          title="Letter 1"
-          status="Out for delivery"
-          date="05/11/2020"
-          progress={1}
+        <LetterOptionCard
+          title="Letters"
+          description="1 photo, 50 words"
           onPress={() => {}}
         />
         <DeliveryStatusCard
           title="Letter 1"
           status="Out for delivery"
           date="05/11/2020"
-          progress={2}
+          progress={DeliveryProgress.Created}
           onPress={() => {}}
         />
         <DeliveryStatusCard
           title="Letter 1"
           status="Out for delivery"
           date="05/11/2020"
-          progress={3}
+          progress={DeliveryProgress.Printed}
           onPress={() => {}}
         />
         <DeliveryStatusCard
           title="Letter 1"
           status="Out for delivery"
           date="05/11/2020"
-          progress={4}
+          progress={DeliveryProgress.Mailed}
+          onPress={() => {}}
+        />
+        <DeliveryStatusCard
+          title="Letter 1"
+          status="Out for delivery"
+          date="05/11/2020"
+          progress={DeliveryProgress.OutForDelivery}
+          onPress={() => {}}
+        />
+        <DeliveryStatusCard
+          title="Letter 1"
+          status="Out for delivery"
+          date="05/11/2020"
+          progress={DeliveryProgress.Delivered}
           onPress={() => {}}
         />
       </ScrollView>
