@@ -25,6 +25,7 @@ module.exports = function (api) {
             '@components': './src/components',
             '@i18n': './src/i18n',
             '@navigations': './src/navigations',
+            '@notifications': './src/notifications',
             '@src': './src',
             '@store': './src/store',
             '@styles': './src/styles',

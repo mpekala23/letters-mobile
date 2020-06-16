@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -9,20 +9,28 @@ import {
 import {
   AddManuallyScreen,
   ContactInfoScreen,
+  ExplainProblemScreen,
+  FirstLetterScreen,
   FacilityDirectoryScreen,
   HomeScreen,
+  IssuesScreen,
   LoginScreen,
-  RegisterScreen,
   ReferFriendsScreen,
-  SplashScreen,
+  RegisterScreen,
   ReviewContactScreen,
+  SplashScreen,
+  ThanksScreen,
 } from "@views";
 import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
-import { Topbar } from "@components";
+import { navigationRef, navigate } from "@notifications";
+export { navigationRef, navigate };
+import { Notif } from "store/Notif/NotifTypes";
 import { NullableFacility } from "types";
+import { Topbar } from "@components";
 
 export type AuthStackParamList = {
+  Splash: undefined;
   Login: undefined;
   Register: undefined;
 };
@@ -30,17 +38,24 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   AddManually: undefined;
   ContactInfo: undefined;
+  ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  FirstLetter: undefined;
+  Home: undefined;
+  Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
-  Home: undefined;
   Splash: undefined;
+  Thanks: undefined;
 };
 
-const Stack = createStackNavigator<AuthStackParamList & AppStackParamList>();
+export type RootStackParamList = AuthStackParamList & AppStackParamList;
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;
+  currentNotif: Notif | null;
 }
 
 const fadeTransition = (
@@ -88,6 +103,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
+        name="ReferFriends"
+        component={ReferFriendsScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
         name="ReviewContact"
         component={ReviewContactScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -95,6 +115,26 @@ const NavigatorBase: React.FC<Props> = (props) => {
       <Stack.Screen
         name="ReferFriends"
         component={ReferFriendsScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ExplainProblem"
+        component={ExplainProblemScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="FirstLetter"
+        component={FirstLetterScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Issues"
+        component={IssuesScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Thanks"
+        component={ThanksScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
     </>
@@ -116,6 +156,7 @@ const NavigatorBase: React.FC<Props> = (props) => {
     <>
       {topSection}
       <Stack.Navigator
+        initialRouteName={"Home"}
         screenOptions={{
           headerShown: false,
         }}
@@ -128,6 +169,7 @@ const NavigatorBase: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
+  currentNotif: state.notif.currentNotif,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);
 

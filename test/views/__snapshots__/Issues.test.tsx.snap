@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Issues screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "paddingHorizontal": 30,
+        "paddingTop": 40,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "fontSize": 23,
+            "textAlign": "center",
+          },
+          Object {
+            "marginBottom": 50,
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Did you have one of these issues?
+    </Text>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "borderColor": "#3490dc",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {},
+          Object {
+            "width": "100%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#3490dc",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Letter wasn't received
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "borderColor": "#3490dc",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {},
+          Object {
+            "width": "100%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#3490dc",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Letter was delayed
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "borderColor": "#3490dc",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {},
+          Object {
+            "width": "100%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#3490dc",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Other
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3490dc",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "grey",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {
+            "marginTop": 40,
+            "width": "100%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Report the problem
+      </Text>
+    </TouchableOpacity>
+  </View>
+</View>
+`;
