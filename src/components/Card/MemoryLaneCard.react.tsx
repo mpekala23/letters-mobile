@@ -26,6 +26,7 @@ const MemoryLaneCard: React.FC<Props> = (props) => {
         source={{
           uri: props.imageUri,
         }}
+        testID="memoryLaneImage"
       />
       <View style={CardStyles.memoryLaneTextBackground}>
         <Text style={CardStyles.memoryLaneText}>{props.text}</Text>

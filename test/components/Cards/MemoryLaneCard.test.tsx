@@ -41,4 +41,9 @@ describe("Memory Lane Card component", () => {
     const { getByText } = setup();
     expect(getByText("Date")).toBeDefined();
   });
+
+  it("should display memory lane image", () => {
+    const { getByTestId } = setup();
+    expect(getByTestId("memoryLaneImage").props.source.uri).toBe("test");
+  });
 });
