@@ -40,7 +40,7 @@ describe("api loginWithToken", () => {
     expect(error).toBeTruthy();
   });
 
-  it("should return BLANK when good token", async () => {
+  it("should return user data when good token", async () => {
     let result = null;
     let error = false;
     fetchMock.post(

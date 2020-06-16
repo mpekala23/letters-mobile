@@ -156,18 +156,11 @@ export class Dropdown extends React.Component<Props, State> {
     });
   }
 
+  // TODO: Hook in custom icon component here
   renderNotif() {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
-    const icon =
-      notif.icon || true ? (
-        /*<Icon
-          size={DROPDOWN_HEIGHT - STATUS_BAR_HEIGHT * 2}
-          name={notif.icon || ""}
-        ></Icon>*/ <View />
-      ) : (
-        <View />
-      );
+    const icon = notif.icon || true ? <View /> : <View />;
     return this.state.dropped ? (
       <TouchableOpacity
         testID="touchable"

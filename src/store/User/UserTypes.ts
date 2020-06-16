@@ -6,7 +6,7 @@ export interface UserRegisterInfo {
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
+  password: string;
   phone: string;
   address1: string;
   address2?: string;
@@ -29,7 +29,6 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
   phone: string;
   address1: string;
   address2?: string;
@@ -43,7 +42,7 @@ export interface User {
 export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
-  apiToken?: string;
+  apiToken: string;
 }
 
 export interface UserState {
