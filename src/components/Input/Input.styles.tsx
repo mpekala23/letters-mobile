@@ -32,7 +32,6 @@ export default StyleSheet.create({
   },
   inputStyleFocused: {
     color: Colors.AMEELIO_BLACK,
-    borderColor: Colors.AMEELIO_BLUE,
   },
   validStyle: {
     backgroundColor: "#F0FAF3",

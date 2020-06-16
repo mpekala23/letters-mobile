@@ -57,6 +57,7 @@ class Input extends React.Component<Props, State> {
     onInvalid: () => {},
     onChangeText: () => {},
     secure: false,
+    enabled: true,
     options: [],
     nextInput: false,
   };
