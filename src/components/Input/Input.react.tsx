@@ -278,6 +278,12 @@ class Input extends React.Component<Props, State> {
         testID="parent"
         pointerEvents={enabled ? "auto" : "none"}
       >
+        {this.state.valid ? <View testID="valid" /> : <View testID="invalid" />}
+        {this.state.focused ? (
+          <View testID="focused" />
+        ) : (
+          <View testID="unfocused" />
+        )}
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}

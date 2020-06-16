@@ -196,6 +196,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -268,6 +274,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -347,6 +359,12 @@ exports[`Register screen should match snapshot 1`] = `
           }
           testID="parent"
         >
+          <View
+            testID="invalid"
+          />
+          <View
+            testID="unfocused"
+          />
           <ScrollView
             keyboardShouldPersistTaps="always"
             scrollEnabled={false}
@@ -420,6 +438,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -492,6 +516,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="valid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -564,6 +594,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -636,6 +672,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -708,6 +750,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -780,6 +828,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -852,6 +906,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -924,6 +984,12 @@ exports[`Register screen should match snapshot 1`] = `
         }
         testID="parent"
       >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}

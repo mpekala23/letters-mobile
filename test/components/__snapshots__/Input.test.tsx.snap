@@ -24,6 +24,12 @@ exports[`Input component should match snapshot 1`] = `
     }
     testID="parent"
   >
+    <View
+      testID="valid"
+    />
+    <View
+      testID="unfocused"
+    />
     <ScrollView
       keyboardShouldPersistTaps="always"
       scrollEnabled={false}

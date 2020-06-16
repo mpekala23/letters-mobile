@@ -115,6 +115,12 @@ exports[`Login screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="valid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -187,6 +193,12 @@ exports[`Login screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="valid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}

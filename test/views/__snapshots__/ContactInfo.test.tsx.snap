@@ -239,6 +239,12 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -311,6 +317,12 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -383,6 +395,12 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -455,6 +473,12 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -527,6 +551,12 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}

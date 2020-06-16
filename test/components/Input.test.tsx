@@ -36,19 +36,13 @@ describe("Input component", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("should have black border when not focused and valid, blue border when focused", () => {
-    const { container, getByPlaceholderText } = setup();
-    expect(getByPlaceholderText("placeholder").props.style[0].borderColor).toBe(
-      Colors.AMEELIO_BLACK
-    );
+  it("should begin unfocused and update when focused", () => {
+    const { container, getByPlaceholderText, getByTestId } = setup();
+    expect(getByTestId("unfocused")).toBeDefined();
     fireEvent.focus(getByPlaceholderText("placeholder"));
-    expect(getByPlaceholderText("placeholder").props.style[0].borderColor).toBe(
-      Colors.AMEELIO_BLUE
-    );
+    expect(getByTestId("focused")).toBeDefined();
     fireEvent.blur(getByPlaceholderText("placeholder"));
-    expect(getByPlaceholderText("placeholder").props.style[0].borderColor).toBe(
-      Colors.AMEELIO_BLACK
-    );
+    expect(getByTestId("unfocused")).toBeDefined();
   });
 
   it("should accept input", () => {
@@ -67,7 +61,6 @@ describe("Input component", () => {
     expect(props.onValid).toHaveBeenCalledTimes(1);
     fireEvent.changeText(textInput, "");
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
-    expect(textInput.props.style[0].borderColor).toBe(Colors.AMEELIO_RED);
   });
 
   it("should validate cell phone numbers correctly", () => {
@@ -191,7 +184,7 @@ describe("Input component", () => {
     expect(
       getByPlaceholderText("placeholder").parent.parent.props.style[1]
     ).toEqual(scrollStyle);
-    expect(getByPlaceholderText("placeholder").props.style[1]).toEqual(
+    expect(getByPlaceholderText("placeholder").props.style[4]).toEqual(
       inputStyle
     );
   });
@@ -212,7 +205,6 @@ describe("Input component", () => {
     expect(option1).toBeDefined();
     fireEvent.press(option1);
     expect(input.props.value).toBe("Option 1");
-    expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
   });
 
   it("should implement complex dropdowns", () => {
@@ -229,18 +221,17 @@ describe("Input component", () => {
     expect(option2).toBeDefined();
     fireEvent.press(option2);
     expect(input.props.value).toBe("Option 2");
-    expect(input.props.style[0].borderColor).toBe(Colors.AMEELIO_BLACK);
   });
 
   it("should implement nextInput", () => {
     const dummyRef = createRef<Input>();
+    const dummyFocus = jest.fn();
     const { getByPlaceholderText } = render(
       <View>
         <Input placeholder="placeholder" nextInput={dummyRef}></Input>
         <Input ref={dummyRef} placeholder="dummy" onFocus={dummyFocus} />
       </View>
     );
-    const dummyFocus = jest.fn();
     dummyRef.current.forceFocus = dummyFocus;
     const input = getByPlaceholderText("placeholder");
     fireEvent.press(input);
