@@ -50,11 +50,7 @@ const ProfilePic: React.FC<Props> = (props) => {
 
   return (
     <TouchableOpacity
-      style={[
-        props.type === ProfilePicTypes.TopbarProfile
-          ? Styles.userBackground
-          : Styles.contactBackground,
-      ]}
+      style={[mapStyleToProfileType(props.type).background]}
       onPress={async () => {
         try {
           // TODO: Have this press direct to Edit Profile screen once finished
