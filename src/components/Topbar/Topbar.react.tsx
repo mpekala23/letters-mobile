@@ -15,8 +15,8 @@ export interface Props {
 const TopbarBase: React.FC<Props> = (props) => {
   const profilePic = props.userState.authInfo.isLoggedIn ?
     <ProfilePic 
-      first_name={props.userState.user.firstName}
-      last_name={props.userState.user.lastName}
+      firstName={props.userState.user.firstName}
+      lastName={props.userState.user.lastName}
       imageUri={props.userState.user.imageUri}
       type={ProfilePicTypes.TopbarProfile}
     /> :

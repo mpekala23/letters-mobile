@@ -9,16 +9,16 @@ import Styles from './ProfilePic.styles';
 const ExamplePic = require('@assets/ExamplePic.jpg');
 
 export interface Props {
-  first_name: String;
-  last_name: String;
+  firstName: String;
+  lastName: String;
   imageUri: String;
   type: ProfilePicTypes;
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
   let initials = '';
-  if (props.first_name && props.last_name) {
-    initials = props.first_name[0].toUpperCase() + props.last_name[0].toUpperCase();
+  if (props.firstName && props.lastName) {
+    initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
