@@ -18,8 +18,14 @@ import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import DropdownAlert from "react-native-dropdownalert";
 import { Typography } from "@styles";
 import Styles from "./Login.styles";
+<<<<<<< HEAD
 import { UserLoginInfo } from "@store/User/UserTypes";
 import { i18n } from "@i18n";
+=======
+import { UserCredentials } from "@store/User/UserTypes";
+// import { i18n } from "@i18n";
+import i18n from '../../i18n/i18n';
+>>>>>>> merge fixes
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
