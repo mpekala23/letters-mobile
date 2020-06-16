@@ -16,6 +16,7 @@ describe("Issues screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should navigate to thanks screen when wasn't received issue pressed", async () => {
     const { navigation, getByText } = setup();
     const receivedButton = getByText("Letter wasn't received");
@@ -24,6 +25,7 @@ describe("Issues screen", () => {
     fireEvent.press(reportButton);
     expect(navigation.navigate).toHaveBeenCalledWith("Thanks");
   });
+
   it("should navigate to thanks screen when delayed issue pressed", async () => {
     const { navigation, getByText } = setup();
     const delayedButton = getByText("Letter was delayed");
@@ -32,6 +34,7 @@ describe("Issues screen", () => {
     fireEvent.press(reportButton);
     expect(navigation.navigate).toHaveBeenCalledWith("Thanks");
   });
+
   it("should navigate to explain problem screen when other pressed", async () => {
     const { navigation, getByText } = setup();
     const otherButton = getByText("Other");

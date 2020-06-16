@@ -33,12 +33,14 @@ describe("First Letter screen", () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
   it("should navigate to home screen when it was fire button is pressed", async () => {
     const { navigation, getByText } = setup();
     const fireButton = getByText("It was fire");
     fireEvent.press(fireButton);
     expect(navigation.navigate).toHaveBeenCalledWith("Home");
   });
+
   it("should navigate to issues screen when problem button is pressed", async () => {
     const { navigation, getByText } = setup();
     const problemButton = getByText("Something went wrong");
