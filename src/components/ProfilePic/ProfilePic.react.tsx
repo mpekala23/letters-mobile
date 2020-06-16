@@ -17,6 +17,19 @@ export interface Props {
   type: ProfilePicTypes;
 }
 
+function mapStyleToProfileType(type: String) {
+  switch (type) {
+    case ProfilePicTypes.TopbarProfile:
+      return { image: Styles.userPic, background: Styles.userBackground };
+    case ProfilePicTypes.ContactProfile:
+      return { image: Styles.contactPic, background: Styles.contactBackground };
+    case ProfilePicTypes.SingleContactProfile:
+      return { image: Styles.singleContactPic, background: Styles.singleContactBackground };
+    default:
+      return { image: {}, background: {} };
+  }
+}
+
 const ProfilePic: React.FC<Props> = (props) => {
   let initials = '';
   if (props.firstName && props.lastName) {
@@ -28,24 +41,16 @@ const ProfilePic: React.FC<Props> = (props) => {
   if (props.imageUri) {
     insideCircle = (
       <Image
-        style={[
-          props.type === ProfilePicTypes.TopbarProfile
-            ? Styles.userPic
-            : Styles.contactPic,
-        ]}
+        style={[mapStyleToProfileType(props.type).image]}
         source={ExamplePic}
-        accessibilityLabel='Profile Picture'
+        accessibilityLabel="Profile Picture"
       />
     );
   }
 
   return (
     <TouchableOpacity
-      style={[
-        props.type === ProfilePicTypes.TopbarProfile
-          ? Styles.userBackground
-          : Styles.contactBackground,
-      ]}
+      style={[mapStyleToProfileType(props.type).background]}
       onPress={async () => {
         try {
           // TODO: Have this press direct to Edit Profile screen once finished
