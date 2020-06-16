@@ -17,6 +17,7 @@ import { Typography } from "@styles";
 import { register } from "@api";
 import { STATES_DROPDOWN, Validation } from "@utils";
 import { User, UserInfo } from "@store/User/UserTypes";
+import { i18n } from "@i18n";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -62,7 +63,7 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.country.current) this.country.current.set("USA");
     if (this.zipcode.current) this.zipcode.current.set("12345");
     if (this.city.current) this.city.current.set("New Haven");
-    if (this.phyState.current) this.phyState.current.set("CT");
+    if (this.phyState.current) this.phyState.current.set("Conneticut");
     if (this.email.current) this.email.current.set("team@ameelio.org");
     if (this.password.current) this.password.current.set("ThisGood1");
     this.updateValid();
@@ -89,7 +90,7 @@ class RegisterScreen extends React.Component<Props, State> {
         this.country.current.state.valid &&
         this.zipcode.current.state.valid &&
         this.city.current.state.valid &&
-        this.phyState.current.state.valid &&
+        // this.phyState.current.state.valid &&
         this.email.current.state.valid &&
         this.password.current.state.valid;
       this.setState({ valid: result });
@@ -128,21 +129,21 @@ class RegisterScreen extends React.Component<Props, State> {
         this.setState({ registered: true });
       } catch (err) {
         if (err.message === "Email in use") {
-          Alert.alert("Email already in use");
+          Alert.alert(i18n.t("RegisterScreen.emailAlreadyInUse"));
         } else if (err.message === "timeout") {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              "Network Error",
-              "The request timed out."
+              i18n.t("Error.network"),
+              i18n.t("Error.requestTimedOut")
             );
         } else {
           // catch all
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
               "error",
-              "Network Error",
-              "The request could not be completed."
+              i18n.t("Error.network"),
+              i18n.t("Error.requestIncomplete")
             );
         }
         this.setState({ registered: false });
@@ -169,18 +170,17 @@ class RegisterScreen extends React.Component<Props, State> {
           >
             <PicUpload />
             <Text style={[Typography.FONT_ITALIC, { marginTop: 5 }]}>
-              Click to upload profile image.
+              {i18n.t("RegisterScreen.clickToUploadProfileImage")}
             </Text>
           </View>
           <View style={Styles.privacyBackground}>
             <Text style={[Typography.FONT_BOLD, Styles.privacyText]}>
-              We value your privacy. We will only use your address information
-              as the return address for the mailed letter.
+              {i18n.t("RegisterScreen.privacyText")}
             </Text>
           </View>
           <Button
             link
-            buttonText="Already have an account?"
+            buttonText={i18n.t("RegisterScreen.alreadyHaveAnAccount")}
             containerStyle={{ marginBottom: 10 }}
             onPress={() => {
               this.props.navigation.navigate("Login");
@@ -190,7 +190,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.firstName}
             parentStyle={Styles.fullWidth}
-            placeholder={"First Name"}
+            placeholder={i18n.t("RegisterScreen.firstName")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -199,7 +199,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.lastName}
             parentStyle={Styles.fullWidth}
-            placeholder={"Last Name"}
+            placeholder={i18n.t("RegisterScreen.lastName")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -209,7 +209,7 @@ class RegisterScreen extends React.Component<Props, State> {
             <Input
               ref={this.cell}
               parentStyle={Styles.fullWidth}
-              placeholder={"Cell Phone Number"}
+              placeholder={i18n.t("RegisterScreen.cellphoneNumber")}
               required
               validate={Validation.Cell}
               onValid={this.updateValid}
@@ -220,7 +220,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address1}
             parentStyle={Styles.fullWidth}
-            placeholder={"Address Line 1"}
+            placeholder={i18n.t("RegisterScreen.addressLine1")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -229,13 +229,13 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
-            placeholder={"Address Line 2"}
+            placeholder={i18n.t("RegisterScreen.addressLine2")}
             nextInput={this.country}
           />
           <Input
             ref={this.country}
             parentStyle={Styles.fullWidth}
-            placeholder={"Country"}
+            placeholder={i18n.t("RegisterScreen.country")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -244,7 +244,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.zipcode}
             parentStyle={Styles.fullWidth}
-            placeholder={"Zip Code"}
+            placeholder={i18n.t("RegisterScreen.zipcode")}
             required
             validate={Validation.Zipcode}
             onValid={this.updateValid}
@@ -254,7 +254,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.city}
             parentStyle={Styles.fullWidth}
-            placeholder={"City"}
+            placeholder={i18n.t("RegisterScreen.city")}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -263,7 +263,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.phyState}
             parentStyle={Styles.fullWidth}
-            placeholder={"State"}
+            placeholder={i18n.t("RegisterScreen.state")}
             validate={Validation.State}
             options={STATES_DROPDOWN}
             required
@@ -274,7 +274,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.email}
             parentStyle={Styles.fullWidth}
-            placeholder={"Email"}
+            placeholder={i18n.t("RegisterScreen.emailAddress")}
             required
             validate={Validation.Email}
             onValid={this.updateValid}
@@ -284,7 +284,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.password}
             parentStyle={Styles.fullWidth}
-            placeholder={"Password"}
+            placeholder={i18n.t("RegisterScreen.password")}
             required
             secure
             validate={Validation.Password}
@@ -293,7 +293,7 @@ class RegisterScreen extends React.Component<Props, State> {
           />
           <Button
             containerStyle={Styles.fullWidth}
-            buttonText="Register"
+            buttonText={i18n.t("RegisterScreen.register")}
             enabled={this.state.valid}
             onPress={this.doRegister}
           />
