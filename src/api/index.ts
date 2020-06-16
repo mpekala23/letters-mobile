@@ -58,17 +58,17 @@ export async function loginWithToken() {
     const body = await response.json();
     if (body.status === "ERROR") throw Error("Invalid token");
     const userData: User = {
-      id: body.data[0].id,
-      firstName: body.data[0].first_name,
-      lastName: body.data[0].last_name,
-      email: body.data[0].email,
-      phone: body.data[0].phone,
-      address1: body.data[0].addr_line_1,
-      address2: body.data[0].addr_line_2 || "",
-      country: body.data[0].country,
-      postal: body.data[0].postal,
-      city: body.data[0].city,
-      state: body.data[0].state,
+      id: body.data.id,
+      firstName: body.data.first_name,
+      lastName: body.data.last_name,
+      email: body.data.email,
+      phone: body.data.phone,
+      address1: body.data.addr_line_1,
+      address2: body.data.addr_line_2 || "",
+      country: body.data.country,
+      postal: body.data.postal,
+      city: body.data.city,
+      state: body.data.state,
     };
     store.dispatch(loginUser(userData));
     return userData;
@@ -97,7 +97,7 @@ export async function login(cred: UserLoginInfo) {
   if (cred.remember) {
     try {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
-      await saveToken(body.data[0].token);
+      await saveToken(body.data.token);
     } catch (err) {
       dropdownError(
         "Storage",
@@ -106,17 +106,17 @@ export async function login(cred: UserLoginInfo) {
     }
   }
   const userData: User = {
-    id: body.data[0].id,
-    firstName: body.data[0].first_name,
-    lastName: body.data[0].last_name,
-    email: body.data[0].email,
-    phone: body.data[0].phone,
-    address1: body.data[0].addr_line_1,
-    address2: body.data[0].addr_line_2 || "",
-    country: body.data[0].country,
-    postal: body.data[0].postal,
-    city: body.data[0].city,
-    state: body.data[0].state,
+    id: body.data.id,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    email: body.data.email,
+    phone: body.data.phone,
+    address1: body.data.addr_line_1,
+    address2: body.data.addr_line_2 || "",
+    country: body.data.country,
+    postal: body.data.postal,
+    city: body.data.city,
+    state: body.data.state,
   };
   store.dispatch(loginUser(userData));
   return userData;
@@ -135,7 +135,18 @@ export async function register(data: UserRegisterInfo) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      phone: data.phone,
+      addr_line_1: data.address1,
+      addr_line_2: data.address2,
+      country: data.country,
+      postal: data.postal,
+      city: data.city,
+      state: data.state,
+    }),
   });
   const body = await response.json();
   if (body.status == "ERROR") {
@@ -144,7 +155,7 @@ export async function register(data: UserRegisterInfo) {
   if (data.remember) {
     try {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
-      await saveToken(body.data[0].token);
+      await saveToken(body.data.token);
     } catch (err) {
       dropdownError(
         "Storage",
@@ -153,17 +164,17 @@ export async function register(data: UserRegisterInfo) {
     }
   }
   const userData: User = {
-    id: body.data[0].id,
-    firstName: body.data[0].first_name,
-    lastName: body.data[0].last_name,
-    email: body.data[0].email,
-    phone: body.data[0].phone,
-    address1: body.data[0].addr_line_1,
-    address2: body.data[0].addr_line_2 || null,
-    country: body.data[0].country,
-    postal: body.data[0].postal,
-    city: body.data[0].city,
-    state: body.data[0].state,
+    id: body.data.id,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    email: body.data.email,
+    phone: body.data.phone,
+    address1: body.data.addr_line_1,
+    address2: body.data.addr_line_2 || null,
+    country: body.data.country,
+    postal: body.data.postal,
+    city: body.data.city,
+    state: body.data.state,
   };
   store.dispatch(loginUser(userData));
   return userData;
