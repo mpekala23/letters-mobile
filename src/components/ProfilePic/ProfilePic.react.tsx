@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { UserState } from '@store/User/UserTypes';
 import { ProfilePicTypes } from 'types';
 import Styles from './ProfilePic.styles';
 
@@ -27,8 +26,9 @@ const ProfilePic: React.FC<Props> = (props) => {
     insideCircle = (
       <Image
         style={[
-          props.displayContact ? Styles.contactPic : {},
-          props.displayUser ? Styles.userPic : {},
+          props.type === ProfilePicTypes.TopbarProfile
+            ? Styles.userPic
+            : Styles.contactPic,
         ]}
         source={ExamplePic}
         accessibilityLabel='Profile Picture'

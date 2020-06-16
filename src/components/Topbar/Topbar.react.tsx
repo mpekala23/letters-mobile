@@ -5,6 +5,7 @@ import Styles from "./Topbar.styles";
 import { View, Image } from "react-native";
 import ProfilePic from "../ProfilePic/ProfilePic.react";
 import { ProfilePicTypes } from "types";
+import { UserState } from '@store/User/UserTypes';
 
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
