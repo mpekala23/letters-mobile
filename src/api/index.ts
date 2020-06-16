@@ -46,7 +46,6 @@ export function loadToken() {
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
 export async function login(cred: UserCredentials) {
-  console.log(MOCK_API_IP);
   const response = await fetchTimeout<Response>(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
