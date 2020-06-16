@@ -35,7 +35,7 @@ exports[`ProfilePic component should match snapshot 1`] = `
         }
       }
     >
-      
+      TA
     </Text>
   </TouchableOpacity>
 </View>

@@ -8,8 +8,8 @@ const mockStore = configureStore([]);
 
 const setup = (propOverrides = {}) => {
   const props = {
-    first_name: 'Team',
-    last_name: 'Ameelio',
+    firstName: 'Team',
+    lastName: 'Ameelio',
     ...propOverrides,
   };
   return {
