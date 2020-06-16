@@ -1,4 +1,4 @@
-import React, { RefObject, MutableRefObject } from "react";
+import React, { RefObject } from "react";
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "@components";
 import { facebookShare } from "@api";
@@ -26,8 +26,7 @@ A component for prompting users to refer friends to use Ameelio's services.
 const ReferFriendsScreen: React.FC<Props> = (props) => {
   const { userName, deliveryDate } = props;
 
-  const dropRef = getDropdownRef();
-  if (dropRef.current) var dropdownRef = React.useRef(dropRef.current);
+  var dropdownRef = getDropdownRef();
 
   return (
     <KeyboardAvoidingView
@@ -88,7 +87,7 @@ const ReferFriendsScreen: React.FC<Props> = (props) => {
   );
 };
 
-const onShare = async (dropdownRef: MutableRefObject<DropdownAlert>) => {
+const onShare = async (dropdownRef: RefObject<DropdownAlert>) => {
   const ameelioUrl = "letters.ameelio.org";
   // TO-DO: Edit message content once we have the content copy
   const shareMessage = "Insert share message";

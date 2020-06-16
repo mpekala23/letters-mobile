@@ -10,6 +10,7 @@ import PicUpload from "./PicUpload/PicUpload.react";
 import PrisonCard from "./Card/PrisonCard.react";
 import ProfilePic from "./ProfilePic/ProfilePic.react";
 import Statusbar from "./Statusbar/Statusbar.react";
+import Icon from "./Icon/Icon.react";
 import Topbar from "./Topbar/Topbar.react";
 
 export {
@@ -25,5 +26,6 @@ export {
   PrisonCard,
   ProfilePic,
   Statusbar,
+  Icon,
   Topbar,
 };
