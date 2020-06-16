@@ -21,6 +21,7 @@ export default StyleSheet.create({
     width: "100%",
   },
   baseInputStyle: {
+    flex: 1,
     width: "100%",
     borderRadius: 8,
     borderWidth: 2,

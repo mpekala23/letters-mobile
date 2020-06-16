@@ -9,6 +9,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Notifs from "@notifications";
 import { Input, Button } from "components";
 import { Validation } from "utils";
+import { ScrollView } from "react-native-gesture-handler";
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
 
@@ -41,14 +42,24 @@ const HomeScreenBase: React.FC<Props> = (props) => {
       onPress={Keyboard.dismiss}
       style={{ backgroundColor: "white", flex: 1, padding: 10 }}
     >
-      <Text>Hello</Text>
-      <Button buttonText="Press Me" onPress={() => {}} />
-      <Input
-        required
-        validate={Validation.CreditCard}
-        placeholder="placeholder"
-        height={300}
-      />
+      <ScrollView>
+        <Input placeholder="Placeholder" />
+        <Input placeholder="Placeholder" />
+        <Input required placeholder="Placeholder" />
+        <Input required validate={Validation.Cell} placeholder="Phone" />
+        <Input
+          required
+          validate={Validation.Password}
+          secure
+          placeholder="Password"
+        />
+        <Input
+          required
+          validate={Validation.CreditCard}
+          placeholder="0000 0000 0000 0000"
+        />
+        <Input placeholder="Placeholder" height={200} numLines={100} />
+      </ScrollView>
     </TouchableOpacity>
   );
 };

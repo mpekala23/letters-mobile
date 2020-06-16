@@ -39,6 +39,7 @@ export interface Props {
   options: string[] | string[][];
   nextInput?: RefObject<Input> | boolean;
   height: number;
+  numLines: number;
 }
 
 export interface State {
@@ -67,6 +68,7 @@ class Input extends React.Component<Props, State> {
     options: [],
     nextInput: false,
     height: INPUT_HEIGHT,
+    numLines: 1,
   };
 
   private inputRef = createRef<TextInput>();
@@ -263,6 +265,7 @@ class Input extends React.Component<Props, State> {
       secure,
       enabled,
       validate,
+      numLines,
     } = this.props;
     return (
       <Animated.View
@@ -288,6 +291,8 @@ class Input extends React.Component<Props, State> {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSubmitEditing={this.onSubmitEditing}
+            multiline={numLines > 1}
+            numberOfLines={numLines}
             style={[
               Styles.baseInputStyle,
               !enabled
@@ -300,24 +305,29 @@ class Input extends React.Component<Props, State> {
                 ? Styles.validStyle
                 : Styles.invalidStyle,
               validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
+              { height: this.props.height },
               inputStyle,
             ]}
             value={this.state.value}
           />
-          <View
-            style={[
-              {
-                position: "absolute",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                left: 20,
-              },
-              { opacity: enabled ? 1.0 : 0.7 },
-            ]}
-          >
-            <Icon svg={CreditCard} />
-          </View>
+          {validate === Validation.CreditCard ? (
+            <View
+              style={[
+                {
+                  position: "absolute",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  left: 20,
+                },
+                { opacity: enabled ? 1.0 : 0.7 },
+              ]}
+            >
+              <Icon svg={CreditCard} />
+            </View>
+          ) : (
+            <View />
+          )}
           {secure && this.state.focused ? (
             <View style={Styles.secureButtonsContainer}>
               <TouchableOpacity

@@ -141,11 +141,15 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </Text>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 60,
                   "marginBottom": 0,
                   "marginTop": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -166,20 +170,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="State"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -187,6 +198,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="Minnesota"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -201,10 +214,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -225,20 +242,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="First Name"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -246,6 +270,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="First"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -260,10 +286,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -284,20 +314,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Last Name"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -305,6 +342,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="Last"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -319,10 +358,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -343,20 +386,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Postal"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -364,6 +414,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="23232"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -378,10 +430,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -402,20 +458,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility Name"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -423,6 +486,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="Facility Name"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -437,10 +502,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -461,20 +530,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility Address"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -482,6 +558,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value="Address"
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -496,10 +574,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -520,20 +602,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Unit (optional, only if needed)"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -541,6 +630,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -555,10 +646,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
@@ -579,20 +674,27 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Dorm (optional, only if needed)"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -600,6 +702,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
