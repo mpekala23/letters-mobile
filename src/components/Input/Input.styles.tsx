@@ -22,7 +22,6 @@ export default StyleSheet.create({
   },
   baseInputStyle: {
     width: "100%",
-    height: INPUT_HEIGHT,
     borderRadius: 8,
     borderWidth: 2,
     borderColor: "rgba(0,0,0,0)",
@@ -67,8 +66,11 @@ export default StyleSheet.create({
   secureButtonsContainer: {
     position: "absolute",
     right: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     height: "100%",
-    width: 100,
-    backgroundColor: "red",
+    width: 80,
+    paddingHorizontal: 10,
   },
 });

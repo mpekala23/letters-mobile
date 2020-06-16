@@ -7,8 +7,12 @@ import {
   View,
   Text,
   Keyboard,
+  ViewStyle,
 } from "react-native";
-import PropTypes, { any } from "prop-types";
+import Icon from "../Icon/Icon.react";
+import ClearPassword from "@assets/components/Input/ClearPassword";
+import TogglePassword from "@assets/components/Input/TogglePassword";
+import CreditCard from "@assets/components/Input/CreditCard";
 import { validateFormat, Validation } from "@utils";
 import Styles, {
   INPUT_HEIGHT,
@@ -19,9 +23,9 @@ import Styles, {
 import { Typography } from "styles";
 
 export interface Props {
-  parentStyle?: object;
-  scrollStyle?: object;
-  inputStyle?: object;
+  parentStyle?: ViewStyle;
+  scrollStyle?: ViewStyle;
+  inputStyle?: ViewStyle;
   placeholder?: string;
   onFocus: () => void;
   onBlur: () => void;
@@ -34,6 +38,7 @@ export interface Props {
   enabled?: boolean;
   options: string[] | string[][];
   nextInput?: RefObject<Input> | boolean;
+  height: number;
 }
 
 export interface State {
@@ -61,6 +66,7 @@ class Input extends React.Component<Props, State> {
     enabled: true,
     options: [],
     nextInput: false,
+    height: INPUT_HEIGHT,
   };
 
   private inputRef = createRef<TextInput>();
@@ -74,8 +80,8 @@ class Input extends React.Component<Props, State> {
       dirty: false,
       currentHeight:
         this.props.options.length > 0
-          ? new Animated.Value(INPUT_HEIGHT + VERTICAL_MARGIN * 2)
-          : new Animated.Value(INPUT_HEIGHT),
+          ? new Animated.Value(props.height + VERTICAL_MARGIN * 2)
+          : new Animated.Value(props.height),
       results: [],
       shown: false,
     };
@@ -178,12 +184,12 @@ class Input extends React.Component<Props, State> {
       target = Math.max(
         Math.min(
           DROP_HEIGHT,
-          INPUT_HEIGHT + this.state.results.length * OPTION_HEIGHT
+          this.props.height + this.state.results.length * OPTION_HEIGHT
         ),
-        INPUT_HEIGHT + VERTICAL_MARGIN * 2
+        this.props.height + VERTICAL_MARGIN * 2
       );
     } else {
-      target = INPUT_HEIGHT + VERTICAL_MARGIN * 2;
+      target = this.props.height + VERTICAL_MARGIN * 2;
     }
     Animated.timing(this.state.currentHeight, {
       toValue: target,
@@ -256,6 +262,7 @@ class Input extends React.Component<Props, State> {
       placeholder,
       secure,
       enabled,
+      validate,
     } = this.props;
     return (
       <Animated.View
@@ -275,7 +282,7 @@ class Input extends React.Component<Props, State> {
         >
           <TextInput
             ref={this.inputRef}
-            secureTextEntry={secure}
+            secureTextEntry={secure && !this.state.shown}
             placeholder={placeholder}
             onChangeText={this.set}
             onFocus={this.onFocus}
@@ -292,17 +299,51 @@ class Input extends React.Component<Props, State> {
                 : this.state.valid
                 ? Styles.validStyle
                 : Styles.invalidStyle,
+              validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
               inputStyle,
             ]}
             value={this.state.value}
           />
-          <View style={Styles.secureButtonsContainer}></View>
+          <View
+            style={[
+              {
+                position: "absolute",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                left: 20,
+              },
+              { opacity: enabled ? 1.0 : 0.7 },
+            ]}
+          >
+            <Icon svg={CreditCard} />
+          </View>
+          {secure && this.state.focused ? (
+            <View style={Styles.secureButtonsContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.set("");
+                }}
+              >
+                <Icon svg={ClearPassword} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({ shown: !this.state.shown });
+                }}
+              >
+                <Icon svg={TogglePassword} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View />
+          )}
           <Animated.View
             style={[
               Styles.optionBackground,
               {
                 height: Math.min(
-                  DROP_HEIGHT - INPUT_HEIGHT,
+                  DROP_HEIGHT - this.props.height,
                   this.state.results.length * OPTION_HEIGHT
                 ),
               },

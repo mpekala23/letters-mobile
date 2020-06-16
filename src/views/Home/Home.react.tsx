@@ -43,7 +43,12 @@ const HomeScreenBase: React.FC<Props> = (props) => {
     >
       <Text>Hello</Text>
       <Button buttonText="Press Me" onPress={() => {}} />
-      <Input required validate={Validation.Email} placeholder="placeholder" />
+      <Input
+        required
+        validate={Validation.CreditCard}
+        placeholder="placeholder"
+        height={300}
+      />
     </TouchableOpacity>
   );
 };

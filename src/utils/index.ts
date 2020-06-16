@@ -38,6 +38,7 @@ export enum Validation {
   Password = "Password",
   Zipcode = "Zipcode",
   State = "State",
+  CreditCard = "CreditCard",
 }
 
 export function isValidEmail(email: string) {
@@ -64,6 +65,12 @@ export function isValidState(state: string) {
   return Object.values(STATES).indexOf(state) > -1;
 }
 
+export function isValidCreditCard(card: string) {
+  return /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(
+    card
+  );
+}
+
 export function validateFormat(format: Validation, value: string) {
   switch (format) {
     case Validation.Email:
@@ -76,6 +83,8 @@ export function validateFormat(format: Validation, value: string) {
       return isValidZipcode(value);
     case Validation.State:
       return isValidState(value);
+    case Validation.CreditCard:
+      return isValidCreditCard(value);
     default:
       return false;
   }
