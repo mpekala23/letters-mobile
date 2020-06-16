@@ -31,6 +31,7 @@ export interface Props {
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
+  enabled?: boolean;
   options: string[] | string[][];
   nextInput?: RefObject<Input> | boolean;
 }
@@ -251,8 +252,7 @@ class Input extends React.Component<Props, State> {
       inputStyle,
       placeholder,
       secure,
-      validate,
-      required,
+      enabled,
     } = this.props;
     return (
       <Animated.View
@@ -263,6 +263,7 @@ class Input extends React.Component<Props, State> {
           { height: this.state.currentHeight },
         ]}
         testID="parent"
+        pointerEvents={enabled ? "auto" : "none"}
       >
         <ScrollView
           keyboardShouldPersistTaps="always"
@@ -278,10 +279,15 @@ class Input extends React.Component<Props, State> {
             onBlur={this.onBlur}
             onSubmitEditing={this.onSubmitEditing}
             style={[
-              this.state.focused
+              Styles.baseInputStyle,
+              !enabled
+                ? Styles.disabledInputStyle
+                : this.state.focused
                 ? Styles.inputStyleFocused
-                : !this.state.dirty || this.state.valid
-                ? Styles.inputStyle
+                : !this.state.dirty
+                ? {}
+                : this.state.valid
+                ? Styles.validStyle
                 : Styles.invalidStyle,
               inputStyle,
             ]}
