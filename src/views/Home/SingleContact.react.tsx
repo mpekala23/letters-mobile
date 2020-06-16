@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactState, Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import Styles from './SingleContact.styles';
+import { ProfilePicTypes } from "types";
 
 type SingleContactScreenNavigationProp = StackNavigationProp<AppStackParamList, 'SingleContact'>;
 
@@ -29,8 +30,8 @@ class SingleContactScreen extends React.Component<Props, State> {
           <ProfilePic
             firstName={contact.firstName}
             lastName={contact.lastName}
-            displaySingleContact
             imageUri="ExamplePic"
+            type={ProfilePicTypes.SingleContactProfile}
           />
           <Text
             style={[

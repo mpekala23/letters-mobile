@@ -12,6 +12,7 @@ export interface Facility {
 export enum ProfilePicTypes {
   TopbarProfile = 'TopbarProfile',
   ContactProfile = 'ContactProfile',
+  SingleContactProfile = 'SingleContactProfile',
 }
 
 export type NullableFacility = Facility | null;

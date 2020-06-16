@@ -8,7 +8,8 @@ import url from 'url';
 
 const { MOCK_API_IP } = process.env;
 
-export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
+// export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
+export const API_URL = "http://" + "192.168.1.157" + ":9000/api/";
 
 export interface UserResponse {
   type: string;
@@ -42,9 +43,9 @@ export function loadToken() {
     city: 'New Haven',
     state: 'CT',
   };
-  setTimeout(() => {
-    store.dispatch(logoutUser());
-  }, 2000);
+  // setTimeout(() => {
+  //   store.dispatch(logoutUser());
+  // }, 2000);
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */
