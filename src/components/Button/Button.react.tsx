@@ -1,15 +1,15 @@
-import React from "react";
-import { TouchableOpacity, Text } from "react-native";
-import PropTypes from "prop-types";
-import Styles from "./Button.styles";
-import { Typography } from "@styles";
-import { StyleType } from "@utils";
+import React from 'react';
+import { TouchableOpacity, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { Typography } from '@styles';
+import { StyleType } from '@utils';
+import Styles from './Button.styles';
 
 export interface Props {
-  containerStyle?: object;
-  textStyle?: object;
-  disabledContainerStyle?: object;
-  disabledTextStyle?: object;
+  containerStyle?: Record<string, unknown>;
+  textStyle?: Record<string, unknown>;
+  disabledContainerStyle?: Record<string, unknown>;
+  disabledTextStyle?: Record<string, unknown>;
   buttonText?: string;
   reverse?: boolean;
   link?: boolean;
@@ -28,6 +28,7 @@ const Button: React.FC<Props> = (props) => {
     reverse,
     link,
     enabled,
+    children,
   } = props;
   if (!link) {
     return (
@@ -58,35 +59,22 @@ const Button: React.FC<Props> = (props) => {
         </Text>
       </TouchableOpacity>
     );
-  } else {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          if (enabled) {
-            onPress();
-          }
-        }}
-        style={containerStyle}
-        testID="clickable"
-      >
-        <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
-          {buttonText || props.children}
-        </Text>
-      </TouchableOpacity>
-    );
   }
-};
-
-Button.propTypes = {
-  containerStyle: StyleType,
-  textStyle: StyleType,
-  disabledContainerStyle: StyleType,
-  disabledTextStyle: StyleType,
-  buttonText: PropTypes.string,
-  reverse: PropTypes.bool,
-  link: PropTypes.bool,
-  enabled: PropTypes.bool,
-  onPress: PropTypes.func.isRequired,
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        if (enabled) {
+          onPress();
+        }
+      }}
+      style={containerStyle}
+      testID="clickable"
+    >
+      <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
+        {buttonText || children}
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 Button.defaultProps = {

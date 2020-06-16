@@ -1,21 +1,19 @@
-import React, { createRef } from "react";
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
-import DropdownAlert from "react-native-dropdownalert";
-import Styles from "./PicUpload.style";
-
-export interface Props {}
+import React, { createRef } from 'react';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
+import DropdownAlert from 'react-native-dropdownalert';
+import Styles from './PicUpload.style';
 
 export interface State {
-  image: any;
+  image: string | null;
 }
 
-class PicUpload extends React.Component<Props, State> {
+class PicUpload extends React.Component<{}, State> {
   dropdownRef = createRef<DropdownAlert>();
 
-  constructor(props: Props) {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       image: null,
@@ -23,18 +21,18 @@ class PicUpload extends React.Component<Props, State> {
     this.dropdownRef = getDropdownRef();
   }
 
-  getCameraRollPermission = async () => {
+  getCameraRollPermission = async (): Promise<void> => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== "granted") {
+    if (status !== 'granted') {
       Alert.alert(
-        "We need permission to access your camera roll to upload a profile picture."
+        'We need permission to access your camera roll to upload a profile picture.'
       );
     }
   };
 
-  _pickImage = async () => {
+  pickImage = async (): Promise<void> => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [3, 3],
@@ -46,20 +44,20 @@ class PicUpload extends React.Component<Props, State> {
     } catch (E) {
       if (this.dropdownRef.current)
         this.dropdownRef.current.alertWithType(
-          "error",
-          "Photo Error",
-          "Unable to access the photo library."
+          'error',
+          'Photo Error',
+          'Unable to access the photo library.'
         );
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const { image } = this.state;
 
     return (
       <TouchableOpacity
         style={Styles.shapeBackground}
-        onPress={this._pickImage}
+        onPress={this.pickImage}
         testID="clickable"
       >
         {image && (

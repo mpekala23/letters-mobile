@@ -1,14 +1,14 @@
-import React, { createRef } from "react";
-import DropdownAlert from "react-native-dropdownalert";
+import React, { createRef, RefObject } from 'react';
+import DropdownAlert from 'react-native-dropdownalert';
 
-let dropdownRef = createRef<DropdownAlert>();
+const dropdownRef = createRef<DropdownAlert>();
 
-export function getDropdownRef() {
+export function getDropdownRef(): RefObject<DropdownAlert> {
   return dropdownRef;
 }
 
 class Dropdown extends React.Component {
-  render() {
+  render(): JSX.Element {
     return (
       <DropdownAlert
         wrapperStyle={{

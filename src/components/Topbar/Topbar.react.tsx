@@ -1,11 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import Styles from "./Topbar.styles";
-import { View, Image } from "react-native";
-import ProfilePic from "../ProfilePic/ProfilePic.react";
-
-const AmeelioLogo = require("@assets/Ameelio_Logo.png");
+import React from 'react';
+import { View, Image } from 'react-native';
+import AmeelioLogo from '@assets/Ameelio_Logo.png';
+import Styles from './Topbar.styles';
+import ProfilePic from '../ProfilePic/ProfilePic.react';
 
 const Topbar: React.FC = () => {
   return (
