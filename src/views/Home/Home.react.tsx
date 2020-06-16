@@ -12,12 +12,7 @@ const HomeScreen: React.FC = () => {
     >
       <Text>Hello</Text>
       <Button buttonText="Press Me" onPress={() => {}} />
-      <Input
-        required
-        validate={Validation.Email}
-        placeholder="placeholder"
-        enabled={false}
-      />
+      <Input required validate={Validation.Email} placeholder="placeholder" />
     </TouchableOpacity>
   );
 };

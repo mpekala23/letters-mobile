@@ -64,4 +64,11 @@ export default StyleSheet.create({
     borderColor: Colors.AMEELIO_BLACK,
   },
   optionText: {},
+  secureButtonsContainer: {
+    position: "absolute",
+    right: 0,
+    height: "100%",
+    width: 100,
+    backgroundColor: "red",
+  },
 });

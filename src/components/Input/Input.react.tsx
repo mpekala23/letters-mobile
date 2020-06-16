@@ -43,6 +43,7 @@ export interface State {
   dirty: boolean;
   currentHeight: Animated.Value;
   results: string[];
+  shown: boolean;
 }
 
 class Input extends React.Component<Props, State> {
@@ -76,6 +77,7 @@ class Input extends React.Component<Props, State> {
           ? new Animated.Value(INPUT_HEIGHT + VERTICAL_MARGIN * 2)
           : new Animated.Value(INPUT_HEIGHT),
       results: [],
+      shown: false,
     };
     if (this.state.valid) {
       props.onValid();
@@ -294,6 +296,7 @@ class Input extends React.Component<Props, State> {
             ]}
             value={this.state.value}
           />
+          <View style={Styles.secureButtonsContainer}></View>
           <Animated.View
             style={[
               Styles.optionBackground,
