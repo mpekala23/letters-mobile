@@ -12,7 +12,9 @@ import { Button } from "@components";
 import PrisonCard from "@components/Card/PrisonCard.react";
 import LetterStatusCard from "@components/Card/LetterStatusCard.react";
 import MemoryLaneCard from "@components/Card/MemoryLaneCard.react";
-import LetterOptionCard from "@components/Card/LetterOptionCard.react";
+import LetterOptionCard, {
+  LetterTypes,
+} from "@components/Card/LetterOptionCard.react";
 import DeliveryStatusCard from "@components/Card/DeliveryStatusCard.react";
 import { PrisonTypes, DeliveryProgress } from "types";
 
@@ -66,16 +68,8 @@ const HomeScreenBase: React.FC<Props> = (props) => {
           onPress={() => {}}
           style={{ width: "50%" }}
         />
-        <LetterOptionCard
-          title="Post cards"
-          description="1 photo, 50 words"
-          onPress={() => {}}
-        />
-        <LetterOptionCard
-          title="Letters"
-          description="1 photo, 50 words"
-          onPress={() => {}}
-        />
+        <LetterOptionCard type={LetterTypes.PostCards} onPress={() => {}} />
+        <LetterOptionCard type={LetterTypes.Letters} onPress={() => {}} />
         <DeliveryStatusCard
           title="Letter 1"
           status="Out for delivery"

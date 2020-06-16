@@ -43,5 +43,11 @@
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"
+  },
+  "LetterTypes": {
+    "postCardsTitle": "Post cards",
+    "postCardsDesc": "1 photo, 300 characters",
+    "lettersTitle": "Letters",
+    "lettersDesc": "300 words"
   }
 }

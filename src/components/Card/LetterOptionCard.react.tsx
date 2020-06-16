@@ -3,11 +3,16 @@ import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import CardStyles from "./Card.styles";
 import LettersIcon from "@assets/components/Card/Letters";
 import PostCardsIcon from "@assets/components/Card/PostCards";
-import { Icon } from "@components";
+import Icon from "../Icon/Icon.react";
+import { i18n } from "@i18n";
+
+export enum LetterTypes {
+  PostCards = "PostCards",
+  Letters = "Letters",
+}
 
 interface Props {
-  title: "Post cards" | "Letters";
-  description: string;
+  type: LetterTypes;
   onPress: () => void;
   style?: ViewStyle;
 }
@@ -24,11 +29,19 @@ const LetterOptionCard: React.FC<Props> = (props) => {
       onPress={props.onPress}
     >
       <Icon
-        svg={props.title === "Post cards" ? PostCardsIcon : LettersIcon}
+        svg={props.type === LetterTypes.PostCards ? PostCardsIcon : LettersIcon}
         style={{ position: "absolute", right: 0, bottom: 0 }}
       />
-      <Text style={CardStyles.cardTitle}>{props.title}</Text>
-      <Text style={CardStyles.cardData}>{props.description}</Text>
+      <Text style={CardStyles.cardTitle}>
+        {props.type === LetterTypes.PostCards
+          ? i18n.t("LetterTypes.postCardsTitle")
+          : i18n.t("LetterTypes.lettersTitle")}
+      </Text>
+      <Text style={CardStyles.cardData}>
+        {props.type === LetterTypes.PostCards
+          ? i18n.t("LetterTypes.postCardsDesc")
+          : i18n.t("LetterTypes.lettersDesc")}
+      </Text>
     </TouchableOpacity>
   );
 };
