@@ -6,27 +6,24 @@ import configureStore from 'redux-mock-store';
 
 const mockStore = configureStore([]);
 
-const setup = (contactsOverrides = {}) => {
+const setup = (contactsOverrides = []) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
-  const contact = {
-    state: 'Minnesota',
-    firstName: 'First',
-    lastName: 'Last',
-    inmateNumber: '6',
-    relationship: 'Brother',
-    facility: {
-      address: 'Address',
-      city: 'City',
-      name: 'Facility Name',
-      postal: '23232',
-      state: 'MN',
-      type: 'State Prison',
-    },
-    ...contactsOverrides,
-  };
+  const contacts = Object.assign(
+    [
+      {
+        state: 'Minnesota',
+        first_name: 'First',
+        last_name: 'Last',
+        inmate_number: '6',
+        relationship: 'Brother',
+      },
+    ],
+    contactsOverrides
+  );
+
   const initialState = {
-    adding: contact,
-    existing: [contact],
+    adding: {},
+    existing: contacts,
   };
   const store = mockStore({
     contact: initialState,
@@ -53,14 +50,24 @@ describe('Contact Selector Screen', () => {
   });
 
   it('should load values for contact cards from the redux store', () => {
-    const { getByText } = setup({
-      state: 'Minnesota',
-      firstName: 'Contact First Name',
-      lastName: 'Contact Last Name',
-      inmateNumber: '12345678',
-      relationship: 'Brother',
-    });
-    expect(getByText('Contact First Name').props.children).toBe('Contact First Name');
+    const { getByText } = setup([
+      {
+        state: 'Minnesota',
+        first_name: 'First Contact',
+        last_name: 'Contact Last Name',
+        inmate_number: '12345678',
+        relationship: 'Brother',
+      },
+      {
+        state: 'Minnesota',
+        first_name: 'Second Contact',
+        last_name: 'Second Contact Last Name',
+        inmate_number: '12345678',
+        relationship: 'Brother',
+      },
+    ]);
+    expect(getByText('First Contact').props.children).toBe('First Contact');
+    expect(getByText('Second Contact').props.children).toBe('Second Contact');
   });
 
   it('should navigate to contact info screen when the plus button is pressed', () => {

@@ -14,8 +14,15 @@ exports[`ProfilePic component should match snapshot 1`] = `
     activeOpacity={0.2}
     style={
       Array [
-        Object {},
-        Object {},
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#f6993f",
+          "borderRadius": 40,
+          "height": 80,
+          "justifyContent": "center",
+          "overflow": "hidden",
+          "width": 80,
+        },
       ]
     }
   >

@@ -46,9 +46,9 @@ export interface State {
 
 class ContactInfoScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
-  private firstName = createRef<Input>();
-  private lastName = createRef<Input>();
-  private inmateNumber = createRef<Input>();
+  private first_name = createRef<Input>();
+  private last_name = createRef<Input>();
+  private inmate_number = createRef<Input>();
   private relationship = createRef<Input>();
   private unsubscribeFocus: () => void;
 
@@ -78,12 +78,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     const addingContact = this.props.contactState.adding;
     if (this.stateRef.current) this.stateRef.current.set(addingContact.state);
-    if (this.firstName.current)
-      this.firstName.current.set(addingContact.firstName);
-    if (this.lastName.current)
-      this.lastName.current.set(addingContact.lastName);
-    if (this.inmateNumber.current)
-      this.inmateNumber.current.set(addingContact.inmateNumber);
+    if (this.first_name.current)
+      this.first_name.current.set(addingContact.first_name);
+    if (this.last_name.current)
+      this.last_name.current.set(addingContact.last_name);
+    if (this.inmate_number.current)
+      this.inmate_number.current.set(addingContact.inmate_number);
     if (this.relationship.current)
       this.relationship.current.set(addingContact.relationship);
   }
@@ -91,16 +91,16 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   updateValid() {
     if (
       this.stateRef.current &&
-      this.firstName.current &&
-      this.lastName.current &&
-      this.inmateNumber.current &&
+      this.first_name.current &&
+      this.last_name.current &&
+      this.inmate_number.current &&
       this.relationship.current
     ) {
       const result =
         this.stateRef.current.state.valid &&
-        this.firstName.current.state.valid &&
-        this.lastName.current.state.valid &&
-        this.inmateNumber.current.state.valid &&
+        this.first_name.current.state.valid &&
+        this.last_name.current.state.valid &&
+        this.inmate_number.current.state.valid &&
         this.relationship.current.state.valid;
       this.setState({ valid: result });
     }
@@ -193,10 +193,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     this.updateValid();
                   }}
                   onInvalid={() => this.setState({ valid: false })}
-                  nextInput={this.firstName}
+                  nextInput={this.first_name}
                 />
                 <Input
-                  ref={this.firstName}
+                  ref={this.first_name}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="First Name"
                   required
@@ -208,10 +208,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
-                  nextInput={this.lastName}
+                  nextInput={this.last_name}
                 />
                 <Input
-                  ref={this.lastName}
+                  ref={this.last_name}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Last Name"
                   required
@@ -223,10 +223,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
-                  nextInput={this.inmateNumber}
+                  nextInput={this.inmate_number}
                 />
                 <Input
-                  ref={this.inmateNumber}
+                  ref={this.inmate_number}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Inmate Number"
                   required
@@ -282,16 +282,16 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 onPress={() => {
                   if (
                     this.stateRef.current &&
-                    this.firstName.current &&
-                    this.lastName.current &&
-                    this.inmateNumber.current &&
+                    this.first_name.current &&
+                    this.last_name.current &&
+                    this.inmate_number.current &&
                     this.relationship.current
                   ) {
                     const contact: Contact = {
                       state: this.stateRef.current.state.value,
-                      firstName: this.firstName.current.state.value,
-                      lastName: this.lastName.current.state.value,
-                      inmateNumber: this.inmateNumber.current.state.value,
+                      first_name: this.first_name.current.state.value,
+                      last_name: this.last_name.current.state.value,
+                      inmate_number: this.inmate_number.current.state.value,
                       relationship: this.relationship.current.state.value,
                       facility: this.props.contactState.adding.facility,
                     };

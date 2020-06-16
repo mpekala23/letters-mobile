@@ -3,12 +3,12 @@ import { Linking } from 'react-native';
 import { loginUser, logoutUser } from '@store/User/UserActions';
 import { User, UserCredentials, UserInfo } from '@store/User/UserTypes';
 import { Contact } from '@store/Contact/ContactTypes';
-import { setExisting } from '@store/Contact/ContactActions';
+import { setAdding, setExisting } from '@store/Contact/ContactActions';
 import url from 'url';
 
 const { MOCK_API_IP } = process.env;
 
-export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
+export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export interface UserResponse {
   type: string;
@@ -123,21 +123,49 @@ export async function addContact(data: Contact) {
     body: JSON.stringify(data),
   });
   const body = await response.json();
-  if (body.type == 'error') {
+  if (body.type == 'ERROR') {
     throw Error(body.data);
   }
   const contactData: Contact = {
-    firstName: body.data.firstName,
-    lastName: body.data.lastName,
-    inmateNumber: body.data.inmateNumber,
+    first_name: body.data.first_name,
+    last_name: body.data.last_name,
+    inmate_number: body.data.inmate_number,
     state: body.data.state,
     relationship: body.data.relationship,
     facility: body.data.facility,
   };
-  const existingContacts = store.getState().contact.existing;
-  existingContacts.push(contactData);
-  store.dispatch(setExisting(existingContacts));
-  return existingContacts;
+  const { existing } = store.getState().contact;
+  // Check if contact being added already exists
+  for (let ix = 0; ix < existing.length; ix++) {
+    if (
+      existing[ix].first_name === contactData.first_name &&
+      existing[ix].last_name === contactData.last_name &&
+      existing[ix].inmate_number === contactData.inmate_number &&
+      existing[ix].state === contactData.state &&
+      existing[ix].relationship === contactData.relationship &&
+      existing[ix].facility.name === contactData.facility.name &&
+      existing[ix].facility.address === contactData.facility.address &&
+      existing[ix].facility.city === contactData.facility.city &&
+      existing[ix].facility.postal === contactData.facility.postal &&
+      existing[ix].facility.state === contactData.facility.state &&
+      existing[ix].facility.type === contactData.facility.type
+    ) {
+      throw Error('Contact already exists');
+      break;
+    }
+  }
+  // Add contact to existing list of contacts
+  existing.push(contactData);
+  store.dispatch(setExisting(existing));
+  store.getState().contact.adding = {
+    state: '',
+    first_name: '',
+    last_name: '',
+    inmate_number: '',
+    relationship: '',
+    facility: null,
+  };
+  return existing;
 }
 
 export async function facebookShare(shareUrl: string) {

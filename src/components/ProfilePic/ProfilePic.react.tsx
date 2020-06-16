@@ -3,20 +3,23 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { UserState } from '@store/User/UserTypes';
+import { ProfilePicTypes } from 'types';
 import Styles from './ProfilePic.styles';
 
 const ExamplePic = require('@assets/ExamplePic.jpg');
 
 export interface Props {
-  firstName: String;
-  lastName: String;
+  first_name: String;
+  last_name: String;
   imageUri: String;
-  displayUser?: Boolean;
-  displayContact?: Boolean;
+  type: ProfilePicTypes;
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
-  const initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
+  let initials = '';
+  if (props.first_name && props.last_name) {
+    initials = props.first_name[0].toUpperCase() + props.last_name[0].toUpperCase();
+  }
 
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
 
@@ -28,7 +31,7 @@ const ProfilePic: React.FC<Props> = (props) => {
           props.displayUser ? Styles.userPic : {},
         ]}
         source={ExamplePic}
-        accessibilityLabel="Profile Picture"
+        accessibilityLabel='Profile Picture'
       />
     );
   }
@@ -36,8 +39,9 @@ const ProfilePic: React.FC<Props> = (props) => {
   return (
     <TouchableOpacity
       style={[
-        props.displayContact ? Styles.contactBackground : {},
-        props.displayUser ? Styles.userBackground : {},
+        props.type === ProfilePicTypes.TopbarProfile
+          ? Styles.userBackground
+          : Styles.contactBackground,
       ]}
     >
       {insideCircle}

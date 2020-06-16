@@ -1,13 +1,13 @@
-import { Facility } from "types";
+import { Facility } from 'types';
 
-export const SET_ADDING = "contact/set_adding";
-export const SET_EXISTING = "contact/set_existing";
+export const SET_ADDING = 'contact/set_adding';
+export const SET_EXISTING = 'contact/set_existing';
 
 export interface Contact {
   state: string;
-  firstName: string;
-  lastName: string;
-  inmateNumber: string;
+  first_name: string;
+  last_name: string;
+  inmate_number: string;
   relationship: string;
   facility: Facility | null;
 }

@@ -4,6 +4,7 @@ import { AppState } from "@store/types";
 import Styles from "./Topbar.styles";
 import { View, Image } from "react-native";
 import ProfilePic from "../ProfilePic/ProfilePic.react";
+import { ProfilePicTypes } from "types";
 
 const AmeelioLogo = require("@assets/Ameelio_Logo.png");
 
@@ -14,10 +15,10 @@ export interface Props {
 const TopbarBase: React.FC<Props> = (props) => {
   const profilePic = props.userState.authInfo.isLoggedIn ?
     <ProfilePic 
-      firstName={props.userState.user.firstName}
-      lastName={props.userState.user.lastName}
+      first_name={props.userState.user.firstName}
+      last_name={props.userState.user.lastName}
       imageUri={props.userState.user.imageUri}
-      displayUser={true}
+      type={ProfilePicTypes.TopbarProfile}
     /> :
     <View testID="blank"></View>;
   return (

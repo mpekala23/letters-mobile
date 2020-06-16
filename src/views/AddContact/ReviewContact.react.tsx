@@ -47,8 +47,8 @@ export interface State {
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
-  private firstName = createRef<Input>();
-  private lastName = createRef<Input>();
+  private first_name = createRef<Input>();
+  private last_name = createRef<Input>();
   private postal = createRef<Input>();
   private facilityName = createRef<Input>();
   private facilityAddress = createRef<Input>();
@@ -83,16 +83,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     if (
       this.stateRef.current &&
-      this.firstName.current &&
-      this.lastName.current &&
+      this.first_name.current &&
+      this.last_name.current &&
       this.postal.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
       this.stateRef.current.set(this.props.contactState.adding.state);
-      this.firstName.current.set(this.props.contactState.adding.firstName);
-      this.lastName.current.set(this.props.contactState.adding.lastName);
+      this.first_name.current.set(this.props.contactState.adding.first_name);
+      this.last_name.current.set(this.props.contactState.adding.last_name);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
       this.facilityName.current.set(
         this.props.contactState.adding.facility.name
@@ -106,16 +106,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   updateValid() {
     if (
       this.stateRef.current &&
-      this.firstName.current &&
-      this.lastName.current &&
+      this.first_name.current &&
+      this.last_name.current &&
       this.postal.current &&
       this.facilityName.current &&
       this.facilityAddress.current
     ) {
       const result =
         this.stateRef.current.state.valid &&
-        this.firstName.current.state.valid &&
-        this.lastName.current.state.valid &&
+        this.first_name.current.state.valid &&
+        this.last_name.current.state.valid &&
         this.postal.current.state.valid &&
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid;
@@ -135,9 +135,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       };
       const contact: Contact = {
         state: this.stateRef.current.state.value,
-        firstName: this.firstName.current.state.value,
-        lastName: this.lastName.current.state.value,
-        inmateNumber: this.props.contactState.adding.inmateNumber,
+        first_name: this.first_name.current.state.value,
+        last_name: this.last_name.current.state.value,
+        inmate_number: this.props.contactState.adding.inmate_number,
         relationship: this.props.contactState.adding.relationship,
         facility: facility,
       };
@@ -146,7 +146,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.navigation.navigate("ContactSelector");
       } catch(err) {
         if (err.message === "Invalid inmate number") {
-          Alert.alert("Invalid inmante number");
+          Alert.alert("Invalid inmate number");
+        } else if (err.message === 'Contact already exists') {
+          Alert.alert("Contact already exists")
         } else {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
@@ -204,7 +206,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   onInvalid={() => this.setState({ valid: false })}
                 />
                 <Input
-                  ref={this.firstName}
+                  ref={this.first_name}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="First Name"
                   required
@@ -212,7 +214,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   onInvalid={() => this.setState({ valid: false })}
                 />
                 <Input
-                  ref={this.lastName}
+                  ref={this.last_name}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Last Name"
                   required

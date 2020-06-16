@@ -1,19 +1,19 @@
 module.exports = (req, res) => {
-  const { firstName, lastName, inmateNumber, relationship, state, facility } = req.body;
+  const { first_name, last_name, inmate_number, relationship, state, facility } = req.body;
 
-  if (inmateNumber === '123456789') {
+  if (inmate_number === '123456789') {
     return res.status(401).send({
-      type: 'error',
+      type: 'ERROR',
       data: 'Invalid inmate number',
     });
   }
 
   return res.status(201).send({
-    type: 'success',
+    type: 'SUCCESS',
     data: {
-      firstName,
-      lastName,
-      inmateNumber,
+      first_name,
+      last_name,
+      inmate_number,
       relationship,
       state,
       facility,

@@ -1,17 +1,12 @@
-import {
-  ContactState,
-  ContactActionTypes,
-  SET_ADDING,
-  SET_EXISTING,
-} from "./ContactTypes";
+import { ContactState, ContactActionTypes, SET_ADDING, SET_EXISTING } from './ContactTypes';
 
 const initialState: ContactState = {
   adding: {
-    state: "",
-    firstName: "",
-    lastName: "",
-    inmateNumber: "",
-    relationship: "",
+    state: '',
+    first_name: '',
+    last_name: '',
+    inmate_number: '',
+    relationship: '',
     facility: null,
   },
   existing: [],

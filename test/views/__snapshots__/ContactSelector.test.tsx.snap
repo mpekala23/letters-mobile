@@ -41,7 +41,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
         ]
       }
     >
-      LOVED ONES
+      YOUR LOVED ONES
     </Text>
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -52,7 +52,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "white",
             "borderRadius": 10,
-            "height": 115,
+            "height": 135,
             "marginBottom": 16,
           }
         }
@@ -62,7 +62,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             Object {
               "backgroundColor": "white",
               "borderRadius": 10,
-              "height": 115,
+              "height": 135,
               "marginBottom": 16,
             }
           }
@@ -92,7 +92,6 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                     "overflow": "hidden",
                     "width": 80,
                   },
-                  Object {},
                 ]
               }
             >
@@ -146,12 +145,12 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                   Object {
                     "color": "#6a6a6a",
                     "fontSize": 16,
-                    "paddingBottom": 4,
+                    "paddingBottom": 6,
                   },
                 ]
               }
             >
-              Letter streak: 5 days
+              💌 received:
             </Text>
             <Text
               style={
@@ -164,12 +163,33 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                   Object {
                     "color": "#6a6a6a",
                     "fontSize": 16,
-                    "paddingBottom": 50,
+                    "paddingBottom": 6,
                   },
                 ]
               }
             >
-              Miles traveled: 3,598
+              📅 last heard from you:
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 16,
+                    "paddingBottom": 6,
+                  },
+                  Object {
+                    "paddingBottom": 16,
+                  },
+                ]
+              }
+            >
+              ✈️ letters traveled:
             </Text>
           </View>
         </View>

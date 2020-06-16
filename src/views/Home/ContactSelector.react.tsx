@@ -15,6 +15,7 @@ import { AppState } from '@store/types';
 import { ContactState } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
 import Styles from './ContactSelector.styles';
+import { ProfilePicTypes } from "types";
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -42,10 +43,10 @@ const ContactSelectorScreenBase: React.FC = (props) => {
             ]}
           >
             <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
+              first_name={contact.first_name}
+              last_name={contact.last_name}
               imageUri={contact.imageUri}
-              displayContact
+              type={ProfilePicTypes.ContactProfile}
             />
           </View>
           <View style={[{ paddingLeft: 112 }]}>
@@ -59,7 +60,7 @@ const ContactSelectorScreenBase: React.FC = (props) => {
                 },
               ]}
             >
-              {contact.firstName}
+              {contact.first_name}
             </Text>
             <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>💌 received:</Text>
             <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>
