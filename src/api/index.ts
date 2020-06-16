@@ -127,44 +127,27 @@ export async function addContact(data: Contact) {
     throw Error(body.data);
   }
   const contactData: Contact = {
-    first_name: body.data.first_name,
-    last_name: body.data.last_name,
-    inmate_number: body.data.inmate_number,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    inmateNumber: body.data.inmate_number,
     state: body.data.state,
     relationship: body.data.relationship,
     facility: body.data.facility,
   };
   const { existing } = store.getState().contact;
-  // Check if contact being added already exists
-  for (let ix = 0; ix < existing.length; ix++) {
-    if (
-      existing[ix].first_name === contactData.first_name &&
-      existing[ix].last_name === contactData.last_name &&
-      existing[ix].inmate_number === contactData.inmate_number &&
-      existing[ix].state === contactData.state &&
-      existing[ix].relationship === contactData.relationship &&
-      existing[ix].facility.name === contactData.facility.name &&
-      existing[ix].facility.address === contactData.facility.address &&
-      existing[ix].facility.city === contactData.facility.city &&
-      existing[ix].facility.postal === contactData.facility.postal &&
-      existing[ix].facility.state === contactData.facility.state &&
-      existing[ix].facility.type === contactData.facility.type
-    ) {
-      throw Error('Contact already exists');
-      break;
-    }
-  }
   // Add contact to existing list of contacts
   existing.push(contactData);
   store.dispatch(setExisting(existing));
-  store.getState().contact.adding = {
-    state: '',
-    first_name: '',
-    last_name: '',
-    inmate_number: '',
-    relationship: '',
-    facility: null,
-  };
+  store.dispatch(
+    setAdding({
+      state: '',
+      firstName: '',
+      lastName: '',
+      inmateNumber: '',
+      relationship: '',
+      facility: null,
+    })
+  );
   return existing;
 }
 

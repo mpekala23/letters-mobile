@@ -12,9 +12,9 @@ const setup = (contactsOverrides = []) => {
     [
       {
         state: 'Minnesota',
-        first_name: 'First',
-        last_name: 'Last',
-        inmate_number: '6',
+        firstName: 'First',
+        lastName: 'Last',
+        inmateNumber: '6',
         relationship: 'Brother',
       },
     ],
@@ -53,16 +53,16 @@ describe('Contact Selector Screen', () => {
     const { getByText } = setup([
       {
         state: 'Minnesota',
-        first_name: 'First Contact',
-        last_name: 'Contact Last Name',
-        inmate_number: '12345678',
+        firstName: 'First Contact',
+        lastName: 'Contact Last Name',
+        inmateNumber: '12345678',
         relationship: 'Brother',
       },
       {
         state: 'Minnesota',
-        first_name: 'Second Contact',
-        last_name: 'Second Contact Last Name',
-        inmate_number: '12345678',
+        firstName: 'Second Contact',
+        lastName: 'Second Contact Last Name',
+        inmateNumber: '12345678',
         relationship: 'Brother',
       },
     ]);

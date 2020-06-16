@@ -33,6 +33,7 @@ export interface Props {
   validate?: Validation;
   options: string[] | string[][];
   nextInput?: RefObject<Input> | boolean;
+  undirty?: boolean;
 }
 
 export interface State {
@@ -58,6 +59,7 @@ class Input extends React.Component<Props, State> {
     secure: false,
     options: [],
     nextInput: false,
+    undirty: false,
   };
 
   private inputRef = createRef<TextInput>();
@@ -86,6 +88,7 @@ class Input extends React.Component<Props, State> {
     this.set = this.set.bind(this);
     this.updateResults = this.updateResults.bind(this);
     this.updateHeight = this.updateHeight.bind(this);
+    this.undirty = this.undirty.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
   }
 
@@ -97,6 +100,9 @@ class Input extends React.Component<Props, State> {
     this.setState({ focused: true, dirty: true }, () => {
       if (this.props.options.length > 0) {
         this.updateHeight();
+      }
+      if (this.props.undirty) {
+        this.undirty();
       }
       this.props.onFocus();
     });
@@ -215,6 +221,10 @@ class Input extends React.Component<Props, State> {
       }
     );
   };
+
+  undirty() {
+    this.setState({ dirty: false });
+  }
 
   renderOptions() {
     const results = this.state.results;

@@ -43,8 +43,8 @@ const ContactSelectorScreenBase: React.FC = (props) => {
             ]}
           >
             <ProfilePic
-              firstName={contact.first_name}
-              lastName={contact.last_name}
+              firstName={contact.firstName}
+              lastName={contact.lastName}
               imageUri={contact.imageUri}
               type={ProfilePicTypes.ContactProfile}
             />
@@ -60,7 +60,7 @@ const ContactSelectorScreenBase: React.FC = (props) => {
                 },
               ]}
             >
-              {contact.first_name}
+              {contact.firstName}
             </Text>
             <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>💌 received:</Text>
             <Text style={[Typography.FONT_REGULAR, Styles.contactCardInfo]}>

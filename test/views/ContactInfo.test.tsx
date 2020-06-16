@@ -12,9 +12,9 @@ const setup = (contactOverrides = {}, userOverrides = {}) => {
   const contact = Object.assign(
     {
       state: "",
-      first_name: "",
-      last_name: "",
-      inmate_number: "",
+      firstName: "",
+      lastName: "",
+      inmateNumber: "",
       relationship: "",
       facility: null,
     },
@@ -114,9 +114,9 @@ describe("Contact Info Screen", () => {
       type: SET_ADDING,
       payload: {
         state: "Minnesota",
-        first_name: "First",
-        last_name: "Last",
-        inmate_number: "2",
+        firstName: "First",
+        lastName: "Last",
+        inmateNumber: "2",
         relationship: "Mother",
         facility: null,
       },
@@ -141,9 +141,9 @@ describe("Contact Info Screen", () => {
   it("should load initial values for fields from the redux store", () => {
     const { getByPlaceholderText } = setup({
       state: "Minnesota",
-      first_name: "First",
-      last_name: "Last",
-      inmate_number: "6",
+      firstName: "First",
+      lastName: "Last",
+      inmateNumber: "6",
       relationship: "Sister",
     });
     expect(getByPlaceholderText("State").props.value).toBe("Minnesota");

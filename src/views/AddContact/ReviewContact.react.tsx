@@ -18,6 +18,7 @@ import CommonStyles from "./AddContact.styles";
 import { Button, Input, PicUpload } from "@components";
 import { STATES_DROPDOWN, Validation } from "@utils";
 import { AppState } from "store/types";
+import store from '@store';
 import {
   Contact,
   ContactActionTypes,
@@ -47,8 +48,8 @@ export interface State {
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
-  private first_name = createRef<Input>();
-  private last_name = createRef<Input>();
+  private firstName = createRef<Input>();
+  private lastName = createRef<Input>();
   private postal = createRef<Input>();
   private facilityName = createRef<Input>();
   private facilityAddress = createRef<Input>();
@@ -83,16 +84,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     if (
       this.stateRef.current &&
-      this.first_name.current &&
-      this.last_name.current &&
+      this.firstName.current &&
+      this.lastName.current &&
       this.postal.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
       this.stateRef.current.set(this.props.contactState.adding.state);
-      this.first_name.current.set(this.props.contactState.adding.first_name);
-      this.last_name.current.set(this.props.contactState.adding.last_name);
+      this.firstName.current.set(this.props.contactState.adding.firstName);
+      this.lastName.current.set(this.props.contactState.adding.lastName);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
       this.facilityName.current.set(
         this.props.contactState.adding.facility.name
@@ -106,16 +107,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   updateValid() {
     if (
       this.stateRef.current &&
-      this.first_name.current &&
-      this.last_name.current &&
+      this.firstName.current &&
+      this.lastName.current &&
       this.postal.current &&
       this.facilityName.current &&
       this.facilityAddress.current
     ) {
       const result =
         this.stateRef.current.state.valid &&
-        this.first_name.current.state.valid &&
-        this.last_name.current.state.valid &&
+        this.firstName.current.state.valid &&
+        this.lastName.current.state.valid &&
         this.postal.current.state.valid &&
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid;
@@ -135,13 +136,33 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       };
       const contact: Contact = {
         state: this.stateRef.current.state.value,
-        first_name: this.first_name.current.state.value,
-        last_name: this.last_name.current.state.value,
-        inmate_number: this.props.contactState.adding.inmate_number,
+        first_name: this.firstName.current.state.value,
+        last_name: this.lastName.current.state.value,
+        inmate_number: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
         facility: facility,
       };
       try {
+        const { existing } = store.getState().contact;
+        // Check if contact being added already exists
+        for (let ix = 0; ix < existing.length; ix++) {
+          if (
+            existing[ix].firstName === contact.first_name &&
+            existing[ix].lastName === contact.last_name &&
+            existing[ix].inmateNumber === contact.inmate_number &&
+            existing[ix].state === contact.state &&
+            existing[ix].relationship === contact.relationship &&
+            existing[ix].facility.name === contact.facility.name &&
+            existing[ix].facility.address === contact.facility.address &&
+            existing[ix].facility.city === contact.facility.city &&
+            existing[ix].facility.postal === contact.facility.postal &&
+            existing[ix].facility.state === contact.facility.state &&
+            existing[ix].facility.type === contact.facility.type
+          ) {
+            throw Error('Contact already exists');
+            break;
+          }
+        }
         const data = await addContact(contact);
         this.props.navigation.navigate("ContactSelector");
       } catch(err) {
@@ -206,7 +227,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   onInvalid={() => this.setState({ valid: false })}
                 />
                 <Input
-                  ref={this.first_name}
+                  ref={this.firstName}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="First Name"
                   required
@@ -214,7 +235,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   onInvalid={() => this.setState({ valid: false })}
                 />
                 <Input
-                  ref={this.last_name}
+                  ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Last Name"
                   required

@@ -3,9 +3,9 @@ import { ContactState, ContactActionTypes, SET_ADDING, SET_EXISTING } from './Co
 const initialState: ContactState = {
   adding: {
     state: '',
-    first_name: '',
-    last_name: '',
-    inmate_number: '',
+    firstName: '',
+    lastName: '',
+    inmateNumber: '',
     relationship: '',
     facility: null,
   },

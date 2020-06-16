@@ -5,9 +5,9 @@ export const SET_EXISTING = 'contact/set_existing';
 
 export interface Contact {
   state: string;
-  first_name: string;
-  last_name: string;
-  inmate_number: string;
+  firstName: string;
+  lastName: string;
+  inmateNumber: string;
   relationship: string;
   facility: Facility | null;
 }
