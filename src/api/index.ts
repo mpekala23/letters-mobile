@@ -31,7 +31,6 @@ export function fetchTimeout(
   ]);
 }
 
-<<<<<<< HEAD
 export async function saveToken(token: string) {
   return await setItemAsync(Storage.RememberToken, token);
 }
@@ -77,25 +76,6 @@ export async function loginWithToken() {
     store.dispatch(logoutUser());
     throw Error(err);
   }
-=======
-/** Dummy function atm, once I implement persistent storage I will replace. */
-export function loadToken() {
-  const dummyData: User = {
-    id: '6',
-    firstName: 'Team',
-    lastName: 'Ameelio',
-    email: 'team@ameelio.org',
-    cell: '4324324432',
-    address1: 'Somewhere',
-    country: 'USA',
-    zipcode: '12345',
-    city: 'New Haven',
-    state: 'CT',
-  };
-  // setTimeout(() => {
-  //   store.dispatch(logoutUser());
-  // }, 2000);
->>>>>>> merge fixes
 }
 
 export async function login(cred: UserLoginInfo) {
