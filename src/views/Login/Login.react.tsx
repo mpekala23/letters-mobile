@@ -18,7 +18,7 @@ import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
 import DropdownAlert from 'react-native-dropdownalert';
 import { Typography } from '@styles';
 import { UserCredentials } from '@store/User/UserTypes';
-import { i18n } from '@i18n';
+import i18n from '@i18n';
 import Styles from './Login.styles';
 
 type LoginScreenNavigationProp = StackNavigationProp<

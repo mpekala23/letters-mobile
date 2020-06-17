@@ -16,7 +16,7 @@ import { Typography } from '@styles';
 import { register } from '@api';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { User, UserInfo } from '@store/User/UserTypes';
-import { i18n } from '@i18n';
+import i18n from '@i18n';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<

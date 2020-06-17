@@ -173,7 +173,7 @@ class NotifsBase {
     store.dispatch(setFutureNotifs(futureNotifs));
   };
 
-  cancelNotificationById = (id: string) => {
+  cancelNotificationById = async (id: string) => {
     const result = await Notifications.cancelScheduledNotificationAsync(id);
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];

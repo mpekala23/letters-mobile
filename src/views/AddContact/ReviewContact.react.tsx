@@ -159,9 +159,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 </View>
                 <Input
                   ref={this.stateRef}
-                  parentStyle={Object.assign(CommonStyles.fullWidth, {
+                  parentStyle={{
+                    width: '100%',
                     marginTop: 10,
-                  })}
+                  }}
                   placeholder="State"
                   options={STATES_DROPDOWN}
                   validate={Validation.State}

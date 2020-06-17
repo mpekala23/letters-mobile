@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Image, View, StyleSheet, NativeModules, Platform } from 'react-native';
-import { i18n } from '@i18n';
+import i18n from '@i18n';
 import * as Localization from 'expo-localization';
 
 import AmeelioLogo from '@assets/Ameelio_Logo.png';
