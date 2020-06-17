@@ -9,7 +9,7 @@ export interface User {
   lastName: string;
   email: string;
   password?: string;
-  cell: string;
+  phone: string;
   address1: string;
   address2?: string;
   country: string;
@@ -30,7 +30,7 @@ export interface UserInfo {
   lastName: string;
   email: string;
   password: string;
-  cell: string;
+  phone: string;
   address1: string;
   address2?: string;
   country: string;

@@ -10,3 +10,16 @@ export interface Facility {
 }
 
 export type NullableFacility = Facility | null;
+
+export enum PrisonTypes {
+  State = 'StatePrison',
+  Federal = 'FederalPrison',
+}
+
+export enum DeliveryProgress {
+  Created = '0%',
+  Printed = '25%',
+  Mailed = '50%',
+  OutForDelivery = '75%',
+  Delivered = '100%',
+}
