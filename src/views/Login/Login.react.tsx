@@ -197,7 +197,9 @@ class LoginScreen extends React.Component<Props, State> {
                     buttonText={i18n.t("LoginScreen.termsOfService")}
                     onPress={() => {}}
                   />
-                  <Text accessible={false} style={Typography.FONT_REGULAR}>{i18n.t("LoginScreen.termsConditionAnd")}</Text>
+                  <Text accessible={false} style={Typography.FONT_REGULAR}>
+                    {i18n.t("LoginScreen.termsConditionAnd")}
+                  </Text>
                   <Button
                     link
                     buttonText={i18n.t("LoginScreen.privacyPolicy")}

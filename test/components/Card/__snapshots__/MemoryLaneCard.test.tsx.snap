@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Memory Lane Card component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "borderRadius": 6,
+          "marginVertical": 6,
+          "padding": 15,
+          "width": "100%",
+        },
+        Object {
+          "height": 210,
+          "padding": 0,
+        },
+        Object {
+          "elevation": 4,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.23,
+          "shadowRadius": 2.62,
+        },
+        undefined,
+      ]
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "test",
+        }
+      }
+      style={
+        Object {
+          "borderTopLeftRadius": 6,
+          "borderTopRightRadius": 6,
+          "height": "50%",
+          "resizeMode": "cover",
+          "width": "100%",
+        }
+      }
+      testID="memoryLaneImage"
+    />
+    <View
+      style={
+        Object {
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 18,
+            "fontWeight": "500",
+            "height": 65,
+          }
+        }
+      >
+        Text
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#6E757C",
+              "fontSize": 16,
+            },
+            Object {
+              "marginTop": 6,
+            },
+          ]
+        }
+      >
+        Date
+      </Text>
+    </View>
+  </TouchableOpacity>
+</View>
+`;
