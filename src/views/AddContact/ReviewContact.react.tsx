@@ -18,7 +18,7 @@ import CommonStyles from "./AddContact.styles";
 import { Button, Input, PicUpload } from "@components";
 import { STATES_DROPDOWN, Validation } from "@utils";
 import { AppState } from "store/types";
-import store from '@store';
+import store from "@store";
 import {
   Contact,
   ContactActionTypes,
@@ -125,7 +125,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   }
 
   doAddContact = async () => {
-    if (this.state.valid) {
+    if (
+      this.state.valid &&
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.props.contactState.adding.facility
+    ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
         type: this.props.contactState.adding.facility.type,
@@ -152,24 +161,24 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             existing[ix].inmateNumber === contact.inmate_number &&
             existing[ix].state === contact.state &&
             existing[ix].relationship === contact.relationship &&
-            existing[ix].facility.name === contact.facility.name &&
-            existing[ix].facility.address === contact.facility.address &&
-            existing[ix].facility.city === contact.facility.city &&
-            existing[ix].facility.postal === contact.facility.postal &&
-            existing[ix].facility.state === contact.facility.state &&
-            existing[ix].facility.type === contact.facility.type
+            existing[ix].facility?.name === contact.facility.name &&
+            existing[ix].facility?.address === contact.facility.address && 
+            existing[ix].facility?.city === contact.facility.city &&
+            existing[ix].facility?.postal === contact.facility.postal &&
+            existing[ix].facility?.state === contact.facility.state &&
+            existing[ix].facility?.type === contact.facility.type 
           ) {
-            throw Error('Contact already exists');
+            throw Error("Contact already exists");
             break;
           }
         }
         const data = await addContact(contact);
         this.props.navigation.navigate("ContactSelector");
-      } catch(err) {
+      } catch (err) {
         if (err.message === "Invalid inmate number") {
           Alert.alert("Invalid inmate number");
-        } else if (err.message === 'Contact already exists') {
-          Alert.alert("Contact already exists")
+        } else if (err.message === "Contact already exists") {
+          Alert.alert("Contact already exists");
         } else {
           if (this.dropdownRef.current)
             this.dropdownRef.current.alertWithType(
@@ -178,9 +187,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               "The request could not be completed."
             );
         }
-      };
+      }
     }
-  }
+  };
 
   render() {
     return (
