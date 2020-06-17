@@ -16,6 +16,10 @@ export enum ProfilePicTypes {
 
 export type NullableFacility = Facility | null;
 
+export enum Storage {
+  RememberToken = "Ameelio-Token",
+}
+
 export enum PrisonTypes {
   State = "StatePrison",
   Federal = "FederalPrison",

@@ -34,9 +34,9 @@ export const StyleType = PropTypes.objectOf(
 
 export enum Validation {
   Email = "Email",
-  Cell = "Cell",
+  Phone = "Phone",
   Password = "Password",
-  Zipcode = "Zipcode",
+  Postal = "Postal",
   State = "State",
 }
 
@@ -44,10 +44,10 @@ export function isValidEmail(email: string) {
   return EmailValidator.validate(email);
 }
 
-export function isValidCell(cell: string) {
-  const pn = new PhoneNumber(cell);
-  const pnPlus = new PhoneNumber("+" + cell);
-  const pnPlusUs = new PhoneNumber("+1" + cell);
+export function isValidPhone(phone: string) {
+  const pn = new PhoneNumber(phone);
+  const pnPlus = new PhoneNumber("+" + phone);
+  const pnPlusUs = new PhoneNumber("+1" + phone);
   return pn.isValid() || pnPlus.isValid() || pnPlusUs.isValid();
 }
 
@@ -56,7 +56,7 @@ export function isValidPassword(password: string) {
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
 }
 
-export function isValidZipcode(zipcode: string) {
+export function isValidPostal(zipcode: string) {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
 }
 
@@ -68,12 +68,12 @@ export function validateFormat(format: Validation, value: string) {
   switch (format) {
     case Validation.Email:
       return isValidEmail(value);
-    case Validation.Cell:
-      return isValidCell(value);
+    case Validation.Phone:
+      return isValidPhone(value);
     case Validation.Password:
       return isValidPassword(value);
-    case Validation.Zipcode:
-      return isValidZipcode(value);
+    case Validation.Postal:
+      return isValidPostal(value);
     case Validation.State:
       return isValidState(value);
     default:

@@ -1,31 +1,29 @@
 import React, { createRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
-import store from "@store";
-import Navigator, { navigationRef } from "@navigations";
+import store, { persistor } from "@store";
+import Navigator from "@navigations";
 import { Dropdown, Statusbar } from "@components";
-import { loadToken } from "@api";
-import Notifs from "@notifications";
+import { loginWithToken } from "@api";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default class App extends React.Component {
   async componentDidMount() {
     try {
-      await loadToken();
+      await loginWithToken();
     } catch (err) {}
-  }
-
-  componentWillUnmount() {
-    Notifs.unsubscribe();
   }
 
   render() {
     return (
       <Provider store={store}>
-        <Dropdown />
-        <Statusbar />
-        <NavigationContainer ref={navigationRef}>
-          <Navigator />
-        </NavigationContainer>
+        <PersistGate persistor={persistor}>
+          <Statusbar />
+          <Dropdown />
+          <NavigationContainer>
+            <Navigator />
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     );
   }

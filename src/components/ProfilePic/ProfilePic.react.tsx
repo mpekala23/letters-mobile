@@ -1,9 +1,12 @@
-import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
-import { AppState } from '@store/types';
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { connect } from "react-redux";
+import { AppState } from "@store/types";
+import { UserState } from "@store/User/UserTypes";
+import Styles from "./ProfilePic.styles";
+import { logout } from "@api";
+import { dropdownError } from "components/Dropdown/Dropdown.react";
 import { ProfilePicTypes } from 'types';
-import Styles from './ProfilePic.styles';
 
 const ExamplePic = require('@assets/ExamplePic.jpg');
 
@@ -43,6 +46,14 @@ const ProfilePic: React.FC<Props> = (props) => {
           ? Styles.userBackground
           : Styles.contactBackground,
       ]}
+      onPress={async () => {
+        try {
+          // TODO: Have this press direct to Edit Profile screen once finished
+          await logout();
+        } catch (err) {
+          dropdownError("Storage", "Unable to successfully log out the user.");
+        }
+      }}
     >
       {insideCircle}
     </TouchableOpacity>

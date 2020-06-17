@@ -1,4 +1,10 @@
-import { ContactState, ContactActionTypes, SET_ADDING, SET_EXISTING } from './ContactTypes';
+import {
+  ContactState,
+  ContactActionTypes,
+  SET_ADDING,
+  SET_EXISTING,
+  CLEAR_CONTACTS,
+} from "./ContactTypes";
 
 const initialState: ContactState = {
   adding: {
@@ -23,6 +29,17 @@ export default function ContactReducer(
       return currentState;
     case SET_EXISTING:
       currentState.existing = action.payload;
+      return currentState;
+    case CLEAR_CONTACTS:
+      currentState.adding = {
+        state: "",
+        firstName: "",
+        lastName: "",
+        inmateNumber: "",
+        relationship: "",
+        facility: null,
+      };
+      currentState.existing = [];
       return currentState;
     default:
       return state;
