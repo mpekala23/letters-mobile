@@ -24,8 +24,8 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
 >;
 
 interface Props {
+  contactState: Contact[];
   navigation: ContactSelectorScreenNavigationProp;
-  contactState: ContactState;
 }
 
 const ContactSelectorScreenBase: React.FC<Props> = (props) => {
