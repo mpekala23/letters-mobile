@@ -1,6 +1,6 @@
-import React from "react";
-import { Dropdown } from "@components";
-import { render, toJSON } from "@testing-library/react-native";
+import React from 'react';
+import { Dropdown } from '@components';
+import { render, toJSON } from '@testing-library/react-native';
 
 const setup = () => {
   return {
@@ -8,8 +8,8 @@ const setup = () => {
   };
 };
 
-describe("Dropdown component", () => {
-  it("should match snapshot", () => {
+describe('Dropdown component', () => {
+  it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
