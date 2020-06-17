@@ -8,9 +8,9 @@ import Styles from './ProfilePic.styles';
 const ExamplePic = require('@assets/ExamplePic.jpg');
 
 export interface Props {
-  firstName: String;
-  lastName: String;
-  imageUri: String;
+  firstName: string;
+  lastName: string;
+  imageUri?: string;
   type: ProfilePicTypes;
 }
 

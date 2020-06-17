@@ -111,7 +111,7 @@ export async function register(data: UserInfo) {
 
 export async function getFacilities(text: string) {}
 
-export async function addContact(data: Contact) {
+export async function addContact(data: {}) {
   const response = await fetchTimeout<Response>(url.resolve(API_URL, 'contacts'), {
     method: 'POST',
     headers: {
