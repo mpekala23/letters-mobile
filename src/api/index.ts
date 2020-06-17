@@ -6,9 +6,8 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { setAdding, setExisting } from '@store/Contact/ContactActions';
 import url from 'url';
 
-const { MOCK_API_IP } = process.env;
-
-export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
+const MOCK_API_IP = process.env.MOCK_API_IP;
+export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
 export interface UserResponse {
   type: string;
