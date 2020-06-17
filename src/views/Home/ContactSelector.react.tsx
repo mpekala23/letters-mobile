@@ -96,7 +96,7 @@ const ContactSelectorScreenBase: React.FC = (props) => {
       <View style={{ alignItems: 'flex-end' }}>
         <Button
           onPress={() => {
-            props.navigation.navigate('ContactInfo');
+            props.navigation.navigate('ContactInfo', { addFromSelector: true });
           }}
           buttonText="+"
           textStyle={{ fontSize: 30 }}

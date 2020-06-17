@@ -35,6 +35,9 @@ export interface Props {
   navigation: ContactInfoScreenNavigationProp;
   userState: UserState;
   contactState: ContactState;
+  route: {
+    params: { addFromSelector: boolean }
+  };
   setAdding: (contact: Contact) => void;
 }
 
@@ -77,6 +80,15 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     const addingContact = this.props.contactState.adding;
+
+    if (this.props.route.params && this.props.route.params.addFromSelector) {
+      this.stateRef.current?.setState({ dirty: false });
+      this.firstName.current?.setState({ dirty: false });
+      this.lastName.current?.setState({ dirty: false });
+      this.inmateNumber.current?.setState({ dirty: false });
+      this.relationship.current?.setState({ dirty: false });
+    }
+
     if (this.stateRef.current) this.stateRef.current.set(addingContact.state);
     if (this.firstName.current)
       this.firstName.current.set(addingContact.firstName);
@@ -194,7 +206,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.firstName}
-                  undirty={true}
                 />
                 <Input
                   ref={this.firstName}
@@ -210,7 +221,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.lastName}
-                  undirty={true}
                 />
                 <Input
                   ref={this.lastName}
@@ -226,7 +236,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.inmateNumber}
-                  undirty={true}
                 />
                 <Input
                   ref={this.inmateNumber}
@@ -242,7 +251,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.relationship}
-                  undirty={true}
                 />
                 <Input
                   ref={this.relationship}
@@ -272,7 +280,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
-                  undirty={true}
                 />
               </View>
             </ScrollView>

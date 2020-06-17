@@ -73,6 +73,6 @@ describe('Contact Selector Screen', () => {
   it('should navigate to contact info screen when the plus button is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('+'));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', { addFromSelector: true });
   });
 });
