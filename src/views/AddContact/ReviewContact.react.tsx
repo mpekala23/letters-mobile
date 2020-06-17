@@ -134,7 +134,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         state: this.props.contactState.adding.facility.state,
         postal: this.postal.current.state.value,
       };
-      const contact: Contact = {
+      const contact = {
         state: this.stateRef.current.state.value,
         first_name: this.firstName.current.state.value,
         last_name: this.lastName.current.state.value,

@@ -45,7 +45,6 @@ const ContactSelectorScreenBase: React.FC = (props) => {
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
-              imageUri={contact.imageUri}
               type={ProfilePicTypes.ContactProfile}
             />
           </View>
