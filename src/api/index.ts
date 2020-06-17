@@ -204,7 +204,6 @@ export async function addContact(data: {}) {
     facility: body.data.facility,
   };
   const { existing } = store.getState().contact;
-  // Add contact to existing list of contacts
   existing.push(contactData);
   store.dispatch(setExisting(existing));
   store.dispatch(
