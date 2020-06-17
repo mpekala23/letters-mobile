@@ -1,15 +1,15 @@
-import React from "react";
-import { Text, View } from "react-native";
-import { TextStyle } from "react-native";
-import * as Colors from "./Colors";
+import React from 'react';
+import { Text, View, TextStyle } from 'react-native';
+
+import * as Colors from './Colors';
 
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = "System";
-export const FONT_FAMILY_BOLD = "System";
+export const FONT_FAMILY_REGULAR = 'System';
+export const FONT_FAMILY_BOLD = 'System';
 
 // FONT WEIGHT
-export const FONT_WEIGHT_REGULAR = "400";
-export const FONT_WEIGHT_BOLD = "600";
+export const FONT_WEIGHT_REGULAR = '400';
+export const FONT_WEIGHT_BOLD = '600';
 
 // FONT STYLE
 export const FONT_REGULAR: TextStyle = {
@@ -26,7 +26,7 @@ export const FONT_BOLD: TextStyle = {
 export const FONT_ITALIC: TextStyle = {
   fontFamily: FONT_FAMILY_REGULAR,
   fontWeight: FONT_WEIGHT_REGULAR,
-  fontStyle: "italic",
+  fontStyle: 'italic',
 };
 
 export interface TextProps {
@@ -36,12 +36,12 @@ export interface TextProps {
 }
 
 const PageHeader: React.FC<TextProps> = (props: TextProps) => {
-  const text = props.text;
+  const { text } = props;
   const size = props.size || 20;
   const color = props.color || Colors.AMEELIO_BLUE;
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <View
         style={{
           width: size,

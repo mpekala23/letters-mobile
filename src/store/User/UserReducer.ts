@@ -3,26 +3,26 @@ import {
   UserActionTypes,
   LOGIN_USER,
   LOGOUT_USER,
-} from "./UserTypes";
+} from './UserTypes';
 
 const initialState: UserState = {
   authInfo: {
     isLoadingToken: true,
     isLoggedIn: false,
-    userToken: "",
+    userToken: '',
   },
   user: {
-    id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    cell: "",
-    address1: "",
-    address2: "",
-    country: "",
-    zipcode: "",
-    city: "",
-    state: "",
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    cell: '',
+    address1: '',
+    address2: '',
+    country: '',
+    zipcode: '',
+    city: '',
+    state: '',
   },
 };
 
@@ -36,7 +36,7 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
-          userToken: "create token here",
+          userToken: 'create token here',
         },
         user: action.payload,
       };
@@ -45,20 +45,20 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: false,
-          userToken: "",
+          userToken: '',
         },
         user: {
-          id: "",
-          firstName: "",
-          lastName: "",
-          email: "",
-          cell: "",
-          address1: "",
-          address2: "",
-          country: "",
-          zipcode: "",
-          city: "",
-          state: "",
+          id: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          cell: '',
+          address1: '',
+          address2: '',
+          country: '',
+          zipcode: '',
+          city: '',
+          state: '',
         },
       };
     default:

@@ -3,7 +3,7 @@ import {
   SET_ADDING,
   SET_EXISTING,
   ContactActionTypes,
-} from "./ContactTypes";
+} from './ContactTypes';
 
 export function setAdding(contact: Contact): ContactActionTypes {
   return {

@@ -85,7 +85,9 @@ Button.defaultProps = {
   reverse: false,
   link: false,
   enabled: true,
-  onPress: () => {},
+  onPress: () => {
+    /* nothing */
+  },
 };
 
 export default Button;

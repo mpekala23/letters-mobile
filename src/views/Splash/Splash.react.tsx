@@ -1,8 +1,9 @@
-import React, { useEffect }from "react";
-import { Image, View, StyleSheet, NativeModules, Platform } from "react-native";
-const AmeelioLogo = require("@assets/Ameelio_Logo.png");
-import { i18n } from "@i18n";
+import React, { useEffect } from 'react';
+import { Image, View, StyleSheet, NativeModules, Platform } from 'react-native';
+import { i18n } from '@i18n';
 import * as Localization from 'expo-localization';
+
+import AmeelioLogo from '@assets/Ameelio_Logo.png';
 
 const SplashScreen: React.FC = () => {
   useEffect(() => {
@@ -16,9 +17,9 @@ const SplashScreen: React.FC = () => {
       accessible={false}
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
       }}
     >
       <Image

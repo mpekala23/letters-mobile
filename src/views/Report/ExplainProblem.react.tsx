@@ -1,21 +1,21 @@
-import React, { useCallback, Dispatch, useState } from "react";
+import React, { useCallback, Dispatch, useState } from 'react';
 import {
   Text,
   TextInput,
   View,
   TouchableOpacity,
   Keyboard,
-} from "react-native";
-import { Colors, Typography } from "@styles";
-import { Button } from "@components";
-import MailHearts from "assets/views/Report/MailHearts";
-import ReportStyles from "./Report.styles";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
+} from 'react-native';
+import { Colors, Typography } from '@styles';
+import { Button } from '@components';
+import MailHearts from 'assets/views/Report/MailHearts';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import ReportStyles from './Report.styles';
 
 type ExplainProblemScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "ExplainProblem"
+  'ExplainProblem'
 >;
 
 interface Props {
@@ -40,15 +40,15 @@ const ExplainProblemScreen: React.FC<Props> = (props) => {
             placeholder="Type something"
             placeholderTextColor="grey"
             numberOfLines={10}
-            multiline={true}
+            multiline
           />
         </View>
         <Button
           buttonText="Report the problem"
           onPress={() => {
-            props.navigation.navigate("Thanks");
+            props.navigation.navigate('Thanks');
           }}
-          containerStyle={{ width: "100%", marginTop: 30 }}
+          containerStyle={{ width: '100%', marginTop: 30 }}
         />
       </View>
     </TouchableOpacity>

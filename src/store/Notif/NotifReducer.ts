@@ -7,7 +7,7 @@ import {
   SET_CURRENT_NOTIF,
   SET_PAST_NOTIFS,
   SET_FUTURE_NOTIFS,
-} from "./NotifTypes";
+} from './NotifTypes';
 
 const initialState: NotifState = {
   currentNotif: null,

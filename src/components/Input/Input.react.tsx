@@ -184,7 +184,7 @@ class Input extends React.Component<Props, State> {
     const { value } = this.state;
     const { options } = this.props;
     const results: string[] = [];
-    for (let ix = 0; ix < options.length; ++ix) {
+    for (let ix = 0; ix < options.length; ix += 1) {
       const option: string | string[] = options[ix];
       if (typeof option === 'string') {
         // simple options, just a list of strings
@@ -197,7 +197,7 @@ class Input extends React.Component<Props, State> {
       } else {
         // complex options, a list of list of strings, first string in each list will be shown and chose,
         // the rest are additional matches to autocomplete
-        for (let jx = 0; jx < option.length; ++jx) {
+        for (let jx = 0; jx < option.length; jx += 1) {
           const match: string = option[jx];
           if (
             match.toLowerCase().substring(0, value.length) ===
@@ -240,7 +240,8 @@ class Input extends React.Component<Props, State> {
               style={Styles.optionContainer}
               onPress={() => {
                 this.set(result);
-                if (!this.props.nextInput) this.inputRef.current?.blur();
+                if (!this.props.nextInput && this.inputRef.current)
+                  this.inputRef.current.blur();
                 this.onSubmitEditing();
               }}
               key={result}

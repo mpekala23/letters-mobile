@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef } from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -8,19 +8,19 @@ import {
   TouchableOpacity,
   Keyboard,
   Platform,
-} from "react-native";
-import { Colors, Typography } from "@styles";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Styles from "./FacilityDirectory.styles";
-import CommonStyles from "./AddContact.styles";
-import { Button, Input } from "@components";
-import { Validation } from "utils";
-import { Facility } from "types";
+} from 'react-native';
+import { Colors, Typography } from '@styles';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Button, Input } from '@components';
+import { Validation } from 'utils';
+import { Facility } from 'types';
+import CommonStyles from './AddContact.styles';
+import Styles from './FacilityDirectory.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "AddManually"
+  'AddManually'
 >;
 
 export interface Props {
@@ -34,8 +34,11 @@ export interface State {
 
 class AddManuallyScreen extends React.Component<Props, State> {
   private facilityName = createRef<Input>();
+
   private facilityAddress = createRef<Input>();
+
   private facilityCity = createRef<Input>();
+
   private facilityPostal = createRef<Input>();
 
   constructor(props: Props) {
@@ -47,7 +50,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
     this.updateValid = this.updateValid.bind(this);
   }
 
-  updateValid() {
+  updateValid(): void {
     if (
       this.facilityName.current &&
       this.facilityAddress.current &&
@@ -63,36 +66,38 @@ class AddManuallyScreen extends React.Component<Props, State> {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: "white" }}
+        style={{ flex: 1, backgroundColor: 'white' }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
         >
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <ScrollView
               keyboardShouldPersistTaps="handled"
               scrollEnabled={this.state.inputting}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
-              <View style={{ width: "100%", height: 40 }} />
+              <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
                 <Typography.PageHeader text="Add A Facility" />
                 <Input
                   ref={this.facilityName}
-                  parentStyle={[CommonStyles.fullWidth, { marginTop: 10 }]}
+                  parentStyle={Object.assign(CommonStyles.fullWidth, {
+                    marginTop: 10,
+                  })}
                   placeholder="Facility Name"
                   required
                   onFocus={() => {
@@ -157,7 +162,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
             onPress={() => {
-              this.props.navigation.navigate("FacilityDirectory");
+              this.props.navigation.navigate('FacilityDirectory');
             }}
             buttonText="Back"
             reverse
@@ -173,17 +178,17 @@ class AddManuallyScreen extends React.Component<Props, State> {
               ) {
                 const facility: Facility = {
                   name: this.facilityName.current.state.value,
-                  type: "State Prison",
+                  type: 'State Prison',
                   address: this.facilityAddress.current.state.value,
                   city: this.facilityCity.current.state.value,
-                  state: "MN",
+                  state: 'MN',
                   postal: this.facilityPostal.current.state.value,
                 };
-                this.props.navigation.navigate("FacilityDirectory", {
+                this.props.navigation.navigate('FacilityDirectory', {
                   newFacility: facility,
                 });
               } else {
-                this.props.navigation.navigate("FacilityDirectory");
+                this.props.navigation.navigate('FacilityDirectory');
               }
             }}
             buttonText="Next"

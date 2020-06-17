@@ -1,5 +1,5 @@
-export const LOGIN_USER = "user/login_user";
-export const LOGOUT_USER = "user/logout_user";
+export const LOGIN_USER = 'user/login_user';
+export const LOGOUT_USER = 'user/logout_user';
 
 // state types
 

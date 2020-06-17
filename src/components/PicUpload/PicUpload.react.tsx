@@ -10,7 +10,7 @@ export interface State {
   image: string | null;
 }
 
-class PicUpload extends React.Component<{}, State> {
+class PicUpload extends React.Component<Record<string, unknown>, State> {
   dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Record<string, unknown>) {

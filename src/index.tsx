@@ -1,24 +1,26 @@
-import React, { createRef } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { Provider } from "react-redux";
-import store from "@store";
-import Navigator, { navigationRef } from "@navigations";
-import { Dropdown, Statusbar } from "@components";
-import { loadToken } from "@api";
-import Notifs from "@notifications";
+import React, { createRef } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
+import store from '@store';
+import Navigator, { navigationRef } from '@navigations';
+import { Dropdown, Statusbar } from '@components';
+import { loadToken } from '@api';
+import Notifs from '@notifications';
 
 export default class App extends React.Component {
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     try {
-      await loadToken();
-    } catch (err) {}
+      loadToken();
+    } catch (err) {
+      /* no token */
+    }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     Notifs.unsubscribe();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Provider store={store}>
         <Dropdown />

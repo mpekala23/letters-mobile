@@ -1,14 +1,14 @@
-import { Dimensions } from "react-native";
-import PropTypes from "prop-types";
-import * as EmailValidator from "email-validator";
-import { STATES, STATES_DROPDOWN } from "./States";
-import PhoneNumber from "awesome-phonenumber";
+import { Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
+import * as EmailValidator from 'email-validator';
+import PhoneNumber from 'awesome-phonenumber';
+import { STATES, STATES_DROPDOWN } from './States';
 
 // Global constants
 export const STATUS_BAR_HEIGHT = 20;
 export const STATUS_BAR_WIDTH = 100;
-export const WINDOW_WIDTH = Dimensions.get("window").width;
-export const WINDOW_HEIGHT = Dimensions.get("window").height;
+export const WINDOW_WIDTH = Dimensions.get('window').width;
+export const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 /** A custom function to validate the type of an object passed for styling.
  *  Accepts any object of strings and numbers,
@@ -16,16 +16,12 @@ export const WINDOW_HEIGHT = Dimensions.get("window").height;
 export const StyleType = PropTypes.objectOf(
   (propValue, key, componentName, location, propFullName): Error | null => {
     if (
-      typeof propValue[key] !== "string" &&
-      typeof propValue[key] !== "number"
+      typeof propValue[key] !== 'string' &&
+      typeof propValue[key] !== 'number'
     ) {
       return new Error(
-        "Invalid prop `" +
-          propFullName +
-          "` supplied to" +
-          " `" +
-          componentName +
-          "`. Validation failed."
+        `Invalid prop \`${propFullName}\` supplied to` +
+          ` \`${componentName}\`. Validation failed.`
       );
     }
     return null;
@@ -33,38 +29,38 @@ export const StyleType = PropTypes.objectOf(
 );
 
 export enum Validation {
-  Email = "Email",
-  Cell = "Cell",
-  Password = "Password",
-  Zipcode = "Zipcode",
-  State = "State",
+  Email = 'Email',
+  Cell = 'Cell',
+  Password = 'Password',
+  Zipcode = 'Zipcode',
+  State = 'State',
 }
 
-export function isValidEmail(email: string) {
+export function isValidEmail(email: string): boolean {
   return EmailValidator.validate(email);
 }
 
-export function isValidCell(cell: string) {
+export function isValidCell(cell: string): boolean {
   const pn = new PhoneNumber(cell);
-  const pnPlus = new PhoneNumber("+" + cell);
-  const pnPlusUs = new PhoneNumber("+1" + cell);
+  const pnPlus = new PhoneNumber(`+${cell}`);
+  const pnPlusUs = new PhoneNumber(`+1${cell}`);
   return pn.isValid() || pnPlus.isValid() || pnPlusUs.isValid();
 }
 
-export function isValidPassword(password: string) {
+export function isValidPassword(password: string): boolean {
   // at least 8 characters, one uppercase, one lowercase, one number
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
 }
 
-export function isValidZipcode(zipcode: string) {
+export function isValidZipcode(zipcode: string): boolean {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
 }
 
-export function isValidState(state: string) {
+export function isValidState(state: string): boolean {
   return Object.values(STATES).indexOf(state) > -1;
 }
 
-export function validateFormat(format: Validation, value: string) {
+export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
       return isValidEmail(value);

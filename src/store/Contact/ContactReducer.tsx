@@ -3,15 +3,15 @@ import {
   ContactActionTypes,
   SET_ADDING,
   SET_EXISTING,
-} from "./ContactTypes";
+} from './ContactTypes';
 
 const initialState: ContactState = {
   adding: {
-    state: "",
-    firstName: "",
-    lastName: "",
-    inmateNumber: "",
-    relationship: "",
+    state: '',
+    firstName: '',
+    lastName: '',
+    inmateNumber: '',
+    relationship: '',
     facility: null,
   },
   existing: [],
