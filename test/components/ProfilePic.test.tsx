@@ -11,7 +11,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     {
       isLoadingToken: true,
       isLoggedIn: false,
-      userToken: "",
+      apiToken: "",
     },
     authOverrides
   );
@@ -21,10 +21,10 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
       firstName: "Team",
       lastName: "Ameelio",
       email: "team@ameelio.org",
-      cell: "4324324432",
+      phone: "4324324432",
       address1: "Somewhere",
       country: "USA",
-      zipcode: "12345",
+      postal: "12345",
       city: "New Haven",
       state: "CT",
     },

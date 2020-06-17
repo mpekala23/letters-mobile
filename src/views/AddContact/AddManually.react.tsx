@@ -140,7 +140,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Facility Postal"
                   required
-                  validate={Validation.Zipcode}
+                  validate={Validation.Postal}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}

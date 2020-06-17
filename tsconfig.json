@@ -11,6 +11,7 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "*": ["src/*"],
       "@*": ["src/*"],
@@ -20,6 +21,7 @@
       "@components/*": ["src/components/*"],
       "@i18n/*": ["src/i18n/*"],
       "@navigations/*": ["src/navigations/*"],
+      "@notifications/*": ["src/notifications/*"],
       "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
@@ -32,6 +34,7 @@
     "babel.config.js",
     "metro.config.js",
     "jest.config.js",
+    "node_modules/expo/build",
     "test"
   ]
 }
