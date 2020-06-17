@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import LettersIcon from '@assets/components/Card/Letters';
 import PostCardsIcon from '@assets/components/Card/PostCards';
-import { i18n } from '@i18n';
+import i18n from '@i18n';
 import Icon from '../Icon/Icon.react';
 import CardStyles from './Card.styles';
 

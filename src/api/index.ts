@@ -69,7 +69,7 @@ export async function login(cred: UserCredentials): Promise<User> {
     address1: body.data.address1,
     address2: body.data.address2 || null,
     country: body.data.country,
-    postal: body.data.zipCode,
+    postal: body.data.postal,
     city: body.data.city,
     state: body.data.state,
   };
@@ -102,7 +102,7 @@ export async function register(data: UserInfo): Promise<User> {
     address1: body.data.address1,
     address2: body.data.address2 || null,
     country: body.data.country,
-    postal: body.data.zipcode,
+    postal: body.data.postal,
     city: body.data.city,
     state: body.data.state,
   };

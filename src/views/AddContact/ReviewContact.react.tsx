@@ -191,7 +191,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder="Postal"
                   required
-                  validate={Validation.Zipcode}
+                  validate={Validation.Postal}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                 />

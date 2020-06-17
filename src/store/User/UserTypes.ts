@@ -13,7 +13,7 @@ export interface User {
   address1: string;
   address2?: string;
   country: string;
-  zipcode: string;
+  postal: string;
   city: string;
   state: string;
   imageUri?: string;
@@ -34,7 +34,7 @@ export interface UserInfo {
   address1: string;
   address2?: string;
   country: string;
-  zipcode: string;
+  postal: string;
   city: string;
   state: string;
   imageUri?: string;
