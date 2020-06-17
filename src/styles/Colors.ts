@@ -18,10 +18,10 @@ export const AMEELIO_CYAN = "#6cb2eb";
 export const SUCCESS = "rgb(20,200,50)";
 export const WARNING = "#ffae00";
 export const ERROR = AMEELIO_RED;
-export const SELECT = "rgba(200, 200, 255, 0.3)";
 export const ALERT = "rgba(200,20,50,0.5)";
 export const ALERT_LIGHT = "rgba(200,20,50,0.1)";
 export const ALERT_FULL = "#cc4b37";
+export const SELECT = "rgb(180, 180, 210)";
 
 // GRAYSCALE
 export const GRAY_LIGHT = "#e6e6e6";

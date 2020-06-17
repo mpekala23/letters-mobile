@@ -1,5 +1,4 @@
-import "react-native-gesture-handler";
-import React from "react";
+import React, { createRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import store, { persistor } from "@store";
