@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={84}
+    bbWidth={103}
+    fill="none"
+    focusable={false}
+    height={84}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        Object {
+          "flex": 0,
+          "height": 84,
+          "width": 103,
+        },
+      ]
+    }
+    vbHeight={84}
+    vbWidth={103}
+    width={103}
+    xml="<svg width=\\"103\\" height=\\"84\\" viewBox=\\"0 0 103 84\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<path d=\\"M2 73.4357V38.8319C1.99981 37.5563 2.31448 36.3004 2.91609 35.1756C3.5177 34.0508 4.38765 33.0919 5.44875 32.3839L32.5738 14.3032C33.8473 13.4535 35.344 13 36.875 13C38.406 13 39.9027 13.4535 41.1762 14.3032L68.3013 32.3839C69.3624 33.0919 70.2323 34.0508 70.8339 35.1756C71.4355 36.3004 71.7502 37.5563 71.75 38.8319V73.4357M2 73.4357C2 75.4911 2.81652 77.4623 4.26992 78.9157C5.72333 80.3691 7.69457 81.1857 9.75 81.1857H64C66.0554 81.1857 68.0267 80.3691 69.4801 78.9157C70.9335 77.4623 71.75 75.4911 71.75 73.4357M2 73.4357L28.1562 55.9982M71.75 73.4357L45.5938 55.9982M28.1562 55.9982L2 38.5607M28.1562 55.9982L32.5738 58.9432C33.8473 59.7929 35.344 60.2463 36.875 60.2463C38.406 60.2463 39.9027 59.7929 41.1762 58.9432L45.5938 55.9982M45.5938 55.9982L71.75 38.5607\\" stroke=\\"#6D89B1\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+<path d=\\"M73.4279 11.6465L76.6275 2.99998\\" stroke=\\"#6D89B1\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+<path d=\\"M85 19L101 10\\" stroke=\\"#6D89B1\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+<path d=\\"M87 32.858L96.0098 32.5846\\" stroke=\\"#6D89B1\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+</svg>
+"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        Array [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGPath
+        d="M2 73.4357V38.8319C1.99981 37.5563 2.31448 36.3004 2.91609 35.1756C3.5177 34.0508 4.38765 33.0919 5.44875 32.3839L32.5738 14.3032C33.8473 13.4535 35.344 13 36.875 13C38.406 13 39.9027 13.4535 41.1762 14.3032L68.3013 32.3839C69.3624 33.0919 70.2323 34.0508 70.8339 35.1756C71.4355 36.3004 71.7502 37.5563 71.75 38.8319V73.4357M2 73.4357C2 75.4911 2.81652 77.4623 4.26992 78.9157C5.72333 80.3691 7.69457 81.1857 9.75 81.1857H64C66.0554 81.1857 68.0267 80.3691 69.4801 78.9157C70.9335 77.4623 71.75 75.4911 71.75 73.4357M2 73.4357L28.1562 55.9982M71.75 73.4357L45.5938 55.9982M28.1562 55.9982L2 38.5607M28.1562 55.9982L32.5738 58.9432C33.8473 59.7929 35.344 60.2463 36.875 60.2463C38.406 60.2463 39.9027 59.7929 41.1762 58.9432L45.5938 55.9982M45.5938 55.9982L71.75 38.5607"
+        propList={
+          Array [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={4285368753}
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={4}
+      />
+      <RNSVGPath
+        d="M73.4279 11.6465L76.6275 2.99998"
+        propList={
+          Array [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={4285368753}
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={4}
+      />
+      <RNSVGPath
+        d="M85 19L101 10"
+        propList={
+          Array [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={4285368753}
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={4}
+      />
+      <RNSVGPath
+        d="M87 32.858L96.0098 32.5846"
+        propList={
+          Array [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={4285368753}
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={4}
+      />
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</View>
+`;

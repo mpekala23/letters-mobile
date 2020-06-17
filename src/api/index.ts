@@ -29,7 +29,7 @@ export function fetchTimeout<T>(
 }
 
 /** Dummy function atm, once I implement persistent storage I will replace. */
-export function loadToken() {
+export async function loadToken() {
   const dummyData: User = {
     id: '6',
     firstName: 'Team',
@@ -42,9 +42,7 @@ export function loadToken() {
     city: 'New Haven',
     state: 'CT',
   };
-  setTimeout(() => {
-    store.dispatch(logoutUser());
-  }, 2000);
+  store.dispatch(loginUser(dummyData));
 }
 
 /** Dummy function atm, once I implement mock login API calls (and then real calls) I will replace */

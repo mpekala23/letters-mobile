@@ -1,15 +1,21 @@
-import "react-native-gesture-handler";
-import React from "react";
+import React, { createRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import store from "@store";
-import Navigator from "@navigations";
+import Navigator, { navigationRef } from "@navigations";
 import { Dropdown, Statusbar } from "@components";
 import { loadToken } from "@api";
+import Notifs from "@notifications";
 
 export default class App extends React.Component {
-  componentDidMount() {
-    loadToken();
+  async componentDidMount() {
+    try {
+      await loadToken();
+    } catch (err) {}
+  }
+
+  componentWillUnmount() {
+    Notifs.unsubscribe();
   }
 
   render() {
@@ -17,7 +23,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Dropdown />
         <Statusbar />
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Navigator />
         </NavigationContainer>
       </Provider>
