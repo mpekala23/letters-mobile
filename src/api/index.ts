@@ -10,7 +10,6 @@ import { clearContacts } from "store/Contact/ContactActions";
 import "isomorphic-fetch";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
-
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
 
 export interface UserResponse {

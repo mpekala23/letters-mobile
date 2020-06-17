@@ -23,21 +23,31 @@
     "incorrectUsernameOrPassword": "Incorrect username or password"
   },
   "RegisterScreen": {
-  	"clickToUploadProfileImage": "Click to upload profile image.",
-  	"privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",
-  	"alreadyHaveAnAccount": "Already have an account?",
-  	"firstName": "First Name",
-  	"lastName": "Last Name",
-  	"cellphoneNumber": "Cell Phone Number",
-  	"addressLine1": "Address Line 1",
-  	"addressLine2": "Address Line 2",
-  	"country": "Country",
-  	"zipcode": "Zip Code",
-  	"city": "City",
-  	"state": "State",
-  	"emailAddress": "E-mail Address",
+    "clickToUploadProfileImage": "Click to upload profile image.",
+    "privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "cellphoneNumber": "Cell Phone Number",
+    "addressLine1": "Address Line 1",
+    "addressLine2": "Address Line 2",
+    "country": "Country",
+    "zipcode": "Zip Code",
+    "city": "City",
+    "state": "State",
+    "emailAddress": "E-mail Address",
     "password": "Password",
-  	"register": "Register",
+    "register": "Register",
     "emailAlreadyInUse": "Email already in use."
+  },
+  "PrisonTypes": {
+    "state": "State Prison",
+    "federal": "Federal Prison"
+  },
+  "LetterTypes": {
+    "postCardsTitle": "Post cards",
+    "postCardsDesc": "1 photo, 300 characters",
+    "lettersTitle": "Letters",
+    "lettersDesc": "300 words"
   }
 }
