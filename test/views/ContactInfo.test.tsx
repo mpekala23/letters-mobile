@@ -7,8 +7,16 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
-const setup = (contactOverrides = {}, userOverrides = {}) => {
-  const navigation = { navigate: jest.fn(), addListener: jest.fn() };
+const setup = (contactOverrides = {}, userOverrides = {}, routeOverrides = {}) => {
+  const navigation = { navigate: jest.fn(), addListener: jest.fn(), setParams: jest.fn() };
+  const route = {
+    params: Object.assign(
+      {
+        addFromSelector: false,
+      },
+      routeOverrides
+    ),
+  };
   const contact = Object.assign(
     {
       state: "",
@@ -59,7 +67,7 @@ const setup = (contactOverrides = {}, userOverrides = {}) => {
     navigation,
     store,
     ...render(
-      <ContactInfoScreen navigation={navigation} contactState={initialState} />,
+      <ContactInfoScreen navigation={navigation} contactState={initialState} route={route} />,
       {
         wrapper: StoreProvider,
       }

@@ -8,11 +8,11 @@ import {
 
 const initialState: ContactState = {
   adding: {
-    state: "",
-    firstName: "",
-    lastName: "",
-    inmateNumber: "",
-    relationship: "",
+    state: '',
+    firstName: '',
+    lastName: '',
+    inmateNumber: '',
+    relationship: '',
     facility: null,
   },
   existing: [],

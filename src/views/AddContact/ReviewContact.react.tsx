@@ -1,5 +1,6 @@
 import React, { createRef, Dispatch } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   View,
   FlatList,
@@ -17,11 +18,15 @@ import CommonStyles from "./AddContact.styles";
 import { Button, Input, PicUpload } from "@components";
 import { STATES_DROPDOWN, Validation } from "@utils";
 import { AppState } from "store/types";
+import store from "@store";
 import {
   Contact,
   ContactActionTypes,
   ContactState,
 } from "store/Contact/ContactTypes";
+import { Facility } from "types";
+import { addContact } from "@api";
+import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import { setAdding } from "store/Contact/ContactActions";
 import { connect } from "react-redux";
 
@@ -62,6 +67,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       "focus",
       this.onNavigationFocus
     );
+    this.doAddContact = this.doAddContact.bind(this);
   }
 
   componentDidMount() {
@@ -114,6 +120,68 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.setState({ valid: result });
     }
   }
+
+  doAddContact = async () => {
+    if (
+      this.state.valid &&
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.props.contactState.adding.facility
+    ) {
+      const facility: Facility = {
+        name: this.facilityName.current.state.value,
+        type: this.props.contactState.adding.facility.type,
+        address: this.facilityAddress.current.state.value,
+        city: this.props.contactState.adding.facility.city,
+        state: this.props.contactState.adding.facility.state,
+        postal: this.postal.current.state.value,
+      };
+      const contact = {
+        state: this.stateRef.current.state.value,
+        first_name: this.firstName.current.state.value,
+        last_name: this.lastName.current.state.value,
+        inmate_number: this.props.contactState.adding.inmateNumber,
+        relationship: this.props.contactState.adding.relationship,
+        facility: facility,
+      };
+      try {
+        const { existing } = store.getState().contact;
+        // Check if contact being added already exists
+        for (let ix = 0; ix < existing.length; ix++) {
+          if (
+            existing[ix].firstName === contact.first_name &&
+            existing[ix].lastName === contact.last_name &&
+            existing[ix].inmateNumber === contact.inmate_number &&
+            existing[ix].state === contact.state &&
+            existing[ix].relationship === contact.relationship &&
+            existing[ix].facility?.name === contact.facility.name &&
+            existing[ix].facility?.address === contact.facility.address &&
+            existing[ix].facility?.city === contact.facility.city &&
+            existing[ix].facility?.postal === contact.facility.postal &&
+            existing[ix].facility?.state === contact.facility.state &&
+            existing[ix].facility?.type === contact.facility.type
+          ) {
+            throw Error("Contact already exists");
+            break;
+          }
+        }
+        const data = await addContact(contact);
+        this.props.navigation.navigate("ContactSelector");
+      } catch (err) {
+        if (err.message === "Invalid inmate number") {
+          Alert.alert("Invalid inmate number");
+        } else if (err.message === "Contact already exists") {
+          Alert.alert("Contact already exists");
+        } else {
+          dropdownError("Network", "The request could not be completed.");
+        }
+      }
+    }
+  };
 
   render() {
     return (
@@ -225,9 +293,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             containerStyle={CommonStyles.bottomButton}
           />
           <Button
-            onPress={() => {
-              this.props.navigation.navigate("ReviewContact");
-            }}
+            onPress={this.doAddContact}
             buttonText="Add Contact"
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}

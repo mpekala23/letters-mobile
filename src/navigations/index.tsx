@@ -9,6 +9,7 @@ import {
 import {
   AddManuallyScreen,
   ContactInfoScreen,
+  ContactSelectorScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
   FacilityDirectoryScreen,
@@ -37,7 +38,8 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
-  ContactInfo: undefined;
+  ContactInfo: { addFromSelector: boolean } | undefined;
+  ContactSelector: undefined,
   ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
@@ -83,11 +85,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
   ) : props.authInfo.isLoggedIn ? (
     <>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
         name="ContactInfo"
         component={ContactInfoScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -113,6 +110,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
+        name="ContactSelector"
+        component={ContactSelectorScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
         name="ExplainProblem"
         component={ExplainProblemScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -131,6 +133,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
         name="Thanks"
         component={ThanksScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+       options={{ cardStyleInterpolator: fadeTransition }}
       />
     </>
   ) : (

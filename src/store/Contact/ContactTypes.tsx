@@ -1,4 +1,4 @@
-import { Facility } from "types";
+import { Facility } from 'types';
 
 export const SET_ADDING = "contact/set_adding";
 export const SET_EXISTING = "contact/set_existing";
