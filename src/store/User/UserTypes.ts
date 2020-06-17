@@ -2,39 +2,38 @@ export const LOGIN_USER = "user/login_user";
 export const LOGOUT_USER = "user/logout_user";
 
 // state types
+export interface UserRegisterInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  address1: string;
+  address2?: string;
+  country: string;
+  postal: string;
+  city: string;
+  state: string;
+  imageUri?: string;
+  remember?: boolean;
+}
+
+export interface UserLoginInfo {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
 
 export interface User {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
-  cell: string;
+  phone: string;
   address1: string;
   address2?: string;
   country: string;
-  zipcode: string;
-  city: string;
-  state: string;
-  imageUri?: string;
-}
-
-export interface UserCredentials {
-  email: string;
-  password: string;
-  remember?: boolean;
-}
-
-export interface UserInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  cell: string;
-  address1: string;
-  address2?: string;
-  country: string;
-  zipcode: string;
+  postal: string;
   city: string;
   state: string;
   imageUri?: string;
@@ -43,7 +42,7 @@ export interface UserInfo {
 export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
-  userToken?: string;
+  apiToken: string;
 }
 
 export interface UserState {

@@ -3,24 +3,26 @@ module.exports = (req, res) => {
 
   if (email === "invalid" || password !== "password") {
     return res.status(401).send({
-      type: "error",
-      data: "Incorrect credentials",
+      status: "ERROR",
+      message: "Incorrect credentials",
+      data: [],
     });
   }
 
   return res.status(201).send({
-    type: "success",
+    status: "OK",
     data: {
       id: "6",
-      firstName: "Team",
-      lastName: "Ameelio",
+      first_name: "Team",
+      last_name: "Ameelio",
       email: "team@ameelio.org",
-      cell: "4324324432",
-      address1: "Somewhere",
+      phone: "4324324432",
+      addr_line_1: "Somewhere",
       country: "USA",
-      zipcode: "12345",
+      postal: "12345",
       city: "New Haven",
-      state: "Connecticut",
+      state: "CT",
+      token: "dummy token",
     },
   });
 };
