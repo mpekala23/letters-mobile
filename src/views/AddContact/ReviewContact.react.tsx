@@ -26,8 +26,7 @@ import {
 } from "store/Contact/ContactTypes";
 import { Facility } from "types";
 import { addContact } from "@api";
-import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
-import DropdownAlert from "react-native-dropdownalert";
+import { dropdownError } from "@components/Dropdown/Dropdown.react";
 import { setAdding } from "store/Contact/ContactActions";
 import { connect } from "react-redux";
 
@@ -56,7 +55,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   private unit = createRef<Input>();
   private dorm = createRef<Input>();
   private unsubscribeFocus: () => void;
-  private dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Props) {
     super(props);
@@ -69,7 +67,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       "focus",
       this.onNavigationFocus
     );
-    this.dropdownRef = getDropdownRef();
     this.doAddContact = this.doAddContact.bind(this);
   }
 
@@ -162,11 +159,11 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             existing[ix].state === contact.state &&
             existing[ix].relationship === contact.relationship &&
             existing[ix].facility?.name === contact.facility.name &&
-            existing[ix].facility?.address === contact.facility.address && 
+            existing[ix].facility?.address === contact.facility.address &&
             existing[ix].facility?.city === contact.facility.city &&
             existing[ix].facility?.postal === contact.facility.postal &&
             existing[ix].facility?.state === contact.facility.state &&
-            existing[ix].facility?.type === contact.facility.type 
+            existing[ix].facility?.type === contact.facility.type
           ) {
             throw Error("Contact already exists");
             break;
@@ -180,12 +177,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         } else if (err.message === "Contact already exists") {
           Alert.alert("Contact already exists");
         } else {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              "Network Error",
-              "The request could not be completed."
-            );
+          dropdownError("Network", "The request could not be completed.");
         }
       }
     }
