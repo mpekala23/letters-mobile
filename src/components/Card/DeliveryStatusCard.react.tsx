@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, TouchableOpacity, ViewStyle, View } from "react-native";
 import CardStyles from "./Card.styles";
-import { PrisonTypes, DeliveryProgress } from "types";
+import { PrisonTypes, LetterStatus } from "types";
 import { Card } from "react-native-elements";
 
 interface Props {
   title: string;
   status: string;
   date: string;
-  progress: DeliveryProgress;
+  progress: LetterStatus;
   onPress: () => void;
   style?: ViewStyle;
 }

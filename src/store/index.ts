@@ -1,8 +1,9 @@
 import { combineReducers, createStore } from "redux";
 import { AppState } from "./types";
-import UserReducer from "./User/UserReducer";
-import NotifReducer from "./Notif/NotifReducer";
 import ContactReducer from "./Contact/ContactReducer";
+import LetterReducer from "./Letter/LetterReduer";
+import NotifReducer from "./Notif/NotifReducer";
+import UserReducer from "./User/UserReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import { AsyncStorage } from "react-native";
 
@@ -15,6 +16,7 @@ const combinedReducers = combineReducers<AppState>({
   user: UserReducer,
   contact: ContactReducer,
   notif: NotifReducer,
+  letter: LetterReducer,
 });
 
 const persistedReducers = persistReducer(config, combinedReducers);
