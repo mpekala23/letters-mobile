@@ -19,7 +19,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
-  SingleContactScreen
+  SingleContactScreen,
   SplashScreen,
   ThanksScreen,
 } from "@views";
@@ -30,6 +30,7 @@ export { navigationRef, navigate };
 import { Notif } from "store/Notif/NotifTypes";
 import { NullableFacility } from "types";
 import { Topbar } from "@components";
+import { Contact } from "@store/Contact/ContactTypes";
 
 export type AuthStackParamList = {
   Splash: undefined;
@@ -50,9 +51,9 @@ export type AppStackParamList = {
   Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
+  SingleContact: {contact : Contact } | undefined;
   Splash: undefined;
   Thanks: undefined;
-  SingleContact: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;

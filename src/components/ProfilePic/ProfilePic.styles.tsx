@@ -3,7 +3,7 @@ import { Colors } from '@styles';
 
 const userSize = 45;
 const contactSize = 80;
-const singleContactSize = 150;
+const singleContactSize = 130;
 
 export default StyleSheet.create({
   contactBackground: {
@@ -23,6 +23,8 @@ export default StyleSheet.create({
     borderRadius: singleContactSize / 2,
     overflow: 'hidden',
     backgroundColor: Colors.AMEELIO_ORANGE,
+    borderWidth: 6,
+    borderColor: 'white',
   },
   userBackground: {
     alignItems: 'center',
