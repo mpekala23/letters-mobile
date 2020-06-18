@@ -63,7 +63,6 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.AMEELIO_BLACK,
   },
-  optionText: {},
   secureButtonsContainer: {
     position: "absolute",
     right: 0,
