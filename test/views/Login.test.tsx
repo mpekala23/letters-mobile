@@ -24,7 +24,7 @@ describe('Login screen', () => {
   });
 
   it('should make an api call on login', async () => {
-    const { getByText, getByTestId } = setup({
+    const { getByText } = setup({
       data: {
         id: '6',
         firstName: 'Team',
@@ -39,7 +39,6 @@ describe('Login screen', () => {
       },
       type: 'success',
     });
-    const loginButton = getByText('Login');
     fireEvent.press(getByText('Login'));
     expect(login).toHaveBeenCalledTimes(1);
   });

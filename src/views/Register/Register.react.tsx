@@ -30,7 +30,6 @@ export interface Props {
 
 export interface State {
   valid: boolean;
-  registered: boolean;
   remember: boolean;
 }
 
@@ -61,12 +60,11 @@ class RegisterScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
-      registered: false,
       remember: false,
     };
   }
 
-  devSkip = () => {
+  devSkip = (): void => {
     if (this.firstName.current) this.firstName.current.set('Team');
     if (this.lastName.current) this.lastName.current.set('Ameelio');
     if (this.phone.current) this.phone.current.set('4324324432');
@@ -137,7 +135,7 @@ class RegisterScreen extends React.Component<Props, State> {
         remember: this.state.remember,
       };
       try {
-        const res = await register(data);
+        await register(data);
       } catch (err) {
         if (err.message === 'Email in use') {
           Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
@@ -308,7 +306,9 @@ class RegisterScreen extends React.Component<Props, State> {
             }}
             checked={this.state.remember}
             onPress={() => {
-              this.setState({ remember: !this.state.remember });
+              this.setState((prevState) => {
+                return { ...prevState, remember: !prevState.remember };
+              });
             }}
           />
           <Button

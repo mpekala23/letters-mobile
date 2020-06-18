@@ -79,7 +79,7 @@ describe('Facility Directory Screen', () => {
   });
 
   it('should have the selected facility have a blue background', () => {
-    const { navigation, getByText } = setup();
+    const { getByText } = setup();
     const facility = getByText('State Prison').parentNode;
     expect(facility.props.style[1].backgroundColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});

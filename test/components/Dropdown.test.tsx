@@ -1,4 +1,3 @@
-import React from 'react';
 import Dropdown, {
   dropdownInfo,
   dropdownSuccess,
@@ -12,7 +11,7 @@ jest.useFakeTimers();
 
 const setup = () => {
   return {
-    ...render([Dropdown()]),
+    ...render(Dropdown()),
   };
 };
 

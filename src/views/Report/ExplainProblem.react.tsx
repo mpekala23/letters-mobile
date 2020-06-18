@@ -1,4 +1,4 @@
-import React, { useCallback, Dispatch, useState } from 'react';
+import React from 'react';
 import {
   Text,
   TextInput,
@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { Button } from '@components';
-import MailHearts from 'assets/views/Report/MailHearts';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ReportStyles from './Report.styles';

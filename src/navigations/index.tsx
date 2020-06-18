@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -137,6 +137,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
         <Stack.Screen
           name="Thanks"
           component={ThanksScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ContactSelector"
+          component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>

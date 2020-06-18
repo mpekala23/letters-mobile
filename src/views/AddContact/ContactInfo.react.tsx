@@ -24,7 +24,6 @@ import {
 } from '@store/Contact/ContactTypes';
 import { UserState } from '@store/User/UserTypes';
 import CommonStyles from './AddContact.styles';
-import Styles from './ContactInfo.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -87,11 +86,16 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     const addingContact = this.props.contactState.adding;
 
     if (this.props.route.params && this.props.route.params.addFromSelector) {
-      this.stateRef.current?.setState({ dirty: false });
-      this.firstName.current?.setState({ dirty: false });
-      this.lastName.current?.setState({ dirty: false });
-      this.inmateNumber.current?.setState({ dirty: false });
-      this.relationship.current?.setState({ dirty: false });
+      if (this.stateRef.current)
+        this.stateRef.current.setState({ dirty: false });
+      if (this.firstName.current)
+        this.firstName.current.setState({ dirty: false });
+      if (this.lastName.current)
+        this.lastName.current.setState({ dirty: false });
+      if (this.inmateNumber.current)
+        this.inmateNumber.current.setState({ dirty: false });
+      if (this.relationship.current)
+        this.relationship.current.setState({ dirty: false });
     }
 
     if (this.stateRef.current) this.stateRef.current.set(addingContact.state);

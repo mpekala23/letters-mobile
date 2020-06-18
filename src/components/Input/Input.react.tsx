@@ -6,9 +6,7 @@ import {
   TouchableOpacity,
   View,
   Text,
-  Keyboard,
 } from 'react-native';
-import PropTypes, { any } from 'prop-types';
 import { validateFormat, Validation } from '@utils';
 import { Typography } from 'styles';
 import Styles, {
@@ -45,6 +43,8 @@ export interface State {
 }
 
 class Input extends React.Component<Props, State> {
+  private inputRef = createRef<TextInput>();
+
   static defaultProps = {
     parentStyle: {},
     scrollStyle: {},
@@ -69,8 +69,6 @@ class Input extends React.Component<Props, State> {
     options: [],
     nextInput: false,
   };
-
-  private inputRef = createRef<TextInput>();
 
   constructor(props: Props) {
     super(props);

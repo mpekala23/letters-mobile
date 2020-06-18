@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, ViewStyle, View } from 'react-native';
-import { PrisonTypes, DeliveryProgress } from 'types';
-import { Card } from 'react-native-elements';
+import { DeliveryProgress } from 'types';
 import CardStyles from './Card.styles';
 
 interface Props {

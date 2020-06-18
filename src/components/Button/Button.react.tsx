@@ -1,8 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import PropTypes from 'prop-types';
 import { Typography } from '@styles';
-import { StyleType } from '@utils';
 import Styles from './Button.styles';
 
 export interface Props {

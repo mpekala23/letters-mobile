@@ -1,4 +1,4 @@
-import React, { createRef, ReactText } from 'react';
+import { createRef, ReactText } from 'react';
 import { Alert, Platform, Linking } from 'react-native';
 import { EventSubscription } from 'fbemitter';
 import { Notifications } from 'expo';
@@ -6,12 +6,7 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { Notification } from 'expo/build/Notifications/Notifications.types';
 import store from '@store';
-import {
-  addNotif,
-  handleNotif,
-  setFutureNotifs,
-  setPastNotifs,
-} from '@store/Notif/NotifiActions';
+import { addNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
 import { NavigationContainerRef } from '@react-navigation/native';
 import {
   NotifType,

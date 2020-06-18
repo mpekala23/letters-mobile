@@ -1,12 +1,10 @@
-import React, { useCallback, Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import { Text, View } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { Button, Icon } from '@components';
 import Mail from '@assets/views/Report/MailLoud';
-import { useFocusEffect } from '@react-navigation/native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
-import { handleNotif } from '@store/Notif/NotifiActions';
 import { NotifActionTypes, Notif, HANDLE_NOTIF } from '@store/Notif/NotifTypes';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';

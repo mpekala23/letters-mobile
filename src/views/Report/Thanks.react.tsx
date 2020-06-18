@@ -1,6 +1,6 @@
-import React, { useCallback, Dispatch, useState } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { Button, Icon } from '@components';
 import MailHearts from '@assets/views/Report/MailHearts';
 import { AppStackParamList } from '@navigations';

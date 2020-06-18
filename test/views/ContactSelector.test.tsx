@@ -50,7 +50,7 @@ const setup = (contactsOverrides = []) => {
 
 describe('Contact Selector Screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<ContactSelectorScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });

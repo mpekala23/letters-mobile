@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
-import { AMEELIO_BLUE } from 'styles/Colors';
 
 export default StyleSheet.create({
   loginBackground: {

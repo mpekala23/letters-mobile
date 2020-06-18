@@ -59,7 +59,7 @@ const PageHeader: React.FC<TextProps> = (props: TextProps) => {
           fontWeight: FONT_WEIGHT_BOLD,
         }}
       >
-        {props.text}
+        {text}
       </Text>
     </View>
   );

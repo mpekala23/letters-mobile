@@ -15,7 +15,6 @@ import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
 import { Button, GrayBar, Input } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import DropdownAlert from 'react-native-dropdownalert';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
 import i18n from '@i18n';
@@ -68,7 +67,7 @@ class LoginScreen extends React.Component<Props, State> {
         remember: this.state.remember,
       };
       try {
-        const data = await login(cred);
+        await login(cred);
       } catch (err) {
         if (err.message === 'Incorrect credentials') {
           Alert.alert(i18n.t('LoginScreen.incorrectUsernameOrPassword'));

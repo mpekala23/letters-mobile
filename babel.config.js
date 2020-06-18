@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['babel-preset-expo'],
+  presets: ['@babel/preset-env', 'babel-preset-expo'],
   plugins: [
     'inline-dotenv',
     [

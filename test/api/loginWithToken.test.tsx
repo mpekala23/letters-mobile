@@ -1,7 +1,4 @@
 import { loginWithToken } from '@api';
-import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage } from 'types';
-import 'isomorphic-fetch';
 import fetchMock from 'fetch-mock';
 
 jest.mock('expo-secure-store', () => ({
@@ -14,10 +11,9 @@ jest.mock('expo-secure-store', () => ({
 
 describe('api loginWithToken', () => {
   it('should throw an error when there is no token', async () => {
-    let result = null;
     let error = false;
     try {
-      result = await loginWithToken();
+      await loginWithToken();
     } catch (err) {
       error = true;
     }
@@ -25,7 +21,6 @@ describe('api loginWithToken', () => {
   });
 
   it('should throw an error when there is an invalid token', async () => {
-    let result = null;
     let error = false;
     fetchMock.post(
       `*`,
@@ -33,7 +28,7 @@ describe('api loginWithToken', () => {
       { repeat: 1 }
     );
     try {
-      result = await loginWithToken();
+      await loginWithToken();
     } catch (err) {
       error = true;
     }

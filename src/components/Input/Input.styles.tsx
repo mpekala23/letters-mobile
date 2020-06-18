@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
-import { AMEELIO_BLACK } from 'styles/Colors';
 
 export const INPUT_HEIGHT = 50;
 export const DROP_HEIGHT = 250;

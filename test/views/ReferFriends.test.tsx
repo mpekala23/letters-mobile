@@ -7,7 +7,7 @@ jest.mock('@api', () => ({
   facebookShare: jest.fn(),
 }));
 
-const setup = (response = {}) => {
+const setup = () => {
   const navigation = { navigate: jest.fn() };
   return render(<ReferFriendsScreen navigation={navigation} />);
 };
@@ -28,7 +28,7 @@ describe('ReferFriends screen', () => {
   });
 
   it('should make api call on share press', async () => {
-    const { container, getByText } = setup();
+    const { getByText } = setup();
     const shareUrl =
       'https://www.facebook.com/sharer/sharer.php?u=letters.ameelio.org&quote=Insert share message';
     const shareButton = getByText('Share');

@@ -4,10 +4,9 @@ import { AppState } from '@store/types';
 import { View, Image } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import { UserState } from '@store/User/UserTypes';
+import AmeelioLogo from '@assets/Ameelio_Logo.png';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles from './Topbar.styles';
-
-const AmeelioLogo = require('@assets/Ameelio_Logo.png');
 
 export interface Props {
   userState: UserState;

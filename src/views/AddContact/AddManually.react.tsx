@@ -2,21 +2,18 @@ import React, { createRef } from 'react';
 import {
   KeyboardAvoidingView,
   View,
-  FlatList,
   ScrollView,
-  Text,
   TouchableOpacity,
   Keyboard,
   Platform,
 } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input } from '@components';
 import { Validation } from 'utils';
 import { Facility } from 'types';
 import CommonStyles from './AddContact.styles';
-import Styles from './FacilityDirectory.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
   AppStackParamList,

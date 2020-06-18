@@ -1,19 +1,16 @@
-import React, { createRef } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Alert, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import DropdownAlert from 'react-native-dropdownalert';
 import Styles from './PicUpload.style';
-
-export interface Props {}
 
 export interface State {
   image: string | null;
 }
 
-class PicUpload extends React.Component<Props, State> {
-  constructor(props: Props) {
+class PicUpload extends React.Component<Record<string, unknown>, State> {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       image: null,

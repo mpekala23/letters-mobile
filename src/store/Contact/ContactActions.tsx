@@ -20,7 +20,7 @@ export function setExisting(contacts: Contact[]): ContactActionTypes {
   };
 }
 
-export function clearContacts() {
+export function clearContacts(): ContactActionTypes {
   return {
     type: CLEAR_CONTACTS,
     payload: null,

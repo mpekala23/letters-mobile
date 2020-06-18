@@ -95,7 +95,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     }),
   });
   const body = await response.json();
-  if (body.status == 'ERROR') {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (cred.remember) {
@@ -132,7 +132,7 @@ export async function logout(): Promise<void> {
   return deleteToken();
 }
 
-export async function register(data: UserRegisterInfo) {
+export async function register(data: UserRegisterInfo): Promise<User> {
   const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
     method: 'POST',
     headers: {
@@ -153,7 +153,7 @@ export async function register(data: UserRegisterInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == 'ERROR') {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (data.remember) {
@@ -184,9 +184,9 @@ export async function register(data: UserRegisterInfo) {
   return userData;
 }
 
-export async function getFacilities(text: string) {}
-
-export async function addContact(data: {}) {
+export async function addContact(
+  data: Record<string, unknown>
+): Promise<Contact[]> {
   const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
     method: 'POST',
     headers: {
@@ -196,7 +196,7 @@ export async function addContact(data: {}) {
     body: JSON.stringify(data),
   });
   const body = await response.json();
-  if (body.type == 'ERROR') {
+  if (body.type === 'ERROR') {
     throw Error(body.data);
   }
   const contactData: Contact = {
@@ -223,7 +223,7 @@ export async function addContact(data: {}) {
   return existing;
 }
 
-export async function facebookShare(shareUrl: string) {
+export async function facebookShare(shareUrl: string): Promise<void> {
   const supportedUrl = await Linking.canOpenURL(shareUrl);
   if (supportedUrl) {
     await Linking.openURL(shareUrl);

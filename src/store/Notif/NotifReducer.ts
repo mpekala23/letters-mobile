@@ -1,6 +1,5 @@
 import {
   NotifState,
-  Notif,
   NotifActionTypes,
   ADD_NOTIF,
   HANDLE_NOTIF,

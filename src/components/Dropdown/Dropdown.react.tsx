@@ -1,10 +1,10 @@
 import React, { createRef } from 'react';
 import {
-  StatusBar,
   Text,
   View,
   Animated,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 
 import { STATUS_BAR_HEIGHT } from '@utils';
@@ -19,7 +19,7 @@ export interface DropNotif {
   body: string;
   icon?: string;
   onPress?: () => void;
-  backgroundStyle?: object;
+  backgroundStyle?: ViewStyle;
   id?: number;
 }
 
@@ -30,12 +30,10 @@ interface State {
   animating: boolean;
 }
 
-interface Props {}
-
-export class Dropdown extends React.Component<Props, State> {
+export class Dropdown extends React.Component<Record<string, unknown>, State> {
   private numNotifs = 1;
 
-  constructor(props: Props) {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       dropped: false,
@@ -44,23 +42,37 @@ export class Dropdown extends React.Component<Props, State> {
       animating: false,
     };
     this.queueNotif = this.queueNotif.bind(this);
-    this._flushNotif = this._flushNotif.bind(this);
-    this._endNotif = this._endNotif.bind(this);
+    this.flushNotif = this.flushNotif.bind(this);
+    this.endNotif = this.endNotif.bind(this);
     this.renderNotif = this.renderNotif.bind(this);
   }
 
-  queueNotif(notif: DropNotif) {
-    notif.id = this.numNotifs;
+  queueNotif(notif: DropNotif): void {
+    const newNotif = notif;
+    newNotif.id = this.numNotifs;
     this.numNotifs += 1;
     const currentNotifs = this.state.notifQ;
-    currentNotifs.push(notif);
-    this.setState({ notifQ: currentNotifs }, () => {
-      this._flushNotif();
-    });
+    currentNotifs.push(newNotif);
+    this.setState(
+      (prevState) => {
+        const newState = { ...prevState };
+        newState.notifQ = [...newState.notifQ, newNotif];
+        return newState;
+      },
+      () => {
+        this.flushNotif();
+      }
+    );
   }
 
   // convenient info dropdown
-  queueInfo(infoString: string, body: string, onPress = () => {}) {
+  queueInfo(
+    infoString: string,
+    body: string,
+    onPress = () => {
+      /* nothing */
+    }
+  ): void {
     const errorNotif: DropNotif = {
       title: `Info: ${infoString}`,
       body,
@@ -72,7 +84,13 @@ export class Dropdown extends React.Component<Props, State> {
   }
 
   // convenient success dropdown
-  queueSuccess(successString: string, body: string, onPress = () => {}) {
+  queueSuccess(
+    successString: string,
+    body: string,
+    onPress = () => {
+      /* nothing */
+    }
+  ): void {
     const errorNotif: DropNotif = {
       title: `Success: ${successString}`,
       body,
@@ -84,7 +102,13 @@ export class Dropdown extends React.Component<Props, State> {
   }
 
   // convenient warning dropdown
-  queueWarning(warningString: string, body: string, onPress = () => {}) {
+  queueWarning(
+    warningString: string,
+    body: string,
+    onPress = () => {
+      /* nothing */
+    }
+  ): void {
     const errorNotif: DropNotif = {
       title: `Warning: ${warningString}`,
       body,
@@ -96,7 +120,13 @@ export class Dropdown extends React.Component<Props, State> {
   }
 
   // convenient error dropdown
-  queueError(errorString: string, body: string, onPress = () => {}) {
+  queueError(
+    errorString: string,
+    body: string,
+    onPress = () => {
+      /* nothing */
+    }
+  ): void {
     const errorNotif: DropNotif = {
       title: `Error: ${errorString}`,
       body,
@@ -107,7 +137,7 @@ export class Dropdown extends React.Component<Props, State> {
     this.queueNotif(errorNotif);
   }
 
-  _flushNotif() {
+  flushNotif(): void {
     if (
       this.state.dropped ||
       this.state.animating ||
@@ -124,18 +154,18 @@ export class Dropdown extends React.Component<Props, State> {
         this.setState({ animating: false });
         // when the animation finishes
         setTimeout(() => {
-          this._endNotif(currentId);
+          this.endNotif(currentId);
         }, DROP_DURATION);
       });
     });
   }
 
-  _endNotif(id: number) {
+  endNotif(id: number): void {
     if (
       !this.state.dropped ||
       this.state.animating ||
       this.state.notifQ.length === 0 ||
-      this.state.notifQ[0].id != id
+      this.state.notifQ[0].id !== id
     )
       return;
     this.setState({ animating: true }, () => {
@@ -146,15 +176,17 @@ export class Dropdown extends React.Component<Props, State> {
       }).start(() => {
         // when the animation finishes
         this.setState(
-          {
-            notifQ: this.state.notifQ.slice(1),
-            dropped: false,
-            animating: false,
+          (prevState) => {
+            const newState = { ...prevState };
+            newState.notifQ.slice(1);
+            newState.dropped = false;
+            newState.animating = false;
+            return newState;
           },
           () => {
             // when the notifQ has been updated
             if (this.state.notifQ.length > 0) {
-              this._flushNotif();
+              this.flushNotif();
             }
           }
         );
@@ -163,10 +195,10 @@ export class Dropdown extends React.Component<Props, State> {
   }
 
   // TODO: Hook in custom icon component here
-  renderNotif() {
+  renderNotif(): JSX.Element {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
-    const icon = notif.icon || true ? <View /> : <View />;
+    const icon = notif.icon ? <View /> : <View />;
     return this.state.dropped ? (
       <TouchableOpacity
         testID="touchable"
@@ -181,7 +213,7 @@ export class Dropdown extends React.Component<Props, State> {
         ]}
         onPress={() => {
           if (notif.onPress) notif.onPress();
-          if (notif.id) this._endNotif(notif.id);
+          if (notif.id) this.endNotif(notif.id);
         }}
         activeOpacity={0.9}
       >
@@ -204,7 +236,7 @@ export class Dropdown extends React.Component<Props, State> {
     );
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Animated.View
         style={{
@@ -221,42 +253,56 @@ export class Dropdown extends React.Component<Props, State> {
 }
 
 const dropdownRef = createRef<Dropdown>();
-const DropdownInstance = () => <Dropdown ref={dropdownRef} key="Dropdown" />;
+const DropdownInstance = (): JSX.Element => (
+  <Dropdown ref={dropdownRef} key="Dropdown" />
+);
 
 export function dropdownInfo(
   infoString: string,
   body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueInfo(infoString, body, onPress);
+  onPress = () => {
+    /* nothing */
+  }
+): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueInfo(infoString, body, onPress);
 }
 
 export function dropdownSuccess(
   successString: string,
   body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueSuccess(successString, body, onPress);
+  onPress = () => {
+    /* nothing */
+  }
+): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueSuccess(successString, body, onPress);
 }
 
 export function dropdownWarning(
   warningString: string,
   body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueWarning(warningString, body, onPress);
+  onPress = () => {
+    /* nothing */
+  }
+): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueWarning(warningString, body, onPress);
 }
 
 export function dropdownError(
   errorString: string,
   body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueError(errorString, body, onPress);
+  onPress = () => {
+    /* nothing */
+  }
+): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueError(errorString, body, onPress);
 }
 
-export function customDropdown(notif: DropNotif) {
-  dropdownRef.current?.queueNotif(notif);
+export function customDropdown(notif: DropNotif): void {
+  if (dropdownRef.current) dropdownRef.current.queueNotif(notif);
 }
 
 export default DropdownInstance;

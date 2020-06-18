@@ -2,15 +2,8 @@ import React, { createRef } from 'react';
 import { Input } from '@components';
 import { Validation } from '@utils';
 import { Colors } from '@styles';
-import {
-  render,
-  toJSON,
-  fireEvent,
-  getAllByPlaceholderText,
-  findByText,
-  findByPlaceholderText,
-} from '@testing-library/react-native';
-import { TextInput, View } from 'react-native';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { View } from 'react-native';
 
 const setup = (propOverrides = {}) => {
   const props = {
@@ -35,7 +28,7 @@ describe('Input component', () => {
   });
 
   it('should have black border when not focused and valid, blue border when focused', () => {
-    const { container, getByPlaceholderText } = setup();
+    const { getByPlaceholderText } = setup();
     expect(getByPlaceholderText('placeholder').props.style[0].borderColor).toBe(
       Colors.AMEELIO_BLACK
     );

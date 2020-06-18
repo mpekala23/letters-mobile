@@ -3,14 +3,13 @@ import {
   Alert,
   KeyboardAvoidingView,
   View,
-  FlatList,
   ScrollView,
   Text,
   TouchableOpacity,
   Keyboard,
   Platform,
 } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload } from '@components';
@@ -23,12 +22,11 @@ import {
   ContactState,
 } from 'store/Contact/ContactTypes';
 import { Facility } from 'types';
-import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from 'store/Contact/ContactActions';
 import { connect } from 'react-redux';
+import { addContact } from 'api';
 import CommonStyles from './AddContact.styles';
-import Styles from './ReviewContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -109,26 +107,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
     }
   }
 
-  updateValid() {
-    if (
-      this.stateRef.current &&
-      this.firstName.current &&
-      this.lastName.current &&
-      this.postal.current &&
-      this.facilityName.current &&
-      this.facilityAddress.current
-    ) {
-      const result =
-        this.stateRef.current.state.valid &&
-        this.firstName.current.state.valid &&
-        this.lastName.current.state.valid &&
-        this.postal.current.state.valid &&
-        this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid;
-      this.setState({ valid: result });
-    }
-  }
-
   doAddContact = async () => {
     if (
       this.state.valid &&
@@ -159,7 +137,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       try {
         const { existing } = store.getState().contact;
         // Check if contact being added already exists
-        for (let ix = 0; ix < existing.length; ix++) {
+        for (let ix = 0; ix < existing.length; ix += 1) {
           if (
             existing[ix].firstName === contact.first_name &&
             existing[ix].lastName === contact.last_name &&
@@ -174,10 +152,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             existing[ix].facility?.type === contact.facility.type
           ) {
             throw Error('Contact already exists');
-            break;
           }
         }
-        const data = await addContact(contact);
+        await addContact(contact);
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
@@ -190,6 +167,26 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       }
     }
   };
+
+  updateValid() {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current
+    ) {
+      const result =
+        this.stateRef.current.state.valid &&
+        this.firstName.current.state.valid &&
+        this.lastName.current.state.valid &&
+        this.postal.current.state.valid &&
+        this.facilityName.current.state.valid &&
+        this.facilityAddress.current.state.valid;
+      this.setState({ valid: result });
+    }
+  }
 
   render() {
     return (

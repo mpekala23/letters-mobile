@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import store, { persistor } from '@store';
@@ -16,7 +16,7 @@ export default class App extends React.Component {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
