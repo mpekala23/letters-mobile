@@ -12,11 +12,9 @@ import { Button } from "@components";
 import PrisonCard from "@components/Card/PrisonCard.react";
 import LetterStatusCard from "@components/Card/LetterStatusCard.react";
 import MemoryLaneCard from "@components/Card/MemoryLaneCard.react";
-import LetterOptionCard, {
-  LetterTypes,
-} from "@components/Card/LetterOptionCard.react";
+import LetterOptionCard from "@components/Card/LetterOptionCard.react";
 import DeliveryStatusCard from "@components/Card/DeliveryStatusCard.react";
-import { PrisonTypes, DeliveryProgress } from "types";
+import { PrisonTypes, DeliveryProgress, LetterTypes } from "types";
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
 

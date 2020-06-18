@@ -8,6 +8,7 @@ import {
 } from "@react-navigation/stack";
 import {
   AddManuallyScreen,
+  ChooseOptionScreen,
   ContactInfoScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
@@ -37,6 +38,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
+  ChooseOption: undefined;
   ContactInfo: undefined;
   ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
@@ -82,6 +84,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   ) : props.authInfo.isLoggedIn ? (
     <>
+      <Stack.Screen
+        name="ChooseOption"
+        component={ChooseOptionScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
@@ -151,7 +158,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
     <>
       {topSection}
       <Stack.Navigator
-        initialRouteName={"Home"}
         screenOptions={{
           headerShown: false,
         }}

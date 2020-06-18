@@ -1,4 +1,5 @@
 import AddManuallyScreen from "./AddContact/AddManually.react";
+import ChooseOptionScreen from "./Compose/ChooseOption.react";
 import ContactInfoScreen from "./AddContact/ContactInfo.react";
 import ExplainProblemScreen from "./Report/ExplainProblem.react";
 import FirstLetterScreen from "./Report/FirstLetter.react";
@@ -14,6 +15,7 @@ import ThanksScreen from "./Report/Thanks.react";
 
 export {
   AddManuallyScreen,
+  ChooseOptionScreen,
   ContactInfoScreen,
   ExplainProblemScreen,
   FirstLetterScreen,

@@ -27,3 +27,8 @@ export enum DeliveryProgress {
   OutForDelivery = "75%",
   Delivered = "100%",
 }
+
+export enum LetterTypes {
+  PostCards = "PostCards",
+  Letters = "Letters",
+}
