@@ -46,7 +46,8 @@ const HomeScreenBase: React.FC<Props> = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button buttonText="Press Me" onPress={() => {props.navigation.navigate("ContactInfo")}} />
+      <Button buttonText="Add New Contact" onPress={() => {props.navigation.navigate("ContactInfo")}} />
+      <Button buttonText="See All Contacts" onPress={() => {props.navigation.navigate("ContactSelector")}} />
       <ScrollView style={{ width: "100%", padding: 10 }}>
         <PrisonCard
           name="Connecticut State Prison"

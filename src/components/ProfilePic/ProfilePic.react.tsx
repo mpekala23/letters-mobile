@@ -19,11 +19,11 @@ export interface Props {
 
 function mapStyleToProfileType(type: String) {
   switch (type) {
-    case ProfilePicTypes.TopbarProfile:
+    case ProfilePicTypes.Topbar:
       return { image: Styles.userPic, background: Styles.userBackground };
-    case ProfilePicTypes.ContactProfile:
+    case ProfilePicTypes.Contact:
       return { image: Styles.contactPic, background: Styles.contactBackground };
-    case ProfilePicTypes.SingleContactProfile:
+    case ProfilePicTypes.SingleContact:
       return { image: Styles.singleContactPic, background: Styles.singleContactBackground };
     default:
       return { image: {}, background: {} };
