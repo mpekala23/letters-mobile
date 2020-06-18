@@ -121,6 +121,7 @@ describe("Contact Info Screen", () => {
     expect(store.getActions()[0]).toEqual({
       type: SET_ADDING,
       payload: {
+        id: -1,
         state: "Minnesota",
         firstName: "First",
         lastName: "Last",

@@ -300,6 +300,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     this.relationship.current
                   ) {
                     const contact: Contact = {
+                      id: -1,
                       state: this.stateRef.current.state.value,
                       firstName: this.firstName.current.state.value,
                       lastName: this.lastName.current.state.value,

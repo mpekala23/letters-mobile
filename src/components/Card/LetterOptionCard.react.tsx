@@ -5,11 +5,7 @@ import LettersIcon from "@assets/components/Card/Letters";
 import PostCardsIcon from "@assets/components/Card/PostCards";
 import Icon from "../Icon/Icon.react";
 import { i18n } from "@i18n";
-
-export enum LetterTypes {
-  PostCards = "PostCards",
-  Letters = "Letters",
-}
+import { LetterTypes } from "types";
 
 interface Props {
   type: LetterTypes;

@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
+  ChooseOptionScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,
@@ -40,8 +41,9 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
+  ChooseOption: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
-  ContactSelector: undefined,
+  ContactSelector: undefined;
   ExplainProblem: undefined;
   ContactInfo: undefined;
   ContactSelector: undefined;
@@ -87,6 +89,16 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   ) : props.authInfo.isLoggedIn ? (
     <>
+      <Stack.Screen
+        name="ChooseOption"
+        component={ChooseOptionScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
       <Stack.Screen
         name="ContactInfo"
         component={ContactInfoScreen}
@@ -142,16 +154,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
         component={ThanksScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
-      <Stack.Screen
-        name="SingleContact"
-        component={SingleContactScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-       options={{ cardStyleInterpolator: fadeTransition }}
-      />
     </>
   ) : (
     <>
@@ -171,7 +173,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
     <>
       {topSection}
       <Stack.Navigator
-        initialRouteName={"Home"}
         screenOptions={{
           headerShown: false,
         }}

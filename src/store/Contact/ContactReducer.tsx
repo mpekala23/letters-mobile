@@ -8,11 +8,12 @@ import {
 
 const initialState: ContactState = {
   adding: {
-    state: '',
-    firstName: '',
-    lastName: '',
-    inmateNumber: '',
-    relationship: '',
+    id: -1,
+    state: "",
+    firstName: "",
+    lastName: "",
+    inmateNumber: "",
+    relationship: "",
     facility: null,
   },
   existing: [],
@@ -31,14 +32,7 @@ export default function ContactReducer(
       currentState.existing = action.payload;
       return currentState;
     case CLEAR_CONTACTS:
-      currentState.adding = {
-        state: "",
-        firstName: "",
-        lastName: "",
-        inmateNumber: "",
-        relationship: "",
-        facility: null,
-      };
+      currentState.adding = initialState.adding;
       currentState.existing = [];
       return currentState;
     default:
