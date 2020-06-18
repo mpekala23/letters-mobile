@@ -32,14 +32,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props) => {
         type={LetterTypes.PostCards}
         onPress={() => {
           props.setType(LetterTypes.PostCards);
-          console.log(props.letterState);
         }}
       />
       <LetterOptionCard
         type={LetterTypes.Letters}
         onPress={() => {
           props.setType(LetterTypes.Letters);
-          console.log(props.letterState);
         }}
       />
     </View>
