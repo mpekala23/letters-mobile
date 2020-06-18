@@ -1,6 +1,6 @@
-import React, { createRef } from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
+import React from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
 import {
   createStackNavigator,
   StackCardInterpolationProps,
@@ -43,8 +43,6 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined,
   ExplainProblem: undefined;
-  ContactInfo: undefined;
-  ContactSelector: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
   Home: undefined;
