@@ -1,7 +1,7 @@
 import React from "react";
 import { DeliveryStatusCard } from "@components";
 import { fireEvent, render, toJSON } from "@testing-library/react-native";
-import { DeliveryProgress } from "types";
+import { LetterStatus } from "types";
 
 const setup = (propOverrides = {}) => {
   const props = Object.assign(
@@ -48,30 +48,35 @@ describe("Delivery Status Card component", () => {
     expect(getByText("Date")).toBeDefined();
   });
 
-  it("should display progress bar 0 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Created });
+  it("should display progress bar 0 / 5", () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Draft });
     expect(getByTestId("progressBar").props.style[1].width).toBe("0%");
   });
 
-  it("should display progress bar 1 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Printed });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("25%");
+  it("should display progress bar 1 / 5", () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Created });
+    expect(getByTestId("progressBar").props.style[1].width).toBe("20%");
   });
 
-  it("should display progress bar 2 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Mailed });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("50%");
+  it("should display progress bar 2 / 5", () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Printed });
+    expect(getByTestId("progressBar").props.style[1].width).toBe("40%");
   });
 
-  it("should display progress bar 3 / 4", () => {
+  it("should display progress bar 3 / 5", () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Mailed });
+    expect(getByTestId("progressBar").props.style[1].width).toBe("60%");
+  });
+
+  it("should display progress bar 4 / 5", () => {
     const { getByTestId } = setup({
-      progress: DeliveryProgress.OutForDelivery,
+      progress: LetterStatus.OutForDelivery,
     });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("75%");
+    expect(getByTestId("progressBar").props.style[1].width).toBe("80%");
   });
 
-  it("should display progress bar 4 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Delivered });
+  it("should display progress bar 5 / 5", () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Delivered });
     expect(getByTestId("progressBar").props.style[1].width).toBe("100%");
   });
 });

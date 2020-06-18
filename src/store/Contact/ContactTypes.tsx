@@ -5,6 +5,7 @@ export const SET_EXISTING = "contact/set_existing";
 export const CLEAR_CONTACTS = "contact/clear_contacts";
 
 export interface Contact {
+  id: number; // TODO: Once addContact api call is made, update id field on success
   state: string;
   firstName: string;
   lastName: string;

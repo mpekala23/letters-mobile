@@ -51,10 +51,10 @@ describe("Choose Option screen", () => {
 
   it("should dispatch a setType action when Letter button is pressed", () => {
     const { store, getByText } = setup();
-    fireEvent.press(getByText("Post cards"));
+    fireEvent.press(getByText("Letters"));
     const actions = store.getActions();
     expect(actions.length).toBe(1);
     expect(actions[0].type).toBe("letter/set_type");
-    expect(actions[0].payload).toBe("PostCards");
+    expect(actions[0].payload).toBe("Letters");
   });
 });

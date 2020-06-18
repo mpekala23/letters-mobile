@@ -1,16 +1,18 @@
 import {
-  Letter,
   SET_COMPOSING,
   SET_TYPE,
-  SET_RECIPIENT,
+  SET_STATUS,
+  SET_DRAFT,
+  SET_RECIPIENT_ID,
   SET_MESSAGE,
   SET_PHOTO_PATH,
+  SET_LETTER_ID,
   CLEAR_COMPOSING,
   SET_EXISTING,
   LetterActionTypes,
+  ADD_LETTER,
 } from "./LetterTypes";
-import { Contact } from "store/Contact/ContactTypes";
-import { LetterTypes } from "types";
+import { LetterTypes, Letter, LetterStatus } from "types";
 
 export function setComposing(letter: Letter): LetterActionTypes {
   return {
@@ -26,10 +28,24 @@ export function setType(letterType: LetterTypes): LetterActionTypes {
   };
 }
 
-export function setRecipient(contact: Contact): LetterActionTypes {
+export function setStatus(status: LetterStatus): LetterActionTypes {
   return {
-    type: SET_RECIPIENT,
-    payload: contact,
+    type: SET_STATUS,
+    payload: status,
+  };
+}
+
+export function setDraft(draft: boolean): LetterActionTypes {
+  return {
+    type: SET_DRAFT,
+    payload: draft,
+  };
+}
+
+export function setRecipientId(contactId: number): LetterActionTypes {
+  return {
+    type: SET_RECIPIENT_ID,
+    payload: contactId,
   };
 }
 
@@ -47,6 +63,13 @@ export function setPhotoPath(path: string): LetterActionTypes {
   };
 }
 
+export function setLetterId(newId: number): LetterActionTypes {
+  return {
+    type: SET_LETTER_ID,
+    payload: newId,
+  };
+}
+
 export function clearComposing(): LetterActionTypes {
   return {
     type: CLEAR_COMPOSING,
@@ -54,9 +77,21 @@ export function clearComposing(): LetterActionTypes {
   };
 }
 
-export function setExisting(letters: Letter[]): LetterActionTypes {
+export function setExisting(
+  letters: Record<number, Letter[]>
+): LetterActionTypes {
   return {
     type: SET_EXISTING,
     payload: letters,
+  };
+}
+
+export function addLetter(contactId: number, letter: Letter) {
+  return {
+    type: ADD_LETTER,
+    payload: {
+      contactId,
+      letter,
+    },
   };
 }

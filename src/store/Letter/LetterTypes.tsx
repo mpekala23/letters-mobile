@@ -1,24 +1,20 @@
-import { LetterTypes } from "types";
-import { Contact } from "store/Contact/ContactTypes";
+import { LetterTypes, Letter, LetterStatus } from "types";
 
 export const SET_COMPOSING = "letter/set_composing";
 export const SET_TYPE = "letter/set_type";
-export const SET_RECIPIENT = "letter/set_recipient";
+export const SET_STATUS = "letter/set_status";
+export const SET_DRAFT = "letter/set_draft";
+export const SET_RECIPIENT_ID = "letter/set_recipient_id";
 export const SET_MESSAGE = "letter/set_message";
 export const SET_PHOTO_PATH = "letter/set_photo_path";
+export const SET_LETTER_ID = "letter/set_letter_id";
 export const CLEAR_COMPOSING = "letter/clear_composing";
 export const SET_EXISTING = "letter/set_existing";
-
-export interface Letter {
-  type: LetterTypes;
-  recipient: Contact | null;
-  message: string;
-  photoPath?: string;
-}
+export const ADD_LETTER = "letter/add_letter";
 
 export interface LetterState {
   composing: Letter;
-  existing: Letter[];
+  existing: Record<number, Letter[]>;
 }
 
 interface SetComposingAction {
@@ -31,9 +27,19 @@ interface SetTypeAction {
   payload: LetterTypes;
 }
 
-interface SetRecipientAction {
-  type: typeof SET_RECIPIENT;
-  payload: Contact;
+interface SetStatusAction {
+  type: typeof SET_STATUS;
+  payload: LetterStatus;
+}
+
+interface SetDraftAction {
+  type: typeof SET_DRAFT;
+  payload: boolean;
+}
+
+interface SetRecipientIdAction {
+  type: typeof SET_RECIPIENT_ID;
+  payload: number;
 }
 
 interface SetMessageAction {
@@ -46,6 +52,11 @@ interface SetPhotoPathAction {
   payload: string;
 }
 
+interface SetLetterIdAction {
+  type: typeof SET_LETTER_ID;
+  payload: number;
+}
+
 interface ClearComposingAction {
   type: typeof CLEAR_COMPOSING;
   payload: null;
@@ -53,14 +64,26 @@ interface ClearComposingAction {
 
 interface SetExistingAction {
   type: typeof SET_EXISTING;
-  payload: Letter[];
+  payload: Record<number, Letter[]>;
+}
+
+interface AddLetterAction {
+  type: typeof ADD_LETTER;
+  payload: {
+    contactId: number;
+    letter: Letter;
+  };
 }
 
 export type LetterActionTypes =
   | SetComposingAction
   | SetTypeAction
-  | SetRecipientAction
+  | SetStatusAction
+  | SetDraftAction
+  | SetRecipientIdAction
   | SetMessageAction
   | SetPhotoPathAction
+  | SetLetterIdAction
   | ClearComposingAction
-  | SetExistingAction;
+  | SetExistingAction
+  | AddLetterAction;
