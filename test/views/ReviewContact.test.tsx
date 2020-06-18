@@ -3,8 +3,13 @@ import { ReviewContactScreen } from "@views";
 import { render, toJSON, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
+import { addContact } from "@api";
 
 const mockStore = configureStore([]);
+
+jest.mock("@api", () => ({
+  addContact: jest.fn(),
+}));
 
 const setup = (contactOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
@@ -106,5 +111,11 @@ describe("Review Contact Screen", () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText("Back"));
     expect(navigation.navigate).toHaveBeenCalledWith("FacilityDirectory");
+  });
+
+  it("should make an api call when add contact button is pressed", () => {
+    const { navigation, getByText } = setup();
+    fireEvent.press(getByText("Add Contact"));
+    expect(addContact).toHaveBeenCalledTimes(1);
   });
 });

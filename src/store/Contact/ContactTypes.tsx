@@ -1,7 +1,8 @@
-import { Facility } from "types";
+import { Facility } from 'types';
 
 export const SET_ADDING = "contact/set_adding";
 export const SET_EXISTING = "contact/set_existing";
+export const CLEAR_CONTACTS = "contact/clear_contacts";
 
 export interface Contact {
   state: string;
@@ -27,4 +28,12 @@ interface SetExistingAction {
   payload: Contact[];
 }
 
-export type ContactActionTypes = SetAddingAction | SetExistingAction;
+interface ClearContactsAction {
+  type: typeof CLEAR_CONTACTS;
+  payload: null;
+}
+
+export type ContactActionTypes =
+  | SetAddingAction
+  | SetExistingAction
+  | ClearContactsAction;

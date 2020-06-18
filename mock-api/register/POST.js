@@ -1,38 +1,44 @@
+/* eslint-disable camelcase */
+// the above disabling is necessary because the snake case variable names are not our decision,
+// but must remain to be consistent with letters-api
+
 module.exports = (req, res) => {
   const {
     email,
-    firstName,
-    lastName,
-    cell,
-    address1,
-    address2,
+    first_name,
+    last_name,
+    phone,
+    addr_line_1,
+    addr_line_2,
     country,
-    zipcode,
+    postal,
     city,
     state,
   } = req.body;
 
-  if (email === 'used@gmail.com') {
+  if (email === "used@gmail.com") {
     return res.status(401).send({
-      type: 'error',
-      data: 'Email in use',
+      status: "ERROR",
+      message: "Email in use",
+      data: [],
     });
   }
 
   return res.status(201).send({
-    type: 'success',
+    status: "OK",
     data: {
-      id: '6',
-      firstName,
-      lastName,
+      id: "6",
+      first_name,
+      last_name,
       email,
-      cell,
-      address1,
-      address2,
+      phone,
+      addr_line_1,
+      addr_line_2,
       country,
-      zipcode,
+      postal,
       city,
       state,
+      token: "dummy token",
     },
   });
 };

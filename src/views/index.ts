@@ -1,5 +1,6 @@
 import AddManuallyScreen from "./AddContact/AddManually.react";
 import ContactInfoScreen from "./AddContact/ContactInfo.react";
+import ContactSelectorScreen from "./Home/ContactSelector.react";
 import ExplainProblemScreen from "./Report/ExplainProblem.react";
 import FirstLetterScreen from "./Report/FirstLetter.react";
 import FacilityDirectoryScreen from "./AddContact/FacilityDirectory.react";
@@ -15,6 +16,7 @@ import ThanksScreen from "./Report/Thanks.react";
 export {
   AddManuallyScreen,
   ContactInfoScreen,
+  ContactSelectorScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
   FacilityDirectoryScreen,

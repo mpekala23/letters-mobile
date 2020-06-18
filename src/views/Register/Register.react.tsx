@@ -10,13 +10,13 @@ import {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "@navigations";
 import { Button, Input, PicUpload } from "@components";
-import { getDropdownRef } from "@components/Dropdown/Dropdown.react";
-import DropdownAlert from "react-native-dropdownalert";
 import Styles from "./Register.style";
 import { Typography } from "@styles";
 import { register } from "@api";
+import { UserRegisterInfo } from "@store/User/UserTypes";
+import { dropdownError } from "components/Dropdown/Dropdown.react";
 import { STATES_DROPDOWN, Validation } from "@utils";
-import { User, UserInfo } from "@store/User/UserTypes";
+import { CheckBox } from "react-native-elements";
 import { i18n } from "@i18n";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -31,37 +31,38 @@ export interface Props {
 export interface State {
   valid: boolean;
   registered: boolean;
+  remember: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
   private firstName = createRef<Input>();
   private lastName = createRef<Input>();
-  private cell = createRef<Input>();
+  private phone = createRef<Input>();
   private address1 = createRef<Input>();
   private address2 = createRef<Input>();
   private country = createRef<Input>();
-  private zipcode = createRef<Input>();
+  private postal = createRef<Input>();
   private city = createRef<Input>();
   private phyState = createRef<Input>();
   private email = createRef<Input>();
   private password = createRef<Input>();
-  private dropdownRef = createRef<DropdownAlert>();
 
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
       registered: false,
+      remember: false,
     };
   }
 
   devSkip = () => {
     if (this.firstName.current) this.firstName.current.set("Team");
     if (this.lastName.current) this.lastName.current.set("Ameelio");
-    if (this.cell.current) this.cell.current.set("4324324432");
+    if (this.phone.current) this.phone.current.set("4324324432");
     if (this.address1.current) this.address1.current.set("Somewhere");
     if (this.country.current) this.country.current.set("USA");
-    if (this.zipcode.current) this.zipcode.current.set("12345");
+    if (this.postal.current) this.postal.current.set("12345");
     if (this.city.current) this.city.current.set("New Haven");
     if (this.phyState.current) this.phyState.current.set("Conneticut");
     if (this.email.current) this.email.current.set("team@ameelio.org");
@@ -73,10 +74,10 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.cell.current &&
+      this.phone.current &&
       this.address1.current &&
       this.country.current &&
-      this.zipcode.current &&
+      this.postal.current &&
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
@@ -85,10 +86,10 @@ class RegisterScreen extends React.Component<Props, State> {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.cell.current.state.valid &&
+        this.phone.current.state.valid &&
         this.address1.current.state.valid &&
         this.country.current.state.valid &&
-        this.zipcode.current.state.valid &&
+        this.postal.current.state.valid &&
         this.city.current.state.valid &&
         // this.phyState.current.state.valid &&
         this.email.current.state.valid &&
@@ -101,28 +102,29 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.cell.current &&
+      this.phone.current &&
       this.address1.current &&
       this.address2.current &&
       this.country.current &&
-      this.zipcode.current &&
+      this.postal.current &&
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
       this.password.current
     ) {
-      const data: UserInfo = {
+      const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
-        cell: this.cell.current.state.value,
+        phone: this.phone.current.state.value,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
         country: this.country.current.state.value,
-        zipcode: this.zipcode.current.state.value,
+        postal: this.postal.current.state.value,
         city: this.city.current.state.value,
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
         password: this.password.current.state.value,
+        remember: this.state.remember,
       };
       try {
         const res = await register(data);
@@ -131,20 +133,15 @@ class RegisterScreen extends React.Component<Props, State> {
         if (err.message === "Email in use") {
           Alert.alert(i18n.t("RegisterScreen.emailAlreadyInUse"));
         } else if (err.message === "timeout") {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              i18n.t("Error.network"),
-              i18n.t("Error.requestTimedOut")
-            );
+          dropdownError(
+            i18n.t("Error.network"),
+            i18n.t("Error.requestTimedOut")
+          );
         } else {
-          // catch all
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              "error",
-              i18n.t("Error.network"),
-              i18n.t("Error.requestIncomplete")
-            );
+          dropdownError(
+            i18n.t("Error.network"),
+            i18n.t("Error.requestIncomplete")
+          );
         }
         this.setState({ registered: false });
       }
@@ -163,7 +160,7 @@ class RegisterScreen extends React.Component<Props, State> {
           contentContainerStyle={Styles.scrollContent}
           keyboardShouldPersistTaps={"handled"}
         >
-          <View 
+          <View
             accessible
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
@@ -203,15 +200,15 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.cell}
+            nextInput={this.phone}
           />
           <View style={{ flexDirection: "row" }}>
             <Input
-              ref={this.cell}
+              ref={this.phone}
               parentStyle={Styles.fullWidth}
               placeholder={i18n.t("RegisterScreen.cellphoneNumber")}
               required
-              validate={Validation.Cell}
+              validate={Validation.Phone}
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
               nextInput={this.address1}
@@ -239,14 +236,14 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.zipcode}
+            nextInput={this.postal}
           />
           <Input
-            ref={this.zipcode}
+            ref={this.postal}
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t("RegisterScreen.zipcode")}
             required
-            validate={Validation.Zipcode}
+            validate={Validation.Postal}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.city}
@@ -290,6 +287,21 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.Password}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+          />
+          <CheckBox
+            checkedIcon={<Text>X</Text>}
+            uncheckedIcon={<Text>O</Text>}
+            center
+            title="Remember Me"
+            containerStyle={{
+              backgroundColor: "white",
+              width: "50%",
+              borderWidth: 0,
+            }}
+            checked={this.state.remember}
+            onPress={() => {
+              this.setState({ remember: !this.state.remember });
+            }}
           />
           <Button
             containerStyle={Styles.fullWidth}

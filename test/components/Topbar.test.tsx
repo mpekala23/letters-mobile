@@ -1,8 +1,8 @@
-import React from "react";
-import { Topbar } from "@components";
-import { render, toJSON } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
+import React from 'react';
+import { Topbar } from '@components';
+import { render, toJSON } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 
 const mockStore = configureStore([]);
 
@@ -11,7 +11,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     {
       isLoadingToken: true,
       isLoggedIn: false,
-      userToken: "",
+      apiToken: "",
     },
     authOverrides
   );
@@ -21,10 +21,10 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
       firstName: "Team",
       lastName: "Ameelio",
       email: "team@ameelio.org",
-      cell: "4324324432",
+      phone: "4324324432",
       address1: "Somewhere",
       country: "USA",
-      zipcode: "12345",
+      postal: "12345",
       city: "New Haven",
       state: "CT",
     },
@@ -46,10 +46,25 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
   };
 };
 
-describe("Topbar component", () => {
-  it("should match snapshot", () => {
+describe('Topbar component', () => {
+  it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
+  });
+
+  it('profile picture should be blank when user is logged out', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('blank').children.length).toBe(0);
+  });
+
+  it('should show an image when a user is logged in with a profile picture', () => {
+    const { getByLabelText } = setup(
+      {
+        isLoggedIn: true,
+      },
+      { imageUri: 'placeholder' }
+    );
+    expect(getByLabelText('Profile Picture')).toBeDefined();
   });
 });

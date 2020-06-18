@@ -5,7 +5,7 @@ import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import { Notification } from "expo/build/Notifications/Notifications.types";
-import { loadToken } from "@api";
+import { loginWithToken } from "@api";
 import store from "@store";
 import {
   addNotif,
@@ -122,7 +122,7 @@ class NotifsBase {
         const state = store.getState();
         if (!state.user.authInfo.isLoggedIn) {
           try {
-            await loadToken();
+            await loginWithToken();
           } catch (err) {
             navigate("Login");
             return;
