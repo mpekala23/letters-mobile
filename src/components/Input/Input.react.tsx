@@ -267,6 +267,20 @@ class Input extends React.Component<Props, State> {
       validate,
       numLines,
     } = this.props;
+
+    let calcInputStyle;
+    if (!enabled) {
+      calcInputStyle = Styles.disabledInputStyle;
+    } else if (this.state.focused) {
+      calcInputStyle = Styles.inputStyleFocused;
+    } else if (!this.state.dirty) {
+      calcInputStyle = {};
+    } else if (this.state.valid) {
+      calcInputStyle = Styles.validStyle;
+    } else {
+      calcInputStyle = Styles.invalidStyle;
+    }
+
     return (
       <Animated.View
         style={[
@@ -301,15 +315,7 @@ class Input extends React.Component<Props, State> {
             numberOfLines={numLines}
             style={[
               Styles.baseInputStyle,
-              !enabled
-                ? Styles.disabledInputStyle
-                : this.state.focused
-                ? Styles.inputStyleFocused
-                : !this.state.dirty
-                ? {}
-                : this.state.valid
-                ? Styles.validStyle
-                : Styles.invalidStyle,
+              calcInputStyle,
               validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
               { height: this.props.height },
               inputStyle,
