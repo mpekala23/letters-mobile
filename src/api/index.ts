@@ -6,8 +6,13 @@ import url from "url";
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { Storage } from "types";
 import { loginUser, logoutUser } from "@store/User/UserActions";
-import { clearContacts } from "store/Contact/ContactActions";
+import {
+  setAdding,
+  setExisting,
+  clearContacts,
+} from "store/Contact/ContactActions";
 import "isomorphic-fetch";
+import { Contact } from "@store/Contact/ContactTypes";
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
@@ -180,6 +185,45 @@ export async function register(data: UserRegisterInfo) {
 }
 
 export async function getFacilities(text: string) {}
+
+export async function addContact(data: {}) {
+  const response = await fetchTimeout(url.resolve(API_URL, "contacts"), {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const body = await response.json();
+  if (body.type == "ERROR") {
+    throw Error(body.data);
+  }
+  const contactData: Contact = {
+    id: body.data.id,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    inmateNumber: body.data.inmate_number,
+    state: body.data.state,
+    relationship: body.data.relationship,
+    facility: body.data.facility,
+  };
+  const { existing } = store.getState().contact;
+  existing.push(contactData);
+  store.dispatch(setExisting(existing));
+  store.dispatch(
+    setAdding({
+      id: -1,
+      state: "",
+      firstName: "",
+      lastName: "",
+      inmateNumber: "",
+      relationship: "",
+      facility: null,
+    })
+  );
+  return existing;
+}
 
 export async function facebookShare(shareUrl: string) {
   const supportedUrl = await Linking.canOpenURL(shareUrl);
