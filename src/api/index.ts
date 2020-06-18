@@ -11,7 +11,6 @@ import {
   setExisting,
   clearContacts,
 } from 'store/Contact/ContactActions';
-import 'isomorphic-fetch';
 import { Contact } from '@store/Contact/ContactTypes';
 
 const { MOCK_API_IP } = process.env;
@@ -36,15 +35,15 @@ export function fetchTimeout<T>(
   ]);
 }
 
-export async function saveToken(token: string) {
-  return await setItemAsync(Storage.RememberToken, token);
+export async function saveToken(token: string): Promise<void> {
+  return setItemAsync(Storage.RememberToken, token);
 }
 
-export async function deleteToken() {
-  return await deleteItemAsync(Storage.RememberToken);
+export async function deleteToken(): Promise<void> {
+  return deleteItemAsync(Storage.RememberToken);
 }
 
-export async function loginWithToken() {
+export async function loginWithToken(): Promise<User> {
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
@@ -83,7 +82,7 @@ export async function loginWithToken() {
   }
 }
 
-export async function login(cred: UserLoginInfo) {
+export async function login(cred: UserLoginInfo): Promise<User> {
   const response = await fetchTimeout(url.resolve(API_URL, 'login'), {
     method: 'POST',
     headers: {
@@ -127,10 +126,10 @@ export async function login(cred: UserLoginInfo) {
   return userData;
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
   store.dispatch(logoutUser());
   store.dispatch(clearContacts());
-  return await deleteToken();
+  return deleteToken();
 }
 
 export async function register(data: UserRegisterInfo) {
