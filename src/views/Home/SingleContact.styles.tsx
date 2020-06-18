@@ -9,15 +9,15 @@ export default StyleSheet.create({
   },
   profileCard: {
     backgroundColor: "white",
-    height: 365,
+    height: 350,
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    paddingTop: 48,
+    paddingTop: 50,
   },
   profileCardHeader: {
     backgroundColor: "#FC7272",
-    height: 110,
+    height: 100,
     width: "100%",
     borderRadius: 10,
     position: "absolute",

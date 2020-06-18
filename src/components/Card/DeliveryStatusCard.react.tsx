@@ -6,11 +6,29 @@ import { Card } from "react-native-elements";
 
 interface Props {
   title: string;
-  status: string;
   date: string;
-  progress: LetterStatus;
+  status: LetterStatus;
   onPress: () => void;
   style?: ViewStyle;
+}
+
+function mapProgressStyletoStatus(type: String) {
+  switch (type) {
+    case LetterStatus.Draft:
+      return { width: "0%" };
+    case LetterStatus.Created:
+      return { width: "20%" };
+    case LetterStatus.Printed:
+      return { width: "40%" };
+    case LetterStatus.Mailed:
+      return { width: "60%" };
+    case LetterStatus.OutForDelivery:
+      return { width: "80%" };
+    case LetterStatus.Delivered:
+      return { width: "100%" };
+    default:
+      return { width: {} };
+  }
 }
 
 const DeliveryStatusCard: React.FC<Props> = (props) => {
@@ -28,7 +46,7 @@ const DeliveryStatusCard: React.FC<Props> = (props) => {
         <View
           style={[
             CardStyles.deliveryStatusBarForeground,
-            { width: props.progress },
+            mapProgressStyletoStatus(props.status),
           ]}
           testID="progressBar"
         />

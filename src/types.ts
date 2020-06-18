@@ -27,12 +27,12 @@ export enum PrisonTypes {
 }
 
 export enum LetterStatus {
-  Draft = "0%",
-  Created = "20%",
-  Printed = "40%",
-  Mailed = "60%",
-  OutForDelivery = "80%",
-  Delivered = "100%",
+  Draft = "Draft",
+  Created = "Created",
+  Printed = "Printed",
+  Mailed = "Mailed",
+  OutForDelivery = "Out for Delivery",
+  Delivered = "Delivered",
 }
 
 export enum LetterTypes {

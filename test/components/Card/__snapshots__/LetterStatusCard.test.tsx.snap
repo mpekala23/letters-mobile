@@ -52,7 +52,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
               "width": 6,
             },
             Object {
-              "backgroundColor": "green",
+              "backgroundColor": Object {},
             },
           ]
         }

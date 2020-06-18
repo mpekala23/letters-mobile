@@ -16,6 +16,7 @@ import { ContactState } from "@store/Contact/ContactTypes";
 import { connect } from "react-redux";
 import Styles from "./ContactSelector.styles";
 import { ProfilePicTypes } from "types";
+import { Letter } from "../../../src/types";
 import { Contact } from "store/Contact/ContactTypes";
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -25,6 +26,7 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   contactState: Contact[];
+  letterState: Record<number, Letter[]>;
   navigation: ContactSelectorScreenNavigationProp;
 }
 
@@ -34,7 +36,12 @@ const ContactSelectorScreenBase: React.FC<Props> = (props) => {
       return (
         <TouchableOpacity
           style={Styles.contactCard}
-          onPress={() => {props.navigation.navigate("SingleContact", {contact: contact})}}
+          onPress={() => {
+            props.navigation.navigate("SingleContact", {
+              contact: contact,
+              letters: props.letterState[contact.id],
+            });
+          }}
           key={key}
         >
           <View style={Styles.contactCard}>
@@ -42,7 +49,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props) => {
               style={[
                 {
                   flex: 1,
-                  flexDirection: 'row',
+                  flexDirection: "row",
                   paddingLeft: 16,
                   paddingTop: 16,
                 },
@@ -126,6 +133,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props) => {
 const mapStateToProps = function (state: AppState) {
   return {
     contactState: state.contact.existing,
+    letterState: state.letter.existing,
   };
 };
 
