@@ -19,24 +19,26 @@ type SingleContactScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: SingleContactScreenNavigationProp;
   route: {
-    params: { contact: Contact; letters: Letter[] };
+    params: { contact: Contact; letters?: Letter[] };
   };
 }
 
 const SingleContactScreen: React.FC<Props> = (props) => {
   const { contact, letters } = props.route.params;
 
-  const letterCards = letters.map((letter: Letter, key: number) => {
-    return (
-      <LetterStatusCard
-        status={letter.status}
-        date="05/11/2020"
-        description={letter.message}
-        onPress={() => {}}
-        key={key}
-      />
-    );
-  });
+  const letterCards = (letters && letters.length > 0) ? 
+    letters.map((letter: Letter, key: number) => {
+      return (
+        <LetterStatusCard
+          status={letter.status}
+          date="05/11/2020"
+          description={letter.message}
+          onPress={() => {}}
+          key={key}
+        />
+      );
+    })
+    : null;
 
   return (
     <View style={Styles.trueBackground}>
@@ -61,7 +63,7 @@ const SingleContactScreen: React.FC<Props> = (props) => {
           {contact.firstName} {contact.lastName}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          💌 received: {letters.length}
+          💌 received: {letters ? letters.length : 0 }
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
           📅 last heard from you:
@@ -76,7 +78,7 @@ const SingleContactScreen: React.FC<Props> = (props) => {
           ✈️ letters traveled:
         </Text>
         <Button
-          onPress={() => {}}
+          onPress={() => props.navigation.navigate("ChooseOption")}
           buttonText="Send letter"
           textStyle={{ fontSize: 20 }}
           containerStyle={Styles.sendLetterButton}
@@ -86,7 +88,7 @@ const SingleContactScreen: React.FC<Props> = (props) => {
         style={Styles.actionItems}
         keyboardShouldPersistTaps="handled"
       >
-        <MemoryLaneCountCard letterCount={letters.length} onPress={() => {}} />
+        <MemoryLaneCountCard letterCount={letters ? letters.length : 0} onPress={() => {}} />
         <Text
           style={[
             Typography.FONT_BOLD,
