@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import { StyleSheet } from "react-native";
 import { Colors } from "@styles";
-=======
-import { StyleSheet } from 'react-native';
-import { Colors, Typography } from '@styles';
->>>>>>> b3309d86a05e86ef3e8b6ca01faa3a41401a6df2
+
 
 export default StyleSheet.create({
   trueBackground: {
