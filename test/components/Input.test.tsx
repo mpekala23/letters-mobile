@@ -114,7 +114,7 @@ describe('Input component', () => {
     expect(props.onValid).toHaveBeenCalledTimes(2);
   });
 
-  it('should validate zipcodes', () => {
+  it('should validate postal zipcodes', () => {
     const { props, getByPlaceholderText } = setup({
       validate: Validation.Postal,
     });

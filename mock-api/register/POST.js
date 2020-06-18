@@ -1,11 +1,11 @@
 module.exports = (req, res) => {
   const {
     email,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     phone,
-    address1,
-    address2,
+    addr_line_1,
+    addr_line_2,
     country,
     postal,
     city,
@@ -14,25 +14,27 @@ module.exports = (req, res) => {
 
   if (email === 'used@gmail.com') {
     return res.status(401).send({
-      type: 'error',
-      data: 'Email in use',
+      status: 'ERROR',
+      message: 'Email in use',
+      data: [],
     });
   }
 
   return res.status(201).send({
-    type: 'success',
+    status: 'OK',
     data: {
       id: '6',
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
       phone,
-      address1,
-      address2,
+      addr_line_1,
+      addr_line_2,
       country,
       postal,
       city,
       state,
+      token: 'dummy token',
     },
   });
 };

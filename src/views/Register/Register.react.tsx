@@ -10,12 +10,12 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
-import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
-import DropdownAlert from 'react-native-dropdownalert';
 import { Typography } from '@styles';
 import { register } from '@api';
+import { UserRegisterInfo } from '@store/User/UserTypes';
+import { dropdownError } from 'components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
-import { User, UserInfo } from '@store/User/UserTypes';
+import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';
 import Styles from './Register.style';
 
@@ -30,6 +30,8 @@ export interface Props {
 
 export interface State {
   valid: boolean;
+  registered: boolean;
+  remember: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -55,16 +57,16 @@ class RegisterScreen extends React.Component<Props, State> {
 
   private password = createRef<Input>();
 
-  private dropdownRef = createRef<DropdownAlert>();
-
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
+      registered: false,
+      remember: false,
     };
   }
 
-  devSkip = (): void => {
+  devSkip = () => {
     if (this.firstName.current) this.firstName.current.set('Team');
     if (this.lastName.current) this.lastName.current.set('Ameelio');
     if (this.phone.current) this.phone.current.set('4324324432');
@@ -120,7 +122,7 @@ class RegisterScreen extends React.Component<Props, State> {
       this.email.current &&
       this.password.current
     ) {
-      const data: UserInfo = {
+      const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         phone: this.phone.current.state.value,
@@ -132,6 +134,7 @@ class RegisterScreen extends React.Component<Props, State> {
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
         password: this.password.current.state.value,
+        remember: this.state.remember,
       };
       try {
         const res = await register(data);
@@ -139,16 +142,12 @@ class RegisterScreen extends React.Component<Props, State> {
         if (err.message === 'Email in use') {
           Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
         } else if (err.message === 'timeout') {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              'error',
-              i18n.t('Error.network'),
-              i18n.t('Error.requestTimedOut')
-            );
-        } else if (this.dropdownRef.current) {
-          // catch all
-          this.dropdownRef.current.alertWithType(
-            'error',
+          dropdownError(
+            i18n.t('Error.network'),
+            i18n.t('Error.requestTimedOut')
+          );
+        } else {
+          dropdownError(
             i18n.t('Error.network'),
             i18n.t('Error.requestIncomplete')
           );
@@ -296,6 +295,21 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.Password}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+          />
+          <CheckBox
+            checkedIcon={<Text>X</Text>}
+            uncheckedIcon={<Text>O</Text>}
+            center
+            title="Remember Me"
+            containerStyle={{
+              backgroundColor: 'white',
+              width: '50%',
+              borderWidth: 0,
+            }}
+            checked={this.state.remember}
+            onPress={() => {
+              this.setState({ remember: !this.state.remember });
+            }}
           />
           <Button
             containerStyle={Styles.fullWidth}

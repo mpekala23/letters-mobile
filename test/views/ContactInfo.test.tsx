@@ -7,8 +7,22 @@ import configureStore from 'redux-mock-store';
 
 const mockStore = configureStore([]);
 
-const setup = (contactOverrides = {}, userOverrides = {}) => {
-  const navigation = { navigate: jest.fn(), addListener: jest.fn() };
+const setup = (
+  contactOverrides = {},
+  userOverrides = {},
+  routeOverrides = {}
+) => {
+  const navigation = {
+    navigate: jest.fn(),
+    addListener: jest.fn(),
+    setParams: jest.fn(),
+  };
+  const route = {
+    params: {
+      addFromSelector: false,
+      ...routeOverrides,
+    },
+  };
   const contact = {
     state: '',
     firstName: '',
@@ -23,10 +37,10 @@ const setup = (contactOverrides = {}, userOverrides = {}) => {
     firstName: 'Team',
     lastName: 'Ameelio',
     email: 'team@ameelio.org',
-    phone: '4324324432',
+    cell: '4324324432',
     address1: 'Somewhere',
     country: 'USA',
-    postal: '12345',
+    zipcode: '12345',
     city: 'New Haven',
     state: 'CT',
     ...userOverrides,
@@ -55,7 +69,11 @@ const setup = (contactOverrides = {}, userOverrides = {}) => {
     navigation,
     store,
     ...render(
-      <ContactInfoScreen navigation={navigation} contactState={initialState} />,
+      <ContactInfoScreen
+        navigation={navigation}
+        contactState={initialState}
+        route={route}
+      />,
       {
         wrapper: StoreProvider,
       }

@@ -1,10 +1,10 @@
 module.exports = (req, res) => {
-  const { email, password } = req.body;
+  const { token } = req.body;
 
-  if (email === 'invalid' || password !== 'password') {
+  if (token !== 'dummy token') {
     return res.status(401).send({
       status: 'ERROR',
-      message: 'Incorrect credentials',
+      message: 'Invalid token',
       data: [],
     });
   }

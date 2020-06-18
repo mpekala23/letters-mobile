@@ -2,13 +2,11 @@ export const LOGIN_USER = 'user/login_user';
 export const LOGOUT_USER = 'user/logout_user';
 
 // state types
-
-export interface User {
-  id: string;
+export interface UserRegisterInfo {
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
+  password: string;
   phone: string;
   address1: string;
   address2?: string;
@@ -17,19 +15,20 @@ export interface User {
   city: string;
   state: string;
   imageUri?: string;
+  remember?: boolean;
 }
 
-export interface UserCredentials {
+export interface UserLoginInfo {
   email: string;
   password: string;
   remember?: boolean;
 }
 
-export interface UserInfo {
+export interface User {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   phone: string;
   address1: string;
   address2?: string;
@@ -43,7 +42,7 @@ export interface UserInfo {
 export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
-  userToken?: string;
+  apiToken: string;
 }
 
 export interface UserState {

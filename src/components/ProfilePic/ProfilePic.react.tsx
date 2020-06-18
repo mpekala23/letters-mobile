@@ -3,40 +3,62 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { UserState } from '@store/User/UserTypes';
-import ExamplePic from '@assets/ExamplePic.jpg';
+import { logout } from '@api';
+import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { ProfilePicTypes } from 'types';
 import Styles from './ProfilePic.styles';
 
+const ExamplePic = require('@assets/ExamplePic.jpg');
+
 export interface Props {
-  userState: UserState;
+  firstName: string;
+  lastName: string;
+  imageUri?: string;
+  type: ProfilePicTypes;
 }
 
-const ProfilePicBase: React.FC<Props> = (props) => {
-  if (!props.userState.authInfo.isLoggedIn) {
-    return <View testID="blank" />;
+const ProfilePic: React.FC<Props> = (props) => {
+  let initials = '';
+  if (props.firstName && props.lastName) {
+    initials =
+      props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
-  const initials =
-    props.userState.user.firstName[0].toUpperCase() +
-    props.userState.user.lastName[0].toUpperCase();
+
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
-  if (props.userState.user.imageUri) {
+
+  if (props.imageUri) {
     insideCircle = (
       <Image
-        style={Styles.pic}
+        style={[
+          props.type === ProfilePicTypes.TopbarProfile
+            ? Styles.userPic
+            : Styles.contactPic,
+        ]}
         source={ExamplePic}
-        accessibilityLabel="ProfilePicture"
+        accessibilityLabel="Profile Picture"
       />
     );
   }
+
   return (
-    <TouchableOpacity style={Styles.background}>
+    <TouchableOpacity
+      style={[
+        props.type === ProfilePicTypes.TopbarProfile
+          ? Styles.userBackground
+          : Styles.contactBackground,
+      ]}
+      onPress={async () => {
+        try {
+          // TODO: Have this press direct to Edit Profile screen once finished
+          await logout();
+        } catch (err) {
+          dropdownError('Storage', 'Unable to successfully log out the user.');
+        }
+      }}
+    >
       {insideCircle}
     </TouchableOpacity>
   );
 };
-
-const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
-});
-const ProfilePic = connect(mapStateToProps)(ProfilePicBase);
 
 export default ProfilePic;

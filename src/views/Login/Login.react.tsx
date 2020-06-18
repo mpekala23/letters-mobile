@@ -14,10 +14,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
 import { Button, GrayBar, Input } from '@components';
-import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import DropdownAlert from 'react-native-dropdownalert';
 import { Typography } from '@styles';
-import { UserCredentials } from '@store/User/UserTypes';
+import { UserLoginInfo } from '@store/User/UserTypes';
 import i18n from '@i18n';
 import Styles from './Login.styles';
 
@@ -40,15 +40,14 @@ class LoginScreen extends React.Component<Props, State> {
 
   private passwordRef = createRef<Input>();
 
-  private dropdownRef = createRef<DropdownAlert>();
-
   constructor(props: Props) {
     super(props);
     this.state = {
       remember: false,
       inputting: false,
     };
-    this.dropdownRef = getDropdownRef();
+    this.emailRef = createRef();
+    this.passwordRef = createRef();
   }
 
   devSkip = async (): Promise<void> => {
@@ -62,7 +61,7 @@ class LoginScreen extends React.Component<Props, State> {
   onLogin = async (): Promise<void> => {
     Keyboard.dismiss();
     if (this.emailRef.current && this.passwordRef.current) {
-      const cred: UserCredentials = {
+      const cred: UserLoginInfo = {
         email: this.emailRef.current && this.emailRef.current.state.value,
         password:
           this.passwordRef.current && this.passwordRef.current.state.value,
@@ -74,18 +73,13 @@ class LoginScreen extends React.Component<Props, State> {
         if (err.message === 'Incorrect credentials') {
           Alert.alert(i18n.t('LoginScreen.incorrectUsernameOrPassword'));
         } else if (err.message === 'timeout') {
-          if (this.dropdownRef.current)
-            this.dropdownRef.current.alertWithType(
-              'error',
-              i18n.t('Error.network'),
-              i18n.t('Error.timedOut')
-            );
-        } else if (this.dropdownRef.current)
-          this.dropdownRef.current.alertWithType(
-            'error',
-            'Network Error',
-            'The request could not be completed.'
+          dropdownError(i18n.t('Error.network'), i18n.t('Error.timedOut'));
+        } else {
+          dropdownError(
+            i18n.t('Error.network'),
+            i18n.t('Error.requestIncomplete')
           );
+        }
       }
     }
   };

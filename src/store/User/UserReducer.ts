@@ -9,7 +9,7 @@ const initialState: UserState = {
   authInfo: {
     isLoadingToken: true,
     isLoggedIn: false,
-    userToken: '',
+    apiToken: '',
   },
   user: {
     id: '',
@@ -36,7 +36,7 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
-          userToken: 'create token here',
+          apiToken: 'create token here',
         },
         user: action.payload,
       };
@@ -45,7 +45,7 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: false,
-          userToken: '',
+          apiToken: '',
         },
         user: {
           id: '',

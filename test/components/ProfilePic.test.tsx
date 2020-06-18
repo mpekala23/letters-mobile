@@ -6,11 +6,16 @@ import configureStore from 'redux-mock-store';
 
 const mockStore = configureStore([]);
 
-const setup = (authOverrides = {}, userOverrides = {}) => {
+const setup = (propOverrides = {}, authOverrides = {}, userOverrides = {}) => {
+  const props = {
+    firstName: 'Team',
+    lastName: 'Ameelio',
+    ...propOverrides,
+  };
   const authInfo = {
     isLoadingToken: true,
     isLoggedIn: false,
-    userToken: '',
+    apiToken: '',
     ...authOverrides,
   };
   const user = {
@@ -36,9 +41,9 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
   const StoreProvider = ({ children }) => {
     return <Provider store={store}>{children}</Provider>;
   };
-
   return {
-    ...render(<ProfilePic />, { wrapper: StoreProvider }),
+    ...render(<ProfilePic {...props} />),
+    props,
   };
 };
 
@@ -49,23 +54,15 @@ describe('ProfilePic component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should be blank when user is logged out', () => {
-    const { getByTestId } = setup();
-    expect(getByTestId('blank').children.length).toBe(0);
-  });
-
-  it('should display initials when a user is logged in without a profile picture', () => {
-    const { getAllByText } = setup({ isLoggedIn: true });
+  it('should display initials when a user has no profile picture', () => {
+    const imageUri = '';
+    const { getAllByText } = setup({ imageUri });
     expect(getAllByText('TA').length).toBe(1);
   });
 
-  it('should show an image when a user is logged in with a profile picture', () => {
-    const { getByLabelText } = setup(
-      {
-        isLoggedIn: true,
-      },
-      { imageUri: 'placeholder' }
-    );
-    expect(getByLabelText('ProfilePicture')).toBeDefined();
+  it('should show image when user has profile picture', () => {
+    const imageUri = 'placeholder';
+    const { getByLabelText } = setup({ imageUri });
+    expect(getByLabelText('Profile Picture')).toBeDefined();
   });
 });

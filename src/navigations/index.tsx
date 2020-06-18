@@ -9,6 +9,7 @@ import {
 import {
   AddManuallyScreen,
   ContactInfoScreen,
+  ContactSelectorScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
   FacilityDirectoryScreen,
@@ -38,7 +39,8 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
-  ContactInfo: undefined;
+  ContactInfo: { addFromSelector: boolean } | undefined;
+  ContactSelector: undefined;
   ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;

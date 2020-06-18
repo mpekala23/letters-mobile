@@ -5,7 +5,6 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { Notification } from 'expo/build/Notifications/Notifications.types';
-import { loadToken } from '@api';
 import store from '@store';
 import {
   addNotif,
@@ -21,6 +20,7 @@ import {
   FutureNotif,
 } from 'store/Notif/NotifTypes';
 import { AppState } from 'store/types';
+import { loginWithToken } from 'api';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -119,12 +119,12 @@ class NotifsBase {
     this.purgeFutureNotifs();
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
-    const state = store.getState();
+    const state: AppState = store.getState();
     switch (notif.type) {
       case NotifType.FirstLetter:
         if (!state.user.authInfo.isLoggedIn) {
           try {
-            await loadToken();
+            await loginWithToken();
           } catch (err) {
             navigate('Login');
             return;

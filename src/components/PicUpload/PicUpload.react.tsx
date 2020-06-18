@@ -2,23 +2,22 @@ import React, { createRef } from 'react';
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import DropdownAlert from 'react-native-dropdownalert';
 import Styles from './PicUpload.style';
+
+export interface Props {}
 
 export interface State {
   image: string | null;
 }
 
-class PicUpload extends React.Component<Record<string, unknown>, State> {
-  dropdownRef = createRef<DropdownAlert>();
-
-  constructor(props: Record<string, unknown>) {
+class PicUpload extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       image: null,
     };
-    this.dropdownRef = getDropdownRef();
   }
 
   getCameraRollPermission = async (): Promise<void> => {
@@ -42,12 +41,7 @@ class PicUpload extends React.Component<Record<string, unknown>, State> {
         this.setState({ image: result.uri });
       }
     } catch (E) {
-      if (this.dropdownRef.current)
-        this.dropdownRef.current.alertWithType(
-          'error',
-          'Photo Error',
-          'Unable to access the photo library.'
-        );
+      dropdownError('Photo Upload', 'Unable to access the photo library.');
     }
   };
 

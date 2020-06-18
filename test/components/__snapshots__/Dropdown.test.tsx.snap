@@ -9,5 +9,18 @@ exports[`Dropdown component should match snapshot 1`] = `
       "flex": 1,
     }
   }
-/>
+>
+  <View
+    style={
+      Object {
+        "position": "absolute",
+        "top": -100,
+        "width": "100%",
+        "zIndex": 999,
+      }
+    }
+  >
+    <View />
+  </View>
+</View>
 `;

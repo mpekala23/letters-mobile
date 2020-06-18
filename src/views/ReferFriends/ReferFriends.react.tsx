@@ -1,9 +1,8 @@
-import React, { RefObject } from 'react';
-import { Alert, KeyboardAvoidingView, Text, View } from 'react-native';
+import React from 'react';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { Button } from '@components';
 import { facebookShare } from '@api';
-import { getDropdownRef } from '@components/Dropdown/Dropdown.react';
-import DropdownAlert from 'react-native-dropdownalert';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'navigations';
@@ -20,7 +19,7 @@ export interface Props {
   deliveryDate: string;
 }
 
-const onShare = async (dropdownRef: RefObject<DropdownAlert>) => {
+const onShare = async () => {
   const ameelioUrl = 'letters.ameelio.org';
   // TO-DO: Edit message content once we have the content copy
   const shareMessage = 'Insert share message';
@@ -28,13 +27,7 @@ const onShare = async (dropdownRef: RefObject<DropdownAlert>) => {
   try {
     await facebookShare(sharingUrl);
   } catch (err) {
-    if (dropdownRef.current) {
-      dropdownRef.current.alertWithType(
-        'error',
-        'Network Error',
-        'The request could not be completed.'
-      );
-    }
+    dropdownError('Network Error', 'The request could not be completed.');
   }
 };
 
@@ -43,8 +36,6 @@ A component for prompting users to refer friends to use Ameelio's services.
 */
 const ReferFriendsScreen: React.FC<Props> = (props) => {
   const { userName, deliveryDate } = props;
-
-  const dropdownRef = getDropdownRef();
 
   return (
     <KeyboardAvoidingView
@@ -99,7 +90,7 @@ const ReferFriendsScreen: React.FC<Props> = (props) => {
             buttonText="Share"
             containerStyle={{ width: 80 }}
             textStyle={{ fontSize: 16 }}
-            onPress={() => onShare(dropdownRef)}
+            onPress={() => onShare()}
           />
         </View>
       </View>

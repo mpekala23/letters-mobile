@@ -15,8 +15,9 @@ export const AMEELIO_TEAL = '#4dc0b5';
 export const AMEELIO_CYAN = '#6cb2eb';
 
 // ACTIONS
-export const SUCCESS = 'rgba(20,200,50,0.5)';
+export const SUCCESS = 'rgb(20,200,50)';
 export const WARNING = '#ffae00';
+export const ERROR = AMEELIO_RED;
 export const ALERT = 'rgba(200,20,50,0.5)';
 export const ALERT_LIGHT = 'rgba(200,20,50,0.1)';
 export const ALERT_FULL = '#cc4b37';

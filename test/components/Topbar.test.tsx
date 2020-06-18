@@ -10,7 +10,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
   const authInfo = {
     isLoadingToken: true,
     isLoggedIn: false,
-    userToken: '',
+    apiToken: '',
     ...authOverrides,
   };
   const user = {
@@ -47,5 +47,20 @@ describe('Topbar component', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
+  });
+
+  it('profile picture should be blank when user is logged out', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('blank').children.length).toBe(0);
+  });
+
+  it('should show an image when a user is logged in with a profile picture', () => {
+    const { getByLabelText } = setup(
+      {
+        isLoggedIn: true,
+      },
+      { imageUri: 'placeholder' }
+    );
+    expect(getByLabelText('Profile Picture')).toBeDefined();
   });
 });
