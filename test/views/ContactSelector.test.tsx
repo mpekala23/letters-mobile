@@ -29,7 +29,7 @@ const setup = (contactsOverrides = []) => {
     contact: initialState,
   });
 
-  const StoreProvider = ({ children }) => {
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 

@@ -27,7 +27,7 @@ interface Props {
   navigation: ContactSelectorScreenNavigationProp;
 }
 
-const ContactSelectorScreenBase: React.FC<Props> = (props) => {
+const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
   const contactSelectorList = props.contactState.map((contact: Contact) => {
     return (
       <TouchableOpacity

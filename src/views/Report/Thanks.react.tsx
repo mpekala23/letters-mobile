@@ -16,7 +16,7 @@ interface Props {
   navigation: ThanksScreenNavigationProp;
 }
 
-const ThanksScreen: React.FC<Props> = (props) => {
+const ThanksScreen: React.FC<Props> = (props: Props) => {
   return (
     <View style={ReportStyles.background}>
       <Text

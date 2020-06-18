@@ -200,6 +200,7 @@ export async function addContact(
     throw Error(body.data);
   }
   const contactData: Contact = {
+    id: body.data.id,
     firstName: body.data.first_name,
     lastName: body.data.last_name,
     inmateNumber: body.data.inmate_number,
@@ -212,6 +213,7 @@ export async function addContact(
   store.dispatch(setExisting(existing));
   store.dispatch(
     setAdding({
+      id: -1,
       state: '',
       firstName: '',
       lastName: '',

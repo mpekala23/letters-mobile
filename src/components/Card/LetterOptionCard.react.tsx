@@ -3,13 +3,9 @@ import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import LettersIcon from '@assets/components/Card/Letters';
 import PostCardsIcon from '@assets/components/Card/PostCards';
 import i18n from '@i18n';
+import { LetterTypes } from 'types';
 import Icon from '../Icon/Icon.react';
 import CardStyles from './Card.styles';
-
-export enum LetterTypes {
-  PostCards = 'PostCards',
-  Letters = 'Letters',
-}
 
 interface Props {
   type: LetterTypes;
@@ -17,7 +13,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const LetterOptionCard: React.FC<Props> = (props) => {
+const LetterOptionCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[

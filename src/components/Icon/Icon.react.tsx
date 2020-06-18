@@ -7,7 +7,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const Icon: React.FC<Props> = (props) => {
+const Icon: React.FC<Props> = (props: Props) => {
   const { svg, style } = props;
   return <SvgXml xml={svg} style={style} />;
 };

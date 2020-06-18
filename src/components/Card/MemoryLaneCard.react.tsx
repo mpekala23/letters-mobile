@@ -10,7 +10,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const MemoryLaneCard: React.FC<Props> = (props) => {
+const MemoryLaneCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[

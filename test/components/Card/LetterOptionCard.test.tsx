@@ -1,8 +1,7 @@
 import React from 'react';
+import { LetterOptionCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
-import LetterOptionCard, {
-  LetterTypes,
-} from '../../../src/components/Card/LetterOptionCard.react';
+import { LetterTypes } from '../../../src/types';
 
 const setup = (propOverrides = {}) => {
   const props = {

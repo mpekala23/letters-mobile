@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
+  ChooseOptionScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,
@@ -39,6 +40,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
+  ChooseOption: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;
   ExplainProblem: undefined;
@@ -71,7 +73,7 @@ const fadeTransition = (
   };
 };
 
-const NavigatorBase: React.FC<Props> = (props) => {
+const NavigatorBase: React.FC<Props> = (props: Props) => {
   let topSection = <View />;
   if (!props.authInfo.isLoadingToken) {
     topSection = <Topbar />;
@@ -144,6 +146,11 @@ const NavigatorBase: React.FC<Props> = (props) => {
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
+        <Stack.Screen
+          name="ChooseOption"
+          component={ChooseOptionScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
       </>
     );
   } else {
@@ -166,7 +173,6 @@ const NavigatorBase: React.FC<Props> = (props) => {
     <>
       {topSection}
       <Stack.Navigator
-        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
         }}

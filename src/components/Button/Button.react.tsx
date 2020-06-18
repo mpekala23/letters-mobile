@@ -13,9 +13,10 @@ export interface Props {
   link?: boolean;
   enabled?: boolean;
   onPress: () => void;
+  children?: JSX.Element;
 }
 
-const Button: React.FC<Props> = (props) => {
+const Button: React.FC<Props> = (props: Props) => {
   const {
     containerStyle,
     disabledContainerStyle,

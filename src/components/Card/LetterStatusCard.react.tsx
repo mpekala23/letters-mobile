@@ -11,7 +11,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const LetterStatusCard: React.FC<Props> = (props) => {
+const LetterStatusCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}

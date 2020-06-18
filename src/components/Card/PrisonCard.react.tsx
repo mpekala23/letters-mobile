@@ -12,7 +12,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const PrisonCard: React.FC<Props> = (props) => {
+const PrisonCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}

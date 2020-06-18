@@ -5,6 +5,7 @@ export const SET_EXISTING = 'contact/set_existing';
 export const CLEAR_CONTACTS = 'contact/clear_contacts';
 
 export interface Contact {
+  id: number;
   state: string;
   firstName: string;
   lastName: string;

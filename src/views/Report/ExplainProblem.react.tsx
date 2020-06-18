@@ -22,7 +22,7 @@ interface Props {
 }
 
 // TODO: Refine this View once coordinating with copy
-const ExplainProblemScreen: React.FC<Props> = (props) => {
+const ExplainProblemScreen: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={1.0}

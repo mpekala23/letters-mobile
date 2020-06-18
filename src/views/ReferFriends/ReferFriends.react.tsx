@@ -34,7 +34,7 @@ const onShare = async () => {
 /**
 A component for prompting users to refer friends to use Ameelio's services.
 */
-const ReferFriendsScreen: React.FC<Props> = (props) => {
+const ReferFriendsScreen: React.FC<Props> = (props: Props) => {
   const { userName, deliveryDate } = props;
 
   return (

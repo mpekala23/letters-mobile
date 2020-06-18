@@ -12,7 +12,7 @@ export interface Props {
   userState: UserState;
 }
 
-const TopbarBase: React.FC<Props> = (props) => {
+const TopbarBase: React.FC<Props> = (props: Props) => {
   const profilePic = props.userState.authInfo.isLoggedIn ? (
     <ProfilePic
       firstName={props.userState.user.firstName}

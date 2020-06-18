@@ -20,7 +20,7 @@ enum Problems {
   other = 'Other',
 }
 
-const IssuesScreen: React.FC<Props> = (props) => {
+const IssuesScreen: React.FC<Props> = (props: Props) => {
   const [selected, setSelected] = useState<Problems | null>(null);
 
   return (

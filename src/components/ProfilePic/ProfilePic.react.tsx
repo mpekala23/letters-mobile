@@ -13,7 +13,7 @@ export interface Props {
   type: ProfilePicTypes;
 }
 
-const ProfilePic: React.FC<Props> = (props) => {
+const ProfilePic: React.FC<Props> = (props: Props) => {
   let initials = '';
   if (props.firstName && props.lastName) {
     initials =

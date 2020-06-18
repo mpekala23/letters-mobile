@@ -33,7 +33,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     },
   });
 
-  const StoreProvider = ({ children }) => {
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 

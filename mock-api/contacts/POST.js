@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+// We have to disable ESLint rule here since snake case variable names are forced on us by the API
+
 module.exports = (req, res) => {
   const {
     first_name,
@@ -18,6 +21,7 @@ module.exports = (req, res) => {
   return res.status(201).send({
     type: 'SUCCESS',
     data: {
+      id: 8,
       first_name,
       last_name,
       inmate_number,
