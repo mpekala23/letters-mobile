@@ -97,7 +97,7 @@ exports[`Delivery Status Card component should match snapshot 1`] = `
               "position": "absolute",
             },
             Object {
-              "width": Object {},
+              "width": "0%",
             },
           ]
         }

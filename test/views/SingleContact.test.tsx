@@ -87,4 +87,8 @@ describe("Single Contact Screen", () => {
     expect(getByText("Redux Letter 1").props.children).toBe("Redux Letter 1");
     expect(getByText("Redux Letter 2").props.children).toBe("Redux Letter 2");
   });
+  
+  // TO-DO: Test navigation to memory lane screen when card is pressed
+
+  // TO-DO: Test navigation to letter tracking screen when letter is pressed
 });

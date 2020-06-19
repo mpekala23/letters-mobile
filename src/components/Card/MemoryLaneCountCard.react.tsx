@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-  InteractionManagerStatic,
-} from "react-native";
+import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import CardStyles from "./Card.styles";
 import { Colors } from "@styles";
-import LettersFilledIcon from "assets/components/Card/LettersFilled";
+import LettersFilledIcon from "@assets/components/Card/LettersFilled";
 import Icon from "../Icon/Icon.react";
 
 interface Props {
@@ -16,7 +11,13 @@ interface Props {
   style?: ViewStyle;
 }
 
-const MemoryLaneCardCount: React.FC<Props> = (props) => {
+const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
+  let cardMessage = "You have no past letters! Go send your first letter.";
+  if (props.letterCount === 1) {
+    cardMessage = "1 Letter";
+  } else if (props.letterCount > 1) {
+    cardMessage = `${props.letterCount} Letters`;
+  }
   return (
     <TouchableOpacity
       style={[
@@ -45,11 +46,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props) => {
             : CardStyles.cardTitle
         }
       >
-        {props.letterCount === 0
-          ? "You have no past letters! Go send your first letter."
-          : props.letterCount === 1
-          ? "1 Letter"
-          : `${props.letterCount} Letters`}
+        {cardMessage}
       </Text>
     </TouchableOpacity>
   );

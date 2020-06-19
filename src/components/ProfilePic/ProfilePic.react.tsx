@@ -1,14 +1,11 @@
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { UserState } from "@store/User/UserTypes";
+import { Image, Text, TouchableOpacity } from "react-native";
 import Styles from "./ProfilePic.styles";
 import { logout } from "@api";
 import { dropdownError } from "components/Dropdown/Dropdown.react";
-import { ProfilePicTypes } from 'types';
+import { ProfilePicTypes } from "types";
 
-const ExamplePic = require('@assets/ExamplePic.jpg');
+const ExamplePic = require("@assets/ExamplePic.jpg");
 
 export interface Props {
   firstName: string;
@@ -17,23 +14,32 @@ export interface Props {
   type: ProfilePicTypes;
 }
 
-function mapStyleToProfileType(type: String) {
+function mapProfileTypeToStyle(type: ProfilePicTypes) {
   switch (type) {
     case ProfilePicTypes.Topbar:
       return { image: Styles.userPic, background: Styles.userBackground };
     case ProfilePicTypes.Contact:
       return { image: Styles.contactPic, background: Styles.contactBackground };
     case ProfilePicTypes.SingleContact:
-      return { image: Styles.singleContactPic, background: Styles.singleContactBackground };
+      return {
+        image: Styles.singleContactPic,
+        background: Styles.singleContactBackground,
+      };
     default:
-      return { image: {}, background: {} };
+      return {
+        image: { width: 100, height: 100, borderRadius: 100 / 2 },
+        background: {
+          flex: 1,
+        },
+      };
   }
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
-  let initials = '';
+  let initials = "";
   if (props.firstName && props.lastName) {
-    initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
+    initials =
+      props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
@@ -41,7 +47,7 @@ const ProfilePic: React.FC<Props> = (props) => {
   if (props.imageUri) {
     insideCircle = (
       <Image
-        style={[mapStyleToProfileType(props.type).image]}
+        style={mapProfileTypeToStyle(props.type).image}
         source={ExamplePic}
         accessibilityLabel="Profile Picture"
       />
@@ -50,7 +56,7 @@ const ProfilePic: React.FC<Props> = (props) => {
 
   return (
     <TouchableOpacity
-      style={[mapStyleToProfileType(props.type).background]}
+      style={mapProfileTypeToStyle(props.type).background}
       onPress={async () => {
         try {
           // TODO: Have this press direct to Edit Profile screen once finished

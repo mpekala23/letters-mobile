@@ -29,7 +29,7 @@ import { AuthInfo } from "@store/User/UserTypes";
 import { navigationRef, navigate } from "@notifications";
 export { navigationRef, navigate };
 import { Notif } from "store/Notif/NotifTypes";
-import { NullableFacility } from "types";
+import { NullableFacility, Letter } from "types";
 import { Topbar } from "@components";
 import { Contact } from "@store/Contact/ContactTypes";
 
@@ -45,15 +45,13 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;
   ExplainProblem: undefined;
-  ContactInfo: undefined;
-  ContactSelector: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
-  SingleContact: {contact : Contact } | undefined;
+  SingleContact: {contact : Contact, letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
 };

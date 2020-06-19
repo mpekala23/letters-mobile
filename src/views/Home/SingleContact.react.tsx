@@ -6,10 +6,9 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Contact } from "@store/Contact/ContactTypes";
 import { Colors, Typography } from "@styles";
 import Styles from "./SingleContact.styles";
-import { ProfilePicTypes } from "types";
+import { ProfilePicTypes, Letter } from "types";
 import LetterStatusCard from "@components/Card/LetterStatusCard.react";
 import MemoryLaneCountCard from "components/Card/MemoryLaneCountCard.react";
-import { Letter } from "../../../src/types";
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -26,19 +25,22 @@ interface Props {
 const SingleContactScreen: React.FC<Props> = (props) => {
   const { contact, letters } = props.route.params;
 
-  const letterCards = (letters && letters.length > 0) ? 
-    letters.map((letter: Letter, key: number) => {
-      return (
-        <LetterStatusCard
-          status={letter.status}
-          date="05/11/2020"
-          description={letter.message}
-          onPress={() => {}}
-          key={key}
-        />
-      );
-    })
-    : null;
+  const letterCards =
+    letters && letters.length > 0
+      ? letters.map((letter: Letter, key: number) => {
+          return (
+            <LetterStatusCard
+              status={letter.status}
+              date="05/11/2020"
+              description={letter.message}
+              onPress={() => {
+                /* TO-DO: Navigate to letter tracking screen*/
+              }}
+              key={key}
+            />
+          );
+        })
+      : null;
 
   return (
     <View style={Styles.trueBackground}>
@@ -63,7 +65,7 @@ const SingleContactScreen: React.FC<Props> = (props) => {
           {contact.firstName} {contact.lastName}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          💌 received: {letters ? letters.length : 0 }
+          💌 received: {letters ? letters.length : 0}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
           📅 last heard from you:
@@ -88,7 +90,12 @@ const SingleContactScreen: React.FC<Props> = (props) => {
         style={Styles.actionItems}
         keyboardShouldPersistTaps="handled"
       >
-        <MemoryLaneCountCard letterCount={letters ? letters.length : 0} onPress={() => {}} />
+        <MemoryLaneCountCard
+          letterCount={letters ? letters.length : 0}
+          onPress={() => {
+            /* TO-DO: Navigate to memory lane screen */
+          }}
+        />
         <Text
           style={[
             Typography.FONT_BOLD,

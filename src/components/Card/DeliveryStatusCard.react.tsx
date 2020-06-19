@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, ViewStyle, View } from "react-native";
 import CardStyles from "./Card.styles";
-import { PrisonTypes, LetterStatus } from "types";
-import { Card } from "react-native-elements";
+import { LetterStatus } from "types";
 
 interface Props {
   title: string;
@@ -12,22 +11,22 @@ interface Props {
   style?: ViewStyle;
 }
 
-function mapProgressStyletoStatus(type: String) {
+function mapStatusToProgressStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { width: "0%" };
+      return { style: { width: "0%" } };
     case LetterStatus.Created:
-      return { width: "20%" };
+      return { style: { width: "20%" } };
     case LetterStatus.Printed:
-      return { width: "40%" };
+      return { style: { width: "40%" } };
     case LetterStatus.Mailed:
-      return { width: "60%" };
+      return { style: { width: "60%" } };
     case LetterStatus.OutForDelivery:
-      return { width: "80%" };
+      return { style: { width: "80%" } };
     case LetterStatus.Delivered:
-      return { width: "100%" };
+      return { style: { width: "100%" } };
     default:
-      return { width: {} };
+      return { style: { width: "0%" } };
   }
 }
 
@@ -46,7 +45,7 @@ const DeliveryStatusCard: React.FC<Props> = (props) => {
         <View
           style={[
             CardStyles.deliveryStatusBarForeground,
-            mapProgressStyletoStatus(props.status),
+            mapStatusToProgressStyle(props.status).style,
           ]}
           testID="progressBar"
         />

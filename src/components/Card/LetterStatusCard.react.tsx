@@ -4,27 +4,27 @@ import CardStyles from "./Card.styles";
 import { LetterStatus } from "types";
 
 interface Props {
-  status: string;
+  status: LetterStatus;
   date: string;
   description: string;
   onPress: () => void;
   style?: ViewStyle;
 }
 
-function mapColorStyletoStatus(type: String) {
+function mapStatusToColorStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { backgroundColor: "#81B5FF" };
+      return { style: { backgroundColor: "#81B5FF" } };
     case LetterStatus.Created:
-      return { backgroundColor: "#81B5FF" };
+      return { style: { backgroundColor: "#81B5FF" } };
     case LetterStatus.Printed:
-      return { backgroundColor: "#7DF5AD" };
+      return { style: { backgroundColor: "#7DF5AD" } };
     case LetterStatus.Mailed:
-      return { backgroundColor: "#81B5FF" };
+      return { style: { backgroundColor: "#81B5FF" } };
     case LetterStatus.OutForDelivery:
-      return { backgroundColor: "#FF7171" };
+      return { style: { backgroundColor: "#FF7171" } };
     default:
-      return { backgroundColor: {} };
+      return { style: { backgroundColor: "#FF7171" } };
   }
 }
 
@@ -38,7 +38,7 @@ const LetterStatusCard: React.FC<Props> = (props) => {
         <View
           style={[
             CardStyles.letterStatusBar,
-            mapColorStyletoStatus(props.status),
+            mapStatusToColorStyle(props.status).style,
           ]}
         />
         <View style={{ flex: 1 }}>

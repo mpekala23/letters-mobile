@@ -15,8 +15,7 @@ import { AppState } from "@store/types";
 import { ContactState } from "@store/Contact/ContactTypes";
 import { connect } from "react-redux";
 import Styles from "./ContactSelector.styles";
-import { ProfilePicTypes } from "types";
-import { Letter } from "../../../src/types";
+import { ProfilePicTypes, Letter } from "types";
 import { Contact } from "store/Contact/ContactTypes";
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<

@@ -13,9 +13,9 @@ exports[`ProfilePic component should match snapshot 1`] = `
   <TouchableOpacity
     activeOpacity={0.2}
     style={
-      Array [
-        Object {},
-      ]
+      Object {
+        "flex": 1,
+      }
     }
   >
     <Text

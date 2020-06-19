@@ -82,17 +82,15 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             <TouchableOpacity
               activeOpacity={0.2}
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#f6993f",
-                    "borderRadius": 40,
-                    "height": 80,
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "width": 80,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#f6993f",
+                  "borderRadius": 40,
+                  "height": 80,
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "width": 80,
+                }
               }
             >
               <Text
