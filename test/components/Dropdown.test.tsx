@@ -3,9 +3,9 @@ import Dropdown, {
   dropdownSuccess,
   dropdownWarning,
   dropdownError,
-} from '@components/Dropdown/Dropdown.react';
-import { Colors } from '@styles';
-import { render, toJSON } from '@testing-library/react-native';
+} from "@components/Dropdown/Dropdown.react";
+import { Colors } from "@styles";
+import { render, toJSON, fireEvent } from "@testing-library/react-native";
 
 jest.useFakeTimers();
 
@@ -22,47 +22,33 @@ describe('Dropdown component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should implement info dropdowns', () => {
-    const { getByText, getByTestId } = setup();
-    dropdownInfo('title', 'body');
-    const bodyText = getByText('body');
-    expect(bodyText).toBeDefined();
-    const touchable = getByTestId('touchable');
-    expect(touchable.props.style[1].backgroundColor).toBe(Colors.AMEELIO_BLUE);
+  it("should implement success dropdowns", () => {
+    const { getByText } = setup();
+    dropdownSuccess({ message: "Success" });
+    const text = getByText("Success");
+    expect(text).toBeDefined();
   });
 
-  it('should implement success dropdowns', () => {
-    const { getByText, getByTestId } = setup();
-    dropdownSuccess('title', 'body');
-    const bodyText = getByText('body');
-    expect(bodyText).toBeDefined();
-    const touchable = getByTestId('touchable');
-    expect(touchable.props.style[1].backgroundColor).toBe(Colors.SUCCESS);
-  });
-
-  it('should implement warning dropdowns', () => {
-    const { getByText, getByTestId } = setup();
-    dropdownWarning('title', 'body');
-    const bodyText = getByText('body');
-    expect(bodyText).toBeDefined();
-    const touchable = getByTestId('touchable');
-    expect(touchable.props.style[1].backgroundColor).toBe(Colors.WARNING);
-  });
-
-  it('should implement error dropdowns', () => {
-    const { getByText, getByTestId } = setup();
-    dropdownError('title', 'body');
-    const bodyText = getByText('body');
-    expect(bodyText).toBeDefined();
-    const touchable = getByTestId('touchable');
-    expect(touchable.props.style[1].backgroundColor).toBe(Colors.ERROR);
+  it("should implement error dropdowns", () => {
+    const { getByText } = setup();
+    dropdownError({ message: "Error" });
+    const text = getByText("Error");
+    expect(text).toBeDefined();
   });
 
   it('should queue dropdowns', () => {
     const { getByText, queryByText } = setup();
-    dropdownError('title1', 'body1');
-    dropdownError('title2', 'body2');
-    expect(getByText('body1')).toBeDefined();
-    expect(queryByText('body2')).toBe(null);
+    dropdownError({ message: "thing 1" });
+    dropdownError({ message: "thing 2" });
+    expect(getByText("thing 1")).toBeDefined();
+    expect(queryByText("thing 2")).toBe(null);
+  });
+
+  it("should implement onPress", () => {
+    const { getByText } = setup();
+    const dummy = jest.fn();
+    dropdownError({ message: "press me", onPress: dummy });
+    fireEvent.press(getByText("press me"));
+    expect(dummy).toHaveBeenCalledTimes(1);
   });
 });

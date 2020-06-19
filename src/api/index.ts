@@ -103,10 +103,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        'Storage',
-        'Unable to save login credentials for next time'
-      );
+      dropdownError({
+        message: 'Unable to save login credentials for next time',
+      });
     }
   }
   const userData: User = {
@@ -161,10 +160,9 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        'Storage',
-        'Unable to save login credentials for next time'
-      );
+      dropdownError({
+        message: 'Unable to save login credentials for next time',
+      });
     }
   }
   const userData: User = {
