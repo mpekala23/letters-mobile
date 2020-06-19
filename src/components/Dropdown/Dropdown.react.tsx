@@ -1,19 +1,24 @@
 import React, { createRef } from "react";
-import { StatusBar, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Animated, TouchableOpacity } from "react-native";
-import { STATUS_BAR_HEIGHT } from "@utils";
-import { Typography, Colors } from "@styles";
+import { Typography } from "@styles";
+import Styles from "./Dropdown.styles";
 
 const DROPDOWN_HEIGHT = 100;
 const ANIM_DURATION = 500;
 const DROP_DURATION = 4000;
 
+export enum DropType {
+  Success = "Success",
+  Error = "Error",
+}
+
 export interface DropNotif {
-  title: string;
-  body: string;
-  icon?: string;
+  type: DropType;
+  message: string;
+  persist: boolean;
+  duration: number;
   onPress?: () => void;
-  backgroundStyle?: object;
   id?: number;
 }
 
@@ -38,8 +43,8 @@ export class Dropdown extends React.Component<Props, State> {
       animating: false,
     };
     this.queueNotif = this.queueNotif.bind(this);
-    this._flushNotif = this._flushNotif.bind(this);
-    this._endNotif = this._endNotif.bind(this);
+    this.flushNotif = this.flushNotif.bind(this);
+    this.endNotif = this.endNotif.bind(this);
     this.renderNotif = this.renderNotif.bind(this);
   }
 
@@ -49,59 +54,55 @@ export class Dropdown extends React.Component<Props, State> {
     const currentNotifs = this.state.notifQ;
     currentNotifs.push(notif);
     this.setState({ notifQ: currentNotifs }, () => {
-      this._flushNotif();
+      this.flushNotif();
     });
   }
 
-  // convenient info dropdown
-  queueInfo(infoString: string, body: string, onPress = () => {}) {
-    const errorNotif: DropNotif = {
-      title: "Info: " + infoString,
-      body: body,
-      onPress: onPress,
-      icon: "poll",
-      backgroundStyle: { backgroundColor: Colors.AMEELIO_BLUE },
-    };
-    this.queueNotif(errorNotif);
-  }
-
   // convenient success dropdown
-  queueSuccess(successString: string, body: string, onPress = () => {}) {
-    const errorNotif: DropNotif = {
-      title: "Success: " + successString,
-      body: body,
-      onPress: onPress,
-      icon: "done",
-      backgroundStyle: { backgroundColor: Colors.SUCCESS },
+  queueSuccess({
+    message,
+    onPress,
+    persist,
+    duration,
+  }: {
+    message: string;
+    onPress: () => void;
+    persist: boolean;
+    duration: number;
+  }) {
+    const successNotif: DropNotif = {
+      type: DropType.Success,
+      message,
+      onPress,
+      persist,
+      duration,
     };
-    this.queueNotif(errorNotif);
-  }
-
-  // convenient warning dropdown
-  queueWarning(warningString: string, body: string, onPress = () => {}) {
-    const errorNotif: DropNotif = {
-      title: "Warning: " + warningString,
-      body: body,
-      onPress: onPress,
-      icon: "warning",
-      backgroundStyle: { backgroundColor: Colors.WARNING },
-    };
-    this.queueNotif(errorNotif);
+    this.queueNotif(successNotif);
   }
 
   // convenient error dropdown
-  queueError(errorString: string, body: string, onPress = () => {}) {
+  queueError({
+    message,
+    onPress,
+    persist,
+    duration,
+  }: {
+    message: string;
+    onPress: () => void;
+    persist: boolean;
+    duration: number;
+  }) {
     const errorNotif: DropNotif = {
-      title: "Error: " + errorString,
-      body: body,
-      onPress: onPress,
-      icon: "error",
-      backgroundStyle: { backgroundColor: Colors.ERROR },
+      type: DropType.Error,
+      message,
+      onPress,
+      persist,
+      duration,
     };
     this.queueNotif(errorNotif);
   }
 
-  _flushNotif() {
+  flushNotif() {
     if (
       this.state.dropped ||
       this.state.animating ||
@@ -117,14 +118,15 @@ export class Dropdown extends React.Component<Props, State> {
       }).start(() => {
         this.setState({ animating: false });
         // when the animation finishes
-        setTimeout(() => {
-          this._endNotif(currentId);
-        }, DROP_DURATION);
+        if (!this.state.notifQ[0].persist)
+          setTimeout(() => {
+            this.endNotif(currentId);
+          }, this.state.notifQ[0].duration);
       });
     });
   }
 
-  _endNotif(id: number) {
+  endNotif(id: number) {
     if (
       !this.state.dropped ||
       this.state.animating ||
@@ -148,7 +150,7 @@ export class Dropdown extends React.Component<Props, State> {
           () => {
             // when the notifQ has been updated
             if (this.state.notifQ.length > 0) {
-              this._flushNotif();
+              this.flushNotif();
             }
           }
         );
@@ -156,42 +158,34 @@ export class Dropdown extends React.Component<Props, State> {
     });
   }
 
-  // TODO: Hook in custom icon component here
   renderNotif() {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
-    const icon = notif.icon || true ? <View /> : <View />;
     return this.state.dropped ? (
       <TouchableOpacity
         testID="touchable"
         style={[
-          {
-            flex: 1,
-            zIndex: 999,
-            padding: STATUS_BAR_HEIGHT,
-            justifyContent: "center",
-          },
-          notif.backgroundStyle,
+          Styles.commonBackground,
+          notif.type === DropType.Success
+            ? Styles.successBackground
+            : Styles.errorBackground,
         ]}
         onPress={() => {
           if (notif.onPress) notif.onPress();
-          if (notif.id) this._endNotif(notif.id);
+          if (notif.id) this.endNotif(notif.id);
         }}
         activeOpacity={0.9}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          {icon}
-          <View
-            style={{ justifyContent: "center", marginLeft: STATUS_BAR_HEIGHT }}
-          >
-            <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
-              {this.state.notifQ[0].title}
-            </Text>
-            <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-              {this.state.notifQ[0].body}
-            </Text>
-          </View>
-        </View>
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            notif.type === DropType.Success
+              ? Styles.successText
+              : Styles.errorText,
+          ]}
+        >
+          {notif.message}
+        </Text>
       </TouchableOpacity>
     ) : (
       <View />
@@ -217,40 +211,50 @@ export class Dropdown extends React.Component<Props, State> {
 let dropdownRef = createRef<Dropdown>();
 const DropdownInstance = () => <Dropdown ref={dropdownRef} key="Dropdown" />;
 
-export function dropdownInfo(
-  infoString: string,
-  body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueInfo(infoString, body, onPress);
+export function dropdownSuccess({
+  message,
+  onPress,
+  persist,
+  duration,
+}: {
+  message?: string;
+  onPress?: () => void;
+  persist?: boolean;
+  duration?: number;
+}) {
+  dropdownRef.current?.queueSuccess({
+    message: message || "",
+    onPress:
+      onPress ||
+      function () {
+        /* nothing */
+      },
+    persist: persist || false,
+    duration: duration || DROP_DURATION,
+  });
 }
 
-export function dropdownSuccess(
-  successString: string,
-  body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueSuccess(successString, body, onPress);
-}
-
-export function dropdownWarning(
-  warningString: string,
-  body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueWarning(warningString, body, onPress);
-}
-
-export function dropdownError(
-  errorString: string,
-  body: string,
-  onPress = () => {}
-) {
-  dropdownRef.current?.queueError(errorString, body, onPress);
-}
-
-export function customDropdown(notif: DropNotif) {
-  dropdownRef.current?.queueNotif(notif);
+export function dropdownError({
+  message,
+  onPress,
+  persist,
+  duration,
+}: {
+  message?: string;
+  onPress?: () => void;
+  persist?: boolean;
+  duration?: number;
+}) {
+  dropdownRef.current?.queueError({
+    message: message || "",
+    onPress:
+      onPress ||
+      function () {
+        /* nothing */
+      },
+    persist: persist || false,
+    duration: duration || DROP_DURATION,
+  });
 }
 
 export default DropdownInstance;

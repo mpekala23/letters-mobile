@@ -41,7 +41,7 @@ class PicUpload extends React.Component<Props, State> {
         this.setState({ image: result.uri });
       }
     } catch (E) {
-      dropdownError("Photo Upload", "Unable to access the photo library.");
+      dropdownError({ message: "Unable to access the photo library." });
     }
   };
 

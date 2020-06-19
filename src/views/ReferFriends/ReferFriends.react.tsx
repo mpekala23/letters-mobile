@@ -7,6 +7,7 @@ import Styles from "./ReferFriends.style";
 import { Typography } from "@styles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "navigations";
+import { i18n } from "@i18n";
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -96,7 +97,7 @@ const onShare = async () => {
   try {
     await facebookShare(sharingUrl);
   } catch (err) {
-    dropdownError("Network", "The request could not be completed.");
+    dropdownError({ message: i18n.t("Error.requestIncomplete") });
   }
 };
 

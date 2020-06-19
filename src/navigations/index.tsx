@@ -87,13 +87,13 @@ const NavigatorBase: React.FC<Props> = (props) => {
   ) : props.authInfo.isLoggedIn ? (
     <>
       <Stack.Screen
-        name="ChooseOption"
-        component={ChooseOptionScreen}
+        name="Home"
+        component={HomeScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ChooseOption"
+        component={ChooseOptionScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
       <Stack.Screen

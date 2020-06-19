@@ -8,6 +8,10 @@ import { AppStackParamList } from "navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Notifs from "@notifications";
 import { Button } from "@components";
+import {
+  dropdownSuccess,
+  dropdownError,
+} from "@components/Dropdown/Dropdown.react";
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
 
@@ -37,7 +41,20 @@ const HomeScreenBase: React.FC<Props> = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button buttonText="Press Me" onPress={() => {}} />
+      <Button
+        buttonText="Success"
+        onPress={() => {
+          dropdownSuccess({
+            message: "test",
+          });
+        }}
+      />
+      <Button
+        buttonText="Error"
+        onPress={() => {
+          dropdownError({ message: "error" });
+        }}
+      />
     </View>
   );
 };

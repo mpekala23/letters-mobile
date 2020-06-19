@@ -6,9 +6,9 @@ import { UserState } from "@store/User/UserTypes";
 import Styles from "./ProfilePic.styles";
 import { logout } from "@api";
 import { dropdownError } from "components/Dropdown/Dropdown.react";
-import { ProfilePicTypes } from 'types';
+import { ProfilePicTypes } from "types";
 
-const ExamplePic = require('@assets/ExamplePic.jpg');
+const ExamplePic = require("@assets/ExamplePic.jpg");
 
 export interface Props {
   firstName: string;
@@ -18,9 +18,10 @@ export interface Props {
 }
 
 const ProfilePic: React.FC<Props> = (props) => {
-  let initials = '';
+  let initials = "";
   if (props.firstName && props.lastName) {
-    initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
+    initials =
+      props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
@@ -34,7 +35,7 @@ const ProfilePic: React.FC<Props> = (props) => {
             : Styles.contactPic,
         ]}
         source={ExamplePic}
-        accessibilityLabel='Profile Picture'
+        accessibilityLabel="Profile Picture"
       />
     );
   }
@@ -51,7 +52,9 @@ const ProfilePic: React.FC<Props> = (props) => {
           // TODO: Have this press direct to Edit Profile screen once finished
           await logout();
         } catch (err) {
-          dropdownError("Storage", "Unable to successfully log out the user.");
+          dropdownError({
+            message: "Unable to successfully log out the user.",
+          });
         }
       }}
     >
