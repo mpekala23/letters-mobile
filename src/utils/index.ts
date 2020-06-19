@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import * as EmailValidator from "email-validator";
 import { STATES, STATES_DROPDOWN } from "./States";
 import PhoneNumber from "awesome-phonenumber";
+import { Prompts, getRandomPromptIx } from "./FeelingStuck";
+
+export { Prompts, getRandomPromptIx };
 
 // Global constants
 export const STATUS_BAR_HEIGHT = 20;

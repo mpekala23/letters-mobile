@@ -1,5 +1,7 @@
 import AddManuallyScreen from "./AddContact/AddManually.react";
 import ChooseOptionScreen from "./Compose/ChooseOption.react";
+import ComposeLetterScreen from "./Compose/ComposeLetter.react";
+import ComposePostcardScreen from "./Compose/ComposePostCard.react";
 import ContactInfoScreen from "./AddContact/ContactInfo.react";
 import ContactSelectorScreen from "./Home/ContactSelector.react";
 import ExplainProblemScreen from "./Report/ExplainProblem.react";
@@ -17,6 +19,8 @@ import ThanksScreen from "./Report/Thanks.react";
 export {
   AddManuallyScreen,
   ChooseOptionScreen,
+  ComposeLetterScreen,
+  ComposePostcardScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,

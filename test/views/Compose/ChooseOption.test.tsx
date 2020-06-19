@@ -3,7 +3,7 @@ import { ChooseOptionScreen } from "@views";
 import { render, fireEvent, toJSON } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { LetterTypes } from "../../src/types";
+import { LetterTypes } from "types";
 
 const mockStore = configureStore([]);
 
@@ -33,7 +33,7 @@ const setup = () => {
   };
 };
 
-describe("Choose Option screen", () => {
+describe("ChooseOption screen", () => {
   it("should match snapshot", () => {
     const { container } = setup();
     const tree = toJSON(container);

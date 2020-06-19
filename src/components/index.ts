@@ -1,4 +1,5 @@
 import Button from "./Button/Button.react";
+import ComposeHeader from "./ComposeHeader/ComposeHeader.react";
 import DeliveryStatusCard from "./Card/DeliveryStatusCard.react";
 import Dropdown from "./Dropdown/Dropdown.react";
 import GrayBar from "./GrayBar/GrayBar.react";
@@ -15,6 +16,7 @@ import Topbar from "./Topbar/Topbar.react";
 
 export {
   Button,
+  ComposeHeader,
   DeliveryStatusCard,
   Dropdown,
   GrayBar,

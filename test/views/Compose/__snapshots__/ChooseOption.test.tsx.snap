@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Choose Option screen should match snapshot 1`] = `
+exports[`ChooseOption screen should match snapshot 1`] = `
 <View
   collapsable={true}
   pointerEvents="box-none"
@@ -13,6 +13,7 @@ exports[`Choose Option screen should match snapshot 1`] = `
   <View
     style={
       Object {
+        "flex": 1,
         "padding": 10,
       }
     }

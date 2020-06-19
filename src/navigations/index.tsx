@@ -10,6 +10,8 @@ import {
   AddManuallyScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
+  ComposeLetterScreen,
+  ComposePostcardScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
@@ -27,8 +29,8 @@ import { AppState } from "@store/types";
 import { AuthInfo } from "@store/User/UserTypes";
 import { navigationRef, navigate } from "@notifications";
 export { navigationRef, navigate };
-import { Notif } from "store/Notif/NotifTypes";
-import { NullableFacility } from "types";
+import { Notif } from "@store/Notif/NotifTypes";
+import { NullableFacility } from "@types";
 import { Topbar } from "@components";
 
 export type AuthStackParamList = {
@@ -40,6 +42,8 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   AddManually: undefined;
   ChooseOption: undefined;
+  ComposeLetter: undefined;
+  ComposePostcard: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;
   ExplainProblem: undefined;
@@ -86,6 +90,16 @@ const NavigatorBase: React.FC<Props> = (props) => {
     />
   ) : props.authInfo.isLoggedIn ? (
     <>
+      <Stack.Screen
+        name="ComposeLetter"
+        component={ComposeLetterScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+      <Stack.Screen
+        name="ComposePostcard"
+        component={ComposePostcardScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
       <Stack.Screen
         name="ChooseOption"
         component={ChooseOptionScreen}
