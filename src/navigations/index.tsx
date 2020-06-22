@@ -28,7 +28,7 @@ import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from 'store/Notif/NotifTypes';
-import { NullableFacility } from 'types';
+import { NullableFacility, Letter } from 'types';
 import { Topbar } from '@components';
 import { Contact } from '@store/Contact/ContactTypes';
 
