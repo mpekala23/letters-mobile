@@ -10,8 +10,9 @@ import {
   setAdding,
   setExisting,
   clearContacts,
-} from 'store/Contact/ContactActions';
+} from '@store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
+import i18n from '@i18n';
 
 const { MOCK_API_IP } = process.env;
 
@@ -104,7 +105,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       await saveToken(body.data.token);
     } catch (err) {
       dropdownError({
-        message: 'Unable to save login credentials for next time',
+        message: i18n.t('Error.unsavedToken'),
       });
     }
   }
@@ -161,7 +162,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       await saveToken(body.data.token);
     } catch (err) {
       dropdownError({
-        message: 'Unable to save login credentials for next time',
+        message: i18n.t('Error.unsavedToken'),
       });
     }
   }

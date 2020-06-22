@@ -7,7 +7,9 @@
   "Error": {
     "network": "Network Error",
     "requestTimedOut": "The request timed out.",
-    "requestIncomplete": "The request could not be completed."
+    "requestIncomplete": "The request could not be completed.",
+    "unsavedToken": "Unable to save login credentials for next time",
+    "cantLogout": "Unable to log out the user"
   },
   "AddManuallyScreen": {
     "addAFacility": "Add a Facility",
