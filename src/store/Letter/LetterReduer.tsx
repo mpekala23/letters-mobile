@@ -1,3 +1,4 @@
+import { LetterTypes, LetterStatus } from 'types';
 import {
   LetterState,
   LetterActionTypes,
@@ -12,8 +13,7 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
-} from "./LetterTypes";
-import { LetterTypes, LetterStatus } from "types";
+} from './LetterTypes';
 
 const initialState: LetterState = {
   composing: {
@@ -21,8 +21,8 @@ const initialState: LetterState = {
     status: LetterStatus.Draft,
     isDraft: true,
     recipientId: -1,
-    message: "",
-    photoPath: "",
+    message: '',
+    photoPath: '',
   },
   existing: [],
 };

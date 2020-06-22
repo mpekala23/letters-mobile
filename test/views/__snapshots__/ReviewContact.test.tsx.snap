@@ -137,7 +137,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Click to upload contact's image.
+                Click to upload contact\`'\`s image.
               </Text>
             </View>
             <View

@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { Notif } from "@store/Notif/NotifTypes";
-import { useFocusEffect } from "@react-navigation/native";
-import { AppState } from "store/types";
-import { connect } from "react-redux";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Notifs from "@notifications";
-import { Button } from "@components";
+import React, { useCallback, useEffect } from 'react';
+import { View, Text } from 'react-native';
+import { Notif } from '@store/Notif/NotifTypes';
+import { useFocusEffect } from '@react-navigation/native';
+import { AppState } from 'store/types';
+import { connect } from 'react-redux';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import Notifs from '@notifications';
+import { Button } from '@components';
 
-type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
 interface Props {
   currentNotif: Notif | null;
   navigation: HomeScreenNavigationProp;
 }
 
-const HomeScreenBase: React.FC<Props> = (props) => {
+const HomeScreenBase: React.FC<Props> = (props: Props) => {
   // runs only on the first render
   useEffect(() => {
     async function doSetup() {
@@ -37,12 +37,17 @@ const HomeScreenBase: React.FC<Props> = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button buttonText="Press Me" onPress={() => {}} />
+      <Button
+        buttonText="Press Me"
+        onPress={() => {
+          /* nothing */
+        }}
+      />
     </View>
   );
 };
 
-const mapStateToProps = function (state: AppState) {
+const mapStateToProps = (state: AppState) => {
   return {
     currentNotif: state.notif.currentNotif,
   };

@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, TouchableOpacity, View, ViewStyle, Image } from "react-native";
-import CardStyles from "./Card.styles";
+import React from 'react';
+import { Text, TouchableOpacity, View, ViewStyle, Image } from 'react-native';
+import CardStyles from './Card.styles';
 
 interface Props {
   text: string;
@@ -10,7 +10,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const MemoryLaneCard: React.FC<Props> = (props) => {
+const MemoryLaneCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[
