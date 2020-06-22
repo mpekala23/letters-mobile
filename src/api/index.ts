@@ -1,33 +1,27 @@
-import store from "@store";
-import { Linking } from "react-native";
-import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
-import { dropdownError } from "@components/Dropdown/Dropdown.react";
-import url from "url";
-import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
-import { Storage } from "types";
-import { loginUser, logoutUser } from "@store/User/UserActions";
-import { setAdding, setExisting, clearContacts } from "store/Contact/ContactActions";
-import "isomorphic-fetch";
+import store from '@store';
+import { Linking } from 'react-native';
+import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import url from 'url';
+import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
+import { Storage } from 'types';
+import { loginUser, logoutUser } from '@store/User/UserActions';
+import { setAdding, setExisting, clearContacts } from 'store/Contact/ContactActions';
+import 'isomorphic-fetch';
 import { Contact } from '@store/Contact/ContactTypes';
 
-const MOCK_API_IP = process.env.MOCK_API_IP;
-export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
+const { MOCK_API_IP } = process.env;
+export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export interface UserResponse {
   type: string;
   data: User;
 }
 
-export function fetchTimeout(
-  url: string,
-  options: object,
-  timeout = 3000
-): Promise<Response> {
+export function fetchTimeout(url: string, options: object, timeout = 3000): Promise<Response> {
   return Promise.race([
     fetch(url, options),
-    new Promise<Response>((_, reject) =>
-      setTimeout(() => reject(new Error("timeout")), timeout)
-    ),
+    new Promise<Response>((_, reject) => setTimeout(() => reject(new Error('timeout')), timeout)),
   ]);
 }
 
@@ -43,20 +37,20 @@ export async function loginWithToken() {
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
-      throw Error("Cannot load token");
+      throw Error('Cannot load token');
     }
-    const response = await fetchTimeout(url.resolve(API_URL, "login/token"), {
-      method: "POST",
+    const response = await fetchTimeout(url.resolve(API_URL, 'login/token'), {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         token: rememberToken,
       }),
     });
     const body = await response.json();
-    if (body.status === "ERROR") throw Error("Invalid token");
+    if (body.status === 'ERROR') throw Error('Invalid token');
     const userData: User = {
       id: body.data.id,
       firstName: body.data.first_name,
@@ -64,7 +58,7 @@ export async function loginWithToken() {
       email: body.data.email,
       phone: body.data.phone,
       address1: body.data.addr_line_1,
-      address2: body.data.addr_line_2 || "",
+      address2: body.data.addr_line_2 || '',
       country: body.data.country,
       postal: body.data.postal,
       city: body.data.city,
@@ -79,8 +73,8 @@ export async function loginWithToken() {
 }
 
 export async function login(cred: UserLoginInfo) {
-  const response = await fetchTimeout(url.resolve(API_URL, "login"), {
-    method: "POST",
+  const response = await fetchTimeout(url.resolve(API_URL, 'login'), {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -91,7 +85,7 @@ export async function login(cred: UserLoginInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == "ERROR") {
+  if (body.status == 'ERROR') {
     throw Error(body.message);
   }
   if (cred.remember) {
@@ -99,10 +93,7 @@ export async function login(cred: UserLoginInfo) {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        "Storage",
-        "Unable to save login credentials for next time"
-      );
+      dropdownError('Storage', 'Unable to save login credentials for next time');
     }
   }
   const userData: User = {
@@ -112,7 +103,7 @@ export async function login(cred: UserLoginInfo) {
     email: body.data.email,
     phone: body.data.phone,
     address1: body.data.addr_line_1,
-    address2: body.data.addr_line_2 || "",
+    address2: body.data.addr_line_2 || '',
     country: body.data.country,
     postal: body.data.postal,
     city: body.data.city,
@@ -129,11 +120,11 @@ export async function logout() {
 }
 
 export async function register(data: UserRegisterInfo) {
-  const response = await fetchTimeout(url.resolve(API_URL, "register"), {
-    method: "POST",
+  const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: data.email,
@@ -149,7 +140,7 @@ export async function register(data: UserRegisterInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == "ERROR") {
+  if (body.status == 'ERROR') {
     throw Error(body.message);
   }
   if (data.remember) {
@@ -157,10 +148,7 @@ export async function register(data: UserRegisterInfo) {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        "Storage",
-        "Unable to save login credentials for next time"
-      );
+      dropdownError('Storage', 'Unable to save login credentials for next time');
     }
   }
   const userData: User = {
@@ -196,6 +184,7 @@ export async function addContact(data: {}) {
     throw Error(body.data);
   }
   const contactData: Contact = {
+    id: body.data.id,
     firstName: body.data.first_name,
     lastName: body.data.last_name,
     inmateNumber: body.data.inmate_number,
@@ -208,6 +197,7 @@ export async function addContact(data: {}) {
   store.dispatch(setExisting(existing));
   store.dispatch(
     setAdding({
+      id: -1,
       state: '',
       firstName: '',
       lastName: '',
