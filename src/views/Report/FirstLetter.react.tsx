@@ -1,21 +1,19 @@
-import React, { useCallback, Dispatch } from "react";
-import { Text, View } from "react-native";
-import { Colors, Typography } from "@styles";
-import { Button, Icon } from "@components";
-import Mail from "@assets/views/Report/MailLoud";
-import Styles from "./FirstLetter.styles";
-import ReportStyles from "./Report.styles";
-import { useFocusEffect } from "@react-navigation/native";
-import { AppState } from "@store/types";
-import { connect } from "react-redux";
-import { handleNotif } from "@store/Notif/NotifiActions";
-import { NotifActionTypes, Notif, HANDLE_NOTIF } from "@store/Notif/NotifTypes";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
+import React, { Dispatch } from 'react';
+import { Text, View } from 'react-native';
+import { Typography } from '@styles';
+import { Button, Icon } from '@components';
+import Mail from '@assets/views/Report/MailLoud';
+import { AppState } from '@store/types';
+import { connect } from 'react-redux';
+import { NotifActionTypes, Notif, HANDLE_NOTIF } from '@store/Notif/NotifTypes';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import ReportStyles from './Report.styles';
+import Styles from './FirstLetter.styles';
 
 type FirstLetterScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "FirstLetter"
+  'FirstLetter'
 >;
 
 interface Props {
@@ -25,15 +23,15 @@ interface Props {
 }
 
 class FirstLetterScreenBase extends React.Component<Props> {
-  componentDidMount() {
+  componentDidMount(): void {
     if (
       this.props.currentNotif &&
-      this.props.currentNotif.screen === "FirstLetter"
+      this.props.currentNotif.screen === 'FirstLetter'
     )
       this.props.handleNotif();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <View style={Styles.background}>
         <View style={Styles.innerBack}>
@@ -46,29 +44,29 @@ class FirstLetterScreenBase extends React.Component<Props> {
               Typography.FONT_REGULAR,
               {
                 fontSize: 16,
-                textAlign: "center",
-                color: "#515151",
+                textAlign: 'center',
+                color: '#515151',
                 marginHorizontal: 20,
                 marginBottom: 30,
               },
             ]}
           >
-            If there was a problem with delivery and your loved one didn't
-            receive the letter, let us know.
+            If there was a problem with delivery and your loved one
+            didn`&apos;`t receive the letter, let us know.
           </Text>
           <Button
             buttonText="It was fire"
             onPress={() => {
-              this.props.navigation.navigate("Home");
+              this.props.navigation.navigate('Home');
             }}
-            containerStyle={{ width: "100%" }}
+            containerStyle={{ width: '100%' }}
           />
           <Button
             buttonText="Something went wrong"
             onPress={() => {
-              this.props.navigation.navigate("Issues");
+              this.props.navigation.navigate('Issues');
             }}
-            containerStyle={{ width: "100%" }}
+            containerStyle={{ width: '100%' }}
             reverse
           />
         </View>
@@ -77,13 +75,13 @@ class FirstLetterScreenBase extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = function (state: AppState) {
+const mapStateToProps = (state: AppState) => {
   return {
     currentNotif: state.notif.currentNotif,
   };
 };
 
-const mapDispatchToProps = function (dispatch: Dispatch<NotifActionTypes>) {
+const mapDispatchToProps = (dispatch: Dispatch<NotifActionTypes>) => {
   return {
     handleNotif: () => dispatch({ type: HANDLE_NOTIF, payload: null }),
   };

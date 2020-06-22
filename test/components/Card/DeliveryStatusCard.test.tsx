@@ -1,77 +1,80 @@
-import React from "react";
-import { DeliveryStatusCard } from "@components";
-import { fireEvent, render, toJSON } from "@testing-library/react-native";
-import { DeliveryProgress } from "types";
+import React from 'react';
+import { DeliveryStatusCard } from '@components';
+import { fireEvent, render, toJSON } from '@testing-library/react-native';
+import { LetterStatus } from 'types';
 
 const setup = (propOverrides = {}) => {
-  const props = Object.assign(
-    {
-      title: "Title",
-      status: "Status",
-      date: "Date",
-      progress: 0,
-      onPress: jest.fn(),
-    },
-    propOverrides
-  );
+  const props = {
+    title: 'Title',
+    status: 'Status',
+    date: 'Date',
+    progress: 0,
+    onPress: jest.fn(),
+    ...propOverrides,
+  };
   return {
     ...render(<DeliveryStatusCard {...props} />),
     props,
   };
 };
 
-describe("Delivery Status Card component", () => {
-  it("should match snapshot", () => {
+describe('Delivery Status Card component', () => {
+  it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 
-  it("should fire onPress() on a press", () => {
+  it('should fire onPress() on a press', () => {
     const { props, getByText } = setup();
-    fireEvent.press(getByText("Title"));
+    fireEvent.press(getByText('Title'));
     expect(props.onPress).toHaveBeenCalledTimes(1);
   });
 
-  it("should display title", () => {
+  it('should display title', () => {
     const { getByText } = setup();
-    expect(getByText("Title")).toBeDefined();
+    expect(getByText('Title')).toBeDefined();
   });
 
-  it("should display status", () => {
+  it('should display status', () => {
     const { getByText } = setup();
-    expect(getByText("Status")).toBeDefined();
+    expect(getByText('Status')).toBeDefined();
   });
 
-  it("should display date", () => {
+  it('should display date', () => {
     const { getByText } = setup();
-    expect(getByText("Date")).toBeDefined();
+    expect(getByText('Date')).toBeDefined();
   });
 
-  it("should display progress bar 0 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Created });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("0%");
+  it('should display progress bar 0 / 5', () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Draft });
+    expect(getByTestId('progressBar').props.style[1].width).toBe('0%');
   });
 
-  it("should display progress bar 1 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Printed });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("25%");
+  it('should display progress bar 1 / 5', () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Created });
+    expect(getByTestId('progressBar').props.style[1].width).toBe('20%');
   });
 
-  it("should display progress bar 2 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Mailed });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("50%");
+  it('should display progress bar 2 / 5', () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Printed });
+    expect(getByTestId('progressBar').props.style[1].width).toBe('40%');
   });
 
-  it("should display progress bar 3 / 4", () => {
+  it('should display progress bar 3 / 5', () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Mailed });
+    expect(getByTestId('progressBar').props.style[1].width).toBe('60%');
+  });
+
+  it('should display progress bar 4 / 5', () => {
     const { getByTestId } = setup({
-      progress: DeliveryProgress.OutForDelivery,
+      progress: LetterStatus.OutForDelivery,
     });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("75%");
+    expect(getByTestId('progressBar').props.style[1].width).toBe('80%');
   });
 
-  it("should display progress bar 4 / 4", () => {
-    const { getByTestId } = setup({ progress: DeliveryProgress.Delivered });
-    expect(getByTestId("progressBar").props.style[1].width).toBe("100%");
+  it('should display progress bar 5 / 5', () => {
+    const { getByTestId } = setup({ progress: LetterStatus.Delivered });
+    expect(getByTestId('progressBar').props.style[1].width).toBe('100%');
   });
 });

@@ -1,16 +1,16 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: "#EDEDED",
+    backgroundColor: '#EDEDED',
   },
   innerBack: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     marginTop: 60,
     marginHorizontal: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 20,
     paddingHorizontal: 40,
     paddingBottom: 60,

@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import CardStyles from "./Card.styles";
+import React from 'react';
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import CardStyles from './Card.styles';
 
 interface Props {
   status: string;
@@ -11,7 +11,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const LetterStatusCard: React.FC<Props> = (props) => {
+const LetterStatusCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}

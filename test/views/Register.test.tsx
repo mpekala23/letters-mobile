@@ -1,16 +1,12 @@
-import React from "react";
-import { RegisterScreen } from "@views";
-process.env.MOCK_API_IP = "test_mock_api";
-import { register } from "@api";
-import {
-  render,
-  fireEvent,
-  toJSON,
-  getByPlaceholderText,
-} from "@testing-library/react-native";
-import fetchMock from "jest-fetch-mock";
+import React from 'react';
+import { RegisterScreen } from '@views';
+import { register } from '@api';
+import { render, fireEvent, toJSON } from '@testing-library/react-native';
+import fetchMock from 'jest-fetch-mock';
 
-jest.mock("@api", () => ({
+process.env.MOCK_API_IP = 'test_mock_api';
+
+jest.mock('@api', () => ({
   register: jest.fn(),
 }));
 
@@ -22,31 +18,34 @@ const setup = (response = {}) => {
   return render(<RegisterScreen navigation={navigation} />);
 };
 
-describe("Register screen", () => {
-  it("should match snapshot", () => {
+describe('Register screen', () => {
+  it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 
-  it("should have register button be disabled until all fields are valid", async () => {
+  it('should have register button be disabled until all fields are valid', async () => {
     const { getByPlaceholderText, getByText } = setup();
-    fireEvent.press(getByText("Register"));
+    fireEvent.press(getByText('Register'));
     expect(register).toHaveBeenCalledTimes(0);
-    fireEvent.changeText(getByPlaceholderText("First Name"), "Team");
-    fireEvent.changeText(getByPlaceholderText("Last Name"), "Ameelio");
+    fireEvent.changeText(getByPlaceholderText('First Name'), 'Team');
+    fireEvent.changeText(getByPlaceholderText('Last Name'), 'Ameelio');
     fireEvent.changeText(
-      getByPlaceholderText("Cell Phone Number"),
-      "4324324432"
+      getByPlaceholderText('Cell Phone Number'),
+      '4324324432'
     );
-    fireEvent.changeText(getByPlaceholderText("Address Line 1"), "Somewhere");
-    fireEvent.changeText(getByPlaceholderText("Country"), "USA");
-    fireEvent.changeText(getByPlaceholderText("Zip Code"), "12345");
-    fireEvent.changeText(getByPlaceholderText("City"), "New Haven");
-    fireEvent.changeText(getByPlaceholderText("State"), "CT");
-    fireEvent.changeText(getByPlaceholderText("E-mail Address"), "team@ameelio.org");
-    fireEvent.changeText(getByPlaceholderText("Password"), "ThisGood1");
-    fireEvent.press(getByText("Register"));
+    fireEvent.changeText(getByPlaceholderText('Address Line 1'), 'Somewhere');
+    fireEvent.changeText(getByPlaceholderText('Country'), 'USA');
+    fireEvent.changeText(getByPlaceholderText('Zip Code'), '12345');
+    fireEvent.changeText(getByPlaceholderText('City'), 'New Haven');
+    fireEvent.changeText(getByPlaceholderText('State'), 'CT');
+    fireEvent.changeText(
+      getByPlaceholderText('E-mail Address'),
+      'team@ameelio.org'
+    );
+    fireEvent.changeText(getByPlaceholderText('Password'), 'ThisGood1');
+    fireEvent.press(getByText('Register'));
     expect(register).toHaveBeenCalledTimes(1);
   });
 });

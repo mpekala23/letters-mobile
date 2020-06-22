@@ -17,18 +17,34 @@ export enum ProfilePicTypes {
 export type NullableFacility = Facility | null;
 
 export enum Storage {
-  RememberToken = "Ameelio-Token",
+  RememberToken = 'Ameelio-Token',
 }
 
 export enum PrisonTypes {
-  State = "StatePrison",
-  Federal = "FederalPrison",
+  State = 'StatePrison',
+  Federal = 'FederalPrison',
 }
 
-export enum DeliveryProgress {
-  Created = "0%",
-  Printed = "25%",
-  Mailed = "50%",
-  OutForDelivery = "75%",
-  Delivered = "100%",
+export enum LetterStatus {
+  Draft = '0%',
+  Created = '20%',
+  Printed = '40%',
+  Mailed = '60%',
+  OutForDelivery = '80%',
+  Delivered = '100%',
+}
+
+export enum LetterTypes {
+  PostCards = 'PostCards',
+  Letters = 'Letters',
+}
+
+export interface Letter {
+  type: LetterTypes;
+  status: LetterStatus;
+  isDraft: boolean;
+  recipientId: number;
+  message: string;
+  photoPath?: string;
+  letterId?: number; // TODO: Once we have more info on this field and lob, use this more
 }
