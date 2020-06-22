@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-// We have to disable ESLint rule here since snake case variable names are forced on us by the API
+// the above disabling is necessary because the snake case variable names are not our decision,
+// but must remain to be consistent with letters-api
 
 module.exports = (req, res) => {
   const {
