@@ -1,3 +1,4 @@
+import { LetterTypes, LetterStatus } from 'types';
 import {
   LetterState,
   LetterActionTypes,
@@ -12,8 +13,7 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
-} from "./LetterTypes";
-import { LetterTypes, LetterStatus } from "types";
+} from './LetterTypes';
 
 const initialState: LetterState = {
   composing: {
@@ -21,8 +21,8 @@ const initialState: LetterState = {
     status: LetterStatus.Draft,
     isDraft: true,
     recipientId: -1,
-    message: "",
-    photoPath: "",
+    message: '',
+    photoPath: '',
   },
   existing: {
     8: [
@@ -32,7 +32,7 @@ const initialState: LetterState = {
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: "",
+        photoPath: '',
       },
       {
         type: LetterTypes.PostCards,
@@ -40,7 +40,7 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: "",
+        photoPath: '',
       },
       {
         type: LetterTypes.PostCards,
@@ -48,7 +48,7 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: "",
+        photoPath: '',
       },
     ],
   },

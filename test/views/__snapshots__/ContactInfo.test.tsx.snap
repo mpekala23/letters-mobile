@@ -155,7 +155,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               >
                 <Text>
                   Tap here to search the
-                   
                   <Text
                     style={
                       Array [
@@ -171,7 +170,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   >
                     CT
                   </Text>
-                   
                   database.
                 </Text>
               </Text>
@@ -204,7 +202,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               >
                 <Text>
                   Tap here to search the
-                   
                   <Text
                     style={
                       Array [
@@ -220,7 +217,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   >
                     Federal
                   </Text>
-                   
                   database.
                 </Text>
               </Text>

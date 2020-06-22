@@ -18,26 +18,26 @@ export enum ProfilePicTypes {
 export type NullableFacility = Facility | null;
 
 export enum Storage {
-  RememberToken = "Ameelio-Token",
+  RememberToken = 'Ameelio-Token',
 }
 
 export enum PrisonTypes {
-  State = "StatePrison",
-  Federal = "FederalPrison",
+  State = 'StatePrison',
+  Federal = 'FederalPrison',
 }
 
 export enum LetterStatus {
-  Draft = "Draft",
-  Created = "Created",
-  Printed = "Printed",
-  Mailed = "Mailed",
-  OutForDelivery = "Out for Delivery",
-  Delivered = "Delivered",
+  Draft = 'Draft',
+  Created = 'Created',
+  Printed = 'Printed',
+  Mailed = 'Mailed',
+  OutForDelivery = 'Out for Delivery',
+  Delivered = 'Delivered',
 }
 
 export enum LetterTypes {
-  PostCards = "PostCards",
-  Letters = "Letters",
+  PostCards = 'PostCards',
+  Letters = 'Letters',
 }
 
 export interface Letter {

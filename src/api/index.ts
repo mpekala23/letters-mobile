@@ -6,11 +6,15 @@ import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
 import { Storage } from 'types';
 import { loginUser, logoutUser } from '@store/User/UserActions';
-import { setAdding, setExisting, clearContacts } from 'store/Contact/ContactActions';
-import 'isomorphic-fetch';
+import {
+  setAdding,
+  setExisting,
+  clearContacts,
+} from 'store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
 
 const { MOCK_API_IP } = process.env;
+
 export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export interface UserResponse {
@@ -18,22 +22,28 @@ export interface UserResponse {
   data: User;
 }
 
-export function fetchTimeout(url: string, options: object, timeout = 3000): Promise<Response> {
+export function fetchTimeout<T>(
+  fetchUrl: string,
+  options: Record<string, unknown>,
+  timeout = 3000
+): Promise<Response> {
   return Promise.race([
-    fetch(url, options),
-    new Promise<Response>((_, reject) => setTimeout(() => reject(new Error('timeout')), timeout)),
+    fetch(fetchUrl, options),
+    new Promise<Response>((_, reject) =>
+      setTimeout(() => reject(new Error('timeout')), timeout)
+    ),
   ]);
 }
 
-export async function saveToken(token: string) {
-  return await setItemAsync(Storage.RememberToken, token);
+export async function saveToken(token: string): Promise<void> {
+  return setItemAsync(Storage.RememberToken, token);
 }
 
-export async function deleteToken() {
-  return await deleteItemAsync(Storage.RememberToken);
+export async function deleteToken(): Promise<void> {
+  return deleteItemAsync(Storage.RememberToken);
 }
 
-export async function loginWithToken() {
+export async function loginWithToken(): Promise<User> {
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
@@ -72,7 +82,7 @@ export async function loginWithToken() {
   }
 }
 
-export async function login(cred: UserLoginInfo) {
+export async function login(cred: UserLoginInfo): Promise<User> {
   const response = await fetchTimeout(url.resolve(API_URL, 'login'), {
     method: 'POST',
     headers: {
@@ -85,7 +95,7 @@ export async function login(cred: UserLoginInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == 'ERROR') {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (cred.remember) {
@@ -93,7 +103,10 @@ export async function login(cred: UserLoginInfo) {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError('Storage', 'Unable to save login credentials for next time');
+      dropdownError(
+        'Storage',
+        'Unable to save login credentials for next time'
+      );
     }
   }
   const userData: User = {
@@ -113,13 +126,13 @@ export async function login(cred: UserLoginInfo) {
   return userData;
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
   store.dispatch(logoutUser());
   store.dispatch(clearContacts());
-  return await deleteToken();
+  return deleteToken();
 }
 
-export async function register(data: UserRegisterInfo) {
+export async function register(data: UserRegisterInfo): Promise<User> {
   const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
     method: 'POST',
     headers: {
@@ -140,7 +153,7 @@ export async function register(data: UserRegisterInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == 'ERROR') {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (data.remember) {
@@ -148,7 +161,10 @@ export async function register(data: UserRegisterInfo) {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError('Storage', 'Unable to save login credentials for next time');
+      dropdownError(
+        'Storage',
+        'Unable to save login credentials for next time'
+      );
     }
   }
   const userData: User = {
@@ -168,9 +184,9 @@ export async function register(data: UserRegisterInfo) {
   return userData;
 }
 
-export async function getFacilities(text: string) {}
-
-export async function addContact(data: {}) {
+export async function addContact(
+  data: Record<string, unknown>
+): Promise<Contact[]> {
   const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
     method: 'POST',
     headers: {
@@ -180,7 +196,7 @@ export async function addContact(data: {}) {
     body: JSON.stringify(data),
   });
   const body = await response.json();
-  if (body.type == 'ERROR') {
+  if (body.type === 'ERROR') {
     throw Error(body.data);
   }
   const contactData: Contact = {
@@ -209,7 +225,7 @@ export async function addContact(data: {}) {
   return existing;
 }
 
-export async function facebookShare(shareUrl: string) {
+export async function facebookShare(shareUrl: string): Promise<void> {
   const supportedUrl = await Linking.canOpenURL(shareUrl);
   if (supportedUrl) {
     await Linking.openURL(shareUrl);

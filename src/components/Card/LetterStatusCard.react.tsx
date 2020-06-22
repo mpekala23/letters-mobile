@@ -1,7 +1,7 @@
-import React from "react";
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import CardStyles from "./Card.styles";
-import { LetterStatus } from "types";
+import React from 'react';
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { LetterStatus } from 'types';
+import CardStyles from './Card.styles';
 
 interface Props {
   status: LetterStatus;
@@ -14,21 +14,21 @@ interface Props {
 function mapStatusToColorStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { style: { backgroundColor: "#81B5FF" } };
+      return { style: { backgroundColor: '#81B5FF' } };
     case LetterStatus.Created:
-      return { style: { backgroundColor: "#81B5FF" } };
+      return { style: { backgroundColor: '#81B5FF' } };
     case LetterStatus.Printed:
-      return { style: { backgroundColor: "#7DF5AD" } };
+      return { style: { backgroundColor: '#7DF5AD' } };
     case LetterStatus.Mailed:
-      return { style: { backgroundColor: "#81B5FF" } };
+      return { style: { backgroundColor: '#81B5FF' } };
     case LetterStatus.OutForDelivery:
-      return { style: { backgroundColor: "#FF7171" } };
+      return { style: { backgroundColor: '#FF7171' } };
     default:
-      return { style: { backgroundColor: "#FF7171" } };
+      return { style: { backgroundColor: '#FF7171' } };
   }
 }
 
-const LetterStatusCard: React.FC<Props> = (props) => {
+const LetterStatusCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}

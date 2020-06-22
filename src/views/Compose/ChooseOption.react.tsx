@@ -1,19 +1,19 @@
-import React, { Dispatch } from "react";
-import { Text, View } from "react-native";
-import { LetterOptionCard } from "@components";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { AppStackParamList } from "navigations";
-import { LetterTypes } from "types";
-import { Typography } from "@styles";
-import Styles from "./Compose.styles";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { setType } from "@store/Letter/LetterActions";
-import { LetterState, LetterActionTypes } from "@store/Letter/LetterTypes";
+import React, { Dispatch } from 'react';
+import { Text, View } from 'react-native';
+import { LetterOptionCard } from '@components';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from 'navigations';
+import { LetterTypes } from 'types';
+import { Typography } from '@styles';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setType } from '@store/Letter/LetterActions';
+import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "Home"
+  'Home'
 >;
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
   setType: (type: LetterTypes) => void;
 }
 
-const ChooseOptionScreenBase: React.FC<Props> = (props) => {
+const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.screenBackground}>
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>

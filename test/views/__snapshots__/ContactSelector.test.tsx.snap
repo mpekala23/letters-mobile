@@ -134,39 +134,39 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                  },
-                  Object {
-                    "color": "#6a6a6a",
-                    "fontSize": 16,
-                    "paddingBottom": 6,
-                  },
-                ]
+                Object {
+                  "color": "#6a6a6a",
+                  "fontSize": 16,
+                  "paddingBottom": 6,
+                }
               }
             >
-              💌 received:
+              <span
+                aria-label="mail heart emoji"
+                role="img"
+              >
+                💌
+              </span>
+               
+              received:
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                  },
-                  Object {
-                    "color": "#6a6a6a",
-                    "fontSize": 16,
-                    "paddingBottom": 6,
-                  },
-                ]
+                Object {
+                  "color": "#6a6a6a",
+                  "fontSize": 16,
+                  "paddingBottom": 6,
+                }
               }
             >
-              📅 last heard from you:
+              <span
+                aria-label="calender emoji"
+                role="img"
+              >
+                📅
+              </span>
+               
+              last heard from you:
             </Text>
             <Text
               style={
@@ -187,7 +187,14 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 ]
               }
             >
-              ✈️ letters traveled:
+              <span
+                aria-label="plane emoji"
+                role="img"
+              >
+                ✈️
+              </span>
+               
+              letters traveled:
             </Text>
           </View>
         </View>

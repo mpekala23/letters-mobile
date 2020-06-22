@@ -23,15 +23,16 @@ import {
   SingleContactScreen,
   SplashScreen,
   ThanksScreen,
-} from "@views";
-import { AppState } from "@store/types";
-import { AuthInfo } from "@store/User/UserTypes";
-import { navigationRef, navigate } from "@notifications";
+} from '@views';
+import { AppState } from '@store/types';
+import { AuthInfo } from '@store/User/UserTypes';
+import { navigationRef, navigate } from '@notifications';
+import { Notif } from 'store/Notif/NotifTypes';
+import { NullableFacility } from 'types';
+import { Topbar } from '@components';
+import { Contact } from '@store/Contact/ContactTypes';
+
 export { navigationRef, navigate };
-import { Notif } from "store/Notif/NotifTypes";
-import { NullableFacility, Letter } from "types";
-import { Topbar } from "@components";
-import { Contact } from "@store/Contact/ContactTypes";
 
 export type AuthStackParamList = {
   Splash: undefined;
@@ -51,7 +52,7 @@ export type AppStackParamList = {
   Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
-  SingleContact: {contact : Contact, letters?: Letter[] } | undefined;
+  SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
 };
@@ -65,7 +66,9 @@ export interface Props {
   currentNotif: Notif | null;
 }
 
-const fadeTransition = (data: StackCardInterpolationProps): StackCardInterpolatedStyle => {
+const fadeTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
   return {
     cardStyle: {
       opacity: data.current.progress,
@@ -73,100 +76,107 @@ const fadeTransition = (data: StackCardInterpolationProps): StackCardInterpolate
   };
 };
 
-const NavigatorBase: React.FC<Props> = (props) => {
+const NavigatorBase: React.FC<Props> = (props: Props) => {
   let topSection = <View />;
   if (!props.authInfo.isLoadingToken) {
     topSection = <Topbar />;
   }
   // Determine which views should be accessible
-  const screens = props.authInfo.isLoadingToken ? (
-    <Stack.Screen
-      name="Splash"
-      component={SplashScreen}
-      options={{ cardStyleInterpolator: fadeTransition }}
-    />
-  ) : props.authInfo.isLoggedIn ? (
-    <>
+  let screens;
+  if (props.authInfo.isLoadingToken) {
+    screens = (
       <Stack.Screen
-        name="ChooseOption"
-        component={ChooseOptionScreen}
+        name="Splash"
+        component={SplashScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="ContactInfo"
-        component={ContactInfoScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="FacilityDirectory"
-        component={FacilityDirectoryScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="AddManually"
-        component={AddManuallyScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="ReferFriends"
-        component={ReferFriendsScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="ReviewContact"
-        component={ReviewContactScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="ContactSelector"
-        component={ContactSelectorScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="SingleContact"
-        component={SingleContactScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="ExplainProblem"
-        component={ExplainProblemScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="FirstLetter"
-        component={FirstLetterScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="Issues"
-        component={IssuesScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="Thanks"
-        component={ThanksScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-    </>
-  ) : (
-    <>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-    </>
-  );
+    );
+  } else if (props.authInfo.isLoggedIn) {
+    screens = (
+      <>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ContactInfo"
+          component={ContactInfoScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="FacilityDirectory"
+          component={FacilityDirectoryScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="AddManually"
+          component={AddManuallyScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ReferFriends"
+          component={ReferFriendsScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ReviewContact"
+          component={ReviewContactScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ExplainProblem"
+          component={ExplainProblemScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="FirstLetter"
+          component={FirstLetterScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Issues"
+          component={IssuesScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Thanks"
+          component={ThanksScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ContactSelector"
+          component={ContactSelectorScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="SingleContact"
+          component={SingleContactScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ChooseOption"
+          component={ChooseOptionScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+      </>
+    );
+  } else {
+    screens = (
+      <>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+      </>
+    );
+  }
   return (
     <>
       {topSection}

@@ -11,15 +11,15 @@ module.exports = (req, res) => {
     facility,
   } = req.body;
 
-  if (inmate_number === "123456789") {
+  if (inmate_number === '123456789') {
     return res.status(401).send({
-      type: "ERROR",
-      data: "Invalid inmate number",
+      type: 'ERROR',
+      data: 'Invalid inmate number',
     });
   }
 
   return res.status(201).send({
-    type: "SUCCESS",
+    type: 'SUCCESS',
     data: {
       id: 8,
       first_name,

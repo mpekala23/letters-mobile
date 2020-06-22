@@ -7,29 +7,25 @@ import configureStore from 'redux-mock-store';
 const mockStore = configureStore([]);
 
 const setup = (authOverrides = {}, userOverrides = {}) => {
-  const authInfo = Object.assign(
-    {
-      isLoadingToken: true,
-      isLoggedIn: false,
-      apiToken: "",
-    },
-    authOverrides
-  );
-  const user = Object.assign(
-    {
-      id: "6",
-      firstName: "Team",
-      lastName: "Ameelio",
-      email: "team@ameelio.org",
-      phone: "4324324432",
-      address1: "Somewhere",
-      country: "USA",
-      postal: "12345",
-      city: "New Haven",
-      state: "CT",
-    },
-    userOverrides
-  );
+  const authInfo = {
+    isLoadingToken: true,
+    isLoggedIn: false,
+    apiToken: '',
+    ...authOverrides,
+  };
+  const user = {
+    id: '6',
+    firstName: 'Team',
+    lastName: 'Ameelio',
+    email: 'team@ameelio.org',
+    phone: '4324324432',
+    address1: 'Somewhere',
+    country: 'USA',
+    postal: '12345',
+    city: 'New Haven',
+    state: 'CT',
+    ...userOverrides,
+  };
   const store = mockStore({
     user: {
       authInfo,
@@ -37,7 +33,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     },
   });
 
-  const StoreProvider = ({ children }) => {
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
