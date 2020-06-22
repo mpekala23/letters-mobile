@@ -6,13 +6,9 @@ import url from "url";
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { Storage } from "types";
 import { loginUser, logoutUser } from "@store/User/UserActions";
-import {
-  setAdding,
-  setExisting,
-  clearContacts,
-} from "store/Contact/ContactActions";
+import { setAdding, setExisting, clearContacts } from "store/Contact/ContactActions";
 import "isomorphic-fetch";
-import { Contact } from "@store/Contact/ContactTypes";
+import { Contact } from '@store/Contact/ContactTypes';
 
 const MOCK_API_IP = process.env.MOCK_API_IP;
 export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
@@ -86,8 +82,8 @@ export async function login(cred: UserLoginInfo) {
   const response = await fetchTimeout(url.resolve(API_URL, "login"), {
     method: "POST",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: cred.email,
@@ -187,20 +183,19 @@ export async function register(data: UserRegisterInfo) {
 export async function getFacilities(text: string) {}
 
 export async function addContact(data: {}) {
-  const response = await fetchTimeout(url.resolve(API_URL, "contacts"), {
-    method: "POST",
+  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
   const body = await response.json();
-  if (body.type == "ERROR") {
+  if (body.type == 'ERROR') {
     throw Error(body.data);
   }
   const contactData: Contact = {
-    id: body.data.id,
     firstName: body.data.first_name,
     lastName: body.data.last_name,
     inmateNumber: body.data.inmate_number,
@@ -213,12 +208,11 @@ export async function addContact(data: {}) {
   store.dispatch(setExisting(existing));
   store.dispatch(
     setAdding({
-      id: -1,
-      state: "",
-      firstName: "",
-      lastName: "",
-      inmateNumber: "",
-      relationship: "",
+      state: '',
+      firstName: '',
+      lastName: '',
+      inmateNumber: '',
+      relationship: '',
       facility: null,
     })
   );
@@ -230,6 +224,6 @@ export async function facebookShare(shareUrl: string) {
   if (supportedUrl) {
     await Linking.openURL(shareUrl);
   } else {
-    throw Error("Share Url not supported");
+    throw Error('Share Url not supported');
   }
 }
