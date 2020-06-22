@@ -106,7 +106,18 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           ]
         }
       >
-        💌 received: 
+        <Text
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 16,
+            }
+          }
+        >
+          💌
+        </Text>
+         received:
+         
         3
       </Text>
       <Text
@@ -125,7 +136,17 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           ]
         }
       >
-        📅 last heard from you:
+        <Text
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 16,
+            }
+          }
+        >
+          📆
+        </Text>
+         last heard from you:
       </Text>
       <Text
         style={
@@ -146,7 +167,17 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           ]
         }
       >
-        ✈️ letters traveled:
+        <Text
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 16,
+            }
+          }
+        >
+          ✈️
+        </Text>
+         letters traveled:
       </Text>
       <TouchableOpacity
         activeOpacity={0.7}

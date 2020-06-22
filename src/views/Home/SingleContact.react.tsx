@@ -8,9 +8,13 @@ import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
+import Emoji from 'react-native-emoji';
 import Styles from './SingleContact.styles';
 
-type SingleContactScreenNavigationProp = StackNavigationProp<AppStackParamList, 'SingleContact'>;
+type SingleContactScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'SingleContact'
+>;
 
 interface Props {
   navigation: SingleContactScreenNavigationProp;
@@ -19,16 +23,16 @@ interface Props {
   };
 }
 
-const SingleContactScreen: React.FC<Props> = (props) => {
+const SingleContactScreen: React.FC<Props> = (props: Props) => {
   const { contact, letters } = props.route.params;
 
   const letterCards =
     letters && letters.length > 0
-      ? letters.map((letter: Letter, key: number) => {
+      ? letters.map((letter: Letter) => {
           return (
             <LetterStatusCard
               status={letter.status}
-              date='05/11/2020'
+              date="05/11/2020"
               description={letter.message}
               onPress={() => {
                 /* TO-DO: Navigate to letter tracking screen */
@@ -46,7 +50,7 @@ const SingleContactScreen: React.FC<Props> = (props) => {
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
-          imageUri='ExamplePic'
+          imageUri="ExamplePic"
           type={ProfilePicTypes.SingleContact}
         />
         <Text
@@ -62,16 +66,21 @@ const SingleContactScreen: React.FC<Props> = (props) => {
           {contact.firstName} {contact.lastName}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          {/* eslint-disable-line jsx-a11y/accessible-emoji */}
-          💌 received: {letters ? letters.length : 0}
+          <Emoji name="love_letter" style={{ fontSize: 16 }} /> received:{' '}
+          {letters ? letters.length : 0}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          {/* eslint-disable-line jsx-a11y/accessible-emoji */}
-          📅 last heard from you:
+          <Emoji name="calendar" style={{ fontSize: 16 }} /> last heard from
+          you:
         </Text>
-        <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo, { paddingBottom: 4 }]}>
-          {/* eslint-disable-line jsx-a11y/accessible-emoji */}
-          ✈️ letters traveled:
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            Styles.profileCardInfo,
+            { paddingBottom: 4 },
+          ]}
+        >
+          <Emoji name="airplane" style={{ fontSize: 16 }} /> letters traveled:
         </Text>
         <Button
           onPress={() => props.navigation.navigate('ChooseOption')}
@@ -80,7 +89,10 @@ const SingleContactScreen: React.FC<Props> = (props) => {
           containerStyle={Styles.sendLetterButton}
         />
       </View>
-      <ScrollView style={Styles.actionItems} keyboardShouldPersistTaps='handled'>
+      <ScrollView
+        style={Styles.actionItems}
+        keyboardShouldPersistTaps="handled"
+      >
         <MemoryLaneCountCard
           letterCount={letters ? letters.length : 0}
           onPress={() => {

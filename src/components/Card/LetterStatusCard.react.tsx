@@ -14,17 +14,17 @@ interface Props {
 function mapStatusToColorStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { style: { backgroundColor: '#81B5FF' } };
+      return { backgroundColor: '#81B5FF' };
     case LetterStatus.Created:
-      return { style: { backgroundColor: '#81B5FF' } };
+      return { backgroundColor: '#81B5FF' };
     case LetterStatus.Printed:
-      return { style: { backgroundColor: '#7DF5AD' } };
+      return { backgroundColor: '#7DF5AD' };
     case LetterStatus.Mailed:
-      return { style: { backgroundColor: '#81B5FF' } };
+      return { backgroundColor: '#81B5FF' };
     case LetterStatus.OutForDelivery:
-      return { style: { backgroundColor: '#FF7171' } };
+      return { backgroundColor: '#FF7171' };
     default:
-      return { style: { backgroundColor: '#FF7171' } };
+      return { backgroundColor: '#FF7171' };
   }
 }
 
@@ -38,7 +38,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
         <View
           style={[
             CardStyles.letterStatusBar,
-            mapStatusToColorStyle(props.status).style,
+            mapStatusToColorStyle(props.status),
           ]}
         />
         <View style={{ flex: 1 }}>

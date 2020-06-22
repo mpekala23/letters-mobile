@@ -22,19 +22,15 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
     contactsOverrides
   );
 
-  const letters = Object.assign(
-    [
-      {
-        type: LetterTypes.PostCards,
-        status: LetterStatus.Printed,
-        isDraft: true,
-        recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-      },
-    ],
-    lettersOverrides
-  );
+  const letters = {
+    type: LetterTypes.PostCards,
+    status: LetterStatus.Printed,
+    isDraft: true,
+    recipientId: 8,
+    message: "I'm trying out this new service called Ameelio...",
+    photoPath: '',
+    ...lettersOverrides,
+  };
 
   const initialContactState = {
     adding: {},

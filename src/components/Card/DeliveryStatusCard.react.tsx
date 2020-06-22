@@ -14,19 +14,19 @@ interface Props {
 function mapStatusToProgressStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { style: { width: '0%' } };
+      return { width: '0%' };
     case LetterStatus.Created:
-      return { style: { width: '20%' } };
+      return { width: '20%' };
     case LetterStatus.Printed:
-      return { style: { width: '40%' } };
+      return { width: '40%' };
     case LetterStatus.Mailed:
-      return { style: { width: '60%' } };
+      return { width: '60%' };
     case LetterStatus.OutForDelivery:
-      return { style: { width: '80%' } };
+      return { width: '80%' };
     case LetterStatus.Delivered:
-      return { style: { width: '100%' } };
+      return { width: '100%' };
     default:
-      return { style: { width: '0%' } };
+      return { width: '0%' };
   }
 }
 
@@ -45,7 +45,7 @@ const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
         <View
           style={[
             CardStyles.deliveryStatusBarForeground,
-            mapStatusToProgressStyle(props.status).style,
+            mapStatusToProgressStyle(props.status),
           ]}
           testID="progressBar"
         />
