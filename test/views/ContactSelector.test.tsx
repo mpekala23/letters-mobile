@@ -29,22 +29,28 @@ const setup = (contactsOverrides = []) => {
     contact: initialState,
   });
 
-  const StoreProvider = ({ children }) => {
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
   return {
     navigation,
     store,
-    ...render(<ContactSelectorScreen navigation={navigation} contactState={initialState} />, {
-      wrapper: StoreProvider,
-    }),
+    ...render(
+      <ContactSelectorScreen
+        navigation={navigation}
+        contactState={initialState}
+      />,
+      {
+        wrapper: StoreProvider,
+      }
+    ),
   };
 };
 
 describe('Contact Selector Screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<ContactSelectorScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
@@ -73,6 +79,8 @@ describe('Contact Selector Screen', () => {
   it('should navigate to contact info screen when the plus button is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('+'));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', { addFromSelector: true });
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', {
+      addFromSelector: true,
+    });
   });
 });

@@ -38,7 +38,7 @@ exports[`Thanks screen should match snapshot 1`] = `
         ]
       }
     >
-      Thanks for giving us feedback! We'll get in touch with you soon.
+      Thanks for giving us feedback! We\`'\`ll get in touch with you soon.
     </Text>
     <View
       testID="thanksSVG"

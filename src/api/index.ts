@@ -1,66 +1,66 @@
-import store from "@store";
-import { Linking } from "react-native";
-import { User, UserLoginInfo, UserRegisterInfo } from "@store/User/UserTypes";
-import { dropdownError } from "@components/Dropdown/Dropdown.react";
-import url from "url";
-import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
-import { Storage } from "types";
-import { loginUser, logoutUser } from "@store/User/UserActions";
+import store from '@store';
+import { Linking } from 'react-native';
+import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import url from 'url';
+import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
+import { Storage } from 'types';
+import { loginUser, logoutUser } from '@store/User/UserActions';
 import {
   setAdding,
   setExisting,
   clearContacts,
-} from "store/Contact/ContactActions";
-import "isomorphic-fetch";
-import { Contact } from "@store/Contact/ContactTypes";
+} from 'store/Contact/ContactActions';
+import { Contact } from '@store/Contact/ContactTypes';
 
-const MOCK_API_IP = process.env.MOCK_API_IP;
-export const API_URL = "http://" + MOCK_API_IP + ":9000/api/";
+const { MOCK_API_IP } = process.env;
+
+export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export interface UserResponse {
   type: string;
   data: User;
 }
 
-export function fetchTimeout(
-  url: string,
-  options: object,
+export function fetchTimeout<T>(
+  fetchUrl: string,
+  options: Record<string, unknown>,
   timeout = 3000
 ): Promise<Response> {
   return Promise.race([
-    fetch(url, options),
+    fetch(fetchUrl, options),
     new Promise<Response>((_, reject) =>
-      setTimeout(() => reject(new Error("timeout")), timeout)
+      setTimeout(() => reject(new Error('timeout')), timeout)
     ),
   ]);
 }
 
-export async function saveToken(token: string) {
-  return await setItemAsync(Storage.RememberToken, token);
+export async function saveToken(token: string): Promise<void> {
+  return setItemAsync(Storage.RememberToken, token);
 }
 
-export async function deleteToken() {
-  return await deleteItemAsync(Storage.RememberToken);
+export async function deleteToken(): Promise<void> {
+  return deleteItemAsync(Storage.RememberToken);
 }
 
-export async function loginWithToken() {
+export async function loginWithToken(): Promise<User> {
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
-      throw Error("Cannot load token");
+      throw Error('Cannot load token');
     }
-    const response = await fetchTimeout(url.resolve(API_URL, "login/token"), {
-      method: "POST",
+    const response = await fetchTimeout(url.resolve(API_URL, 'login/token'), {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         token: rememberToken,
       }),
     });
     const body = await response.json();
-    if (body.status === "ERROR") throw Error("Invalid token");
+    if (body.status === 'ERROR') throw Error('Invalid token');
     const userData: User = {
       id: body.data.id,
       firstName: body.data.first_name,
@@ -68,7 +68,7 @@ export async function loginWithToken() {
       email: body.data.email,
       phone: body.data.phone,
       address1: body.data.addr_line_1,
-      address2: body.data.addr_line_2 || "",
+      address2: body.data.addr_line_2 || '',
       country: body.data.country,
       postal: body.data.postal,
       city: body.data.city,
@@ -82,12 +82,12 @@ export async function loginWithToken() {
   }
 }
 
-export async function login(cred: UserLoginInfo) {
-  const response = await fetchTimeout(url.resolve(API_URL, "login"), {
-    method: "POST",
+export async function login(cred: UserLoginInfo): Promise<User> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'login'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: cred.email,
@@ -95,7 +95,7 @@ export async function login(cred: UserLoginInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == "ERROR") {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (cred.remember) {
@@ -104,8 +104,8 @@ export async function login(cred: UserLoginInfo) {
       await saveToken(body.data.token);
     } catch (err) {
       dropdownError(
-        "Storage",
-        "Unable to save login credentials for next time"
+        'Storage',
+        'Unable to save login credentials for next time'
       );
     }
   }
@@ -116,7 +116,7 @@ export async function login(cred: UserLoginInfo) {
     email: body.data.email,
     phone: body.data.phone,
     address1: body.data.addr_line_1,
-    address2: body.data.addr_line_2 || "",
+    address2: body.data.addr_line_2 || '',
     country: body.data.country,
     postal: body.data.postal,
     city: body.data.city,
@@ -126,18 +126,18 @@ export async function login(cred: UserLoginInfo) {
   return userData;
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
   store.dispatch(logoutUser());
   store.dispatch(clearContacts());
-  return await deleteToken();
+  return deleteToken();
 }
 
-export async function register(data: UserRegisterInfo) {
-  const response = await fetchTimeout(url.resolve(API_URL, "register"), {
-    method: "POST",
+export async function register(data: UserRegisterInfo): Promise<User> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: data.email,
@@ -153,7 +153,7 @@ export async function register(data: UserRegisterInfo) {
     }),
   });
   const body = await response.json();
-  if (body.status == "ERROR") {
+  if (body.status === 'ERROR') {
     throw Error(body.message);
   }
   if (data.remember) {
@@ -162,8 +162,8 @@ export async function register(data: UserRegisterInfo) {
       await saveToken(body.data.token);
     } catch (err) {
       dropdownError(
-        "Storage",
-        "Unable to save login credentials for next time"
+        'Storage',
+        'Unable to save login credentials for next time'
       );
     }
   }
@@ -184,22 +184,23 @@ export async function register(data: UserRegisterInfo) {
   return userData;
 }
 
-export async function getFacilities(text: string) {}
-
-export async function addContact(data: {}) {
-  const response = await fetchTimeout(url.resolve(API_URL, "contacts"), {
-    method: "POST",
+export async function addContact(
+  data: Record<string, unknown>
+): Promise<Contact[]> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
   const body = await response.json();
-  if (body.type == "ERROR") {
+  if (body.type === 'ERROR') {
     throw Error(body.data);
   }
   const contactData: Contact = {
+    id: body.data.id,
     firstName: body.data.first_name,
     lastName: body.data.last_name,
     inmateNumber: body.data.inmate_number,
@@ -212,22 +213,23 @@ export async function addContact(data: {}) {
   store.dispatch(setExisting(existing));
   store.dispatch(
     setAdding({
-      state: "",
-      firstName: "",
-      lastName: "",
-      inmateNumber: "",
-      relationship: "",
+      id: -1,
+      state: '',
+      firstName: '',
+      lastName: '',
+      inmateNumber: '',
+      relationship: '',
       facility: null,
     })
   );
   return existing;
 }
 
-export async function facebookShare(shareUrl: string) {
+export async function facebookShare(shareUrl: string): Promise<void> {
   const supportedUrl = await Linking.canOpenURL(shareUrl);
   if (supportedUrl) {
     await Linking.openURL(shareUrl);
   } else {
-    throw Error("Share Url not supported");
+    throw Error('Share Url not supported');
   }
 }

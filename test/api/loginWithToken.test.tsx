@@ -1,64 +1,59 @@
-import { loginWithToken } from "@api";
-import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
-import { Storage } from "types";
-import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
+import { loginWithToken } from '@api';
+import fetchMock from 'fetch-mock';
 
-jest.mock("expo-secure-store", () => ({
+jest.mock('expo-secure-store', () => ({
   getItemAsync: jest
     .fn()
     .mockReturnValueOnce(undefined)
-    .mockReturnValueOnce("invalid token")
-    .mockReturnValueOnce("dummy token"),
+    .mockReturnValueOnce('invalid token')
+    .mockReturnValueOnce('dummy token'),
 }));
 
-describe("api loginWithToken", () => {
-  it("should throw an error when there is no token", async () => {
-    let result = null;
+describe('api loginWithToken', () => {
+  it('should throw an error when there is no token', async () => {
     let error = false;
     try {
-      result = await loginWithToken();
+      await loginWithToken();
     } catch (err) {
       error = true;
     }
     expect(error).toBeTruthy();
   });
 
-  it("should throw an error when there is an invalid token", async () => {
-    let result = null;
+  it('should throw an error when there is an invalid token', async () => {
     let error = false;
     fetchMock.post(
       `*`,
-      JSON.stringify({ status: "ERROR", message: "Invalid token", data: [] }),
+      JSON.stringify({ status: 'ERROR', message: 'Invalid token', data: [] }),
       { repeat: 1 }
     );
     try {
-      result = await loginWithToken();
+      await loginWithToken();
     } catch (err) {
       error = true;
     }
     expect(error).toBeTruthy();
   });
 
-  it("should return user data when good token", async () => {
+  it('should return user data when good token', async () => {
     let result = null;
     let error = false;
     fetchMock.post(
       `*`,
       JSON.stringify({
-        status: "SUCCESS",
+        status: 'SUCCESS',
         data: {
-          id: "6",
-          first_name: "Team",
-          last_name: "Ameelio",
-          email: "team@ameelio.org",
-          phone: "4324324432",
-          addr_line_1: "Somewhere",
-          country: "USA",
-          postal: "12345",
-          city: "New Haven",
-          state: "CT",
-          token: "dummy token",
+          id: '6',
+          first_name: 'Team',
+          last_name: 'Ameelio',
+          email: 'team@ameelio.org',
+          phone: '4324324432',
+          addr_line_1: 'Somewhere',
+          country: 'USA',
+          postal: '12345',
+          city: 'New Haven',
+          state: 'CT',
+          token: 'dummy token',
         },
       }),
       { overwriteRoutes: false }
@@ -69,17 +64,17 @@ describe("api loginWithToken", () => {
       error = true;
     }
     expect(result).toEqual({
-      id: "6",
-      firstName: "Team",
-      lastName: "Ameelio",
-      email: "team@ameelio.org",
-      phone: "4324324432",
-      address1: "Somewhere",
-      address2: "",
-      country: "USA",
-      postal: "12345",
-      city: "New Haven",
-      state: "CT",
+      id: '6',
+      firstName: 'Team',
+      lastName: 'Ameelio',
+      email: 'team@ameelio.org',
+      phone: '4324324432',
+      address1: 'Somewhere',
+      address2: '',
+      country: 'USA',
+      postal: '12345',
+      city: 'New Haven',
+      state: 'CT',
     });
     expect(error).toBeFalsy();
   });

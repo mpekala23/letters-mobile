@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
-import { WINDOW_WIDTH } from "@utils";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({});

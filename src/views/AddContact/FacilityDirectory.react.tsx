@@ -1,24 +1,24 @@
-import React, { Dispatch } from "react";
-import { View, FlatList, Text, TouchableOpacity, Keyboard } from "react-native";
-import { Colors, Typography } from "@styles";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Styles from "./FacilityDirectory.styles";
-import CommonStyles from "./AddContact.styles";
-import { Button, Input } from "@components";
-import { Facility, NullableFacility } from "types";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { setAdding } from "@store/Contact/ContactActions";
+import React, { Dispatch } from 'react';
+import { View, FlatList, Text, TouchableOpacity, Keyboard } from 'react-native';
+import { Colors, Typography } from '@styles';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Button, Input } from '@components';
+import { Facility, NullableFacility } from 'types';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setAdding } from '@store/Contact/ContactActions';
 import {
   ContactState,
   Contact,
   ContactActionTypes,
-} from "@store/Contact/ContactTypes";
+} from '@store/Contact/ContactTypes';
+import CommonStyles from './AddContact.styles';
+import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "FacilityDirectory"
+  'FacilityDirectory'
 >;
 
 export interface Props {
@@ -38,12 +38,12 @@ export interface State {
 }
 
 const example: Facility = {
-  name: "Yukon Kskokwim Correctional Center",
-  type: "State Prison",
-  address: "P.O. Box 400",
-  city: "Bethel",
-  state: "AK",
-  postal: "99559",
+  name: 'Yukon Kskokwim Correctional Center',
+  type: 'State Prison',
+  address: 'P.O. Box 400',
+  city: 'Bethel',
+  state: 'AK',
+  postal: '99559',
 };
 
 class FacilityDirectoryScreenBase extends React.Component<Props, State> {
@@ -56,7 +56,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      search: "",
+      search: '',
       selected: null,
       manual: null,
     };
@@ -65,7 +65,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.filterData = this.filterData.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
-      "focus",
+      'focus',
       this.onNavigationFocus
     );
   }
@@ -88,6 +88,23 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       this.setState({ selected: this.props.contactState.adding.facility });
     }
     this.props.navigation.setParams({ newFacility: null });
+  }
+
+  filterData() {
+    const result = [];
+    for (let ix = 0; ix < this.props.facilityData.length; ix += 1) {
+      const facility = this.props.facilityData[ix];
+      const search = this.state.search.toLowerCase();
+      if (
+        facility.name.toLowerCase().indexOf(search) > -1 ||
+        facility.city.toLowerCase().indexOf(search) > -1 ||
+        facility.postal.toLowerCase().indexOf(search) > -1 ||
+        facility.state.toLowerCase().indexOf(search) > -1
+      ) {
+        result.push(facility);
+      }
+    }
+    return result;
   }
 
   renderItem({ item }: { item: Facility }) {
@@ -113,7 +130,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           {item.type}
         </Text>
         <Text style={[Typography.FONT_ITALIC, Styles.itemInfo]}>
-          {item.address} - {item.city}, {item.state} {item.postal}
+          {item.address} -{item.city},{item.state} {item.postal}
         </Text>
       </TouchableOpacity>
     );
@@ -124,7 +141,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       <View>
         <View
           style={{
-            width: "100%",
+            width: '100%',
             height: 1,
             backgroundColor: Colors.GRAY_LIGHT,
             marginBottom: 30,
@@ -139,34 +156,17 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       <View style={Styles.footerBackground}>
         {manualEntry}
         <Text style={[Typography.FONT_REGULAR, { marginBottom: 20 }]}>
-          Don't see the facility you're looking for?
+          Don`&apos;`t see the facility you`&apos;`re looking for?
         </Text>
         <Button
           buttonText="Add Manually"
           onPress={() => {
             this.setState({ selected: null });
-            this.props.navigation.navigate("AddManually");
+            this.props.navigation.navigate('AddManually');
           }}
         />
       </View>
     );
-  }
-
-  filterData() {
-    const result = [];
-    for (let ix = 0; ix < this.props.facilityData.length; ++ix) {
-      const facility = this.props.facilityData[ix];
-      const search = this.state.search.toLowerCase();
-      if (
-        facility.name.toLowerCase().indexOf(search) > -1 ||
-        facility.city.toLowerCase().indexOf(search) > -1 ||
-        facility.postal.toLowerCase().indexOf(search) > -1 ||
-        facility.state.toLowerCase().indexOf(search) > -1
-      ) {
-        result.push(facility);
-      }
-    }
-    return result;
   }
 
   render() {
@@ -200,7 +200,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               this.props.navigation.setParams({
                 newFacility: null,
               });
-              this.props.navigation.navigate("ContactInfo");
+              this.props.navigation.navigate('ContactInfo');
             }}
             buttonText="Back"
             reverse
@@ -215,7 +215,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               this.props.navigation.setParams({
                 newFacility: null,
               });
-              this.props.navigation.navigate("ReviewContact");
+              this.props.navigation.navigate('ReviewContact');
             }}
             buttonText="Next"
             enabled={this.state.selected !== null}

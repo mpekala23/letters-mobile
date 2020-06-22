@@ -4,7 +4,7 @@ import {
   SET_EXISTING,
   CLEAR_CONTACTS,
   ContactActionTypes,
-} from "./ContactTypes";
+} from './ContactTypes';
 
 export function setAdding(contact: Contact): ContactActionTypes {
   return {
@@ -20,7 +20,7 @@ export function setExisting(contacts: Contact[]): ContactActionTypes {
   };
 }
 
-export function clearContacts() {
+export function clearContacts(): ContactActionTypes {
   return {
     type: CLEAR_CONTACTS,
     payload: null,

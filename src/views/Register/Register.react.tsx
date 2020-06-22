@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -6,22 +6,22 @@ import {
   Text,
   View,
   Platform,
-} from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { AuthStackParamList } from "@navigations";
-import { Button, Input, PicUpload } from "@components";
-import Styles from "./Register.style";
-import { Typography } from "@styles";
-import { register } from "@api";
-import { UserRegisterInfo } from "@store/User/UserTypes";
-import { dropdownError } from "components/Dropdown/Dropdown.react";
-import { STATES_DROPDOWN, Validation } from "@utils";
-import { CheckBox } from "react-native-elements";
-import { i18n } from "@i18n";
+} from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AuthStackParamList } from '@navigations';
+import { Button, Input, PicUpload } from '@components';
+import { Typography } from '@styles';
+import { register } from '@api';
+import { UserRegisterInfo } from '@store/User/UserTypes';
+import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { STATES_DROPDOWN, Validation } from '@utils';
+import { CheckBox } from 'react-native-elements';
+import i18n from '@i18n';
+import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
-  "Register"
+  'Register'
 >;
 
 export interface Props {
@@ -30,47 +30,55 @@ export interface Props {
 
 export interface State {
   valid: boolean;
-  registered: boolean;
   remember: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
   private firstName = createRef<Input>();
+
   private lastName = createRef<Input>();
+
   private phone = createRef<Input>();
+
   private address1 = createRef<Input>();
+
   private address2 = createRef<Input>();
+
   private country = createRef<Input>();
+
   private postal = createRef<Input>();
+
   private city = createRef<Input>();
+
   private phyState = createRef<Input>();
+
   private email = createRef<Input>();
+
   private password = createRef<Input>();
 
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
-      registered: false,
       remember: false,
     };
   }
 
-  devSkip = () => {
-    if (this.firstName.current) this.firstName.current.set("Team");
-    if (this.lastName.current) this.lastName.current.set("Ameelio");
-    if (this.phone.current) this.phone.current.set("4324324432");
-    if (this.address1.current) this.address1.current.set("Somewhere");
-    if (this.country.current) this.country.current.set("USA");
-    if (this.postal.current) this.postal.current.set("12345");
-    if (this.city.current) this.city.current.set("New Haven");
-    if (this.phyState.current) this.phyState.current.set("Conneticut");
-    if (this.email.current) this.email.current.set("team@ameelio.org");
-    if (this.password.current) this.password.current.set("ThisGood1");
+  devSkip = (): void => {
+    if (this.firstName.current) this.firstName.current.set('Team');
+    if (this.lastName.current) this.lastName.current.set('Ameelio');
+    if (this.phone.current) this.phone.current.set('4324324432');
+    if (this.address1.current) this.address1.current.set('Somewhere');
+    if (this.country.current) this.country.current.set('USA');
+    if (this.postal.current) this.postal.current.set('12345');
+    if (this.city.current) this.city.current.set('New Haven');
+    if (this.phyState.current) this.phyState.current.set('Conneticut');
+    if (this.email.current) this.email.current.set('team@ameelio.org');
+    if (this.password.current) this.password.current.set('ThisGood1');
     this.updateValid();
   };
 
-  updateValid = () => {
+  updateValid = (): void => {
     if (
       this.firstName.current &&
       this.lastName.current &&
@@ -98,7 +106,7 @@ class RegisterScreen extends React.Component<Props, State> {
     }
   };
 
-  doRegister = async () => {
+  doRegister = async (): Promise<void> => {
     if (
       this.firstName.current &&
       this.lastName.current &&
@@ -127,38 +135,36 @@ class RegisterScreen extends React.Component<Props, State> {
         remember: this.state.remember,
       };
       try {
-        const res = await register(data);
-        this.setState({ registered: true });
+        await register(data);
       } catch (err) {
-        if (err.message === "Email in use") {
-          Alert.alert(i18n.t("RegisterScreen.emailAlreadyInUse"));
-        } else if (err.message === "timeout") {
+        if (err.message === 'Email in use') {
+          Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
+        } else if (err.message === 'timeout') {
           dropdownError(
-            i18n.t("Error.network"),
-            i18n.t("Error.requestTimedOut")
+            i18n.t('Error.network'),
+            i18n.t('Error.requestTimedOut')
           );
         } else {
           dropdownError(
-            i18n.t("Error.network"),
-            i18n.t("Error.requestIncomplete")
+            i18n.t('Error.network'),
+            i18n.t('Error.requestIncomplete')
           );
         }
-        this.setState({ registered: false });
       }
     }
   };
 
-  render() {
+  render(): JSX.Element {
     return (
       <KeyboardAvoidingView
         style={Styles.trueBackground}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         enabled
       >
         <ScrollView
           style={Styles.backgroundScroll}
           contentContainerStyle={Styles.scrollContent}
-          keyboardShouldPersistTaps={"handled"}
+          keyboardShouldPersistTaps="handled"
         >
           <View
             accessible
@@ -167,27 +173,27 @@ class RegisterScreen extends React.Component<Props, State> {
           >
             <PicUpload />
             <Text style={[Typography.FONT_ITALIC, { marginTop: 5 }]}>
-              {i18n.t("RegisterScreen.clickToUploadProfileImage")}
+              {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
           </View>
           <View style={Styles.privacyBackground}>
             <Text style={[Typography.FONT_BOLD, Styles.privacyText]}>
-              {i18n.t("RegisterScreen.privacyText")}
+              {i18n.t('RegisterScreen.privacyText')}
             </Text>
           </View>
           <Button
             link
-            buttonText={i18n.t("RegisterScreen.alreadyHaveAnAccount")}
+            buttonText={i18n.t('RegisterScreen.alreadyHaveAnAccount')}
             containerStyle={{ marginBottom: 10 }}
             onPress={() => {
-              this.props.navigation.navigate("Login");
+              this.props.navigation.navigate('Login');
             }}
           />
           <Button buttonText="Dev Skip" onPress={this.devSkip} />
           <Input
             ref={this.firstName}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.firstName")}
+            placeholder={i18n.t('RegisterScreen.firstName')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -196,17 +202,17 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.lastName}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.lastName")}
+            placeholder={i18n.t('RegisterScreen.lastName')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.phone}
           />
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Input
               ref={this.phone}
               parentStyle={Styles.fullWidth}
-              placeholder={i18n.t("RegisterScreen.cellphoneNumber")}
+              placeholder={i18n.t('RegisterScreen.cellphoneNumber')}
               required
               validate={Validation.Phone}
               onValid={this.updateValid}
@@ -217,7 +223,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address1}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.addressLine1")}
+            placeholder={i18n.t('RegisterScreen.addressLine1')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -226,13 +232,13 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.addressLine2")}
+            placeholder={i18n.t('RegisterScreen.addressLine2')}
             nextInput={this.country}
           />
           <Input
             ref={this.country}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.country")}
+            placeholder={i18n.t('RegisterScreen.country')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -241,7 +247,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.postal}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.zipcode")}
+            placeholder={i18n.t('RegisterScreen.zipcode')}
             required
             validate={Validation.Postal}
             onValid={this.updateValid}
@@ -251,7 +257,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.city}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.city")}
+            placeholder={i18n.t('RegisterScreen.city')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -260,7 +266,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.phyState}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.state")}
+            placeholder={i18n.t('RegisterScreen.state')}
             validate={Validation.State}
             options={STATES_DROPDOWN}
             required
@@ -271,7 +277,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.email}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.emailAddress")}
+            placeholder={i18n.t('RegisterScreen.emailAddress')}
             required
             validate={Validation.Email}
             onValid={this.updateValid}
@@ -281,7 +287,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.password}
             parentStyle={Styles.fullWidth}
-            placeholder={i18n.t("RegisterScreen.password")}
+            placeholder={i18n.t('RegisterScreen.password')}
             required
             secure
             validate={Validation.Password}
@@ -294,18 +300,20 @@ class RegisterScreen extends React.Component<Props, State> {
             center
             title="Remember Me"
             containerStyle={{
-              backgroundColor: "white",
-              width: "50%",
+              backgroundColor: 'white',
+              width: '50%',
               borderWidth: 0,
             }}
             checked={this.state.remember}
             onPress={() => {
-              this.setState({ remember: !this.state.remember });
+              this.setState((prevState) => {
+                return { ...prevState, remember: !prevState.remember };
+              });
             }}
           />
           <Button
             containerStyle={Styles.fullWidth}
-            buttonText={i18n.t("RegisterScreen.register")}
+            buttonText={i18n.t('RegisterScreen.register')}
             enabled={this.state.valid}
             onPress={this.doRegister}
           />

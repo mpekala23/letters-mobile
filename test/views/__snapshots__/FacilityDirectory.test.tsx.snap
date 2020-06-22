@@ -244,9 +244,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             }
           >
             P.O. Box 400
-             - 
+             -
             Bethel
-            , 
+            ,
             AK
              
             99559
@@ -276,7 +276,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
               ]
             }
           >
-            Don't see the facility you're looking for?
+            Don\`'\`t see the facility you\`'\`re looking for?
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}

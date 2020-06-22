@@ -6,37 +6,38 @@ import {
   SET_PAST_NOTIFS,
   FutureNotif,
   SET_FUTURE_NOTIFS,
-} from "./NotifTypes";
+  NotifActionTypes,
+} from './NotifTypes';
 
-export function addNotif(notif: Notif) {
+export function addNotif(notif: Notif): NotifActionTypes {
   return {
     type: ADD_NOTIF,
     payload: notif,
   };
 }
 
-export function handleNotif() {
+export function handleNotif(): NotifActionTypes {
   return {
     type: HANDLE_NOTIF,
     payload: null,
   };
 }
 
-export function setCurrentNotif(notif: Notif) {
+export function setCurrentNotif(notif: Notif): NotifActionTypes {
   return {
     type: SET_CURRENT_NOTIF,
     payload: notif,
   };
 }
 
-export function setPastNotifs(notifs: Notif[]) {
+export function setPastNotifs(notifs: Notif[]): NotifActionTypes {
   return {
     type: SET_PAST_NOTIFS,
     payload: notifs,
   };
 }
 
-export function setFutureNotifs(futureNotifs: FutureNotif[]) {
+export function setFutureNotifs(futureNotifs: FutureNotif[]): NotifActionTypes {
   return {
     type: SET_FUTURE_NOTIFS,
     payload: futureNotifs,
