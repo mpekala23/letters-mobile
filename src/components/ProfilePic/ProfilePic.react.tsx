@@ -1,14 +1,10 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { UserState } from "@store/User/UserTypes";
-import Styles from "./ProfilePic.styles";
-import { logout } from "@api";
-import { dropdownError } from "components/Dropdown/Dropdown.react";
-import { ProfilePicTypes } from "types";
-
-const ExamplePic = require("@assets/ExamplePic.jpg");
+import React from 'react';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import { logout } from '@api';
+import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { ProfilePicTypes } from 'types';
+import ExamplePic from '@assets/ExamplePic.jpg';
+import Styles from './ProfilePic.styles';
 
 export interface Props {
   firstName: string;
@@ -17,8 +13,8 @@ export interface Props {
   type: ProfilePicTypes;
 }
 
-const ProfilePic: React.FC<Props> = (props) => {
-  let initials = "";
+const ProfilePic: React.FC<Props> = (props: Props) => {
+  let initials = '';
   if (props.firstName && props.lastName) {
     initials =
       props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
@@ -53,7 +49,7 @@ const ProfilePic: React.FC<Props> = (props) => {
           await logout();
         } catch (err) {
           dropdownError({
-            message: "Unable to successfully log out the user.",
+            message: 'Unable to successfully log out the user.',
           });
         }
       }}

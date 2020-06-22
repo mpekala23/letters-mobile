@@ -1,4 +1,4 @@
-import { User, LOGIN_USER, LOGOUT_USER, UserActionTypes } from "./UserTypes";
+import { User, LOGIN_USER, LOGOUT_USER, UserActionTypes } from './UserTypes';
 
 /** Logs in a user, either by loaded token or successful auth. */
 export function loginUser(user: User): UserActionTypes {

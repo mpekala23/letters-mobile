@@ -1,16 +1,16 @@
-import React, { createRef } from "react";
-import { Text, View } from "react-native";
-import { Animated, TouchableOpacity } from "react-native";
-import { Typography } from "@styles";
-import Styles from "./Dropdown.styles";
+import React, { createRef } from 'react';
+import { Text, View, Animated, TouchableOpacity } from 'react-native';
+
+import { Typography } from '@styles';
+import Styles from './Dropdown.styles';
 
 const DROPDOWN_HEIGHT = 100;
 const ANIM_DURATION = 500;
 const DROP_DURATION = 4000;
 
 export enum DropType {
-  Success = "Success",
-  Error = "Error",
+  Success = 'Success',
+  Error = 'Error',
 }
 
 export interface DropNotif {
@@ -29,12 +29,10 @@ interface State {
   animating: boolean;
 }
 
-interface Props {}
-
-export class Dropdown extends React.Component<Props, State> {
+export class Dropdown extends React.Component<Record<string, unknown>, State> {
   private numNotifs = 1;
 
-  constructor(props: Props) {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       dropped: false,
@@ -48,14 +46,22 @@ export class Dropdown extends React.Component<Props, State> {
     this.renderNotif = this.renderNotif.bind(this);
   }
 
-  queueNotif(notif: DropNotif) {
-    notif.id = this.numNotifs;
+  queueNotif(notif: DropNotif): void {
+    const newNotif = notif;
+    newNotif.id = this.numNotifs;
     this.numNotifs += 1;
-    const currentNotifs = this.state.notifQ;
-    currentNotifs.push(notif);
-    this.setState({ notifQ: currentNotifs }, () => {
-      this.flushNotif();
-    });
+    this.setState(
+      ({ notifQ }) => {
+        const currentNotifs = [...notifQ];
+        currentNotifs.push(notif);
+        return {
+          notifQ: currentNotifs,
+        };
+      },
+      () => {
+        this.flushNotif();
+      }
+    );
   }
 
   // convenient success dropdown
@@ -69,7 +75,7 @@ export class Dropdown extends React.Component<Props, State> {
     onPress: () => void;
     persist: boolean;
     duration: number;
-  }) {
+  }): void {
     const successNotif: DropNotif = {
       type: DropType.Success,
       message,
@@ -91,7 +97,7 @@ export class Dropdown extends React.Component<Props, State> {
     onPress: () => void;
     persist: boolean;
     duration: number;
-  }) {
+  }): void {
     const errorNotif: DropNotif = {
       type: DropType.Error,
       message,
@@ -102,7 +108,7 @@ export class Dropdown extends React.Component<Props, State> {
     this.queueNotif(errorNotif);
   }
 
-  flushNotif() {
+  flushNotif(): void {
     if (
       this.state.dropped ||
       this.state.animating ||
@@ -126,12 +132,12 @@ export class Dropdown extends React.Component<Props, State> {
     });
   }
 
-  endNotif(id: number) {
+  endNotif(id: number): void {
     if (
       !this.state.dropped ||
       this.state.animating ||
       this.state.notifQ.length === 0 ||
-      this.state.notifQ[0].id != id
+      this.state.notifQ[0].id !== id
     )
       return;
     this.setState({ animating: true }, () => {
@@ -142,10 +148,12 @@ export class Dropdown extends React.Component<Props, State> {
       }).start(() => {
         // when the animation finishes
         this.setState(
-          {
-            notifQ: this.state.notifQ.slice(1),
-            dropped: false,
-            animating: false,
+          (prevState) => {
+            const newState = { ...prevState };
+            newState.notifQ.slice(1);
+            newState.dropped = false;
+            newState.animating = false;
+            return newState;
           },
           () => {
             // when the notifQ has been updated
@@ -158,7 +166,7 @@ export class Dropdown extends React.Component<Props, State> {
     });
   }
 
-  renderNotif() {
+  renderNotif(): JSX.Element {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
     return this.state.dropped ? (
@@ -192,14 +200,14 @@ export class Dropdown extends React.Component<Props, State> {
     );
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Animated.View
         style={{
-          position: "absolute",
+          position: 'absolute',
           zIndex: 999,
           top: this.state.height,
-          width: "100%",
+          width: '100%',
         }}
       >
         {this.renderNotif()}
@@ -208,8 +216,10 @@ export class Dropdown extends React.Component<Props, State> {
   }
 }
 
-let dropdownRef = createRef<Dropdown>();
-const DropdownInstance = () => <Dropdown ref={dropdownRef} key="Dropdown" />;
+const dropdownRef = createRef<Dropdown>();
+const DropdownInstance = (): JSX.Element => (
+  <Dropdown ref={dropdownRef} key="Dropdown" />
+);
 
 export function dropdownSuccess({
   message,
@@ -221,17 +231,18 @@ export function dropdownSuccess({
   onPress?: () => void;
   persist?: boolean;
   duration?: number;
-}) {
-  dropdownRef.current?.queueSuccess({
-    message: message || "",
-    onPress:
-      onPress ||
-      function () {
-        /* nothing */
-      },
-    persist: persist || false,
-    duration: duration || DROP_DURATION,
-  });
+}): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueSuccess({
+      message: message || '',
+      onPress:
+        onPress ||
+        function nothing() {
+          /* nothing */
+        },
+      persist: persist || false,
+      duration: duration || DROP_DURATION,
+    });
 }
 
 export function dropdownError({
@@ -244,17 +255,18 @@ export function dropdownError({
   onPress?: () => void;
   persist?: boolean;
   duration?: number;
-}) {
-  dropdownRef.current?.queueError({
-    message: message || "",
-    onPress:
-      onPress ||
-      function () {
-        /* nothing */
-      },
-    persist: persist || false,
-    duration: duration || DROP_DURATION,
-  });
+}): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueError({
+      message: message || '',
+      onPress:
+        onPress ||
+        function nothing() {
+          /* nothing */
+        },
+      persist: persist || false,
+      duration: duration || DROP_DURATION,
+    });
 }
 
 export default DropdownInstance;

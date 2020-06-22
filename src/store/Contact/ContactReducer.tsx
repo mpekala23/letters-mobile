@@ -4,16 +4,16 @@ import {
   SET_ADDING,
   SET_EXISTING,
   CLEAR_CONTACTS,
-} from "./ContactTypes";
+} from './ContactTypes';
 
 const initialState: ContactState = {
   adding: {
     id: -1,
-    state: "",
-    firstName: "",
-    lastName: "",
-    inmateNumber: "",
-    relationship: "",
+    state: '',
+    firstName: '',
+    lastName: '',
+    inmateNumber: '',
+    relationship: '',
     facility: null,
   },
   existing: [],

@@ -1,26 +1,26 @@
-import React, { useCallback, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { Notif } from "@store/Notif/NotifTypes";
-import { useFocusEffect } from "@react-navigation/native";
-import { AppState } from "store/types";
-import { connect } from "react-redux";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Notifs from "@notifications";
-import { Button } from "@components";
+import React, { useCallback, useEffect } from 'react';
+import { View, Text } from 'react-native';
+import { Notif } from '@store/Notif/NotifTypes';
+import { useFocusEffect } from '@react-navigation/native';
+import { AppState } from 'store/types';
+import { connect } from 'react-redux';
+import { AppStackParamList } from 'navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import Notifs from '@notifications';
+import { Button } from '@components';
 import {
   dropdownSuccess,
   dropdownError,
-} from "@components/Dropdown/Dropdown.react";
+} from '@components/Dropdown/Dropdown.react';
 
-type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
 interface Props {
   currentNotif: Notif | null;
   navigation: HomeScreenNavigationProp;
 }
 
-const HomeScreenBase: React.FC<Props> = (props) => {
+const HomeScreenBase: React.FC<Props> = (props: Props) => {
   // runs only on the first render
   useEffect(() => {
     async function doSetup() {
@@ -45,21 +45,21 @@ const HomeScreenBase: React.FC<Props> = (props) => {
         buttonText="Success"
         onPress={() => {
           dropdownSuccess({
-            message: "test",
+            message: 'test',
           });
         }}
       />
       <Button
         buttonText="Error"
         onPress={() => {
-          dropdownError({ message: "error" });
+          dropdownError({ message: 'error' });
         }}
       />
     </View>
   );
 };
 
-const mapStateToProps = function (state: AppState) {
+const mapStateToProps = (state: AppState) => {
   return {
     currentNotif: state.notif.currentNotif,
   };

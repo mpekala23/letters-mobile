@@ -1,12 +1,12 @@
-import { StyleSheet } from "react-native";
-import { Colors } from "@styles";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 const barHeight = 50;
 
 export default StyleSheet.create({
   barContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     height: barHeight,
     borderColor: Colors.GRAY_MEDIUM,
     borderBottomWidth: 0.5,

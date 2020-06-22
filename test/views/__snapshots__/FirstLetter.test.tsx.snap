@@ -176,7 +176,7 @@ exports[`First Letter screen should match snapshot 1`] = `
           ]
         }
       >
-        If there was a problem with delivery and your loved one didn't receive the letter, let us know.
+        If there was a problem with delivery and your loved one didn\`'\`t receive the letter, let us know.
       </Text>
       <TouchableOpacity
         activeOpacity={0.7}

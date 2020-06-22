@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
-import { Colors } from "@styles";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -13,15 +13,15 @@ export default StyleSheet.create({
     elevation: 4,
   },
   cardBase: {
-    backgroundColor: "white",
-    width: "100%",
+    backgroundColor: 'white',
+    width: '100%',
     padding: 15,
     borderRadius: 6,
     marginVertical: 6,
   },
   cardTitle: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: Colors.AMEELIO_BLACK,
   },
   cardData: {
@@ -29,18 +29,18 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_GRAY,
   },
   letterStatusBackground: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   letterStatusBar: {
     width: 6,
-    height: "100%",
+    height: '100%',
     borderRadius: 3,
     marginRight: 15,
   },
   statusAndDateContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 10,
   },
   date: {
@@ -55,38 +55,38 @@ export default StyleSheet.create({
     padding: 8,
   },
   memoryLanePicture: {
-    height: "50%",
-    width: "100%",
-    resizeMode: "cover",
+    height: '50%',
+    width: '100%',
+    resizeMode: 'cover',
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
   },
   memoryLaneText: {
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: '500',
     height: 65,
   },
   letterOptionsBackground: {
-    flexDirection: "column",
-    justifyContent: "space-between",
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     height: 90,
   },
   deliveryAndDateContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   deliveryStatusBarBackground: {
     height: 10,
     marginTop: 15,
-    width: "100%",
-    backgroundColor: "#F2F2F2",
+    width: '100%',
+    backgroundColor: '#F2F2F2',
     borderRadius: 5,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   deliveryStatusBarForeground: {
-    position: "absolute",
+    position: 'absolute',
     height: 10,
-    backgroundColor: "#6D89B1",
+    backgroundColor: '#6D89B1',
   },
 });

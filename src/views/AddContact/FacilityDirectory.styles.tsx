@@ -1,16 +1,16 @@
-import { StyleSheet } from "react-native";
-import { WINDOW_WIDTH } from "@utils";
-import { Colors } from "@styles";
+import { StyleSheet } from 'react-native';
+import { WINDOW_WIDTH } from '@utils';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   facilityBackground: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingTop: 60,
     paddingHorizontal: 10,
   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -21,12 +21,12 @@ export default StyleSheet.create({
   },
   flatBackground: {
     flex: 1,
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
     paddingTop: 10,
   },
   itemBackground: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     width: WINDOW_WIDTH * 0.9,
     paddingHorizontal: 30,
     paddingVertical: 10,

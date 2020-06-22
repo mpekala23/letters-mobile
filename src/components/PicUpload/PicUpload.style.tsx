@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { Colors } from "@styles";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   shapeBackground: {
@@ -7,6 +7,6 @@ export default StyleSheet.create({
     height: 100,
     borderRadius: 50,
     backgroundColor: Colors.AMEELIO_BLUE,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
 });

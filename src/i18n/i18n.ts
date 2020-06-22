@@ -1,4 +1,3 @@
-// @ts-ignore
 import i18n from 'i18n-js';
 
 import en from './locales/en.json';

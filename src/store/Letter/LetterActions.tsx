@@ -1,3 +1,4 @@
+import { LetterTypes, Letter, LetterStatus } from 'types';
 import {
   SET_COMPOSING,
   SET_TYPE,
@@ -11,8 +12,7 @@ import {
   SET_EXISTING,
   LetterActionTypes,
   ADD_LETTER,
-} from "./LetterTypes";
-import { LetterTypes, Letter, LetterStatus } from "types";
+} from './LetterTypes';
 
 export function setComposing(letter: Letter): LetterActionTypes {
   return {
@@ -86,7 +86,10 @@ export function setExisting(
   };
 }
 
-export function addLetter(contactId: number, letter: Letter) {
+export function addLetter(
+  contactId: number,
+  letter: Letter
+): LetterActionTypes {
   return {
     type: ADD_LETTER,
     payload: {
