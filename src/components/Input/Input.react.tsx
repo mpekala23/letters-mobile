@@ -50,21 +50,11 @@ class Input extends React.Component<Props, State> {
     scrollStyle: {},
     inputStyle: {},
     placeholder: '',
-    onFocus: (): void => {
-      /* do nothing */
-    },
-    onBlur: (): void => {
-      /* do nothing */
-    },
-    onValid: (): void => {
-      /* do nothing */
-    },
-    onInvalid: (): void => {
-      /* do nothing */
-    },
-    onChangeText: (): void => {
-      /* do nothing */
-    },
+    onFocus: (): null => null,
+    onBlur: (): null => null,
+    onValid: (): null => null,
+    onInvalid: (): null => null,
+    onChangeText: (): null => null,
     secure: false,
     options: [],
     nextInput: false,

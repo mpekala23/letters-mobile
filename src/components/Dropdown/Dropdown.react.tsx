@@ -122,9 +122,12 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
         duration: ANIM_DURATION,
         useNativeDriver: false,
       }).start(() => {
-        this.setState({ animating: false });
         // when the animation finishes
-        if (!this.state.notifQ[0].persist)
+        this.setState({ animating: false });
+        const shouldPersist = (): boolean => {
+          return this.state.notifQ[0].persist;
+        };
+        if (!shouldPersist)
           setTimeout(() => {
             this.endNotif(currentId);
           }, this.state.notifQ[0].duration);
@@ -235,11 +238,7 @@ export function dropdownSuccess({
   if (dropdownRef.current)
     dropdownRef.current.queueSuccess({
       message: message || '',
-      onPress:
-        onPress ||
-        function nothing() {
-          /* nothing */
-        },
+      onPress: onPress || (() => null),
       persist: persist || false,
       duration: duration || DROP_DURATION,
     });
@@ -259,11 +258,7 @@ export function dropdownError({
   if (dropdownRef.current)
     dropdownRef.current.queueError({
       message: message || '',
-      onPress:
-        onPress ||
-        function nothing() {
-          /* nothing */
-        },
+      onPress: onPress || (() => null),
       persist: persist || false,
       duration: duration || DROP_DURATION,
     });

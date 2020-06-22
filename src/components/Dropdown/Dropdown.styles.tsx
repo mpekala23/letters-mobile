@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '@utils';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   commonBackground: {
@@ -12,19 +13,19 @@ export default StyleSheet.create({
     borderRadius: 12,
   },
   successBackground: {
-    backgroundColor: '#F0FAF3',
+    backgroundColor: Colors.DROPDOWN_SUCCESS_BACKGROUND,
   },
   successText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#09863D',
+    color: Colors.DROPDOWN_SUCCESS_TEXT,
   },
   errorBackground: {
-    backgroundColor: '#FFF5F5',
+    backgroundColor: Colors.DROPDOWN_ERROR_BACKGROUND,
   },
   errorText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#762B2B',
+    color: Colors.DROPDOWN_ERROR_TEXT,
   },
 });

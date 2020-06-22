@@ -4,6 +4,7 @@ import { logout } from '@api';
 import { dropdownError } from 'components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
+import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -49,7 +50,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           await logout();
         } catch (err) {
           dropdownError({
-            message: 'Unable to successfully log out the user.',
+            message: i18n.t('Error.cantLogout'),
           });
         }
       }}
