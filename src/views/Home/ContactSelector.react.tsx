@@ -24,20 +24,20 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
 >;
 
 interface Props {
-  contactState: Contact[];
-  letterState: Record<number, Letter[]>;
+  existingContacts: Contact[];
+  existingLetters: Record<number, Letter[]>;
   navigation: ContactSelectorScreenNavigationProp;
 }
 
 const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
-  const contactSelectorList = props.contactState.map((contact: Contact) => {
+  const contactSelectorList = props.existingContacts.map((contact: Contact) => {
     return (
       <TouchableOpacity
         style={Styles.contactCard}
         onPress={() => {
           props.navigation.navigate('SingleContact', {
             contact,
-            letters: props.letterState[contact.id],
+            letters: props.existingLetters[contact.id],
           });
         }}
         key={contact.inmateNumber}
@@ -130,8 +130,8 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    contactState: state.contact.existing,
-    letterState: state.letter.existing,
+    existingContacts: state.contact.existing,
+    existingLetters: state.letter.existing,
   };
 };
 
