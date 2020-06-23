@@ -56,7 +56,7 @@ export type AppStackParamList = {
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
-  UpdateContact: { contactId: number } | undefined;
+  UpdateContact: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
