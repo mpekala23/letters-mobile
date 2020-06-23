@@ -126,7 +126,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         state: this.props.contactState.adding.facility.state,
         postal: this.postal.current.state.value,
       };
+      // Generating random contactId for mocking purposes
+      const randomContactId = Math.floor(Math.random() * 1000);
       const contact = {
+        id: randomContactId,
         state: this.stateRef.current.state.value,
         first_name: this.firstName.current.state.value,
         last_name: this.lastName.current.state.value,

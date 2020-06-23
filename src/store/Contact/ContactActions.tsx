@@ -1,6 +1,7 @@
 import {
   Contact,
   SET_ADDING,
+  SET_ACTIVE,
   SET_EXISTING,
   CLEAR_CONTACTS,
   ContactActionTypes,
@@ -9,6 +10,13 @@ import {
 export function setAdding(contact: Contact): ContactActionTypes {
   return {
     type: SET_ADDING,
+    payload: contact,
+  };
+}
+
+export function setActive(contact: Contact): ContactActionTypes {
+  return {
+    type: SET_ACTIVE,
     payload: contact,
   };
 }
