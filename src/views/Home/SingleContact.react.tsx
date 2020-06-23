@@ -9,6 +9,7 @@ import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
+import i18n from '@i18n';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -66,12 +67,13 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
           {contact.firstName} {contact.lastName}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          <Emoji name="love_letter" style={{ fontSize: 16 }} /> received:{' '}
+          <Emoji name="love_letter" style={{ fontSize: 16 }} />{' '}
+          {i18n.t('SingleContactScreen.received')}:{' '}
           {letters ? letters.length : 0}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-          <Emoji name="calendar" style={{ fontSize: 16 }} /> last heard from
-          you:
+          <Emoji name="calendar" style={{ fontSize: 16 }} />{' '}
+          {i18n.t('SingleContactScreen.lastHeardFromYou')}:
         </Text>
         <Text
           style={[
@@ -80,11 +82,12 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
             { paddingBottom: 4 },
           ]}
         >
-          <Emoji name="airplane" style={{ fontSize: 16 }} /> letters traveled:
+          <Emoji name="airplane" style={{ fontSize: 16 }} />{' '}
+          {i18n.t('SingleContactScreen.lettersTraveled')}:
         </Text>
         <Button
           onPress={() => props.navigation.navigate('ChooseOption')}
-          buttonText="Send letter"
+          buttonText={i18n.t('SingleContactScreen.sendLetter')}
           textStyle={{ fontSize: 20 }}
           containerStyle={Styles.sendLetterButton}
         />
@@ -109,7 +112,7 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
             },
           ]}
         >
-          Letter Tracking
+          {i18n.t('SingleContactScreen.letterTracking')}
         </Text>
         {letterCards}
       </ScrollView>

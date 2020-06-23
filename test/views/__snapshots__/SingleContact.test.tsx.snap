@@ -116,7 +116,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         >
           💌
         </Text>
-         received:
+         
+        received
+        :
          
         3
       </Text>
@@ -146,7 +148,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         >
           📆
         </Text>
-         last heard from you:
+         
+        last heard from you
+        :
       </Text>
       <Text
         style={
@@ -177,7 +181,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         >
           ✈️
         </Text>
-         letters traveled:
+         
+        letters traveled
+        :
       </Text>
       <TouchableOpacity
         activeOpacity={0.7}
