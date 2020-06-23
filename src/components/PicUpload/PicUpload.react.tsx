@@ -1,18 +1,42 @@
-import React, { createRef } from "react";
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import { dropdownError } from "@components/Dropdown/Dropdown.react";
-import DropdownAlert from "react-native-dropdownalert";
-import Styles from "./PicUpload.style";
+import React from 'react';
+import {
+  Alert,
+  TouchableOpacity,
+  ViewStyle,
+  Text,
+  View,
+  Image,
+} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import Styles from './PicUpload.style';
 
-export interface Props {}
+export enum PicUploadTypes {
+  Profile = 'Profile',
+  Media = 'Media',
+}
+
+export interface Props {
+  type: PicUploadTypes;
+  shapeBackground: ViewStyle;
+  children?: JSX.Element;
+  width: number;
+  height: number;
+}
 
 export interface State {
-  image: any;
+  image: string | null;
 }
 
 class PicUpload extends React.Component<Props, State> {
+  static defaultProps = {
+    type: PicUploadTypes.Media,
+    shapeBackground: {},
+    width: 100,
+    height: 100,
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -20,18 +44,18 @@ class PicUpload extends React.Component<Props, State> {
     };
   }
 
-  getCameraRollPermission = async () => {
+  getCameraRollPermission = async (): Promise<void> => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== "granted") {
+    if (status !== 'granted') {
       Alert.alert(
-        "We need permission to access your camera roll to upload a profile picture."
+        'We need permission to access your camera roll to upload a profile picture.'
       );
     }
   };
 
-  _pickImage = async () => {
+  pickImage = async (): Promise<void> => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [3, 3],
@@ -41,22 +65,40 @@ class PicUpload extends React.Component<Props, State> {
         this.setState({ image: result.uri });
       }
     } catch (E) {
-      dropdownError("Photo Upload", "Unable to access the photo library.");
+      dropdownError('Photo Upload', 'Unable to access the photo library.');
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const { image } = this.state;
+    let innerCircle;
+    if (image) {
+      innerCircle = (
+        <Image
+          source={{ uri: image }}
+          style={{ width: this.props.width, height: this.props.height }}
+        />
+      );
+    } else if (this.props.children) {
+      innerCircle = this.props.children;
+    } else {
+      innerCircle =
+        this.props.type === PicUploadTypes.Profile ? <View /> : <Text>+</Text>;
+    }
 
     return (
       <TouchableOpacity
-        style={Styles.shapeBackground}
-        onPress={this._pickImage}
+        style={[
+          { width: this.props.width, height: this.props.height },
+          this.props.type === PicUploadTypes.Profile
+            ? Styles.profileBackground
+            : Styles.mediaBackground,
+          this.props.shapeBackground,
+        ]}
+        onPress={this.pickImage}
         testID="clickable"
       >
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
-        )}
+        {innerCircle}
       </TouchableOpacity>
     );
   }

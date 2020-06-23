@@ -1,8 +1,7 @@
-import React from "react";
-import { Text, TouchableOpacity, ViewStyle, View } from "react-native";
-import CardStyles from "./Card.styles";
-import { PrisonTypes, LetterStatus } from "types";
-import { Card } from "react-native-elements";
+import React from 'react';
+import { Text, TouchableOpacity, ViewStyle, View } from 'react-native';
+import { LetterStatus } from 'types';
+import CardStyles from './Card.styles';
 
 interface Props {
   title: string;
@@ -13,7 +12,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const DeliveryStatusCard: React.FC<Props> = (props) => {
+const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}

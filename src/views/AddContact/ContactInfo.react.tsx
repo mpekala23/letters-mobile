@@ -1,4 +1,4 @@
-import React, { createRef, Dispatch } from "react";
+import React, { createRef, Dispatch } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,28 +7,27 @@ import {
   TouchableOpacity,
   View,
   Platform,
-} from "react-native";
-import { Button, Input } from "@components";
-import { Typography } from "@styles";
-import Styles from "./ContactInfo.styles";
-import CommonStyles from "./AddContact.styles";
-import { AMEELIO_BLACK } from "styles/Colors";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { STATES_DROPDOWN, Validation } from "@utils";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { setAdding } from "@store/Contact/ContactActions";
+} from 'react-native';
+import { Button, Input } from '@components';
+import { Typography } from '@styles';
+import { AMEELIO_BLACK } from '@styles/Colors';
+import { AppStackParamList } from '@navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { STATES_DROPDOWN, Validation } from '@utils';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setAdding } from '@store/Contact/ContactActions';
 import {
   ContactState,
   Contact,
   ContactActionTypes,
-} from "@store/Contact/ContactTypes";
-import { UserState } from "@store/User/UserTypes";
+} from '@store/Contact/ContactTypes';
+import { UserState } from '@store/User/UserTypes';
+import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "ContactInfo"
+  'ContactInfo'
 >;
 
 export interface Props {
@@ -36,7 +35,7 @@ export interface Props {
   userState: UserState;
   contactState: ContactState;
   route: {
-    params: { addFromSelector: boolean }
+    params: { addFromSelector: boolean };
   };
   setAdding: (contact: Contact) => void;
 }
@@ -49,10 +48,15 @@ export interface State {
 
 class ContactInfoScreenBase extends React.Component<Props, State> {
   private stateRef = createRef<Input>();
+
   private firstName = createRef<Input>();
+
   private lastName = createRef<Input>();
+
   private inmateNumber = createRef<Input>();
+
   private relationship = createRef<Input>();
+
   private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
@@ -65,7 +69,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
-      "focus",
+      'focus',
       this.onNavigationFocus
     );
   }
@@ -82,11 +86,16 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     const addingContact = this.props.contactState.adding;
 
     if (this.props.route.params && this.props.route.params.addFromSelector) {
-      this.stateRef.current?.setState({ dirty: false });
-      this.firstName.current?.setState({ dirty: false });
-      this.lastName.current?.setState({ dirty: false });
-      this.inmateNumber.current?.setState({ dirty: false });
-      this.relationship.current?.setState({ dirty: false });
+      if (this.stateRef.current)
+        this.stateRef.current.setState({ dirty: false });
+      if (this.firstName.current)
+        this.firstName.current.setState({ dirty: false });
+      if (this.lastName.current)
+        this.lastName.current.setState({ dirty: false });
+      if (this.inmateNumber.current)
+        this.inmateNumber.current.setState({ dirty: false });
+      if (this.relationship.current)
+        this.relationship.current.setState({ dirty: false });
     }
 
     if (this.stateRef.current) this.stateRef.current.set(addingContact.state);
@@ -121,48 +130,52 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   render() {
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: "white" }}
+        style={{ flex: 1, backgroundColor: 'white' }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
         >
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <ScrollView
               keyboardShouldPersistTaps="handled"
               scrollEnabled={this.state.inputting}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
-              <View style={{ width: "100%", height: 40 }} />
+              <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
                 <Typography.PageHeader text="Add Contact" />
                 <Button
                   link
                   buttonText="Need help finding your inmate ID?"
-                  containerStyle={{ marginTop: 10, alignSelf: "flex-start" }}
-                  onPress={() => {}}
+                  containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
+                  onPress={() => {
+                    /* TODO */
+                  }}
                 />
                 <Button
                   link
-                  containerStyle={{ marginTop: 10, alignSelf: "flex-start" }}
-                  onPress={() => {}}
+                  containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
+                  onPress={() => {
+                    /* TODO */
+                  }}
                 >
                   <Text>
-                    Tap here to search the{" "}
+                    Tap here to search the
                     <Text
                       style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
                     >
                       {this.state.stateToSearch}
-                    </Text>{" "}
+                    </Text>
                     database.
                   </Text>
                 </Button>
@@ -171,17 +184,19 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   containerStyle={{
                     marginTop: 10,
                     marginBottom: 30,
-                    alignSelf: "flex-start",
+                    alignSelf: 'flex-start',
                   }}
-                  onPress={() => {}}
+                  onPress={() => {
+                    /* TODO */
+                  }}
                 >
                   <Text>
-                    Tap here to search the{" "}
+                    Tap here to search the
                     <Text
                       style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
                     >
                       Federal
-                    </Text>{" "}
+                    </Text>
                     database.
                   </Text>
                 </Button>
@@ -258,19 +273,19 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder="Relationship to Inmate"
                   required
                   options={[
-                    "Mother",
-                    "Father",
-                    "Brother",
-                    "Sister",
-                    "Sibling",
-                    "Daughter",
-                    "Son",
-                    "Grandmother",
-                    "Grandfather",
-                    "Grandaughter",
-                    "Grandson",
-                    "Friend",
-                    "Other",
+                    'Mother',
+                    'Father',
+                    'Brother',
+                    'Sister',
+                    'Sibling',
+                    'Daughter',
+                    'Son',
+                    'Grandmother',
+                    'Grandfather',
+                    'Grandaughter',
+                    'Grandson',
+                    'Friend',
+                    'Other',
                   ]}
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -285,7 +300,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             </ScrollView>
             <View style={CommonStyles.bottomButtonContainer}>
               <Button
-                onPress={() => {}}
+                onPress={() => {
+                  /* TODO */
+                }}
                 buttonText="Back"
                 reverse
                 containerStyle={CommonStyles.bottomButton}
@@ -310,7 +327,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     };
                     this.props.setAdding(contact);
                   }
-                  this.props.navigation.navigate("FacilityDirectory");
+                  this.props.navigation.navigate('FacilityDirectory');
                 }}
                 buttonText="Next"
                 enabled={this.state.valid}

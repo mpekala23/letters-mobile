@@ -1,9 +1,9 @@
-import React from "react";
-import { ChooseOptionScreen } from "@views";
-import { render, fireEvent, toJSON } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { LetterTypes } from "types";
+import React from 'react';
+import { ChooseOptionScreen } from '@views';
+import { render, fireEvent, toJSON } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { LetterTypes } from 'types';
 
 const mockStore = configureStore([]);
 
@@ -14,13 +14,13 @@ const setup = () => {
       composing: {
         type: LetterTypes.PostCards,
         recipient: null,
-        message: "",
-        photoPath: "",
+        message: '',
+        photoPath: '',
       },
       existing: [],
     },
   });
-  const StoreProvider = ({ children }) => {
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
@@ -33,28 +33,28 @@ const setup = () => {
   };
 };
 
-describe("ChooseOption screen", () => {
-  it("should match snapshot", () => {
+describe('ChooseOption screen', () => {
+  it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 
-  it("should dispatch a setType action when Post cards button is pressed", () => {
+  it('should dispatch a setType action when Post cards button is pressed', () => {
     const { store, getByText } = setup();
-    fireEvent.press(getByText("Post cards"));
+    fireEvent.press(getByText('Post cards'));
     const actions = store.getActions();
     expect(actions.length).toBe(1);
-    expect(actions[0].type).toBe("letter/set_type");
-    expect(actions[0].payload).toBe("PostCards");
+    expect(actions[0].type).toBe('letter/set_type');
+    expect(actions[0].payload).toBe('PostCards');
   });
 
-  it("should dispatch a setType action when Letter button is pressed", () => {
+  it('should dispatch a setType action when Letter button is pressed', () => {
     const { store, getByText } = setup();
-    fireEvent.press(getByText("Letters"));
+    fireEvent.press(getByText('Letters'));
     const actions = store.getActions();
     expect(actions.length).toBe(1);
-    expect(actions[0].type).toBe("letter/set_type");
-    expect(actions[0].payload).toBe("Letters");
+    expect(actions[0].type).toBe('letter/set_type');
+    expect(actions[0].payload).toBe('Letters');
   });
 });

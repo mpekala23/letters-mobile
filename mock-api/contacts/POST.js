@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-// We have to disable ESLint rule here since snake case variable names are forced on us by the API
+// the above disabling is necessary because the snake case variable names are not our decision,
+// but must remain to be consistent with letters-api
 
 module.exports = (req, res) => {
   const {
@@ -11,15 +12,15 @@ module.exports = (req, res) => {
     facility,
   } = req.body;
 
-  if (inmate_number === "123456789") {
+  if (inmate_number === '123456789') {
     return res.status(401).send({
-      type: "ERROR",
-      data: "Invalid inmate number",
+      type: 'ERROR',
+      data: 'Invalid inmate number',
     });
   }
 
   return res.status(201).send({
-    type: "SUCCESS",
+    type: 'SUCCESS',
     data: {
       id: 8,
       first_name,

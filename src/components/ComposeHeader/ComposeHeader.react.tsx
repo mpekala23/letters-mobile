@@ -1,8 +1,8 @@
-import React from "react";
-import { Animated, Text, View } from "react-native";
-import Button from "../Button/Button.react";
-import { Typography } from "@styles";
-import { Prompts, getRandomPromptIx } from "@utils";
+import React from 'react';
+import { Animated, Text, View } from 'react-native';
+import { Typography } from '@styles';
+import { Prompts, getRandomPromptIx } from '@utils';
+import Button from '../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 60;
 const DEFAULT_OPEN_HEIGHT = 120;
@@ -75,15 +75,15 @@ class ComposeHeader extends React.Component<Props, State> {
       <Animated.View
         style={{
           height: this.state.height,
-          width: "100%",
+          width: '100%',
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={[Typography.FONT_BOLD, { flex: 1, fontSize: 18 }]}>
             To: {this.props.recipientName}
           </Text>
           <Button
-            buttonText={this.state.open ? "Collapse" : "Feeling Stuck?"}
+            buttonText={this.state.open ? 'Collapse' : 'Feeling Stuck?'}
             onPress={() => {
               if (this.state.open) this.close();
               else this.open();

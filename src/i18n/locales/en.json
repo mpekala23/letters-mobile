@@ -49,5 +49,8 @@
     "postCardsDesc": "1 photo, 300 characters",
     "lettersTitle": "Letters",
     "lettersDesc": "300 words"
+  },
+  "Compose": {
+    "placeholder": "Tell your loved one about something you did /saw today that reminded you of them!"
   }
 }

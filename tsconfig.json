@@ -15,6 +15,7 @@
     "paths": {
       "@*": ["src/*"],
       "tests": ["tests/*"],
+      "types": ["./src/types"],
       "@api/*": ["src/api/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
@@ -35,5 +36,7 @@
     "jest.config.js",
     "node_modules/expo/build",
     "test"
-  ]
+  ],
+  "includes": ["./src/typings.d.ts"],
+  "typeRoots": ["node_modules/@types", "./typings.d.ts"]
 }

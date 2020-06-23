@@ -1,14 +1,10 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { connect } from "react-redux";
-import { AppState } from "@store/types";
-import { UserState } from "@store/User/UserTypes";
-import Styles from "./ProfilePic.styles";
-import { logout } from "@api";
-import { dropdownError } from "components/Dropdown/Dropdown.react";
+import React from 'react';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import { logout } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
-
-const ExamplePic = require('@assets/ExamplePic.jpg');
+import ExamplePic from '@assets/ExamplePic.jpg';
+import Styles from './ProfilePic.styles';
 
 export interface Props {
   firstName: string;
@@ -17,10 +13,11 @@ export interface Props {
   type: ProfilePicTypes;
 }
 
-const ProfilePic: React.FC<Props> = (props) => {
+const ProfilePic: React.FC<Props> = (props: Props) => {
   let initials = '';
   if (props.firstName && props.lastName) {
-    initials = props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
+    initials =
+      props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
   let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
@@ -34,7 +31,7 @@ const ProfilePic: React.FC<Props> = (props) => {
             : Styles.contactPic,
         ]}
         source={ExamplePic}
-        accessibilityLabel='Profile Picture'
+        accessibilityLabel="Profile Picture"
       />
     );
   }
@@ -51,7 +48,7 @@ const ProfilePic: React.FC<Props> = (props) => {
           // TODO: Have this press direct to Edit Profile screen once finished
           await logout();
         } catch (err) {
-          dropdownError("Storage", "Unable to successfully log out the user.");
+          dropdownError('Storage', 'Unable to successfully log out the user.');
         }
       }}
     >
