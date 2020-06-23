@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 import { AppState } from './types';
 import ContactReducer from './Contact/ContactReducer';
-import LetterReducer from './Letter/LetterReduer';
+import LetterReducer from './Letter/LetterReducer';
 import NotifReducer from './Notif/NotifReducer';
 import UserReducer from './User/UserReducer';
 

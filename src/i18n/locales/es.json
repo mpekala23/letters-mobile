@@ -40,6 +40,13 @@
     "register": "Register",
     "emailAlreadyInUse": "Email already in use."
   },
+  "SingleContactScreen": {
+    "received": "received",
+    "lastHeardFromYou": "last heard from you",
+    "lettersTraveled": "letters traveled",
+    "sendLetter": "Send letter",
+    "letterTracking": "Letter Tracking"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"

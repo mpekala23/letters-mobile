@@ -24,7 +24,34 @@ const initialState: LetterState = {
     message: '',
     photoPath: '',
   },
-  existing: [],
+  existing: {
+    8: [
+      {
+        type: LetterTypes.PostCards,
+        status: LetterStatus.Printed,
+        isDraft: true,
+        recipientId: 8,
+        message: "I'm trying out this new service called Ameelio...",
+        photoPath: '',
+      },
+      {
+        type: LetterTypes.PostCards,
+        status: LetterStatus.OutForDelivery,
+        isDraft: false,
+        recipientId: 8,
+        message: "Hi Emily! How are you doing? I'm trying out this...",
+        photoPath: '',
+      },
+      {
+        type: LetterTypes.PostCards,
+        status: LetterStatus.Mailed,
+        isDraft: false,
+        recipientId: 8,
+        message: "I'm trying out this new service called Ameelio...",
+        photoPath: '',
+      },
+    ],
+  },
 };
 
 export default function LetterReducer(
