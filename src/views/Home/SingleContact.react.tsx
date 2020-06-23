@@ -1,15 +1,19 @@
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { Dispatch } from 'react';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Contact } from '@store/Contact/ContactTypes';
+import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
+import PencilIcon from '@assets/components/Card/Pencil';
+import Icon from '@components/Icon/Icon.react';
+import { connect } from 'react-redux';
+import { setActive } from '@store/Contact/ContactActions';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -22,9 +26,10 @@ interface Props {
   route: {
     params: { contact: Contact; letters?: Letter[] };
   };
+  setActive: (contact: Contact) => void;
 }
 
-const SingleContactScreen: React.FC<Props> = (props: Props) => {
+const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   const { contact, letters } = props.route.params;
 
   const letterCards =
@@ -47,7 +52,19 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.profileCard}>
-        <View style={Styles.profileCardHeader} />
+        <View style={Styles.profileCardHeader}>
+          <TouchableOpacity
+            onPress={() => {
+              props.setActive(contact);
+              props.navigation.navigate('UpdateContact');
+            }}
+          >
+            <Icon
+              svg={PencilIcon}
+              style={{ position: 'absolute', top: 8, right: 12 }}
+            />
+          </TouchableOpacity>
+        </View>
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
@@ -119,5 +136,15 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
     </View>
   );
 };
+
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setActive: (contact: Contact) => dispatch(setActive(contact)),
+  };
+};
+const SingleContactScreen = connect(
+  null,
+  mapDispatchToProps
+)(SingleContactScreenBase);
 
 export default SingleContactScreen;
