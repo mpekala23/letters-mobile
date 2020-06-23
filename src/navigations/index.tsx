@@ -20,6 +20,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SingleContactScreen,
   SplashScreen,
   ThanksScreen,
 } from '@views';
@@ -27,8 +28,9 @@ import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from 'store/Notif/NotifTypes';
-import { NullableFacility } from 'types';
+import { NullableFacility, Letter } from 'types';
 import { Topbar } from '@components';
+import { Contact } from '@store/Contact/ContactTypes';
 
 export { navigationRef, navigate };
 
@@ -50,6 +52,7 @@ export type AppStackParamList = {
   Issues: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
+  SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
 };
@@ -144,6 +147,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="SingleContact"
+          component={SingleContactScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

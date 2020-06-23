@@ -5,11 +5,29 @@ import CardStyles from './Card.styles';
 
 interface Props {
   title: string;
-  status: string;
   date: string;
-  progress: LetterStatus;
+  status: LetterStatus;
   onPress: () => void;
   style?: ViewStyle;
+}
+
+function mapStatusToProgressStyle(type: LetterStatus) {
+  switch (type) {
+    case LetterStatus.Draft:
+      return { width: '0%' };
+    case LetterStatus.Created:
+      return { width: '20%' };
+    case LetterStatus.Printed:
+      return { width: '40%' };
+    case LetterStatus.Mailed:
+      return { width: '60%' };
+    case LetterStatus.OutForDelivery:
+      return { width: '80%' };
+    case LetterStatus.Delivered:
+      return { width: '100%' };
+    default:
+      return { width: '0%' };
+  }
 }
 
 const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
@@ -27,7 +45,7 @@ const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
         <View
           style={[
             CardStyles.deliveryStatusBarForeground,
-            { width: props.progress },
+            mapStatusToProgressStyle(props.status),
           ]}
           testID="progressBar"
         />

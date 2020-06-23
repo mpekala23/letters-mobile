@@ -1,14 +1,31 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { LetterStatus } from 'types';
 import CardStyles from './Card.styles';
 
 interface Props {
-  status: string;
+  status: LetterStatus;
   date: string;
   description: string;
   onPress: () => void;
-  color?: string;
   style?: ViewStyle;
+}
+
+function mapStatusToColorStyle(type: LetterStatus) {
+  switch (type) {
+    case LetterStatus.Draft:
+      return { backgroundColor: '#81B5FF' };
+    case LetterStatus.Created:
+      return { backgroundColor: '#81B5FF' };
+    case LetterStatus.Printed:
+      return { backgroundColor: '#7DF5AD' };
+    case LetterStatus.Mailed:
+      return { backgroundColor: '#81B5FF' };
+    case LetterStatus.OutForDelivery:
+      return { backgroundColor: '#FF7171' };
+    default:
+      return { backgroundColor: '#FF7171' };
+  }
 }
 
 const LetterStatusCard: React.FC<Props> = (props: Props) => {
@@ -19,7 +36,10 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
     >
       <View style={CardStyles.letterStatusBackground}>
         <View
-          style={[CardStyles.letterStatusBar, { backgroundColor: props.color }]}
+          style={[
+            CardStyles.letterStatusBar,
+            mapStatusToColorStyle(props.status),
+          ]}
         />
         <View style={{ flex: 1 }}>
           <View style={CardStyles.statusAndDateContainer}>

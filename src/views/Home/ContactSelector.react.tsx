@@ -14,7 +14,8 @@ import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { ProfilePicTypes } from 'types';
+import { ProfilePicTypes, Letter } from 'types';
+import Emoji from 'react-native-emoji';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -23,75 +24,71 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
 >;
 
 interface Props {
-  contactState: Contact[];
+  existingContacts: Contact[];
+  existingLetters: Record<number, Letter[]>;
   navigation: ContactSelectorScreenNavigationProp;
 }
 
 const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
-  const contactSelectorList = props.contactState.map((contact: Contact) => {
+  const contactSelectorList = props.existingContacts.map((contact: Contact) => {
     return (
       <TouchableOpacity
         style={Styles.contactCard}
         onPress={() => {
-          /* nothing */
+          props.navigation.navigate('SingleContact', {
+            contact,
+            letters: props.existingLetters[contact.id],
+          });
         }}
         key={contact.inmateNumber}
       >
-        <View style={Styles.contactCard}>
-          <View
-            style={[
-              {
-                flex: 1,
-                flexDirection: 'row',
-                paddingLeft: 16,
-                paddingTop: 16,
-              },
-            ]}
-          >
+        <View
+          style={[
+            {
+              flex: 1,
+              flexDirection: 'row',
+              paddingLeft: 16,
+              paddingTop: 18,
+            },
+          ]}
+        >
+          <View style={[{ paddingTop: 8 }]}>
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
-              type={ProfilePicTypes.ContactProfile}
+              type={ProfilePicTypes.Contact}
             />
           </View>
-          <View style={[{ paddingLeft: 112 }]}>
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  color: Colors.AMEELIO_BLACK,
-                  fontSize: 22,
-                  paddingBottom: 8,
-                },
-              ]}
-            >
-              {contact.firstName}
-            </Text>
-            <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
-              <span role="img" aria-label="mail heart emoji">
-                💌
-              </span>{' '}
-              received:
-            </Text>
-            <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
-              <span role="img" aria-label="calender emoji">
-                📅
-              </span>{' '}
-              last heard from you:
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                Styles.contactCardInfo,
-                { paddingBottom: 16 },
-              ]}
-            >
-              <span role="img" aria-label="plane emoji">
-                ✈️
-              </span>{' '}
-              letters traveled:
-            </Text>
-          </View>
+        </View>
+        <View style={[{ paddingLeft: 112 }]}>
+          <Text
+            style={[
+              Typography.FONT_BOLD,
+              {
+                color: Colors.AMEELIO_BLACK,
+                fontSize: 22,
+                paddingBottom: 8,
+              },
+            ]}
+          >
+            {contact.firstName}
+          </Text>
+          <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
+            <Emoji name="love_letter" style={{ fontSize: 16 }} /> received:
+          </Text>
+          <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
+            <Emoji name="calendar" style={{ fontSize: 16 }} /> last heard from
+            you:
+          </Text>
+          <Text
+            style={[
+              Typography.FONT_REGULAR,
+              Styles.contactCardInfo,
+              { paddingBottom: 16 },
+            ]}
+          >
+            <Emoji name="airplane" style={{ fontSize: 16 }} /> letters traveled:
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -133,7 +130,8 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    contactState: state.contact.existing,
+    existingContacts: state.contact.existing,
+    existingLetters: state.letter.existing,
   };
 };
 
