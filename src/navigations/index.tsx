@@ -23,6 +23,7 @@ import {
   SingleContactScreen,
   SplashScreen,
   ThanksScreen,
+  UpdateContactScreen,
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
@@ -55,6 +56,7 @@ export type AppStackParamList = {
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
+  UpdateContact: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -157,6 +159,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="UpdateContact"
+          component={UpdateContactScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>
