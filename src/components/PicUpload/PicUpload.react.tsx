@@ -6,10 +6,12 @@ import {
   Text,
   View,
   Image,
+  Linking,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import i18n from '@i18n';
+import { Colors } from '@styles';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -23,6 +25,8 @@ export interface Props {
   children?: JSX.Element;
   width: number;
   height: number;
+  onSuccess?: (path: string) => void;
+  onDelete?: () => void;
 }
 
 export interface State {
@@ -53,6 +57,10 @@ class PicUpload extends React.Component<Props, State> {
     }
   };
 
+  getImage = (): string | null => {
+    return this.state.image;
+  };
+
   pickImage = async (): Promise<void> => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -62,11 +70,26 @@ class PicUpload extends React.Component<Props, State> {
         quality: 1,
       });
       if (!result.cancelled) {
-        this.setState({ image: result.uri });
+        this.setState({ image: result.uri }, () => {
+          if (this.props.onSuccess) this.props.onSuccess(result.uri);
+        });
       }
     } catch (E) {
-      dropdownError('Photo Upload', 'Unable to access the photo library.');
+      Alert.alert(
+        i18n.t('Error.photoPermission'),
+        i18n.t('Permissions.photos'),
+        [
+          { text: 'Dismiss' },
+          { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
+        ]
+      );
     }
+  };
+
+  deleteImage = (): void => {
+    this.setState({ image: '' }, () => {
+      if (this.props.onDelete) this.props.onDelete();
+    });
   };
 
   render(): JSX.Element {
@@ -99,6 +122,24 @@ class PicUpload extends React.Component<Props, State> {
         testID="clickable"
       >
         {innerCircle}
+        {image ? (
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              top: 5,
+              right: 5,
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              backgroundColor: Colors.AMEELIO_RED,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={this.deleteImage}
+          >
+            <Text>X</Text>
+          </TouchableOpacity>
+        ) : null}
       </TouchableOpacity>
     );
   }

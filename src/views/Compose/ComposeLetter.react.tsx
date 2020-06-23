@@ -8,15 +8,17 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input } from '@components';
+import { ComposeHeader, Input, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setMessage } from '@store/Letter/LetterActions';
-import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
+import { Typography, Colors } from '@styles';
+import { Letter } from 'types';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -26,7 +28,7 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
-  letterState: LetterState;
+  composing: Letter;
   setMessage: (message: string) => void;
 }
 
@@ -92,9 +94,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <ComposeHeader
-              recipientName={this.props.letterState.composing.recipientName}
+            <Button
+              buttonText="Next Page"
+              onPress={() => {
+                // TODO: Once [Mobile Component Librar] Bars is done,
+                // replace this with a press of the next button in the navbar
+              }}
             />
+            <ComposeHeader recipientName={this.props.composing.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -121,40 +128,38 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             />
             <Animated.View
               style={{
-                opacity: this.state.keyboardOpacity.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 1],
-                }),
+                opacity: this.state.keyboardOpacity,
                 position: 'absolute',
                 bottom: 0,
                 width: WINDOW_WIDTH,
               }}
             >
-              <TouchableOpacity style={Styles.keyboardButtonContainer}>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>Tt</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>`&quot;`</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>bullet</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>dots</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>@</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1.0}
+                style={Styles.keyboardButtonContainer}
+              >
+                <View style={[Styles.keyboardButtonItem, { flex: 1 }]}>
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      { color: Colors.GRAY_DARK },
+                    ]}
+                  >
+                    {this.state.wordsLeft} left
+                  </Text>
+                </View>
                 <TouchableOpacity
                   style={[Styles.keyboardButtonItem, { flex: 1 }]}
+                  onPress={Keyboard.dismiss}
                 >
-                  <Text>{this.state.wordsLeft} left</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
-                >
-                  <Text>pic</Text>
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      { color: Colors.AMEELIO_BLUE },
+                    ]}
+                  >
+                    done
+                  </Text>
                 </TouchableOpacity>
               </TouchableOpacity>
             </Animated.View>
@@ -166,7 +171,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  letterState: state.letter,
+  composing: state.letter.composing,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {

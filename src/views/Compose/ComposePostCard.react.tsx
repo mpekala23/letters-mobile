@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, createRef } from 'react';
 import {
   Animated,
   View,
@@ -8,19 +8,21 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input } from '@components';
+import { ComposeHeader, Input, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage } from '@store/Letter/LetterActions';
-import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import { setMessage, setPhotoPath } from '@store/Letter/LetterActions';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
-import Styles from './Compose.styles';
+import { Colors, Typography } from '@styles';
+import { Letter } from 'types';
 import PicUpload, {
   PicUploadTypes,
-} from '../../components/PicUpload/PicUpload.react';
+} from '@components/PicUpload/PicUpload.react';
+import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -29,8 +31,9 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
-  letterState: LetterState;
+  composing: Letter;
   setMessage: (message: string) => void;
+  setPhotoPath: (path: string) => void;
 }
 
 interface State {
@@ -39,6 +42,8 @@ interface State {
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
+  private picRef = createRef<PicUpload>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -47,6 +52,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     };
     this.updateCharsLeft = this.updateCharsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
+    this.registerPhoto = this.registerPhoto.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
   }
 
   updateCharsLeft(value: string): void {
@@ -56,6 +63,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   changeText(value: string): void {
     this.updateCharsLeft(value);
     this.props.setMessage(value);
+  }
+
+  registerPhoto(photo: string): void {
+    this.props.setPhotoPath(photo);
+  }
+
+  deletePhoto(): void {
+    this.props.setPhotoPath('');
   }
 
   render(): JSX.Element {
@@ -86,9 +101,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <ComposeHeader
-              recipientName={this.props.letterState.composing.recipientName}
+            <Button
+              buttonText="Next Page"
+              onPress={() => {
+                // TODO: Once [Mobile Component Librar] Bars is done,
+                // replace this with a press of the next button in the navbar
+              }}
             />
+            <ComposeHeader recipientName={this.props.composing.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -117,8 +137,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 style={[
                   {
                     opacity: this.state.keyboardOpacity.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 0],
+                      inputRange: [0, 0.1, 1],
+                      outputRange: [1, 0.5, 0],
                     }),
                     height: this.state.keyboardOpacity.interpolate({
                       inputRange: [0, 0.8, 1],
@@ -128,6 +148,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 ]}
               >
                 <PicUpload
+                  ref={this.picRef}
+                  onSuccess={this.registerPhoto}
+                  onDelete={this.deletePhoto}
                   type={PicUploadTypes.Media}
                   width={200}
                   height={200}
@@ -136,40 +159,49 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             </Input>
             <Animated.View
               style={{
-                opacity: this.state.keyboardOpacity.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 1],
-                }),
+                opacity: this.state.keyboardOpacity,
                 position: 'absolute',
                 bottom: 0,
                 width: WINDOW_WIDTH,
               }}
             >
-              <TouchableOpacity style={Styles.keyboardButtonContainer}>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>Tt</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>`&quot;`</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>bullet</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>dots</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Styles.keyboardButtonItem}>
-                  <Text>@</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1.0}
+                style={Styles.keyboardButtonContainer}
+              >
+                <View style={[Styles.keyboardButtonItem, { flex: 1 }]}>
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      { color: Colors.GRAY_DARK },
+                    ]}
+                  >
+                    {this.state.charsLeft} left
+                  </Text>
+                </View>
                 <TouchableOpacity
                   style={[Styles.keyboardButtonItem, { flex: 1 }]}
-                >
-                  <Text>{this.state.charsLeft} left</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
+                  onPress={async () => {
+                    Keyboard.dismiss();
+                    if (this.picRef.current) {
+                      await this.picRef.current.pickImage();
+                    }
+                  }}
                 >
                   <Text>pic</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
+                  onPress={Keyboard.dismiss}
+                >
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      { color: Colors.AMEELIO_BLUE },
+                    ]}
+                  >
+                    done
+                  </Text>
                 </TouchableOpacity>
               </TouchableOpacity>
             </Animated.View>
@@ -181,11 +213,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  letterState: state.letter,
+  composing: state.letter.composing,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setMessage: (message: string) => dispatch(setMessage(message)),
+    setPhotoPath: (path: string) => dispatch(setPhotoPath(path)),
   };
 };
 const ComposePostcardScreen = connect(

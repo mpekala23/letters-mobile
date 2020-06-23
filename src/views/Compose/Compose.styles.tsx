@@ -6,6 +6,7 @@ export default StyleSheet.create({
     padding: 10,
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: 'white',
   },
   headerText: {
     fontSize: 22,
@@ -14,8 +15,8 @@ export default StyleSheet.create({
   keyboardButtonContainer: {
     width: '100%',
     height: 50,
-    borderTopWidth: 0.5,
-    borderTopColor: Colors.AMEELIO_GRAY,
+    borderTopWidth: 0.3,
+    borderTopColor: Colors.GRAY_MEDIUM,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'white',
@@ -24,6 +25,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 60,
+    maxWidth: 120,
   },
 });
