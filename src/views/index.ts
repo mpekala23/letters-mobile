@@ -13,6 +13,7 @@ import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import SplashScreen from './Splash/Splash.react';
 import ThanksScreen from './Report/Thanks.react';
+import UpdateContactScreen from './UpdateContact/UpdateContact.react';
 
 export {
   AddManuallyScreen,
@@ -30,4 +31,5 @@ export {
   ReviewContactScreen,
   SplashScreen,
   ThanksScreen,
+  UpdateContactScreen,
 };
