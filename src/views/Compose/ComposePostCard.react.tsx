@@ -184,7 +184,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   onPress={async () => {
                     Keyboard.dismiss();
                     if (this.picRef.current) {
-                      await this.picRef.current.pickImage();
+                      await this.picRef.current.selectImage();
                     }
                   }}
                 >

@@ -1,7 +1,9 @@
 import { Dimensions } from 'react-native';
-import PropTypes from 'prop-types';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { STATES, STATES_DROPDOWN } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 
@@ -13,23 +15,25 @@ export const STATUS_BAR_WIDTH = 100;
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-/** A custom function to validate the type of an object passed for styling.
- *  Accepts any object of strings and numbers,
- * to avoid having to enumerate all possible styles that can be applied. */
-export const StyleType = PropTypes.objectOf(
-  (propValue, key, componentName, location, propFullName): Error | null => {
-    if (
-      typeof propValue[key] !== 'string' &&
-      typeof propValue[key] !== 'number'
-    ) {
-      return new Error(
-        `Invalid prop \`${propFullName}\` supplied to` +
-          ` \`${componentName}\`. Validation failed.`
-      );
-    }
+export async function getCameraRollPermission(): Promise<
+  ImagePicker.PermissionStatus
+> {
+  const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  return status;
+}
+
+export async function pickImage(): Promise<null | ImageInfo> {
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [3, 3],
+    quality: 1,
+  });
+  if (result.cancelled) {
     return null;
   }
-);
+  return result;
+}
 
 export enum Validation {
   Email = 'Email',

@@ -8,10 +8,9 @@ import {
   Image,
   Linking,
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 import i18n from '@i18n';
 import { Colors } from '@styles';
+import { pickImage } from '@utils';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -48,28 +47,14 @@ class PicUpload extends React.Component<Props, State> {
     };
   }
 
-  getCameraRollPermission = async (): Promise<void> => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      Alert.alert(
-        'We need permission to access your camera roll to upload a profile picture.'
-      );
-    }
-  };
-
   getImage = (): string | null => {
     return this.state.image;
   };
 
-  pickImage = async (): Promise<void> => {
+  selectImage = async (): Promise<void> => {
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [3, 3],
-        quality: 1,
-      });
-      if (!result.cancelled) {
+      const result = await pickImage();
+      if (result) {
         this.setState({ image: result.uri }, () => {
           if (this.props.onSuccess) this.props.onSuccess(result.uri);
         });
@@ -87,7 +72,7 @@ class PicUpload extends React.Component<Props, State> {
   };
 
   deleteImage = (): void => {
-    this.setState({ image: '' }, () => {
+    this.setState({ image: null }, () => {
       if (this.props.onDelete) this.props.onDelete();
     });
   };
@@ -102,8 +87,6 @@ class PicUpload extends React.Component<Props, State> {
           style={{ width: this.props.width, height: this.props.height }}
         />
       );
-    } else if (this.props.children) {
-      innerCircle = this.props.children;
     } else {
       innerCircle =
         this.props.type === PicUploadTypes.Profile ? <View /> : <Text>+</Text>;
@@ -118,11 +101,11 @@ class PicUpload extends React.Component<Props, State> {
             : Styles.mediaBackground,
           this.props.shapeBackground,
         ]}
-        onPress={this.pickImage}
+        onPress={this.selectImage}
         testID="clickable"
       >
         {innerCircle}
-        {image ? (
+        {image && (
           <TouchableOpacity
             style={{
               position: 'absolute',
@@ -139,7 +122,7 @@ class PicUpload extends React.Component<Props, State> {
           >
             <Text>X</Text>
           </TouchableOpacity>
-        ) : null}
+        )}
       </TouchableOpacity>
     );
   }
