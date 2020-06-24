@@ -15,28 +15,4 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 25,
   },
-  inTransitBar: {
-    marginTop: 60,
-    marginLeft: 14,
-    height: 200,
-    width: 7,
-    backgroundColor: '#E1E1E1',
-    position: 'absolute',
-  },
-  localAreaBar: {
-    marginTop: 60,
-    marginLeft: 14,
-    height: 200,
-    width: 7,
-    backgroundColor: '#E1E1E1',
-    position: 'absolute',
-  },
-  outForDeliveryBar: {
-    marginTop: 60,
-    marginLeft: 16,
-    height: 200,
-    width: 7,
-    backgroundColor: '#E1E1E1',
-    position: 'absolute',
-  },
 });

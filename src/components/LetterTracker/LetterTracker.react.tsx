@@ -11,22 +11,22 @@ export interface Props {
 function mapStatustoTrackerColor(type: string) {
   switch (type) {
     case LetterStatus.Mailed:
-      return '#436697';
-    case LetterStatus.InTransit:
-      return '#6D89B1';
-    case LetterStatus.InLocalArea:
-      return '#8DA7CC';
-    case LetterStatus.OutForDelivery:
       return '#A8C1E4';
+    case LetterStatus.InTransit:
+      return '#8DA7CC';
+    case LetterStatus.InLocalArea:
+      return '#6D89B1';
+    case LetterStatus.OutForDelivery:
+      return '#436697';
     default:
       return '';
   }
 }
 
 const LetterTracker: React.FC<Props> = (props: Props) => {
-  const event = props.trackingEvent;
-  const date = moment(event.date).format('MMM DD, YYYY');
-  const time = moment(event.date).format('HH:mm a');
+  const { name, location, date } = props.trackingEvent;
+  const dateFormatted = moment(date).format('MMM DD, YYYY');
+  const timeFormatted = moment(date).format('HH:mm a');
 
   return (
     <View>
@@ -34,11 +34,12 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
         <View
           style={{
             borderRadius: 50,
-            backgroundColor: mapStatustoTrackerColor(event.name),
+            backgroundColor: mapStatustoTrackerColor(name),
             height: 36,
             width: 36,
             marginRight: 24,
           }}
+          testID="trackerCircle"
         />
         <View style={{ flexDirection: 'column' }}>
           <Text
@@ -51,7 +52,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {event.name}
+            {name}
           </Text>
           <Text
             style={[
@@ -63,7 +64,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {event.location}
+            {location}
           </Text>
         </View>
         <View
@@ -83,7 +84,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {date}
+            {dateFormatted}
           </Text>
           <Text
             style={[
@@ -95,7 +96,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {time}
+            {timeFormatted}
           </Text>
         </View>
       </View>

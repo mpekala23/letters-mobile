@@ -17,9 +17,9 @@ function mapStatusToProgressStyle(type: LetterStatus) {
       return { width: '0%' };
     case LetterStatus.Created:
       return { width: '20%' };
-    case LetterStatus.Printed:
-      return { width: '40%' };
     case LetterStatus.Mailed:
+      return { width: '40%' };
+    case LetterStatus.InTransit:
       return { width: '60%' };
     case LetterStatus.OutForDelivery:
       return { width: '80%' };

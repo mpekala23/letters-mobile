@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Letter Tracker component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "paddingBottom": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#A8C1E4",
+            "borderRadius": 50,
+            "height": 36,
+            "marginRight": 24,
+            "width": 36,
+          }
+        }
+        testID="trackerCircle"
+      />
+      <View
+        style={
+          Object {
+            "flexDirection": "column",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "System",
+                "fontWeight": "600",
+              },
+              Object {
+                "color": "#282828",
+                "fontSize": 16,
+                "paddingBottom": 6,
+              },
+            ]
+          }
+        >
+          Mailed
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "System",
+                "fontWeight": "600",
+              },
+              Object {
+                "color": "#6a6a6a",
+                "fontSize": 14,
+                "paddingBottom": 4,
+              },
+            ]
+          }
+        >
+          Zipcode
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "column",
+            "marginLeft": "auto",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "System",
+                "fontSize": 16,
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#6a6a6a",
+                "fontSize": 14,
+                "paddingBottom": 8,
+              },
+            ]
+          }
+        >
+          Jul 12, 2019
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "System",
+                "fontSize": 16,
+                "fontWeight": "400",
+              },
+              Object {
+                "color": "#6a6a6a",
+                "fontSize": 14,
+                "paddingBottom": 4,
+              },
+            ]
+          }
+        >
+          11:51 am
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -2,13 +2,13 @@ import React from 'react';
 import { Text, ScrollView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'navigations';
-import { Button, LetterTracker, LetterStatusCard } from '@components';
+import { Button, LetterTracker } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
-import { Letter } from '@store/Letter/LetterTypes';
-import { LetterTrackingEvent, LetterStatus } from 'types';
+import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
 import moment from 'moment';
+import i18n from '@i18n';
 import Styles from './LetterTracking.styles';
 
 type LetterTrackingScreenNavigationProp = StackNavigationProp<
@@ -21,23 +21,23 @@ interface Props {
   letter: Letter;
 }
 
-function mapStatusToTrackerBar(type: LetterStatus) {
+function mapStatusToTrackerBarHeight(type: LetterStatus) {
   switch (type) {
     case LetterStatus.InTransit:
-      return Styles.inTransitBar;
+      return 40;
     case LetterStatus.InLocalArea:
-      return Styles.localAreaBar;
+      return 120;
     case LetterStatus.OutForDelivery:
-      return Styles.outForDeliveryBar;
+      return 200;
     default:
-      return {};
+      return 0;
   }
 }
 
 const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
-  const deliveryDate = moment(
-    props.letter.trackingEvents.expectedDeliveryDate
-  ).format('MMM DD');
+  const deliveryDate = moment(props.letter.expectedDeliveryDate).format(
+    'MMM DD'
+  );
   const chronologicalEvents = [...props.letter.trackingEvents].reverse();
   const letterTracker = chronologicalEvents.map(
     (trackingEvent: LetterTrackingEvent) => {
@@ -59,7 +59,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
             },
           ]}
         >
-          Letter tracking
+          {i18n.t('LetterTrackingScreen.letterTracking')}
         </Text>
         <Text
           style={[
@@ -70,12 +70,32 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
             },
           ]}
         >
-          Your letter is estimated to arrive on {deliveryDate}
+          {i18n.t('LetterTrackingScreen.estimatedArrival')}
+        </Text>
+        <Text
+          style={[
+            Typography.FONT_BOLD,
+            {
+              color: Colors.AMEELIO_BLACK,
+              fontSize: 14,
+            },
+          ]}
+        >
+          {deliveryDate}
         </Text>
       </View>
-      <View style={{ paddingTop: 56 }}>
+      <View style={{ paddingTop: 36 }}>
         <View
-          style={mapStatusToTrackerBar(props.letter.trackingEvents[0].name)}
+          style={{
+            marginTop: 60,
+            marginLeft: 14,
+            height: mapStatusToTrackerBarHeight(
+              props.letter.trackingEvents[0].name
+            ),
+            width: 7,
+            backgroundColor: '#E1E1E1',
+            position: 'absolute',
+          }}
         />
         {letterTracker}
       </View>
@@ -83,7 +103,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
         onPress={() => {
           /* To-do: Navigate to in-app reporting flow */
         }}
-        buttonText="I need help"
+        buttonText={i18n.t('LetterTrackingScreen.needHelp')}
         textStyle={{ fontSize: 14 }}
         containerStyle={Styles.needHelpButton}
       />
@@ -97,7 +117,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
           },
         ]}
       >
-        Letter Content
+        {i18n.t('LetterTrackingScreen.letterContent')}
       </Text>
       <ScrollView keyboardShouldPersistTaps="handled">
         <Text style={{ fontSize: 15 }}>{props.letter.message}</Text>

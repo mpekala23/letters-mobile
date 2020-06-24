@@ -55,7 +55,7 @@ export interface Letter {
 
 export interface LetterTrackingEvent {
   id: number;
-  name: string;
+  name: LetterStatus;
   location: string;
   date: string;
 }

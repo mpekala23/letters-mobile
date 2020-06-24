@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Letter Tracking Screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "white",
+        "flex": 1,
+        "flexDirection": "column",
+        "padding": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "color": "#282828",
+              "fontSize": 20,
+              "paddingBottom": 4,
+            },
+          ]
+        }
+      >
+        Letter tracking
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "color": "#282828",
+              "fontSize": 14,
+            },
+          ]
+        }
+      >
+        Your letter is estimated to arrive on
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "color": "#282828",
+              "fontSize": 14,
+            },
+          ]
+        }
+      >
+        Jun 30
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingTop": 36,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#E1E1E1",
+            "height": 0,
+            "marginLeft": 14,
+            "marginTop": 60,
+            "position": "absolute",
+            "width": 7,
+          }
+        }
+      />
+      <View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "paddingBottom": 16,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#A8C1E4",
+                "borderRadius": 50,
+                "height": 36,
+                "marginRight": 24,
+                "width": 36,
+              }
+            }
+            testID="trackerCircle"
+          />
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontWeight": "600",
+                  },
+                  Object {
+                    "color": "#282828",
+                    "fontSize": 16,
+                    "paddingBottom": 6,
+                  },
+                ]
+              }
+            >
+              Mailed
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontWeight": "600",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 14,
+                    "paddingBottom": 4,
+                  },
+                ]
+              }
+            >
+              20002
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "flex-end",
+                "flexDirection": "column",
+                "marginLeft": "auto",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 14,
+                    "paddingBottom": 8,
+                  },
+                ]
+              }
+            >
+              Jul 12, 2019
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                  },
+                  Object {
+                    "color": "#6a6a6a",
+                    "fontSize": 14,
+                    "paddingBottom": 4,
+                  },
+                ]
+              }
+            >
+              11:51 am
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3490dc",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+          },
+          Object {},
+          Object {
+            "alignSelf": "center",
+            "backgroundColor": "#FC7272",
+            "borderRadius": 15,
+            "height": 50,
+            "marginBottom": 25,
+            "width": "50%",
+          },
+          Object {},
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Object {
+              "fontSize": 14,
+            },
+            Object {},
+          ]
+        }
+      >
+        I need help
+      </Text>
+    </TouchableOpacity>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "color": "#282828",
+            "fontSize": 22,
+            "paddingBottom": 4,
+          },
+        ]
+      }
+    >
+      Letter content
+    </Text>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 15,
+          }
+        }
+      >
+        I'm trying out this new service called Ameelio...
+      </Text>
+    </ScrollView>
+  </View>
+</View>
+`;

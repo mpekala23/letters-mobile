@@ -34,6 +34,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
         undefined,
       ]
     }
+    testID="letterStatusCard"
   >
     <View
       style={
