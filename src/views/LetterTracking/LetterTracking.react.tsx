@@ -21,7 +21,7 @@ interface Props {
   letter: Letter;
 }
 
-function mapStatusToTrackerBarHeight(type: LetterStatus) {
+function mapStatusToTrackerBarHeight(type?: LetterStatus) {
   switch (type) {
     case LetterStatus.InTransit:
       return 40;
@@ -38,8 +38,8 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
   const deliveryDate = moment(props.letter.expectedDeliveryDate).format(
     'MMM DD'
   );
-  const chronologicalEvents = [...props.letter.trackingEvents].reverse();
-  const letterTracker = chronologicalEvents.map(
+  const chronologicalEvents = props.letter.trackingEvents?.slice().reverse();
+  const letterTracker = chronologicalEvents?.map(
     (trackingEvent: LetterTrackingEvent) => {
       return (
         <LetterTracker trackingEvent={trackingEvent} key={trackingEvent.id} />
@@ -90,7 +90,9 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
             marginTop: 60,
             marginLeft: 14,
             height: mapStatusToTrackerBarHeight(
-              props.letter.trackingEvents[0].name
+              props.letter.trackingEvents
+                ? props.letter.trackingEvents[0].name
+                : undefined
             ),
             width: 7,
             backgroundColor: '#E1E1E1',
