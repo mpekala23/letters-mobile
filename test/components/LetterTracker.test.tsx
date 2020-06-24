@@ -41,11 +41,6 @@ describe('Letter Tracker component', () => {
     expect(getByText('Jul 12, 2019')).toBeDefined();
   });
 
-  it('should display formatted time', () => {
-    const { getByText } = setup();
-    expect(getByText('11:51 am')).toBeDefined();
-  });
-
   it('should display tracker color for status Mailed', () => {
     const { getByTestId } = setup({ name: LetterStatus.Mailed });
     expect(getByTestId('trackerCircle').props.style.backgroundColor).toBe(
