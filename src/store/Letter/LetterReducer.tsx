@@ -44,6 +44,7 @@ const initialState: LetterState = {
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
+<<<<<<< HEAD
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -53,6 +54,8 @@ const initialState: LetterState = {
             date: '2019-07-12T15:51:41.000Z',
           },
         ],
+=======
+>>>>>>> [1/x] create screen + write tests
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
