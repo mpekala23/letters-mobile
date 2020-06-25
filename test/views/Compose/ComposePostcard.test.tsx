@@ -1,9 +1,10 @@
 import React from 'react';
 import { ComposePostcardScreen } from '@views';
-import { render, toJSON } from '@testing-library/react-native';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { LetterTypes, LetterStatus } from 'types';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import i18n from '@i18n';
 
 const mockStore = configureStore([]);
 
@@ -12,11 +13,12 @@ const setup = () => {
 
   const store = mockStore({
     letter: {
-      adding: {
+      composing: {
         type: LetterTypes.Letters,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
+        recipientName: '',
         message: '',
         photoPath: '',
         letterId: -1,
@@ -43,4 +45,21 @@ describe('ComposePostcard screen', () => {
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
+
+  it('should update the redux store when the message changes', () => {
+    const { getByPlaceholderText, store } = setup();
+    const input = getByPlaceholderText(i18n.t('Compose.placeholder'));
+    fireEvent.changeText(input, 'new text');
+    expect(store.getActions()[1].type).toBe('letter/set_message');
+    expect(store.getActions()[1].payload).toBe('new text');
+  });
+
+  it('should update chars left correctly', () => {
+    const { getByPlaceholderText, getByText } = setup();
+    const input = getByPlaceholderText(i18n.t('Compose.placeholder'));
+    fireEvent.changeText(input, 'twelve chars');
+    expect(getByText('288 left')).toBeDefined();
+  });
+
+  // TODO: Once new navbar is done, add next / back navigation test
 });

@@ -9,7 +9,9 @@ import FirstLetterScreen from './Report/FirstLetter.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
+import LetterPreviewScreen from './Compose/LetterPreview.react';
 import LoginScreen from './Login/Login.react';
+import PostcardPreviewScreen from './Compose/PostcardPreview.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
@@ -28,7 +30,9 @@ export {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  LetterPreviewScreen,
   LoginScreen,
+  PostcardPreviewScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,

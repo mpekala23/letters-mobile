@@ -23,7 +23,6 @@ import Icon from '../Icon/Icon.react';
 
 export interface Props {
   parentStyle?: ViewStyle;
-  scrollStyle?: ViewStyle;
   inputStyle?: Record<string, unknown>;
   placeholder?: string;
   onFocus: () => void;
@@ -40,6 +39,7 @@ export interface Props {
   height: number;
   numLines: number;
   children?: JSX.Element;
+  testId?: string;
 }
 
 export interface State {
@@ -271,7 +271,6 @@ class Input extends React.Component<Props, State> {
   render(): JSX.Element {
     const {
       parentStyle,
-      scrollStyle,
       inputStyle,
       placeholder,
       secure,

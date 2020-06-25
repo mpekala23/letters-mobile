@@ -65,14 +65,24 @@ export default function LetterReducer(
       currentState.existing = action.payload;
       return currentState;
     case ADD_LETTER:
-      if (action.payload.contactId in currentState.existing) {
-        currentState.existing[action.payload.contactId].push(
-          action.payload.letter
-        );
+      if (action.payload.recipientId in currentState.existing) {
+        const existingLetters =
+          currentState.existing[action.payload.recipientId];
+        let matchIx = 0;
+        while (matchIx < existingLetters.length) {
+          if (existingLetters[matchIx].letterId === action.payload.letterId) {
+            break;
+          }
+          matchIx += 1;
+        }
+        if (matchIx < existingLetters.length) {
+          existingLetters.splice(matchIx, 1, action.payload);
+        } else {
+          existingLetters.push(action.payload);
+        }
+        currentState.existing[action.payload.recipientId] = existingLetters;
       } else {
-        currentState.existing[action.payload.contactId] = [
-          action.payload.letter,
-        ];
+        currentState.existing[action.payload.recipientId] = [action.payload];
       }
       return currentState;
     default:

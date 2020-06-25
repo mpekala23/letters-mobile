@@ -13,7 +13,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage, setPhotoPath } from '@store/Letter/LetterActions';
+import {
+  setMessage,
+  setPhotoPath,
+  setDraft,
+} from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
@@ -34,6 +38,7 @@ interface Props {
   composing: Letter;
   setMessage: (message: string) => void;
   setPhotoPath: (path: string) => void;
+  setDraft: (value: boolean) => void;
 }
 
 interface State {
@@ -43,6 +48,8 @@ interface State {
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
   private picRef = createRef<PicUpload>();
+
+  private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -54,6 +61,19 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.changeText = this.changeText.bind(this);
     this.registerPhoto = this.registerPhoto.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus() {
+    this.props.setDraft(true);
   }
 
   updateCharsLeft(value: string): void {
@@ -106,6 +126,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               onPress={() => {
                 // TODO: Once [Mobile Component Librar] Bars is done,
                 // replace this with a press of the next button in the navbar
+                this.props.navigation.navigate('PostcardPreview');
               }}
             />
             <ComposeHeader recipientName={this.props.composing.recipientName} />
@@ -197,7 +218,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   <Text
                     style={[
                       Typography.FONT_REGULAR,
-                      { color: Colors.AMEELIO_BLUE },
+                      {
+                        color:
+                          this.state.charsLeft >= 0
+                            ? Colors.GRAY_DARK
+                            : Colors.AMEELIO_RED,
+                      },
                     ]}
                   >
                     done
@@ -219,6 +245,7 @@ const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setMessage: (message: string) => dispatch(setMessage(message)),
     setPhotoPath: (path: string) => dispatch(setPhotoPath(path)),
+    setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };
 const ComposePostcardScreen = connect(

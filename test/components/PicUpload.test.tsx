@@ -30,6 +30,13 @@ describe('PicUpload component', () => {
   it('should display blank with no image when type is profile', () => {
     const { getByTestId } = setup({ type: PicUploadTypes.Profile });
     expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByTestId('clickable').children[0].children).toEqual([]);
+  });
+
+  it('should display blank with no image when type is media', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByTestId('clickable').children[0].children).toBeDefined();
   });
 
   it('should display blank with no image when error in pickImage', async () => {

@@ -35,8 +35,8 @@ export enum LetterStatus {
 }
 
 export enum LetterTypes {
-  PostCards = 'PostCards',
-  Letters = 'Letters',
+  PostCards = 'postCards',
+  Letters = 'letters',
 }
 
 export interface Letter {

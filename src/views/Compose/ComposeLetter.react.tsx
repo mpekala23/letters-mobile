@@ -13,7 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage } from '@store/Letter/LetterActions';
+import { setMessage, setDraft } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
@@ -30,6 +30,7 @@ interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
   setMessage: (message: string) => void;
+  setDraft: (value: boolean) => void;
 }
 
 interface State {
@@ -38,6 +39,8 @@ interface State {
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
+  private unsubscribeFocus: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -46,6 +49,19 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus() {
+    this.props.setDraft(true);
   }
 
   updateWordsLeft(value: string): void {
@@ -99,6 +115,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               onPress={() => {
                 // TODO: Once [Mobile Component Librar] Bars is done,
                 // replace this with a press of the next button in the navbar
+                this.props.navigation.navigate('LetterPreview');
               }}
             />
             <ComposeHeader recipientName={this.props.composing.recipientName} />
@@ -125,6 +142,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               }}
               placeholder={i18n.t('Compose.placeholder')}
               numLines={100}
+              testId="input"
             />
             <Animated.View
               style={{
@@ -142,7 +160,12 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                   <Text
                     style={[
                       Typography.FONT_REGULAR,
-                      { color: Colors.GRAY_DARK },
+                      {
+                        color:
+                          this.state.wordsLeft >= 0
+                            ? Colors.GRAY_DARK
+                            : Colors.AMEELIO_RED,
+                      },
                     ]}
                   >
                     {this.state.wordsLeft} left
@@ -176,6 +199,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setMessage: (message: string) => dispatch(setMessage(message)),
+    setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };
 const ComposeLetterScreen = connect(

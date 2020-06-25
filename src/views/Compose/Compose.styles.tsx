@@ -27,4 +27,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     maxWidth: 120,
   },
+  postcardBackground: {
+    flexDirection: 'row',
+    height: 'auto',
+  },
 });

@@ -69,10 +69,7 @@ interface SetExistingAction {
 
 interface AddLetterAction {
   type: typeof ADD_LETTER;
-  payload: {
-    contactId: number;
-    letter: Letter;
-  };
+  payload: Letter;
 }
 
 export type LetterActionTypes =

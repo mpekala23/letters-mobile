@@ -86,15 +86,9 @@ export function setExisting(
   };
 }
 
-export function addLetter(
-  contactId: number,
-  letter: Letter
-): LetterActionTypes {
+export function addLetter(letter: Letter): LetterActionTypes {
   return {
     type: ADD_LETTER,
-    payload: {
-      contactId,
-      letter,
-    },
+    payload: letter,
   };
 }

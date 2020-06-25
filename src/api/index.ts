@@ -4,7 +4,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage } from 'types';
+import { Storage, Letter } from 'types';
 import { loginUser, logoutUser } from '@store/User/UserActions';
 import {
   setAdding,
@@ -12,6 +12,7 @@ import {
   clearContacts,
 } from '@store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
+import { addLetter } from '@store/Letter/LetterActions';
 
 const { MOCK_API_IP } = process.env;
 
@@ -22,7 +23,7 @@ export interface UserResponse {
   data: User;
 }
 
-export function fetchTimeout<T>(
+export function fetchTimeout(
   fetchUrl: string,
   options: Record<string, unknown>,
   timeout = 3000
@@ -33,6 +34,22 @@ export function fetchTimeout<T>(
       setTimeout(() => reject(new Error('timeout')), timeout)
     ),
   ]);
+}
+
+export async function fetchAuthenticated(
+  fetchUrl: string,
+  options: Record<string, unknown>,
+  timeout = 3000
+): Promise<Response> {
+  const requestOptions = {
+    ...options,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
+    },
+  };
+  return fetchTimeout(fetchUrl, requestOptions, timeout);
 }
 
 export async function saveToken(token: string): Promise<void> {
@@ -232,4 +249,32 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   } else {
     throw Error('Share Url not supported');
   }
+}
+
+export async function createLetter(letter: Letter): Promise<Letter> {
+  let reqBody: Record<string, unknown> = {
+    contact_id: letter.recipientId,
+    content: letter.message,
+    is_draft: letter.isDraft,
+    s3_img_url: letter.photoPath,
+    type: letter.type,
+  };
+  if (letter.letterId) {
+    reqBody = { ...reqBody, letter_id: letter.letterId };
+  }
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(reqBody),
+  };
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, 'letter'),
+    options
+  );
+  const body = await response.json();
+  if (body.type === 'ERROR') {
+    throw Error(body.message);
+  }
+  // TODO: Figure out how letter_id is returned from actual API and update it here
+  store.dispatch(addLetter(letter));
+  return letter;
 }

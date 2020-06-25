@@ -18,7 +18,9 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  LetterPreviewScreen,
   LoginScreen,
+  PostcardPreviewScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
@@ -52,6 +54,8 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  LetterPreview: undefined;
+  PostcardPreview: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
   Splash: undefined;
@@ -108,6 +112,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ComposePostcard"
           component={ComposePostcardScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="LetterPreview"
+          component={LetterPreviewScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="PostcardPreview"
+          component={PostcardPreviewScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

@@ -13,7 +13,9 @@ exports[`ChooseOption screen should match snapshot 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "white",
         "flex": 1,
+        "flexDirection": "column",
         "padding": 10,
       }
     }
