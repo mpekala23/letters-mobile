@@ -19,6 +19,7 @@ import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from 'api';
 import i18n from '@i18n';
+import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -166,7 +167,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
           style={{ width: '100%' }}
         >
           <View style={Styles.profileCard}>
-            <View style={Styles.profileCardHeader} />
+            <LinearGradient
+              colors={['#ADD3FF', '#FFC9C9']}
+              style={Styles.profileCardHeader}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0 }}
+            />
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
