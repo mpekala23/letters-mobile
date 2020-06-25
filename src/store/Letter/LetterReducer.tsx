@@ -33,7 +33,8 @@ const initialState: LetterState = {
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
         letterId: 2,
@@ -42,7 +43,8 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: '',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
         letterId: 3,
@@ -51,7 +53,8 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
     ],
   },
