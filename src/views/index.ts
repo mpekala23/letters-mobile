@@ -9,6 +9,7 @@ import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
 import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
 import LoginScreen from './Login/Login.react';
+import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
@@ -28,7 +29,11 @@ export {
   HomeScreen,
   IssuesScreen,
   LoginScreen,
+<<<<<<< HEAD
   LetterTrackingScreen,
+=======
+  MemoryLaneScreen,
+>>>>>>> [1/x] create screen + write tests
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,

@@ -38,13 +38,12 @@ const initialState: LetterState = {
   existing: {
     8: [
       {
+        letterId: 1,
         type: LetterTypes.PostCards,
         status: LetterStatus.Mailed,
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 1,
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -54,15 +53,15 @@ const initialState: LetterState = {
             date: '2019-07-12T15:51:41.000Z',
           },
         ],
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
+        letterId: 2,
         type: LetterTypes.PostCards,
         status: LetterStatus.InTransit,
         isDraft: true,
         recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 2,
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -78,15 +77,18 @@ const initialState: LetterState = {
             date: '2019-06-23T15:51:41.000Z',
           },
         ],
+        message: "Hi Emily! How are you doing? I'm trying out this...",
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
+        letterId: 3,
         type: LetterTypes.PostCards,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 3,
+        photoPath: 'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
