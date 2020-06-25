@@ -53,7 +53,24 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           }
         }
       >
-        <View
+        <ViewManagerAdapter_ExpoLinearGradient
+          proxiedProperties={
+            Object {
+              "colors": Array [
+                4289582079,
+                4294953417,
+              ],
+              "endPoint": Array [
+                1,
+                0,
+              ],
+              "locations": undefined,
+              "startPoint": Array [
+                0,
+                1,
+              ],
+            }
+          }
           style={
             Object {
               "backgroundColor": "#FC7272",

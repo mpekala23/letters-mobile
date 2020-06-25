@@ -14,6 +14,7 @@ import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive } from '@store/Contact/ContactActions';
+import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -52,7 +53,12 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.profileCard}>
-        <View style={Styles.profileCardHeader}>
+        <LinearGradient
+          colors={['#ADD3FF', '#FFC9C9']}
+          style={Styles.profileCardHeader}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+        >
           <TouchableOpacity
             onPress={() => {
               props.setActive(contact);
@@ -64,7 +70,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               style={{ position: 'absolute', top: 8, right: 12 }}
             />
           </TouchableOpacity>
-        </View>
+        </LinearGradient>
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
