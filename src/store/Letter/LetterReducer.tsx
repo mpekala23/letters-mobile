@@ -27,6 +27,7 @@ const initialState: LetterState = {
   existing: {
     8: [
       {
+        letterId: 1,
         type: LetterTypes.PostCards,
         status: LetterStatus.Printed,
         isDraft: true,
@@ -35,6 +36,7 @@ const initialState: LetterState = {
         photoPath: '',
       },
       {
+        letterId: 2,
         type: LetterTypes.PostCards,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
@@ -43,6 +45,7 @@ const initialState: LetterState = {
         photoPath: '',
       },
       {
+        letterId: 3,
         type: LetterTypes.PostCards,
         status: LetterStatus.Mailed,
         isDraft: false,

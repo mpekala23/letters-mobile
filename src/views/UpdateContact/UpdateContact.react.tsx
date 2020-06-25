@@ -14,8 +14,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from 'store/Contact/ContactTypes';
-import { ProfilePicTypes } from 'types';
+import { ProfilePicTypes, Facility } from 'types';
 import { Typography } from '@styles';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { updateContact, deleteContact } from 'api';
+import i18n from '@i18n';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -45,26 +48,18 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private dorm = createRef<Input>();
 
-  private unsubscribeFocus: () => void;
-
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
-    this.unsubscribeFocus = props.navigation.addListener(
-      'focus',
-      this.onNavigationFocus
-    );
+    this.doDeleteContact = this.doDeleteContact.bind(this);
+    this.doUpdateContact = this.doUpdateContact.bind(this);
   }
 
   componentDidMount() {
     this.onNavigationFocus();
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFocus();
   }
 
   onNavigationFocus() {
@@ -82,18 +77,72 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     }
   }
 
+  doDeleteContact = async () => {
+    try {
+      await deleteContact(this.props.contact);
+      this.props.navigation.navigate('ContactSelector');
+    } catch (err) {
+      dropdownError(i18n.t('Error.network'), i18n.t('Error.requestIncomplete'));
+    }
+  };
+
+  doUpdateContact = async () => {
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.props.contact.facility
+    ) {
+      const facility: Facility = {
+        name: this.facilityName.current.state.value,
+        type: this.props.contact.facility.type,
+        address: this.facilityAddress.current.state.value,
+        city: this.props.contact.facility.city,
+        state: this.props.contact.facility.state,
+        postal: this.props.contact.facility.postal,
+      };
+      const contact = {
+        id: this.props.contact.id,
+        state: this.props.contact.state,
+        first_name: this.firstName.current.state.value,
+        last_name: this.lastName.current.state.value,
+        inmate_number: this.props.contact.inmateNumber,
+        relationship: this.props.contact.relationship,
+        facility,
+      };
+      try {
+        await updateContact(contact);
+        this.props.navigation.navigate('ContactSelector');
+      } catch (err) {
+        dropdownError(
+          i18n.t('Error.network'),
+          i18n.t('Error.requestIncomplete')
+        );
+      }
+    }
+  };
+
   updateValid() {
     if (
       this.firstName.current &&
       this.lastName.current &&
       this.facilityName.current &&
-      this.facilityAddress.current
+      this.facilityAddress.current &&
+      this.props.contact.facility
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid;
+        this.facilityAddress.current.state.valid &&
+        // Check that at least one field has changed
+        (this.firstName.current.state.value !== this.props.contact.firstName ||
+          this.lastName.current.state.value !== this.props.contact.lastName ||
+          this.facilityName.current.state.value !==
+            this.props.contact.facility.name ||
+          this.facilityAddress.current.state.value !==
+            this.props.contact.facility.address);
       this.setState({ valid: result });
     }
   }
@@ -134,11 +183,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            First name
+            {i18n.t('UpdateContactScreen.firstName')}
           </Text>
           <Input
             ref={this.firstName}
-            placeholder="First name"
+            placeholder={i18n.t('UpdateContactScreen.firstName')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -153,11 +202,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            Last name
+            {i18n.t('UpdateContactScreen.lastName')}
           </Text>
           <Input
             ref={this.lastName}
-            placeholder="Last name"
+            placeholder={i18n.t('UpdateContactScreen.lastName')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -172,11 +221,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            Address line 1
+            {i18n.t('UpdateContactScreen.addressLine1')}
           </Text>
           <Input
             ref={this.facilityName}
-            placeholder="Address line 1"
+            placeholder={i18n.t('UpdateContactScreen.addressLine1')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -191,11 +240,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            Address Line 2
+            {i18n.t('UpdateContactScreen.addressLine2')}
           </Text>
           <Input
             ref={this.facilityAddress}
-            placeholder="Address line 2"
+            placeholder={i18n.t('UpdateContactScreen.addressLine2')}
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
@@ -211,17 +260,13 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
           />
         </ScrollView>
         <Button
-          buttonText="Save Profile"
+          buttonText={i18n.t('UpdateContactScreen.saveProfile')}
           enabled={this.state.valid}
-          onPress={() => {
-            /* TODO: Update Contact */
-          }}
+          onPress={this.doUpdateContact}
         />
         <Button
-          buttonText="Delete Profile"
-          onPress={() => {
-            /* TODO: Delete Contact */
-          }}
+          buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
+          onPress={this.doDeleteContact}
         />
       </TouchableOpacity>
     );

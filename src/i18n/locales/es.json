@@ -47,6 +47,14 @@
     "sendLetter": "Send letter",
     "letterTracking": "Letter Tracking"
   },
+  "UpdateContactScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Adress line 2",
+    "saveProfile": "Save Profile",
+    "deleteProfile": "Delete Profile"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"

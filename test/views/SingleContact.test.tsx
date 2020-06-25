@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { SingleContactScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from '../../src/types';
+
+const mockStore = configureStore([]);
 
 const setup = (letterOverrides = []) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
@@ -46,12 +50,18 @@ const setup = (letterOverrides = []) => {
     params: { contact, letters },
   };
 
+  const store = mockStore({});
+
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
+
   return {
     navigation,
-    ...render(
-      <SingleContactScreen navigation={navigation} route={route} />,
-      {}
-    ),
+    store,
+    ...render(<SingleContactScreen navigation={navigation} route={route} />, {
+      wrapper: StoreProvider,
+    }),
   };
 };
 
