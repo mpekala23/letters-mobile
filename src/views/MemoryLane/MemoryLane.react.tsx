@@ -38,7 +38,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
             />
           );
         })
-      : null;
+      : null; // TO-DO: Add zeroth state when unblocked by design
 
   return (
     <ScrollView
