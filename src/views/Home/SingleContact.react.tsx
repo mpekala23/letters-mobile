@@ -122,7 +122,8 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         <MemoryLaneCountCard
           letterCount={letters ? letters.length : 0}
           onPress={() => {
-            /* TO-DO: Navigate to memory lane screen */
+            props.setActive(contact);
+            props.navigation.navigate('MemoryLane');
           }}
         />
         <Text

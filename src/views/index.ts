@@ -8,6 +8,7 @@ import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
 import LoginScreen from './Login/Login.react';
+import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
@@ -27,6 +28,7 @@ export {
   HomeScreen,
   IssuesScreen,
   LoginScreen,
+  MemoryLaneScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
