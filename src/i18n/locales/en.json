@@ -123,6 +123,20 @@
     "saveProfile": "Save Profile",
     "deleteProfile": "Delete Profile"
   },
+  "SupportFAQScreen": {
+    "howCanWeHelp": "How can we help?",
+    "cancelMyLetter": "I want to cancel my letter",
+    "takeLongTimeToArrive": "My letter is taking a long time to arrive",
+    "notYetArrived": "I sent my letter more than 6 days ago and it's not here yet",
+    "wrongMailingAddress": "I put the wrong mailing address",
+    "somethingWrongWithTracking": "There's something wrong with tracking",
+    "somethingElse": "It's something else"
+  },
+  "SupportFAQDetailScreen": {
+    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio.",
+    "messageUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you in 1-2 days.",
+    "talkToSomeoneOnFacebook": "Talk to Someone on Facebook"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"
