@@ -14,6 +14,8 @@ import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Splash/Splash.react';
+import SupportFAQScreen from './Report/SupportFAQ.react';
+import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import ThanksScreen from './Report/Thanks.react';
 
 export {
@@ -33,5 +35,7 @@ export {
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
+  SupportFAQScreen,
+  SupportFAQDetailScreen,
   ThanksScreen,
 };
