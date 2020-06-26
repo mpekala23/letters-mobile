@@ -52,6 +52,8 @@
     "lastName": "Last name",
     "addressLine1": "Address line 1",
     "addressLine2": "Adress line 2",
+    "optionalUnit": "Unit (optional, only if needed)",
+    "optionalDorm": "Dorm (optional, only if needed)",
     "saveProfile": "Save Profile",
     "deleteProfile": "Delete Profile"
   },

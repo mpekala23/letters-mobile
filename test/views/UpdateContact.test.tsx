@@ -83,24 +83,14 @@ describe('Update Contact Screen', () => {
     expect(getByPlaceholderText('Last name').props.value).toBe('Last test');
   });
 
-  it('enable save profile button when at least one field changes', () => {
+  it('enable api call from save profile button when at least one field changes', () => {
     const { getByPlaceholderText, getByText } = setup();
     const saveButton = getByText('Save Profile');
-    expect(saveButton.parentNode.props.style[1].backgroundColor).toEqual(
-      'grey'
-    );
+    fireEvent.press(saveButton);
+    expect(updateContact).toHaveBeenCalledTimes(0);
     fireEvent.changeText(getByPlaceholderText('First name'), '');
     fireEvent.changeText(getByPlaceholderText('First name'), 'Doe');
-    expect(saveButton.parentNode.props.style[0].backgroundColor).toEqual(
-      '#3490dc'
-    );
-  });
-
-  it('should make an api call when save profile button is pressed', () => {
-    const { getByText, getByPlaceholderText } = setup();
-    fireEvent.changeText(getByPlaceholderText('First name'), '');
-    fireEvent.changeText(getByPlaceholderText('First name'), 'Doe');
-    fireEvent.press(getByText('Save Profile'));
+    fireEvent.press(saveButton);
     expect(updateContact).toHaveBeenCalledTimes(1);
   });
 
