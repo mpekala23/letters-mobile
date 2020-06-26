@@ -25,6 +25,8 @@ import {
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
+  SupportFAQScreen,
+  SupportFAQDetailScreen,
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
@@ -61,6 +63,8 @@ export type AppStackParamList = {
   ReviewContact: undefined;
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
+  SupportFAQ: undefined;
+  SupportFAQDetail: undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
 };
@@ -175,6 +179,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="LetterDetails"
           component={LetterDetailsScreen}
+          name="SupportFAQ"
+          component={SupportFAQScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="SupportFAQDetail"
+          component={SupportFAQDetailScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
