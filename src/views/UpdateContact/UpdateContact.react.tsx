@@ -57,6 +57,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     this.updateValid = this.updateValid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
+    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
   }
 
   componentDidMount() {
@@ -137,15 +138,29 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
-        // Check that at least one field has changed
-        (this.firstName.current.state.value !== this.props.contact.firstName ||
-          this.lastName.current.state.value !== this.props.contact.lastName ||
-          this.facilityName.current.state.value !==
-            this.props.contact.facility.name ||
-          this.facilityAddress.current.state.value !==
-            this.props.contact.facility.address);
+        this.didUpdateAtLeastOneField();
       this.setState({ valid: result });
     }
+  }
+
+  didUpdateAtLeastOneField() {
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.props.contact.facility
+    ) {
+      return (
+        this.firstName.current.state.value !== this.props.contact.firstName ||
+        this.lastName.current.state.value !== this.props.contact.lastName ||
+        this.facilityName.current.state.value !==
+          this.props.contact.facility.name ||
+        this.facilityAddress.current.state.value !==
+          this.props.contact.facility.address
+      );
+    }
+    return false;
   }
 
   render() {
@@ -258,11 +273,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
           <Input
             ref={this.unit}
-            placeholder="Unit (optional, only if needed)"
+            placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
           />
           <Input
             ref={this.dorm}
-            placeholder="Dorm (optional, only if needed)"
+            placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
           />
         </ScrollView>
         <Button
