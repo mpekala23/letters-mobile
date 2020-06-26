@@ -49,37 +49,15 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.trueBackground}>
       <View style={{ alignItems: 'center' }}>
-        <Text
-          style={[
-            Typography.FONT_BOLD,
-            {
-              color: Colors.AMEELIO_BLACK,
-              fontSize: 20,
-              paddingBottom: 4,
-            },
-          ]}
-        >
+        <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterTracking')}
         </Text>
-        <Text
-          style={[
-            Typography.FONT_BOLD,
-            {
-              color: Colors.AMEELIO_BLACK,
-              fontSize: 14,
-            },
-          ]}
-        >
+        <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
           {i18n.t('LetterTrackingScreen.estimatedArrival')}
         </Text>
         <Text
-          style={[
-            Typography.FONT_BOLD,
-            {
-              color: Colors.AMEELIO_BLACK,
-              fontSize: 14,
-            },
-          ]}
+          style={[Typography.FONT_BOLD, Styles.baseText]}
+          testID="deliveryDate"
         >
           {deliveryDate}
         </Text>
@@ -95,7 +73,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
                 : undefined
             ),
             width: 7,
-            backgroundColor: '#E1E1E1',
+            backgroundColor: Colors.GRAY_LIGHT,
             position: 'absolute',
           }}
         />
@@ -109,16 +87,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
         textStyle={{ fontSize: 14 }}
         containerStyle={Styles.needHelpButton}
       />
-      <Text
-        style={[
-          Typography.FONT_BOLD,
-          {
-            color: Colors.AMEELIO_BLACK,
-            fontSize: 22,
-            paddingBottom: 4,
-          },
-        ]}
-      >
+      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
         {i18n.t('LetterTrackingScreen.letterContent')}
       </Text>
       <ScrollView keyboardShouldPersistTaps="handled">

@@ -7,6 +7,10 @@ import { LetterTypes, LetterStatus } from '../../src/types';
 
 const mockStore = configureStore([]);
 
+jest.mock('moment', () => () => ({
+  format: () => 'Jun 30',
+}));
+
 const setup = (letterOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const letter = {
@@ -60,8 +64,8 @@ describe('Letter Tracking Screen', () => {
   });
 
   it('should display formatted delivery date', () => {
-    const { getByText } = setup();
-    expect(getByText('Jun 30')).toBeDefined();
+    const { getByTestId } = setup();
+    expect(getByTestId('deliveryDate').props.children).toBe('Jun 30');
   });
 
   it('should display letter content', () => {

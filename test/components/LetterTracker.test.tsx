@@ -1,7 +1,11 @@
 import React from 'react';
 import { LetterTracker } from '@components';
-import { fireEvent, render, toJSON } from '@testing-library/react-native';
+import { render, toJSON } from '@testing-library/react-native';
 import { LetterStatus } from 'types';
+
+jest.mock('moment', () => () => ({
+  format: () => 'Jul 12',
+}));
 
 const setup = (propOverrides = {}) => {
   const props = {
@@ -37,8 +41,8 @@ describe('Letter Tracker component', () => {
   });
 
   it('should display formatted date', () => {
-    const { getByText } = setup();
-    expect(getByText('Jul 12, 2019')).toBeDefined();
+    const { getByTestId } = setup();
+    expect(getByTestId('dateFormatted').props.children).toBe('Jul 12');
   });
 
   it('should display tracker color for status Mailed', () => {

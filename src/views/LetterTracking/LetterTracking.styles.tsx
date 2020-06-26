@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   trueBackground: {
@@ -14,5 +15,14 @@ export default StyleSheet.create({
     height: 50,
     alignSelf: 'center',
     marginBottom: 25,
+  },
+  headerText: {
+    color: Colors.AMEELIO_BLACK,
+    fontSize: 21,
+    paddingBottom: 4,
+  },
+  baseText: {
+    color: Colors.AMEELIO_BLACK,
+    fontSize: 14,
   },
 });

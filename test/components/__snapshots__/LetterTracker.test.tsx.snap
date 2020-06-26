@@ -97,8 +97,9 @@ exports[`Letter Tracker component should match snapshot 1`] = `
               },
             ]
           }
+          testID="dateFormatted"
         >
-          Jul 12, 2019
+          Jul 12
         </Text>
         <Text
           style={
@@ -116,7 +117,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
             ]
           }
         >
-          11:51 am
+          Jul 12
         </Text>
       </View>
     </View>

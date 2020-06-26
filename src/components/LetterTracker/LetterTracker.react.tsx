@@ -83,6 +83,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
                 paddingBottom: 8,
               },
             ]}
+            testID="dateFormatted"
           >
             {dateFormatted}
           </Text>

@@ -36,7 +36,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
             },
             Object {
               "color": "#282828",
-              "fontSize": 20,
+              "fontSize": 21,
               "paddingBottom": 4,
             },
           ]
@@ -73,6 +73,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
             },
           ]
         }
+        testID="deliveryDate"
       >
         Jun 30
       </Text>
@@ -87,7 +88,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#E1E1E1",
+            "backgroundColor": "#e6e6e6",
             "height": 0,
             "marginLeft": 14,
             "marginTop": 60,
@@ -183,8 +184,9 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                   },
                 ]
               }
+              testID="dateFormatted"
             >
-              Jul 12, 2019
+              Jun 30
             </Text>
             <Text
               style={
@@ -202,7 +204,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                 ]
               }
             >
-              11:51 am
+              Jun 30
             </Text>
           </View>
         </View>
@@ -263,7 +265,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
           },
           Object {
             "color": "#282828",
-            "fontSize": 22,
+            "fontSize": 21,
             "paddingBottom": 4,
           },
         ]
