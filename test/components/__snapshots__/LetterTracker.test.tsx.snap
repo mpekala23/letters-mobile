@@ -42,8 +42,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontWeight": "600",
+                "fontFamily": "Poppins-Bold",
               },
               Object {
                 "color": "#282828",
@@ -59,8 +58,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontWeight": "600",
+                "fontFamily": "Poppins-Bold",
               },
               Object {
                 "color": "#6a6a6a",
@@ -86,9 +84,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontSize": 16,
-                "fontWeight": "400",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#6a6a6a",
@@ -105,9 +101,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontSize": 16,
-                "fontWeight": "400",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#6a6a6a",
