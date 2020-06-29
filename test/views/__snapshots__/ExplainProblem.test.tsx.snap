@@ -33,8 +33,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "fontSize": 23,
@@ -69,9 +68,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontSize": 16,
-                "fontWeight": "400",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "height": "100%",

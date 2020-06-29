@@ -44,9 +44,8 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       <Text
         style={
           Object {
-            "fontFamily": "System",
+            "fontFamily": "Poppins-Bold",
             "fontSize": 30,
-            "fontWeight": "600",
           }
         }
       >
@@ -202,8 +201,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "fontFamily": "System",
-                  "fontWeight": "600",
+                  "fontFamily": "Poppins-Bold",
                 },
                 Object {
                   "fontSize": 16,
@@ -216,11 +214,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           <Text
             style={
               Array [
-                Object {
-                  "fontFamily": "System",
-                  "fontStyle": "italic",
-                  "fontWeight": "400",
-                },
+                undefined,
                 Object {
                   "color": "#6E757C",
                 },
@@ -232,11 +226,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           <Text
             style={
               Array [
-                Object {
-                  "fontFamily": "System",
-                  "fontStyle": "italic",
-                  "fontWeight": "400",
-                },
+                undefined,
                 Object {
                   "color": "#6E757C",
                 },
@@ -266,9 +256,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": "400",
+                  "fontFamily": "Poppins-Regular",
                 },
                 Object {
                   "marginBottom": 20,

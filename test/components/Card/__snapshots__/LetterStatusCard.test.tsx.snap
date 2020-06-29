@@ -78,9 +78,11 @@ exports[`Letter Status Card component should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
                   "color": "#282828",
-                  "fontSize": 24,
-                  "fontWeight": "bold",
+                  "fontSize": 20,
                 },
                 Object {
                   "flex": 1,
@@ -105,7 +107,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
           style={
             Object {
               "color": "#6E757C",
-              "fontSize": 18,
+              "fontSize": 16,
             }
           }
         >

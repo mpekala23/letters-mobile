@@ -13,7 +13,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    paddingTop: 50,
+    paddingTop: 60,
   },
   profileCardHeader: {
     backgroundColor: '#FC7272',
@@ -29,11 +29,11 @@ export default StyleSheet.create({
     borderRadius: 15,
     width: '100%',
     height: 50,
+    marginBottom: 12,
   },
   profileCardInfo: {
     color: Colors.GRAY_DARKER,
     fontSize: 16,
-    paddingBottom: 4,
   },
   actionItems: {
     padding: 16,

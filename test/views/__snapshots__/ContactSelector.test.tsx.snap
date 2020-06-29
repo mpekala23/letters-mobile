@@ -30,8 +30,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
+            "fontFamily": "Poppins-Bold",
           },
           Object {
             "color": "#6a6a6a",
@@ -52,8 +51,9 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "white",
             "borderRadius": 10,
-            "height": 135,
+            "height": 130,
             "marginBottom": 16,
+            "paddingBottom": 6,
           }
         }
       >
@@ -64,7 +64,6 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 "flex": 1,
                 "flexDirection": "row",
                 "paddingLeft": 16,
-                "paddingTop": 18,
               },
             ]
           }
@@ -73,7 +72,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "paddingTop": 8,
+                  "paddingTop": 24,
                 },
               ]
             }
@@ -119,13 +118,11 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "fontFamily": "System",
-                  "fontWeight": "600",
+                  "fontFamily": "Poppins-Bold",
                 },
                 Object {
                   "color": "#282828",
                   "fontSize": 22,
-                  "paddingBottom": 8,
                 },
               ]
             }
@@ -134,11 +131,15 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
           </Text>
           <Text
             style={
-              Object {
-                "color": "#6a6a6a",
-                "fontSize": 16,
-                "paddingBottom": 6,
-              }
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "#6a6a6a",
+                  "fontSize": 16,
+                },
+              ]
             }
           >
             <Text
@@ -155,11 +156,15 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
           </Text>
           <Text
             style={
-              Object {
-                "color": "#6a6a6a",
-                "fontSize": 16,
-                "paddingBottom": 6,
-              }
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "#6a6a6a",
+                  "fontSize": 16,
+                },
+              ]
             }
           >
             <Text
@@ -178,17 +183,11 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": "400",
+                  "fontFamily": "Poppins-Medium",
                 },
                 Object {
                   "color": "#6a6a6a",
                   "fontSize": 16,
-                  "paddingBottom": 6,
-                },
-                Object {
-                  "paddingBottom": 16,
                 },
               ]
             }

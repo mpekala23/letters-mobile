@@ -90,9 +90,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               <Text
                 style={
                   Object {
-                    "fontFamily": "System",
+                    "fontFamily": "Poppins-Bold",
                     "fontSize": 30,
-                    "fontWeight": "600",
                   }
                 }
               >
@@ -128,15 +127,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   testID="clickable"
                 />
               </View>
-              <Text
-                style={
-                  Object {
-                    "fontFamily": "System",
-                    "fontStyle": "italic",
-                    "fontWeight": "400",
-                  }
-                }
-              >
+              <Text>
                 Click to upload contact\`'\`s image.
               </Text>
             </View>

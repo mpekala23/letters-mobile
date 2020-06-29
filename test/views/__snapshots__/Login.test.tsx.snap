@@ -504,9 +504,7 @@ exports[`Login screen should match snapshot 1`] = `
               <Text
                 style={
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "fontFamily": "Poppins-Regular",
                   }
                 }
               >
@@ -531,9 +529,7 @@ exports[`Login screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
-                        "fontFamily": "System",
-                        "fontSize": 16,
-                        "fontWeight": "400",
+                        "fontFamily": "Poppins-Regular",
                       },
                       Object {
                         "color": "#3490dc",
@@ -549,9 +545,7 @@ exports[`Login screen should match snapshot 1`] = `
                 accessible={false}
                 style={
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "fontFamily": "Poppins-Regular",
                   }
                 }
               >
@@ -566,9 +560,7 @@ exports[`Login screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
-                        "fontFamily": "System",
-                        "fontSize": 16,
-                        "fontWeight": "400",
+                        "fontFamily": "Poppins-Regular",
                       },
                       Object {
                         "color": "#3490dc",
@@ -583,9 +575,7 @@ exports[`Login screen should match snapshot 1`] = `
               <Text
                 style={
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "fontFamily": "Poppins-Regular",
                   }
                 }
               >

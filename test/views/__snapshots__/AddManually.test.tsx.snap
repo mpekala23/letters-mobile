@@ -91,9 +91,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               <Text
                 style={
                   Object {
-                    "fontFamily": "System",
+                    "fontFamily": "Poppins-Bold",
                     "fontSize": 30,
-                    "fontWeight": "600",
                   }
                 }
               >

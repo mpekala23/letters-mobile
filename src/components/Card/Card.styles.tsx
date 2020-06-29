@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
+import { Colors, Typography } from '@styles';
 
 export default StyleSheet.create({
   shadow: {
@@ -20,12 +20,19 @@ export default StyleSheet.create({
     marginVertical: 6,
   },
   cardTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 28,
     color: Colors.AMEELIO_BLACK,
   },
   cardData: {
     fontSize: 18,
+    color: Colors.AMEELIO_GRAY,
+  },
+  letterStatusTitle: {
+    fontSize: 20,
+    color: Colors.AMEELIO_BLACK,
+  },
+  letterStatusData: {
+    fontSize: 16,
     color: Colors.AMEELIO_GRAY,
   },
   letterStatusBackground: {

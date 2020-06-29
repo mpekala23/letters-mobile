@@ -70,11 +70,7 @@ exports[`Register screen should match snapshot 1`] = `
         <Text
           style={
             Array [
-              Object {
-                "fontFamily": "System",
-                "fontStyle": "italic",
-                "fontWeight": "400",
-              },
+              undefined,
               Object {
                 "marginTop": 5,
               },
@@ -104,8 +100,7 @@ exports[`Register screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontWeight": "600",
+                "fontFamily": "Poppins-Bold",
               },
               Object {
                 "color": "#124181",
@@ -131,9 +126,7 @@ exports[`Register screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "System",
-                "fontSize": 16,
-                "fontWeight": "400",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#3490dc",

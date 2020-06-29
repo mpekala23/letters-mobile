@@ -48,11 +48,10 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
               flex: 1,
               flexDirection: 'row',
               paddingLeft: 16,
-              paddingTop: 18,
             },
           ]}
         >
-          <View style={[{ paddingTop: 8 }]}>
+          <View style={[{ paddingTop: 24 }]}>
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
@@ -67,26 +66,19 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
               {
                 color: Colors.AMEELIO_BLACK,
                 fontSize: 22,
-                paddingBottom: 8,
               },
             ]}
           >
             {contact.firstName}
           </Text>
-          <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
+          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
             <Emoji name="love_letter" style={{ fontSize: 16 }} /> received:
           </Text>
-          <Text style={(Typography.FONT_REGULAR, Styles.contactCardInfo)}>
+          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
             <Emoji name="calendar" style={{ fontSize: 16 }} /> last heard from
             you:
           </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              Styles.contactCardInfo,
-              { paddingBottom: 16 },
-            ]}
-          >
+          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
             <Emoji name="airplane" style={{ fontSize: 16 }} /> letters traveled:
           </Text>
         </View>

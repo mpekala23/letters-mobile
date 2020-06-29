@@ -12,13 +12,13 @@ export default StyleSheet.create({
   contactCard: {
     backgroundColor: 'white',
     borderRadius: 10,
-    height: 135,
+    height: 130,
     marginBottom: 16,
+    paddingBottom: 6,
   },
   contactCardInfo: {
     color: Colors.GRAY_DARKER,
     fontSize: 16,
-    paddingBottom: 6,
   },
   addContactButton: {
     marginBottom: 24,

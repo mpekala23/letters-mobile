@@ -91,9 +91,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               <Text
                 style={
                   Object {
-                    "fontFamily": "System",
+                    "fontFamily": "Poppins-Bold",
                     "fontSize": 30,
-                    "fontWeight": "600",
                   }
                 }
               >
@@ -114,9 +113,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
+                      "fontFamily": "Poppins-Regular",
                     },
                     Object {
                       "color": "#3490dc",
@@ -142,9 +139,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
+                      "fontFamily": "Poppins-Regular",
                     },
                     Object {
                       "color": "#3490dc",
@@ -159,8 +154,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     style={
                       Array [
                         Object {
-                          "fontFamily": "System",
-                          "fontWeight": "600",
+                          "fontFamily": "Poppins-Bold",
                         },
                         Object {
                           "color": "#282828",
@@ -189,9 +183,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
+                      "fontFamily": "Poppins-Regular",
                     },
                     Object {
                       "color": "#3490dc",
@@ -206,8 +198,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     style={
                       Array [
                         Object {
-                          "fontFamily": "System",
-                          "fontWeight": "600",
+                          "fontFamily": "Poppins-Bold",
                         },
                         Object {
                           "color": "#282828",

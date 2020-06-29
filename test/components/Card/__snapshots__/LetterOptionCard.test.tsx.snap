@@ -153,11 +153,15 @@ exports[`Letter Option Card component should match snapshot 1`] = `
     </RNSVGSvgView>
     <Text
       style={
-        Object {
-          "color": "#282828",
-          "fontSize": 24,
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "fontFamily": "Poppins-Bold",
+          },
+          Object {
+            "color": "#282828",
+            "fontSize": 28,
+          },
+        ]
       }
     >
       Post cards

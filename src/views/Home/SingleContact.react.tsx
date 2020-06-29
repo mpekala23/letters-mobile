@@ -60,35 +60,28 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
             {
               color: Colors.AMEELIO_BLACK,
               fontSize: 25,
-              paddingBottom: 4,
             },
           ]}
         >
           {contact.firstName} {contact.lastName}
         </Text>
-        <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
           <Emoji name="love_letter" style={{ fontSize: 16 }} />{' '}
           {i18n.t('SingleContactScreen.received')}:{' '}
           {letters ? letters.length : 0}
         </Text>
-        <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
           <Emoji name="calendar" style={{ fontSize: 16 }} />{' '}
           {i18n.t('SingleContactScreen.lastHeardFromYou')}:
         </Text>
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            Styles.profileCardInfo,
-            { paddingBottom: 4 },
-          ]}
-        >
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
           <Emoji name="airplane" style={{ fontSize: 16 }} />{' '}
           {i18n.t('SingleContactScreen.lettersTraveled')}:
         </Text>
         <Button
           onPress={() => props.navigation.navigate('ChooseOption')}
           buttonText={i18n.t('SingleContactScreen.sendLetter')}
-          textStyle={{ fontSize: 20 }}
+          textStyle={[Typography.FONT_BOLD, { fontSize: 20 }]}
           containerStyle={Styles.sendLetterButton}
         />
       </View>

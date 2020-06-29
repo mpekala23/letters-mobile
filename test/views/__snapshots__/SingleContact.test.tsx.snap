@@ -27,7 +27,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           "height": 350,
           "justifyContent": "center",
           "padding": 16,
-          "paddingTop": 50,
+          "paddingTop": 60,
         }
       }
     >
@@ -75,13 +75,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#282828",
               "fontSize": 25,
-              "paddingBottom": 4,
             },
           ]
         }
@@ -94,14 +92,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontSize": 16,
-              "fontWeight": "400",
+              "fontFamily": "Poppins-Medium",
             },
             Object {
               "color": "#6a6a6a",
               "fontSize": 16,
-              "paddingBottom": 4,
             },
           ]
         }
@@ -126,14 +121,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontSize": 16,
-              "fontWeight": "400",
+              "fontFamily": "Poppins-Medium",
             },
             Object {
               "color": "#6a6a6a",
               "fontSize": 16,
-              "paddingBottom": 4,
             },
           ]
         }
@@ -156,17 +148,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontSize": 16,
-              "fontWeight": "400",
+              "fontFamily": "Poppins-Medium",
             },
             Object {
               "color": "#6a6a6a",
               "fontSize": 16,
-              "paddingBottom": 4,
-            },
-            Object {
-              "paddingBottom": 4,
             },
           ]
         }
@@ -202,6 +188,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "backgroundColor": "#FC7272",
               "borderRadius": 15,
               "height": 50,
+              "marginBottom": 12,
               "width": "100%",
             },
             Object {},
@@ -219,9 +206,14 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {
-                "fontSize": 20,
-              },
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 20,
+                },
+              ],
               Object {},
             ]
           }
@@ -414,21 +406,30 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         </RNSVGSvgView>
         <Text
           style={
-            Object {
-              "color": "#6E757C",
-              "fontSize": 18,
-            }
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#6E757C",
+                "fontSize": 18,
+              },
+            ]
           }
         >
           Memory Lane
         </Text>
         <Text
           style={
-            Object {
-              "color": "#282828",
-              "fontSize": 24,
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#282828",
+                "fontSize": 28,
+              },
+            ]
           }
         >
           3 Letters
@@ -438,8 +439,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#6a6a6a",
@@ -519,9 +519,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
                       "color": "#282828",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
+                      "fontSize": 20,
                     },
                     Object {
                       "flex": 1,
@@ -546,7 +548,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               style={
                 Object {
                   "color": "#6E757C",
-                  "fontSize": 18,
+                  "fontSize": 16,
                 }
               }
             >
@@ -623,9 +625,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
                       "color": "#282828",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
+                      "fontSize": 20,
                     },
                     Object {
                       "flex": 1,
@@ -650,7 +654,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               style={
                 Object {
                   "color": "#6E757C",
-                  "fontSize": 18,
+                  "fontSize": 16,
                 }
               }
             >
@@ -727,9 +731,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
                       "color": "#282828",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
+                      "fontSize": 20,
                     },
                     Object {
                       "flex": 1,
@@ -754,7 +760,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               style={
                 Object {
                   "color": "#6E757C",
-                  "fontSize": 18,
+                  "fontSize": 16,
                 }
               }
             >
