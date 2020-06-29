@@ -29,19 +29,8 @@ export {
   HomeScreen,
   IssuesScreen,
   LoginScreen,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   LetterTrackingScreen,
-=======
   MemoryLaneScreen,
->>>>>>> [1/x] create screen + write tests
-=======
-  MemoryLaneScreen,
->>>>>>> [1/x] create screen + write tests
-=======
-  MemoryLaneScreen,
->>>>>>> [1/x] create screen + write tests
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,

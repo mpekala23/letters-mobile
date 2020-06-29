@@ -16,10 +16,7 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
-<<<<<<< HEAD
   LetterTrackingScreen,
-=======
->>>>>>> [1/x] create screen + write tests
   MemoryLaneScreen,
   LoginScreen,
   ReferFriendsScreen,
@@ -56,10 +53,7 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
-<<<<<<< HEAD
   LetterTracking: undefined;
-=======
->>>>>>> [1/x] create screen + write tests
   MemoryLane: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
@@ -167,14 +161,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-<<<<<<< HEAD
           name="LetterTracking"
           component={LetterTrackingScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-=======
->>>>>>> [1/x] create screen + write tests
           name="MemoryLane"
           component={MemoryLaneScreen}
           options={{ cardStyleInterpolator: fadeTransition }}

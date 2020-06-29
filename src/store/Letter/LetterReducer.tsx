@@ -1,4 +1,4 @@
-import { LetterTypes, LetterStatus, LetterTrackingEvent } from 'types';
+import { LetterTypes, LetterStatus } from 'types';
 import {
   LetterState,
   LetterActionTypes,
@@ -44,8 +44,6 @@ const initialState: LetterState = {
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-<<<<<<< HEAD
-<<<<<<< HEAD
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -55,10 +53,6 @@ const initialState: LetterState = {
             date: '2019-07-12T15:51:41.000Z',
           },
         ],
-=======
->>>>>>> [1/x] create screen + write tests
-=======
->>>>>>> [1/x] create screen + write tests
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
@@ -94,8 +88,8 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-<<<<<<< HEAD
-        photoPath: 'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -123,10 +117,6 @@ const initialState: LetterState = {
             date: '2019-06-23T15:11:41.000Z',
           },
         ],
-=======
-        photoPath:
-          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
->>>>>>> [1/x] create screen + write tests
       },
     ],
   },
