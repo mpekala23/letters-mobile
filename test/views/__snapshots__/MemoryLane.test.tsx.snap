@@ -62,6 +62,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
             },
           ]
         }
+        testID="memoryLaneCard"
       >
         <Image
           source={
@@ -111,7 +112,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
               ]
             }
           >
-            05/11/2020
+            
           </Text>
         </View>
       </TouchableOpacity>

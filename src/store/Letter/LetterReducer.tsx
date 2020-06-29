@@ -24,6 +24,7 @@ const initialState: LetterState = {
     recipientId: -1,
     message: '',
     photoPath: '',
+    dateCreated: '06/29/20',
     trackingEvents: [],
   },
   active: {
@@ -33,6 +34,7 @@ const initialState: LetterState = {
     recipientId: -1,
     message: '',
     photoPath: '',
+    dateCreated: '06/29/20',
     trackingEvents: [],
   },
   existing: {
@@ -53,6 +55,7 @@ const initialState: LetterState = {
             date: '2019-07-12T15:51:41.000Z',
           },
         ],
+        dateCreated: '06/29/20',
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
@@ -77,7 +80,9 @@ const initialState: LetterState = {
             date: '2019-06-23T15:51:41.000Z',
           },
         ],
-        message: "Hi Emily! How are you doing? I'm trying out this...",
+        message:
+          "Hi Emily! How are you doing? I'm sending you a letter through Ameelio. It is a great service! ",
+        dateCreated: '06/26/20',
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
@@ -88,6 +93,7 @@ const initialState: LetterState = {
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
+        dateCreated: '06/14/20',
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
         expectedDeliveryDate: '2019-06-30',

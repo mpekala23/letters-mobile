@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Letter Details Screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "white",
+        "flex": 1,
+        "flexDirection": "column",
+        "padding": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderBottomWidth": 2,
+          "borderColor": "#e6e6e6",
+          "paddingBottom": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 24,
+            "fontWeight": "600",
+          }
+        }
+      >
+        06/26/2019
+      </Text>
+    </View>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#282828",
+            "fontSize": 18,
+            "fontWeight": "600",
+            "padding": 8,
+            "paddingBottom": 36,
+            "paddingTop": 16,
+          }
+        }
+      >
+        I'm trying out this new service called Ameelio...
+      </Text>
+    </ScrollView>
+  </View>
+</View>
+`;
