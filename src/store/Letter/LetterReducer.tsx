@@ -1,4 +1,4 @@
-import { LetterTypes, LetterStatus } from 'types';
+import { LetterTypes, LetterStatus, LetterTrackingEvent } from 'types';
 import {
   LetterState,
   LetterActionTypes,
@@ -13,6 +13,7 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
+  SET_ACTIVE,
 } from './LetterTypes';
 
 const initialState: LetterState = {
@@ -23,32 +24,96 @@ const initialState: LetterState = {
     recipientId: -1,
     message: '',
     photoPath: '',
+    trackingEvents: [],
+  },
+  active: {
+    type: LetterTypes.PostCards,
+    status: LetterStatus.Created,
+    isDraft: true,
+    recipientId: -1,
+    message: '',
+    photoPath: '',
+    trackingEvents: [],
   },
   existing: {
     8: [
       {
         type: LetterTypes.PostCards,
-        status: LetterStatus.Printed,
+        status: LetterStatus.Mailed,
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
         photoPath: '',
+        letterId: 1,
+        expectedDeliveryDate: '2019-06-30',
+        trackingEvents: [
+          {
+            id: 1,
+            name: LetterStatus.Mailed,
+            location: '20002',
+            date: '2019-07-12T15:51:41.000Z',
+          },
+        ],
+      },
+      {
+        type: LetterTypes.PostCards,
+        status: LetterStatus.InTransit,
+        isDraft: true,
+        recipientId: 8,
+        message: "I'm trying out this new service called Ameelio...",
+        photoPath: '',
+        letterId: 2,
+        expectedDeliveryDate: '2019-06-30',
+        trackingEvents: [
+          {
+            id: 1,
+            name: LetterStatus.InTransit,
+            location: '90210',
+            date: '2019-06-25T12:28:41.000Z',
+          },
+          {
+            id: 2,
+            name: LetterStatus.Mailed,
+            location: '10001',
+            date: '2019-06-23T15:51:41.000Z',
+          },
+        ],
       },
       {
         type: LetterTypes.PostCards,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: '',
-      },
-      {
-        type: LetterTypes.PostCards,
-        status: LetterStatus.Mailed,
-        isDraft: false,
-        recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
         photoPath: '',
+        letterId: 3,
+        expectedDeliveryDate: '2019-06-30',
+        trackingEvents: [
+          {
+            id: 2,
+            name: LetterStatus.OutForDelivery,
+            location: '06520',
+            date: '2019-06-30T15:21:41.000Z',
+          },
+          {
+            id: 3,
+            name: LetterStatus.InLocalArea,
+            location: '06511',
+            date: '2019-06-29T14:38:41.000Z',
+          },
+          {
+            id: 4,
+            name: LetterStatus.InTransit,
+            location: '90210',
+            date: '2019-06-25T12:28:41.000Z',
+          },
+          {
+            id: 5,
+            name: LetterStatus.Mailed,
+            location: '20002',
+            date: '2019-06-23T15:11:41.000Z',
+          },
+        ],
       },
     ],
   },
@@ -100,6 +165,9 @@ export default function LetterReducer(
           action.payload.letter,
         ];
       }
+      return currentState;
+    case SET_ACTIVE:
+      currentState.active = action.payload;
       return currentState;
     default:
       return currentState;

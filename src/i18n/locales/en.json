@@ -9,6 +9,12 @@
     "requestTimedOut": "The request timed out.",
     "requestIncomplete": "The request could not be completed."
   },
+  "LetterTrackingScreen": {
+    "letterTracking": "Letter tracking",
+    "estimatedArrival": "Your letter is estimated to arrive on",
+    "needHelp": "I need help",
+    "letterContent": "Letter content"
+  },
   "LoginScreen": {
     "emailAddress": "E-mail Address",
     "password": "Password",

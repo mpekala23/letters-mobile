@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from 'navigations';
@@ -10,6 +10,9 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
+import { connect } from 'react-redux';
+import { setActive } from '@store/Letter/LetterActions';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -22,9 +25,10 @@ interface Props {
   route: {
     params: { contact: Contact; letters?: Letter[] };
   };
+  setActiveLetter: (letter: Letter) => void;
 }
 
-const SingleContactScreen: React.FC<Props> = (props: Props) => {
+const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   const { contact, letters } = props.route.params;
 
   const letterCards =
@@ -37,6 +41,8 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
               description={letter.message}
               onPress={() => {
                 /* TO-DO: Navigate to letter tracking screen */
+                props.setActiveLetter(letter);
+                props.navigation.navigate('LetterTracking');
               }}
               key={letter.letterId}
             />
@@ -112,5 +118,15 @@ const SingleContactScreen: React.FC<Props> = (props: Props) => {
     </View>
   );
 };
+
+const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+  return {
+    setActiveLetter: (letter: Letter) => dispatch(setActive(letter)),
+  };
+};
+const SingleContactScreen = connect(
+  null,
+  mapDispatchToProps
+)(SingleContactScreenBase);
 
 export default SingleContactScreen;

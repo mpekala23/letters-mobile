@@ -29,8 +29,9 @@ export enum PrisonTypes {
 export enum LetterStatus {
   Draft = 'Draft',
   Created = 'Created',
-  Printed = 'Printed',
   Mailed = 'Mailed',
+  InTransit = 'In Transit',
+  InLocalArea = 'In Local Area',
   OutForDelivery = 'Out for Delivery',
   Delivered = 'Delivered',
 }
@@ -48,4 +49,13 @@ export interface Letter {
   message: string;
   photoPath?: string;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
+  expectedDeliveryDate?: string;
+  trackingEvents?: LetterTrackingEvent[];
+}
+
+export interface LetterTrackingEvent {
+  id: number;
+  name: LetterStatus;
+  location: string;
+  date: string;
 }

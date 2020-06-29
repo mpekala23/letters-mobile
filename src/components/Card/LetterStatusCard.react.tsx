@@ -18,12 +18,14 @@ function mapStatusToColorStyle(type: LetterStatus) {
       return { backgroundColor: '#81B5FF' };
     case LetterStatus.Created:
       return { backgroundColor: '#81B5FF' };
-    case LetterStatus.Printed:
-      return { backgroundColor: '#7DF5AD' };
     case LetterStatus.Mailed:
-      return { backgroundColor: '#81B5FF' };
+      return { backgroundColor: '#A8C1E4' };
+    case LetterStatus.InTransit:
+      return { backgroundColor: '#8DA7CC' };
+    case LetterStatus.InLocalArea:
+      return { backgroundColor: '#6D89B1' };
     case LetterStatus.OutForDelivery:
-      return { backgroundColor: '#FF7171' };
+      return { backgroundColor: '#436697' };
     default:
       return { backgroundColor: '#FF7171' };
   }
@@ -34,6 +36,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
       onPress={props.onPress}
+      testID="letterStatusCard"
     >
       <View style={CardStyles.letterStatusBackground}>
         <View
