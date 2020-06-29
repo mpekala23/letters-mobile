@@ -126,10 +126,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
           {item.name}
         </Text>
-        <Text style={[Typography.FONT_ITALIC, Styles.itemInfo]}>
+        <Text style={[Typography.FONT_REGULAR_ITALIC, Styles.itemInfo]}>
           {item.type}
         </Text>
-        <Text style={[Typography.FONT_ITALIC, Styles.itemInfo]}>
+        <Text style={[Typography.FONT_REGULAR_ITALIC, Styles.itemInfo]}>
           {item.address} -{item.city},{item.state} {item.postal}
         </Text>
       </TouchableOpacity>

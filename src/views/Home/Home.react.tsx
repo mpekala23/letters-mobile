@@ -50,10 +50,10 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
         Regular Font Style (Italics)
       </Text>
       <Text style={[Typography.FONT_MEDIUM, { fontSize: 24 }]}>
-        Regular Font Style
+        Medium Font Style
       </Text>
       <Text style={[Typography.FONT_MEDIUM_ITALIC, { fontSize: 24 }]}>
-        Regular Font Style (Italics)
+        Medium Font Style (Italics)
       </Text>
       <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
         Bold Font Style
