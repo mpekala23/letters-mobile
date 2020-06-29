@@ -10,7 +10,7 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActive } from '@store/Letter/LetterActions';
+import { setActiveLetter } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
@@ -127,7 +127,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         <MemoryLaneCountCard
           letterCount={letters ? letters.length : 0}
           onPress={() => {
-            props.setActive(contact);
+            props.setActiveContact(contact);
             props.navigation.navigate('MemoryLane');
           }}
         />
@@ -154,7 +154,7 @@ const mapDispatchToProps = (
 ) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
-    setActiveLetter: (letter: Letter) => dispatch(setActive(letter)),
+    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
   };
 };
 const SingleContactScreen = connect(

@@ -13,7 +13,7 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
-  SET_ACTIVE,
+  SET_ACTIVE_LETTER,
 } from './LetterTypes';
 
 const initialState: LetterState = {
@@ -169,7 +169,7 @@ export default function LetterReducer(
         ];
       }
       return currentState;
-    case SET_ACTIVE:
+    case SET_ACTIVE_LETTER:
       currentState.active = action.payload;
       return currentState;
     default:
