@@ -4,29 +4,38 @@ import { Text, View, TextStyle } from 'react-native';
 import * as Colors from './Colors';
 
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = 'System';
-export const FONT_FAMILY_BOLD = 'System';
+export const FONT_FAMILY_LIGHT = 'Poppins-Light';
+export const FONT_FAMILY_LIGHT_ITALIC = 'Poppins-Light-Italic';
 
-// FONT WEIGHT
-export const FONT_WEIGHT_REGULAR = '400';
-export const FONT_WEIGHT_BOLD = '600';
+export const FONT_FAMILY_REGULAR = 'Poppins-Regular';
+export const FONT_FAMILY_REGULAR_ITALIC = 'Poppins-Regular-Italic';
+
+export const FONT_FAMILY_BOLD = 'Poppins-Bold';
+export const FONT_FAMILY_BOLD_ITALIC = 'Poppins-Bold-Italic';
 
 // FONT STYLE
 export const FONT_REGULAR: TextStyle = {
   fontFamily: FONT_FAMILY_REGULAR,
-  fontWeight: FONT_WEIGHT_REGULAR,
-  fontSize: 16,
+};
+
+export const FONT_REGULAR_ITALIC: TextStyle = {
+  fontFamily: FONT_FAMILY_REGULAR_ITALIC,
 };
 
 export const FONT_BOLD: TextStyle = {
   fontFamily: FONT_FAMILY_BOLD,
-  fontWeight: FONT_WEIGHT_BOLD,
 };
 
-export const FONT_ITALIC: TextStyle = {
-  fontFamily: FONT_FAMILY_REGULAR,
-  fontWeight: FONT_WEIGHT_REGULAR,
-  fontStyle: 'italic',
+export const FONT_BOLD_ITALIC: TextStyle = {
+  fontFamily: FONT_FAMILY_BOLD_ITALIC,
+};
+
+export const FONT_LIGHT: TextStyle = {
+  fontFamily: FONT_FAMILY_LIGHT,
+};
+
+export const FONT_LIGHT_ITALIC: TextStyle = {
+  fontFamily: FONT_FAMILY_LIGHT_ITALIC,
 };
 
 export interface TextProps {
@@ -56,7 +65,6 @@ const PageHeader: React.FC<TextProps> = (props: TextProps) => {
         style={{
           fontSize: size * 1.5,
           fontFamily: FONT_FAMILY_BOLD,
-          fontWeight: FONT_WEIGHT_BOLD,
         }}
       >
         {text}
