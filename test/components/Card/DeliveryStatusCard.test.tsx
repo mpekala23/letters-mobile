@@ -57,12 +57,12 @@ describe('Delivery Status Card component', () => {
   });
 
   it('should display progress bar 2 / 5', () => {
-    const { getByTestId } = setup({ status: LetterStatus.Printed });
+    const { getByTestId } = setup({ status: LetterStatus.Mailed });
     expect(getByTestId('progressBar').props.style[1].width).toBe('40%');
   });
 
   it('should display progress bar 3 / 5', () => {
-    const { getByTestId } = setup({ status: LetterStatus.Mailed });
+    const { getByTestId } = setup({ status: LetterStatus.InTransit });
     expect(getByTestId('progressBar').props.style[1].width).toBe('60%');
   });
 

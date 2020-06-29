@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { SingleContactScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from '../../src/types';
+
+const mockStore = configureStore([]);
 
 const setup = (letterOverrides = []) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
@@ -16,26 +20,10 @@ const setup = (letterOverrides = []) => {
     [
       {
         type: LetterTypes.PostCards,
-        status: LetterStatus.Printed,
-        isDraft: true,
-        recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-      },
-      {
-        type: LetterTypes.PostCards,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
         message: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: '',
-      },
-      {
-        type: LetterTypes.PostCards,
-        status: LetterStatus.Mailed,
-        isDraft: false,
-        recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
         photoPath: '',
       },
     ],
@@ -46,12 +34,25 @@ const setup = (letterOverrides = []) => {
     params: { contact, letters },
   };
 
+  const initialLetterState = {
+    existing: letters,
+  };
+
+  const store = mockStore({
+    letter: initialLetterState,
+  });
+
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
+
   return {
     navigation,
-    ...render(
-      <SingleContactScreen navigation={navigation} route={route} />,
-      {}
-    ),
+    route,
+    store,
+    ...render(<SingleContactScreen navigation={navigation} route={route} />, {
+      wrapper: StoreProvider,
+    }),
   };
 };
 
@@ -93,5 +94,9 @@ describe('Single Contact Screen', () => {
 
   // TO-DO: Test navigation to memory lane screen when card is pressed
 
-  // TO-DO: Test navigation to letter tracking screen when letter is pressed
+  it('should navigate to letter tracking screen when letter card is pressed', () => {
+    const { navigation, getByTestId } = setup();
+    fireEvent.press(getByTestId('letterStatusCard'));
+    expect(navigation.navigate).toHaveBeenCalledWith('LetterTracking');
+  });
 });
