@@ -127,7 +127,13 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   testID="clickable"
                 />
               </View>
-              <Text>
+              <Text
+                style={
+                  Object {
+                    "fontFamily": "Poppins-Regular-Italic",
+                  }
+                }
+              >
                 Click to upload contact\`'\`s image.
               </Text>
             </View>

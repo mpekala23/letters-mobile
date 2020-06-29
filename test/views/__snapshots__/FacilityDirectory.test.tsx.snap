@@ -214,7 +214,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           <Text
             style={
               Array [
-                undefined,
+                Object {
+                  "fontFamily": "Poppins-Regular-Italic",
+                },
                 Object {
                   "color": "#6E757C",
                 },
@@ -226,7 +228,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           <Text
             style={
               Array [
-                undefined,
+                Object {
+                  "fontFamily": "Poppins-Regular-Italic",
+                },
                 Object {
                   "color": "#6E757C",
                 },

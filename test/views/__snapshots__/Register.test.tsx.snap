@@ -70,7 +70,9 @@ exports[`Register screen should match snapshot 1`] = `
         <Text
           style={
             Array [
-              undefined,
+              Object {
+                "fontFamily": "Poppins-Regular-Italic",
+              },
               Object {
                 "marginTop": 5,
               },
