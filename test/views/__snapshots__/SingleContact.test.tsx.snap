@@ -423,7 +423,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Bold",
               },
               Object {
                 "color": "#282828",

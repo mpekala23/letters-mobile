@@ -22,6 +22,11 @@
     "privacyPolicy": "Privacy Policy",
     "incorrectUsernameOrPassword": "Incorrect username or password"
   },
+  "MemoryLaneCountCard": {
+    "noLettersYet": "No letters yet",
+    "oneLetter": "1 Letter",
+    "letters": "Letters"
+  },
   "RegisterScreen": {
     "clickToUploadProfileImage": "Click to upload profile image.",
     "privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",

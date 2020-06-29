@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import LettersFilledIcon from '@assets/components/Card/LettersFilled';
+import i18n from '@i18n';
 import CardStyles from './Card.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -12,11 +13,13 @@ interface Props {
 }
 
 const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
-  let cardMessage = 'No letters yet';
+  let cardMessage = i18n.t('MemoryLaneCountCard.noLettersYet');
   if (props.letterCount === 1) {
-    cardMessage = '1 Letter';
+    cardMessage = i18n.t('MemoryLaneCountCard.oneLetter');
   } else if (props.letterCount > 1) {
-    cardMessage = `${props.letterCount} Letters`;
+    cardMessage = `${props.letterCount} ${i18n.t(
+      'MemoryLaneCountCard.letters'
+    )}`;
   }
   return (
     <TouchableOpacity
@@ -39,7 +42,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         style={
           props.letterCount === 0
             ? [
-                Typography.FONT_MEDIUM,
+                Typography.FONT_BOLD,
                 {
                   fontSize: 26,
                   color: Colors.AMEELIO_BLACK,
@@ -47,7 +50,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
                   paddingTop: 4,
                 },
               ]
-            : [Typography.FONT_MEDIUM, CardStyles.cardTitle]
+            : [Typography.FONT_BOLD, CardStyles.cardTitle]
         }
       >
         {cardMessage}
