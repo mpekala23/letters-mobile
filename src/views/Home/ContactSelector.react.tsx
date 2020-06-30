@@ -16,6 +16,7 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
 import { ProfilePicTypes, Letter } from 'types';
 import Emoji from 'react-native-emoji';
+import i18n from '@i18n';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -71,15 +72,23 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
           >
             {contact.firstName}
           </Text>
-          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
-            <Emoji name="love_letter" style={{ fontSize: 16 }} /> received:
+          <Text style={(Typography.FONT_MEDIUM, Styles.contactCardInfo)}>
+            <Emoji name="love_letter" style={{ fontSize: 16 }} />{' '}
+            {i18n.t('SingleContactScreen.received')}:{' '}
           </Text>
-          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
-            <Emoji name="calendar" style={{ fontSize: 16 }} /> last heard from
-            you:
+          <Text style={(Typography.FONT_MEDIUM, Styles.contactCardInfo)}>
+            <Emoji name="calendar" style={{ fontSize: 16 }} />{' '}
+            {i18n.t('SingleContactScreen.lastHeardFromYou')}:
           </Text>
-          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
-            <Emoji name="airplane" style={{ fontSize: 16 }} /> letters traveled:
+          <Text
+            style={[
+              Typography.FONT_MEDIUM,
+              Styles.contactCardInfo,
+              { paddingBottom: 16 },
+            ]}
+          >
+            <Emoji name="airplane" style={{ fontSize: 16 }} />{' '}
+            {i18n.t('SingleContactScreen.lettersTraveled')}:
           </Text>
         </View>
       </TouchableOpacity>
@@ -101,7 +110,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
           },
         ]}
       >
-        YOUR LOVED ONES
+        {i18n.t('ContactSelectorScreen.yourLovedOnes')}
       </Text>
       <ScrollView keyboardShouldPersistTaps="handled">
         {contactSelectorList}

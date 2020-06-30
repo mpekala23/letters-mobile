@@ -268,7 +268,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
               ]
             }
           >
-            Don\`'\`t see the facility you\`'\`re looking for?
+            Don't see the facility you're looking for?
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
