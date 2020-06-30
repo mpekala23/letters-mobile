@@ -137,7 +137,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Click to upload contact\`'\`s image.
+                Click to upload contact's image
               </Text>
             </View>
             <View
@@ -147,7 +147,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
                   "height": 60,
-                  "marginBottom": 0,
+                  "marginBottom": 10,
                   "marginTop": 10,
                   "overflow": "hidden",
                   "width": "100%",
