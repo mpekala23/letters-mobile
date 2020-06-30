@@ -23,6 +23,7 @@ import {
   ContactActionTypes,
 } from '@store/Contact/ContactTypes';
 import { UserState } from '@store/User/UserTypes';
+import i18n from '@i18n';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -153,10 +154,14 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
-                <Typography.PageHeader text="Add Contact" />
+                <Typography.PageHeader
+                  text={i18n.t('ContactInfoScreen.addContact')}
+                />
                 <Button
                   link
-                  buttonText="Need help finding your inmate ID?"
+                  buttonText={i18n.t(
+                    'ContactInfoScreen.needHelpFindingYourInmateID'
+                  )}
                   containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
                   onPress={() => {
                     /* TODO */
@@ -170,13 +175,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                 >
                   <Text>
-                    Tap here to search the
+                    {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
                     >
                       {this.state.stateToSearch}
-                    </Text>
-                    database.
+                    </Text>{' '}
+                    {i18n.t('ContactInfoScreen.database')}.
                   </Text>
                 </Button>
                 <Button
@@ -191,19 +196,19 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                 >
                   <Text>
-                    Tap here to search the
+                    {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
                     >
-                      Federal
-                    </Text>
-                    database.
+                      {i18n.t('ContactInfoScreen.federal')}
+                    </Text>{' '}
+                    {i18n.t('ContactInfoScreen.database')}.
                   </Text>
                 </Button>
                 <Input
                   ref={this.stateRef}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder="State"
+                  parentStyle={(CommonStyles.fullWidth, { marginBottom: 10 })}
+                  placeholder={i18n.t('ContactInfoScreen.state')}
                   options={STATES_DROPDOWN}
                   validate={Validation.State}
                   onFocus={() => {
@@ -225,7 +230,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.firstName}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="First Name"
+                  placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -240,7 +245,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Last Name"
+                  placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -255,7 +260,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.inmateNumber}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Inmate Number"
+                  placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -270,22 +275,22 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.relationship}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Relationship to Inmate"
+                  placeholder={i18n.t('ContactInfoScreen.relationshipToInmate')}
                   required
                   options={[
-                    'Mother',
-                    'Father',
-                    'Brother',
-                    'Sister',
-                    'Sibling',
-                    'Daughter',
-                    'Son',
-                    'Grandmother',
-                    'Grandfather',
-                    'Grandaughter',
-                    'Grandson',
-                    'Friend',
-                    'Other',
+                    i18n.t('ContactInfoScreen.mother'),
+                    i18n.t('ContactInfoScreen.father'),
+                    i18n.t('ContactInfoScreen.brother'),
+                    i18n.t('ContactInfoScreen.sister'),
+                    i18n.t('ContactInfoScreen.sibling'),
+                    i18n.t('ContactInfoScreen.daughter'),
+                    i18n.t('ContactInfoScreen.son'),
+                    i18n.t('ContactInfoScreen.grandmother'),
+                    i18n.t('ContactInfoScreen.grandfather'),
+                    i18n.t('ContactInfoScreen.grandaughter'),
+                    i18n.t('ContactInfoScreen.grandson'),
+                    i18n.t('ContactInfoScreen.friend'),
+                    i18n.t('ContactInfoScreen.other'),
                   ]}
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -303,7 +308,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 onPress={() => {
                   /* TODO */
                 }}
-                buttonText="Back"
+                buttonText={i18n.t('ContactInfoScreen.back')}
                 reverse
                 containerStyle={CommonStyles.bottomButton}
               />
@@ -329,7 +334,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }
                   this.props.navigation.navigate('FacilityDirectory');
                 }}
-                buttonText="Next"
+                buttonText={i18n.t('ContactInfoScreen.next')}
                 enabled={this.state.valid}
                 containerStyle={CommonStyles.bottomButton}
               />
