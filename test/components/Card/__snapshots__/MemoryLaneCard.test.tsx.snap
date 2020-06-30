@@ -38,6 +38,7 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
         undefined,
       ]
     }
+    testID="memoryLaneCard"
   >
     <Image
       source={

@@ -18,6 +18,7 @@ import {
   IssuesScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
+  LetterDetailsScreen,
   LoginScreen,
   ReferFriendsScreen,
   RegisterScreen,
@@ -53,6 +54,7 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  LetterDetails: undefined;
   LetterTracking: undefined;
   MemoryLane: undefined;
   ReferFriends: undefined;
@@ -168,6 +170,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="MemoryLane"
           component={MemoryLaneScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="LetterDetails"
+          component={LetterDetailsScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

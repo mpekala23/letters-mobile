@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MemoryLaneScreen } from '@views';
-import { render, toJSON } from '@testing-library/react-native';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from '../../src/types';
@@ -83,5 +83,9 @@ describe('Memory Lane Screen', () => {
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');
   });
 
-  // TO-DO: Test navigation to letter info screen when card is pressed
+  it('should navigate to letter details screen when letter card is pressed', () => {
+    const { navigation, getByTestId } = setup();
+    fireEvent.press(getByTestId('memoryLaneCard'));
+    expect(navigation.navigate).toHaveBeenCalledWith('LetterDetails');
+  });
 });
