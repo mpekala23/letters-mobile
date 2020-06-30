@@ -105,7 +105,6 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Object {
               "color": "#000",
-              "fontSize": 16,
             }
           }
         >
@@ -134,7 +133,6 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Object {
               "color": "#000",
-              "fontSize": 16,
             }
           }
         >
@@ -161,7 +159,6 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Object {
               "color": "#000",
-              "fontSize": 16,
             }
           }
         >
@@ -435,10 +432,10 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           Array [
             Object {
               "fontFamily": "Poppins-Bold",
+              "fontSize": 20,
             },
             Object {
               "color": "#6a6a6a",
-              "fontSize": 20,
               "paddingTop": 24,
             },
           ]

@@ -61,33 +61,23 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
           </View>
         </View>
         <View style={[{ paddingLeft: 112 }]}>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                color: Colors.AMEELIO_BLACK,
-                fontSize: 22,
-              },
-            ]}
-          >
-            {contact.firstName}
-          </Text>
-          <Text style={(Typography.FONT_MEDIUM, Styles.contactCardInfo)}>
-            <Emoji name="love_letter" style={{ fontSize: 16 }} />{' '}
+          <Text style={[Typography.BASE_TITLE]}>{contact.firstName}</Text>
+          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
+            <Emoji name="love_letter" />{' '}
             {i18n.t('SingleContactScreen.received')}:{' '}
           </Text>
-          <Text style={(Typography.FONT_MEDIUM, Styles.contactCardInfo)}>
-            <Emoji name="calendar" style={{ fontSize: 16 }} />{' '}
+          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
+            <Emoji name="calendar" />{' '}
             {i18n.t('SingleContactScreen.lastHeardFromYou')}:
           </Text>
           <Text
             style={[
               Typography.FONT_MEDIUM,
               Styles.contactCardInfo,
-              { paddingBottom: 16 },
+              { paddingBottom: 4 },
             ]}
           >
-            <Emoji name="airplane" style={{ fontSize: 16 }} />{' '}
+            <Emoji name="airplane" />{' '}
             {i18n.t('SingleContactScreen.lettersTraveled')}:
           </Text>
         </View>

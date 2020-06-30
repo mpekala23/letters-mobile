@@ -80,11 +80,11 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                 style={
                   Object {
                     "backgroundColor": "#3490dc",
-                    "borderBottomRightRadius": 5,
-                    "borderTopRightRadius": 5,
-                    "height": 10,
+                    "borderBottomRightRadius": 7.5,
+                    "borderTopRightRadius": 7.5,
+                    "height": 15,
                     "marginRight": 10,
-                    "width": 20,
+                    "width": 30,
                   }
                 }
               />

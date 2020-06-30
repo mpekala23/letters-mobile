@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     height: 130,
     marginBottom: 16,
-    paddingBottom: 6,
+    paddingBottom: 4,
   },
   contactCardInfo: {
     color: Colors.GRAY_DARKER,

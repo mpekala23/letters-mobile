@@ -49,6 +49,17 @@ export const FONT_BOLD_ITALIC: TextStyle = {
   fontFamily: FONT_FAMILY_BOLD_ITALIC,
 };
 
+// BASE STYLE
+export const BASE_TITLE: TextStyle = {
+  fontFamily: FONT_FAMILY_BOLD,
+  fontSize: 20,
+};
+
+export const BASE_TEXT: TextStyle = {
+  fontFamily: FONT_FAMILY_REGULAR,
+  fontSize: 16,
+};
+
 export interface TextProps {
   text: string;
   size?: number;
@@ -57,7 +68,7 @@ export interface TextProps {
 
 const PageHeader: React.FC<TextProps> = (props: TextProps) => {
   const { text } = props;
-  const size = props.size || 20;
+  const size = props.size || 30;
   const color = props.color || Colors.AMEELIO_BLUE;
 
   return (
@@ -74,7 +85,7 @@ const PageHeader: React.FC<TextProps> = (props: TextProps) => {
       />
       <Text
         style={{
-          fontSize: size * 1.5,
+          fontSize: size,
           fontFamily: FONT_FAMILY_BOLD,
         }}
       >

@@ -22,10 +22,10 @@ const customFonts = {
 };
 
 export default class App extends React.Component {
-  // eslint-disable-next-line react/state-in-constructor
-  state = {
-    fontsLoaded: false,
-  };
+  constructor(props = {}) {
+    super(props);
+    this.state = { fontsLoaded: false };
+  }
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();

@@ -72,16 +72,15 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
           {contact.firstName} {contact.lastName}
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="love_letter" style={{ fontSize: 16 }} />{' '}
-          {i18n.t('SingleContactScreen.received')}:{' '}
+          <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.received')}:{' '}
           {letters ? letters.length : 0}
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="calendar" style={{ fontSize: 16 }} />{' '}
+          <Emoji name="calendar" />{' '}
           {i18n.t('SingleContactScreen.lastHeardFromYou')}:
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="airplane" style={{ fontSize: 16 }} />{' '}
+          <Emoji name="airplane" />{' '}
           {i18n.t('SingleContactScreen.lettersTraveled')}:
         </Text>
         <Button
@@ -103,10 +102,9 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         />
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.BASE_TITLE,
             {
               color: Colors.GRAY_DARKER,
-              fontSize: 20,
               paddingTop: 24,
             },
           ]}
