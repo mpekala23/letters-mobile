@@ -97,7 +97,7 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Add A Facility
+                Add a Facility
               </Text>
             </View>
             <View

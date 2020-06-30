@@ -151,7 +151,10 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             >
               💌
             </Text>
-             received:
+             
+            received
+            :
+             
           </Text>
           <Text
             style={
@@ -172,7 +175,9 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             >
               📆
             </Text>
-             last heard from you:
+             
+            last heard from you
+            :
           </Text>
           <Text
             style={
@@ -203,7 +208,9 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             >
               ✈️
             </Text>
-             letters traveled:
+             
+            letters traveled
+            :
           </Text>
         </View>
       </TouchableOpacity>
