@@ -109,7 +109,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
-          keyboardVerticalOffset={70}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 100}
           pointerEvents="box-none"
         >
           <View

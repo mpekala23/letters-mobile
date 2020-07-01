@@ -7,6 +7,7 @@ import GrayBar from './GrayBar/GrayBar.react';
 import Input from './Input/Input.react';
 import LetterOptionCard from './Card/LetterOptionCard.react';
 import LetterStatusCard from './Card/LetterStatusCard.react';
+import LetterTracker from './LetterTracker/LetterTracker.react';
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PrisonCard from './Card/PrisonCard.react';
@@ -25,6 +26,7 @@ export {
   Input,
   LetterOptionCard,
   LetterStatusCard,
+  LetterTracker,
   MemoryLaneCard,
   PicUpload,
   PrisonCard,

@@ -13,6 +13,55 @@
   "Permissions": {
     "photos": "Allow access to your photo library."
   },
+  "AddManuallyScreen": {
+    "addAFacility": "Add a Facility",
+    "facilityName": "Facility Name",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "FacilityCity",
+    "facilityPostal": "Facility Postal"
+  },
+  "ContactInfoScreen": {
+    "addContact": "Add Contact",
+    "needHelpFindingYourInmateID": "Need help finding your inmate ID?",
+    "tapHereToSearch": "Tap here to search the",
+    "database": "database",
+    "federal": "Federal",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "inmateNumber": "Inmate Number",
+    "relationshipToInmate": "Relationship to Inmate",
+    "state": "State",
+    "postal": "Postal",
+    "mother": "Mother",
+    "father": "Father",
+    "brother": "Brother",
+    "sister": "Sister",
+    "sibling": "Sibling",
+    "daughter": "Daughter",
+    "son": "Son",
+    "grandmother": "Grandmother",
+    "grandfather": "Grandfather",
+    "grandaughter": "Grandaughter",
+    "grandson": "Grandson",
+    "friend": "Friend",
+    "other": "Other",
+    "back": "Back",
+    "next": "Next"
+  },
+  "ContactSelectorScreen": {
+    "yourLovedOnes": "YOUR LOVED ONES"
+  },
+  "FacilityDirectoryScreen": {
+    "facilityDirectory": "Facility Directory",
+    "dontSeeTheFacility": "Don't see the facility you're looking for?",
+    "addManually": "Add Manually"
+  },
+  "LetterTrackingScreen": {
+    "letterTracking": "Letter tracking",
+    "estimatedArrival": "Your letter is estimated to arrive on",
+    "needHelp": "I need help",
+    "letterContent": "Letter content"
+  },
   "LoginScreen": {
     "emailAddress": "E-mail Address",
     "password": "Password",
@@ -43,6 +92,19 @@
     "password": "Password",
     "register": "Register",
     "emailAlreadyInUse": "Email already in use."
+  },
+  "ReviewContactScreen": {
+    "reviewContact": "Review Contact",
+    "clickToUploadContactImage": "Click to upload contact's image",
+    "optionalUnit": "Unit (optional, only if needed)",
+    "optionalDorm": "Dorm (optional, only if needed)"
+  },
+  "SingleContactScreen": {
+    "received": "received",
+    "lastHeardFromYou": "last heard from you",
+    "lettersTraveled": "letters traveled",
+    "sendLetter": "Send letter",
+    "letterTracking": "Letter Tracking"
   },
   "PrisonTypes": {
     "state": "State Prison",

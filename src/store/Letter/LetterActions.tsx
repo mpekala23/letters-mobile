@@ -12,6 +12,7 @@ import {
   SET_EXISTING,
   LetterActionTypes,
   ADD_LETTER,
+  SET_ACTIVE,
 } from './LetterTypes';
 
 export function setComposing(letter: Letter): LetterActionTypes {
@@ -89,6 +90,13 @@ export function setExisting(
 export function addLetter(letter: Letter): LetterActionTypes {
   return {
     type: ADD_LETTER,
+    payload: letter,
+  };
+}
+
+export function setActive(letter: Letter): LetterActionTypes {
+  return {
+    type: SET_ACTIVE,
     payload: letter,
   };
 }

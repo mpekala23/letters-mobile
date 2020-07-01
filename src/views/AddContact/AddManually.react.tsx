@@ -13,6 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input } from '@components';
 import { Validation } from '@utils';
 import { Facility } from 'types';
+import i18n from '@i18n';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -89,14 +90,16 @@ class AddManuallyScreen extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
-                <Typography.PageHeader text="Add A Facility" />
+                <Typography.PageHeader
+                  text={i18n.t('AddManuallyScreen.addAFacility')}
+                />
                 <Input
                   ref={this.facilityName}
                   parentStyle={{
                     width: '100%',
                     marginTop: 10,
                   }}
-                  placeholder="Facility Name"
+                  placeholder={i18n.t('AddManuallyScreen.facilityName')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -111,7 +114,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.facilityAddress}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Facility Address"
+                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -126,7 +129,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.facilityCity}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Facility City"
+                  placeholder={i18n.t('AddManuallyScreen.facilityCity')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -141,7 +144,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 <Input
                   ref={this.facilityPostal}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Facility Postal"
+                  placeholder={i18n.t('AddManuallyScreen.facilityPostal')}
                   required
                   validate={Validation.Postal}
                   onFocus={() => {
@@ -162,7 +165,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
             onPress={() => {
               this.props.navigation.navigate('FacilityDirectory');
             }}
-            buttonText="Back"
+            buttonText={i18n.t('ContactInfoScreen.back')}
             reverse
             containerStyle={CommonStyles.bottomButton}
           />
@@ -189,7 +192,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 this.props.navigation.navigate('FacilityDirectory');
               }
             }}
-            buttonText="Next"
+            buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}
           />

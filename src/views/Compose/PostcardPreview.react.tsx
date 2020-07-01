@@ -6,7 +6,7 @@ import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Letter, LetterStatus } from 'types';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import {
   setDraft,
   setStatus,
@@ -33,7 +33,6 @@ interface Props {
 }
 
 const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
-  console.log(props.composing);
   return (
     <View style={Styles.screenBackground}>
       <View style={{ flex: 1 }}>
@@ -58,12 +57,27 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             <GrayBar />
           </View>
         </GenericCard>
-        <View
-          style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 28 }]}
-        >
-          <Text>{props.composing.message}</Text>
-        </View>
+        <GenericCard style={{ minHeight: 200 }}>
+          <Text
+            style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
+          >
+            {props.composing.message}
+          </Text>
+        </GenericCard>
       </View>
+      <Text
+        style={[
+          Typography.FONT_REGULAR,
+          {
+            fontSize: 20,
+            color: Colors.GRAY_DARK,
+            textAlign: 'center',
+            margin: 10,
+          },
+        ]}
+      >
+        Warning: your letters cannot be cancelled once sent
+      </Text>
       <Button
         buttonText="Send letter"
         onPress={async () => {

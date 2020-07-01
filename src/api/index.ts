@@ -15,7 +15,6 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { addLetter } from '@store/Letter/LetterActions';
 
 const { MOCK_API_IP } = process.env;
-
 export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export interface UserResponse {

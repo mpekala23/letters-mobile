@@ -13,6 +13,7 @@ import {
   Contact,
   ContactActionTypes,
 } from '@store/Contact/ContactTypes';
+import i18n from '@i18n';
 import CommonStyles from './AddContact.styles';
 import Styles from './FacilityDirectory.styles';
 
@@ -156,10 +157,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       <View style={Styles.footerBackground}>
         {manualEntry}
         <Text style={[Typography.FONT_REGULAR, { marginBottom: 20 }]}>
-          Don`&apos;`t see the facility you`&apos;`re looking for?
+          {i18n.t('FacilityDirectoryScreen.dontSeeTheFacility')}
         </Text>
         <Button
-          buttonText="Add Manually"
+          buttonText={i18n.t('FacilityDirectoryScreen.addManually')}
           onPress={() => {
             this.setState({ selected: null });
             this.props.navigation.navigate('AddManually');
@@ -176,7 +177,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <Typography.PageHeader text="Facility Directory" />
+        <Typography.PageHeader
+          text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
+        />
         <Input
           parentStyle={Styles.searchParent}
           inputStyle={Styles.searchInput}
@@ -202,7 +205,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               });
               this.props.navigation.navigate('ContactInfo');
             }}
-            buttonText="Back"
+            buttonText={i18n.t('ContactInfoScreen.back')}
             reverse
             containerStyle={CommonStyles.bottomButton}
           />
@@ -217,7 +220,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               });
               this.props.navigation.navigate('ReviewContact');
             }}
-            buttonText="Next"
+            buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.selected !== null}
             containerStyle={CommonStyles.bottomButton}
           />

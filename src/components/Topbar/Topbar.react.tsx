@@ -18,7 +18,7 @@ const TopbarBase: React.FC<Props> = (props: Props) => {
       firstName={props.userState.user.firstName}
       lastName={props.userState.user.lastName}
       imageUri={props.userState.user.imageUri}
-      type={ProfilePicTypes.TopbarProfile}
+      type={ProfilePicTypes.Topbar}
     />
   ) : (
     <View testID="blank" />

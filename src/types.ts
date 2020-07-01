@@ -10,8 +10,9 @@ export interface Facility {
 }
 
 export enum ProfilePicTypes {
-  TopbarProfile = 'TopbarProfile',
-  ContactProfile = 'ContactProfile',
+  Topbar = 'Topbar',
+  Contact = 'Contact',
+  SingleContact = 'SingleContact',
 }
 
 export type NullableFacility = Facility | null;
@@ -26,12 +27,13 @@ export enum PrisonTypes {
 }
 
 export enum LetterStatus {
-  Draft = '0%',
-  Created = '20%',
-  Printed = '40%',
-  Mailed = '60%',
-  OutForDelivery = '80%',
-  Delivered = '100%',
+  Draft = 'Draft',
+  Created = 'Created',
+  Mailed = 'Mailed',
+  InTransit = 'In Transit',
+  InLocalArea = 'In Local Area',
+  OutForDelivery = 'Out for Delivery',
+  Delivered = 'Delivered',
 }
 
 export enum LetterTypes {
@@ -48,4 +50,13 @@ export interface Letter {
   message: string;
   photoPath?: string;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
+  expectedDeliveryDate?: string;
+  trackingEvents?: LetterTrackingEvent[];
+}
+
+export interface LetterTrackingEvent {
+  id: number;
+  name: LetterStatus;
+  location: string;
+  date: string;
 }

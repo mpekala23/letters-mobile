@@ -19,20 +19,23 @@ import {
   HomeScreen,
   IssuesScreen,
   LetterPreviewScreen,
+  LetterTrackingScreen,
   LoginScreen,
   PostcardPreviewScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SingleContactScreen,
   SplashScreen,
   ThanksScreen,
 } from '@views';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility } from 'types';
 import { Topbar } from '@components';
 import { AppState } from '@store/types';
+import { NullableFacility, Letter } from 'types';
+import { Contact } from '@store/Contact/ContactTypes';
 
 export { navigationRef, navigate };
 
@@ -56,8 +59,10 @@ export type AppStackParamList = {
   Issues: undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
+  LetterTracking: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
+  SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
 };
@@ -177,6 +182,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="SingleContact"
+          component={SingleContactScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="LetterTracking"
+          component={LetterTrackingScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>

@@ -1,12 +1,12 @@
 import React, { Dispatch } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Button, GrayBar } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Letter, LetterStatus } from 'types';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import {
   setDraft,
   setStatus,
@@ -15,6 +15,7 @@ import {
 import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -38,12 +39,27 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           Letter Preview
         </Text>
         <GrayBar />
-        <View
-          style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 28 }]}
-        >
-          <Text>{props.composing.message}</Text>
-        </View>
+        <ScrollView>
+          <Text
+            style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
+          >
+            {props.composing.message}
+          </Text>
+        </ScrollView>
       </View>
+      <Text
+        style={[
+          Typography.FONT_REGULAR,
+          {
+            fontSize: 20,
+            color: Colors.GRAY_DARK,
+            textAlign: 'center',
+            margin: 10,
+          },
+        ]}
+      >
+        Warning: your letters cannot be cancelled once sent
+      </Text>
       <Button
         buttonText="Send letter"
         onPress={async () => {

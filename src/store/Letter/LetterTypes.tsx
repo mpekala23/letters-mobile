@@ -11,9 +11,11 @@ export const SET_LETTER_ID = 'letter/set_letter_id';
 export const CLEAR_COMPOSING = 'letter/clear_composing';
 export const SET_EXISTING = 'letter/set_existing';
 export const ADD_LETTER = 'letter/add_letter';
+export const SET_ACTIVE = 'letter/set_active';
 
 export interface LetterState {
   composing: Letter;
+  active: Letter;
   existing: Record<number, Letter[]>;
 }
 
@@ -72,6 +74,11 @@ interface AddLetterAction {
   payload: Letter;
 }
 
+interface SetActiveAction {
+  type: typeof SET_ACTIVE;
+  payload: Letter;
+}
+
 export type LetterActionTypes =
   | SetComposingAction
   | SetTypeAction
@@ -83,4 +90,5 @@ export type LetterActionTypes =
   | SetLetterIdAction
   | ClearComposingAction
   | SetExistingAction
-  | AddLetterAction;
+  | AddLetterAction
+  | SetActiveAction;
