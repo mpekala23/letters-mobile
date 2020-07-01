@@ -211,7 +211,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Medium",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
             },
           ]
@@ -239,7 +239,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Medium",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
             },
           ]
@@ -265,7 +265,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Medium",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
             },
           ]
