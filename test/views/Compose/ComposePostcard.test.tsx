@@ -9,7 +9,7 @@ import i18n from '@i18n';
 const mockStore = configureStore([]);
 
 const setup = () => {
-  const navigation = { navigate: jest.fn() };
+  const navigation = { navigate: jest.fn(), addListener: jest.fn() };
 
   const store = mockStore({
     letter: {

@@ -197,6 +197,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   "flex": 1,
                   "fontSize": 16,
                   "padding": 10,
+                  "textAlignVertical": "top",
                   "width": "100%",
                 },
                 Object {
@@ -363,7 +364,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       "fontWeight": "400",
                     },
                     Object {
-                      "color": "#3490dc",
+                      "color": "#8a8a8a",
                     },
                   ]
                 }

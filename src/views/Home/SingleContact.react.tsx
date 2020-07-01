@@ -1,13 +1,13 @@
 import React, { Dispatch } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Button, ProfilePic } from '@components';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
-import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
+import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
 import { connect } from 'react-redux';

@@ -15,7 +15,7 @@ export const SET_ACTIVE = 'letter/set_active';
 
 export interface LetterState {
   composing: Letter;
-  active: Letter;
+  active: Letter | null;
   existing: Record<number, Letter[]>;
 }
 

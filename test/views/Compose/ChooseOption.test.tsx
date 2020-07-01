@@ -46,7 +46,7 @@ describe('ChooseOption screen', () => {
     const actions = store.getActions();
     expect(actions.length).toBe(1);
     expect(actions[0].type).toBe('letter/set_type');
-    expect(actions[0].payload).toBe('PostCards');
+    expect(actions[0].payload).toBe('postCards');
   });
 
   it('should dispatch a setType action when Letter button is pressed', () => {
@@ -55,6 +55,6 @@ describe('ChooseOption screen', () => {
     const actions = store.getActions();
     expect(actions.length).toBe(1);
     expect(actions[0].type).toBe('letter/set_type');
-    expect(actions[0].payload).toBe('Letters');
+    expect(actions[0].payload).toBe('letters');
   });
 });

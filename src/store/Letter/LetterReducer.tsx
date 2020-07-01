@@ -25,6 +25,7 @@ const initialState: LetterState = {
     message: '',
     photoPath: '',
   },
+  active: null,
   existing: [],
 };
 

@@ -18,6 +18,7 @@ const GenericCard: React.FC<Props> = (props: Props) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="GenericTouch"
     >
       {props.children}
     </TouchableOpacity>

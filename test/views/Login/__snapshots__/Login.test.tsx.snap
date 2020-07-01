@@ -137,6 +137,7 @@ exports[`Login screen should match snapshot 1`] = `
                       "flex": 1,
                       "fontSize": 16,
                       "padding": 10,
+                      "textAlignVertical": "top",
                       "width": "100%",
                     },
                     Object {
@@ -200,6 +201,7 @@ exports[`Login screen should match snapshot 1`] = `
                       "flex": 1,
                       "fontSize": 16,
                       "padding": 10,
+                      "textAlignVertical": "top",
                       "width": "100%",
                     },
                     Object {
@@ -330,7 +332,7 @@ exports[`Login screen should match snapshot 1`] = `
               style={
                 Object {
                   "backgroundColor": "#e6e6e6",
-                  "height": 1,
+                  "height": 2,
                   "marginVertical": 8,
                   "width": "100%",
                 }
