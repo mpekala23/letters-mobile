@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
+  BeginScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
@@ -43,6 +44,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: undefined;
+  Begin: undefined;
   ChooseOption: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;
@@ -171,6 +173,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
+        <Stack.Screen
+          name="Begin"
+          component={BeginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
         <Stack.Screen
           name="Login"
           component={LoginScreen}
