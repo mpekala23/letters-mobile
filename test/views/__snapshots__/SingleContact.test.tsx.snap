@@ -99,7 +99,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
               "paddingBottom": 4,
             },
@@ -131,7 +131,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
               "paddingBottom": 4,
             },
@@ -161,7 +161,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 16,
               "paddingBottom": 4,
             },
@@ -442,7 +442,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontWeight": "600",
             },
             Object {
-              "color": "#6a6a6a",
+              "color": "#393939",
               "fontSize": 20,
               "paddingTop": 24,
             },
