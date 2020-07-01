@@ -41,20 +41,6 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button
-        buttonText="Success"
-        onPress={() => {
-          dropdownSuccess({
-            message: 'test',
-          });
-        }}
-      />
-      <Button
-        buttonText="Error"
-        onPress={() => {
-          dropdownError({ message: 'error' });
-        }}
-      />
     </View>
   );
 };

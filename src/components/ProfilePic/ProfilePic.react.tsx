@@ -59,7 +59,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       style={mapProfileTypeToStyle(props.type).background}
       onPress={async () => {
         try {
-          // TODO: Have this press direct to Edit Profile screen once finished
+          // TODO: Have this press direct to Edit Profile screen instead of logout once finished
           await logout();
         } catch (err) {
           dropdownError({

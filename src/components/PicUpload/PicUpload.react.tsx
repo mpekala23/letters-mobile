@@ -3,6 +3,7 @@ import { Alert, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import i18n from '@i18n';
 import Styles from './PicUpload.style';
 
 export interface State {
@@ -37,8 +38,8 @@ class PicUpload extends React.Component<Record<string, unknown>, State> {
       if (!result.cancelled) {
         this.setState({ image: result.uri });
       }
-    } catch (E) {
-      dropdownError({ message: 'Unable to access the photo library.' });
+    } catch (err) {
+      dropdownError({ message: i18n.t('Permission.photos') });
     }
   };
 
