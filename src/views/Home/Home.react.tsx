@@ -38,9 +38,9 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
       <Button
-        buttonText="Press Me"
+        buttonText="View Contact List"
         onPress={() => {
-          /* nothing */
+          props.navigation.navigate('ContactSelector');
         }}
       />
     </View>

@@ -1,18 +1,22 @@
 import React, { Dispatch } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Contact } from '@store/Contact/ContactTypes';
+import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { connect } from 'react-redux';
-import { setActive } from '@store/Letter/LetterActions';
+import { setActiveLetter } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import PencilIcon from '@assets/components/Card/Pencil';
+import Icon from '@components/Icon/Icon.react';
+import { connect } from 'react-redux';
+import { setActive } from '@store/Contact/ContactActions';
+import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -26,6 +30,7 @@ interface Props {
     params: { contact: Contact; letters?: Letter[] };
   };
   setActiveLetter: (letter: Letter) => void;
+  setActiveContact: (contact: Contact) => void;
 }
 
 const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
@@ -40,7 +45,6 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               date="05/11/2020"
               description={letter.message}
               onPress={() => {
-                /* TO-DO: Navigate to letter tracking screen */
                 props.setActiveLetter(letter);
                 props.navigation.navigate('LetterTracking');
               }}
@@ -53,7 +57,24 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.profileCard}>
-        <View style={Styles.profileCardHeader} />
+        <LinearGradient
+          colors={['#ADD3FF', '#FFC9C9']}
+          style={Styles.profileCardHeader}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              props.setActiveContact(contact);
+              props.navigation.navigate('UpdateContact');
+            }}
+          >
+            <Icon
+              svg={PencilIcon}
+              style={{ position: 'absolute', top: 8, right: 12 }}
+            />
+          </TouchableOpacity>
+        </LinearGradient>
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
@@ -105,7 +126,8 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         <MemoryLaneCountCard
           letterCount={letters ? letters.length : 0}
           onPress={() => {
-            /* TO-DO: Navigate to memory lane screen */
+            props.setActiveContact(contact);
+            props.navigation.navigate('MemoryLane');
           }}
         />
         <Text
@@ -126,9 +148,12 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<LetterActionTypes | ContactActionTypes>
+) => {
   return {
-    setActiveLetter: (letter: Letter) => dispatch(setActive(letter)),
+    setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
+    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
   };
 };
 const SingleContactScreen = connect(
