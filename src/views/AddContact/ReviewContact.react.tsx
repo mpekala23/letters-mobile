@@ -214,13 +214,15 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
-                <Typography.PageHeader text="Review Contact" />
+                <Typography.PageHeader
+                  text={i18n.t('ReviewContactScreen.reviewContact')}
+                />
                 <View style={{ alignSelf: 'center', marginVertical: 10 }}>
                   <View style={{ alignSelf: 'center' }}>
                     <PicUpload />
                   </View>
                   <Text style={Typography.FONT_ITALIC}>
-                    Click to upload contact`&apos;`s image.
+                    {i18n.t('ReviewContactScreen.clickToUploadContactImage')}
                   </Text>
                 </View>
                 <Input
@@ -228,8 +230,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   parentStyle={{
                     width: '100%',
                     marginTop: 10,
+                    marginBottom: 10,
                   }}
-                  placeholder="State"
+                  placeholder={i18n.t('ContactInfoScreen.state')}
                   options={STATES_DROPDOWN}
                   validate={Validation.State}
                   required
@@ -239,7 +242,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.firstName}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="First Name"
+                  placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
@@ -247,7 +250,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Last Name"
+                  placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
@@ -255,7 +258,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.postal}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Postal"
+                  placeholder={i18n.t('ContactInfoScreen.postal')}
                   required
                   validate={Validation.Postal}
                   onValid={this.updateValid}
@@ -264,7 +267,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.facilityName}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Facility Name"
+                  placeholder={i18n.t('AddManuallyScreen.facilityName')}
                   required
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
@@ -272,7 +275,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.facilityAddress}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Facility Address"
+                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
                   required
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
@@ -280,12 +283,12 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <Input
                   ref={this.unit}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Unit (optional, only if needed)"
+                  placeholder={i18n.t('ReviewContactScreen.optionalUnit')}
                 />
                 <Input
                   ref={this.dorm}
                   parentStyle={CommonStyles.fullWidth}
-                  placeholder="Dorm (optional, only if needed)"
+                  placeholder={i18n.t('ReviewContactScreen.optionalDorm')}
                 />
                 <View style={{ width: '100%', height: 80 }} />
               </View>

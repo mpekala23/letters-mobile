@@ -6,20 +6,25 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ViewStyle,
 } from 'react-native';
+import ClearPassword from '@assets/components/Input/ClearPassword';
+import TogglePassword from '@assets/components/Input/TogglePassword';
+import CreditCard from '@assets/components/Input/CreditCard';
 import { validateFormat, Validation } from '@utils';
-import { Typography } from 'styles';
+import { Typography } from '@styles';
 import Styles, {
   INPUT_HEIGHT,
   DROP_HEIGHT,
   OPTION_HEIGHT,
   VERTICAL_MARGIN,
 } from './Input.styles';
+import Icon from '../Icon/Icon.react';
 
 export interface Props {
-  parentStyle?: Record<string, unknown>;
-  scrollStyle?: Record<string, unknown>;
-  inputStyle?: Record<string, unknown>;
+  parentStyle?: ViewStyle;
+  scrollStyle?: ViewStyle;
+  inputStyle?: ViewStyle;
   placeholder?: string;
   onFocus: () => void;
   onBlur: () => void;
@@ -29,8 +34,11 @@ export interface Props {
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
+  enabled?: boolean;
   options: string[] | string[][];
   nextInput?: RefObject<Input> | boolean;
+  height: number;
+  numLines: number;
 }
 
 export interface State {
@@ -40,6 +48,7 @@ export interface State {
   dirty: boolean;
   currentHeight: Animated.Value;
   results: string[];
+  shown: boolean;
 }
 
 class Input extends React.Component<Props, State> {
@@ -56,8 +65,11 @@ class Input extends React.Component<Props, State> {
     onInvalid: (): null => null,
     onChangeText: (): null => null,
     secure: false,
+    enabled: true,
     options: [],
     nextInput: false,
+    height: INPUT_HEIGHT,
+    numLines: 1,
   };
 
   constructor(props: Props) {
@@ -69,9 +81,10 @@ class Input extends React.Component<Props, State> {
       dirty: false,
       currentHeight:
         this.props.options.length > 0
-          ? new Animated.Value(INPUT_HEIGHT + VERTICAL_MARGIN * 2)
-          : new Animated.Value(INPUT_HEIGHT),
+          ? new Animated.Value(props.height + VERTICAL_MARGIN * 2)
+          : new Animated.Value(props.height),
       results: [],
+      shown: false,
     };
     if (this.state.valid) {
       props.onValid();
@@ -251,15 +264,24 @@ class Input extends React.Component<Props, State> {
       inputStyle,
       placeholder,
       secure,
+      enabled,
+      validate,
+      numLines,
     } = this.props;
+
     let calcInputStyle;
-    if (this.state.focused) {
+    if (!enabled) {
+      calcInputStyle = Styles.disabledInputStyle;
+    } else if (this.state.focused) {
       calcInputStyle = Styles.inputStyleFocused;
-    } else if (!this.state.dirty || this.state.valid) {
-      calcInputStyle = Styles.inputStyle;
+    } else if (!this.state.dirty) {
+      calcInputStyle = {};
+    } else if (this.state.valid) {
+      calcInputStyle = Styles.validStyle;
     } else {
       calcInputStyle = Styles.invalidStyle;
     }
+
     return (
       <Animated.View
         style={[
@@ -269,7 +291,14 @@ class Input extends React.Component<Props, State> {
           { height: this.state.currentHeight },
         ]}
         testID="parent"
+        pointerEvents={enabled ? 'auto' : 'none'}
       >
+        {this.state.valid ? <View testID="valid" /> : <View testID="invalid" />}
+        {this.state.focused ? (
+          <View testID="focused" />
+        ) : (
+          <View testID="unfocused" />
+        )}
         <ScrollView
           keyboardShouldPersistTaps="always"
           scrollEnabled={false}
@@ -277,21 +306,71 @@ class Input extends React.Component<Props, State> {
         >
           <TextInput
             ref={this.inputRef}
-            secureTextEntry={secure}
+            secureTextEntry={secure && !this.state.shown}
             placeholder={placeholder}
             onChangeText={this.set}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSubmitEditing={this.onSubmitEditing}
-            style={[calcInputStyle, inputStyle]}
+            multiline={numLines > 1}
+            numberOfLines={numLines}
+            style={[
+              Styles.baseInputStyle,
+              calcInputStyle,
+              validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
+              { height: this.props.height },
+              inputStyle,
+            ]}
             value={this.state.value}
           />
+          {validate === Validation.CreditCard ? (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '100%',
+                  left: 20,
+                },
+                { opacity: enabled ? 1.0 : 0.7 },
+              ]}
+            >
+              <Icon svg={CreditCard} />
+            </View>
+          ) : (
+            <View />
+          )}
+          {secure && this.state.focused ? (
+            <View style={Styles.secureButtonsContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.set('');
+                }}
+              >
+                <Icon svg={ClearPassword} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState(({ shown }) => {
+                    return {
+                      shown: !shown,
+                    };
+                  });
+                }}
+              >
+                <Icon svg={TogglePassword} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View />
+          )}
           <Animated.View
             style={[
               Styles.optionBackground,
               {
                 height: Math.min(
-                  DROP_HEIGHT - INPUT_HEIGHT,
+                  DROP_HEIGHT - this.props.height,
                   this.state.results.length * OPTION_HEIGHT
                 ),
               },

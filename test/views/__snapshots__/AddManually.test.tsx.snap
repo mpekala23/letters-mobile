@@ -97,20 +97,30 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Add A Facility
+                Add a Facility
               </Text>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
                   "marginTop": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -126,20 +136,27 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility Name"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -147,6 +164,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -161,15 +180,25 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -185,20 +214,27 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility Address"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -206,6 +242,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -220,15 +258,25 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -244,20 +292,27 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility City"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -265,6 +320,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {
@@ -279,15 +336,25 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               </ScrollView>
             </View>
             <View
+              pointerEvents="auto"
               style={
                 Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
                   "height": 50,
                   "marginBottom": 10,
+                  "overflow": "hidden",
                   "width": "100%",
                 }
               }
               testID="parent"
             >
+              <View
+                testID="invalid"
+              />
+              <View
+                testID="unfocused"
+              />
               <ScrollView
                 keyboardShouldPersistTaps="always"
                 scrollEnabled={false}
@@ -303,20 +370,27 @@ exports[`Add Manually Screen should match snapshot 1`] = `
               >
                 <TextInput
                   allowFontScaling={true}
+                  multiline={false}
+                  numberOfLines={1}
                   placeholder="Facility Postal"
                   rejectResponderTermination={true}
                   secureTextEntry={false}
                   style={
                     Array [
                       Object {
-                        "borderColor": "#282828",
-                        "borderRadius": 4,
+                        "borderColor": "rgba(0,0,0,0)",
+                        "borderRadius": 8,
                         "borderWidth": 2,
-                        "color": "#282828",
-                        "fontSize": 18,
-                        "height": 50,
+                        "color": "#9A9A9A",
+                        "flex": 1,
+                        "fontSize": 16,
                         "padding": 10,
                         "width": "100%",
+                      },
+                      Object {},
+                      Object {},
+                      Object {
+                        "height": 50,
                       },
                       Object {},
                     ]
@@ -324,6 +398,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                   underlineColorAndroid="transparent"
                   value=""
                 />
+                <View />
+                <View />
                 <View
                   style={
                     Object {

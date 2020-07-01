@@ -59,22 +59,21 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 10,
-              "height": 135,
-              "marginBottom": 16,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "paddingLeft": 16,
+                "paddingTop": 18,
+              },
+            ]
           }
         >
           <View
             style={
               Array [
                 Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 16,
-                  "paddingTop": 16,
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -82,17 +81,15 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
             <TouchableOpacity
               activeOpacity={0.2}
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#f6993f",
-                    "borderRadius": 40,
-                    "height": 80,
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "width": 80,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#f6993f",
+                  "borderRadius": 40,
+                  "height": 80,
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "width": 80,
+                }
               }
             >
               <Text
@@ -108,97 +105,113 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
               </Text>
             </TouchableOpacity>
           </View>
-          <View
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "paddingLeft": 112,
+              },
+            ]
+          }
+        >
+          <Text
             style={
               Array [
                 Object {
-                  "paddingLeft": 112,
+                  "fontFamily": "System",
+                  "fontWeight": "600",
+                },
+                Object {
+                  "color": "#282828",
+                  "fontSize": 22,
+                  "paddingBottom": 8,
+                },
+              ]
+            }
+          >
+            First
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "#6a6a6a",
+                "fontSize": 16,
+                "paddingBottom": 6,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 16,
+                }
+              }
+            >
+              💌
+            </Text>
+             
+            received
+            :
+             
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "#6a6a6a",
+                "fontSize": 16,
+                "paddingBottom": 6,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 16,
+                }
+              }
+            >
+              📆
+            </Text>
+             
+            last heard from you
+            :
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontWeight": "400",
+                },
+                Object {
+                  "color": "#6a6a6a",
+                  "fontSize": 16,
+                  "paddingBottom": 6,
+                },
+                Object {
+                  "paddingBottom": 16,
                 },
               ]
             }
           >
             <Text
               style={
-                Array [
-                  Object {
-                    "fontFamily": "System",
-                    "fontWeight": "600",
-                  },
-                  Object {
-                    "color": "#282828",
-                    "fontSize": 22,
-                    "paddingBottom": 8,
-                  },
-                ]
-              }
-            >
-              First
-            </Text>
-            <Text
-              style={
                 Object {
-                  "color": "#6a6a6a",
+                  "color": "#000",
                   "fontSize": 16,
-                  "paddingBottom": 6,
                 }
               }
             >
-              <span
-                aria-label="mail heart emoji"
-                role="img"
-              >
-                💌
-              </span>
-               
-              received:
+              ✈️
             </Text>
-            <Text
-              style={
-                Object {
-                  "color": "#6a6a6a",
-                  "fontSize": 16,
-                  "paddingBottom": 6,
-                }
-              }
-            >
-              <span
-                aria-label="calender emoji"
-                role="img"
-              >
-                📅
-              </span>
-               
-              last heard from you:
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                  },
-                  Object {
-                    "color": "#6a6a6a",
-                    "fontSize": 16,
-                    "paddingBottom": 6,
-                  },
-                  Object {
-                    "paddingBottom": 16,
-                  },
-                ]
-              }
-            >
-              <span
-                aria-label="plane emoji"
-                role="img"
-              >
-                ✈️
-              </span>
-               
-              letters traveled:
-            </Text>
-          </View>
+             
+            letters traveled
+            :
+          </Text>
         </View>
       </TouchableOpacity>
     </ScrollView>

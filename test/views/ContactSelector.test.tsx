@@ -3,10 +3,11 @@ import { ContactSelectorScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { LetterTypes, LetterStatus } from '../../src/types';
 
 const mockStore = configureStore([]);
 
-const setup = (contactsOverrides = []) => {
+const setup = (contactsOverrides = [], lettersOverrides = []) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contacts = Object.assign(
     [
@@ -21,12 +22,29 @@ const setup = (contactsOverrides = []) => {
     contactsOverrides
   );
 
-  const initialState = {
+  const letters = {
+    type: LetterTypes.PostCards,
+    status: LetterStatus.Printed,
+    isDraft: true,
+    recipientId: 8,
+    message: "I'm trying out this new service called Ameelio...",
+    photoPath: '',
+    ...lettersOverrides,
+  };
+
+  const initialContactState = {
     adding: {},
     existing: contacts,
   };
+
+  const initialLetterState = {
+    composing: {},
+    existing: letters,
+  };
+
   const store = mockStore({
-    contact: initialState,
+    contact: initialContactState,
+    letter: initialLetterState,
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -39,7 +57,8 @@ const setup = (contactsOverrides = []) => {
     ...render(
       <ContactSelectorScreen
         navigation={navigation}
-        contactState={initialState}
+        contactState={initialContactState}
+        letterState={initialLetterState}
       />,
       {
         wrapper: StoreProvider,

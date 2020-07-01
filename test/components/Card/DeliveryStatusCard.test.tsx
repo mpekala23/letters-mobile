@@ -47,34 +47,34 @@ describe('Delivery Status Card component', () => {
   });
 
   it('should display progress bar 0 / 5', () => {
-    const { getByTestId } = setup({ progress: LetterStatus.Draft });
+    const { getByTestId } = setup({ status: LetterStatus.Draft });
     expect(getByTestId('progressBar').props.style[1].width).toBe('0%');
   });
 
   it('should display progress bar 1 / 5', () => {
-    const { getByTestId } = setup({ progress: LetterStatus.Created });
+    const { getByTestId } = setup({ status: LetterStatus.Created });
     expect(getByTestId('progressBar').props.style[1].width).toBe('20%');
   });
 
   it('should display progress bar 2 / 5', () => {
-    const { getByTestId } = setup({ progress: LetterStatus.Printed });
+    const { getByTestId } = setup({ status: LetterStatus.Mailed });
     expect(getByTestId('progressBar').props.style[1].width).toBe('40%');
   });
 
   it('should display progress bar 3 / 5', () => {
-    const { getByTestId } = setup({ progress: LetterStatus.Mailed });
+    const { getByTestId } = setup({ status: LetterStatus.InTransit });
     expect(getByTestId('progressBar').props.style[1].width).toBe('60%');
   });
 
   it('should display progress bar 4 / 5', () => {
     const { getByTestId } = setup({
-      progress: LetterStatus.OutForDelivery,
+      status: LetterStatus.OutForDelivery,
     });
     expect(getByTestId('progressBar').props.style[1].width).toBe('80%');
   });
 
   it('should display progress bar 5 / 5', () => {
-    const { getByTestId } = setup({ progress: LetterStatus.Delivered });
+    const { getByTestId } = setup({ status: LetterStatus.Delivered });
     expect(getByTestId('progressBar').props.style[1].width).toBe('100%');
   });
 });
