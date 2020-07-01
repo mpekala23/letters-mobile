@@ -73,16 +73,6 @@ const PageHeader: React.FC<TextProps> = (props: TextProps) => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View
-        style={{
-          width: size,
-          height: size / 2,
-          borderTopRightRadius: size / 4,
-          borderBottomRightRadius: size / 4,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
       <Text
         style={{
           fontSize: size,

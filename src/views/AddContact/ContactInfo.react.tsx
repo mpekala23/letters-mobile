@@ -8,9 +8,8 @@ import {
   View,
   Platform,
 } from 'react-native';
-import { Button, Input } from '@components';
-import { Typography } from '@styles';
-import { AMEELIO_BLACK } from 'styles/Colors';
+import { Button, Icon, Input } from '@components';
+import { Colors, Typography } from '@styles';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { STATES_DROPDOWN, Validation } from '@utils';
@@ -24,6 +23,7 @@ import {
 } from '@store/Contact/ContactTypes';
 import { UserState } from '@store/User/UserTypes';
 import i18n from '@i18n';
+import Letter from '@assets/views/AddContact/Letter';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -154,9 +154,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 40 }} />
               <View style={CommonStyles.contactbackground}>
-                <Typography.PageHeader
-                  text={i18n.t('ContactInfoScreen.addContact')}
-                />
+                <View style={{ flexDirection: 'row' }}>
+                  <Typography.PageHeader
+                    text={i18n.t('ContactInfoScreen.addContact')}
+                  />
+                  <Icon svg={Letter} style={{ margin: 16 }} />
+                </View>
                 <Button
                   link
                   buttonText={i18n.t(
@@ -174,10 +177,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     /* TODO */
                   }}
                 >
-                  <Text>
+                  <Text style={{ color: Colors.PINK_DARK }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
-                      style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
+                      style={[
+                        Typography.FONT_BOLD,
+                        { color: Colors.PINK_DARK },
+                      ]}
                     >
                       {this.state.stateToSearch}
                     </Text>{' '}
@@ -195,10 +201,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     /* TODO */
                   }}
                 >
-                  <Text>
+                  <Text style={{ color: Colors.PINK_DARK }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
-                      style={[Typography.FONT_BOLD, { color: AMEELIO_BLACK }]}
+                      style={[
+                        Typography.FONT_BOLD,
+                        { color: Colors.PINK_DARK },
+                      ]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}
                     </Text>{' '}
