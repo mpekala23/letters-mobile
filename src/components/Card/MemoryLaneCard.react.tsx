@@ -20,6 +20,7 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="memoryLaneCard"
     >
       <Image
         style={CardStyles.memoryLanePicture}

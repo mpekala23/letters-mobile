@@ -1,6 +1,7 @@
 import { Facility } from 'types';
 
 export const SET_ADDING = 'contact/set_adding';
+export const SET_ACTIVE = 'contact/set_active';
 export const SET_EXISTING = 'contact/set_existing';
 export const CLEAR_CONTACTS = 'contact/clear_contacts';
 
@@ -16,11 +17,17 @@ export interface Contact {
 
 export interface ContactState {
   adding: Contact;
+  active: Contact;
   existing: Contact[];
 }
 
 interface SetAddingAction {
   type: typeof SET_ADDING;
+  payload: Contact;
+}
+
+interface SetActiveAction {
+  type: typeof SET_ACTIVE;
   payload: Contact;
 }
 
@@ -36,5 +43,6 @@ interface ClearContactsAction {
 
 export type ContactActionTypes =
   | SetAddingAction
+  | SetActiveAction
   | SetExistingAction
   | ClearContactsAction;

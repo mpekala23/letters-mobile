@@ -1,4 +1,4 @@
-import { LetterTypes, LetterStatus, LetterTrackingEvent } from 'types';
+import { LetterTypes, LetterStatus } from 'types';
 import {
   LetterState,
   LetterActionTypes,
@@ -13,7 +13,7 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
-  SET_ACTIVE,
+  SET_ACTIVE_LETTER,
 } from './LetterTypes';
 
 const initialState: LetterState = {
@@ -24,6 +24,7 @@ const initialState: LetterState = {
     recipientId: -1,
     message: '',
     photoPath: '',
+    dateCreated: '06/29/20',
     trackingEvents: [],
   },
   active: {
@@ -33,18 +34,18 @@ const initialState: LetterState = {
     recipientId: -1,
     message: '',
     photoPath: '',
+    dateCreated: '06/29/20',
     trackingEvents: [],
   },
   existing: {
     8: [
       {
+        letterId: 1,
         type: LetterTypes.PostCards,
         status: LetterStatus.Mailed,
         isDraft: true,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 1,
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -54,15 +55,16 @@ const initialState: LetterState = {
             date: '2019-07-12T15:51:41.000Z',
           },
         ],
+        dateCreated: '06/29/20',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
+        letterId: 2,
         type: LetterTypes.PostCards,
         status: LetterStatus.InTransit,
         isDraft: true,
         recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 2,
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -78,15 +80,22 @@ const initialState: LetterState = {
             date: '2019-06-23T15:51:41.000Z',
           },
         ],
+        message:
+          "Hi Emily! How are you doing? I'm sending you a letter through Ameelio. It is a great service! ",
+        dateCreated: '06/26/20',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
       },
       {
+        letterId: 3,
         type: LetterTypes.PostCards,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
         message: "I'm trying out this new service called Ameelio...",
-        photoPath: '',
-        letterId: 3,
+        dateCreated: '06/14/20',
+        photoPath:
+          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -166,7 +175,7 @@ export default function LetterReducer(
         ];
       }
       return currentState;
-    case SET_ACTIVE:
+    case SET_ACTIVE_LETTER:
       currentState.active = action.payload;
       return currentState;
     default:
