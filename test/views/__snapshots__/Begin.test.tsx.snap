@@ -1,0 +1,330 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Begin screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    accessible={false}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "padding": 24,
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Ameelio Logo"
+      accessible={true}
+      style={
+        Object {
+          "flexDirection": "row",
+          "left": "30%",
+          "position": "absolute",
+          "top": 24,
+        }
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={60}
+        bbWidth={60}
+        fill="none"
+        focusable={false}
+        height={60}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "flex": 0,
+              "height": 60,
+              "width": 60,
+            },
+          ]
+        }
+        vbHeight={145}
+        vbWidth={143}
+        width={60}
+        xml="<svg width=\\"60\\" height=\\"60\\" viewBox=\\"0 0 143 145\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<g clip-path=\\"url(#clip0)\\">
+<path d=\\"M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z\\" fill=\\"#FF7171\\"/>
+<path d=\\"M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z\\" fill=\\"#FF7171\\"/>
+<path d=\\"M4 132.727L39.9963 102L27.786 134.689L4 132.727Z\\" fill=\\"#FF7171\\"/>
+<path d=\\"M69.31 29.0881L33.8369 124.055L59.9659 117.383L93.5357 108.811L69.31 29.0881Z\\" fill=\\"#FF7171\\"/>
+<path d=\\"M79.7896 56.2477L116.047 46.9957L94.5042 104.67L79.7896 56.2477Z\\" fill=\\"#FF7171\\"/>
+<path d=\\"M110.17 68.6877L118.507 46.3659L143 60.2105L110.17 68.6877Z\\" fill=\\"#FF7171\\"/>
+</g>
+<defs>
+<clipPath id=\\"clip0\\">
+<rect width=\\"143\\" height=\\"145\\" fill=\\"white\\"/>
+</clipPath>
+</defs>
+</svg>
+"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            Array [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGGroup
+            clipPath="clip0"
+          >
+            <RNSVGPath
+              d="M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M4 132.727L39.9963 102L27.786 134.689L4 132.727Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M69.31 29.0881L33.8369 124.055L59.9659 117.383L93.5357 108.811L69.31 29.0881Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M79.7896 56.2477L116.047 46.9957L94.5042 104.67L79.7896 56.2477Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M110.17 68.6877L118.507 46.3659L143 60.2105L110.17 68.6877Z"
+              fill={4294930801}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            />
+          </RNSVGGroup>
+          <RNSVGDefs>
+            <RNSVGClipPath
+              name="clip0"
+            >
+              <RNSVGRect
+                fill={4294967295}
+                height={145}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+                width={143}
+                x={0}
+                y={0}
+              />
+            </RNSVGClipPath>
+          </RNSVGDefs>
+        </RNSVGGroup>
+      </RNSVGSvgView>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontWeight": "600",
+            },
+            Object {
+              "color": "#FF7171",
+              "fontSize": 26,
+              "paddingLeft": 8,
+              "paddingTop": 18,
+            },
+          ]
+        }
+      >
+        Ameelio
+      </Text>
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "fontSize": 26,
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      Connect with your incarcerated loved ones
+      ,
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontWeight": "600",
+          },
+          Object {
+            "fontSize": 26,
+            "textAlign": "center",
+          },
+          Object {
+            "paddingBottom": "80%",
+          },
+        ]
+      }
+    >
+      for free
+      .
+    </Text>
+    <View
+      style={
+        Object {
+          "bottom": 24,
+          "position": "absolute",
+          "width": "100%",
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "backgroundColor": "#FF7171",
+              "borderRadius": 15,
+              "height": 50,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "fontSize": 18,
+              },
+              Object {},
+            ]
+          }
+        >
+          Sign up
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 15,
+              "borderWidth": 2,
+              "height": 50,
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Array [
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "color": "#FF7171",
+                },
+              ],
+              Object {},
+            ]
+          }
+        >
+          Log in
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+`;

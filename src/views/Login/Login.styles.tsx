@@ -14,13 +14,18 @@ export default StyleSheet.create({
   fullWidth: {
     width: '100%',
   },
+  loginButton: {
+    backgroundColor: Colors.PINK_DARK,
+    borderRadius: 15,
+    width: '100%',
+    height: 50,
+  },
   forgotContainer: {
     backgroundColor: 'white',
     marginBottom: 30,
-    width: '60%',
   },
   forgotText: {
-    color: Colors.AMEELIO_BLUE,
+    color: Colors.PINK_DARK,
     fontSize: 16,
     fontWeight: '500',
   },

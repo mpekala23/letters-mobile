@@ -64,43 +64,32 @@ exports[`Login screen should match snapshot 1`] = `
               }
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.7}
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "marginVertical": 5,
+                    "fontFamily": "System",
+                    "fontWeight": "600",
                   },
-                  Object {},
-                  Object {},
-                  Object {},
+                  Object {
+                    "fontSize": 26,
+                  },
                 ]
               }
-              testID="clickable"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
+              Welcome back
+            </Text>
+            <Text
+              style={
+                Object {
+                  "fontSize": 14,
+                  "paddingBottom": 28,
+                  "paddingTop": 6,
                 }
-              >
-                Dev Skip
-              </Text>
-            </TouchableOpacity>
+              }
+            >
+              Log in with your email and password
+            </Text>
             <View
               pointerEvents="auto"
               style={
@@ -356,16 +345,6 @@ exports[`Login screen should match snapshot 1`] = `
                 </Text>
               </View>
             </TouchableOpacity>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "#F2F2F2",
-                  "height": 1,
-                  "marginVertical": 8,
-                  "width": "100%",
-                }
-              }
-            />
             <TouchableOpacity
               activeOpacity={0.7}
               style={
@@ -380,6 +359,9 @@ exports[`Login screen should match snapshot 1`] = `
                   },
                   Object {},
                   Object {
+                    "backgroundColor": "#FF7171",
+                    "borderRadius": 15,
+                    "height": 50,
                     "width": "100%",
                   },
                   Object {},
@@ -405,92 +387,68 @@ exports[`Login screen should match snapshot 1`] = `
                 Login
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
+            <View
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "white",
-                    "borderColor": "#3490dc",
-                    "borderRadius": 4,
-                    "borderWidth": 1,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {
-                    "width": "100%",
-                  },
-                  Object {},
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#3490dc",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
+                Object {
+                  "flexDirection": "row",
                 }
-              >
-                Register
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "marginVertical": 5,
-                  },
-                  Object {},
-                  Object {
-                    "backgroundColor": "white",
-                    "marginBottom": 30,
-                    "width": "60%",
-                  },
-                  Object {},
-                ]
               }
-              testID="clickable"
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {
-                      "color": "#3490dc",
-                      "fontSize": 16,
-                      "fontWeight": "500",
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "fontSize": 16,
+                    "paddingTop": 11,
+                  }
                 }
               >
                 Forgot Your Password?
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#3490dc",
+                      "borderRadius": 4,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "marginVertical": 5,
+                    },
+                    Object {},
+                    Object {
+                      "backgroundColor": "white",
+                      "marginBottom": 30,
+                    },
+                    Object {},
+                  ]
+                }
+                testID="clickable"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 20,
+                        "fontWeight": "700",
+                        "padding": 6,
+                      },
+                      Object {},
+                      Object {
+                        "color": "#FF7171",
+                        "fontSize": 16,
+                        "fontWeight": "500",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  Reset it
+                </Text>
+              </TouchableOpacity>
+            </View>
             <View
               accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
               accessible={true}
@@ -582,6 +540,43 @@ exports[`Login screen should match snapshot 1`] = `
                 .
               </Text>
             </View>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#3490dc",
+                    "borderRadius": 4,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "marginVertical": 5,
+                  },
+                  Object {},
+                  Object {},
+                  Object {},
+                ]
+              }
+              testID="clickable"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 20,
+                      "fontWeight": "700",
+                      "padding": 6,
+                    },
+                    Object {},
+                    Object {},
+                    Object {},
+                  ]
+                }
+              >
+                Dev Skip
+              </Text>
+            </TouchableOpacity>
             <View
               style={
                 Object {

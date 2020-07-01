@@ -1,4 +1,5 @@
 import AddManuallyScreen from './AddContact/AddManually.react';
+import BeginScreen from './Splash/Begin.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
@@ -21,6 +22,7 @@ import UpdateContactScreen from './UpdateContact/UpdateContact.react';
 
 export {
   AddManuallyScreen,
+  BeginScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
