@@ -21,8 +21,12 @@ const customFonts = {
   'Poppins-Bold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
 };
 
-export default class App extends React.Component {
-  constructor(props = {}) {
+export interface State {
+  fontsLoaded: boolean;
+}
+
+export default class App extends React.Component<null, State> {
+  constructor(props: null) {
     super(props);
     this.state = { fontsLoaded: false };
   }
