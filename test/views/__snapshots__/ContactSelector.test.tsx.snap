@@ -135,6 +135,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 Object {
                   "color": "#393939",
                   "fontSize": 16,
+                  "paddingBottom": 6,
                 },
               ]
             }
@@ -162,6 +163,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 Object {
                   "color": "#393939",
                   "fontSize": 16,
+                  "paddingBottom": 6,
                 },
               ]
             }

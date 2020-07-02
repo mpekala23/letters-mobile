@@ -552,6 +552,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             },
             Object {
               "color": "#393939",
+              "fontSize": 20,
               "paddingTop": 24,
             },
           ]
