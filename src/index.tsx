@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
@@ -6,9 +7,32 @@ import Navigator from '@navigations';
 import { Dropdown, Statusbar } from '@components';
 import { loginWithToken } from '@api';
 import { PersistGate } from 'redux-persist/integration/react';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
-export default class App extends React.Component {
+const customFonts = {
+  'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
+  'Poppins-Light-Italic': require('./assets/fonts/Poppins-LightItalic.ttf'),
+  'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+  'Poppins-Regular-Italic': require('./assets/fonts/Poppins-Italic.ttf'),
+  'Poppins-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
+  'Poppins-Medium-Italic': require('./assets/fonts/Poppins-MediumItalic.ttf'),
+  'Poppins-Bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+  'Poppins-Bold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
+};
+
+export interface State {
+  fontsLoaded: boolean;
+}
+
+export default class App extends React.Component<null, State> {
+  constructor(props: null) {
+    super(props);
+    this.state = { fontsLoaded: false };
+  }
+
   async componentDidMount(): Promise<void> {
+    this.loadFontsAsync();
     try {
       await loginWithToken();
     } catch (err) {
@@ -16,17 +40,25 @@ export default class App extends React.Component {
     }
   }
 
+  async loadFontsAsync(): Promise<void> {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
+  }
+
   render(): JSX.Element {
-    return (
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <Statusbar />
-          <Dropdown />
-          <NavigationContainer>
-            <Navigator />
-          </NavigationContainer>
-        </PersistGate>
-      </Provider>
-    );
+    if (this.state.fontsLoaded) {
+      return (
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <Statusbar />
+            <Dropdown />
+            <NavigationContainer>
+              <Navigator />
+            </NavigationContainer>
+          </PersistGate>
+        </Provider>
+      );
+    }
+    return <AppLoading />;
   }
 }

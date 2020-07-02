@@ -224,7 +224,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   <View style={{ alignSelf: 'center' }}>
                     <PicUpload />
                   </View>
-                  <Text style={Typography.FONT_ITALIC}>
+                  <Text style={Typography.FONT_REGULAR_ITALIC}>
                     {i18n.t('ReviewContactScreen.clickToUploadContactImage')}
                   </Text>
                 </View>

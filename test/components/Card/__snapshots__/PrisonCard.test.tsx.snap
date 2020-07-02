@@ -39,8 +39,7 @@ exports[`Prison Card component should match snapshot 1`] = `
       style={
         Object {
           "color": "#282828",
-          "fontSize": 24,
-          "fontWeight": "bold",
+          "fontSize": 28,
         }
       }
     >
