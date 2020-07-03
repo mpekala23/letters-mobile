@@ -11,13 +11,13 @@ export interface Props {
 function mapStatustoTrackerColor(type: string) {
   switch (type) {
     case LetterStatus.Mailed:
-      return '#A8C1E4';
+      return Colors.GREEN_LIGHTER;
     case LetterStatus.InTransit:
-      return '#8DA7CC';
+      return Colors.GREEN_LIGHT;
     case LetterStatus.InLocalArea:
-      return '#6D89B1';
+      return Colors.GREEN_DARK;
     case LetterStatus.OutForDelivery:
-      return '#436697';
+      return Colors.GREEN_DARKER;
     default:
       return '';
   }
@@ -35,8 +35,9 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
           style={{
             borderRadius: 50,
             backgroundColor: mapStatustoTrackerColor(name),
-            height: 36,
-            width: 36,
+            height: 28,
+            width: 28,
+            marginLeft: 4,
             marginRight: 24,
           }}
           testID="trackerCircle"

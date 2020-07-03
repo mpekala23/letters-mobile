@@ -17,14 +17,20 @@ exports[`ProfilePic component should match snapshot 1`] = `
         "flex": 1,
       }
     }
+    testID="profilePicture"
   >
     <Text
       style={
-        Object {
-          "color": "white",
-          "fontSize": 22,
-          "fontWeight": "500",
-        }
+        Array [
+          Object {
+            "fontFamily": "Poppins-Regular",
+          },
+          Object {
+            "color": "white",
+            "fontSize": 22,
+            "fontWeight": "500",
+          },
+        ]
       }
     >
       TA

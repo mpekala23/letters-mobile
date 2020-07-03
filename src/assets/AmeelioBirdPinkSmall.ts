@@ -1,4 +1,4 @@
-const AmeelioBirdPinkSmall = `<svg width="60" height="60" viewBox="0 0 143 145" fill="none" xmlns="http://www.w3.org/2000/svg">
+const AmeelioBirdPinkSmall = `<svg width="50" height="50" viewBox="0 0 143 145" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0)">
 <path d="M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z" fill="#FF7171"/>
 <path d="M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z" fill="#FF7171"/>

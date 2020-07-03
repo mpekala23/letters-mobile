@@ -325,6 +325,7 @@ class Input extends React.Component<Props, State> {
             multiline={numLines > 1}
             numberOfLines={numLines}
             style={[
+              Typography.FONT_REGULAR,
               Styles.baseInputStyle,
               calcInputStyle,
               validate === Validation.CreditCard ? { paddingLeft: 65 } : {},

@@ -9,6 +9,7 @@ import { loginWithToken } from '@api';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import { setCustomText } from 'react-native-global-props';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -19,6 +20,12 @@ const customFonts = {
   'Poppins-Medium-Italic': require('./assets/fonts/Poppins-MediumItalic.ttf'),
   'Poppins-Bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
   'Poppins-Bold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
+};
+
+const customTextProps = {
+  style: {
+    fontFamily: 'Poppins-Regular',
+  },
 };
 
 export interface State {
@@ -42,6 +49,7 @@ export default class App extends React.Component<null, State> {
 
   async loadFontsAsync(): Promise<void> {
     await Font.loadAsync(customFonts);
+    setCustomText(customTextProps);
     this.setState({ fontsLoaded: true });
   }
 

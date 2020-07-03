@@ -10,7 +10,6 @@
     "requestIncomplete": "The request could not be completed."
   },
   "AddManuallyScreen": {
-    "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
@@ -51,10 +50,17 @@
     "next": "Next"
   },
   "ContactSelectorScreen": {
-    "yourLovedOnes": "YOUR LOVED ONES"
+    "yourLovedOnes": "Your loved ones"
+  },
+  "CreditsCard": {
+    "credit": "Credit",
+    "credits": "Credits",
+    "addMore": "Add more",
+    "creditsResetDaily": "Credits reset daily"
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
+    "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
     "addManually": "Add Manually"
   },
@@ -70,7 +76,7 @@
     "emailAddress": "E-mail Address",
     "password": "Password",
     "rememberMe": "Remember Me",
-    "login": "Login",
+    "login": "Log in",
     "register": "Register",
     "forgotYourPassword": "Forgot Your Password?",
     "resetIt": "Reset it",

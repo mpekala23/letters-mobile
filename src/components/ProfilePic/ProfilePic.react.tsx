@@ -4,6 +4,7 @@ import { logout } from '@api';
 import { dropdownError } from 'components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
+import { Typography } from '@styles';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -41,7 +42,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
-  let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
+  let insideCircle = (
+    <Text style={[Typography.FONT_REGULAR, Styles.initials]}>{initials}</Text>
+  );
 
   if (props.imageUri) {
     insideCircle = (
@@ -64,6 +67,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           dropdownError('Storage', 'Unable to successfully log out the user.');
         }
       }}
+      testID="profilePicture"
     >
       {insideCircle}
     </TouchableOpacity>

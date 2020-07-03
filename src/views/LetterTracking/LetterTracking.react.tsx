@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, ScrollView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'navigations';
-import { Button, LetterTracker } from '@components';
+import { Button, LetterTracker, GrayBar } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -24,7 +24,7 @@ interface Props {
 function mapStatusToTrackerBarHeight(type?: LetterStatus) {
   switch (type) {
     case LetterStatus.InTransit:
-      return 40;
+      return 70;
     case LetterStatus.InLocalArea:
       return 120;
     case LetterStatus.OutForDelivery:
@@ -48,7 +48,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
   );
   return (
     <View style={Styles.trueBackground}>
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: 'left', paddingBottom: 12 }}>
         <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterTracking')}
         </Text>
@@ -62,10 +62,11 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
           {deliveryDate}
         </Text>
       </View>
-      <View style={{ paddingTop: 36 }}>
+      <GrayBar />
+      <View style={{ paddingTop: 24 }}>
         <View
           style={{
-            marginTop: 60,
+            marginTop: 40,
             marginLeft: 14,
             height: mapStatusToTrackerBarHeight(
               props.letter.trackingEvents
@@ -84,7 +85,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
           /* To-do: Navigate to in-app reporting flow */
         }}
         buttonText={i18n.t('LetterTrackingScreen.needHelp')}
-        textStyle={{ fontSize: 14 }}
+        textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
         containerStyle={Styles.needHelpButton}
       />
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>

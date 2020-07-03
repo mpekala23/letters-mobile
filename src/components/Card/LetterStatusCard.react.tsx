@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { LetterStatus } from 'types';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -15,19 +15,19 @@ interface Props {
 function mapStatusToColorStyle(type: LetterStatus) {
   switch (type) {
     case LetterStatus.Draft:
-      return { backgroundColor: '#81B5FF' };
+      return { backgroundColor: Colors.GREEN_LIGHTEST };
     case LetterStatus.Created:
-      return { backgroundColor: '#81B5FF' };
+      return { backgroundColor: Colors.GREEN_LIGHTER };
     case LetterStatus.Mailed:
-      return { backgroundColor: '#A8C1E4' };
+      return { backgroundColor: Colors.GREEN_LIGHT };
     case LetterStatus.InTransit:
-      return { backgroundColor: '#8DA7CC' };
+      return { backgroundColor: Colors.GREEN_DARK };
     case LetterStatus.InLocalArea:
-      return { backgroundColor: '#6D89B1' };
+      return { backgroundColor: Colors.GREEN_DARKER };
     case LetterStatus.OutForDelivery:
-      return { backgroundColor: '#436697' };
+      return { backgroundColor: Colors.GREEN_DARKEST };
     default:
-      return { backgroundColor: '#FF7171' };
+      return { backgroundColor: '' };
   }
 }
 

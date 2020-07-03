@@ -19,25 +19,25 @@ export default StyleSheet.create({
   ameelioLogo: {
     fontSize: 26,
     paddingTop: 18,
-    paddingLeft: 8,
-    color: Colors.PINK_DARK,
+    paddingLeft: 4,
+    color: Colors.PINK_DARKER,
   },
   titleText: {
-    fontSize: 26,
+    fontSize: 24,
     textAlign: 'center',
   },
   baseText: {
     fontSize: 18,
   },
   registerButton: {
-    backgroundColor: Colors.PINK_DARK,
+    backgroundColor: Colors.PINK_DARKER,
     borderRadius: 15,
     width: '100%',
     height: 50,
   },
   loginButton: {
     backgroundColor: 'white',
-    borderColor: Colors.PINK_DARK,
+    borderColor: Colors.PINK_DARKER,
     borderWidth: 2,
     borderRadius: 15,
     height: 50,

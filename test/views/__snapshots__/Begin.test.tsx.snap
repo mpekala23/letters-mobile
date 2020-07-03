@@ -37,11 +37,11 @@ exports[`Begin screen should match snapshot 1`] = `
     >
       <RNSVGSvgView
         align="xMidYMid"
-        bbHeight={60}
-        bbWidth={60}
+        bbHeight={50}
+        bbWidth={50}
         fill="none"
         focusable={false}
-        height={60}
+        height={50}
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -53,15 +53,15 @@ exports[`Begin screen should match snapshot 1`] = `
             },
             Object {
               "flex": 0,
-              "height": 60,
-              "width": 60,
+              "height": 50,
+              "width": 50,
             },
           ]
         }
         vbHeight={145}
         vbWidth={143}
-        width={60}
-        xml="<svg width=\\"60\\" height=\\"60\\" viewBox=\\"0 0 143 145\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+        width={50}
+        xml="<svg width=\\"50\\" height=\\"50\\" viewBox=\\"0 0 143 145\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <g clip-path=\\"url(#clip0)\\">
 <path d=\\"M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z\\" fill=\\"#FF7171\\"/>
 <path d=\\"M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z\\" fill=\\"#FF7171\\"/>
@@ -169,13 +169,12 @@ exports[`Begin screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#FF7171",
               "fontSize": 26,
-              "paddingLeft": 8,
+              "paddingLeft": 4,
               "paddingTop": 18,
             },
           ]
@@ -188,11 +187,10 @@ exports[`Begin screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
+            "fontFamily": "Poppins-Bold",
           },
           Object {
-            "fontSize": 26,
+            "fontSize": 24,
             "textAlign": "center",
           },
         ]
@@ -205,11 +203,10 @@ exports[`Begin screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
+            "fontFamily": "Poppins-Bold",
           },
           Object {
-            "fontSize": 26,
+            "fontSize": 24,
             "textAlign": "center",
           },
           Object {
@@ -264,9 +261,14 @@ exports[`Begin screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {
-                "fontSize": 18,
-              },
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ],
               Object {},
             ]
           }
@@ -310,6 +312,9 @@ exports[`Begin screen should match snapshot 1`] = `
               },
               Object {},
               Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
                 Object {
                   "fontSize": 18,
                 },

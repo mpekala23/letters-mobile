@@ -39,7 +39,7 @@ describe('Login screen', () => {
       },
       type: 'success',
     });
-    fireEvent.press(getByText('Login'));
+    fireEvent.press(getByText('Log in'));
     expect(login).toHaveBeenCalledTimes(1);
   });
 });

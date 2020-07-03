@@ -68,7 +68,7 @@ export interface TextProps {
 
 const PageHeader: React.FC<TextProps> = (props: TextProps) => {
   const { text } = props;
-  const size = props.size || 30;
+  const size = props.size || 24;
   const color = props.color || Colors.AMEELIO_BLUE;
 
   return (

@@ -152,7 +152,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 40 }} />
+              <View style={{ width: '100%', height: 20 }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader
@@ -177,12 +177,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     /* TODO */
                   }}
                 >
-                  <Text style={{ color: Colors.PINK_DARK }}>
+                  <Text style={{ color: Colors.PINK_DARKER }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[
                         Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARK },
+                        { color: Colors.PINK_DARKER },
                       ]}
                     >
                       {this.state.stateToSearch}
@@ -201,12 +201,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     /* TODO */
                   }}
                 >
-                  <Text style={{ color: Colors.PINK_DARK }}>
+                  <Text style={{ color: Colors.PINK_DARKER }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[
                         Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARK },
+                        { color: Colors.PINK_DARKER },
                       ]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}

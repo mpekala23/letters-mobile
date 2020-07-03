@@ -1,4 +1,6 @@
 import Button from './Button/Button.react';
+import ContactSelectorCard from './Card/ContactSelectorCard.react';
+import CreditsCard from './Card/CreditsCard.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import Dropdown from './Dropdown/Dropdown.react';
 import GrayBar from './GrayBar/GrayBar.react';
@@ -16,6 +18,8 @@ import Topbar from './Topbar/Topbar.react';
 
 export {
   Button,
+  ContactSelectorCard,
+  CreditsCard,
   DeliveryStatusCard,
   Dropdown,
   GrayBar,

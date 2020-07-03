@@ -13,7 +13,7 @@ import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
-import { Button, GrayBar, Input } from '@components';
+import { Button, Input } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
@@ -111,9 +111,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
                   {i18n.t('LoginScreen.welcomeBack')}
                 </Text>
-                <Text
-                  style={{ fontSize: 14, paddingTop: 6, paddingBottom: 28 }}
-                >
+                <Text style={[Typography.FONT_REGULAR, Styles.welcomeBackText]}>
                   {i18n.t('LoginScreen.logInWithEmailAndPassword')}
                 </Text>
                 <Input
@@ -159,6 +157,7 @@ class LoginScreen extends React.Component<Props, State> {
                 />
                 <Button
                   containerStyle={Styles.loginButton}
+                  textStyle={Typography.FONT_BOLD}
                   buttonText={i18n.t('LoginScreen.login')}
                   onPress={this.onLogin}
                 />

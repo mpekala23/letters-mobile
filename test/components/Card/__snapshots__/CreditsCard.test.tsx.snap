@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Letter Status Card component should match snapshot 1`] = `
+exports[`Credits Card component should match snapshot 1`] = `
 <View
   collapsable={true}
   pointerEvents="box-none"
@@ -10,8 +10,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <View
     style={
       Array [
         Object {
@@ -34,7 +33,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
         undefined,
       ]
     }
-    testID="letterStatusCard"
+    testID="creditsCard"
   >
     <View
       style={
@@ -43,21 +42,6 @@ exports[`Letter Status Card component should match snapshot 1`] = `
         }
       }
     >
-      <View
-        style={
-          Array [
-            Object {
-              "borderRadius": 3,
-              "height": "100%",
-              "marginRight": 15,
-              "width": 6,
-            },
-            Object {
-              "backgroundColor": "",
-            },
-          ]
-        }
-      />
       <View
         style={
           Object {
@@ -71,7 +55,6 @@ exports[`Letter Status Card component should match snapshot 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
-              "marginBottom": 10,
             }
           }
         >
@@ -91,31 +74,38 @@ exports[`Letter Status Card component should match snapshot 1`] = `
               ]
             }
           >
-            Status
+            4
+             
+            Credits
+             left
           </Text>
-          <Text
-            style={
-              Object {
-                "color": "#6E757C",
-                "fontSize": 16,
-              }
-            }
+          <TouchableOpacity
+            activeOpacity={0.2}
           >
-            Date
-          </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#FF7171",
+                  "fontSize": 16,
+                }
+              }
+            >
+              Add more
+            </Text>
+          </TouchableOpacity>
         </View>
         <Text
           style={
             Object {
               "color": "#6E757C",
-              "fontSize": 16,
+              "fontSize": 14,
             }
           }
         >
-          Description
+          Credits reset daily
         </Text>
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
 </View>
 `;

@@ -98,6 +98,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               "width": 130,
             }
           }
+          testID="profilePicture"
         >
           <Image
             accessibilityLabel="Profile Picture"
@@ -168,6 +169,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -262,6 +266,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -354,6 +361,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -448,6 +458,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -526,6 +539,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -603,6 +619,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,

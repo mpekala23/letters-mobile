@@ -68,8 +68,7 @@ exports[`Login screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontWeight": "600",
+                    "fontFamily": "Poppins-Bold",
                   },
                   Object {
                     "fontSize": 26,
@@ -81,11 +80,17 @@ exports[`Login screen should match snapshot 1`] = `
             </Text>
             <Text
               style={
-                Object {
-                  "fontSize": 14,
-                  "paddingBottom": 28,
-                  "paddingTop": 6,
-                }
+                Array [
+                  Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                  Object {
+                    "color": "#6D6D6D",
+                    "fontSize": 14,
+                    "paddingBottom": 28,
+                    "paddingTop": 6,
+                  },
+                ]
               }
             >
               Log in with your email and password
@@ -132,6 +137,9 @@ exports[`Login screen should match snapshot 1`] = `
                   secureTextEntry={false}
                   style={
                     Array [
+                      Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
                       Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
@@ -210,6 +218,9 @@ exports[`Login screen should match snapshot 1`] = `
                   secureTextEntry={true}
                   style={
                     Array [
+                      Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
                       Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
@@ -379,12 +390,14 @@ exports[`Login screen should match snapshot 1`] = `
                       "padding": 6,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
                     Object {},
                   ]
                 }
               >
-                Login
+                Log in
               </Text>
             </TouchableOpacity>
             <View
@@ -490,8 +503,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#3490dc",
-                        "textDecorationLine": "underline",
+                        "color": "#FF7171",
                       },
                     ]
                   }
@@ -521,8 +533,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#3490dc",
-                        "textDecorationLine": "underline",
+                        "color": "#FF7171",
                       },
                     ]
                   }

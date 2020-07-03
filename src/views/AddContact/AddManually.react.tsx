@@ -10,10 +10,11 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input } from '@components';
+import { Button, Input, Icon } from '@components';
 import { Validation } from 'utils';
 import { Facility } from 'types';
 import i18n from '@i18n';
+import FacilityIcon from '@assets/views/AddContact/Facility';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -88,11 +89,14 @@ class AddManuallyScreen extends React.Component<Props, State> {
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 40 }} />
+              <View style={{ width: '100%', height: 20 }} />
               <View style={CommonStyles.contactbackground}>
-                <Typography.PageHeader
-                  text={i18n.t('AddManuallyScreen.addAFacility')}
-                />
+                <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
+                  <Typography.PageHeader
+                    text={i18n.t('AddManuallyScreen.facilityAddress')}
+                  />
+                  <Icon svg={FacilityIcon} style={{ margin: 16 }} />
+                </View>
                 <Input
                   ref={this.facilityName}
                   parentStyle={{

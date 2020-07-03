@@ -3,7 +3,7 @@ import { View, FlatList, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input } from '@components';
+import { Button, Input, Icon } from '@components';
 import { Facility, NullableFacility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -14,6 +14,7 @@ import {
   ContactActionTypes,
 } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
+import FacilityIcon from '@assets/views/AddContact/Facility';
 import CommonStyles from './AddContact.styles';
 import Styles from './FacilityDirectory.styles';
 
@@ -127,11 +128,11 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
           {item.name}
         </Text>
-        <Text style={[Typography.FONT_REGULAR_ITALIC, Styles.itemInfo]}>
+        <Text style={[Typography.FONT_REGULAR, Styles.itemInfo]}>
           {item.type}
         </Text>
-        <Text style={[Typography.FONT_REGULAR_ITALIC, Styles.itemInfo]}>
-          {item.address} -{item.city},{item.state} {item.postal}
+        <Text style={[Typography.FONT_REGULAR, Styles.itemInfo]}>
+          {item.address} - {item.city}, {item.state} {item.postal}
         </Text>
       </TouchableOpacity>
     );
@@ -156,11 +157,12 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     return (
       <View style={Styles.footerBackground}>
         {manualEntry}
-        <Text style={[Typography.FONT_REGULAR, { marginBottom: 20 }]}>
+        <Text style={[Typography.BASE_TEXT, { marginBottom: 20 }]}>
           {i18n.t('FacilityDirectoryScreen.dontSeeTheFacility')}
         </Text>
         <Button
           buttonText={i18n.t('FacilityDirectoryScreen.addManually')}
+          containerStyle={Styles.addManuallyButton}
           onPress={() => {
             this.setState({ selected: null });
             this.props.navigation.navigate('AddManually');
@@ -177,12 +179,16 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <Typography.PageHeader
-          text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
-        />
+        <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
+          <Typography.PageHeader
+            text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
+          />
+          <Icon svg={FacilityIcon} style={{ margin: 16 }} />
+        </View>
         <Input
           parentStyle={Styles.searchParent}
           inputStyle={Styles.searchInput}
+          placeholder={i18n.t('FacilityDirectoryScreen.facilityName')}
           onChangeText={(val: string) => {
             this.setState({ search: val });
           }}

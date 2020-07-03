@@ -106,8 +106,9 @@ exports[`Register screen should match snapshot 1`] = `
               },
               Object {
                 "color": "#124181",
-                "fontSize": 18,
+                "fontSize": 16,
                 "fontWeight": "400",
+                "textAlign": "center",
               },
             ]
           }
@@ -131,8 +132,7 @@ exports[`Register screen should match snapshot 1`] = `
                 "fontFamily": "Poppins-Regular",
               },
               Object {
-                "color": "#3490dc",
-                "textDecorationLine": "underline",
+                "color": "#FF7171",
               },
             ]
           }
@@ -220,6 +220,9 @@ exports[`Register screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -297,6 +300,9 @@ exports[`Register screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -383,6 +389,9 @@ exports[`Register screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                  Object {
                     "borderColor": "rgba(0,0,0,0)",
                     "borderRadius": 8,
                     "borderWidth": 2,
@@ -462,6 +471,9 @@ exports[`Register screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -539,6 +551,9 @@ exports[`Register screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -618,6 +633,9 @@ exports[`Register screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -695,6 +713,9 @@ exports[`Register screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -774,6 +795,9 @@ exports[`Register screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -816,7 +840,7 @@ exports[`Register screen should match snapshot 1`] = `
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
             "height": 60,
-            "marginBottom": 0,
+            "marginBottom": 8,
             "overflow": "hidden",
             "width": "100%",
           }
@@ -851,6 +875,9 @@ exports[`Register screen should match snapshot 1`] = `
             secureTextEntry={false}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -930,6 +957,9 @@ exports[`Register screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
@@ -1007,6 +1037,9 @@ exports[`Register screen should match snapshot 1`] = `
             secureTextEntry={true}
             style={
               Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
                 Object {
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
@@ -1163,6 +1196,8 @@ exports[`Register screen should match snapshot 1`] = `
               "marginVertical": 5,
             },
             Object {
+              "borderRadius": 15,
+              "height": 50,
               "width": "100%",
             },
             Object {},

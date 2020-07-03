@@ -53,6 +53,9 @@ exports[`Input component should match snapshot 1`] = `
         style={
           Array [
             Object {
+              "fontFamily": "Poppins-Regular",
+            },
+            Object {
               "borderColor": "rgba(0,0,0,0)",
               "borderRadius": 8,
               "borderWidth": 2,

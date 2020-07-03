@@ -23,7 +23,8 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "left",
+          "paddingBottom": 12,
         }
       }
     >
@@ -78,7 +79,17 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     <View
       style={
         Object {
-          "paddingTop": 36,
+          "backgroundColor": "#F2F2F2",
+          "height": 2,
+          "marginVertical": 8,
+          "width": "100%",
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "paddingTop": 24,
         }
       }
     >
@@ -88,7 +99,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
             "backgroundColor": "#F2F2F2",
             "height": 0,
             "marginLeft": 14,
-            "marginTop": 60,
+            "marginTop": 40,
             "position": "absolute",
             "width": 7,
           }
@@ -106,11 +117,12 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#A8C1E4",
+                "backgroundColor": "#CFF3DD",
                 "borderRadius": 50,
-                "height": 36,
+                "height": 28,
+                "marginLeft": 4,
                 "marginRight": 24,
-                "width": 36,
+                "width": 28,
               }
             }
             testID="trackerCircle"
@@ -237,9 +249,14 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               "padding": 6,
             },
             Object {},
-            Object {
-              "fontSize": 14,
-            },
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "fontSize": 14,
+              },
+            ],
             Object {},
           ]
         }

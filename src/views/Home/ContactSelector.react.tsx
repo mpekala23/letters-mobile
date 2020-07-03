@@ -7,16 +7,17 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { Button, ProfilePic } from '@components';
+import { Icon } from '@components';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { ProfilePicTypes, Letter } from 'types';
-import Emoji from 'react-native-emoji';
+import { Letter } from 'types';
 import i18n from '@i18n';
+import AddContact from '@assets/views/ContactSelector/AddContact';
+import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -33,8 +34,10 @@ interface Props {
 const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
   const contactSelectorList = props.existingContacts.map((contact: Contact) => {
     return (
-      <TouchableOpacity
-        style={Styles.contactCard}
+      <ContactSelectorCard
+        firstName={contact.firstName}
+        lastName={contact.lastName}
+        letters={props.existingLetters[contact.id]}
         onPress={() => {
           props.navigation.navigate('SingleContact', {
             contact,
@@ -42,46 +45,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
           });
         }}
         key={contact.inmateNumber}
-      >
-        <View
-          style={[
-            {
-              flex: 1,
-              flexDirection: 'row',
-              paddingLeft: 16,
-            },
-          ]}
-        >
-          <View style={[{ paddingTop: 24 }]}>
-            <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
-              type={ProfilePicTypes.Contact}
-            />
-          </View>
-        </View>
-        <View style={[{ paddingLeft: 112 }]}>
-          <Text style={[Typography.BASE_TITLE]}>{contact.firstName}</Text>
-          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
-            <Emoji name="love_letter" />{' '}
-            {i18n.t('SingleContactScreen.received')}:{' '}
-          </Text>
-          <Text style={[Typography.FONT_MEDIUM, Styles.contactCardInfo]}>
-            <Emoji name="calendar" />{' '}
-            {i18n.t('SingleContactScreen.lastHeardFromYou')}:
-          </Text>
-          <Text
-            style={[
-              Typography.FONT_MEDIUM,
-              Styles.contactCardInfo,
-              { paddingBottom: 4 },
-            ]}
-          >
-            <Emoji name="airplane" />{' '}
-            {i18n.t('SingleContactScreen.lettersTraveled')}:
-          </Text>
-        </View>
-      </TouchableOpacity>
+      />
     );
   });
   return (
@@ -94,7 +58,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
         style={[
           Typography.FONT_BOLD,
           {
-            color: Colors.GRAY_DARKER,
+            color: Colors.GRAY_DARK,
             fontSize: 20,
             paddingBottom: 16,
           },
@@ -105,16 +69,15 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
       <ScrollView keyboardShouldPersistTaps="handled">
         {contactSelectorList}
       </ScrollView>
-      <View style={{ alignItems: 'flex-end' }}>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('ContactInfo', { addFromSelector: true });
-          }}
-          buttonText="+"
-          textStyle={{ fontSize: 30 }}
-          containerStyle={Styles.addContactButton}
-        />
-      </View>
+      <TouchableOpacity
+        style={Styles.addContactButton}
+        onPress={() => {
+          props.navigation.navigate('ContactInfo', { addFromSelector: true });
+        }}
+        testID="addContact"
+      >
+        <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };

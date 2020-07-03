@@ -54,7 +54,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "height": 40,
+                "height": 20,
                 "width": "100%",
               }
             }
@@ -71,7 +71,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
             <View
               style={
                 Object {
-                  "alignItems": "center",
                   "flexDirection": "row",
                 }
               }
@@ -79,25 +78,82 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#3490dc",
-                    "borderBottomRightRadius": 7.5,
-                    "borderTopRightRadius": 7.5,
-                    "height": 15,
-                    "marginRight": 10,
-                    "width": 30,
-                  }
-                }
-              />
-              <Text
-                style={
-                  Object {
-                    "fontFamily": "Poppins-Bold",
-                    "fontSize": 30,
+                    "alignItems": "center",
+                    "flexDirection": "row",
                   }
                 }
               >
-                Add Contact
-              </Text>
+                <Text
+                  style={
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                      "fontSize": 24,
+                    }
+                  }
+                >
+                  Add Contact
+                </Text>
+              </View>
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={19}
+                bbWidth={24}
+                fill="none"
+                focusable={false}
+                height={19}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    Object {
+                      "margin": 16,
+                    },
+                    Object {
+                      "flex": 0,
+                      "height": 19,
+                      "width": 24,
+                    },
+                  ]
+                }
+                vbHeight={19}
+                vbWidth={24}
+                width={24}
+                xml="<svg width=\\"24\\" height=\\"19\\" viewBox=\\"0 0 24 19\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+    <path d=\\"M1 4.64286L10.6433 11.03C11.045 11.2963 11.5171 11.4384 12 11.4384C12.4829 11.4384 12.955 11.2963 13.3567 11.03L23 4.64286M3.44444 18H20.5556C21.2039 18 21.8256 17.7441 22.284 17.2887C22.7425 16.8332 23 16.2155 23 15.5714V3.42857C23 2.78447 22.7425 2.16676 22.284 1.71131C21.8256 1.25587 21.2039 1 20.5556 1H3.44444C2.79614 1 2.17438 1.25587 1.71596 1.71131C1.25754 2.16676 1 2.78447 1 3.42857V15.5714C1 16.2155 1.25754 16.8332 1.71596 17.2887C2.17438 17.7441 2.79614 18 3.44444 18Z\\" stroke=\\"black\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+</svg>
+"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <RNSVGGroup
+                  fill={null}
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
+                >
+                  <RNSVGPath
+                    d="M1 4.64286L10.6433 11.03C11.045 11.2963 11.5171 11.4384 12 11.4384C12.4829 11.4384 12.955 11.2963 13.3567 11.03L23 4.64286M3.44444 18H20.5556C21.2039 18 21.8256 17.7441 22.284 17.2887C22.7425 16.8332 23 16.2155 23 15.5714V3.42857C23 2.78447 22.7425 2.16676 22.284 1.71131C21.8256 1.25587 21.2039 1 20.5556 1H3.44444C2.79614 1 2.17438 1.25587 1.71596 1.71131C1.25754 2.16676 1 2.78447 1 3.42857V15.5714C1 16.2155 1.25754 16.8332 1.71596 17.2887C2.17438 17.7441 2.79614 18 3.44444 18Z"
+                    propList={
+                      Array [
+                        "stroke",
+                        "strokeWidth",
+                        "strokeLinecap",
+                        "strokeLinejoin",
+                      ]
+                    }
+                    stroke={4278190080}
+                    strokeLinecap={1}
+                    strokeLinejoin={1}
+                    strokeWidth={2}
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
             <TouchableOpacity
               activeOpacity={0.2}
@@ -116,8 +172,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#3490dc",
-                      "textDecorationLine": "underline",
+                      "color": "#FF7171",
                     },
                   ]
                 }
@@ -142,13 +197,18 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#3490dc",
-                      "textDecorationLine": "underline",
+                      "color": "#FF7171",
                     },
                   ]
                 }
               >
-                <Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#FF7171",
+                    }
+                  }
+                >
                   Tap here to search the
                    
                   <Text
@@ -158,7 +218,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                           "fontFamily": "Poppins-Bold",
                         },
                         Object {
-                          "color": "#282828",
+                          "color": "#FF7171",
                         },
                       ]
                     }
@@ -189,13 +249,18 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#3490dc",
-                      "textDecorationLine": "underline",
+                      "color": "#FF7171",
                     },
                   ]
                 }
               >
-                <Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#FF7171",
+                    }
+                  }
+                >
                   Tap here to search the
                    
                   <Text
@@ -205,7 +270,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                           "fontFamily": "Poppins-Bold",
                         },
                         Object {
-                          "color": "#282828",
+                          "color": "#FF7171",
                         },
                       ]
                     }
@@ -260,6 +325,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   secureTextEntry={false}
                   style={
                     Array [
+                      Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
                       Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
@@ -339,6 +407,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
+                      Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
                         "borderWidth": 2,
@@ -416,6 +487,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   secureTextEntry={false}
                   style={
                     Array [
+                      Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
                       Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
@@ -495,6 +569,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
+                      Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
                         "borderWidth": 2,
@@ -573,6 +650,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
+                        "fontFamily": "Poppins-Regular",
+                      },
+                      Object {
                         "borderColor": "rgba(0,0,0,0)",
                         "borderRadius": 8,
                         "borderWidth": 2,
@@ -614,10 +694,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
           style={
             Object {
               "alignSelf": "center",
+              "backgroundColor": "#FFF5F5",
               "flexDirection": "row",
-              "marginBottom": 15,
-              "marginTop": 0,
-              "width": 712.5,
+              "padding": 15,
             }
           }
         >

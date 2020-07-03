@@ -96,4 +96,21 @@ export default StyleSheet.create({
     height: 10,
     backgroundColor: '#6D89B1',
   },
+  creditsTitle: {
+    fontSize: 20,
+    color: Colors.AMEELIO_BLACK,
+  },
+  creditsResetMessage: {
+    fontSize: 14,
+    color: Colors.AMEELIO_GRAY,
+  },
+  creditsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  creditsAddMoreText: {
+    fontSize: 16,
+    color: Colors.PINK_DARKER,
+  },
 });

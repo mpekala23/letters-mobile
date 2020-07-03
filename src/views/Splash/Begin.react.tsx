@@ -40,13 +40,17 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         <Button
           onPress={() => props.navigation.navigate('Register')}
           buttonText={i18n.t('BeginScreen.signUp')}
-          textStyle={Styles.baseText}
+          textStyle={[Typography.FONT_BOLD, Styles.baseText]}
           containerStyle={Styles.registerButton}
         />
         <Button
           onPress={() => props.navigation.navigate('Login')}
           buttonText={i18n.t('BeginScreen.logIn')}
-          textStyle={[Styles.baseText, { color: Colors.PINK_DARK }]}
+          textStyle={[
+            Typography.FONT_BOLD,
+            Styles.baseText,
+            { color: Colors.PINK_DARKER },
+          ]}
           containerStyle={Styles.loginButton}
         />
       </View>

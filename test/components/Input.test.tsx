@@ -27,7 +27,7 @@ describe('Input component', () => {
   });
 
   it('should begin unfocused and update when focused', () => {
-    const { container, getByPlaceholderText, getByTestId } = setup();
+    const { getByPlaceholderText, getByTestId } = setup();
     expect(getByTestId('unfocused')).toBeDefined();
     fireEvent.focus(getByPlaceholderText('placeholder'));
     expect(getByTestId('focused')).toBeDefined();
@@ -174,7 +174,7 @@ describe('Input component', () => {
     expect(
       getByPlaceholderText('placeholder').parent.parent.props.style[1]
     ).toEqual(scrollStyle);
-    expect(getByPlaceholderText('placeholder').props.style[4]).toEqual(
+    expect(getByPlaceholderText('placeholder').props.style[5]).toEqual(
       inputStyle
     );
   });

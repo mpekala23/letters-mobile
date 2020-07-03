@@ -175,6 +175,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             "width": 130,
           }
         }
+        testID="profilePicture"
       >
         <Image
           accessibilityLabel="Profile Picture"
@@ -319,9 +320,14 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {
-                "fontSize": 20,
-              },
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 20,
+                },
+              ],
               Object {},
             ]
           }
@@ -338,6 +344,102 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         }
       }
     >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "white",
+              "borderRadius": 6,
+              "marginVertical": 6,
+              "padding": 15,
+              "width": "100%",
+            },
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
+            undefined,
+          ]
+        }
+        testID="creditsCard"
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
+                      "color": "#282828",
+                      "fontSize": 20,
+                    },
+                    Object {
+                      "flex": 1,
+                    },
+                  ]
+                }
+              >
+                 
+                Credit
+                 left
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.2}
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#FF7171",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  Add more
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={
+                Object {
+                  "color": "#6E757C",
+                  "fontSize": 14,
+                }
+              }
+            >
+              Credits reset daily
+            </Text>
+          </View>
+        </View>
+      </View>
       <TouchableOpacity
         activeOpacity={0.2}
         style={
@@ -551,8 +653,8 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "fontSize": 20,
             },
             Object {
-              "color": "#393939",
-              "paddingTop": 24,
+              "color": "#6D6D6D",
+              "paddingTop": 12,
             },
           ]
         }
@@ -602,7 +704,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   "width": 6,
                 },
                 Object {
-                  "backgroundColor": "#436697",
+                  "backgroundColor": "#09863D",
                 },
               ]
             }
