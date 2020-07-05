@@ -31,8 +31,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#282828",
@@ -48,8 +47,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#282828",
@@ -64,8 +62,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "color": "#282828",
@@ -88,7 +85,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#e6e6e6",
+            "backgroundColor": "#F2F2F2",
             "height": 0,
             "marginLeft": 14,
             "marginTop": 60,
@@ -129,8 +126,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontWeight": "600",
+                    "fontFamily": "Poppins-Bold",
                   },
                   Object {
                     "color": "#282828",
@@ -146,11 +142,10 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontWeight": "600",
+                    "fontFamily": "Poppins-Bold",
                   },
                   Object {
-                    "color": "#6a6a6a",
+                    "color": "#393939",
                     "fontSize": 14,
                     "paddingBottom": 4,
                   },
@@ -173,12 +168,10 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "fontFamily": "Poppins-Regular",
                   },
                   Object {
-                    "color": "#6a6a6a",
+                    "color": "#393939",
                     "fontSize": 14,
                     "paddingBottom": 8,
                   },
@@ -192,12 +185,10 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontSize": 16,
-                    "fontWeight": "400",
+                    "fontFamily": "Poppins-Regular",
                   },
                   Object {
-                    "color": "#6a6a6a",
+                    "color": "#393939",
                     "fontSize": 14,
                     "paddingBottom": 4,
                   },
@@ -260,8 +251,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
+            "fontFamily": "Poppins-Bold",
           },
           Object {
             "color": "#282828",

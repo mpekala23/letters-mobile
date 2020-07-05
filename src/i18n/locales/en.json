@@ -76,6 +76,15 @@
     "privacyPolicy": "Privacy Policy",
     "incorrectUsernameOrPassword": "Incorrect username or password"
   },
+  "MemoryLaneCountCard": {
+    "noLettersYet": "No letters yet",
+    "oneLetter": "1 Letter",
+    "letters": "Letters"
+  },
+  "MemoryLaneScreen" : {
+    "youDoNotHaveLettersYet": "You do not have any letters yet!",
+    "goSendYourFirstLetter": "Go send your first letter."
+  },
   "RegisterScreen": {
     "clickToUploadProfileImage": "Click to upload profile image.",
     "privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",
@@ -106,6 +115,16 @@
     "lettersTraveled": "letters traveled",
     "sendLetter": "Send letter",
     "letterTracking": "Letter Tracking"
+  },
+  "UpdateContactScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Adress line 2",
+    "optionalUnit": "Unit (optional, only if needed)",
+    "optionalDorm": "Dorm (optional, only if needed)",
+    "saveProfile": "Save Profile",
+    "deleteProfile": "Delete Profile"
   },
   "PrisonTypes": {
     "state": "State Prison",

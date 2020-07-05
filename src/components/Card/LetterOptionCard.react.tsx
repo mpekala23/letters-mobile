@@ -4,6 +4,7 @@ import LettersIcon from '@assets/components/Card/Letters';
 import PostCardsIcon from '@assets/components/Card/PostCards';
 import i18n from '@i18n';
 import { LetterTypes } from 'types';
+import { Typography } from '@styles';
 import Icon from '../Icon/Icon.react';
 import CardStyles from './Card.styles';
 
@@ -28,7 +29,7 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
         svg={props.type === LetterTypes.PostCards ? PostCardsIcon : LettersIcon}
         style={{ position: 'absolute', right: 0, bottom: 0 }}
       />
-      <Text style={CardStyles.cardTitle}>
+      <Text style={[Typography.FONT_BOLD, CardStyles.cardTitle]}>
         {props.type === LetterTypes.PostCards
           ? i18n.t('LetterTypes.postCardsTitle')
           : i18n.t('LetterTypes.lettersTitle')}

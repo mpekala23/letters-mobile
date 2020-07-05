@@ -8,10 +8,6 @@ import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
 import { Button } from '@components';
-import {
-  dropdownSuccess,
-  dropdownError,
-} from '@components/Dropdown/Dropdown.react';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 

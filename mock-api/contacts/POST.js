@@ -4,6 +4,7 @@
 
 module.exports = (req, res) => {
   const {
+    id,
     first_name,
     last_name,
     inmate_number,
@@ -22,7 +23,7 @@ module.exports = (req, res) => {
   return res.status(201).send({
     type: 'SUCCESS',
     data: {
-      id: 8,
+      id,
       first_name,
       last_name,
       inmate_number,

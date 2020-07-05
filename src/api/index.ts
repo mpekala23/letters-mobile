@@ -224,6 +224,62 @@ export async function addContact(
   return existing;
 }
 
+export async function updateContact(
+  data: Record<string, unknown>
+): Promise<Contact[]> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const body = await response.json();
+  if (body.type === 'ERROR') {
+    throw Error(body.data);
+  }
+  const contactData: Contact = {
+    id: body.data.id,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    inmateNumber: body.data.inmate_number,
+    state: body.data.state,
+    relationship: body.data.relationship,
+    facility: body.data.facility,
+  };
+  const { existing } = store.getState().contact;
+  const newExisting = [];
+  for (let ix = 0; ix < existing.length; ix += 1) {
+    if (existing[ix].id === contactData.id) {
+      newExisting.push(contactData);
+    } else {
+      newExisting.push(existing[ix]);
+    }
+  }
+  store.dispatch(setExisting(newExisting));
+  return newExisting;
+}
+
+export async function deleteContact(data: Contact): Promise<Contact[]> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const body = await response.json();
+  if (body.type === 'ERROR') {
+    throw Error(body.data);
+  }
+  const { existing } = store.getState().contact;
+  const newExisting = existing.filter((contact) => contact.id !== data.id);
+  store.dispatch(setExisting(newExisting));
+  return newExisting;
+}
+
 export async function facebookShare(shareUrl: string): Promise<void> {
   const supportedUrl = await Linking.canOpenURL(shareUrl);
   if (supportedUrl) {

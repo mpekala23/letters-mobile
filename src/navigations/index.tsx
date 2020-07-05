@@ -17,6 +17,8 @@ import {
   HomeScreen,
   IssuesScreen,
   LetterTrackingScreen,
+  MemoryLaneScreen,
+  LetterDetailsScreen,
   LoginScreen,
   ReferFriendsScreen,
   RegisterScreen,
@@ -24,6 +26,7 @@ import {
   SingleContactScreen,
   SplashScreen,
   ThanksScreen,
+  UpdateContactScreen,
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
@@ -51,12 +54,15 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  LetterDetails: undefined;
   LetterTracking: undefined;
+  MemoryLane: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
+  UpdateContact: { contactId: number } | undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -162,8 +168,23 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
+          name="MemoryLane"
+          component={MemoryLaneScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="LetterDetails"
+          component={LetterDetailsScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="UpdateContact"
+          component={UpdateContactScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>

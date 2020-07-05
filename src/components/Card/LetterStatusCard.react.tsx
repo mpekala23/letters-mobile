@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { LetterStatus } from 'types';
+import { Typography } from '@styles';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -46,12 +47,18 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
         />
         <View style={{ flex: 1 }}>
           <View style={CardStyles.statusAndDateContainer}>
-            <Text style={[CardStyles.cardTitle, { flex: 1 }]}>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                CardStyles.letterStatusTitle,
+                { flex: 1 },
+              ]}
+            >
               {props.status}
             </Text>
             <Text style={CardStyles.date}>{props.date}</Text>
           </View>
-          <Text style={CardStyles.cardData}>{props.description}</Text>
+          <Text style={CardStyles.letterStatusData}>{props.description}</Text>
         </View>
       </View>
     </TouchableOpacity>
