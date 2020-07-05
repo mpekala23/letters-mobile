@@ -36,7 +36,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
     <View style={Styles.screenBackground}>
       <View style={{ flex: 1 }}>
         <Text style={[Typography.FONT_BOLD, { fontSize: 36 }]}>
-          Letter Preview
+          {i18n.t('Compose.preview')}
         </Text>
         <GrayBar />
         <ScrollView>
@@ -58,10 +58,10 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           },
         ]}
       >
-        Warning: your letters cannot be cancelled once sent
+        {i18n.t('Compose.warningCantCancel')}
       </Text>
       <Button
-        buttonText="Send letter"
+        buttonText={i18n.t('Compose.send')}
         onPress={async () => {
           try {
             props.setDraft(false);

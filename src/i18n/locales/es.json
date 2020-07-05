@@ -117,6 +117,8 @@
     "lettersDesc": "300 words"
   },
   "Compose": {
-    "placeholder": "Tell your loved one about something you did /saw today that reminded you of them!"
+    "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
+    "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
+    "send": "Send Letter"
   }
 }

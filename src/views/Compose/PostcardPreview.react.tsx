@@ -76,10 +76,10 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           },
         ]}
       >
-        Warning: your letters cannot be cancelled once sent
+        {i18n.t('Compose.warningCantCancel')}
       </Text>
       <Button
-        buttonText="Send letter"
+        buttonText={i18n.t('Compose.send')}
         onPress={async () => {
           try {
             props.setDraft(false);

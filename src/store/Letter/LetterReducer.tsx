@@ -3,6 +3,7 @@ import {
   LetterState,
   LetterActionTypes,
   SET_COMPOSING,
+  SET_ACTIVE,
   SET_TYPE,
   SET_STATUS,
   SET_DRAFT,
@@ -36,6 +37,9 @@ export default function LetterReducer(
   const currentState = { ...state };
   switch (action.type) {
     case SET_COMPOSING:
+      currentState.composing = action.payload;
+      return currentState;
+    case SET_ACTIVE:
       currentState.composing = action.payload;
       return currentState;
     case SET_TYPE:

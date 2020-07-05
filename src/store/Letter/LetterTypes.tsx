@@ -1,6 +1,7 @@
 import { LetterTypes, Letter, LetterStatus } from 'types';
 
 export const SET_COMPOSING = 'letter/set_composing';
+export const SET_ACTIVE = 'letter/set_active';
 export const SET_TYPE = 'letter/set_type';
 export const SET_STATUS = 'letter/set_status';
 export const SET_DRAFT = 'letter/set_draft';
@@ -11,7 +12,6 @@ export const SET_LETTER_ID = 'letter/set_letter_id';
 export const CLEAR_COMPOSING = 'letter/clear_composing';
 export const SET_EXISTING = 'letter/set_existing';
 export const ADD_LETTER = 'letter/add_letter';
-export const SET_ACTIVE = 'letter/set_active';
 
 export interface LetterState {
   composing: Letter;
@@ -21,6 +21,11 @@ export interface LetterState {
 
 interface SetComposingAction {
   type: typeof SET_COMPOSING;
+  payload: Letter;
+}
+
+interface SetActiveAction {
+  type: typeof SET_ACTIVE;
   payload: Letter;
 }
 
@@ -71,11 +76,6 @@ interface SetExistingAction {
 
 interface AddLetterAction {
   type: typeof ADD_LETTER;
-  payload: Letter;
-}
-
-interface SetActiveAction {
-  type: typeof SET_ACTIVE;
   payload: Letter;
 }
 
