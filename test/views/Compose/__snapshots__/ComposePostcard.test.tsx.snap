@@ -108,8 +108,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "System",
-                    "fontWeight": "600",
+                    "fontFamily": "Poppins-Bold",
                   },
                   Object {
                     "flex": 1,
@@ -277,7 +276,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             style={
               Object {
                 "backgroundColor": "white",
-                "borderTopColor": "#cacaca",
+                "borderTopColor": "#9A9A9A",
                 "borderTopWidth": 0.3,
                 "flexDirection": "row",
                 "height": 50,
@@ -305,12 +304,10 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
+                      "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#8a8a8a",
+                      "color": "#6D6D6D",
                     },
                   ]
                 }
@@ -359,12 +356,10 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
+                      "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#8a8a8a",
+                      "color": "#6D6D6D",
                     },
                   ]
                 }

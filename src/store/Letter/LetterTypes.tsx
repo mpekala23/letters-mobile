@@ -81,6 +81,7 @@ interface AddLetterAction {
 
 export type LetterActionTypes =
   | SetComposingAction
+  | SetActiveAction
   | SetTypeAction
   | SetStatusAction
   | SetDraftAction
@@ -90,5 +91,4 @@ export type LetterActionTypes =
   | SetLetterIdAction
   | ClearComposingAction
   | SetExistingAction
-  | AddLetterAction
-  | SetActiveAction;
+  | AddLetterAction;

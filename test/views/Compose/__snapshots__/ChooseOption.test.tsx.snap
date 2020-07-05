@@ -24,8 +24,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
+            "fontFamily": "Poppins-Bold",
           },
           Object {
             "fontSize": 22,
@@ -179,11 +178,15 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       </RNSVGSvgView>
       <Text
         style={
-          Object {
-            "color": "#282828",
-            "fontSize": 24,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "fontFamily": "Poppins-Bold",
+            },
+            Object {
+              "color": "#282828",
+              "fontSize": 28,
+            },
+          ]
         }
       >
         Post cards
@@ -342,11 +345,15 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       </RNSVGSvgView>
       <Text
         style={
-          Object {
-            "color": "#282828",
-            "fontSize": 24,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "fontFamily": "Poppins-Bold",
+            },
+            Object {
+              "color": "#282828",
+              "fontSize": 28,
+            },
+          ]
         }
       >
         Letters

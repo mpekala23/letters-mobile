@@ -127,7 +127,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         state: this.props.contactState.adding.facility.state,
         postal: this.postal.current.state.value,
       };
+      // TO-DO: Replace random contactId for mocking purposes with real Ids
+      const randomContactId = Math.floor(Math.random() * 1000);
       const contact = {
+        id: randomContactId,
         state: this.stateRef.current.state.value,
         first_name: this.firstName.current.state.value,
         last_name: this.lastName.current.state.value,
@@ -221,7 +224,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   <View style={{ alignSelf: 'center' }}>
                     <PicUpload />
                   </View>
-                  <Text style={Typography.FONT_ITALIC}>
+                  <Text style={Typography.FONT_REGULAR_ITALIC}>
                     {i18n.t('ReviewContactScreen.clickToUploadContactImage')}
                   </Text>
                 </View>

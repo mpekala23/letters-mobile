@@ -30,8 +30,7 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "System",
-              "fontWeight": "600",
+              "fontFamily": "Poppins-Bold",
             },
             Object {
               "flex": 1,

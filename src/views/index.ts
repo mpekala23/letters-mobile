@@ -13,12 +13,15 @@ import LetterPreviewScreen from './Compose/LetterPreview.react';
 import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
 import LoginScreen from './Login/Login.react';
 import PostcardPreviewScreen from './Compose/PostcardPreview.react';
+import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
+import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Splash/Splash.react';
 import ThanksScreen from './Report/Thanks.react';
+import UpdateContactScreen from './UpdateContact/UpdateContact.react';
 
 export {
   AddManuallyScreen,
@@ -33,13 +36,16 @@ export {
   HomeScreen,
   IssuesScreen,
   LetterPreviewScreen,
+  LetterDetailsScreen,
   LoginScreen,
   PostcardPreviewScreen,
   LetterTrackingScreen,
+  MemoryLaneScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
   ThanksScreen,
+  UpdateContactScreen,
 };

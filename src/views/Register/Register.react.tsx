@@ -172,7 +172,7 @@ class RegisterScreen extends React.Component<Props, State> {
             style={Styles.picContainer}
           >
             <PicUpload />
-            <Text style={[Typography.FONT_ITALIC, { marginTop: 5 }]}>
+            <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
           </View>
