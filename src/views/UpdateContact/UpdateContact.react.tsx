@@ -55,9 +55,17 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.setInvalid = this.setInvalid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
     this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
+    this.props.navigation.setParams({
+      topbar: {
+        enabled: true,
+        text: 'Save',
+        action: this.doUpdateContact,
+      },
+    });
   }
 
   componentDidMount() {
@@ -77,6 +85,17 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
     }
+  }
+
+  setInvalid() {
+    this.setState({ valid: false });
+    this.props.navigation.setParams({
+      topbar: {
+        enabled: false,
+        text: 'Save',
+        action: this.doUpdateContact,
+      },
+    });
   }
 
   doDeleteContact = async () => {
@@ -140,6 +159,13 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.facilityAddress.current.state.valid &&
         this.didUpdateAtLeastOneField();
       this.setState({ valid: result });
+      this.props.navigation.setParams({
+        topbar: {
+          enabled: result,
+          text: 'Save',
+          action: this.doUpdateContact,
+        },
+      });
     }
   }
 
@@ -211,7 +237,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.firstName')}
             required
             onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
+            onInvalid={this.setInvalid}
             nextInput={this.lastName}
           />
           <Text
@@ -230,7 +256,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.lastName')}
             required
             onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
+            onInvalid={this.setInvalid}
             nextInput={this.facilityName}
           />
           <Text
@@ -249,7 +275,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.addressLine1')}
             required
             onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
+            onInvalid={this.setInvalid}
             nextInput={this.facilityAddress}
           />
           <Text
@@ -268,7 +294,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.addressLine2')}
             required
             onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
+            onInvalid={this.setInvalid}
           />
 
           <Input

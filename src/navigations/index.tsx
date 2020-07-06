@@ -1,10 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
 import { connect } from 'react-redux';
 import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
+  StackHeaderProps,
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
@@ -45,6 +45,12 @@ export type AuthStackParamList = {
   Register: undefined;
 };
 
+export type TopbarRouteAction = {
+  enabled: boolean;
+  text: string;
+  action: () => void;
+};
+
 export type AppStackParamList = {
   AddManually: undefined;
   ChooseOption: undefined;
@@ -53,7 +59,7 @@ export type AppStackParamList = {
   ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
-  Home: undefined;
+  Home: { topbar: TopbarRouteAction };
   Issues: undefined;
   LetterDetails: undefined;
   LetterTracking: undefined;
@@ -63,7 +69,7 @@ export type AppStackParamList = {
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
-  UpdateContact: { contactId: number } | undefined;
+  UpdateContact: { contactId: number; topbar: TopbarRouteAction } | undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -86,10 +92,6 @@ const fadeTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  let topSection = <View />;
-  if (!props.authInfo.isLoadingToken) {
-    topSection = <Topbar navigation={navigationRef.current} />;
-  }
   // Determine which views should be accessible
   let screens;
   if (props.authInfo.isLoadingToken) {
@@ -106,87 +108,295 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Home"
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="FacilityDirectory"
           component={FacilityDirectoryScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="AddManually"
           component={AddManuallyScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ReferFriends"
           component={ReferFriendsScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ReviewContact"
           component={ReviewContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ExplainProblem"
           component={ExplainProblemScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="FirstLetter"
           component={FirstLetterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="Issues"
           component={IssuesScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="Thanks"
           component={ThanksScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label=""
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="SingleContact"
           component={SingleContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Home"
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="LetterTracking"
           component={LetterTrackingScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Tracking"
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="MemoryLane"
           component={MemoryLaneScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Memory Lane"
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="LetterDetails"
           component={LetterDetailsScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Home"
+                  profile={false}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps) => {
+              return (
+                <Topbar
+                  label="Compose"
+                  profile
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="UpdateContact"
           component={UpdateContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            header: (screenProps: StackHeaderProps) => {
+              const params = screenProps.scene.route.params as {
+                topbar: TopbarRouteAction;
+              };
+              return (
+                <Topbar
+                  label="Profile"
+                  profile={false}
+                  profileOverride={params ? params.topbar : undefined}
+                  backEnabled={screenProps.navigation.canGoBack()}
+                  back={screenProps.navigation.goBack}
+                />
+              );
+            },
+          }}
         />
       </>
     );
@@ -208,11 +418,9 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   }
   return (
     <NavigationContainer ref={navigationRef}>
-      {/* ... */}
-      {topSection}
       <Stack.Navigator
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
         }}
       >
         {screens}
