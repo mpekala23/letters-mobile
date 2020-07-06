@@ -41,13 +41,13 @@ export { navigationRef, navigate };
 
 export type AuthStackParamList = {
   Splash: undefined;
+  Begin: undefined;
   Login: undefined;
   Register: undefined;
 };
 
 export type AppStackParamList = {
   AddManually: undefined;
-  Begin: undefined;
   ChooseOption: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;

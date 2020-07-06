@@ -48,7 +48,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
   );
   return (
     <View style={Styles.trueBackground}>
-      <View style={{ alignItems: 'left', paddingBottom: 12 }}>
+      <View style={{ paddingBottom: 12 }}>
         <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterTracking')}
         </Text>
@@ -85,7 +85,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
           /* To-do: Navigate to in-app reporting flow */
         }}
         buttonText={i18n.t('LetterTrackingScreen.needHelp')}
-        textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+        textStyle={(Typography.FONT_BOLD, { fontSize: 14 })}
         containerStyle={Styles.needHelpButton}
       />
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>

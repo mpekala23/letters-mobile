@@ -4,12 +4,12 @@ import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import AmeelioBirdPink from '@assets/AmeelioBirdPinkSmall';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AuthStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Styles from './Begin.styles';
 
 type BeginScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
+  AuthStackParamList,
   'Begin'
 >;
 
@@ -40,17 +40,17 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         <Button
           onPress={() => props.navigation.navigate('Register')}
           buttonText={i18n.t('BeginScreen.signUp')}
-          textStyle={[Typography.FONT_BOLD, Styles.baseText]}
+          textStyle={(Typography.FONT_BOLD, Styles.baseText)}
           containerStyle={Styles.registerButton}
         />
         <Button
           onPress={() => props.navigation.navigate('Login')}
           buttonText={i18n.t('BeginScreen.logIn')}
-          textStyle={[
-            Typography.FONT_BOLD,
+          textStyle={
+            (Typography.FONT_BOLD,
             Styles.baseText,
-            { color: Colors.PINK_DARKER },
-          ]}
+            { color: Colors.PINK_DARKER })
+          }
           containerStyle={Styles.loginButton}
         />
       </View>
