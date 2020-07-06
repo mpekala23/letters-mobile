@@ -47,7 +47,7 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 30,
     textAlign: 'center',
-    width: '75%',
+    width: '90%',
   },
   buttonText: {
     fontSize: 14,

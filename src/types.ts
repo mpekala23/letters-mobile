@@ -41,6 +41,16 @@ export enum LetterTypes {
   Letters = 'Letters',
 }
 
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
+}
+
 export interface Letter {
   type: LetterTypes;
   status: LetterStatus;

@@ -34,7 +34,7 @@ import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from 'store/Notif/NotifTypes';
-import { NullableFacility, Letter } from 'types';
+import { NullableFacility, Letter, SupportFAQTypes } from 'types';
 import { Topbar } from '@components';
 import { Contact } from '@store/Contact/ContactTypes';
 
@@ -64,7 +64,7 @@ export type AppStackParamList = {
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   SupportFAQ: undefined;
-  SupportFAQDetail: undefined;
+  SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
 };
@@ -179,6 +179,9 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="LetterDetails"
           component={LetterDetailsScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
           name="SupportFAQ"
           component={SupportFAQScreen}
           options={{ cardStyleInterpolator: fadeTransition }}

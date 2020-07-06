@@ -10,349 +10,408 @@ exports[`Support FAQ screen should match snapshot 1`] = `
     }
   }
 >
-  <View
+  <ScrollView
     style={
       Object {
-        "alignItems": "center",
         "backgroundColor": "white",
-        "flex": 1,
-        "flexDirection": "column",
-        "padding": 16,
       }
     }
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "fontFamily": "System",
-            "fontWeight": "600",
-          },
-          Object {
-            "color": "#282828",
-            "fontSize": 20,
-            "paddingBottom": 20,
-            "paddingTop": 20,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "flex": 1,
+          "flexDirection": "column",
+          "padding": 16,
+        }
       }
-    >
-      How can we help?
-    </Text>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 50,
-            "marginBottom": 14,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
     >
       <Text
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "fontFamily": "Poppins-Bold",
             },
-            Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "color": "#282828",
+              "fontSize": 20,
+              "paddingBottom": 20,
+              "paddingTop": 20,
             },
-            Object {},
           ]
         }
       >
-        I want to cancel my letter
+        How can we help?
       </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 50,
-            "marginBottom": 14,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
             },
             Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
             },
             Object {},
           ]
         }
+        testID="clickable"
       >
-        My letter is taking a long time to arrive
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 75,
-            "marginBottom": 14,
-            "paddingLeft": 20,
-            "paddingRight": 20,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I want to delete my letter
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
             },
             Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 75,
+              "marginBottom": 14,
+              "paddingLeft": 20,
+              "paddingRight": 20,
+              "width": "100%",
             },
             Object {},
           ]
         }
+        testID="clickable"
       >
-        I sent my letter more than 6 days ago and it's not here yet
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 50,
-            "marginBottom": 14,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I sent my letter more than 6 days ago and it hasn't arrived at the facility yet
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
             },
             Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
             },
             Object {},
           ]
         }
+        testID="clickable"
       >
-        I put the wrong mailing address
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 50,
-            "marginBottom": 14,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I put the wrong mailing address
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
             },
             Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
             },
             Object {},
           ]
         }
+        testID="clickable"
       >
-        There's something wrong with tracking
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#3490dc",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "borderColor": "black",
-            "borderRadius": 15,
-            "borderWidth": 1.5,
-            "height": 50,
-            "marginBottom": 14,
-            "width": "100%",
-          },
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I put the wrong return address
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={
           Array [
             Object {
-              "color": "#3490dc",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
             },
             Object {},
             Object {
-              "color": "black",
-              "fontSize": 14,
-              "fontWeight": "500",
-              "textAlign": "center",
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
             },
             Object {},
           ]
         }
+        testID="clickable"
       >
-        It's something else
-      </Text>
-    </TouchableOpacity>
-  </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I would like the USPS tracking number
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          There's something wrong with tracking
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#3490dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "alignSelf": "center",
+              "borderColor": "black",
+              "borderRadius": 15,
+              "borderWidth": 1.5,
+              "height": 50,
+              "marginBottom": 14,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#3490dc",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "color": "black",
+                "fontSize": 14,
+                "fontWeight": "500",
+                "textAlign": "center",
+              },
+              Object {},
+            ]
+          }
+        >
+          I want to talk to someone at Ameelio
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </ScrollView>
 </View>
 `;
