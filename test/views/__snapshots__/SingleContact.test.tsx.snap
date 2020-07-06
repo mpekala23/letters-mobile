@@ -320,14 +320,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Bold",
-                },
-                Object {
-                  "fontSize": 20,
-                },
-              ],
+              Object {
+                "fontSize": 20,
+              },
               Object {},
             ]
           }

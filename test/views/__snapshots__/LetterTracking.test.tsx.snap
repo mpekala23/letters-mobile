@@ -23,7 +23,6 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     <View
       style={
         Object {
-          "alignItems": "left",
           "paddingBottom": 12,
         }
       }
@@ -249,14 +248,9 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               "padding": 6,
             },
             Object {},
-            Array [
-              Object {
-                "fontFamily": "Poppins-Bold",
-              },
-              Object {
-                "fontSize": 14,
-              },
-            ],
+            Object {
+              "fontSize": 14,
+            },
             Object {},
           ]
         }
