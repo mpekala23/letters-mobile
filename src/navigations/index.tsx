@@ -35,6 +35,7 @@ import { Notif } from 'store/Notif/NotifTypes';
 import { NullableFacility, Letter } from 'types';
 import { Topbar } from '@components';
 import { Contact } from '@store/Contact/ContactTypes';
+import { NavigationContainer } from '@react-navigation/native';
 
 export { navigationRef, navigate };
 
@@ -87,7 +88,7 @@ const fadeTransition = (
 const NavigatorBase: React.FC<Props> = (props: Props) => {
   let topSection = <View />;
   if (!props.authInfo.isLoadingToken) {
-    topSection = <Topbar />;
+    topSection = <Topbar navigation={navigationRef.current} />;
   }
   // Determine which views should be accessible
   let screens;
@@ -206,7 +207,8 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     );
   }
   return (
-    <>
+    <NavigationContainer ref={navigationRef}>
+      {/* ... */}
       {topSection}
       <Stack.Navigator
         screenOptions={{
@@ -215,7 +217,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       >
         {screens}
       </Stack.Navigator>
-    </>
+    </NavigationContainer>
   );
 };
 
