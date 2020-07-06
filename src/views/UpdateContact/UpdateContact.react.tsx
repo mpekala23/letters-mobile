@@ -9,7 +9,8 @@ import {
   View,
 } from 'react-native';
 import { Button, Input, ProfilePic } from '@components';
-import { AppStackParamList } from 'navigations';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { AppStackParamList, TopbarRouteAction } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -49,27 +50,37 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private dorm = createRef<Input>();
 
+  private unsubscribeFocus: () => void;
+
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
-      valid: false,
+      valid: true,
     };
+
     this.updateValid = this.updateValid.bind(this);
-    this.setInvalid = this.setInvalid.bind(this);
+    this.setValid = this.setValid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
     this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
-    this.props.navigation.setParams({
-      topbar: {
-        enabled: true,
-        text: 'Save',
-        action: this.doUpdateContact,
-      },
-    });
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
-  componentDidMount() {
-    this.onNavigationFocus();
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
@@ -85,16 +96,23 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
     }
+    setProfileOverride({
+      enabled: true,
+      text: 'Save',
+      action: this.doUpdateContact,
+    });
   }
 
-  setInvalid() {
-    this.setState({ valid: false });
-    this.props.navigation.setParams({
-      topbar: {
-        enabled: false,
-        text: 'Save',
-        action: this.doUpdateContact,
-      },
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: 'Save',
+      action: this.doUpdateContact,
     });
   }
 
@@ -158,14 +176,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.didUpdateAtLeastOneField();
-      this.setState({ valid: result });
-      this.props.navigation.setParams({
-        topbar: {
-          enabled: result,
-          text: 'Save',
-          action: this.doUpdateContact,
-        },
-      });
+      this.setValid(result);
     }
   }
 
@@ -237,7 +248,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.firstName')}
             required
             onValid={this.updateValid}
-            onInvalid={this.setInvalid}
+            onInvalid={() => this.setValid(false)}
             nextInput={this.lastName}
           />
           <Text
@@ -256,7 +267,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.lastName')}
             required
             onValid={this.updateValid}
-            onInvalid={this.setInvalid}
+            onInvalid={() => this.setValid(false)}
             nextInput={this.facilityName}
           />
           <Text
@@ -275,7 +286,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.addressLine1')}
             required
             onValid={this.updateValid}
-            onInvalid={this.setInvalid}
+            onInvalid={() => this.setValid(false)}
             nextInput={this.facilityAddress}
           />
           <Text
@@ -294,7 +305,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.addressLine2')}
             required
             onValid={this.updateValid}
-            onInvalid={this.setInvalid}
+            onInvalid={() => this.setValid(false)}
           />
 
           <Input

@@ -4,7 +4,6 @@ import {
   createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
-  StackHeaderProps,
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
@@ -29,11 +28,15 @@ import {
   UpdateContactScreen,
 } from '@views';
 import { AppState } from '@store/types';
-import { AuthInfo } from '@store/User/UserTypes';
+import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from 'store/Notif/NotifTypes';
 import { NullableFacility, Letter } from 'types';
-import { Topbar } from '@components';
+import Topbar, {
+  setTitle,
+  topbarRef,
+  setProfile,
+} from '@components/Topbar/Topbar.react';
 import { Contact } from '@store/Contact/ContactTypes';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -45,12 +48,6 @@ export type AuthStackParamList = {
   Register: undefined;
 };
 
-export type TopbarRouteAction = {
-  enabled: boolean;
-  text: string;
-  action: () => void;
-};
-
 export type AppStackParamList = {
   AddManually: undefined;
   ChooseOption: undefined;
@@ -59,7 +56,7 @@ export type AppStackParamList = {
   ExplainProblem: undefined;
   FacilityDirectory: { newFacility: NullableFacility } | undefined;
   FirstLetter: undefined;
-  Home: { topbar: TopbarRouteAction };
+  Home: undefined;
   Issues: undefined;
   LetterDetails: undefined;
   LetterTracking: undefined;
@@ -72,6 +69,34 @@ export type AppStackParamList = {
   UpdateContact: { contactId: number; topbar: TopbarRouteAction } | undefined;
 };
 
+interface RouteDetails {
+  title: string;
+  profile: boolean;
+}
+
+const mapRouteNameToDetails: Record<string, RouteDetails> = {
+  Splash: { title: 'Splash', profile: false },
+  Login: { title: 'Login', profile: false },
+  Register: { title: 'Register', profile: false },
+  AddManually: { title: 'Add Manually', profile: false },
+  ChooseOption: { title: 'Choose Option', profile: false },
+  ContactInfo: { title: 'Contact Info', profile: false },
+  ContactSelector: { title: 'Contact Selector', profile: true },
+  ExplainProblem: { title: 'Explain Problem', profile: false },
+  FacilityDirectory: { title: 'Facility Directory', profile: false },
+  FirstLetter: { title: 'First Letter', profile: false },
+  Home: { title: 'Home', profile: true },
+  Issues: { title: 'Issues', profile: false },
+  LetterDetails: { title: 'Letter Details', profile: true },
+  LetterTracking: { title: 'Letter Tracking', profile: true },
+  MemoryLane: { title: 'Memory Lane', profile: true },
+  ReferFriends: { title: 'Refer Friends', profile: false },
+  ReviewContact: { title: 'Review Contact', profile: false },
+  SingleContact: { title: 'Single Contact', profile: true },
+  Thanks: { title: 'Thanks', profile: false },
+  UpdateContact: { title: 'Update Contact', profile: false },
+};
+
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -79,6 +104,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export interface Props {
   authInfo: AuthInfo;
   currentNotif: Notif | null;
+  userState: UserState;
 }
 
 const fadeTransition = (
@@ -92,6 +118,14 @@ const fadeTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
+  const topbar = (
+    <Topbar
+      userState={props.userState}
+      navigation={navigationRef.current}
+      ref={topbarRef}
+    />
+  );
+
   // Determine which views should be accessible
   let screens;
   if (props.authInfo.isLoadingToken) {
@@ -110,16 +144,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={HomeScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Home"
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -127,16 +151,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ContactInfoScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -144,16 +158,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={FacilityDirectoryScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -161,16 +165,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={AddManuallyScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -178,16 +172,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ReferFriendsScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -195,16 +179,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ReviewContactScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -212,16 +186,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ExplainProblemScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -229,16 +193,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={FirstLetterScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -246,16 +200,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={IssuesScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -263,16 +207,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ThanksScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -280,16 +214,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ContactSelectorScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label=""
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -297,16 +221,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={SingleContactScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Home"
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -314,16 +228,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={LetterTrackingScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Tracking"
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -331,16 +235,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={MemoryLaneScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Memory Lane"
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -348,16 +242,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={LetterDetailsScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Home"
-                  profile={false}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -365,16 +249,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ChooseOptionScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps) => {
-              return (
-                <Topbar
-                  label="Compose"
-                  profile
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -382,20 +256,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={UpdateContactScreen}
           options={{
             cardStyleInterpolator: fadeTransition,
-            header: (screenProps: StackHeaderProps) => {
-              const params = screenProps.scene.route.params as {
-                topbar: TopbarRouteAction;
-              };
-              return (
-                <Topbar
-                  label="Profile"
-                  profile={false}
-                  profileOverride={params ? params.topbar : undefined}
-                  backEnabled={screenProps.navigation.canGoBack()}
-                  back={screenProps.navigation.goBack}
-                />
-              );
-            },
           }}
         />
       </>
@@ -417,12 +277,18 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     );
   }
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: true,
-        }}
-      >
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={() => {
+        const name = navigationRef.current?.getCurrentRoute()?.name;
+        if (name) {
+          setTitle(mapRouteNameToDetails[name].title);
+          setProfile(mapRouteNameToDetails[name].profile);
+        }
+      }}
+    >
+      {topbar}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {screens}
       </Stack.Navigator>
     </NavigationContainer>
@@ -432,6 +298,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
   currentNotif: state.notif.currentNotif,
+  userState: state.user,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);
 

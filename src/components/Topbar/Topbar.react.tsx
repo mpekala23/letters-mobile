@@ -1,70 +1,118 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { AppState } from '@store/types';
+import React, { createRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { ProfilePicTypes } from 'types';
+import { ProfilePicTypes, TopbarRouteAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
+import { Colors, Typography } from '@styles';
+import { NavigationContainerRef } from '@react-navigation/native';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles from './Topbar.styles';
+import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
 
-export interface Props {
+interface Props {
   userState: UserState;
-  label: string;
+  navigation: NavigationContainerRef | null;
+}
+
+interface State {
+  title: string;
   profile: boolean;
   profileOverride?: {
     enabled: boolean;
     text: string;
     action: () => void;
   };
-  backEnabled: boolean;
-  back: () => void;
 }
 
-const TopbarBase: React.FC<Props> = (props: Props) => {
-  let topRight;
-  if (props.profile) {
-    topRight = (
-      <ProfilePic
-        firstName={props.userState.user.firstName}
-        lastName={props.userState.user.lastName}
-        imageUri={props.userState.user.imageUri}
-        type={ProfilePicTypes.Topbar}
-      />
-    );
-  } else if (props.profileOverride) {
-    topRight = (
-      <TouchableOpacity onPress={props.profileOverride.action}>
-        <Text
-          style={{ color: props.profileOverride.enabled ? 'orange' : 'blue' }}
-        >
-          {props.profileOverride.text}
-        </Text>
-      </TouchableOpacity>
-    );
-  } else {
-    topRight = <View testID="blank" />;
+class Topbar extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      title: 'test',
+      profile: true,
+    };
   }
-  return (
-    <View style={Styles.barContainer}>
-      {props.backEnabled && (
+
+  render(): JSX.Element {
+    let topRight;
+    if (this.state.profile) {
+      topRight = (
+        <ProfilePic
+          firstName={this.props.userState.user.firstName}
+          lastName={this.props.userState.user.lastName}
+          imageUri={this.props.userState.user.imageUri}
+          type={ProfilePicTypes.Topbar}
+        />
+      );
+    } else if (this.state.profileOverride) {
+      topRight = (
         <TouchableOpacity
-          style={{ position: 'absolute', left: 0 }}
-          onPress={props.back}
+          activeOpacity={this.state.profileOverride?.enabled ? 0.7 : 1.0}
+          onPress={() => {
+            if (this.state.profileOverride?.enabled) {
+              this.state.profileOverride.action();
+            }
+          }}
         >
-          <Icon svg={BackButton} />
+          <Text
+            style={[
+              Typography.FONT_BOLD,
+              {
+                color: this.state.profileOverride.enabled
+                  ? Colors.PINK_DARKER
+                  : Colors.GRAY_MEDIUM,
+                fontSize: 16,
+              },
+            ]}
+          >
+            {this.state.profileOverride.text}
+          </Text>
         </TouchableOpacity>
-      )}
-      <Text>{props.label}</Text>
-      <View style={{ position: 'absolute', right: 0 }}>{topRight}</View>
-    </View>
-  );
+      );
+    } else {
+      topRight = <View testID="blank" />;
+    }
+    return (
+      <View style={Styles.barContainer}>
+        {this.props.navigation && this.props.navigation.canGoBack() && (
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              left: 19,
+              width: 30,
+              height: barHeight,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={this.props.navigation.goBack}
+          >
+            <Icon svg={BackButton} />
+          </TouchableOpacity>
+        )}
+        <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
+          {this.state.title}
+        </Text>
+        <View style={{ position: 'absolute', right: 19 }}>{topRight}</View>
+      </View>
+    );
+  }
+}
+
+export const topbarRef = createRef<Topbar>();
+
+export const setTitle = (val: string): void => {
+  if (topbarRef.current) topbarRef.current.setState({ title: val });
 };
 
-const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
-});
-const Topbar = connect(mapStateToProps)(TopbarBase);
+export const setProfile = (val: boolean): void => {
+  if (topbarRef.current) topbarRef.current.setState({ profile: val });
+};
+
+export const setProfileOverride = (
+  override: TopbarRouteAction | undefined
+): void => {
+  if (topbarRef.current)
+    topbarRef.current.setState({ profileOverride: override });
+};
 
 export default Topbar;
