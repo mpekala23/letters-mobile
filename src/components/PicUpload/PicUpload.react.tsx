@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  Alert,
-  TouchableOpacity,
-  ViewStyle,
-  Text,
-  View,
-  Image,
-  Linking,
-} from 'react-native';
+import { TouchableOpacity, ViewStyle, Text, View, Image } from 'react-native';
 import i18n from '@i18n';
 import { Colors } from '@styles';
 import { pickImage } from '@utils';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -59,15 +52,8 @@ class PicUpload extends React.Component<Props, State> {
           if (this.props.onSuccess) this.props.onSuccess(result.uri);
         });
       }
-    } catch (E) {
-      Alert.alert(
-        i18n.t('Error.photoPermission'),
-        i18n.t('Permissions.photos'),
-        [
-          { text: 'Dismiss' },
-          { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
-        ]
-      );
+    } catch (err) {
+      dropdownError({ message: i18n.t('Permission.photos') });
     }
   };
 

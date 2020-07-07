@@ -84,7 +84,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       await deleteContact(this.props.contact);
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
-      dropdownError(i18n.t('Error.network'), i18n.t('Error.requestIncomplete'));
+      dropdownError({ message: i18n.t('Error.requestIncomplete') });
     }
   };
 
@@ -117,10 +117,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         await updateContact(contact);
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
-        dropdownError(
-          i18n.t('Error.network'),
-          i18n.t('Error.requestIncomplete')
-        );
+        dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
   };

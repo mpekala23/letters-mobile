@@ -13,6 +13,7 @@ import {
 } from '@store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
 import { addLetter } from '@store/Letter/LetterActions';
+import i18n from '@i18n';
 
 const { MOCK_API_IP } = process.env;
 export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
@@ -119,10 +120,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        'Storage',
-        'Unable to save login credentials for next time'
-      );
+      dropdownError({
+        message: i18n.t('Error.unsavedToken'),
+      });
     }
   }
   const userData: User = {
@@ -177,10 +177,9 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.token);
     } catch (err) {
-      dropdownError(
-        'Storage',
-        'Unable to save login credentials for next time'
-      );
+      dropdownError({
+        message: i18n.t('Error.unsavedToken'),
+      });
     }
   }
   const userData: User = {

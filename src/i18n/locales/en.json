@@ -8,16 +8,17 @@
     "network": "Network Error",
     "requestTimedOut": "The request timed out.",
     "requestIncomplete": "The request could not be completed.",
-    "photoPermission": "Unable to Load Photos."
+    "unsavedToken": "Unable to save login credentials for next time",
+    "cantLogout": "Unable to log out the user"
   },
-  "Permissions": {
-    "photos": "Allow access to your photo library."
+  "Permission": {
+    "photos": "Can't access photo library"
   },
   "AddManuallyScreen": {
     "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
-    "facilityCity": "Facility City",
+    "facilityCity": "FacilityCity",
     "facilityPostal": "Facility Postal"
   },
   "ContactInfoScreen": {
@@ -80,7 +81,7 @@
     "oneLetter": "1 Letter",
     "letters": "Letters"
   },
-  "MemoryLaneScreen" : {
+  "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
@@ -138,7 +139,6 @@
   "Compose": {
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
-    "send": "Send Letter",
-    "preview": "Letter Preview"
+    "send": "Send Letter"
   }
 }
