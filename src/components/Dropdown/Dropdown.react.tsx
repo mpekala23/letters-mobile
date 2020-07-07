@@ -108,7 +108,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     this.queueNotif(errorNotif);
   }
 
-  flushNotif(): void {
+  flushNotif() {
     if (
       this.state.dropped ||
       this.state.animating ||
@@ -135,7 +135,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     });
   }
 
-  endNotif(id: number): void {
+  endNotif(id: number) {
     if (
       !this.state.dropped ||
       this.state.animating ||

@@ -85,7 +85,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
       </View>
       <Button
         onPress={() => {
-          /* To-do: Navigate to in-app reporting flow */
+          props.navigation.navigate('SupportFAQ');
         }}
         buttonText={i18n.t('LetterTrackingScreen.needHelp')}
         textStyle={{ fontSize: 14 }}

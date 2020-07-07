@@ -29,15 +29,17 @@ import {
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
+  SupportFAQScreen,
+  SupportFAQDetailScreen,
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
+import { NullableFacility, Letter, SupportFAQTypes } from 'types';
 import { Topbar } from '@components';
 import { AppState } from '@store/types';
-import { NullableFacility, Letter } from 'types';
 import { Contact } from '@store/Contact/ContactTypes';
 
 export { navigationRef, navigate };
@@ -69,6 +71,8 @@ export type AppStackParamList = {
   ReviewContact: undefined;
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
+  SupportFAQ: undefined;
+  SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
 };
@@ -211,8 +215,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
+          name="SupportFAQ"
+          component={SupportFAQScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="SupportFAQDetail"
+          component={SupportFAQDetailScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
