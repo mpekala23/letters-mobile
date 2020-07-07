@@ -17,7 +17,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';
-import { popupAlert } from 'components/Alert/Alert.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<

@@ -27,7 +27,7 @@ import { setAdding } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import { addContact } from '@api';
 import i18n from '@i18n';
-import { popupAlert } from 'components/Alert/Alert.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<

@@ -18,7 +18,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
 import i18n from '@i18n';
-import { popupAlert } from 'components/Alert/Alert.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Login.styles';
 
 type LoginScreenNavigationProp = StackNavigationProp<

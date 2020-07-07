@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from 'utils';
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils';
 
 export default StyleSheet.create({
   trueBackground: {
