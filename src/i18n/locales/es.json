@@ -139,7 +139,7 @@
     "addressLine2": "Adress line 2",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
-    "saveProfile": "Save Profile",
+    "save": "Save",
     "deleteProfile": "Delete Profile"
   },
   "SupportFAQScreen": {

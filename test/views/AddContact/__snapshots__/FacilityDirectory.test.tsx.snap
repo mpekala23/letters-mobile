@@ -328,7 +328,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
                 },
                 Object {},
                 Object {
-                  "backgroundColor": "#762B2B",
+                  "backgroundColor": "#FF7171",
                   "borderRadius": 15,
                   "height": 50,
                   "width": "100%",
@@ -363,7 +363,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       style={
         Object {
           "alignSelf": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFF5F5",
           "flexDirection": "row",
           "padding": 15,
         }

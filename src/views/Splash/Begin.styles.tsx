@@ -20,7 +20,7 @@ export default StyleSheet.create({
     fontSize: 26,
     paddingTop: 18,
     paddingLeft: 4,
-    color: Colors.PINK_DARK,
+    color: Colors.PINK_DARKER,
   },
   titleText: {
     fontSize: 24,
@@ -30,14 +30,14 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   registerButton: {
-    backgroundColor: Colors.PINK_DARK,
+    backgroundColor: Colors.PINK_DARKER,
     borderRadius: 15,
     width: '100%',
     height: 50,
   },
   loginButton: {
     backgroundColor: 'white',
-    borderColor: Colors.PINK_DARK,
+    borderColor: Colors.PINK_DARKER,
     borderWidth: 2,
     borderRadius: 15,
     height: 50,

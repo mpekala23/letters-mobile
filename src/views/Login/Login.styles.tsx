@@ -21,7 +21,7 @@ export default StyleSheet.create({
     color: Colors.GRAY_DARK,
   },
   loginButton: {
-    backgroundColor: Colors.PINK_DARK,
+    backgroundColor: Colors.PINK_DARKER,
     borderRadius: 15,
     width: '100%',
     height: 50,

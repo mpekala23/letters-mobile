@@ -172,7 +172,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#762B2B",
+                      "color": "#FF7171",
                     },
                   ]
                 }
@@ -197,7 +197,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#762B2B",
+                      "color": "#FF7171",
                     },
                   ]
                 }
@@ -205,7 +205,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <Text
                   style={
                     Object {
-                      "color": "#762B2B",
+                      "color": "#FF7171",
                     }
                   }
                 >
@@ -218,7 +218,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                           "fontFamily": "Poppins-Bold",
                         },
                         Object {
-                          "color": "#762B2B",
+                          "color": "#FF7171",
                         },
                       ]
                     }
@@ -249,7 +249,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#762B2B",
+                      "color": "#FF7171",
                     },
                   ]
                 }
@@ -257,7 +257,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <Text
                   style={
                     Object {
-                      "color": "#762B2B",
+                      "color": "#FF7171",
                     }
                   }
                 >
@@ -270,7 +270,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                           "fontFamily": "Poppins-Bold",
                         },
                         Object {
-                          "color": "#762B2B",
+                          "color": "#FF7171",
                         },
                       ]
                     }
@@ -605,7 +605,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFF5F5",
               "flexDirection": "row",
               "padding": 15,
             }

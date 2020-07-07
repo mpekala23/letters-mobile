@@ -660,7 +660,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
       style={
         Object {
           "alignSelf": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFF5F5",
           "flexDirection": "row",
           "padding": 15,
         }

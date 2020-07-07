@@ -172,7 +172,7 @@ exports[`Begin screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Bold",
             },
             Object {
-              "color": "#762B2B",
+              "color": "#FF7171",
               "fontSize": 26,
               "paddingLeft": 4,
               "paddingTop": 18,
@@ -241,7 +241,7 @@ exports[`Begin screen should match snapshot 1`] = `
             },
             Object {},
             Object {
-              "backgroundColor": "#762B2B",
+              "backgroundColor": "#FF7171",
               "borderRadius": 15,
               "height": 50,
               "width": "100%",
@@ -286,7 +286,7 @@ exports[`Begin screen should match snapshot 1`] = `
             Object {},
             Object {
               "backgroundColor": "white",
-              "borderColor": "#762B2B",
+              "borderColor": "#FF7171",
               "borderRadius": 15,
               "borderWidth": 2,
               "height": 50,
@@ -307,7 +307,7 @@ exports[`Begin screen should match snapshot 1`] = `
               },
               Object {},
               Object {
-                "color": "#762B2B",
+                "color": "#FF7171",
               },
               Object {},
             ]

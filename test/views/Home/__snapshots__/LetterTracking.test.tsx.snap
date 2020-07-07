@@ -116,7 +116,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#F0FAF3",
+                "backgroundColor": "#CFF3DD",
                 "borderRadius": 50,
                 "height": 28,
                 "marginLeft": 4,
@@ -230,7 +230,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
             "backgroundColor": "#FC7272",
             "borderRadius": 15,
             "height": 50,
-            "marginBottom": 25,
+            "marginBottom": 16,
             "width": "50%",
           },
           Object {},

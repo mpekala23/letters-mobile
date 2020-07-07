@@ -336,7 +336,7 @@ exports[`Login screen should match snapshot 1`] = `
                   },
                   Object {},
                   Object {
-                    "backgroundColor": "#762B2B",
+                    "backgroundColor": "#FF7171",
                     "borderRadius": 15,
                     "height": 50,
                     "width": "100%",
@@ -416,7 +416,7 @@ exports[`Login screen should match snapshot 1`] = `
                       },
                       Object {},
                       Object {
-                        "color": "#762B2B",
+                        "color": "#FF7171",
                         "fontSize": 16,
                         "fontWeight": "500",
                       },
@@ -469,7 +469,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#762B2B",
+                        "color": "#FF7171",
                       },
                     ]
                   }
@@ -499,7 +499,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#762B2B",
+                        "color": "#FF7171",
                       },
                     ]
                   }
