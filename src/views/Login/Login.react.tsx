@@ -96,7 +96,7 @@ class LoginScreen extends React.Component<Props, State> {
       <TouchableOpacity
         accessible={false}
         style={{ flex: 1, backgroundColor: 'white' }}
-        onPress={() => Keyboard.dismiss()}
+        onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView

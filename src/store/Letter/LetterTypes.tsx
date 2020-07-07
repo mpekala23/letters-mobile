@@ -1,6 +1,7 @@
 import { LetterTypes, Letter, LetterStatus } from 'types';
 
 export const SET_COMPOSING = 'letter/set_composing';
+export const SET_ACTIVE = 'letter/set_active';
 export const SET_TYPE = 'letter/set_type';
 export const SET_STATUS = 'letter/set_status';
 export const SET_DRAFT = 'letter/set_draft';
@@ -11,16 +12,20 @@ export const SET_LETTER_ID = 'letter/set_letter_id';
 export const CLEAR_COMPOSING = 'letter/clear_composing';
 export const SET_EXISTING = 'letter/set_existing';
 export const ADD_LETTER = 'letter/add_letter';
-export const SET_ACTIVE_LETTER = 'letter/set_active_letter';
 
 export interface LetterState {
   composing: Letter;
-  active: Letter;
+  active: Letter | null;
   existing: Record<number, Letter[]>;
 }
 
 interface SetComposingAction {
   type: typeof SET_COMPOSING;
+  payload: Letter;
+}
+
+interface SetActiveAction {
+  type: typeof SET_ACTIVE;
   payload: Letter;
 }
 
@@ -71,19 +76,12 @@ interface SetExistingAction {
 
 interface AddLetterAction {
   type: typeof ADD_LETTER;
-  payload: {
-    contactId: number;
-    letter: Letter;
-  };
-}
-
-interface SetActiveLetterAction {
-  type: typeof SET_ACTIVE_LETTER;
   payload: Letter;
 }
 
 export type LetterActionTypes =
   | SetComposingAction
+  | SetActiveAction
   | SetTypeAction
   | SetStatusAction
   | SetDraftAction
@@ -93,5 +91,4 @@ export type LetterActionTypes =
   | SetLetterIdAction
   | ClearComposingAction
   | SetExistingAction
-  | AddLetterAction
-  | SetActiveLetterAction;
+  | AddLetterAction;

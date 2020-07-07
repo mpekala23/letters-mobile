@@ -1,5 +1,7 @@
 import AddManuallyScreen from './AddContact/AddManually.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
+import ComposeLetterScreen from './Compose/ComposeLetter.react';
+import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import ExplainProblemScreen from './Report/ExplainProblem.react';
@@ -7,9 +9,11 @@ import FirstLetterScreen from './Report/FirstLetter.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
-import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
+import LetterPreviewScreen from './Compose/LetterPreview.react';
 import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
 import LoginScreen from './Login/Login.react';
+import PostcardPreviewScreen from './Compose/PostcardPreview.react';
+import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
 import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
@@ -22,6 +26,8 @@ import UpdateContactScreen from './UpdateContact/UpdateContact.react';
 export {
   AddManuallyScreen,
   ChooseOptionScreen,
+  ComposeLetterScreen,
+  ComposePostcardScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,
@@ -29,8 +35,10 @@ export {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  LetterPreviewScreen,
   LetterDetailsScreen,
   LoginScreen,
+  PostcardPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
   ReferFriendsScreen,

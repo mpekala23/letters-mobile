@@ -8,10 +8,10 @@ import {
   Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input } from '@components';
-import { Validation } from 'utils';
+import { Validation } from '@utils';
 import { Facility } from 'types';
 import i18n from '@i18n';
 import CommonStyles from './AddContact.styles';

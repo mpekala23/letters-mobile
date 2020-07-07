@@ -2,8 +2,14 @@ import React from 'react';
 import { View } from 'react-native';
 import Styles from './GrayBar.styles';
 
-const GrayBar: React.FC = () => {
-  return <View style={Styles.grayBar} />;
+interface Props {
+  vertical?: boolean;
+}
+
+const GrayBar: React.FC<Props> = (props: Props) => {
+  return (
+    <View style={props.vertical ? Styles.verticalGrayBar : Styles.grayBar} />
+  );
 };
 
 export default GrayBar;

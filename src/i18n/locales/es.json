@@ -18,7 +18,7 @@
     "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
-    "facilityCity": "FacilityCity",
+    "facilityCity": "Facility City",
     "facilityPostal": "Facility Postal"
   },
   "ContactInfoScreen": {
@@ -147,5 +147,10 @@
     "emulatorDetected": "Emulator detected",
     "mustUsePhysical": "You must use a physical device to receive push notifications",
     "okay": "Okay"
+  },
+  "Compose": {
+    "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
+    "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
+    "send": "Send Letter"
   }
 }

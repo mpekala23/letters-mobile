@@ -6,7 +6,7 @@ import Mail from '@assets/views/Report/MailLoud';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { NotifActionTypes, Notif, HANDLE_NOTIF } from '@store/Notif/NotifTypes';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ReportStyles from './Report.styles';
 import Styles from './FirstLetter.styles';

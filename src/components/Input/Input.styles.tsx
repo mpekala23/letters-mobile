@@ -28,6 +28,7 @@ export default StyleSheet.create({
     padding: 10,
     fontSize: 16,
     color: '#9A9A9A',
+    textAlignVertical: 'top',
   },
   inputStyleFocused: {
     color: Colors.AMEELIO_BLACK,
