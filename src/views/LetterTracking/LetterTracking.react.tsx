@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, ScrollView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { Button, LetterTracker, GrayBar } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';

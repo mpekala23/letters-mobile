@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from '@components';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';

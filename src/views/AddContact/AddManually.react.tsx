@@ -11,7 +11,7 @@ import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
-import { Validation } from 'utils';
+import { Validation } from '@utils';
 import { Facility } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';

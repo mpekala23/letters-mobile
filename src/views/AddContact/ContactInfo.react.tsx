@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Button, Icon, Input } from '@components';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { connect } from 'react-redux';
