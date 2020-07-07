@@ -13,7 +13,6 @@ interface Props {
 }
 
 const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
-
   let cardMessage = i18n.t('MemoryLaneCountCard.noLettersYet');
   if (props.letterCount === 1) {
     cardMessage = i18n.t('MemoryLaneCountCard.oneLetter');

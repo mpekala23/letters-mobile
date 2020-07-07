@@ -23,8 +23,7 @@ import Icon from '../Icon/Icon.react';
 
 export interface Props {
   parentStyle?: ViewStyle;
-  scrollStyle?: ViewStyle;
-  inputStyle?: ViewStyle;
+  inputStyle?: Record<string, unknown>;
   placeholder?: string;
   onFocus: () => void;
   onBlur: () => void;
@@ -39,6 +38,8 @@ export interface Props {
   nextInput?: RefObject<Input> | boolean;
   height: number;
   numLines: number;
+  children?: JSX.Element;
+  testId?: string;
 }
 
 export interface State {
@@ -260,19 +261,20 @@ class Input extends React.Component<Props, State> {
   render(): JSX.Element {
     const {
       parentStyle,
-      scrollStyle,
       inputStyle,
       placeholder,
       secure,
       enabled,
       validate,
       numLines,
+      required,
+      options,
     } = this.props;
 
     let calcInputStyle;
     if (!enabled) {
       calcInputStyle = Styles.disabledInputStyle;
-    } else if (this.state.focused) {
+    } else if (this.state.focused || (!validate && !required)) {
       calcInputStyle = Styles.inputStyleFocused;
     } else if (!this.state.dirty) {
       calcInputStyle = {};
@@ -288,7 +290,7 @@ class Input extends React.Component<Props, State> {
           Styles.parentStyle,
           this.props.options.length > 0 ? { marginBottom: 0 } : {},
           parentStyle,
-          { height: this.state.currentHeight },
+          options.length > 0 ? { height: this.state.currentHeight } : {},
         ]}
         testID="parent"
         pointerEvents={enabled ? 'auto' : 'none'}
@@ -299,86 +301,81 @@ class Input extends React.Component<Props, State> {
         ) : (
           <View testID="unfocused" />
         )}
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
-          style={[Styles.scrollStyle, scrollStyle]}
-        >
-          <TextInput
-            ref={this.inputRef}
-            secureTextEntry={secure && !this.state.shown}
-            placeholder={placeholder}
-            onChangeText={this.set}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            onSubmitEditing={this.onSubmitEditing}
-            multiline={numLines > 1}
-            numberOfLines={numLines}
+        <TextInput
+          ref={this.inputRef}
+          secureTextEntry={secure && !this.state.shown}
+          placeholder={placeholder}
+          onChangeText={this.set}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onSubmitEditing={this.onSubmitEditing}
+          multiline={numLines > 1}
+          numberOfLines={numLines}
+          style={[
+            Styles.baseInputStyle,
+            calcInputStyle,
+            validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
+            options.length > 0 ? { height: this.props.height } : {},
+            inputStyle,
+          ]}
+          value={this.state.value}
+        />
+        {validate === Validation.CreditCard ? (
+          <View
             style={[
-              Styles.baseInputStyle,
-              calcInputStyle,
-              validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
-              { height: this.props.height },
-              inputStyle,
-            ]}
-            value={this.state.value}
-          />
-          {validate === Validation.CreditCard ? (
-            <View
-              style={[
-                {
-                  position: 'absolute',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100%',
-                  left: 20,
-                },
-                { opacity: enabled ? 1.0 : 0.7 },
-              ]}
-            >
-              <Icon svg={CreditCard} />
-            </View>
-          ) : (
-            <View />
-          )}
-          {secure && this.state.focused ? (
-            <View style={Styles.secureButtonsContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.set('');
-                }}
-              >
-                <Icon svg={ClearPassword} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState(({ shown }) => {
-                    return {
-                      shown: !shown,
-                    };
-                  });
-                }}
-              >
-                <Icon svg={TogglePassword} />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View />
-          )}
-          <Animated.View
-            style={[
-              Styles.optionBackground,
               {
-                height: Math.min(
-                  DROP_HEIGHT - this.props.height,
-                  this.state.results.length * OPTION_HEIGHT
-                ),
+                position: 'absolute',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                left: 20,
               },
+              { opacity: enabled ? 1.0 : 0.7 },
             ]}
           >
-            {this.renderOptions()}
-          </Animated.View>
-        </ScrollView>
+            <Icon svg={CreditCard} />
+          </View>
+        ) : (
+          <View />
+        )}
+        {secure && this.state.focused ? (
+          <View style={Styles.secureButtonsContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                this.set('');
+              }}
+            >
+              <Icon svg={ClearPassword} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState(({ shown }) => {
+                  return {
+                    shown: !shown,
+                  };
+                });
+              }}
+            >
+              <Icon svg={TogglePassword} />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View />
+        )}
+        <Animated.View
+          style={[
+            Styles.optionBackground,
+            {
+              height: Math.min(
+                DROP_HEIGHT - this.props.height,
+                this.state.results.length * OPTION_HEIGHT
+              ),
+            },
+          ]}
+        >
+          {this.renderOptions()}
+        </Animated.View>
+        {this.props.children}
       </Animated.View>
     );
   }

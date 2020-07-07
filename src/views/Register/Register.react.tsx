@@ -13,7 +13,7 @@ import { Button, Input, PicUpload } from '@components';
 import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
-import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';

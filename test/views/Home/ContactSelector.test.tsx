@@ -3,7 +3,7 @@ import { ContactSelectorScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { LetterTypes, LetterStatus } from '../../src/types';
+import { LetterTypes, LetterStatus } from 'types';
 
 const mockStore = configureStore([]);
 

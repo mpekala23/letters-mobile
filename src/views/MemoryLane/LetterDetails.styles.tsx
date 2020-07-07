@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'styles';
-import { AMEELIO_PINK } from 'styles/Colors';
+import { Colors } from '@styles';
+import { AMEELIO_PINK } from '@styles/Colors';
 
 export default StyleSheet.create({
   trueBackground: {
