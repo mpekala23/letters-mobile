@@ -1,15 +1,15 @@
 import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Letter } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
 import { connect } from 'react-redux';
-import { Contact } from 'store/Contact/ContactTypes';
+import { Contact } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
-import { setActiveLetter } from '@store/Letter/LetterActions';
+import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
 import i18n from '@i18n';
-import { LetterActionTypes } from 'store/Letter/LetterTypes';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Styles from './MemoryLane.styles';
 
 type MemoryLaneScreenNavigationProp = StackNavigationProp<

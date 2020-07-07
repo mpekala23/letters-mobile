@@ -10,21 +10,21 @@ import {
   Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload } from '@components';
 import { STATES_DROPDOWN, Validation } from '@utils';
-import { AppState } from 'store/types';
+import { AppState } from '@store/types';
 import store from '@store';
 import {
   Contact,
   ContactActionTypes,
   ContactState,
-} from 'store/Contact/ContactTypes';
+} from '@store/Contact/ContactTypes';
 import { Facility } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setAdding } from 'store/Contact/ContactActions';
+import { setAdding } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
 import CommonStyles from './AddContact.styles';

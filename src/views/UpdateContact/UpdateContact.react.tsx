@@ -9,15 +9,15 @@ import {
   View,
 } from 'react-native';
 import { Button, Input, ProfilePic } from '@components';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Contact } from 'store/Contact/ContactTypes';
+import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes, Facility } from 'types';
 import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { updateContact, deleteContact } from 'api';
+import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './UpdateContact.styles';
