@@ -99,16 +99,4 @@ const ReferFriendsScreen: React.FC<Props> = (props: Props) => {
   );
 };
 
-const onShare = async () => {
-  const ameelioUrl = 'letters.ameelio.org';
-  // TO-DO: Edit message content once we have the content copy
-  const shareMessage = 'Insert share message';
-  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}&quote=${shareMessage}`;
-  try {
-    await facebookShare(sharingUrl);
-  } catch (err) {
-    dropdownError({ message: i18n.t('Error.requestIncomplete') });
-  }
-};
-
 export default ReferFriendsScreen;

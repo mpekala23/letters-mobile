@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useCallback, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Notif } from '@store/Notif/NotifTypes';
@@ -12,24 +11,6 @@ import { Button } from '@components';
 import { Typography } from '@styles';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
-=======
-import React, { useCallback, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { Notif } from "@store/Notif/NotifTypes";
-import { useFocusEffect } from "@react-navigation/native";
-import { AppState } from "store/types";
-import { connect } from "react-redux";
-import { AppStackParamList } from "navigations";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Notifs from "@notifications";
-import { Button } from "@components";
-import {
-  dropdownSuccess,
-  dropdownError,
-} from "@components/Dropdown/Dropdown.react";
-
-type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, "Home">;
->>>>>>> revamp dropdowns
 
 interface Props {
   currentNotif: Notif | null;

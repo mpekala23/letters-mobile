@@ -15,7 +15,7 @@ exports[`Topbar component should match snapshot 1`] = `
       Object {
         "alignItems": "center",
         "borderBottomWidth": 0.5,
-        "borderColor": "#9A9A9A",
+        "borderColor": "#cacaca",
         "flexDirection": "row",
         "height": 50,
         "paddingBottom": 5,

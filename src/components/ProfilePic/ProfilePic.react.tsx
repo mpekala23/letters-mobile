@@ -7,8 +7,6 @@ import ExamplePic from '@assets/ExamplePic.jpg';
 import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
-const ExamplePic = require('@assets/ExamplePic.jpg');
-
 export interface Props {
   firstName: string;
   lastName: string;

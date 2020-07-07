@@ -85,7 +85,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#F2F2F2",
+            "backgroundColor": "#e6e6e6",
             "height": 0,
             "marginLeft": 14,
             "marginTop": 60,
@@ -145,7 +145,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                     "fontFamily": "Poppins-Bold",
                   },
                   Object {
-                    "color": "#393939",
+                    "color": "#6a6a6a",
                     "fontSize": 14,
                     "paddingBottom": 4,
                   },
@@ -171,7 +171,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                     "fontFamily": "Poppins-Regular",
                   },
                   Object {
-                    "color": "#393939",
+                    "color": "#6a6a6a",
                     "fontSize": 14,
                     "paddingBottom": 8,
                   },
@@ -188,7 +188,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                     "fontFamily": "Poppins-Regular",
                   },
                   Object {
-                    "color": "#393939",
+                    "color": "#6a6a6a",
                     "fontSize": 14,
                     "paddingBottom": 4,
                   },

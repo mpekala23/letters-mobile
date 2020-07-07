@@ -192,16 +192,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-          name="SupportFAQ"
-          component={SupportFAQScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="SupportFAQDetail"
-          component={SupportFAQDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
           options={{ cardStyleInterpolator: fadeTransition }}

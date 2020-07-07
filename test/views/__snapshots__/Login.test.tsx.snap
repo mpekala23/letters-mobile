@@ -359,7 +359,7 @@ exports[`Login screen should match snapshot 1`] = `
             <View
               style={
                 Object {
-                  "backgroundColor": "#F2F2F2",
+                  "backgroundColor": "#e6e6e6",
                   "height": 1,
                   "marginVertical": 8,
                   "width": "100%",
