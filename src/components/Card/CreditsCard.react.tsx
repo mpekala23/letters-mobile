@@ -12,9 +12,9 @@ interface Props {
 
 const CreditsCard: React.FC<Props> = (props: Props) => {
   const creditsRemaining =
-    props.credits > 1
-      ? i18n.t('CreditsCard.credits')
-      : i18n.t('CreditsCard.credit');
+    props.credits === 1
+      ? i18n.t('CreditsCard.credit')
+      : i18n.t('CreditsCard.credits');
   return (
     <View
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
@@ -30,7 +30,7 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
                 { flex: 1 },
               ]}
             >
-              {props.credits} {creditsRemaining} left
+              {props.credits} {creditsRemaining} {i18n.t('CreditsCard.left')}
             </Text>
             <TouchableOpacity onPress={props.onPress}>
               <Text style={CardStyles.creditsAddMoreText}>

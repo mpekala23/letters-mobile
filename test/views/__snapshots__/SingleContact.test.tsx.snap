@@ -404,8 +404,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 }
               >
                  
-                Credit
-                 left
+                Credits
+                 
+                left
               </Text>
               <TouchableOpacity
                 activeOpacity={0.2}

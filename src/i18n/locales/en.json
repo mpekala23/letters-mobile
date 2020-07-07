@@ -55,6 +55,7 @@
   "CreditsCard": {
     "credit": "Credit",
     "credits": "Credits",
+    "left": "left",
     "addMore": "Add more",
     "creditsResetDaily": "Credits reset daily"
   },

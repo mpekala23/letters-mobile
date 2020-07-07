@@ -77,7 +77,8 @@ exports[`Credits Card component should match snapshot 1`] = `
             4
              
             Credits
-             left
+             
+            left
           </Text>
           <TouchableOpacity
             activeOpacity={0.2}
