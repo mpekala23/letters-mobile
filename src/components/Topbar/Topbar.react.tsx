@@ -28,7 +28,7 @@ class Topbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      title: 'test',
+      title: '',
       profile: true,
     };
   }
@@ -76,14 +76,7 @@ class Topbar extends React.Component<Props, State> {
       <View style={Styles.barContainer}>
         {this.props.navigation && this.props.navigation.canGoBack() && (
           <TouchableOpacity
-            style={{
-              position: 'absolute',
-              left: 19,
-              width: 30,
-              height: barHeight,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={Styles.backContainer}
             onPress={this.props.navigation.goBack}
             testID="backButton"
           >

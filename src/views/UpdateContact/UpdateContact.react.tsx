@@ -73,6 +73,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+
     this.unsubscribeBlur = this.props.navigation.addListener(
       'blur',
       this.onNavigationBlur

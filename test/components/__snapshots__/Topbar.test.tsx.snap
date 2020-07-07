@@ -116,7 +116,7 @@ exports[`Topbar component should match snapshot 1`] = `
         ]
       }
     >
-      test
+      
     </Text>
     <View
       style={

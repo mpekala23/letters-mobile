@@ -21,4 +21,12 @@ export default StyleSheet.create({
     elevation: 5,
     zIndex: 10,
   },
+  backContainer: {
+    position: 'absolute',
+    left: 19,
+    width: 30,
+    height: barHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
