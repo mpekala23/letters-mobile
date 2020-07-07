@@ -92,6 +92,8 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Register: { title: 'Register', profile: false },
   AddManually: { title: 'Add Manually', profile: false },
   ChooseOption: { title: 'Choose Option', profile: false },
+  ComposeLetter: { title: 'Compose Letter', profile: false },
+  ComposePostcard: { title: 'Compose Postcard', profile: false },
   ContactInfo: { title: 'Contact Info', profile: false },
   ContactSelector: { title: 'Contact Selector', profile: true },
   ExplainProblem: { title: 'Explain Problem', profile: false },
@@ -100,8 +102,10 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Home: { title: 'Home', profile: true },
   Issues: { title: 'Issues', profile: false },
   LetterDetails: { title: 'Letter Details', profile: true },
+  LetterPreview: { title: 'Letter Preview', profile: false },
   LetterTracking: { title: 'Letter Tracking', profile: true },
   MemoryLane: { title: 'Memory Lane', profile: true },
+  PostcardPreview: { title: 'Postcard Preview', profile: false },
   ReferFriends: { title: 'Refer Friends', profile: false },
   ReviewContact: { title: 'Review Contact', profile: false },
   SingleContact: { title: 'Single Contact', profile: true },
@@ -321,9 +325,12 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name;
-        if (name) {
+        if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
           setProfile(mapRouteNameToDetails[name].profile);
+        } else {
+          setTitle('');
+          setProfile(true);
         }
       }}
     >

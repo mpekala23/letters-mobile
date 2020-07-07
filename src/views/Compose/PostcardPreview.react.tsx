@@ -38,10 +38,12 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
       <View style={{ flex: 1 }}>
         <GenericCard style={Styles.postcardBackground}>
           <View style={{ flex: 1 }}>
-            <Image
-              source={{ uri: props.composing.photoPath }}
-              style={{ width: '100%', aspectRatio: 1 }}
-            />
+            {props.composing.photoPath !== '' && (
+              <Image
+                source={{ uri: props.composing.photoPath }}
+                style={{ width: '100%', aspectRatio: 1 }}
+              />
+            )}
           </View>
           <GrayBar vertical />
           <View style={{ flex: 1, flexDirection: 'column' }}>
