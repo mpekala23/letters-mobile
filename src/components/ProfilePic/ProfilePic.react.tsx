@@ -5,6 +5,7 @@ import { dropdownError } from 'components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
 import { Typography } from '@styles';
+import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -61,10 +62,12 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       style={mapProfileTypeToStyle(props.type).background}
       onPress={async () => {
         try {
-          // TODO: Have this press direct to Edit Profile screen once finished
+          // TODO: Have this press direct to Edit Profile screen instead of logout once finished
           await logout();
         } catch (err) {
-          dropdownError('Storage', 'Unable to successfully log out the user.');
+          dropdownError({
+            message: i18n.t('Error.cantLogout'),
+          });
         }
       }}
       testID="profilePicture"

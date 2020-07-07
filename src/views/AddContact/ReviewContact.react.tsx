@@ -167,7 +167,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         } else if (err.message === 'Contact already exists') {
           Alert.alert('Contact already exists');
         } else {
-          dropdownError('Network', 'The request could not be completed.');
+          dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
       }
     }
