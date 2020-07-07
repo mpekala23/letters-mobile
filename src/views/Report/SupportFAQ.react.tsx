@@ -44,7 +44,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           reverse
           buttonText={i18n.t('SupportFAQScreen.notYetArrived')}
           textStyle={Styles.buttonText}
-          containerStyle={Styles.tallButton}
+          containerStyle={Styles.regularButton}
         />
         <Button
           onPress={() => {

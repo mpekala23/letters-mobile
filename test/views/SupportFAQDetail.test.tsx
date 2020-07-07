@@ -22,21 +22,21 @@ describe('Support FAQ Detail screen', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('no call-to-action for DeleteLetter', () => {
+  it('should not show call-to-action for DeleteLetter', () => {
     const { getByTestId } = setup({
       issue: SupportFAQTypes.DeleteLetter,
     });
     expect(getByTestId('callToActionButton').props.children).toBe(null);
   });
 
-  it('no call-to-action for NotArrived', () => {
+  it('should not show call-to-action for NotArrived', () => {
     const { getByTestId } = setup({
       issue: SupportFAQTypes.NotArrived,
     });
     expect(getByTestId('callToActionButton').props.children).toBe(null);
   });
 
-  it('no call-to-action for TrackingNumber', () => {
+  it('should not show call-to-action for TrackingNumber', () => {
     const { getByTestId } = setup({
       issue: SupportFAQTypes.TrackingNumber,
     });

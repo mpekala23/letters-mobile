@@ -50,7 +50,7 @@ exports[`Support FAQ Detail screen should match snapshot 1`] = `
         }
       }
     >
-      
+      We’re happy to talk and we’d be more than glad to help however we can!
     </Text>
     <View
       style={
@@ -59,7 +59,52 @@ exports[`Support FAQ Detail screen should match snapshot 1`] = `
         }
       }
       testID="callToActionButton"
-    />
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "backgroundColor": "#FC7272",
+              "borderRadius": 15,
+              "height": 50,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "fontSize": 18,
+              },
+              Object {},
+            ]
+          }
+        >
+          Reach out to support
+        </Text>
+      </TouchableOpacity>
+    </View>
   </View>
 </View>
 `;
