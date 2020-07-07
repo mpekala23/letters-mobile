@@ -71,10 +71,9 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('ContactSelector');
           } catch (err) {
             props.setDraft(true);
-            dropdownError(
-              i18n.t('Error.requestIncomplete'),
-              i18n.t('Error.requestIncomplete')
-            );
+            dropdownError({
+              message: i18n.t('Error.requestIncomplete'),
+            });
           }
         }}
       />

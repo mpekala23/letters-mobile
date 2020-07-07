@@ -5,7 +5,7 @@ import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
 import Styles from './ReferFriends.style';
 

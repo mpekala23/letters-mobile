@@ -18,7 +18,7 @@
     "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
-    "facilityCity": "FacilityCity",
+    "facilityCity": "Facility City",
     "facilityPostal": "Facility Postal"
   },
   "ContactInfoScreen": {
