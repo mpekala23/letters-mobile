@@ -202,36 +202,17 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="Facility Name"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -283,36 +264,17 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="Facility Address"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -364,36 +326,17 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="Facility City"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -445,36 +388,17 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="Facility Postal"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -489,7 +413,7 @@ exports[`Add Manually Screen should match snapshot 1`] = `
       style={
         Object {
           "alignSelf": "center",
-          "backgroundColor": "#FFF5F5",
+          "backgroundColor": undefined,
           "flexDirection": "row",
           "padding": 15,
         }

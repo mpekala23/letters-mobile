@@ -414,7 +414,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 <Text
                   style={
                     Object {
-                      "color": "#FF7171",
+                      "color": "#762B2B",
                       "fontSize": 16,
                     }
                   }
@@ -700,7 +700,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   "width": 6,
                 },
                 Object {
-                  "backgroundColor": "#09863D",
+                  "backgroundColor": undefined,
                 },
               ]
             }

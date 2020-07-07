@@ -47,9 +47,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
           onPress={() => props.navigation.navigate('Login')}
           buttonText={i18n.t('BeginScreen.logIn')}
           textStyle={
-            (Typography.FONT_BOLD,
-            Styles.baseText,
-            { color: Colors.PINK_DARKER })
+            (Typography.FONT_BOLD, Styles.baseText, { color: Colors.PINK_DARK })
           }
           containerStyle={Styles.loginButton}
         />

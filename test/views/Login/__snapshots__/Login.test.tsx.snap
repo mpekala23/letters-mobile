@@ -142,36 +142,17 @@ exports[`Login screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="E-mail Address"
-                  rejectResponderTermination={true}
-                  secureTextEntry={false}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -225,36 +206,17 @@ exports[`Login screen should match snapshot 1`] = `
                     Object {},
                   ]
                 }
-              >
-                <TextInput
-                  allowFontScaling={true}
-                  multiline={false}
-                  numberOfLines={1}
-                  placeholder="Password"
-                  rejectResponderTermination={true}
-                  secureTextEntry={true}
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "borderColor": "rgba(0,0,0,0)",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "color": "#9A9A9A",
-                        "flex": 1,
-                        "fontSize": 16,
-                        "padding": 10,
-                        "width": "100%",
-                      },
-                      Object {},
-                      Object {},
-                      Object {
-                        "height": 50,
-                      },
-                      Object {},
-                    ]
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View />
+              <View />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
                   }
                 }
               >
@@ -360,16 +322,6 @@ exports[`Login screen should match snapshot 1`] = `
                 </Text>
               </View>
             </TouchableOpacity>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "#F2F2F2",
-                  "height": 2,
-                  "marginVertical": 8,
-                  "width": "100%",
-                }
-              }
-            />
             <TouchableOpacity
               activeOpacity={0.7}
               style={
@@ -384,7 +336,7 @@ exports[`Login screen should match snapshot 1`] = `
                   },
                   Object {},
                   Object {
-                    "backgroundColor": "#FF7171",
+                    "backgroundColor": "#762B2B",
                     "borderRadius": 15,
                     "height": 50,
                     "width": "100%",
@@ -464,7 +416,7 @@ exports[`Login screen should match snapshot 1`] = `
                       },
                       Object {},
                       Object {
-                        "color": "#FF7171",
+                        "color": "#762B2B",
                         "fontSize": 16,
                         "fontWeight": "500",
                       },
@@ -517,7 +469,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#FF7171",
+                        "color": "#762B2B",
                       },
                     ]
                   }
@@ -547,7 +499,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "fontFamily": "Poppins-Regular",
                       },
                       Object {
-                        "color": "#FF7171",
+                        "color": "#762B2B",
                       },
                     ]
                   }

@@ -86,7 +86,7 @@ exports[`Credits Card component should match snapshot 1`] = `
             <Text
               style={
                 Object {
-                  "color": "#FF7171",
+                  "color": "#762B2B",
                   "fontSize": 16,
                 }
               }
