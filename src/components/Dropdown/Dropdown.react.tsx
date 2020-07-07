@@ -1,16 +1,16 @@
-import React, { createRef } from "react";
-import { Text, View } from "react-native";
-import { Animated, TouchableOpacity } from "react-native";
-import { Typography } from "@styles";
-import Styles from "./Dropdown.styles";
+import React, { createRef } from 'react';
+import { Text, View, Animated, TouchableOpacity } from 'react-native';
+
+import { Typography } from '@styles';
+import Styles from './Dropdown.styles';
 
 const DROPDOWN_HEIGHT = 100;
 const ANIM_DURATION = 500;
 const DROP_DURATION = 4000;
 
 export enum DropType {
-  Success = "Success",
-  Error = "Error",
+  Success = 'Success',
+  Error = 'Error',
 }
 
 export interface DropNotif {
@@ -50,11 +50,18 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     const newNotif = notif;
     newNotif.id = this.numNotifs;
     this.numNotifs += 1;
-    const currentNotifs = this.state.notifQ;
-    currentNotifs.push(notif);
-    this.setState({ notifQ: currentNotifs }, () => {
-      this.flushNotif();
-    });
+    this.setState(
+      ({ notifQ }) => {
+        const currentNotifs = [...notifQ];
+        currentNotifs.push(notif);
+        return {
+          notifQ: currentNotifs,
+        };
+      },
+      () => {
+        this.flushNotif();
+      }
+    );
   }
 
   // convenient success dropdown
@@ -68,7 +75,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     onPress: () => void;
     persist: boolean;
     duration: number;
-  }) {
+  }): void {
     const successNotif: DropNotif = {
       type: DropType.Success,
       message,
@@ -90,7 +97,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     onPress: () => void;
     persist: boolean;
     duration: number;
-  }) {
+  }): void {
     const errorNotif: DropNotif = {
       type: DropType.Error,
       message,
@@ -162,7 +169,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     });
   }
 
-  renderNotif() {
+  renderNotif(): JSX.Element {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
     return this.state.dropped ? (

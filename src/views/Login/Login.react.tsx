@@ -69,12 +69,12 @@ class LoginScreen extends React.Component<Props, State> {
       try {
         await login(cred);
       } catch (err) {
-        if (err.message === "Incorrect credentials") {
-          Alert.alert(i18n.t("LoginScreen.incorrectUsernameOrPassword"));
-        } else if (err.message === "timeout") {
-          dropdownError({ message: i18n.t("Error.timedOut") });
+        if (err.message === 'Incorrect credentials') {
+          Alert.alert(i18n.t('LoginScreen.incorrectUsernameOrPassword'));
+        } else if (err.message === 'timeout') {
+          dropdownError({ message: i18n.t('Error.timedOut') });
         } else {
-          dropdownError({ message: i18n.t("Error.requestIncomplete") });
+          dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
       }
     }

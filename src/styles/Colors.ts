@@ -23,16 +23,13 @@ export const ALERT_LIGHT = 'rgba(200,20,50,0.1)';
 export const ALERT_FULL = '#cc4b37';
 export const SELECT = 'rgb(180, 180, 210)';
 
-// GRAYSCALE
-export const GRAY_LIGHT = '#e6e6e6';
-export const GRAY_MEDIUM = '#cacaca';
-export const GRAY_DARK = '#8a8a8a';
-export const GRAY_DARKER = '#6a6a6a';
-
-// TODO: Format new colors / coordinate with design for format and specifics
-// Colors in here are used to explicitly remind us that they need to be updated later
-// NEW COLORS
 export const DROPDOWN_SUCCESS_BACKGROUND = '#F0FAF3';
 export const DROPDOWN_SUCCESS_TEXT = '#09863D';
 export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
 export const DROPDOWN_ERROR_TEXT = '#762B2B';
+
+export const GRAY_LIGHTER = '#FBFBFB';
+export const GRAY_LIGHT = '#F2F2F2';
+export const GRAY_MEDIUM = '#9A9A9A';
+export const GRAY_DARK = '#6D6D6D';
+export const GRAY_DARKER = '#393939';

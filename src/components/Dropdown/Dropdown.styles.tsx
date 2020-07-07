@@ -9,7 +9,7 @@ export default StyleSheet.create({
     marginTop: STATUS_BAR_HEIGHT,
     marginHorizontal: 5,
     padding: STATUS_BAR_HEIGHT,
-    justifyContent: "center",
+    justifyContent: 'center',
     borderRadius: 12,
   },
   successBackground: {
