@@ -18,6 +18,7 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
   LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,

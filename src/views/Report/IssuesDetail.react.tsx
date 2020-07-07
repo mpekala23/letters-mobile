@@ -6,7 +6,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes } from 'types';
-import Emoji from 'react-native-emoji';
+import ReportStyles from './Report.styles';
 import Styles from './SupportFAQ.styles';
 
 type IssuesDetailScreenNavigationProp = StackNavigationProp<
@@ -19,6 +19,28 @@ interface Props {
   route: {
     params: { issue: DeliveryReportTypes };
   };
+}
+
+function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
+  switch (type) {
+    case DeliveryReportTypes.received:
+      return 'Awesome! Thanks for using our service :)';
+    case DeliveryReportTypes.unsure:
+      return "We'll check in with you again in two days.";
+    default:
+      return "What's up?";
+  }
+}
+
+function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
+  switch (type) {
+    case DeliveryReportTypes.received:
+      return "We hope you'll send another letter soon!";
+    case DeliveryReportTypes.unsure:
+      return 'Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org';
+    default:
+      return "What's up?";
+  }
 }
 
 // function mapIssueToFAQDetails(type: SupportFAQTypes) {
@@ -88,13 +110,14 @@ interface Props {
 
 const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
-  console.log(issue);
+  // console.log(issue);
   return (
-    <View style={Styles.trueBackground}>
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-        {i18n.t('SupportFAQDetailScreen.talkToSomeoneAtAmeelio')}
+    <View style={ReportStyles.background}>
+      <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
+        {/* {i18n.t('SupportFAQDetailScreen.talkToSomeoneAtAmeelio')} */}
+        {mapIssueToDetailsTitle(issue)}
       </Text>
-      {/* <Text style={Styles.baseText}>{mapIssueToFAQDetails(issue)}</Text> */}
+      <Text style={Styles.baseText}>{mapIssueToDetailsDescription(issue)}</Text>
       <View style={{ width: '100%' }} testID="callToActionButton">
         {/* {mapIssueToFAQCTA(props, issue)} */}
       </View>

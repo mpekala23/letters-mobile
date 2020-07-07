@@ -10,6 +10,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   question: { fontSize: 23, textAlign: 'center', width: '80%' },
+  title: { fontSize: 20, textAlign: 'center', width: '80%' },
   description: {
     color: Colors.GRAY_DARKER,
     fontSize: 16,
