@@ -24,7 +24,7 @@ exports[`Letter Details Screen should match snapshot 1`] = `
       style={
         Object {
           "borderBottomWidth": 2,
-          "borderColor": "#e6e6e6",
+          "borderColor": "#F2F2F2",
           "paddingBottom": 16,
         }
       }

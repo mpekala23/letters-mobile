@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Text, View } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { LetterTypes } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
@@ -32,12 +32,14 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         type={LetterTypes.PostCards}
         onPress={() => {
           props.setType(LetterTypes.PostCards);
+          props.navigation.navigate('ComposePostcard');
         }}
       />
       <LetterOptionCard
         type={LetterTypes.Letters}
         onPress={() => {
           props.setType(LetterTypes.Letters);
+          props.navigation.navigate('ComposeLetter');
         }}
       />
     </View>

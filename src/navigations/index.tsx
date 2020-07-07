@@ -10,17 +10,20 @@ import {
   AddManuallyScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
+  ComposeLetterScreen,
+  ComposePostcardScreen,
   ContactSelectorScreen,
   ExplainProblemScreen,
   FirstLetterScreen,
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
-  IssuesDetailScreen,
+  LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
   LetterDetailsScreen,
   LoginScreen,
+  PostcardPreviewScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
@@ -31,10 +34,9 @@ import {
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
-import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
-import { Notif } from 'store/Notif/NotifTypes';
+import { Notif } from '@store/Notif/NotifTypes';
 import {
   NullableFacility,
   Letter,
@@ -42,6 +44,7 @@ import {
   DeliveryReportTypes,
 } from 'types';
 import { Topbar } from '@components';
+import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
 
 export { navigationRef, navigate };
@@ -55,6 +58,8 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   AddManually: undefined;
   ChooseOption: undefined;
+  ComposeLetter: undefined;
+  ComposePostcard: undefined;
   ContactInfo: { addFromSelector: boolean } | undefined;
   ContactSelector: undefined;
   ExplainProblem: undefined;
@@ -63,6 +68,8 @@ export type AppStackParamList = {
   Home: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
+  LetterPreview: undefined;
+  PostcardPreview: undefined;
   LetterDetails: undefined;
   LetterTracking: undefined;
   MemoryLane: undefined;
@@ -113,6 +120,31 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (props.authInfo.isLoggedIn) {
     screens = (
       <>
+        <Stack.Screen
+          name="ChooseOption"
+          component={ChooseOptionScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ComposeLetter"
+          component={ComposeLetterScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="ComposePostcard"
+          component={ComposePostcardScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="LetterPreview"
+          component={LetterPreviewScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="PostcardPreview"
+          component={PostcardPreviewScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -201,11 +233,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="SupportFAQDetail"
           component={SupportFAQDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

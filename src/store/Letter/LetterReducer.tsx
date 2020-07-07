@@ -3,6 +3,7 @@ import {
   LetterState,
   LetterActionTypes,
   SET_COMPOSING,
+  SET_ACTIVE,
   SET_TYPE,
   SET_STATUS,
   SET_DRAFT,
@@ -13,7 +14,6 @@ import {
   CLEAR_COMPOSING,
   SET_EXISTING,
   ADD_LETTER,
-  SET_ACTIVE_LETTER,
 } from './LetterTypes';
 
 const initialState: LetterState = {
@@ -22,6 +22,7 @@ const initialState: LetterState = {
     status: LetterStatus.Draft,
     isDraft: true,
     recipientId: -1,
+    recipientName: '',
     message: '',
     photoPath: '',
     dateCreated: '06/29/20',
@@ -32,6 +33,7 @@ const initialState: LetterState = {
     status: LetterStatus.Created,
     isDraft: true,
     recipientId: -1,
+    recipientName: '',
     message: '',
     photoPath: '',
     dateCreated: '06/29/20',
@@ -45,6 +47,7 @@ const initialState: LetterState = {
         status: LetterStatus.Mailed,
         isDraft: true,
         recipientId: 8,
+        recipientName: 'Jane doe',
         message: "I'm trying out this new service called Ameelio...",
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
@@ -65,6 +68,7 @@ const initialState: LetterState = {
         status: LetterStatus.InTransit,
         isDraft: true,
         recipientId: 8,
+        recipientName: 'John Doe',
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -92,6 +96,7 @@ const initialState: LetterState = {
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
+        recipientName: 'Jonathon Yoe',
         message: "I'm trying out this new service called Ameelio...",
         dateCreated: '06/14/20',
         photoPath:
@@ -137,6 +142,9 @@ export default function LetterReducer(
     case SET_COMPOSING:
       currentState.composing = action.payload;
       return currentState;
+    case SET_ACTIVE:
+      currentState.composing = action.payload;
+      return currentState;
     case SET_TYPE:
       currentState.composing.type = action.payload;
       return currentState;
@@ -165,18 +173,25 @@ export default function LetterReducer(
       currentState.existing = action.payload;
       return currentState;
     case ADD_LETTER:
-      if (action.payload.contactId in currentState.existing) {
-        currentState.existing[action.payload.contactId].push(
-          action.payload.letter
-        );
+      if (action.payload.recipientId in currentState.existing) {
+        const existingLetters =
+          currentState.existing[action.payload.recipientId];
+        let matchIx = 0;
+        while (matchIx < existingLetters.length) {
+          if (existingLetters[matchIx].letterId === action.payload.letterId) {
+            break;
+          }
+          matchIx += 1;
+        }
+        if (matchIx < existingLetters.length) {
+          existingLetters.splice(matchIx, 1, action.payload);
+        } else {
+          existingLetters.push(action.payload);
+        }
+        currentState.existing[action.payload.recipientId] = existingLetters;
       } else {
-        currentState.existing[action.payload.contactId] = [
-          action.payload.letter,
-        ];
+        currentState.existing[action.payload.recipientId] = [action.payload];
       }
-      return currentState;
-    case SET_ACTIVE_LETTER:
-      currentState.active = action.payload;
       return currentState;
     default:
       return currentState;

@@ -7,7 +7,12 @@
   "Error": {
     "network": "Network Error",
     "requestTimedOut": "The request timed out.",
-    "requestIncomplete": "The request could not be completed."
+    "requestIncomplete": "The request could not be completed.",
+    "unsavedToken": "Unable to save login credentials for next time",
+    "cantLogout": "Unable to log out the user"
+  },
+  "Permission": {
+    "photos": "Can't access photo library"
   },
   "AddManuallyScreen": {
     "addAFacility": "Add a Facility",
@@ -83,7 +88,7 @@
     "oneLetter": "1 Letter",
     "letters": "Letters"
   },
-  "MemoryLaneScreen" : {
+  "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
@@ -161,5 +166,10 @@
     "postCardsDesc": "1 photo, 300 characters",
     "lettersTitle": "Letters",
     "lettersDesc": "300 words"
+  },
+  "Compose": {
+    "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
+    "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
+    "send": "Send Letter"
   }
 }

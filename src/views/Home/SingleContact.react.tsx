@@ -1,21 +1,21 @@
 import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, ProfilePic } from '@components';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
-import MemoryLaneCountCard from 'components/Card/MemoryLaneCountCard.react';
+import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActiveLetter } from '@store/Letter/LetterActions';
+import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
-import { setActive } from '@store/Contact/ContactActions';
+import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './SingleContact.styles';
 
@@ -143,7 +143,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes>
 ) => {
   return {
-    setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
+    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
     setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
   };
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, ScrollView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { Button, LetterTracker } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -18,7 +18,7 @@ type LetterTrackingScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: LetterTrackingScreenNavigationProp;
-  letter: Letter;
+  letter: Letter | null;
 }
 
 function mapStatusToTrackerBarHeight(type?: LetterStatus) {
@@ -35,6 +35,10 @@ function mapStatusToTrackerBarHeight(type?: LetterStatus) {
 }
 
 const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
+  if (!props.letter) {
+    props.navigation.navigate('SingleContact');
+    return <View />;
+  }
   const deliveryDate = moment(props.letter.expectedDeliveryDate).format(
     'MMM DD'
   );

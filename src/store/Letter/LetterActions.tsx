@@ -1,6 +1,7 @@
 import { LetterTypes, Letter, LetterStatus } from 'types';
 import {
   SET_COMPOSING,
+  SET_ACTIVE,
   SET_TYPE,
   SET_STATUS,
   SET_DRAFT,
@@ -12,12 +13,18 @@ import {
   SET_EXISTING,
   LetterActionTypes,
   ADD_LETTER,
-  SET_ACTIVE_LETTER,
 } from './LetterTypes';
 
 export function setComposing(letter: Letter): LetterActionTypes {
   return {
     type: SET_COMPOSING,
+    payload: letter,
+  };
+}
+
+export function setActive(letter: Letter): LetterActionTypes {
+  return {
+    type: SET_ACTIVE,
     payload: letter,
   };
 }
@@ -87,22 +94,9 @@ export function setExisting(
   };
 }
 
-export function addLetter(
-  contactId: number,
-  letter: Letter
-): LetterActionTypes {
+export function addLetter(letter: Letter): LetterActionTypes {
   return {
     type: ADD_LETTER,
-    payload: {
-      contactId,
-      letter,
-    },
-  };
-}
-
-export function setActiveLetter(letter: Letter): LetterActionTypes {
-  return {
-    type: SET_ACTIVE_LETTER,
     payload: letter,
   };
 }

@@ -1,6 +1,8 @@
 import Button from './Button/Button.react';
+import ComposeHeader from './ComposeHeader/ComposeHeader.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import Dropdown from './Dropdown/Dropdown.react';
+import GenericCard from './Card/GenericCard.react';
 import GrayBar from './GrayBar/GrayBar.react';
 import Input from './Input/Input.react';
 import LetterOptionCard from './Card/LetterOptionCard.react';
@@ -16,8 +18,10 @@ import Topbar from './Topbar/Topbar.react';
 
 export {
   Button,
+  ComposeHeader,
   DeliveryStatusCard,
   Dropdown,
+  GenericCard,
   GrayBar,
   Input,
   LetterOptionCard,
