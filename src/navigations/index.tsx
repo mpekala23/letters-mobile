@@ -37,7 +37,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, Letter } from 'types';
+import { NullableFacility, Letter, SupportFAQTypes } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,

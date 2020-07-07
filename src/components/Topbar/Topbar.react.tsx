@@ -59,7 +59,7 @@ class Topbar extends React.Component<Props, State> {
               Typography.FONT_BOLD,
               {
                 color: this.state.profileOverride.enabled
-                  ? Colors.PINK_DARKER
+                  ? Colors.PINK_DARK
                   : Colors.GRAY_MEDIUM,
                 fontSize: 16,
               },
