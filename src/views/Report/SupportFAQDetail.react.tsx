@@ -7,12 +7,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
 import Emoji from 'react-native-emoji';
-
 import Styles from './SupportFAQ.styles';
 
 type SupportFAQDetailScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'SupportFAQ'
+  'SupportFAQDetail'
 >;
 
 interface Props {
@@ -47,10 +46,8 @@ function mapIssueToFAQDetails(type: SupportFAQTypes) {
       );
     case SupportFAQTypes.TrackingError:
       return i18n.t('SupportFAQDetailScreen.trackingError');
-    case SupportFAQTypes.TalkToAmeelio:
-      return i18n.t('SupportFAQDetailScreen.talkToAmeelio');
     default:
-      return '';
+      return i18n.t('SupportFAQDetailScreen.talkToAmeelio');
   }
 }
 
@@ -78,20 +75,14 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
       );
     case SupportFAQTypes.WrongReturnAddress:
       return defaultCTAButton(() => {
-        /* Navigate to update user profile screen */
+        /* TO-DO: Navigate to update user profile screen */
       }, i18n.t('SupportFAQDetailScreen.updateProfile'));
     case SupportFAQTypes.TrackingNumber:
       return null;
-    case SupportFAQTypes.TrackingError:
-      return defaultCTAButton(async () => {
-        await Linking.openURL('https://m.me/teamameelio');
-      }, i18n.t('SupportFAQDetailScreen.reachOutToSupport'));
-    case SupportFAQTypes.TalkToAmeelio:
-      return defaultCTAButton(async () => {
-        await Linking.openURL('https://m.me/teamameelio');
-      }, i18n.t('SupportFAQDetailScreen.reachOutToSupport'));
     default:
-      return null;
+      return defaultCTAButton(async () => {
+        await Linking.openURL('https://m.me/teamameelio');
+      }, i18n.t('SupportFAQDetailScreen.reachOutToSupport'));
   }
 }
 

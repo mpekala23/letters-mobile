@@ -18,17 +18,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 14,
   },
-  tallButton: {
-    borderColor: 'black',
-    borderWidth: 1.5,
-    borderRadius: 15,
-    width: '100%',
-    height: 75,
-    alignSelf: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginBottom: 14,
-  },
   needHelpButton: {
     backgroundColor: '#FC7272',
     borderRadius: 15,
