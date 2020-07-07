@@ -23,33 +23,34 @@ export const ALERT_LIGHT = 'rgba(200,20,50,0.1)';
 export const ALERT_FULL = '#cc4b37';
 export const SELECT = 'rgb(180, 180, 210)';
 
-// GRAYSCALE
+export const DROPDOWN_SUCCESS_BACKGROUND = '#F0FAF3';
+export const DROPDOWN_SUCCESS_TEXT = '#09863D';
+export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
+export const DROPDOWN_ERROR_TEXT = '#762B2B';
+
 export const GRAY_LIGHTER = '#FBFBFB';
 export const GRAY_LIGHT = '#F2F2F2';
 export const GRAY_MEDIUM = '#9A9A9A';
 export const GRAY_DARK = '#6D6D6D';
 export const GRAY_DARKER = '#393939';
 
-// PINKSCALE
-export const PINK_LIGHTEST = '#FFF5F5';
-export const PINK_LIGHTER = '#FFE8E8';
-export const PINK_LIGHT = '#FFC4C4';
-export const PINK_DARK = '#FF9E9E';
-export const PINK_DARKER = '#FF7171';
-export const PINK_DARKEST = '#762B2B';
+export const PINK_LIGHTER = '#FFF5F5';
+export const PINK_LIGHT = '#FFE8E8';
+export const PINK_MEDIUM_LIGHT = '#FFC4C4';
+export const PINK_MEDIUM = '#FF9E9E';
+export const PINK_DARK = '#FF7171';
+export const PINK_DARKER = '#762B2B';
 
-// BLUESCALE
-export const BLUE_LIGHTEST = '#F1F7FF';
-export const BLUE_LIGHTER = '#D7E4F8';
-export const BLUE_LIGHT = '#A8C1E4';
-export const BLUE_DARK = '#8DA7CC';
-export const BLUE_DARKER = '#6D89B1';
-export const BLUE_DARKEST = '#436697';
+export const BLUE_LIGHTER = '#F1F7FF';
+export const BLUE_LIGHT = '#D7E4F8';
+export const BLUE_MEDIUM_LIGHT = '#A8C1E4';
+export const BLUE_MEDIUM = '#8DA7CC';
+export const BLUE_DARK = '#6D89B1';
+export const BLUE_DARKER = '#436697';
 
-// GREENSCALE
-export const GREEN_LIGHTEST = '#F0FAF3';
-export const GREEN_LIGHTER = '#CFF3DD';
-export const GREEN_LIGHT = '#9EE2B8';
-export const GREEN_DARK = '#43BF75';
-export const GREEN_DARKER = '#21A453';
-export const GREEN_DARKEST = '#09863D';
+export const GREEN_LIGHTER = '#F0FAF3';
+export const GREEN_LIGHT = '#CFF3DD';
+export const GREEN_MEDIUM_LIGHT = '#9EE2B8';
+export const GREEN_MEDIUM = '#43BF75';
+export const GREEN_DARK = '#21A453';
+export const GREEN_DARKER = '#09863D';

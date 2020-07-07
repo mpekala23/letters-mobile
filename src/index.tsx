@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import store, { persistor } from '@store';
 import Navigator from '@navigations';
@@ -60,9 +59,7 @@ export default class App extends React.Component<null, State> {
           <PersistGate persistor={persistor}>
             <Statusbar />
             <Dropdown />
-            <NavigationContainer>
-              <Navigator />
-            </NavigationContainer>
+            <Navigator />
           </PersistGate>
         </Provider>
       );

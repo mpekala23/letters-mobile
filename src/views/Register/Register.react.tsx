@@ -13,7 +13,7 @@ import { Button, Input, PicUpload } from '@components';
 import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
-import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';
@@ -140,15 +140,9 @@ class RegisterScreen extends React.Component<Props, State> {
         if (err.message === 'Email in use') {
           Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
         } else if (err.message === 'timeout') {
-          dropdownError(
-            i18n.t('Error.network'),
-            i18n.t('Error.requestTimedOut')
-          );
+          dropdownError({ message: i18n.t('Error.requestTimedOut') });
         } else {
-          dropdownError(
-            i18n.t('Error.network'),
-            i18n.t('Error.requestIncomplete')
-          );
+          dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
       }
     }

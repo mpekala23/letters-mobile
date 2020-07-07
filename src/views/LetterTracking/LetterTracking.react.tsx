@@ -18,7 +18,7 @@ type LetterTrackingScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: LetterTrackingScreenNavigationProp;
-  letter: Letter;
+  letter: Letter | null;
 }
 
 function mapStatusToTrackerBarHeight(type?: LetterStatus) {
@@ -35,6 +35,10 @@ function mapStatusToTrackerBarHeight(type?: LetterStatus) {
 }
 
 const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
+  if (!props.letter) {
+    props.navigation.navigate('SingleContact');
+    return <View />;
+  }
   const deliveryDate = moment(props.letter.expectedDeliveryDate).format(
     'MMM DD'
   );
@@ -82,7 +86,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
       </View>
       <Button
         onPress={() => {
-          /* To-do: Navigate to in-app reporting flow */
+          props.navigation.navigate('SupportFAQ');
         }}
         buttonText={i18n.t('LetterTrackingScreen.needHelp')}
         textStyle={(Typography.FONT_BOLD, { fontSize: 14 })}

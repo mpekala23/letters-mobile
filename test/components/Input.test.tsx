@@ -161,20 +161,15 @@ describe('Input component', () => {
 
   it('should implement style props', () => {
     const parentStyle = { backgroundColor: 'green' };
-    const scrollStyle = { backgroundColor: 'red' };
     const inputStyle = { backgroundColor: 'yellow' };
     const { getByPlaceholderText, getByTestId } = setup({
       parentStyle,
-      scrollStyle,
       inputStyle,
     });
     expect(getByTestId('parent').props.style.backgroundColor).toEqual(
       parentStyle.backgroundColor
     );
-    expect(
-      getByPlaceholderText('placeholder').parent.parent.props.style[1]
-    ).toEqual(scrollStyle);
-    expect(getByPlaceholderText('placeholder').props.style[5]).toEqual(
+    expect(getByPlaceholderText('placeholder').props.style[4]).toEqual(
       inputStyle
     );
   });

@@ -101,7 +101,6 @@ exports[`Login screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
-                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -115,15 +114,31 @@ exports[`Login screen should match snapshot 1`] = `
               <View
                 testID="unfocused"
               />
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                scrollEnabled={false}
+              <TextInput
+                allowFontScaling={true}
+                multiline={false}
+                numberOfLines={1}
+                placeholder="E-mail Address"
+                rejectResponderTermination={true}
+                secureTextEntry={false}
                 style={
                   Array [
                     Object {
+                      "borderColor": "rgba(0,0,0,0)",
+                      "borderRadius": 8,
+                      "borderWidth": 2,
+                      "color": "#9A9A9A",
                       "flex": 1,
+                      "fontSize": 16,
+                      "padding": 10,
+                      "textAlignVertical": "top",
                       "width": "100%",
                     },
+                    Object {
+                      "color": "#282828",
+                    },
+                    Object {},
+                    Object {},
                     Object {},
                   ]
                 }
@@ -158,23 +173,10 @@ exports[`Login screen should match snapshot 1`] = `
                       Object {},
                     ]
                   }
-                  underlineColorAndroid="transparent"
-                  value=""
-                />
+                }
+              >
                 <View />
-                <View />
-                <View
-                  style={
-                    Object {
-                      "height": 0,
-                      "width": "100%",
-                      "zIndex": 5,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </ScrollView>
+              </View>
             </View>
             <View
               pointerEvents="auto"
@@ -182,7 +184,6 @@ exports[`Login screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
-                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -196,15 +197,31 @@ exports[`Login screen should match snapshot 1`] = `
               <View
                 testID="unfocused"
               />
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                scrollEnabled={false}
+              <TextInput
+                allowFontScaling={true}
+                multiline={false}
+                numberOfLines={1}
+                placeholder="Password"
+                rejectResponderTermination={true}
+                secureTextEntry={true}
                 style={
                   Array [
                     Object {
+                      "borderColor": "rgba(0,0,0,0)",
+                      "borderRadius": 8,
+                      "borderWidth": 2,
+                      "color": "#9A9A9A",
                       "flex": 1,
+                      "fontSize": 16,
+                      "padding": 10,
+                      "textAlignVertical": "top",
                       "width": "100%",
                     },
+                    Object {
+                      "color": "#282828",
+                    },
+                    Object {},
+                    Object {},
                     Object {},
                   ]
                 }
@@ -239,23 +256,10 @@ exports[`Login screen should match snapshot 1`] = `
                       Object {},
                     ]
                   }
-                  underlineColorAndroid="transparent"
-                  value=""
-                />
+                }
+              >
                 <View />
-                <View />
-                <View
-                  style={
-                    Object {
-                      "height": 0,
-                      "width": "100%",
-                      "zIndex": 5,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </ScrollView>
+              </View>
             </View>
             <TouchableOpacity
               accessibilityRole="checkbox"
@@ -356,6 +360,16 @@ exports[`Login screen should match snapshot 1`] = `
                 </Text>
               </View>
             </TouchableOpacity>
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#F2F2F2",
+                  "height": 2,
+                  "marginVertical": 8,
+                  "width": "100%",
+                }
+              }
+            />
             <TouchableOpacity
               activeOpacity={0.7}
               style={

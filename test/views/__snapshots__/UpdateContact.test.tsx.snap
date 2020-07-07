@@ -133,7 +133,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -147,15 +146,29 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="First name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {},
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -190,23 +203,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value="First"
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <Text
         style={
@@ -229,7 +229,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -243,15 +242,29 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Last name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {},
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -286,23 +299,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value="Last"
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <Text
         style={
@@ -325,7 +325,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -339,15 +338,29 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Address line 1"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {},
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -382,23 +395,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value="Facility Name"
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <Text
         style={
@@ -421,7 +421,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -435,15 +434,29 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Adress line 2"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {},
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -478,23 +491,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value="Address"
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -502,7 +502,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -516,15 +515,31 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Unit (optional, only if needed)"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {
+                "color": "#282828",
+              },
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -559,23 +574,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value=""
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -583,7 +585,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -597,15 +598,31 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Dorm (optional, only if needed)"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {
+                "color": "#282828",
+              },
+              Object {},
+              Object {},
               Object {},
             ]
           }
@@ -640,23 +657,10 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 Object {},
               ]
             }
-            underlineColorAndroid="transparent"
-            value=""
-          />
+          }
+        >
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
     </ScrollView>
     <TouchableOpacity

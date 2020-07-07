@@ -1,25 +1,32 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
 
-const barHeight = 50;
+export const barHeight = 70;
 
 export default StyleSheet.create({
   barContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     height: barHeight,
-    borderColor: Colors.GRAY_MEDIUM,
-    borderBottomWidth: 0.5,
     paddingHorizontal: 10,
     paddingBottom: 5,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.21,
+    shadowRadius: 2,
+    elevation: 5,
+    zIndex: 10,
   },
-  logoContainer: {
-    flex: 1,
+  backContainer: {
+    position: 'absolute',
+    left: 19,
+    width: 30,
     height: barHeight,
-  },
-  logo: {
-    height: barHeight + 5,
-    aspectRatio: 2015 / 885,
-    marginTop: -5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

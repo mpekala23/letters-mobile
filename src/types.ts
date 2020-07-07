@@ -37,8 +37,18 @@ export enum LetterStatus {
 }
 
 export enum LetterTypes {
-  PostCards = 'PostCards',
-  Letters = 'Letters',
+  PostCards = 'postCards',
+  Letters = 'letters',
+}
+
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
 }
 
 export interface Letter {
@@ -46,6 +56,7 @@ export interface Letter {
   status: LetterStatus;
   isDraft: boolean;
   recipientId: number;
+  recipientName: string;
   message: string;
   photoPath?: string;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
@@ -60,3 +71,9 @@ export interface LetterTrackingEvent {
   location: string;
   date: string;
 }
+
+export type TopbarRouteAction = {
+  enabled: boolean;
+  text: string;
+  action: () => void;
+};

@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
 import { Validation } from 'utils';
