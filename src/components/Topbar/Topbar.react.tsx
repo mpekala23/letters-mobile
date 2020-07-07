@@ -35,7 +35,7 @@ class Topbar extends React.Component<Props, State> {
 
   render(): JSX.Element {
     let topRight;
-    if (this.state.profile) {
+    if (this.state.profile && this.props.userState.authInfo.isLoggedIn) {
       topRight = (
         <ProfilePic
           firstName={this.props.userState.user.firstName}
@@ -85,6 +85,7 @@ class Topbar extends React.Component<Props, State> {
               alignItems: 'center',
             }}
             onPress={this.props.navigation.goBack}
+            testID="backButton"
           >
             <Icon svg={BackButton} />
           </TouchableOpacity>

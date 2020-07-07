@@ -66,7 +66,7 @@ export type AppStackParamList = {
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   Thanks: undefined;
-  UpdateContact: { contactId: number; topbar: TopbarRouteAction } | undefined;
+  UpdateContact: { contactId: number } | undefined;
 };
 
 interface RouteDetails {
