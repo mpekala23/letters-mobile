@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { Button, Input } from '@components';
 import { Typography } from '@styles';
-import { AMEELIO_BLACK } from 'styles/Colors';
-import { AppStackParamList } from 'navigations';
+import { AMEELIO_BLACK } from '@styles/Colors';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { connect } from 'react-redux';

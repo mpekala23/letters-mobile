@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { LetterTrackingScreen } from '@views';
-import { render, toJSON } from '@testing-library/react-native';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { LetterTypes, LetterStatus } from '../../src/types';
+import { LetterTypes, LetterStatus } from 'types';
 
 const mockStore = configureStore([]);
 
@@ -50,7 +50,7 @@ const setup = (letterOverrides = {}) => {
   return {
     navigation,
     store,
-    ...render(<LetterTrackingScreen />, {
+    ...render(<LetterTrackingScreen navigation={navigation} />, {
       wrapper: StoreProvider,
     }),
   };
@@ -88,5 +88,9 @@ describe('Letter Tracking Screen', () => {
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');
   });
 
-  // TO-DO: Test navigation to in-app reporting flow when button is pressed
+  it('should navigate to Support FAQ screen when button is pressed', async () => {
+    const { navigation, getByText } = setup();
+    fireEvent.press(getByText('I need help'));
+    expect(navigation.navigate).toHaveBeenCalledWith('SupportFAQ');
+  });
 });

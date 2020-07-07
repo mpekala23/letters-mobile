@@ -14,11 +14,11 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Contact } from 'store/Contact/ContactTypes';
+import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes, Facility } from 'types';
 import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { updateContact, deleteContact } from 'api';
+import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import Styles from './UpdateContact.styles';
@@ -116,7 +116,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       await deleteContact(this.props.contact);
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
-      dropdownError(i18n.t('Error.network'), i18n.t('Error.requestIncomplete'));
+      dropdownError({ message: i18n.t('Error.requestIncomplete') });
     }
   };
 
@@ -149,10 +149,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         await updateContact(contact);
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
-        dropdownError(
-          i18n.t('Error.network'),
-          i18n.t('Error.requestIncomplete')
-        );
+        dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
   };

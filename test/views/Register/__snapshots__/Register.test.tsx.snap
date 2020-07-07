@@ -57,16 +57,28 @@ exports[`Register screen should match snapshot 1`] = `
         <TouchableOpacity
           activeOpacity={0.2}
           style={
-            Object {
-              "backgroundColor": "#3490dc",
-              "borderRadius": 50,
-              "height": 100,
-              "overflow": "hidden",
-              "width": 100,
-            }
+            Array [
+              Object {
+                "height": 100,
+                "width": 100,
+              },
+              Object {
+                "alignItems": "center",
+                "borderColor": "#6E757C",
+                "borderRadius": 20,
+                "borderWidth": 5,
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+              Object {},
+            ]
           }
           testID="clickable"
-        />
+        >
+          <Text>
+            +
+          </Text>
+        </TouchableOpacity>
         <Text
           style={
             Array [
@@ -183,7 +195,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -197,63 +208,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="First Name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="First Name"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -261,7 +257,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -275,63 +270,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Last Name"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Last Name"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         style={
@@ -346,7 +326,6 @@ exports[`Register screen should match snapshot 1`] = `
             Object {
               "backgroundColor": "#F2F2F2",
               "borderRadius": 8,
-              "height": 50,
               "marginBottom": 10,
               "overflow": "hidden",
               "width": "100%",
@@ -360,103 +339,11 @@ exports[`Register screen should match snapshot 1`] = `
           <View
             testID="unfocused"
           />
-          <ScrollView
-            keyboardShouldPersistTaps="always"
-            scrollEnabled={false}
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "width": "100%",
-                },
-                Object {},
-              ]
-            }
-          >
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Cell Phone Number"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "#9A9A9A",
-                    "flex": 1,
-                    "fontSize": 16,
-                    "padding": 10,
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-            <View />
-            <View />
-            <View
-              style={
-                Object {
-                  "height": 0,
-                  "width": "100%",
-                  "zIndex": 5,
-                }
-              }
-            >
-              <View />
-            </View>
-          </ScrollView>
-        </View>
-      </View>
-      <View
-        pointerEvents="auto"
-        style={
-          Object {
-            "backgroundColor": "#F2F2F2",
-            "borderRadius": 8,
-            "height": 50,
-            "marginBottom": 10,
-            "overflow": "hidden",
-            "width": "100%",
-          }
-        }
-        testID="parent"
-      >
-        <View
-          testID="invalid"
-        />
-        <View
-          testID="unfocused"
-        />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
-          style={
-            Array [
-              Object {
-                "flex": 1,
-                "width": "100%",
-              },
-              Object {},
-            ]
-          }
-        >
           <TextInput
             allowFontScaling={true}
             multiline={false}
             numberOfLines={1}
-            placeholder="Address Line 1"
+            placeholder="Cell Phone Number"
             rejectResponderTermination={true}
             secureTextEntry={false}
             style={
@@ -469,13 +356,12 @@ exports[`Register screen should match snapshot 1`] = `
                   "flex": 1,
                   "fontSize": 16,
                   "padding": 10,
+                  "textAlignVertical": "top",
                   "width": "100%",
                 },
                 Object {},
                 Object {},
-                Object {
-                  "height": 50,
-                },
+                Object {},
                 Object {},
               ]
             }
@@ -495,7 +381,7 @@ exports[`Register screen should match snapshot 1`] = `
           >
             <View />
           </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -503,7 +389,68 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
+            "marginBottom": 10,
+            "overflow": "hidden",
+            "width": "100%",
+          }
+        }
+        testID="parent"
+      >
+        <View
+          testID="invalid"
+        />
+        <View
+          testID="unfocused"
+        />
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Address Line 1"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
+          style={
+            Array [
+              Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
+                "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
+                "width": "100%",
+              },
+              Object {},
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
+        >
+          <View />
+        </View>
+      </View>
+      <View
+        pointerEvents="auto"
+        style={
+          Object {
+            "backgroundColor": "#F2F2F2",
+            "borderRadius": 8,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -517,63 +464,50 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Address Line 2"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
+              Object {
+                "color": "#282828",
+              },
+              Object {},
+              Object {},
               Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Address Line 2"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -581,7 +515,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -595,63 +528,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Country"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Country"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -659,7 +577,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -673,63 +590,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Zip Code"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Zip Code"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -737,7 +639,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -751,63 +652,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="City"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="City"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -829,63 +715,50 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="State"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
+              },
+              Object {},
+              Object {},
+              Object {
+                "height": 50,
               },
               Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 200,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="State"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 200,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -893,7 +766,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -907,63 +779,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="E-mail Address"
+          rejectResponderTermination={true}
+          secureTextEntry={false}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="E-mail Address"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <View
         pointerEvents="auto"
@@ -971,7 +828,6 @@ exports[`Register screen should match snapshot 1`] = `
           Object {
             "backgroundColor": "#F2F2F2",
             "borderRadius": 8,
-            "height": 50,
             "marginBottom": 10,
             "overflow": "hidden",
             "width": "100%",
@@ -985,63 +841,48 @@ exports[`Register screen should match snapshot 1`] = `
         <View
           testID="unfocused"
         />
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={false}
+        <TextInput
+          allowFontScaling={true}
+          multiline={false}
+          numberOfLines={1}
+          placeholder="Password"
+          rejectResponderTermination={true}
+          secureTextEntry={true}
           style={
             Array [
               Object {
+                "borderColor": "rgba(0,0,0,0)",
+                "borderRadius": 8,
+                "borderWidth": 2,
+                "color": "#9A9A9A",
                 "flex": 1,
+                "fontSize": 16,
+                "padding": 10,
+                "textAlignVertical": "top",
                 "width": "100%",
               },
               Object {},
+              Object {},
+              Object {},
+              Object {},
             ]
           }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+        <View />
+        <View />
+        <View
+          style={
+            Object {
+              "height": 0,
+              "width": "100%",
+              "zIndex": 5,
+            }
+          }
         >
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Password"
-            rejectResponderTermination={true}
-            secureTextEntry={true}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "#9A9A9A",
-                  "flex": 1,
-                  "fontSize": 16,
-                  "padding": 10,
-                  "width": "100%",
-                },
-                Object {},
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {},
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
           <View />
-          <View />
-          <View
-            style={
-              Object {
-                "height": 0,
-                "width": "100%",
-                "zIndex": 5,
-              }
-            }
-          >
-            <View />
-          </View>
-        </ScrollView>
+        </View>
       </View>
       <TouchableOpacity
         accessibilityRole="checkbox"
