@@ -1,3 +1,4 @@
+import Alert from './Alert/Alert.react';
 import Button from './Button/Button.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import Dropdown from './Dropdown/Dropdown.react';
@@ -15,6 +16,7 @@ import Icon from './Icon/Icon.react';
 import Topbar from './Topbar/Topbar.react';
 
 export {
+  Alert,
   Button,
   DeliveryStatusCard,
   Dropdown,

@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import store, { persistor } from '@store';
 import Navigator from '@navigations';
-import { Dropdown, Statusbar } from '@components';
+import { Alert, Dropdown, Statusbar } from '@components';
 import { loginWithToken } from '@api';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as Font from 'expo-font';
@@ -55,6 +55,7 @@ export default class App extends React.Component<null, State> {
             <NavigationContainer>
               <Navigator />
             </NavigationContainer>
+            <Alert />
           </PersistGate>
         </Provider>
       );

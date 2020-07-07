@@ -1,5 +1,6 @@
 import { createRef, ReactText } from 'react';
-import { Alert, Platform, Linking } from 'react-native';
+import { Platform, Linking } from 'react-native';
+import { popupAlert } from '@components/Alert/Alert.react';
 import { EventSubscription } from 'fbemitter';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -16,6 +17,7 @@ import {
 } from 'store/Notif/NotifTypes';
 import { AppState } from 'store/types';
 import { loginWithToken } from 'api';
+import i18n from 'i18n';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -62,10 +64,13 @@ class NotifsBase {
 
   async registerForPushNotifications() {
     if (!Constants.isDevice) {
-      Alert.alert(
-        'Error',
-        'Must use a physical device to receive push notifications.'
-      );
+      popupAlert({
+        title: i18n.t('Alert.emulatorDetected'),
+        message: i18n.t('Alert.mustUsePhysical'),
+        buttons: [
+          { text: i18n.t('Alert.okay'), reverse: false, onPress: () => null },
+        ],
+      });
       return;
     }
     const { status: existingStatus } = await Permissions.getAsync(
@@ -77,11 +82,22 @@ class NotifsBase {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      Alert.alert(
-        'Enable Notifications',
-        'Go to settings to receive notifications about your letters.',
-        [{ text: 'Dismiss' }, { text: 'Settings', onPress: this.goToSettings }]
-      );
+      popupAlert({
+        title: i18n.t('Alert.weNeedNotificationsPermission'),
+        message: i18n.t('Alert.goToSettingsToUpdate'),
+        buttons: [
+          {
+            text: i18n.t('Alert.goToSettings'),
+            reverse: false,
+            onPress: this.goToSettings,
+          },
+          {
+            text: i18n.t('Alert.maybeLater'),
+            reverse: true,
+            onPress: () => null,
+          },
+        ],
+      });
       return;
     }
     this.expoPushToken = await Notifications.getExpoPushTokenAsync();

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, Linking } from 'react-native';
+import { popupAlert } from '@components/Alert/Alert.react';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -21,9 +22,24 @@ class PicUpload extends React.Component<Record<string, unknown>, State> {
   getCameraRollPermission = async (): Promise<void> => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
-      Alert.alert(
-        'We need permission to access your camera roll to upload a profile picture.'
-      );
+      popupAlert({
+        title: i18n.t('Alert.weNeedProfilePermission'),
+        message: i18n.t('Alert.goToSettingsToUpdate'),
+        buttons: [
+          {
+            text: i18n.t('Alert.goToSettings'),
+            reverse: false,
+            onPress: () => {
+              Linking.openURL('app-settings:');
+            },
+          },
+          {
+            text: i18n.t('Alert.maybeLater'),
+            reverse: true,
+            onPress: () => null,
+          },
+        ],
+      });
     }
   };
 

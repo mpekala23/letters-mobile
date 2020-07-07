@@ -8,6 +8,7 @@ import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
 import { Button } from '@components';
+import { popupAlert } from '@components/Alert/Alert.react';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
@@ -37,6 +38,27 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
+      <Button
+        buttonText="popup"
+        onPress={() => {
+          popupAlert({
+            title: 'You have a letter in progress',
+            message: 'Continue writing and send that letter to your loved one',
+            buttons: [
+              {
+                text: 'Continue writing',
+                reverse: false,
+                onPress: () => null,
+              },
+              {
+                text: 'Start new letter',
+                reverse: true,
+                onPress: () => null,
+              },
+            ],
+          });
+        }}
+      />
     </View>
   );
 };

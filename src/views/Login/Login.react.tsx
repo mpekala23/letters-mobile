@@ -18,6 +18,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
 import i18n from '@i18n';
+import { popupAlert } from 'components/Alert/Alert.react';
 import Styles from './Login.styles';
 
 type LoginScreenNavigationProp = StackNavigationProp<
@@ -70,7 +71,17 @@ class LoginScreen extends React.Component<Props, State> {
         await login(cred);
       } catch (err) {
         if (err.message === 'Incorrect credentials') {
-          Alert.alert(i18n.t('LoginScreen.incorrectUsernameOrPassword'));
+          popupAlert({
+            title: i18n.t('LoginScreen.incorrectUsernameOrPassword'),
+            message: '',
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+                reverse: false,
+                onPress: () => null,
+              },
+            ],
+          });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.timedOut') });
         } else {

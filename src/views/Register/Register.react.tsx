@@ -17,6 +17,7 @@ import { dropdownError } from 'components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';
+import { popupAlert } from 'components/Alert/Alert.react';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -138,7 +139,17 @@ class RegisterScreen extends React.Component<Props, State> {
         await register(data);
       } catch (err) {
         if (err.message === 'Email in use') {
-          Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
+          popupAlert({
+            title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
+            message: '',
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+                reverse: false,
+                onPress: () => null,
+              },
+            ],
+          });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.requestTimedOut') });
         } else {
