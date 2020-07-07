@@ -16,6 +16,7 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
   LetterDetailsScreen,
@@ -34,7 +35,12 @@ import { AppState } from '@store/types';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from 'store/Notif/NotifTypes';
-import { NullableFacility, Letter, SupportFAQTypes } from 'types';
+import {
+  NullableFacility,
+  Letter,
+  SupportFAQTypes,
+  DeliveryReportTypes,
+} from 'types';
 import { Topbar } from '@components';
 import { Contact } from '@store/Contact/ContactTypes';
 
@@ -56,6 +62,7 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   LetterDetails: undefined;
   LetterTracking: undefined;
   MemoryLane: undefined;
@@ -149,6 +156,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Issues"
           component={IssuesScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="IssuesDetail"
+          component={IssuesDetailScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
