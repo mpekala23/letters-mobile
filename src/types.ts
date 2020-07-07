@@ -48,6 +48,7 @@ export enum SupportFAQTypes {
   WrongMailingAddress = 'WrongMailingAddress',
   TrackingNumber = 'TrackingNumber',
   TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
 }
 
 export interface Letter {
