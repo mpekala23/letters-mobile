@@ -6,17 +6,15 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes } from 'types';
-import { facebookShare } from '@api';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import ReportStyles from './Report.styles';
 
-type IssuesDetailScreenNavigationProp = StackNavigationProp<
+type IssuesDetailSecondaryScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'IssuesDetail'
+  'IssuesDetailSecondary'
 >;
 
 interface Props {
-  navigation: IssuesDetailScreenNavigationProp;
+  navigation: IssuesDetailSecondaryScreenNavigationProp;
   route: {
     params: { issue: DeliveryReportTypes };
   };
@@ -24,35 +22,25 @@ interface Props {
 
 function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
   switch (type) {
-    case DeliveryReportTypes.received:
-      return 'Awesome! Thanks for using our service :)';
-    case DeliveryReportTypes.unsure:
-      return "We'll check in with you again in two days.";
-    default:
-      return "What's up?";
-  }
-}
-
-function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
-  switch (type) {
-    case DeliveryReportTypes.received:
-      return "We hope you'll send another letter soon!";
-    case DeliveryReportTypes.unsure:
-      return 'Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org';
+    case DeliveryReportTypes.haveNotAsked:
+      return "We'll check in again in two days.";
+    case DeliveryReportTypes.haveNotReceived:
+      return 'Want to check with the facility?';
     default:
       return '';
   }
 }
 
-const onShare = async () => {
-  const ameelioUrl = 'letters.ameelio.org';
-  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
-  try {
-    await facebookShare(sharingUrl);
-  } catch (err) {
-    dropdownError({ message: i18n.t('Error.requestIncomplete') });
+function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
+  switch (type) {
+    case DeliveryReportTypes.haveNotAsked:
+      return 'Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org';
+    case DeliveryReportTypes.haveNotReceived:
+      return 'Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.';
+    default:
+      return '';
   }
-};
+}
 
 function defaultCTAButton(
   onPress: () => void,
@@ -72,29 +60,21 @@ function defaultCTAButton(
 
 function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
   switch (type) {
-    case DeliveryReportTypes.received:
-      return defaultCTAButton(
-        onShare,
-        'Share on Facebook',
-        ReportStyles.buttonTextReverse,
-        ReportStyles.button
-      );
-    case DeliveryReportTypes.unsure:
+    case DeliveryReportTypes.haveNotAsked:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
         'Return home',
         ReportStyles.buttonTextReverse,
         ReportStyles.button
       );
-    case DeliveryReportTypes.notYetReceived:
+    case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
-        () =>
-          props.navigation.navigate('IssuesDetailSecondary', {
-            issue: DeliveryReportTypes.haveNotAsked,
-          }),
-        "I haven't asked my loved one!",
-        { fontSize: 14, color: 'black' },
-        ReportStyles.buttonReverseBlack
+        () => {
+          /* TO-DO: Navigate to call facility phone number */
+        },
+        'Call facility',
+        ReportStyles.buttonTextReverse,
+        ReportStyles.button
       );
     default:
       return null;
@@ -106,29 +86,19 @@ function mapIssueToDetailsSecondaryCTA(
   type: DeliveryReportTypes
 ) {
   switch (type) {
-    case DeliveryReportTypes.received:
+    case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
-        'Return home',
+        "I'll wait",
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
-      );
-    case DeliveryReportTypes.notYetReceived:
-      return defaultCTAButton(
-        () =>
-          props.navigation.navigate('IssuesDetailSecondary', {
-            issue: DeliveryReportTypes.haveNotReceived,
-          }),
-        "They haven't received the letter yet",
-        { fontSize: 14, color: 'black' },
-        ReportStyles.buttonReverseBlack
       );
     default:
       return null;
   }
 }
 
-const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
+const IssuesDetailSecondaryScreen: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
     <View style={ReportStyles.background}>
@@ -148,4 +118,4 @@ const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default IssuesDetailScreen;
+export default IssuesDetailSecondaryScreen;

@@ -10,6 +10,7 @@ import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
+import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
 import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
 import LetterPreviewScreen from './Compose/LetterPreview.react';
 import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
@@ -39,6 +40,7 @@ export {
   HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterDetailsScreen,
   LoginScreen,

@@ -19,6 +19,7 @@ import {
   HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
@@ -69,6 +70,7 @@ export type AppStackParamList = {
   Home: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
+  IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
   LetterDetails: undefined;
@@ -194,6 +196,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="IssuesDetail"
           component={IssuesDetailScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="IssuesDetailSecondary"
+          component={IssuesDetailSecondaryScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

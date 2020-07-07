@@ -55,6 +55,8 @@ export enum DeliveryReportTypes {
   received = 'received',
   unsure = 'unsure',
   notYetReceived = 'notYetReceived',
+  haveNotAsked = 'haveNotAsked',
+  haveNotReceived = 'haveNotReceived',
 }
 
 export interface Letter {
