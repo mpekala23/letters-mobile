@@ -71,3 +71,9 @@ export interface LetterTrackingEvent {
   location: string;
   date: string;
 }
+
+export type TopbarRouteAction = {
+  enabled: boolean;
+  text: string;
+  action: () => void;
+};
