@@ -23,7 +23,11 @@ export const ALERT_LIGHT = 'rgba(200,20,50,0.1)';
 export const ALERT_FULL = '#cc4b37';
 export const SELECT = 'rgb(180, 180, 210)';
 
-// GRAYSCALE
+export const DROPDOWN_SUCCESS_BACKGROUND = '#F0FAF3';
+export const DROPDOWN_SUCCESS_TEXT = '#09863D';
+export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
+export const DROPDOWN_ERROR_TEXT = '#762B2B';
+
 export const GRAY_LIGHTER = '#FBFBFB';
 export const GRAY_LIGHT = '#F2F2F2';
 export const GRAY_MEDIUM = '#9A9A9A';
