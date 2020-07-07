@@ -13,7 +13,7 @@
     "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
-    "facilityCity": "FacilityCity",
+    "facilityCity": "Facility City",
     "facilityPostal": "Facility Postal"
   },
   "ContactInfoScreen": {
@@ -120,6 +120,15 @@
     "optionalDorm": "Dorm (optional, only if needed)",
     "saveProfile": "Save Profile",
     "deleteProfile": "Delete Profile"
+  },
+  "UpdateProfileScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "cellPhone": "Cell phone",
+    "addressLine": "Address line",
+    "joined": "Joined",
+    "save": "Save",
+    "logOut": "Log out"
   },
   "PrisonTypes": {
     "state": "State Prison",

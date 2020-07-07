@@ -18,6 +18,7 @@ import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Splash/Splash.react';
 import ThanksScreen from './Report/Thanks.react';
 import UpdateContactScreen from './UpdateContact/UpdateContact.react';
+import UpdateProfileScreen from './UpdateProfile/UpdateProfile.react';
 
 export {
   AddManuallyScreen,
@@ -40,4 +41,5 @@ export {
   SplashScreen,
   ThanksScreen,
   UpdateContactScreen,
+  UpdateProfileScreen,
 };

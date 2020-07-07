@@ -67,6 +67,12 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
           props.navigation.navigate('ContactSelector');
         }}
       />
+      <Button
+        buttonText="Update Profile"
+        onPress={() => {
+          props.navigation.navigate('UpdateProfile');
+        }}
+      />
     </View>
   );
 };

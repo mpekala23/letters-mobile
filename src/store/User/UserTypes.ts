@@ -1,5 +1,6 @@
 export const LOGIN_USER = 'user/login_user';
 export const LOGOUT_USER = 'user/logout_user';
+export const SET_ACTIVE_USER = 'user/set_active_user';
 
 // state types
 export interface UserRegisterInfo {
@@ -62,4 +63,12 @@ interface LogoutUserAction {
   payload: null;
 }
 
-export type UserActionTypes = LoginUserAction | LogoutUserAction;
+interface SetActiveUserAction {
+  type: typeof SET_ACTIVE_USER;
+  payload: User;
+}
+
+export type UserActionTypes =
+  | LoginUserAction
+  | LogoutUserAction
+  | SetActiveUserAction;

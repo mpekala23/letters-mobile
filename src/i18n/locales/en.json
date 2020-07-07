@@ -121,6 +121,15 @@
     "saveProfile": "Save Profile",
     "deleteProfile": "Delete Profile"
   },
+  "UpdateProfileScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "cellPhone": "Cell phone",
+    "addressLine": "Address line",
+    "joined": "Joined",
+    "save": "Save",
+    "logOut": "Log out"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"

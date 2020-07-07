@@ -3,6 +3,7 @@ import {
   UserActionTypes,
   LOGIN_USER,
   LOGOUT_USER,
+  SET_ACTIVE_USER,
 } from './UserTypes';
 
 const initialState: UserState = {
@@ -60,6 +61,15 @@ export default function UserReducer(
           city: '',
           state: '',
         },
+      };
+    case SET_ACTIVE_USER:
+      return {
+        authInfo: {
+          isLoadingToken: false,
+          isLoggedIn: true,
+          apiToken: 'create token here',
+        },
+        user: action.payload,
       };
     default:
       return state;

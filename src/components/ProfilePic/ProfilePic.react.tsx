@@ -59,7 +59,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       onPress={async () => {
         try {
           // TODO: Have this press direct to Edit Profile screen once finished
-          await logout();
+          // await logout();
         } catch (err) {
           dropdownError('Storage', 'Unable to successfully log out the user.');
         }

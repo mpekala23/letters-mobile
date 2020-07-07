@@ -5,7 +5,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
 import { Storage } from 'types';
-import { loginUser, logoutUser } from '@store/User/UserActions';
+import { loginUser, logoutUser, setActiveUser } from '@store/User/UserActions';
 import {
   setAdding,
   setExisting,
@@ -181,6 +181,41 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     state: body.data.state,
   };
   store.dispatch(loginUser(userData));
+  return userData;
+}
+
+export async function updateProfile(
+  data: Record<string, unknown>
+): Promise<User> {
+  const response = await fetchTimeout(url.resolve(API_URL, 'user'), {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const body = await response.json();
+  if (body.type === 'ERROR') {
+    throw Error(body.data);
+  }
+  const userData: User = {
+    id: body.data.id,
+    firstName: body.data.first_name,
+    lastName: body.data.last_name,
+    email: body.data.email,
+    phone: body.data.phone,
+    address1: body.data.address1,
+    address2: body.data.address2 || null,
+    country: body.data.country,
+    postal: body.data.postal,
+    city: body.data.city,
+    state: body.data.state,
+    imageUri: body.data.imageUri,
+  };
+  // store.dispatch(setExisting(newExisting));
+  // store.dispatch(loginUser(userData));
+  store.dispatch(setActiveUser(userData));
   return userData;
 }
 
