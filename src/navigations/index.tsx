@@ -36,7 +36,7 @@ import {
 } from '@views';
 import { AuthInfo } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
-import { Notif } from 'store/Notif/NotifTypes';
+import { Notif } from '@store/Notif/NotifTypes';
 import { NullableFacility, Letter, SupportFAQTypes } from 'types';
 import { Topbar } from '@components';
 import { AppState } from '@store/types';
