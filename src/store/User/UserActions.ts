@@ -2,7 +2,7 @@ import {
   User,
   LOGIN_USER,
   LOGOUT_USER,
-  SET_ACTIVE_USER,
+  SET_USER,
   UserActionTypes,
 } from './UserTypes';
 
@@ -23,9 +23,9 @@ export function logoutUser(): UserActionTypes {
 }
 
 /** Updates user profile  */
-export function setActiveUser(user: User): UserActionTypes {
+export function setUser(user: User): UserActionTypes {
   return {
-    type: SET_ACTIVE_USER,
+    type: SET_USER,
     payload: user,
   };
 }

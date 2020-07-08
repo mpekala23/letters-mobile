@@ -5,7 +5,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
 import { Storage, Letter } from 'types';
-import { loginUser, logoutUser, setActiveUser } from '@store/User/UserActions';
+import { loginUser, logoutUser, setUser } from '@store/User/UserActions';
 import {
   setAdding,
   setExisting,
@@ -199,16 +199,27 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   return userData;
 }
 
-export async function updateProfile(
-  data: Record<string, unknown>
-): Promise<User> {
+export async function updateProfile(data: User): Promise<User> {
   const response = await fetchTimeout(url.resolve(API_URL, 'user'), {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      id: data.id,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      address1: data.address1,
+      address2: data.address2,
+      country: data.country,
+      postal: data.postal,
+      city: data.city,
+      state: data.state,
+      imageUri: data.imageUri,
+    }),
   });
   const body = await response.json();
   if (body.type === 'ERROR') {
@@ -228,7 +239,7 @@ export async function updateProfile(
     state: body.data.state,
     imageUri: body.data.imageUri,
   };
-  store.dispatch(setActiveUser(userData));
+  store.dispatch(setUser(userData));
   return userData;
 }
 

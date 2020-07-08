@@ -107,8 +107,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     ) {
       const user = {
         id: this.props.userState.user.id,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
         email: this.props.userState.user.email,
         phone: this.phone.current.state.value,
         address1: this.address.current.state.value,

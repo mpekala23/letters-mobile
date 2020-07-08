@@ -14,9 +14,9 @@ jest.mock('@api', () => ({
 const setup = (authOverrides = {}, userOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const authInfo = {
-    isLoadingToken: true,
-    isLoggedIn: false,
-    apiToken: '',
+    isLoadingToken: false,
+    isLoggedIn: true,
+    apiToken: 'dummy',
     ...authOverrides,
   };
   const user = {
@@ -32,12 +32,6 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     state: 'CT',
     ...userOverrides,
   };
-  const initialUserState = {
-    user: {
-      authInfo,
-      user,
-    },
-  };
   const store = mockStore({
     user: {
       authInfo,
@@ -51,16 +45,9 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
 
   return {
     navigation,
-    store,
-    ...render(
-      <UpdateProfileScreen
-        navigation={navigation}
-        userState={initialUserState}
-      />,
-      {
-        wrapper: StoreProvider,
-      }
-    ),
+    ...render(<UpdateProfileScreen navigation={navigation} />, {
+      wrapper: StoreProvider,
+    }),
   };
 };
 
@@ -73,11 +60,7 @@ describe('Update Profile Screen', () => {
 
   it('should load initial values for fields from the redux store', () => {
     const { getByPlaceholderText } = setup(
-      {
-        isLoadingToken: true,
-        isLoggedIn: false,
-        apiToken: '',
-      },
+      {},
       {
         id: '6',
         firstName: 'First test',
