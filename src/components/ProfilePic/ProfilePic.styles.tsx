@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 
-const userSize = 45;
+const userSize = 46;
 const contactSize = 80;
 const singleContactSize = 130;
 

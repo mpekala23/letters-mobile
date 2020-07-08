@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { View, FlatList, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input } from '@components';
 import { Facility, NullableFacility } from 'types';

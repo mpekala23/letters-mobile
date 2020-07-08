@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Letter } from 'types';
+import { Letter, LetterTypes, LetterStatus } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import Styles from './LetterDetails.styles';
@@ -42,7 +42,19 @@ const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  letter: state.letter.active,
+  letter: state.letter.active
+    ? state.letter.active
+    : {
+        type: LetterTypes.PostCards,
+        status: LetterStatus.Draft,
+        isDraft: true,
+        recipientId: -1,
+        recipientName: '',
+        message: '',
+        photoPath: '',
+        dateCreated: '',
+        trackingEvents: [],
+      },
 });
 
 const LetterDetailsScreen = connect(mapStateToProps)(LetterDetailsScreenBase);

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generic Card component should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "borderRadius": 6,
+          "marginVertical": 6,
+          "padding": 15,
+          "width": "100%",
+        },
+        Object {
+          "flexDirection": "column",
+          "height": 90,
+          "justifyContent": "space-between",
+        },
+        Object {
+          "elevation": 4,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.23,
+          "shadowRadius": 2.62,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;

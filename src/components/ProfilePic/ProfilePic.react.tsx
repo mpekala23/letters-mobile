@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import { logout } from '@api';
-import { dropdownError } from 'components/Dropdown/Dropdown.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
+import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -61,7 +62,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           // TODO: Have this press direct to Edit Profile screen once finished
           // await logout();
         } catch (err) {
-          dropdownError('Storage', 'Unable to successfully log out the user.');
+          dropdownError({
+            message: i18n.t('Error.cantLogout'),
+          });
         }
       }}
     >

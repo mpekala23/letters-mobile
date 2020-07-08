@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['@babel/preset-env', 'babel-preset-expo'],
+  presets: ['babel-preset-expo'],
   plugins: [
     'inline-dotenv',
     [
@@ -18,6 +18,7 @@ module.exports = {
           '.json',
         ],
         alias: {
+          types: './src/types',
           '@api': './src/api',
           '@assets': './src/assets',
           '@components': './src/components',

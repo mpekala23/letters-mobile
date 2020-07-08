@@ -13,9 +13,9 @@ import {
   Notif,
   NativeNotif,
   FutureNotif,
-} from 'store/Notif/NotifTypes';
-import { AppState } from 'store/types';
-import { loginWithToken } from 'api';
+} from '@store/Notif/NotifTypes';
+import { AppState } from '@store/types';
+import { loginWithToken } from '@api';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 

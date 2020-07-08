@@ -1,9 +1,23 @@
 import React from 'react';
-import { PicUpload } from '@components';
-import { render, toJSON } from '@testing-library/react-native';
+import PicUpload, {
+  PicUploadTypes,
+} from '@components/PicUpload/PicUpload.react';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { pickImage } from '@utils';
 
-const setup = () => {
-  return render(<PicUpload />);
+jest.mock('@utils', () => ({
+  pickImage: jest
+    .fn()
+    .mockRejectedValueOnce('failed')
+    .mockReturnValueOnce(null)
+    .mockReturnValueOnce({ uri: 'dummy_image_path' }),
+}));
+
+const setup = (propOverrides = {}) => {
+  const props = {
+    ...propOverrides,
+  };
+  return render(<PicUpload {...props} />);
 };
 
 describe('PicUpload component', () => {
@@ -13,8 +27,42 @@ describe('PicUpload component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display blank with no image', () => {
+  it('should display blank with no image when type is profile', () => {
+    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByTestId('clickable').children[0].children).toEqual([]);
+  });
+
+  it('should display blank with no image when type is media', () => {
     const { getByTestId } = setup();
-    expect(getByTestId('clickable').children.length).toBe(0);
+    expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByTestId('clickable').children[0].children).toBeDefined();
+  });
+
+  it('should display blank with no image when error in pickImage', async () => {
+    jest.useRealTimers();
+    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    fireEvent.press(getByTestId('clickable'));
+    await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
+    expect(getByTestId('clickable').children.length).toBe(1);
+  });
+
+  it('should display blank with no image when pickImage cancelled', async () => {
+    jest.useRealTimers();
+    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    fireEvent.press(getByTestId('clickable'));
+    await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
+    expect(getByTestId('clickable').children.length).toBe(1);
+  });
+
+  it('should display an image with path when pickImage succeeds', async () => {
+    jest.useRealTimers();
+    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    fireEvent.press(getByTestId('clickable'));
+    await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
+    expect(getByTestId('clickable').children.length).toBe(2);
+    expect(getByTestId('clickable').children[0].props.source.uri).toBe(
+      'dummy_image_path'
+    );
   });
 });

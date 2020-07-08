@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Button, ProfilePic } from '@components';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
