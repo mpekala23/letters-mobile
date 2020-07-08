@@ -47,7 +47,6 @@ export default StyleSheet.create({
     padding: 6,
   },
   linkText: {
-    color: Colors.AMEELIO_BLUE,
-    textDecorationLine: 'underline',
+    color: Colors.PINK_DARKER,
   },
 });

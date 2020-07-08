@@ -134,6 +134,7 @@ describe('Contact Info Screen', () => {
         inmateNumber: '2',
         relationship: 'Mother',
         facility: null,
+        credit: 4,
       },
     });
   });

@@ -56,9 +56,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      valid: true,
-    };
 
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
@@ -93,7 +90,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     this.loadValuesFromStore();
     setProfileOverride({
       enabled: true,
-      text: 'Save',
+      text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
     });
   }
@@ -103,10 +100,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   };
 
   setValid(val: boolean) {
-    this.setState({ valid: val });
     setProfileOverride({
       enabled: val,
-      text: 'Save',
+      text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
     });
   }
@@ -324,11 +320,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
           />
         </ScrollView>
-        <Button
-          buttonText={i18n.t('UpdateContactScreen.saveProfile')}
-          enabled={this.state.valid}
-          onPress={this.doUpdateContact}
-        />
         <Button
           buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
           onPress={this.doDeleteContact}

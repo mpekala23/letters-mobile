@@ -53,18 +53,23 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "height": 40,
+                "height": 28,
                 "width": "100%",
               }
             }
           />
           <View
             style={
-              Object {
-                "backgroundColor": "white",
-                "flex": 1,
-                "paddingHorizontal": 10,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "paddingHorizontal": 10,
+                },
+                Object {
+                  "alignItems": "center",
+                },
+              ]
             }
           >
             <View
@@ -75,23 +80,11 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 }
               }
             >
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "#3490dc",
-                    "borderBottomRightRadius": 7.5,
-                    "borderTopRightRadius": 7.5,
-                    "height": 15,
-                    "marginRight": 10,
-                    "width": 30,
-                  }
-                }
-              />
               <Text
                 style={
                   Object {
                     "fontFamily": "Poppins-Bold",
-                    "fontSize": 30,
+                    "fontSize": 24,
                   }
                 }
               >
@@ -141,9 +134,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </View>
               <Text
                 style={
-                  Object {
-                    "fontFamily": "Poppins-Regular-Italic",
-                  }
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular-Italic",
+                    },
+                    Object {
+                      "paddingTop": 12,
+                    },
+                  ]
                 }
               >
                 Click to upload contact's image
@@ -669,10 +667,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
       style={
         Object {
           "alignSelf": "center",
+          "backgroundColor": "#FFF5F5",
           "flexDirection": "row",
-          "marginBottom": 15,
-          "marginTop": 0,
-          "width": 712.5,
+          "padding": 15,
         }
       }
     >

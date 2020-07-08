@@ -15,11 +15,16 @@
     "photos": "Can't access photo library"
   },
   "AddManuallyScreen": {
-    "addAFacility": "Add a Facility",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
     "facilityPostal": "Facility Postal"
+  },
+  "BeginScreen": {
+    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones",
+    "forFree": "for free",
+    "signUp": "Sign up",
+    "logIn": "Log in"
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
@@ -50,10 +55,18 @@
     "next": "Next"
   },
   "ContactSelectorScreen": {
-    "yourLovedOnes": "YOUR LOVED ONES"
+    "yourLovedOnes": "Your loved ones"
+  },
+  "CreditsCard": {
+    "credit": "Credit",
+    "credits": "Credits",
+    "left": "left",
+    "addMore": "Add more",
+    "creditsResetDaily": "Credits reset daily"
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
+    "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
     "addManually": "Add Manually"
   },
@@ -64,12 +77,15 @@
     "letterContent": "Letter content"
   },
   "LoginScreen": {
+    "welcomeBack": "Welcome back",
+    "logInWithEmailAndPassword": "Log in with your email and password",
     "emailAddress": "E-mail Address",
     "password": "Password",
     "rememberMe": "Remember Me",
-    "login": "Login",
+    "login": "Log in",
     "register": "Register",
     "forgotYourPassword": "Forgot Your Password?",
+    "resetIt": "Reset it",
     "termsCondition": "By creating an account, you agree to the",
     "termsConditionAnd": " and ",
     "termsOfService": "Terms of Service",
@@ -123,7 +139,7 @@
     "addressLine2": "Adress line 2",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
-    "saveProfile": "Save Profile",
+    "save": "Save",
     "deleteProfile": "Delete Profile"
   },
   "SupportFAQScreen": {
@@ -149,6 +165,9 @@
     "updateAddress": "Update address",
     "updateProfile": "Update profile",
     "reachOutToSupport": "Reach out to support"
+  },
+  "TermsScreen": {
+    "ameelioTermsOfService": "Ameelio Terms of Service"
   },
   "PrisonTypes": {
     "state": "State Prison",

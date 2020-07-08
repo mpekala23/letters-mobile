@@ -143,7 +143,7 @@ export default function LetterReducer(
       currentState.composing = action.payload;
       return currentState;
     case SET_ACTIVE:
-      currentState.composing = action.payload;
+      currentState.active = action.payload;
       return currentState;
     case SET_TYPE:
       currentState.composing.type = action.payload;

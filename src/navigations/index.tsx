@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/stack';
 import {
   AddManuallyScreen,
+  BeginScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
@@ -23,6 +24,7 @@ import {
   LetterDetailsScreen,
   LoginScreen,
   PostcardPreviewScreen,
+  PrivacyScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
@@ -30,6 +32,7 @@ import {
   SplashScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
+  TermsScreen,
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
@@ -50,7 +53,10 @@ export { navigationRef, navigate };
 
 export type AuthStackParamList = {
   Splash: undefined;
+  Begin: undefined;
   Login: undefined;
+  Terms: undefined;
+  Privacy: undefined;
   Register: undefined;
 };
 
@@ -89,6 +95,8 @@ interface RouteDetails {
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Splash: { title: 'Splash', profile: false },
   Login: { title: 'Login', profile: false },
+  Terms: { title: 'Terms of Service', profile: false },
+  Privacy: { title: 'Privacy Policy', profile: false },
   Register: { title: 'Register', profile: false },
   AddManually: { title: 'Add Manually', profile: false },
   ChooseOption: { title: 'Choose Option', profile: false },
@@ -156,6 +164,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
+        />
+        <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
@@ -179,13 +194,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           name="PostcardPreview"
           component={PostcardPreviewScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
         />
         <Stack.Screen
           name="ContactInfo"
@@ -308,8 +316,23 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
+          name="Begin"
+          component={BeginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Terms"
+          component={TermsScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Privacy"
+          component={PrivacyScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
