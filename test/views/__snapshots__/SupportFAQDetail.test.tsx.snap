@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Support FAQ Detail screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "flexDirection": "column",
+        "padding": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "Poppins-Bold",
+          },
+          Object {
+            "color": "#282828",
+            "fontSize": 20,
+            "paddingBottom": 20,
+            "paddingTop": 20,
+          },
+        ]
+      }
+    >
+      Talk to someone at Ameelio.
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#282828",
+          "fontSize": 16,
+          "paddingBottom": 30,
+          "paddingTop": 20,
+          "textAlign": "center",
+          "width": "90%",
+        }
+      }
+    >
+      We’re happy to talk and we’d be more than glad to help however we can!
+    </Text>
+    <View
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+      testID="callToActionButton"
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3490dc",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "backgroundColor": "#FC7272",
+              "borderRadius": 15,
+              "height": 50,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {
+                "fontSize": 18,
+              },
+              Object {},
+            ]
+          }
+        >
+          Reach out to support
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+`;

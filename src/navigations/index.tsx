@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { connect } from 'react-redux';
 import {
   createStackNavigator,
@@ -29,16 +28,24 @@ import {
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
+  SupportFAQScreen,
+  SupportFAQDetailScreen,
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
-import { AuthInfo } from '@store/User/UserTypes';
+import { AppState } from '@store/types';
+import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { Topbar } from '@components';
-import { AppState } from '@store/types';
-import { NullableFacility, Letter } from 'types';
+import { NullableFacility, Letter, SupportFAQTypes } from 'types';
+import Topbar, {
+  setTitle,
+  topbarRef,
+  setProfile,
+} from '@components/Topbar/Topbar.react';
 import { Contact } from '@store/Contact/ContactTypes';
+import { NavigationContainer } from '@react-navigation/native';
+import { Alert, Dropdown } from '@components';
 
 export { navigationRef, navigate };
 
@@ -69,8 +76,42 @@ export type AppStackParamList = {
   ReviewContact: undefined;
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
+  SupportFAQ: undefined;
+  SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
+};
+
+interface RouteDetails {
+  title: string;
+  profile: boolean;
+}
+
+const mapRouteNameToDetails: Record<string, RouteDetails> = {
+  Splash: { title: 'Splash', profile: false },
+  Login: { title: 'Login', profile: false },
+  Register: { title: 'Register', profile: false },
+  AddManually: { title: 'Add Manually', profile: false },
+  ChooseOption: { title: 'Choose Option', profile: false },
+  ComposeLetter: { title: 'Compose Letter', profile: false },
+  ComposePostcard: { title: 'Compose Postcard', profile: false },
+  ContactInfo: { title: 'Contact Info', profile: false },
+  ContactSelector: { title: 'Contact Selector', profile: true },
+  ExplainProblem: { title: 'Explain Problem', profile: false },
+  FacilityDirectory: { title: 'Facility Directory', profile: false },
+  FirstLetter: { title: 'First Letter', profile: false },
+  Home: { title: 'Home', profile: true },
+  Issues: { title: 'Issues', profile: false },
+  LetterDetails: { title: 'Letter Details', profile: true },
+  LetterPreview: { title: 'Letter Preview', profile: false },
+  LetterTracking: { title: 'Letter Tracking', profile: true },
+  MemoryLane: { title: 'Memory Lane', profile: true },
+  PostcardPreview: { title: 'Postcard Preview', profile: false },
+  ReferFriends: { title: 'Refer Friends', profile: false },
+  ReviewContact: { title: 'Review Contact', profile: false },
+  SingleContact: { title: 'Single Contact', profile: true },
+  Thanks: { title: 'Thanks', profile: false },
+  UpdateContact: { title: 'Update Contact', profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -80,6 +121,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export interface Props {
   authInfo: AuthInfo;
   currentNotif: Notif | null;
+  userState: UserState;
 }
 
 const fadeTransition = (
@@ -93,10 +135,14 @@ const fadeTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  let topSection = <View />;
-  if (!props.authInfo.isLoadingToken) {
-    topSection = <Topbar />;
-  }
+  const topbar = (
+    <Topbar
+      userState={props.userState}
+      navigation={navigationRef.current}
+      ref={topbarRef}
+    />
+  );
+
   // Determine which views should be accessible
   let screens;
   if (props.authInfo.isLoadingToken) {
@@ -138,82 +184,117 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="FacilityDirectory"
           component={FacilityDirectoryScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="AddManually"
           component={AddManuallyScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="ReferFriends"
           component={ReferFriendsScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="ReviewContact"
           component={ReviewContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="ExplainProblem"
           component={ExplainProblemScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="FirstLetter"
           component={FirstLetterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="Issues"
           component={IssuesScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="Thanks"
           component={ThanksScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="SingleContact"
           component={SingleContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="LetterTracking"
           component={LetterTrackingScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="MemoryLane"
           component={MemoryLaneScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
         <Stack.Screen
           name="LetterDetails"
           component={LetterDetailsScreen}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
+        />
+        <Stack.Screen
+          name="SupportFAQ"
+          component={SupportFAQScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
+          name="SupportFAQDetail"
+          component={SupportFAQDetailScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="UpdateContact"
           component={UpdateContactScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
         />
       </>
     );
@@ -234,22 +315,31 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     );
   }
   return (
-    <>
-      {topSection}
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={() => {
+        const name = navigationRef.current?.getCurrentRoute()?.name;
+        if (name && name in mapRouteNameToDetails) {
+          setTitle(mapRouteNameToDetails[name].title);
+          setProfile(mapRouteNameToDetails[name].profile);
+        } else {
+          setTitle('');
+          setProfile(true);
+        }
+      }}
+    >
+      {topbar}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {screens}
       </Stack.Navigator>
-    </>
+    </NavigationContainer>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
   currentNotif: state.notif.currentNotif,
+  userState: state.user,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);
 

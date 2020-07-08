@@ -9,6 +9,8 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.25)',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 11,
+    elevation: 6,
   },
   alertBackground: {
     backgroundColor: 'white',

@@ -9,6 +9,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
 import { Button } from '@components';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
@@ -54,6 +55,7 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
               },
             ],
           });
+          dropdownError({ message: 'hello' });
         }}
       />
     </View>

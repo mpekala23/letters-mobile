@@ -22,10 +22,10 @@ import {
   ContactState,
 } from '@store/Contact/ContactTypes';
 import { Facility } from 'types';
+import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
-import { addContact } from '@api';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
 import CommonStyles from './AddContact.styles';

@@ -41,6 +41,16 @@ export enum LetterTypes {
   Letters = 'letters',
 }
 
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
+}
+
 export interface Letter {
   type: LetterTypes;
   status: LetterStatus;
@@ -61,3 +71,9 @@ export interface LetterTrackingEvent {
   location: string;
   date: string;
 }
+
+export type TopbarRouteAction = {
+  enabled: boolean;
+  text: string;
+  action: () => void;
+};

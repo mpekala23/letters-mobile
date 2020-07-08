@@ -128,6 +128,30 @@
     "saveProfile": "Save Profile",
     "deleteProfile": "Delete Profile"
   },
+  "SupportFAQScreen": {
+    "howCanWeHelp": "How can we help?",
+    "cancelMyLetter": "I want to delete my letter",
+    "notYetArrived": "I sent my letter more than 6 days ago and it hasn't arrived at the facility yet",
+    "wrongMailingAddress": "I put the wrong mailing address",
+    "wrongReturnAddress": "I put the wrong return address",
+    "wouldLikeTrackingNumber": "I would like the USPS tracking number",
+    "somethingWrongWithTracking": "There's something wrong with tracking",
+    "talkToAmeelio": "I want to talk to someone at Ameelio"
+  },
+  "SupportFAQDetailScreen": {
+    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio.",
+    "cancelMyLetter1": "Sorry to hear that. Unfortunately, we cannot cancel letters after they are sent",
+    "cancelMyLetter2": "Letters are immediately sent to our printers after you submit and they are already on their way.",
+    "notYetArrived": "Due to COVID-19, USPS is experiencing temporary delays in delivery. We’ll report your problem to the service provider and we appreciate your patience during this time. We are trying our best to ensure the letter gets to your recipient soon.",
+    "wrongMailingAddress": "Sorry to hear that! We won’t be able to edit the address for this letter since it’s already on the way, but you can easily update your loved one’s address to make sure they get the next ones!",
+    "wrongReturnAddress": "We’re sorry to hear that! To update your return address, you can update your profile here.",
+    "trackingNumber": "Each letter sent through our platform has a unique barcode that gets scanned by USPS as it travels through the mail stream. However, we do not have access to the specific USPS tracking number at this time.",
+    "trackingError": "We’re sorry to hear that! Please reach out to us so we can help you figure out what went wrong.",
+    "talkToAmeelio": "We’re happy to talk and we’d be more than glad to help however we can!",
+    "updateAddress": "Update address",
+    "updateProfile": "Update profile",
+    "reachOutToSupport": "Reach out to support"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"
@@ -151,6 +175,7 @@
   "Compose": {
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
-    "send": "Send Letter"
+    "send": "Send Letter",
+    "preview": "Letter Preview"
   }
 }

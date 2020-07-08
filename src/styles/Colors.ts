@@ -34,7 +34,6 @@ export const GRAY_MEDIUM = '#9A9A9A';
 export const GRAY_DARK = '#6D6D6D';
 export const GRAY_DARKER = '#393939';
 
-// PINKSCALE
 export const PINK_LIGHTEST = '#FFF5F5';
 export const PINK_LIGHTER = '#FFE8E8';
 export const PINK_LIGHT = '#FFC4C4';
@@ -42,7 +41,6 @@ export const PINK_DARK = '#FF9E9E';
 export const PINK_DARKER = '#FF7171';
 export const PINK_DARKEST = '#762B2B';
 
-// BLUESCALE
 export const BLUE_LIGHTEST = '#F1F7FF';
 export const BLUE_LIGHTER = '#D7E4F8';
 export const BLUE_LIGHT = '#A8C1E4';
@@ -50,7 +48,6 @@ export const BLUE_DARK = '#8DA7CC';
 export const BLUE_DARKER = '#6D89B1';
 export const BLUE_DARKEST = '#436697';
 
-// GREENSCALE
 export const GREEN_LIGHTEST = '#F0FAF3';
 export const GREEN_LIGHTER = '#CFF3DD';
 export const GREEN_LIGHT = '#9EE2B8';
