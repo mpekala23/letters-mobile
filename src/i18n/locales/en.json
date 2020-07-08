@@ -166,6 +166,9 @@
     "updateProfile": "Update profile",
     "reachOutToSupport": "Reach out to support"
   },
+  "TermsScreen": {
+    "ameelioTermsOfService": "Ameelio Terms of Service"
+  },
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison"

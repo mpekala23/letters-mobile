@@ -186,7 +186,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.termsOfService')}
                     onPress={() => {
-                      /* TODO */
+                      this.props.navigation.navigate('Terms');
                     }}
                   />
                   <Text accessible={false} style={Typography.FONT_REGULAR}>
@@ -196,7 +196,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.privacyPolicy')}
                     onPress={() => {
-                      /* TODO */
+                      this.props.navigation.navigate('Privacy');
                     }}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
