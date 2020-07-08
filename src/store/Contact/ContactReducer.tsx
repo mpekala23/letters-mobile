@@ -16,6 +16,7 @@ const initialState: ContactState = {
     inmateNumber: '',
     relationship: '',
     facility: null,
+    credit: 4,
   },
   active: {
     id: -1,
@@ -25,6 +26,7 @@ const initialState: ContactState = {
     inmateNumber: '',
     relationship: '',
     facility: null,
+    credit: 4,
   },
   existing: [],
 };

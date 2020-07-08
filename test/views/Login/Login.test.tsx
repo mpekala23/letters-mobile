@@ -13,7 +13,10 @@ const setup = (response = {}) => {
   if (Object.keys(response).length > 0) {
     fetchMock.mockOnce(JSON.stringify(response));
   }
-  return render(<LoginScreen navigation={navigation} />);
+  return {
+    navigation,
+    ...render(<LoginScreen navigation={navigation} />),
+  };
 };
 
 describe('Login screen', () => {
@@ -39,7 +42,19 @@ describe('Login screen', () => {
       },
       type: 'success',
     });
-    fireEvent.press(getByText('Login'));
+    fireEvent.press(getByText('Log in'));
     expect(login).toHaveBeenCalledTimes(1);
+  });
+
+  it('should navigate to terms of service when ToS button is pressed', () => {
+    const { navigation, getByText } = setup();
+    fireEvent.press(getByText('Terms of Service'));
+    expect(navigation.navigate).toHaveBeenCalledWith('Terms');
+  });
+
+  it('should navigate to privacy policy when privacy button is pressed', () => {
+    const { navigation, getByText } = setup();
+    fireEvent.press(getByText('Privacy Policy'));
+    expect(navigation.navigate).toHaveBeenCalledWith('Privacy');
   });
 });

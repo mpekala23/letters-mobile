@@ -11,6 +11,7 @@ module.exports = (req, res) => {
     relationship,
     state,
     facility,
+    credit,
   } = req.body;
 
   if (inmate_number === '123456789') {
@@ -30,6 +31,7 @@ module.exports = (req, res) => {
       relationship,
       state,
       facility,
+      credit,
     },
   });
 };

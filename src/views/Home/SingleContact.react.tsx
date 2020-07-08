@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
 import { ProfilePicTypes, Letter } from 'types';
+import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
@@ -53,6 +54,21 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
           );
         })
       : null;
+
+  const letterTrackingTitle =
+    letters && letters.length > 0 ? (
+      <Text
+        style={[
+          Typography.BASE_TITLE,
+          {
+            color: Colors.GRAY_DARK,
+            paddingTop: 12,
+          },
+        ]}
+      >
+        {i18n.t('SingleContactScreen.letterTracking')}
+      </Text>
+    ) : null;
 
   return (
     <View style={Styles.trueBackground}>
@@ -107,7 +123,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         <Button
           onPress={() => props.navigation.navigate('ChooseOption')}
           buttonText={i18n.t('SingleContactScreen.sendLetter')}
-          textStyle={{ fontSize: 20 }}
+          textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
           containerStyle={Styles.sendLetterButton}
         />
       </View>
@@ -115,6 +131,12 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         style={Styles.actionItems}
         keyboardShouldPersistTaps="handled"
       >
+        <CreditsCard
+          credits={contact.credit}
+          onPress={() => {
+            /* Navigate to Add More credits flow */
+          }}
+        />
         <MemoryLaneCountCard
           letterCount={letters ? letters.length : 0}
           onPress={() => {
@@ -122,17 +144,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('MemoryLane');
           }}
         />
-        <Text
-          style={[
-            Typography.BASE_TITLE,
-            {
-              color: Colors.GRAY_DARKER,
-              paddingTop: 24,
-            },
-          ]}
-        >
-          {i18n.t('SingleContactScreen.letterTracking')}
-        </Text>
+        {letterTrackingTitle}
         {letterCards}
       </ScrollView>
     </View>

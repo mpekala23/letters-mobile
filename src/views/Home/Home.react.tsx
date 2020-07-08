@@ -8,7 +8,6 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
 import { Button } from '@components';
-import { getContacts } from '@api';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
@@ -38,7 +37,10 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button buttonText="Get contacts" onPress={getContacts} />
+      <Button
+        buttonText="View Contact List"
+        onPress={() => props.navigation.navigate('ContactSelector')}
+      />
     </View>
   );
 };

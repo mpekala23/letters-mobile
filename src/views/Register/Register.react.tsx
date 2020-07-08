@@ -277,7 +277,7 @@ class RegisterScreen extends React.Component<Props, State> {
           />
           <Input
             ref={this.phyState}
-            parentStyle={Styles.fullWidth}
+            parentStyle={[Styles.fullWidth, { marginBottom: 8 }]}
             placeholder={i18n.t('RegisterScreen.state')}
             validate={Validation.State}
             options={STATES_DROPDOWN}
@@ -343,7 +343,7 @@ class RegisterScreen extends React.Component<Props, State> {
             }}
           />
           <Button
-            containerStyle={Styles.fullWidth}
+            containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}
             enabled={this.state.valid}
             onPress={this.doRegister}

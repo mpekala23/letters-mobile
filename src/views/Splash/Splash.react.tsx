@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import i18n from '@i18n';
 import * as Localization from 'expo-localization';
-
-import AmeelioLogo from '@assets/Ameelio_Logo.png';
+import { Icon } from '@components';
+import AmeelioBirdPink from '@assets/AmeelioBirdPink';
 
 const SplashScreen: React.FC = () => {
   useEffect(() => {
@@ -22,12 +22,9 @@ const SplashScreen: React.FC = () => {
         backgroundColor: 'white',
       }}
     >
-      <Image
-        style={{ height: 120, aspectRatio: 2015 / 885 }}
-        source={AmeelioLogo}
-        accessible
-        accessibilityLabel="Ameelio Logo"
-      />
+      <View accessible accessibilityLabel="Ameelio Logo">
+        <Icon svg={AmeelioBirdPink} style={{ padding: 80 }} />
+      </View>
     </View>
   );
 };
