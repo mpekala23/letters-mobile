@@ -47,13 +47,10 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
             buttons: [
               {
                 text: 'Continue writing',
-                reverse: false,
-                onPress: () => null,
               },
               {
                 text: 'Start new letter',
                 reverse: true,
-                onPress: () => null,
               },
             ],
           });

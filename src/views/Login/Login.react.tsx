@@ -73,12 +73,9 @@ class LoginScreen extends React.Component<Props, State> {
         if (err.message === 'Incorrect credentials') {
           popupAlert({
             title: i18n.t('LoginScreen.incorrectUsernameOrPassword'),
-            message: '',
             buttons: [
               {
                 text: i18n.t('Alert.okay'),
-                reverse: false,
-                onPress: () => null,
               },
             ],
           });

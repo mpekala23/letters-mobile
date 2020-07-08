@@ -67,9 +67,7 @@ class NotifsBase {
       popupAlert({
         title: i18n.t('Alert.emulatorDetected'),
         message: i18n.t('Alert.mustUsePhysical'),
-        buttons: [
-          { text: i18n.t('Alert.okay'), reverse: false, onPress: () => null },
-        ],
+        buttons: [{ text: i18n.t('Alert.okay') }],
       });
       return;
     }
@@ -88,13 +86,11 @@ class NotifsBase {
         buttons: [
           {
             text: i18n.t('Alert.goToSettings'),
-            reverse: false,
             onPress: this.goToSettings,
           },
           {
             text: i18n.t('Alert.maybeLater'),
             reverse: true,
-            onPress: () => null,
           },
         ],
       });

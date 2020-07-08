@@ -141,12 +141,9 @@ class RegisterScreen extends React.Component<Props, State> {
         if (err.message === 'Email in use') {
           popupAlert({
             title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
-            message: '',
             buttons: [
               {
                 text: i18n.t('Alert.okay'),
-                reverse: false,
-                onPress: () => null,
               },
             ],
           });

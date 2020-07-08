@@ -165,24 +165,18 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         if (err.message === 'Invalid inmate number') {
           popupAlert({
             title: i18n.t('ReviewContactScreen.invalidInmateNumber'),
-            message: '',
             buttons: [
               {
                 text: i18n.t('Alert.okay'),
-                reverse: false,
-                onPress: () => null,
               },
             ],
           });
         } else if (err.message === 'Contact already exists') {
           popupAlert({
             title: i18n.t('ReviewContactScreen.contactAlreadyExists'),
-            message: '',
             buttons: [
               {
                 text: i18n.t('Alert.okay'),
-                reverse: false,
-                onPress: () => null,
               },
             ],
           });
