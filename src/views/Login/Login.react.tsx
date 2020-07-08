@@ -51,7 +51,7 @@ class LoginScreen extends React.Component<Props, State> {
 
   devSkip = async (): Promise<void> => {
     if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org');
-    if (this.passwordRef.current) this.passwordRef.current.set('password');
+    if (this.passwordRef.current) this.passwordRef.current.set('ThisGood1');
     setTimeout(() => {
       this.onLogin();
     }, 10);
@@ -69,7 +69,10 @@ class LoginScreen extends React.Component<Props, State> {
       try {
         await login(cred);
       } catch (err) {
-        if (err.message === 'Incorrect credentials') {
+        if (
+          err.message === 'Missing Fields' ||
+          err.message === 'Invalid Password'
+        ) {
           Alert.alert(i18n.t('LoginScreen.incorrectUsernameOrPassword'));
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.timedOut') });

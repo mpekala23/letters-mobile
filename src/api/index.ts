@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+// The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
 import { Linking } from 'react-native';
 import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
@@ -16,7 +18,9 @@ import { addLetter } from '@store/Letter/LetterActions';
 import i18n from '@i18n';
 
 const { MOCK_API_IP } = process.env;
-export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
+export const MOCK_API_URL = `http://${MOCK_API_IP}:9000/api/`;
+
+export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
 export interface UserResponse {
   type: string;
@@ -38,7 +42,7 @@ export function fetchTimeout(
 
 export async function fetchAuthenticated(
   fetchUrl: string,
-  options: Record<string, unknown>,
+  options: Record<string, unknown> = {},
   timeout = 3000
 ): Promise<Response> {
   const requestOptions = {
@@ -91,7 +95,7 @@ export async function loginWithToken(): Promise<User> {
       city: body.data.city,
       state: body.data.state,
     };
-    store.dispatch(loginUser(userData));
+    store.dispatch(loginUser(userData, body.token));
     return userData;
   } catch (err) {
     store.dispatch(logoutUser());
@@ -113,12 +117,12 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   const body = await response.json();
   if (body.status === 'ERROR') {
-    throw Error(body.message);
+    throw body;
   }
   if (cred.remember) {
     try {
       // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
-      await saveToken(body.data.token);
+      await saveToken(body.data.remember);
     } catch (err) {
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
@@ -138,7 +142,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     city: body.data.city,
     state: body.data.state,
   };
-  store.dispatch(loginUser(userData));
+  store.dispatch(loginUser(userData, body.data.token));
   return userData;
 }
 
@@ -157,20 +161,23 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     },
     body: JSON.stringify({
       email: data.email,
+      password: data.password,
+      password_confirmation: data.passwordConfirmation,
       first_name: data.firstName,
       last_name: data.lastName,
-      phone: data.phone,
-      addr_line_1: data.address1,
-      addr_line_2: data.address2,
-      country: data.country,
-      postal: data.postal,
+      address_line_1: data.address1,
+      address_line_2: data.address2,
       city: data.city,
       state: data.state,
+      country: data.country,
+      referer: data.referer,
+      postal: data.postal,
+      phone: data.phone,
     }),
   });
   const body = await response.json();
-  if (body.status === 'ERROR') {
-    throw Error(body.message);
+  if (body.status === 'ERROR' || body.exception) {
+    throw body;
   }
   if (data.remember) {
     try {
@@ -195,14 +202,63 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     city: body.data.city,
     state: body.data.state,
   };
-  store.dispatch(loginUser(userData));
+  store.dispatch(loginUser(userData, body.data.token));
   return userData;
+}
+
+interface RawContact {
+  id: number;
+  state: string;
+  first_name: string;
+  last_name: string;
+  facility_state: string;
+  inmate_number: string;
+  relationship: string;
+  facility_name: string;
+  facility_address: string;
+  facility_city: string;
+  facility_postal: string;
+}
+
+export async function getContacts(page = 1): Promise<Contact[]> {
+  const params = new URLSearchParams({ page: page.toString() });
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `contacts?${params}`),
+    {
+      method: 'GET',
+    }
+  );
+  const body = await response.json();
+  const cleanContact = (data: RawContact): Contact => {
+    return {
+      id: data.id,
+      state: data.facility_state,
+      firstName: data.first_name,
+      lastName: data.last_name,
+      inmateNumber: data.inmate_number,
+      relationship: data.relationship,
+      facility: {
+        name: data.facility_name,
+        type: 'Federal Prison', // TODO: does this field even exist on the backend?
+        address: data.facility_address,
+        city: data.facility_city,
+        state: data.facility_state,
+        postal: data.facility_postal,
+      },
+    };
+  };
+  if (body.status === 'ERROR') throw body;
+  const existingContacts = body.data.data.map((contact: RawContact) =>
+    cleanContact(contact)
+  );
+  store.dispatch(setExisting(existingContacts));
+  return existingContacts;
 }
 
 export async function addContact(
   data: Record<string, unknown>
 ): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -243,7 +299,7 @@ export async function addContact(
 export async function updateContact(
   data: Record<string, unknown>
 ): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -278,7 +334,7 @@ export async function updateContact(
 }
 
 export async function deleteContact(data: Contact): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(API_URL, 'contacts'), {
+  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
@@ -321,7 +377,7 @@ export async function createLetter(letter: Letter): Promise<Letter> {
     body: JSON.stringify(reqBody),
   };
   const response = await fetchAuthenticated(
-    url.resolve(API_URL, 'letter'),
+    url.resolve(MOCK_API_URL, 'letter'),
     options
   );
   const body = await response.json();

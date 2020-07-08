@@ -36,9 +36,9 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
-          apiToken: 'create token here',
+          apiToken: action.payload.token,
         },
-        user: action.payload,
+        user: action.payload.user,
       };
     case LOGOUT_USER:
       return {

@@ -14,7 +14,7 @@ import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { STATES_DROPDOWN, Validation, REFERERS } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import i18n from '@i18n';
 import Styles from './Register.style';
@@ -56,6 +56,10 @@ class RegisterScreen extends React.Component<Props, State> {
 
   private password = createRef<Input>();
 
+  private passwordConfirmation = createRef<Input>();
+
+  private referer = createRef<Input>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -72,9 +76,12 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.country.current) this.country.current.set('USA');
     if (this.postal.current) this.postal.current.set('12345');
     if (this.city.current) this.city.current.set('New Haven');
-    if (this.phyState.current) this.phyState.current.set('Conneticut');
+    if (this.phyState.current) this.phyState.current.set('Connecticut');
     if (this.email.current) this.email.current.set('team@ameelio.org');
     if (this.password.current) this.password.current.set('ThisGood1');
+    if (this.passwordConfirmation.current)
+      this.passwordConfirmation.current.set('ThisGood1');
+    if (this.referer.current) this.referer.current.set('Other');
     this.updateValid();
   };
 
@@ -89,7 +96,9 @@ class RegisterScreen extends React.Component<Props, State> {
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
-      this.password.current
+      this.password.current &&
+      this.passwordConfirmation.current &&
+      this.referer.current
     ) {
       const result =
         this.firstName.current.state.valid &&
@@ -99,9 +108,12 @@ class RegisterScreen extends React.Component<Props, State> {
         this.country.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
-        // this.phyState.current.state.valid &&
+        this.phyState.current.state.valid &&
         this.email.current.state.valid &&
-        this.password.current.state.valid;
+        this.password.current.state.valid &&
+        this.passwordConfirmation.current.state.value ===
+          this.password.current.state.value &&
+        this.referer.current.state.valid;
       this.setState({ valid: result });
     }
   };
@@ -118,7 +130,9 @@ class RegisterScreen extends React.Component<Props, State> {
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
-      this.password.current
+      this.password.current &&
+      this.passwordConfirmation.current &&
+      this.referer.current
     ) {
       const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
@@ -132,13 +146,17 @@ class RegisterScreen extends React.Component<Props, State> {
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
         password: this.password.current.state.value,
+        passwordConfirmation: this.passwordConfirmation.current.state.value,
         remember: this.state.remember,
+        referer: this.referer.current.state.value,
       };
       try {
         await register(data);
       } catch (err) {
-        if (err.message === 'Email in use') {
-          Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
+        console.log(err);
+        if (err.message === 'Validation Error') {
+          if (err.data.email)
+            Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.requestTimedOut') });
         } else {
@@ -285,6 +303,25 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             secure
             validate={Validation.Password}
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+          />
+          <Input
+            ref={this.passwordConfirmation}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.confirmPassword')}
+            required
+            secure
+            validate={Validation.Password}
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+          />
+          <Input
+            ref={this.referer}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.referer')}
+            required
+            options={REFERERS}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />

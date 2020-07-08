@@ -6,8 +6,10 @@ import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { STATES, STATES_DROPDOWN } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
+import REFERERS from './Referers';
 
 export { Prompts, getRandomPromptIx };
+export { REFERERS };
 
 // Global constants
 export const STATUS_BAR_HEIGHT = 20;

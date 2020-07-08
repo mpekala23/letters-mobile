@@ -152,6 +152,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
+        />
+        <Stack.Screen
           name="ChooseOption"
           component={ChooseOptionScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
@@ -175,13 +182,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           name="PostcardPreview"
           component={PostcardPreviewScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
         />
         <Stack.Screen
           name="ContactInfo"

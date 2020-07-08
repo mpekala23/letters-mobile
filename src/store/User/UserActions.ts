@@ -1,10 +1,13 @@
 import { User, LOGIN_USER, LOGOUT_USER, UserActionTypes } from './UserTypes';
 
 /** Logs in a user, either by loaded token or successful auth. */
-export function loginUser(user: User): UserActionTypes {
+export function loginUser(user: User, token: string): UserActionTypes {
   return {
     type: LOGIN_USER,
-    payload: user,
+    payload: {
+      user,
+      token,
+    },
   };
 }
 

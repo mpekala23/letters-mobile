@@ -7,6 +7,7 @@ export interface UserRegisterInfo {
   lastName: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
   phone: string;
   address1: string;
   address2?: string;
@@ -14,6 +15,7 @@ export interface UserRegisterInfo {
   postal: string;
   city: string;
   state: string;
+  referer: string;
   imageUri?: string;
   remember?: boolean;
 }
@@ -54,7 +56,10 @@ export interface UserState {
 
 interface LoginUserAction {
   type: typeof LOGIN_USER;
-  payload: User;
+  payload: {
+    user: User;
+    token: string;
+  };
 }
 
 interface LogoutUserAction {
