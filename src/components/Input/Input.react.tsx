@@ -22,7 +22,7 @@ import Styles, {
 import Icon from '../Icon/Icon.react';
 
 export interface Props {
-  parentStyle?: ViewStyle;
+  parentStyle?: ViewStyle | ViewStyle[];
   inputStyle?: Record<string, unknown>;
   placeholder?: string;
   onFocus: () => void;

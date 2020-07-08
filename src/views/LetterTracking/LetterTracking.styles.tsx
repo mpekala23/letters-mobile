@@ -14,7 +14,7 @@ export default StyleSheet.create({
     width: '50%',
     height: 50,
     alignSelf: 'center',
-    marginBottom: 25,
+    marginBottom: 16,
   },
   headerText: {
     color: Colors.AMEELIO_BLACK,

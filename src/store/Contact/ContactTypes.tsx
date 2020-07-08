@@ -13,6 +13,7 @@ export interface Contact {
   inmateNumber: string;
   relationship: string;
   facility: Facility | null;
+  credit: number;
 }
 
 export interface ContactState {

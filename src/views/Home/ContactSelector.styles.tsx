@@ -16,6 +16,16 @@ export default StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 4,
   },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 1.8,
+    elevation: 4,
+  },
   contactCardInfo: {
     color: Colors.GRAY_DARKER,
     fontSize: 16,

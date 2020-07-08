@@ -48,28 +48,28 @@ describe('Letter Tracker component', () => {
   it('should display tracker color for status Mailed', () => {
     const { getByTestId } = setup({ name: LetterStatus.Mailed });
     expect(getByTestId('trackerCircle').props.style.backgroundColor).toBe(
-      '#A8C1E4'
+      '#CFF3DD'
     );
   });
 
   it('should display tracker color for status InTransit', () => {
     const { getByTestId } = setup({ name: LetterStatus.InTransit });
     expect(getByTestId('trackerCircle').props.style.backgroundColor).toBe(
-      '#8DA7CC'
+      '#9EE2B8'
     );
   });
 
   it('should display tracker color for status InLocalArea', () => {
     const { getByTestId } = setup({ name: LetterStatus.InLocalArea });
     expect(getByTestId('trackerCircle').props.style.backgroundColor).toBe(
-      '#6D89B1'
+      '#43BF75'
     );
   });
 
   it('should display tracker color for status OutForDelivery', () => {
     const { getByTestId } = setup({ name: LetterStatus.OutForDelivery });
     expect(getByTestId('trackerCircle').props.style.backgroundColor).toBe(
-      '#436697'
+      '#21A453'
     );
   });
 });

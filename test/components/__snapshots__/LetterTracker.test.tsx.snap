@@ -22,11 +22,12 @@ exports[`Letter Tracker component should match snapshot 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#A8C1E4",
+            "backgroundColor": "#CFF3DD",
             "borderRadius": 50,
-            "height": 36,
+            "height": 28,
+            "marginLeft": 4,
             "marginRight": 24,
-            "width": 36,
+            "width": 28,
           }
         }
         testID="trackerCircle"

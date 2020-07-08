@@ -3,6 +3,7 @@ import { Image, Text, TouchableOpacity } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
 import { NavigationContainerRef } from '@react-navigation/native';
+import { Typography } from '@styles';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -41,7 +42,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
-  let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
+  let insideCircle = (
+    <Text style={[Typography.FONT_REGULAR, Styles.initials]}>{initials}</Text>
+  );
 
   if (props.imageUri) {
     insideCircle = (
@@ -61,6 +64,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           props.navigation.navigate('UpdateProfile');
         }
       }}
+      testID="profilePicture"
     >
       {insideCircle}
     </TouchableOpacity>

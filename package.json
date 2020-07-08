@@ -31,6 +31,7 @@
     "expo-file-system": "^8.1.0",
     "expo-font": "~8.1.0",
     "expo-image-picker": "^8.1.0",
+    "expo-linear-gradient": "~8.1.0",
     "expo-localization": "^8.1.0",
     "expo-permissions": "^8.1.0",
     "expo-secure-store": "^8.1.0",
@@ -52,6 +53,7 @@
     "react-native-emoji": "^1.8.0",
     "react-native-env": "0.0.6",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-global-props": "^1.1.5",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.2",
     "react-native-screens": "^2.7.0",
@@ -64,8 +66,7 @@
     "redux-mock-store": "^1.5.4",
     "redux-persist": "^6.0.0",
     "url": "^0.11.0",
-    "utf-8-validate": "^5.0.2",
-    "expo-linear-gradient": "~8.1.0"
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
