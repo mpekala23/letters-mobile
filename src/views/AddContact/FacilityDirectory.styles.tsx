@@ -6,8 +6,7 @@ export default StyleSheet.create({
   facilityBackground: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 60,
-    paddingHorizontal: 10,
+    paddingTop: 20,
   },
   shadow: {
     shadowColor: '#000',
@@ -30,11 +29,11 @@ export default StyleSheet.create({
     width: WINDOW_WIDTH * 0.9,
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 30,
+    borderRadius: 7,
     marginBottom: 10,
   },
   selectedBackground: {
-    backgroundColor: Colors.SELECT,
+    backgroundColor: Colors.PINK_LIGHTER,
   },
   itemTitle: {
     fontSize: 16,
@@ -46,10 +45,18 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   searchParent: {
-    marginTop: 20,
+    marginTop: 10,
+    marginLeft: 10,
+    width: '95%',
   },
   searchInput: {
     padding: 10,
     borderRadius: 20,
+  },
+  addManuallyButton: {
+    backgroundColor: Colors.PINK_DARKER,
+    borderRadius: 15,
+    width: '100%',
+    height: 50,
   },
 });

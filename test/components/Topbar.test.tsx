@@ -1,12 +1,8 @@
 import React from 'react';
 import { Topbar } from '@components';
-import { render, toJSON } from '@testing-library/react-native';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { render, toJSON, fireEvent } from '@testing-library/react-native';
 
-const mockStore = configureStore([]);
-
-const setup = (authOverrides = {}, userOverrides = {}) => {
+const setup = (authOverrides = {}, userOverrides = {}, navOverrides = {}) => {
   const authInfo = {
     isLoadingToken: true,
     isLoggedIn: false,
@@ -26,19 +22,19 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     state: 'CT',
     ...userOverrides,
   };
-  const store = mockStore({
-    user: {
-      authInfo,
-      user,
-    },
-  });
-
-  const StoreProvider = ({ children }: { children: JSX.Element }) => {
-    return <Provider store={store}>{children}</Provider>;
+  const navigation = {
+    canGoBack: () => true,
+    goBack: jest.fn(),
+    ...navOverrides,
   };
 
   return {
-    ...render(<Topbar />, { wrapper: StoreProvider }),
+    ...render(
+      <Topbar userState={{ user, authInfo }} navigation={navigation} />
+    ),
+    user,
+    authInfo,
+    navigation,
   };
 };
 
@@ -49,7 +45,7 @@ describe('Topbar component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('profile picture should be blank when user is logged out', () => {
+  it('should show a blank profile picture when user is logged out', () => {
     const { getByTestId } = setup();
     expect(getByTestId('blank').children.length).toBe(0);
   });
@@ -62,5 +58,18 @@ describe('Topbar component', () => {
       { imageUri: 'placeholder' }
     );
     expect(getByLabelText('Profile Picture')).toBeDefined();
+  });
+
+  it('should allow a user to go back when canGoBack() returns true', () => {
+    const { getByTestId, navigation } = setup();
+    const backButton = getByTestId('backButton');
+    fireEvent.press(backButton);
+    expect(navigation.goBack).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not display a back button when canGoBack() returns false', () => {
+    const { queryByTestId } = setup({}, {}, { canGoBack: () => false });
+    const backButton = queryByTestId('backButton');
+    expect(backButton).toBeNull();
   });
 });

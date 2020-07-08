@@ -40,8 +40,14 @@ export default StyleSheet.create({
     marginBottom: 15,
   },
   privacyText: {
-    fontSize: 18,
+    fontSize: 16,
+    textAlign: 'center',
     fontWeight: '400',
     color: '#124181',
+  },
+  registerButton: {
+    borderRadius: 15,
+    width: '100%',
+    height: 50,
   },
 });

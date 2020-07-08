@@ -1,9 +1,10 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
 import { logout } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
+import { Typography } from '@styles';
 import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
@@ -42,7 +43,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       props.firstName[0].toUpperCase() + props.lastName[0].toUpperCase();
   }
 
-  let insideCircle = <Text style={Styles.initials}>{initials}</Text>;
+  let insideCircle = (
+    <Text style={[Typography.FONT_REGULAR, Styles.initials]}>{initials}</Text>
+  );
 
   if (props.imageUri) {
     insideCircle = (
@@ -67,6 +70,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           });
         }
       }}
+      testID="profilePicture"
     >
       {insideCircle}
     </TouchableOpacity>
