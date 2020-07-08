@@ -57,6 +57,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
               "width": 130,
             }
           }
+          testID="profilePicture"
         >
           <Image
             accessibilityLabel="Profile Picture"
