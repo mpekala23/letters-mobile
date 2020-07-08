@@ -261,9 +261,14 @@ exports[`Begin screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {
-                "fontSize": 18,
-              },
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ],
               Object {},
             ]
           }

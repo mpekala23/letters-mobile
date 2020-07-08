@@ -1003,11 +1003,16 @@ exports[`Register screen should match snapshot 1`] = `
               "justifyContent": "center",
               "marginVertical": 5,
             },
-            Object {
-              "borderRadius": 15,
-              "height": 50,
-              "width": "100%",
-            },
+            Array [
+              Object {
+                "width": "100%",
+              },
+              Object {
+                "borderRadius": 15,
+                "height": 50,
+                "width": "100%",
+              },
+            ],
             Object {},
           ]
         }

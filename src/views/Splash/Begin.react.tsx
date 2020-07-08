@@ -40,7 +40,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         <Button
           onPress={() => props.navigation.navigate('Register')}
           buttonText={i18n.t('BeginScreen.signUp')}
-          textStyle={(Typography.FONT_BOLD, Styles.baseText)}
+          textStyle={[Typography.FONT_BOLD, Styles.baseText]}
           containerStyle={Styles.registerButton}
         />
         <Button

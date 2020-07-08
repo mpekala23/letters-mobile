@@ -60,9 +60,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           />
           <View
             style={
-              Object {
-                "alignItems": "center",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "paddingHorizontal": 10,
+                },
+                Object {
+                  "alignItems": "center",
+                },
+              ]
             }
           >
             <View

@@ -4,8 +4,8 @@ import { Typography } from '@styles';
 import Styles from './Button.styles';
 
 export interface Props {
-  containerStyle?: Record<string, unknown>;
-  textStyle?: Record<string, unknown> | TextStyle;
+  containerStyle?: Record<string, unknown> | Record<string, unknown>[];
+  textStyle?: Record<string, unknown> | TextStyle | TextStyle[];
   disabledContainerStyle?: Record<string, unknown>;
   disabledTextStyle?: Record<string, unknown>;
   buttonText?: string;
