@@ -228,8 +228,6 @@ export async function updateProfile(
     state: body.data.state,
     imageUri: body.data.imageUri,
   };
-  // store.dispatch(setExisting(newExisting));
-  // store.dispatch(loginUser(userData));
   store.dispatch(setActiveUser(userData));
   return userData;
 }

@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Button, Input, ProfilePic } from '@components';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from 'navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
@@ -45,33 +46,56 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   private address = createRef<Input>();
 
+  private unsubscribeFocus: () => void;
+
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
-    this.state = {
-      inputting: false,
-      valid: false,
-    };
+    this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.doUpdateProfile = this.doUpdateProfile.bind(this);
     this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentDidMount() {
-    this.onNavigationFocus();
+    this.loadValuesFromStore();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.phone.current &&
-      this.address.current
-    ) {
-      this.firstName.current.set(this.props.userState.user.firstName);
-      this.lastName.current.set(this.props.userState.user.lastName);
-      this.phone.current.set(this.props.userState.user.phone);
-      this.address.current.set(this.props.userState.user.address1);
-    }
+    this.loadValuesFromStore();
+    setProfileOverride({
+      enabled: true,
+      text: i18n.t('UpdateProfileScreen.save'),
+      action: this.doUpdateProfile,
+    });
+  }
+
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
+
+  setValid(val: boolean) {
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('UpdateProfileScreen.save'),
+      action: this.doUpdateProfile,
+    });
   }
 
   doUpdateProfile = async () => {
@@ -96,9 +120,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         imageUri: this.props.userState.user.imageUri,
       };
       try {
-        // console.log("new user:", user);
         await updateProfile(user);
-        // this.props.navigation.navigate('ContactSelector');
+        this.props.navigation.pop();
       } catch (err) {
         dropdownError(
           i18n.t('Error.network'),
@@ -107,6 +130,20 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       }
     }
   };
+
+  loadValuesFromStore() {
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.phone.current &&
+      this.address.current
+    ) {
+      this.firstName.current.set(this.props.userState.user.firstName);
+      this.lastName.current.set(this.props.userState.user.lastName);
+      this.phone.current.set(this.props.userState.user.phone);
+      this.address.current.set(this.props.userState.user.address1);
+    }
+  }
 
   updateValid() {
     if (
@@ -121,7 +158,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.phone.current.state.valid &&
         this.address.current.state.valid &&
         this.didUpdateAtLeastOneField();
-      this.setState({ valid: result });
+      this.setValid(result);
     }
   }
 
@@ -162,23 +199,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
           enabled
         >
           <View style={Styles.profileCard}>
-            <View
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-              }}
-            >
-              <Button
-                buttonText={i18n.t('UpdateProfileScreen.save')}
-                onPress={this.doUpdateProfile}
-                enabled={this.state.valid}
-                containerStyle={Styles.saveButton}
-              />
-            </View>
             <ProfilePic
               firstName={user.firstName}
               lastName={user.lastName}
@@ -200,7 +220,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
           </View>
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            scrollEnabled={this.state.inputting}
+            scrollEnabled
             style={{ width: '100%' }}
           >
             <Text
@@ -219,14 +239,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={{ width: '100%' }}
               placeholder={i18n.t('UpdateProfileScreen.firstName')}
               required
-              onFocus={() => {
-                this.setState({ inputting: true });
-              }}
-              onBlur={() => {
-                this.setState({ inputting: false });
-              }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
             <Text
@@ -245,14 +259,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={{ width: '100%', marginBottom: 10 }}
               placeholder={i18n.t('UpdateProfileScreen.lastName')}
               required
-              onFocus={() => {
-                this.setState({ inputting: true });
-              }}
-              onBlur={() => {
-                this.setState({ inputting: false });
-              }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={() => this.setValid(false)}
               nextInput={this.phone}
             />
             <Text
@@ -271,14 +279,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={{ width: '100%', marginBottom: 10 }}
               placeholder={i18n.t('UpdateProfileScreen.cellPhone')}
               required
-              onFocus={() => {
-                this.setState({ inputting: true });
-              }}
-              onBlur={() => {
-                this.setState({ inputting: false });
-              }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={() => this.setValid(false)}
               nextInput={this.address}
             />
             <Text
@@ -296,14 +298,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               ref={this.address}
               placeholder={i18n.t('UpdateProfileScreen.addressLine')}
               required
-              onFocus={() => {
-                this.setState({ inputting: true });
-              }}
-              onBlur={() => {
-                this.setState({ inputting: false });
-              }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={() => this.setValid(false)}
             />
           </ScrollView>
           <Button

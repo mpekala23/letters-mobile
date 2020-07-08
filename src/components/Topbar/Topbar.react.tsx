@@ -42,6 +42,7 @@ class Topbar extends React.Component<Props, State> {
           lastName={this.props.userState.user.lastName}
           imageUri={this.props.userState.user.imageUri}
           type={ProfilePicTypes.Topbar}
+          navigation={this.props.navigation}
         />
       );
     } else if (this.state.profileOverride) {
