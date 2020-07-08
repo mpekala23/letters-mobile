@@ -46,7 +46,7 @@ const IssuesScreen: React.FC<Props> = (props: Props) => {
           });
         }}
         containerStyle={ReportStyles.buttonReverse}
-        textStyle={(Typography.FONT_MEDIUM, ReportStyles.buttonText)}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
       <Button
         buttonText={i18n.t('IssuesScreen.notSureYet')}
@@ -56,7 +56,7 @@ const IssuesScreen: React.FC<Props> = (props: Props) => {
           });
         }}
         containerStyle={ReportStyles.buttonReverse}
-        textStyle={(Typography.FONT_MEDIUM, ReportStyles.buttonText)}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
       <Button
         buttonText={i18n.t('IssuesScreen.notYetReceived')}
@@ -66,7 +66,7 @@ const IssuesScreen: React.FC<Props> = (props: Props) => {
           });
         }}
         containerStyle={ReportStyles.buttonReverse}
-        textStyle={(Typography.FONT_MEDIUM, ReportStyles.buttonText)}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
     </View>
   );

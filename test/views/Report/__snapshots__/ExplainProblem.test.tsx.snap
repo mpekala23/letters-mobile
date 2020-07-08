@@ -24,7 +24,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
           "alignItems": "center",
           "backgroundColor": "white",
           "flex": 1,
-          "paddingHorizontal": 30,
+          "paddingHorizontal": 16,
           "paddingTop": 40,
         }
       }
@@ -38,6 +38,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
             Object {
               "fontSize": 23,
               "textAlign": "center",
+              "width": "80%",
             },
           ]
         }

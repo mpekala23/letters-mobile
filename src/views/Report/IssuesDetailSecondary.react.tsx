@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TextStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
 import { AppStackParamList } from '@navigations';
@@ -23,9 +23,9 @@ interface Props {
 function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
-      return "We'll check in again in two days.";
+      return i18n.t('IssuesDetailScreen.weWillCheckInTwoDays');
     case DeliveryReportTypes.haveNotReceived:
-      return 'Want to check with the facility?';
+      return i18n.t('IssuesDetailScreen.wantToCheckWithFacility');
     default:
       return '';
   }
@@ -34,9 +34,9 @@ function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
 function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
-      return 'Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org';
+      return i18n.t('IssuesDetailScreen.yourLetterIsOnItsWay');
     case DeliveryReportTypes.haveNotReceived:
-      return 'Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.';
+      return i18n.t('IssuesDetailScreen.waitCoupleDays');
     default:
       return '';
   }
@@ -45,14 +45,14 @@ function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
 function defaultCTAButton(
   onPress: () => void,
   buttonText: string,
-  textStyle: Record<string, unknown>,
+  textStyle: TextStyle,
   containerStyle: Record<string, unknown>
 ) {
   return (
     <Button
       onPress={onPress}
       buttonText={buttonText}
-      textStyle={textStyle}
+      textStyle={[Typography.FONT_MEDIUM, textStyle]}
       containerStyle={containerStyle}
     />
   );
@@ -63,16 +63,16 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
     case DeliveryReportTypes.haveNotAsked:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
-        'Return home',
-        ReportStyles.buttonTextReverse,
-        ReportStyles.button
+        i18n.t('IssuesDetailScreen.returnHome'),
+        ReportStyles.buttonText,
+        ReportStyles.buttonReverse
       );
     case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
         () => {
           /* TO-DO: Navigate to call facility phone number */
         },
-        'Call facility',
+        i18n.t('IssuesDetailScreen.callFacility'),
         ReportStyles.buttonTextReverse,
         ReportStyles.button
       );
@@ -89,7 +89,7 @@ function mapIssueToDetailsSecondaryCTA(
     case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
-        "I'll wait",
+        i18n.t('IssuesDetailScreen.IllWait'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
       );

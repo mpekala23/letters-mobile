@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TextStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
 import { AppStackParamList } from '@navigations';
@@ -25,20 +25,20 @@ interface Props {
 function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.received:
-      return 'Awesome! Thanks for using our service :)';
+      return i18n.t('IssuesDetailScreen.awesomeThanksForUsingOurService');
     case DeliveryReportTypes.unsure:
-      return "We'll check in with you again in two days.";
+      return i18n.t('IssuesDetailScreen.weWillCheckInTwoDays');
     default:
-      return "What's up?";
+      return i18n.t('IssuesDetailScreen.whatsUp');
   }
 }
 
 function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.received:
-      return "We hope you'll send another letter soon!";
+      return i18n.t('IssuesDetailScreen.weHopeYoullSendAnotherLetter');
     case DeliveryReportTypes.unsure:
-      return 'Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org';
+      return i18n.t('IssuesDetailScreen.yourLetterIsOnItsWay');
     default:
       return '';
   }
@@ -57,14 +57,14 @@ const onShare = async () => {
 function defaultCTAButton(
   onPress: () => void,
   buttonText: string,
-  textStyle: Record<string, unknown>,
+  textStyle: TextStyle,
   containerStyle: Record<string, unknown>
 ) {
   return (
     <Button
       onPress={onPress}
       buttonText={buttonText}
-      textStyle={textStyle}
+      textStyle={[Typography.FONT_MEDIUM, textStyle]}
       containerStyle={containerStyle}
     />
   );
@@ -75,16 +75,16 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
     case DeliveryReportTypes.received:
       return defaultCTAButton(
         onShare,
-        'Share on Facebook',
+        i18n.t('IssuesDetailScreen.shareOnFacebook'),
         ReportStyles.buttonTextReverse,
         ReportStyles.button
       );
     case DeliveryReportTypes.unsure:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
-        'Return home',
-        ReportStyles.buttonTextReverse,
-        ReportStyles.button
+        i18n.t('IssuesDetailScreen.returnHome'),
+        ReportStyles.buttonText,
+        ReportStyles.buttonReverse
       );
     case DeliveryReportTypes.notYetReceived:
       return defaultCTAButton(
@@ -92,8 +92,8 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
           props.navigation.navigate('IssuesDetailSecondary', {
             issue: DeliveryReportTypes.haveNotAsked,
           }),
-        "I haven't asked my loved one!",
-        { fontSize: 14, color: 'black' },
+        i18n.t('IssuesDetailScreen.IHaventAskedMyLovedOne'),
+        { fontSize: 15, color: 'black' },
         ReportStyles.buttonReverseBlack
       );
     default:
@@ -109,7 +109,7 @@ function mapIssueToDetailsSecondaryCTA(
     case DeliveryReportTypes.received:
       return defaultCTAButton(
         () => props.navigation.navigate('Home'),
-        'Return home',
+        i18n.t('IssuesDetailScreen.returnHome'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
       );
@@ -119,8 +119,8 @@ function mapIssueToDetailsSecondaryCTA(
           props.navigation.navigate('IssuesDetailSecondary', {
             issue: DeliveryReportTypes.haveNotReceived,
           }),
-        "They haven't received the letter yet",
-        { fontSize: 14, color: 'black' },
+        i18n.t('IssuesDetailScreen.theyHaventReceivedLetter'),
+        { fontSize: 15, color: 'black' },
         ReportStyles.buttonReverseBlack
       );
     default:
