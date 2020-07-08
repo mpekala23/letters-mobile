@@ -255,7 +255,6 @@ export async function addContact(
     state: body.data.state,
     relationship: body.data.relationship,
     facility: body.data.facility,
-    credit: 4,
   };
   const { existing } = store.getState().contact;
   existing.push(contactData);
@@ -269,7 +268,6 @@ export async function addContact(
       inmateNumber: '',
       relationship: '',
       facility: null,
-      credit: 4,
     })
   );
   return existing;

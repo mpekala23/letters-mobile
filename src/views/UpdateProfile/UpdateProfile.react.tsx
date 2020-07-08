@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Button, Input, ProfilePic } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { AppStackParamList } from 'navigations';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -18,7 +18,7 @@ import { UserState } from '@store/User/UserTypes';
 import { ProfilePicTypes } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { logout, updateProfile } from 'api';
+import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
 import Styles from './UpdateProfile.styles';
 
@@ -123,10 +123,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         await updateProfile(user);
         this.props.navigation.pop();
       } catch (err) {
-        dropdownError(
-          i18n.t('Error.network'),
-          i18n.t('Error.requestIncomplete')
-        );
+        dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
   };
