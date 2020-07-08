@@ -24,6 +24,7 @@ import {
   LetterDetailsScreen,
   LoginScreen,
   PostcardPreviewScreen,
+  PrivacyScreen,
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
@@ -31,6 +32,7 @@ import {
   SplashScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
+  TermsScreen,
   ThanksScreen,
   UpdateContactScreen,
 } from '@views';
@@ -53,6 +55,8 @@ export type AuthStackParamList = {
   Splash: undefined;
   Begin: undefined;
   Login: undefined;
+  Terms: undefined;
+  Privacy: undefined;
   Register: undefined;
 };
 
@@ -91,6 +95,8 @@ interface RouteDetails {
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Splash: { title: 'Splash', profile: false },
   Login: { title: 'Login', profile: false },
+  Terms: { title: 'Terms of Service', profile: false },
+  Privacy: { title: 'Privacy Policy', profile: false },
   Register: { title: 'Register', profile: false },
   AddManually: { title: 'Add Manually', profile: false },
   ChooseOption: { title: 'Choose Option', profile: false },
@@ -317,6 +323,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Terms"
+          component={TermsScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="Privacy"
+          component={PrivacyScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
