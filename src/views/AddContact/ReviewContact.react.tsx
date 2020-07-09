@@ -27,6 +27,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
+import { popupAlert } from '@components/Alert/Alert.react';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -163,9 +164,23 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
-          Alert.alert('Invalid inmate number');
+          popupAlert({
+            title: i18n.t('ReviewContactScreen.invalidInmateNumber'),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else if (err.message === 'Contact already exists') {
-          Alert.alert('Contact already exists');
+          popupAlert({
+            title: i18n.t('ReviewContactScreen.contactAlreadyExists'),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else {
           dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }

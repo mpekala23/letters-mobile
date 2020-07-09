@@ -48,6 +48,7 @@ import Topbar, {
 } from '@components/Topbar/Topbar.react';
 import { Contact } from '@store/Contact/ContactTypes';
 import { NavigationContainer } from '@react-navigation/native';
+import { Alert, Dropdown } from '@components';
 
 export { navigationRef, navigate };
 
@@ -166,13 +167,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

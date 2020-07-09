@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store, { persistor } from '@store';
 import Navigator from '@navigations';
-import { Dropdown, Statusbar } from '@components';
+import { Alert, Dropdown, Statusbar } from '@components';
 import { loginWithToken } from '@api';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as Font from 'expo-font';
@@ -58,8 +58,9 @@ export default class App extends React.Component<null, State> {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <Statusbar />
-            <Dropdown />
             <Navigator />
+            <Alert />
+            <Dropdown />
           </PersistGate>
         </Provider>
       );
