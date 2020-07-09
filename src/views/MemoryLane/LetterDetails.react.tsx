@@ -34,7 +34,7 @@ const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
         <Text style={Styles.baseText}>{letter.dateCreated}</Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={Styles.letterText}>{letter.message}</Text>
+        <Text style={Styles.letterText}>{letter.content}</Text>
         {photos}
       </ScrollView>
     </View>
@@ -45,12 +45,12 @@ const mapStateToProps = (state: AppState) => ({
   letter: state.letter.active
     ? state.letter.active
     : {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
+        content: '',
         photoPath: '',
         dateCreated: '',
         trackingEvents: [],

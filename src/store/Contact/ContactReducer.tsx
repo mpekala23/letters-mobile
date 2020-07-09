@@ -10,7 +10,6 @@ import {
 const initialState: ContactState = {
   adding: {
     id: -1,
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
@@ -20,7 +19,6 @@ const initialState: ContactState = {
   },
   active: {
     id: -1,
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',

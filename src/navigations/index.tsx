@@ -61,14 +61,14 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  AddManually: undefined;
+  AddManually: { phyState: string };
   ChooseOption: undefined;
   ComposeLetter: undefined;
   ComposePostcard: undefined;
-  ContactInfo: { addFromSelector: boolean } | undefined;
+  ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   ExplainProblem: undefined;
-  FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  FacilityDirectory: { newFacility?: NullableFacility; phyState: string };
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;

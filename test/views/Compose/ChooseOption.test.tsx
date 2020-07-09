@@ -12,9 +12,9 @@ const setup = () => {
   const store = mockStore({
     letter: {
       composing: {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         recipient: null,
-        message: '',
+        content: '',
         photoPath: '',
       },
       existing: [],
@@ -46,7 +46,7 @@ describe('ChooseOption screen', () => {
     const actions = store.getActions();
     expect(actions.length).toBe(1);
     expect(actions[0].type).toBe('letter/set_type');
-    expect(actions[0].payload).toBe('postCards');
+    expect(actions[0].payload).toBe('postcard');
   });
 
   it('should dispatch a setType action when Letter button is pressed', () => {
@@ -55,6 +55,6 @@ describe('ChooseOption screen', () => {
     const actions = store.getActions();
     expect(actions.length).toBe(1);
     expect(actions[0].type).toBe('letter/set_type');
-    expect(actions[0].payload).toBe('letters');
+    expect(actions[0].payload).toBe('letter');
   });
 });

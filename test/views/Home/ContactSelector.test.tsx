@@ -23,11 +23,11 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
   );
 
   const letters = {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     status: LetterStatus.Printed,
     isDraft: true,
     recipientId: 8,
-    message: "I'm trying out this new service called Ameelio...",
+    content: "I'm trying out this new service called Ameelio...",
     photoPath: '',
     ...lettersOverrides,
   };

@@ -14,12 +14,12 @@ const setup = () => {
   const store = mockStore({
     letter: {
       composing: {
-        type: LetterTypes.Letters,
+        type: LetterTypes.Letter,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
+        content: '',
         photoPath: '',
         letterId: -1,
       },

@@ -7,13 +7,14 @@ export const CLEAR_CONTACTS = 'contact/clear_contacts';
 
 export interface Contact {
   id: number;
-  state: string;
   firstName: string;
   lastName: string;
   inmateNumber: string;
   relationship: string;
   facility: Facility | null;
   credit: number;
+  dorm?: string;
+  unit?: string;
 }
 
 export interface ContactState {

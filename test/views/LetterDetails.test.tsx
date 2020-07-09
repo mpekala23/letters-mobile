@@ -10,11 +10,11 @@ const mockStore = configureStore([]);
 const setup = (letterOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const letter = {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     status: LetterStatus.Mailed,
     isDraft: true,
     recipientId: 8,
-    message: "I'm trying out this new service called Ameelio...",
+    content: "I'm trying out this new service called Ameelio...",
     photoPath: '',
     letterId: 1,
     expectedDeliveryDate: '2019-06-30',
@@ -74,11 +74,11 @@ describe('Letter Details Screen', () => {
 
   it('should load values for letters from the redux store', () => {
     const { getByText } = setup({
-      type: LetterTypes.PostCards,
+      type: LetterTypes.Postcard,
       status: LetterStatus.InTransit,
       isDraft: true,
       recipientId: 8,
-      message: 'Redux Letter 1',
+      content: 'Redux Letter 1',
       letterId: 2,
       expectedDeliveryDate: '2019-06-30',
     });

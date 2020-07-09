@@ -6,7 +6,7 @@ import {
   SET_STATUS,
   SET_DRAFT,
   SET_RECIPIENT_ID,
-  SET_MESSAGE,
+  SET_CONTENT,
   SET_PHOTO_PATH,
   SET_LETTER_ID,
   CLEAR_COMPOSING,
@@ -57,10 +57,10 @@ export function setRecipientId(contactId: number): LetterActionTypes {
   };
 }
 
-export function setMessage(message: string): LetterActionTypes {
+export function setContent(content: string): LetterActionTypes {
   return {
-    type: SET_MESSAGE,
-    payload: message,
+    type: SET_CONTENT,
+    payload: content,
   };
 }
 

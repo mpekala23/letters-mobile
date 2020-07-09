@@ -27,6 +27,7 @@ type PostcardPreviewScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: PostcardPreviewScreenNavigationProp;
   composing: Letter;
+  recipientName: string;
   setDraft: (value: boolean) => void;
   setStatus: (status: LetterStatus) => void;
   clearComposing: () => void;
@@ -49,7 +50,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <Icon svg={Stamp} style={{ alignSelf: 'flex-end' }} />
             <Text style={Typography.FONT_REGULAR}>
-              To: {props.composing.recipientName}{' '}
+              To: {props.recipientName}{' '}
             </Text>
             <GrayBar />
             <GrayBar />
@@ -63,7 +64,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
           >
-            {props.composing.message}
+            {props.composing.content}
           </Text>
         </GenericCard>
       </View>
@@ -103,6 +104,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {

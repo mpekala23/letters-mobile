@@ -19,7 +19,7 @@ const setup = () => {
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
+        content: '',
         photoPath: '',
         letterId: -1,
       },

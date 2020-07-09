@@ -96,7 +96,7 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
         {i18n.t('LetterTrackingScreen.letterContent')}
       </Text>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={{ fontSize: 15 }}>{props.letter.message}</Text>
+        <Text style={{ fontSize: 15 }}>{props.letter.content}</Text>
       </ScrollView>
     </View>
   );

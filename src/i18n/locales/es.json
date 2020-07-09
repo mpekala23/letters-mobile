@@ -18,6 +18,7 @@
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
+    "facilityState": "Facility State",
     "facilityPostal": "Facility Postal"
   },
   "BeginScreen": {

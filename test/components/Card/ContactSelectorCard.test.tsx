@@ -10,7 +10,7 @@ const setup = (propOverrides = {}) => {
       {
         isDraft: true,
         recipientId: 8,
-        message: 'Text',
+        content: 'Text',
         photoPath: '',
       },
     ],

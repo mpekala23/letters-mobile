@@ -27,13 +27,14 @@ export interface Props {
   facilityData: Facility[];
   navigation: ContactInfoScreenNavigationProp;
   route: {
-    params: { newFacility: NullableFacility };
+    params: { newFacility?: NullableFacility; phyState: string };
   };
   contactState: ContactState;
   setAdding: (contact: Contact) => void;
 }
 
 export interface State {
+  phyState: string;
   search: string;
   selected: Facility | null;
   manual: Facility | null;
@@ -44,7 +45,7 @@ const example: Facility = {
   type: 'State Prison',
   address: 'P.O. Box 400',
   city: 'Bethel',
-  state: 'AK',
+  state: 'Alaska',
   postal: '99559',
 };
 
@@ -58,6 +59,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      phyState: '',
       search: '',
       selected: null,
       manual: null,
@@ -88,6 +90,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       });
     } else {
       this.setState({ selected: this.props.contactState.adding.facility });
+    }
+    if (this.props.route.params && this.props.route.params.phyState) {
+      this.setState({ phyState: this.props.route.params.phyState });
     }
     this.props.navigation.setParams({ newFacility: null });
   }
@@ -165,7 +170,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           containerStyle={Styles.addManuallyButton}
           onPress={() => {
             this.setState({ selected: null });
-            this.props.navigation.navigate('AddManually');
+            this.props.navigation.navigate('AddManually', {
+              phyState: this.state.phyState,
+            });
           }}
         />
       </View>
@@ -209,7 +216,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               this.props.navigation.setParams({
                 newFacility: null,
               });
-              this.props.navigation.navigate('ContactInfo');
+              this.props.navigation.navigate('ContactInfo', {
+                phyState: this.props.route.params.phyState,
+              });
             }}
             buttonText={i18n.t('ContactInfoScreen.back')}
             reverse
@@ -219,7 +228,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             onPress={() => {
               const contact = this.props.contactState.adding;
               contact.facility = this.state.selected;
-
               this.props.setAdding(contact);
               this.props.navigation.setParams({
                 newFacility: null,

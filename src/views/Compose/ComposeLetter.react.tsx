@@ -13,7 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage, setDraft } from '@store/Letter/LetterActions';
+import { setDraft, setContent } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
@@ -29,7 +29,8 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
-  setMessage: (message: string) => void;
+  recipientName: string;
+  setContent: (content: string) => void;
   setDraft: (value: boolean) => void;
 }
 
@@ -79,7 +80,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   changeText(value: string): void {
     this.updateWordsLeft(value);
-    this.props.setMessage(value);
+    this.props.setContent(value);
   }
 
   render(): JSX.Element {
@@ -118,7 +119,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                 this.props.navigation.navigate('LetterPreview');
               }}
             />
-            <ComposeHeader recipientName={this.props.composing.recipientName} />
+            <ComposeHeader recipientName={this.props.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -195,10 +196,11 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
-    setMessage: (message: string) => dispatch(setMessage(message)),
+    setContent: (content: string) => dispatch(setContent(content)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };

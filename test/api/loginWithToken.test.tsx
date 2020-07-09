@@ -41,7 +41,7 @@ describe('api loginWithToken', () => {
     fetchMock.post(
       `*`,
       JSON.stringify({
-        status: 'SUCCESS',
+        status: 'OK',
         data: {
           id: '6',
           first_name: 'Team',

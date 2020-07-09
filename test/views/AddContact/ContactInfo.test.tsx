@@ -24,7 +24,6 @@ const setup = (
     },
   };
   const contact = {
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
@@ -128,7 +127,6 @@ describe('Contact Info Screen', () => {
       type: SET_ADDING,
       payload: {
         id: -1,
-        state: 'Minnesota',
         firstName: 'First',
         lastName: 'Last',
         inmateNumber: '2',
@@ -151,7 +149,9 @@ describe('Contact Info Screen', () => {
       'Mother'
     );
     fireEvent.press(nextButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory');
+    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory', {
+      phyState: 'Minnesota',
+    });
   });
 
   it('should load initial values for fields from the redux store', () => {
@@ -177,10 +177,8 @@ describe('Contact Info Screen', () => {
   });
 
   it('should update the state databases to search when user inputs a valid state', () => {
-    const { queryByText, getByText, getByPlaceholderText } = setup(
-      {},
-      { state: 'Iowa' }
-    );
+    const { queryByText, getByText, getByPlaceholderText } = setup();
+    fireEvent.changeText(getByPlaceholderText('State'), 'Iowa');
     expect(getByText('Iowa')).toBeDefined();
     const stateInput = getByPlaceholderText('State');
     fireEvent.changeText(stateInput, 'Not a valid state');

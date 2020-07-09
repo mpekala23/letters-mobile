@@ -14,9 +14,9 @@ import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import {
-  setMessage,
   setPhotoPath,
   setDraft,
+  setContent,
 } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
@@ -36,7 +36,8 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
-  setMessage: (message: string) => void;
+  recipientName: string;
+  setContent: (content: string) => void;
   setPhotoPath: (path: string) => void;
   setDraft: (value: boolean) => void;
 }
@@ -82,7 +83,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   changeText(value: string): void {
     this.updateCharsLeft(value);
-    this.props.setMessage(value);
+    this.props.setContent(value);
   }
 
   registerPhoto(photo: string): void {
@@ -129,7 +130,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 this.props.navigation.navigate('PostcardPreview');
               }}
             />
-            <ComposeHeader recipientName={this.props.composing.recipientName} />
+            <ComposeHeader recipientName={this.props.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -240,10 +241,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
-    setMessage: (message: string) => dispatch(setMessage(message)),
+    setContent: (content: string) => dispatch(setContent(content)),
     setPhotoPath: (path: string) => dispatch(setPhotoPath(path)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };

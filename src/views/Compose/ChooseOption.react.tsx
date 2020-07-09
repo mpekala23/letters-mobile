@@ -29,16 +29,16 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         Choose an option
       </Text>
       <LetterOptionCard
-        type={LetterTypes.PostCards}
+        type={LetterTypes.Postcard}
         onPress={() => {
-          props.setType(LetterTypes.PostCards);
+          props.setType(LetterTypes.Postcard);
           props.navigation.navigate('ComposePostcard');
         }}
       />
       <LetterOptionCard
-        type={LetterTypes.Letters}
+        type={LetterTypes.Letter}
         onPress={() => {
-          props.setType(LetterTypes.Letters);
+          props.setType(LetterTypes.Letter);
           props.navigation.navigate('ComposeLetter');
         }}
       />

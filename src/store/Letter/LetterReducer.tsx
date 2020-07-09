@@ -8,7 +8,7 @@ import {
   SET_STATUS,
   SET_DRAFT,
   SET_RECIPIENT_ID,
-  SET_MESSAGE,
+  SET_CONTENT,
   SET_PHOTO_PATH,
   SET_LETTER_ID,
   CLEAR_COMPOSING,
@@ -18,23 +18,21 @@ import {
 
 const initialState: LetterState = {
   composing: {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     status: LetterStatus.Draft,
     isDraft: true,
     recipientId: -1,
-    recipientName: '',
-    message: '',
+    content: '',
     photoPath: '',
     dateCreated: '06/29/20',
     trackingEvents: [],
   },
   active: {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     status: LetterStatus.Created,
     isDraft: true,
     recipientId: -1,
-    recipientName: '',
-    message: '',
+    content: '',
     photoPath: '',
     dateCreated: '06/29/20',
     trackingEvents: [],
@@ -43,12 +41,11 @@ const initialState: LetterState = {
     8: [
       {
         letterId: 1,
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.Mailed,
         isDraft: true,
         recipientId: 8,
-        recipientName: 'Jane doe',
-        message: "I'm trying out this new service called Ameelio...",
+        content: "I'm trying out this new service called Ameelio...",
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -64,11 +61,10 @@ const initialState: LetterState = {
       },
       {
         letterId: 2,
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.InTransit,
         isDraft: true,
         recipientId: 8,
-        recipientName: 'John Doe',
         expectedDeliveryDate: '2019-06-30',
         trackingEvents: [
           {
@@ -84,7 +80,7 @@ const initialState: LetterState = {
             date: '2019-06-23T15:51:41.000Z',
           },
         ],
-        message:
+        content:
           "Hi Emily! How are you doing? I'm sending you a letter through Ameelio. It is a great service! ",
         dateCreated: '06/26/20',
         photoPath:
@@ -92,12 +88,11 @@ const initialState: LetterState = {
       },
       {
         letterId: 3,
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        recipientName: 'Jonathon Yoe',
-        message: "I'm trying out this new service called Ameelio...",
+        content: "I'm trying out this new service called Ameelio...",
         dateCreated: '06/14/20',
         photoPath:
           'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
@@ -157,8 +152,8 @@ export default function LetterReducer(
     case SET_RECIPIENT_ID:
       currentState.composing.recipientId = action.payload;
       return currentState;
-    case SET_MESSAGE:
-      currentState.composing.message = action.payload;
+    case SET_CONTENT:
+      currentState.composing.content = action.payload;
       return currentState;
     case SET_PHOTO_PATH:
       currentState.composing.photoPath = action.payload;

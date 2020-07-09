@@ -6,19 +6,26 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, Letter } from 'types';
+import {
+  Storage,
+  Letter,
+  Facility,
+  LetterTrackingEvent,
+  LetterTypes,
+  LetterStatus,
+} from 'types';
 import { loginUser, logoutUser } from '@store/User/UserActions';
 import {
-  setAdding,
-  setExisting,
+  setAdding as setAddingContact,
+  setExisting as setExistingContacts,
   clearContacts,
 } from '@store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
-import { addLetter } from '@store/Letter/LetterActions';
+import {
+  addLetter,
+  setExisting as setExistingLetters,
+} from '@store/Letter/LetterActions';
 import i18n from '@i18n';
-
-const { MOCK_API_IP } = process.env;
-export const MOCK_API_URL = `http://${MOCK_API_IP}:9000/api/`;
 
 export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
@@ -81,7 +88,7 @@ export async function loginWithToken(): Promise<User> {
       }),
     });
     const body = await response.json();
-    if (body.status === 'ERROR') throw Error('Invalid token');
+    if (body.status !== 'OK') throw Error('Invalid token');
     const userData: User = {
       id: body.data.id,
       firstName: body.data.first_name,
@@ -116,7 +123,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     }),
   });
   const body = await response.json();
-  if (body.status === 'ERROR') {
+  if (body.status !== 'OK') {
     throw body;
   }
   if (cred.remember) {
@@ -176,7 +183,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     }),
   });
   const body = await response.json();
-  if (body.status === 'ERROR' || body.exception) {
+  if (body.status !== 'OK' || body.exception) {
     throw body;
   }
   if (data.remember) {
@@ -220,6 +227,25 @@ interface RawContact {
   facility_postal: string;
 }
 
+function cleanContact(data: RawContact): Contact {
+  return {
+    id: data.id,
+    firstName: data.first_name,
+    lastName: data.last_name,
+    inmateNumber: data.inmate_number,
+    relationship: data.relationship,
+    credit: 4, // TODO: how do credits work on the backend? is this even in V0
+    facility: {
+      name: data.facility_name,
+      type: 'Federal Prison', // TODO: does this field even exist on the backend?
+      address: data.facility_address,
+      city: data.facility_city,
+      state: data.facility_state,
+      postal: data.facility_postal,
+    },
+  };
+}
+
 export async function getContacts(page = 1): Promise<Contact[]> {
   const params = new URLSearchParams({ page: page.toString() });
   const response = await fetchAuthenticated(
@@ -229,64 +255,56 @@ export async function getContacts(page = 1): Promise<Contact[]> {
     }
   );
   const body = await response.json();
-  const cleanContact = (data: RawContact): Contact => {
-    return {
-      id: data.id,
-      state: data.facility_state,
-      firstName: data.first_name,
-      lastName: data.last_name,
-      inmateNumber: data.inmate_number,
-      relationship: data.relationship,
-      facility: {
-        name: data.facility_name,
-        type: 'Federal Prison', // TODO: does this field even exist on the backend?
-        address: data.facility_address,
-        city: data.facility_city,
-        state: data.facility_state,
-        postal: data.facility_postal,
-      },
-    };
-  };
-  if (body.status === 'ERROR') throw body;
+
+  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
   const existingContacts = body.data.data.map((contact: RawContact) =>
     cleanContact(contact)
   );
-  store.dispatch(setExisting(existingContacts));
+  store.dispatch(setExistingContacts(existingContacts));
   return existingContacts;
 }
 
-export async function addContact(
-  data: Record<string, unknown>
-): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
+export async function getContact(id: number): Promise<Contact> {
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `contact/${id}`),
+    {
+      method: 'GET',
+    }
+  );
+  const body = await response.json();
+  if (body.status !== 'OK' || !body.data) throw body;
+  return cleanContact(body.data);
+}
+
+export async function addContact(data: Contact): Promise<Contact[]> {
+  if (!data.facility) throw Error('No facility');
+  const dormExtension = data.dorm ? { facility_dorm: data.dorm } : {};
+  const unitExtension = data.unit ? { facility_unit: data.unit } : {};
+  const response = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      first_name: data.firstName,
+      last_name: data.lastName,
+      inmate_number: data.inmateNumber,
+      facility_name: data.facility.name,
+      facility_address: data.facility.address,
+      facility_city: data.facility.city,
+      facility_state: data.facility.state,
+      facility_postal: data.facility.postal,
+      ...dormExtension,
+      ...unitExtension,
+      relationship: data.relationship,
+    }),
   });
   const body = await response.json();
-  if (body.type === 'ERROR') {
-    throw Error(body.data);
-  }
-  const contactData: Contact = {
-    id: body.data.id,
-    firstName: body.data.first_name,
-    lastName: body.data.last_name,
-    inmateNumber: body.data.inmate_number,
-    state: body.data.state,
-    relationship: body.data.relationship,
-    facility: body.data.facility,
-    credit: body.data.credit,
-  };
+  if (body.status !== 'OK') throw body;
+
   const { existing } = store.getState().contact;
-  existing.push(contactData);
-  store.dispatch(setExisting(existing));
+  existing.push(data);
+  store.dispatch(setExistingContacts(existing));
   store.dispatch(
-    setAdding({
+    setAddingContact({
       id: -1,
-      state: '',
       firstName: '',
       lastName: '',
       inmateNumber: '',
@@ -298,61 +316,194 @@ export async function addContact(
   return existing;
 }
 
-export async function updateContact(
-  data: Record<string, unknown>
-): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+export async function updateContact(data: Contact): Promise<Contact[]> {
+  if (!data.facility) throw Error('No facility');
+  const dormExtension = data.dorm ? { facility_dorm: data.dorm } : {};
+  const unitExtension = data.unit ? { facility_unit: data.unit } : {};
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `contact/${data.id}`),
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        first_name: data.firstName,
+        last_name: data.lastName,
+        inmate_number: data.inmateNumber,
+        facility_name: data.facility.name,
+        facility_address: data.facility.address,
+        facility_city: data.facility.city,
+        facility_state: data.facility.state,
+        facility_postal: data.facility.postal,
+        ...dormExtension,
+        ...unitExtension,
+        relationship: data.relationship,
+      }),
+    }
+  );
   const body = await response.json();
-  if (body.type === 'ERROR') {
-    throw Error(body.data);
-  }
-  const contactData: Contact = {
-    id: body.data.id,
-    firstName: body.data.first_name,
-    lastName: body.data.last_name,
-    inmateNumber: body.data.inmate_number,
-    state: body.data.state,
-    relationship: body.data.relationship,
-    facility: body.data.facility,
-    credit: body.data.credit,
-  };
+  if (body.type === 'ERROR') throw body.data;
   const { existing } = store.getState().contact;
   const newExisting = [];
   for (let ix = 0; ix < existing.length; ix += 1) {
-    if (existing[ix].id === contactData.id) {
-      newExisting.push(contactData);
+    if (existing[ix].id === data.id) {
+      newExisting.push(data);
     } else {
       newExisting.push(existing[ix]);
     }
   }
-  store.dispatch(setExisting(newExisting));
+  store.dispatch(setExistingContacts(newExisting));
   return newExisting;
 }
 
-export async function deleteContact(data: Contact): Promise<Contact[]> {
-  const response = await fetchTimeout(url.resolve(MOCK_API_URL, 'contacts'), {
-    method: 'DELETE',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+export async function deleteContact(id: number): Promise<Contact[]> {
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `contact/${id}`),
+    {
+      method: 'DELETE',
+    }
+  );
   const body = await response.json();
   if (body.type === 'ERROR') {
     throw Error(body.data);
   }
   const { existing } = store.getState().contact;
-  const newExisting = existing.filter((contact) => contact.id !== data.id);
-  store.dispatch(setExisting(newExisting));
+  const newExisting = existing.filter((contact) => contact.id !== id);
+  store.dispatch(setExistingContacts(newExisting));
   return newExisting;
+}
+
+interface RawFacility {
+  name: string;
+  federal: number;
+  address: string;
+  city: string;
+  state: string;
+  postal: string;
+}
+
+function cleanFacility(facility: RawFacility): Facility {
+  return {
+    name: facility.name,
+    type: facility.federal ? 'State Prison' : 'Federal Prison',
+    address: facility.address,
+    city: facility.city,
+    state: facility.state,
+    postal: facility.postal,
+  };
+}
+
+export async function getFacilities(page = 1): Promise<Facility[]> {
+  const params = new URLSearchParams({ page: page.toString() });
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `facilities?${params}`),
+    {
+      method: 'GET',
+    }
+  );
+  const body = await response.json();
+  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
+  const facilities = body.data.data.map((facility: RawFacility) =>
+    cleanFacility(facility)
+  );
+  return facilities;
+}
+
+export async function getFacility(id: number): Promise<Facility> {
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `facility/${id}`)
+  );
+  const body = await response.json();
+  if (body.status !== 'OK' || !body.data) throw body;
+  return body.data;
+}
+
+interface RawLetter {
+  id: number;
+  created_at: string;
+  contact_id: number;
+  content: string;
+  sent: boolean;
+  delivered: boolean;
+  attached_img_src: string;
+  type: LetterTypes;
+  tracking_events: LetterTrackingEvent[];
+}
+
+// TODO: Once I know how to translate from a lob letter to front-end letter, fix this
+function cleanLetter(letter: RawLetter): Letter {
+  const { type } = letter;
+  let status: LetterStatus;
+  if (!letter.sent) {
+    status = LetterStatus.Draft;
+  } else {
+    status = LetterStatus.Created;
+  }
+  const isDraft = !letter.sent;
+  const recipientId: number = letter.contact_id;
+  const { content } = letter;
+  const photoPath = letter.attached_img_src;
+  const letterId = letter.id;
+  const expectedDeliveryDate = letter.created_at;
+  const dateCreated = letter.created_at;
+  const trackingEvents = letter.tracking_events;
+  return {
+    type,
+    status,
+    isDraft,
+    recipientId,
+    content,
+    photoPath,
+    letterId,
+    expectedDeliveryDate,
+    dateCreated,
+    trackingEvents,
+  };
+}
+
+export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
+  const params = new URLSearchParams({ page: page.toString() });
+  const response = await fetchAuthenticated(
+    url.resolve(API_URL, `letters?${params}`),
+    {
+      method: 'GET',
+    }
+  );
+  const body = await response.json();
+  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
+  const rawLetters: RawLetter[] = body.data.data;
+  const existingLetters: Record<number, Letter[]> = {};
+  for (let ix = 0; ix < rawLetters.length; ix += 1) {
+    const rawLetter = rawLetters[ix];
+    if (rawLetter.contact_id in existingLetters) {
+      existingLetters[rawLetter.contact_id].push(cleanLetter(rawLetter));
+    } else {
+      existingLetters[rawLetter.contact_id] = [cleanLetter(rawLetter)];
+    }
+  }
+  store.dispatch(setExistingLetters(existingLetters));
+  return existingLetters;
+}
+
+export async function createLetter(letter: Letter): Promise<Letter> {
+  let reqBody: Record<string, unknown> = {
+    contact_id: letter.recipientId,
+    content: letter.content,
+    is_draft: letter.isDraft,
+    s3_img_url: letter.photoPath,
+    type: letter.type,
+  };
+  if (letter.letterId) {
+    reqBody = { ...reqBody, letter_id: letter.letterId };
+  }
+
+  const response = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
+    method: 'POST',
+    body: JSON.stringify(reqBody),
+  });
+  const body = await response.json();
+  if (body.status !== 'OK' || !body.data) throw body;
+  // TODO: Figure out how letter_id is returned from actual API and update it here
+  store.dispatch(addLetter(letter));
+  return letter;
 }
 
 export async function facebookShare(shareUrl: string): Promise<void> {
@@ -362,32 +513,4 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   } else {
     throw Error('Share Url not supported');
   }
-}
-
-export async function createLetter(letter: Letter): Promise<Letter> {
-  let reqBody: Record<string, unknown> = {
-    contact_id: letter.recipientId,
-    content: letter.message,
-    is_draft: letter.isDraft,
-    s3_img_url: letter.photoPath,
-    type: letter.type,
-  };
-  if (letter.letterId) {
-    reqBody = { ...reqBody, letter_id: letter.letterId };
-  }
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(reqBody),
-  };
-  const response = await fetchAuthenticated(
-    url.resolve(MOCK_API_URL, 'letter'),
-    options
-  );
-  const body = await response.json();
-  if (body.type === 'ERROR') {
-    throw Error(body.message);
-  }
-  // TODO: Figure out how letter_id is returned from actual API and update it here
-  store.dispatch(addLetter(letter));
-  return letter;
 }

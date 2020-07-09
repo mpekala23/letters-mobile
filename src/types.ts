@@ -26,6 +26,16 @@ export enum PrisonTypes {
   Federal = 'FederalPrison',
 }
 
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
+}
+
 export enum LetterStatus {
   Draft = 'Draft',
   Created = 'Created',
@@ -37,18 +47,8 @@ export enum LetterStatus {
 }
 
 export enum LetterTypes {
-  PostCards = 'postCards',
-  Letters = 'letters',
-}
-
-export enum SupportFAQTypes {
-  DeleteLetter = 'DeleteLetter',
-  NotArrived = 'NotArrived',
-  WrongReturnAddress = 'WrongReturnAddress',
-  WrongMailingAddress = 'WrongMailingAddress',
-  TrackingNumber = 'TrackingNumber',
-  TrackingError = 'TrackingError',
-  TalkToAmeelio = 'TalkToAmeelio',
+  Postcard = 'postcard',
+  Letter = 'letter',
 }
 
 export interface Letter {
@@ -56,8 +56,7 @@ export interface Letter {
   status: LetterStatus;
   isDraft: boolean;
   recipientId: number;
-  recipientName: string;
-  message: string;
+  content: string;
   photoPath?: string;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
   expectedDeliveryDate?: string;

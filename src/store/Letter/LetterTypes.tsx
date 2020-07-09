@@ -6,7 +6,7 @@ export const SET_TYPE = 'letter/set_type';
 export const SET_STATUS = 'letter/set_status';
 export const SET_DRAFT = 'letter/set_draft';
 export const SET_RECIPIENT_ID = 'letter/set_recipient_id';
-export const SET_MESSAGE = 'letter/set_message';
+export const SET_CONTENT = 'letter/set_content';
 export const SET_PHOTO_PATH = 'letter/set_photo_path';
 export const SET_LETTER_ID = 'letter/set_letter_id';
 export const CLEAR_COMPOSING = 'letter/clear_composing';
@@ -49,8 +49,8 @@ interface SetRecipientIdAction {
   payload: number;
 }
 
-interface SetMessageAction {
-  type: typeof SET_MESSAGE;
+interface SetContentAction {
+  type: typeof SET_CONTENT;
   payload: string;
 }
 
@@ -86,7 +86,7 @@ export type LetterActionTypes =
   | SetStatusAction
   | SetDraftAction
   | SetRecipientIdAction
-  | SetMessageAction
+  | SetContentAction
   | SetPhotoPathAction
   | SetLetterIdAction
   | ClearComposingAction

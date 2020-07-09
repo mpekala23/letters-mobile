@@ -109,7 +109,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   doDeleteContact = async () => {
     try {
-      await deleteContact(this.props.contact);
+      await deleteContact(this.props.contact.id);
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
       dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -134,11 +134,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       };
       const contact = {
         id: this.props.contact.id,
-        state: this.props.contact.state,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
-        inmate_number: this.props.contact.inmateNumber,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contact.inmateNumber,
         relationship: this.props.contact.relationship,
+        credit: 4,
         facility,
       };
       try {

@@ -43,7 +43,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
           >
-            {props.composing.message}
+            {props.composing.content}
           </Text>
         </ScrollView>
       </View>

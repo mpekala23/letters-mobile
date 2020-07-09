@@ -19,11 +19,11 @@ const setup = (letterOverrides = []) => {
   const letters = Object.assign(
     [
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: "Hi Emily! How are you doing? I'm trying out this...",
+        content: "Hi Emily! How are you doing? I'm trying out this...",
         photoPath: '',
       },
     ],
@@ -58,7 +58,7 @@ const setup = (letterOverrides = []) => {
 
 describe('Single Contact Screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<SingleContactScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
@@ -66,19 +66,19 @@ describe('Single Contact Screen', () => {
   it('should load values for letters from the redux store', () => {
     const { getByText } = setup([
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: 'Redux Letter 1',
+        content: 'Redux Letter 1',
         photoPath: '',
       },
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: 'Redux Letter 2',
+        content: 'Redux Letter 2',
         photoPath: '',
       },
     ]);

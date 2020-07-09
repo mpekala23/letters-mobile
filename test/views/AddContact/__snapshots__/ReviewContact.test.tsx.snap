@@ -163,7 +163,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="valid"
+                testID="invalid"
               />
               <View
                 testID="unfocused"
@@ -197,7 +197,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   ]
                 }
                 underlineColorAndroid="transparent"
-                value="Minnesota"
+                value="MN"
               />
               <View />
               <View />
@@ -716,7 +716,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={1}
         style={
           Array [
             Object {
@@ -727,7 +727,14 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               "justifyContent": "center",
               "marginVertical": 5,
             },
-            Object {},
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "grey",
+              "borderRadius": 4,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
             Object {
               "flex": 1,
               "margin": 10,
@@ -746,7 +753,12 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 "fontWeight": "700",
                 "padding": 6,
               },
-              Object {},
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
               Object {},
               Object {},
             ]

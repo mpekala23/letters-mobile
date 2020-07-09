@@ -44,7 +44,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
             <LetterStatusCard
               status={letter.status}
               date="05/11/2020"
-              description={letter.message}
+              description={letter.content}
               onPress={() => {
                 props.setActiveLetter(letter);
                 props.navigation.navigate('LetterTracking');

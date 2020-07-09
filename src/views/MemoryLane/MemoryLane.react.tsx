@@ -32,7 +32,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
         return (
           <MemoryLaneCard
             key={letter.letterId}
-            text={letter.message}
+            text={letter.content}
             date={letter.dateCreated ? letter.dateCreated : ''}
             imageUri={letter.photoPath ? letter.photoPath : ''}
             onPress={() => {
