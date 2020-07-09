@@ -38,8 +38,14 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
       <Button
+        buttonText="Compose a Letter"
+        onPress={() => props.navigation.navigate('ChooseOption')}
+        containerStyle={{ margin: 16 }}
+      />
+      <Button
         buttonText="View Contact List"
         onPress={() => props.navigation.navigate('ContactSelector')}
+        containerStyle={{ margin: 16 }}
       />
     </View>
   );

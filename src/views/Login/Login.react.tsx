@@ -163,8 +163,8 @@ class LoginScreen extends React.Component<Props, State> {
                     {i18n.t('LoginScreen.forgotYourPassword')}
                   </Text>
                   <Button
+                    link
                     containerStyle={Styles.forgotContainer}
-                    textStyle={Styles.forgotText}
                     buttonText={i18n.t('LoginScreen.resetIt')}
                     onPress={() => {
                       /* TO-DO: Navigate to Reset Password screen */

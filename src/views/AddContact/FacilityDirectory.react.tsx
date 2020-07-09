@@ -205,20 +205,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             onPress={() => {
               const contact = this.props.contactState.adding;
               contact.facility = this.state.selected;
-              this.props.setAdding(contact);
-              this.props.navigation.setParams({
-                newFacility: null,
-              });
-              this.props.navigation.navigate('ContactInfo');
-            }}
-            buttonText={i18n.t('ContactInfoScreen.back')}
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
-            onPress={() => {
-              const contact = this.props.contactState.adding;
-              contact.facility = this.state.selected;
 
               this.props.setAdding(contact);
               this.props.navigation.setParams({
@@ -229,6 +215,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.selected !== null}
             containerStyle={CommonStyles.bottomButton}
+            showNextIcon
           />
         </View>
       </TouchableOpacity>

@@ -52,9 +52,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -65,11 +65,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -78,7 +87,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -86,6 +98,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -104,9 +118,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -117,11 +131,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -130,7 +153,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -138,6 +164,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -156,9 +184,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -169,11 +197,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -182,7 +219,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -190,6 +230,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -208,9 +250,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -221,11 +263,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -234,7 +285,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -242,6 +296,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -260,9 +316,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -273,11 +329,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -286,7 +351,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -294,6 +362,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -312,9 +382,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -325,11 +395,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -338,7 +417,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -346,6 +428,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",
@@ -364,9 +448,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -377,11 +461,20 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               "borderColor": "black",
               "borderRadius": 15,
               "borderWidth": 1.5,
-              "height": 50,
               "marginBottom": 14,
-              "width": "100%",
+              "paddingVertical": 4,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
           ]
         }
         testID="clickable"
@@ -390,7 +483,10 @@ exports[`Support FAQ screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
@@ -398,6 +494,8 @@ exports[`Support FAQ screen should match snapshot 1`] = `
               Object {},
               Object {
                 "color": "black",
+                "flex": 1,
+                "flexWrap": "wrap",
                 "fontSize": 14,
                 "fontWeight": "500",
                 "textAlign": "center",

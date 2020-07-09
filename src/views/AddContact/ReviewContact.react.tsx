@@ -308,18 +308,11 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         </KeyboardAvoidingView>
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
-            onPress={() => {
-              this.props.navigation.navigate('FacilityDirectory');
-            }}
-            buttonText="Back"
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
             onPress={this.doAddContact}
-            buttonText="Add Contact"
+            buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}
+            showNextIcon
           />
         </View>
       </TouchableOpacity>
