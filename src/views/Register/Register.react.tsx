@@ -16,6 +16,9 @@ import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Register.style';
@@ -267,7 +270,7 @@ class RegisterScreen extends React.Component<Props, State> {
           />
           <Input
             ref={this.phyState}
-            parentStyle={Styles.fullWidth}
+            parentStyle={[Styles.fullWidth, { marginBottom: 8 }]}
             placeholder={i18n.t('RegisterScreen.state')}
             validate={Validation.State}
             options={STATES_DROPDOWN}
@@ -297,8 +300,8 @@ class RegisterScreen extends React.Component<Props, State> {
             onInvalid={() => this.setState({ valid: false })}
           />
           <CheckBox
-            checkedIcon={<Text>X</Text>}
-            uncheckedIcon={<Text>O</Text>}
+            checkedIcon={<Icon svg={CheckedIcon} />}
+            uncheckedIcon={<Icon svg={UncheckedIcon} />}
             center
             title="Remember Me"
             containerStyle={{
@@ -314,7 +317,7 @@ class RegisterScreen extends React.Component<Props, State> {
             }}
           />
           <Button
-            containerStyle={Styles.fullWidth}
+            containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}
             enabled={this.state.valid}
             onPress={this.doRegister}

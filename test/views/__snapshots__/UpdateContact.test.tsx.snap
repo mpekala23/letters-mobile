@@ -49,7 +49,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             "alignItems": "center",
             "backgroundColor": "white",
             "justifyContent": "center",
-            "paddingTop": 28,
+            "paddingTop": 22,
           }
         }
       >
@@ -98,6 +98,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               "width": 130,
             }
           }
+          testID="profilePicture"
         >
           <Image
             accessibilityLabel="Profile Picture"
@@ -548,55 +549,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
         </View>
       </View>
     </ScrollView>
-    <TouchableOpacity
-      activeOpacity={1}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#3490dc",
-            "borderRadius": 4,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "grey",
-            "borderRadius": 4,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {},
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "white",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {
-              "color": "white",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {},
-            Object {},
-          ]
-        }
-      >
-        Save Profile
-      </Text>
-    </TouchableOpacity>
     <TouchableOpacity
       activeOpacity={0.7}
       style={

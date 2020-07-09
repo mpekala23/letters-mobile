@@ -13,10 +13,13 @@ import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
-import { Button, GrayBar, Input } from '@components';
+import { Button, Input } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Login.styles';
@@ -113,7 +116,12 @@ class LoginScreen extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 60 }} />
               <View style={Styles.loginBackground}>
-                <Button onPress={this.devSkip} buttonText="Dev Skip" />
+                <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
+                  {i18n.t('LoginScreen.welcomeBack')}
+                </Text>
+                <Text style={[Typography.FONT_REGULAR, Styles.welcomeBackText]}>
+                  {i18n.t('LoginScreen.logInWithEmailAndPassword')}
+                </Text>
                 <Input
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}
@@ -139,8 +147,8 @@ class LoginScreen extends React.Component<Props, State> {
                   secure
                 />
                 <CheckBox
-                  checkedIcon={<Text>X</Text>}
-                  uncheckedIcon={<Text>O</Text>}
+                  checkedIcon={<Icon svg={CheckedIcon} />}
+                  uncheckedIcon={<Icon svg={UncheckedIcon} />}
                   center
                   title={i18n.t('LoginScreen.rememberMe')}
                   containerStyle={{
@@ -155,29 +163,26 @@ class LoginScreen extends React.Component<Props, State> {
                     });
                   }}
                 />
-                <GrayBar />
                 <Button
-                  containerStyle={Styles.fullWidth}
+                  containerStyle={Styles.loginButton}
+                  textStyle={Typography.FONT_BOLD}
                   buttonText={i18n.t('LoginScreen.login')}
                   onPress={this.onLogin}
                 />
-                <Button
-                  containerStyle={Styles.fullWidth}
-                  buttonText={i18n.t('LoginScreen.register')}
-                  reverse
-                  onPress={() => {
-                    Keyboard.dismiss();
-                    this.props.navigation.navigate('Register');
-                  }}
-                />
-                <Button
-                  containerStyle={Styles.forgotContainer}
-                  textStyle={Styles.forgotText}
-                  buttonText={i18n.t('LoginScreen.forgotYourPassword')}
-                  onPress={() => {
-                    Keyboard.dismiss();
-                  }}
-                />
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ paddingTop: 11, fontSize: 16 }}>
+                    {i18n.t('LoginScreen.forgotYourPassword')}
+                  </Text>
+                  <Button
+                    containerStyle={Styles.forgotContainer}
+                    textStyle={Styles.forgotText}
+                    buttonText={i18n.t('LoginScreen.resetIt')}
+                    onPress={() => {
+                      /* TO-DO: Navigate to Reset Password screen */
+                      Keyboard.dismiss();
+                    }}
+                  />
+                </View>
                 <View
                   accessible
                   accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
@@ -192,7 +197,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.termsOfService')}
                     onPress={() => {
-                      /* TODO */
+                      this.props.navigation.navigate('Terms');
                     }}
                   />
                   <Text accessible={false} style={Typography.FONT_REGULAR}>
@@ -202,11 +207,12 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.privacyPolicy')}
                     onPress={() => {
-                      /* TODO */
+                      this.props.navigation.navigate('Privacy');
                     }}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
                 </View>
+                <Button onPress={this.devSkip} buttonText="Dev Skip" />
                 <View style={{ width: '100%', height: 100 }} />
               </View>
             </ScrollView>

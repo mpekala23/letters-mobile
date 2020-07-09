@@ -40,23 +40,8 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
     <View style={{ flex: 1 }}>
       <Text>Hello</Text>
       <Button
-        buttonText="popup"
-        onPress={() => {
-          popupAlert({
-            title: 'You have a letter in progress',
-            message: 'Continue writing and send that letter to your loved one',
-            buttons: [
-              {
-                text: 'Continue writing',
-              },
-              {
-                text: 'Start new letter',
-                reverse: true,
-              },
-            ],
-          });
-          dropdownError({ message: 'hello' });
-        }}
+        buttonText="View Contact List"
+        onPress={() => props.navigation.navigate('ContactSelector')}
       />
     </View>
   );

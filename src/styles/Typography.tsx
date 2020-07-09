@@ -68,21 +68,11 @@ export interface TextProps {
 
 const PageHeader: React.FC<TextProps> = (props: TextProps) => {
   const { text } = props;
-  const size = props.size || 30;
+  const size = props.size || 24;
   const color = props.color || Colors.AMEELIO_BLUE;
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View
-        style={{
-          width: size,
-          height: size / 2,
-          borderTopRightRadius: size / 4,
-          borderBottomRightRadius: size / 4,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
       <Text
         style={{
           fontSize: size,

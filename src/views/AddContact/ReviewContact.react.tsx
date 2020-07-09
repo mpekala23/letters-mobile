@@ -137,6 +137,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         last_name: this.lastName.current.state.value,
         inmate_number: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
+        credit: 4,
         facility,
       };
       try {
@@ -230,8 +231,13 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 40 }} />
-              <View style={CommonStyles.contactbackground}>
+              <View style={{ width: '100%', height: 28 }} />
+              <View
+                style={[
+                  CommonStyles.contactbackground,
+                  { alignItems: 'center' },
+                ]}
+              >
                 <Typography.PageHeader
                   text={i18n.t('ReviewContactScreen.reviewContact')}
                 />
@@ -239,7 +245,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   <View style={{ alignSelf: 'center' }}>
                     <PicUpload />
                   </View>
-                  <Text style={Typography.FONT_REGULAR_ITALIC}>
+                  <Text
+                    style={[Typography.FONT_REGULAR_ITALIC, { paddingTop: 12 }]}
+                  >
                     {i18n.t('ReviewContactScreen.clickToUploadContactImage')}
                   </Text>
                 </View>
