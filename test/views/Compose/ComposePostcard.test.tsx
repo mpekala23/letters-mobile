@@ -24,6 +24,11 @@ const setup = () => {
         letterId: -1,
       },
     },
+    contact: {
+      active: {
+        firstName: 'First Name',
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -50,7 +55,7 @@ describe('ComposePostcard screen', () => {
     const { getByPlaceholderText, store } = setup();
     const input = getByPlaceholderText(i18n.t('Compose.placeholder'));
     fireEvent.changeText(input, 'new text');
-    expect(store.getActions()[1].type).toBe('letter/set_message');
+    expect(store.getActions()[1].type).toBe('letter/set_content');
     expect(store.getActions()[1].payload).toBe('new text');
   });
 
@@ -61,5 +66,8 @@ describe('ComposePostcard screen', () => {
     expect(getByText('288 left')).toBeDefined();
   });
 
-  // TODO: Once new navbar is done, add next / back navigation test
+  it('should display the first name', () => {
+    const { getByText } = setup();
+    expect(getByText('To: First Name')).toBeDefined();
+  });
 });

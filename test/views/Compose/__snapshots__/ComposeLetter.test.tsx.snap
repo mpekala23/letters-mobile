@@ -118,7 +118,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
               }
             >
               To: 
-              
+              First Name
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
