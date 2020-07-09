@@ -158,6 +158,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
               "borderRadius": 20,
               "padding": 10,
             },
+            Object {
+              "fontFamily": "Poppins-Regular",
+            },
           ]
         }
         underlineColorAndroid="transparent"

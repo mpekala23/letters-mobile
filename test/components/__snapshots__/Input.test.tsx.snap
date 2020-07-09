@@ -55,6 +55,9 @@ exports[`Input component should match snapshot 1`] = `
           Object {},
           Object {},
           Object {},
+          Object {
+            "fontFamily": "Poppins-Regular",
+          },
         ]
       }
       underlineColorAndroid="transparent"

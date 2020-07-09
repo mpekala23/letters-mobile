@@ -335,6 +335,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "height": 50,
                     },
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -397,6 +400,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -459,6 +465,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -521,6 +530,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -586,6 +598,9 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "height": 50,
                     },
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"

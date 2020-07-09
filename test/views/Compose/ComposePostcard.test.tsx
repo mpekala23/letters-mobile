@@ -24,6 +24,14 @@ const setup = () => {
         letterId: -1,
       },
     },
+    contact: {
+      active: {
+        firstName: 'First',
+        lastName: 'Last',
+        inmateNumber: '6',
+        relationship: 'Brother',
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
