@@ -16,6 +16,9 @@ import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import Styles from './Register.style';
 
@@ -289,8 +292,8 @@ class RegisterScreen extends React.Component<Props, State> {
             onInvalid={() => this.setState({ valid: false })}
           />
           <CheckBox
-            checkedIcon={<Text>X</Text>}
-            uncheckedIcon={<Text>O</Text>}
+            checkedIcon={<Icon svg={CheckedIcon} />}
+            uncheckedIcon={<Icon svg={UncheckedIcon} />}
             center
             title="Remember Me"
             containerStyle={{
