@@ -156,24 +156,17 @@ describe('Contact Info Screen', () => {
 
   it('should load initial values for fields from the redux store', () => {
     const { getByPlaceholderText } = setup({
-      state: 'Minnesota',
       firstName: 'First',
       lastName: 'Last',
       inmateNumber: '6',
       relationship: 'Sister',
     });
-    expect(getByPlaceholderText('State').props.value).toBe('Minnesota');
     expect(getByPlaceholderText('First Name').props.value).toBe('First');
     expect(getByPlaceholderText('Last Name').props.value).toBe('Last');
     expect(getByPlaceholderText('Inmate Number').props.value).toBe('6');
     expect(getByPlaceholderText('Relationship to Inmate').props.value).toBe(
       'Sister'
     );
-  });
-
-  it('should prompt users to search their home state databases initially', () => {
-    const { getByText } = setup({}, { state: 'Iowa' });
-    expect(getByText('Iowa')).toBeDefined();
   });
 
   it('should update the state databases to search when user inputs a valid state', () => {

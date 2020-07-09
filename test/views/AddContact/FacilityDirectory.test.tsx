@@ -21,7 +21,6 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
     },
   };
   const contact = {
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
@@ -106,14 +105,13 @@ describe('Facility Directory Screen', () => {
           city: 'Bethel',
           name: 'Yukon Kskokwim Correctional Center',
           postal: '99559',
-          state: 'AK',
+          state: 'Alaska',
           type: 'State Prison',
         },
         firstName: '',
         inmateNumber: '',
         lastName: '',
         relationship: '',
-        state: '',
       },
     });
   });
@@ -121,13 +119,17 @@ describe('Facility Directory Screen', () => {
   it('should navigate to the contact info screen when the back button is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('Back'));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', {
+      phyState: undefined,
+    });
   });
 
   it('should navigate to the add manually screen when the add manually button is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('Add Manually'));
-    expect(navigation.navigate).toHaveBeenCalledWith('AddManually');
+    expect(navigation.navigate).toHaveBeenCalledWith('AddManually', {
+      phyState: '',
+    });
   });
 
   it('should navigate to the review contact screen when the next button is pressed', () => {
