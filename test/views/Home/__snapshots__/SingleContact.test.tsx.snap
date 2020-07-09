@@ -63,6 +63,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
       >
         <TouchableOpacity
           activeOpacity={0.2}
+          style={
+            Object {
+              "height": 100,
+            }
+          }
         >
           <RNSVGSvgView
             align="xMidYMid"
