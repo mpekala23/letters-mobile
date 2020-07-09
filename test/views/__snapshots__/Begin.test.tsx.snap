@@ -234,7 +234,7 @@ exports[`Begin screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#FF7171",
-              "borderRadius": 15,
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -297,7 +297,7 @@ exports[`Begin screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#FF7171",
-              "borderRadius": 15,
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,

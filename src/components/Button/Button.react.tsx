@@ -34,13 +34,7 @@ const Button: React.FC<Props> = (props: Props) => {
     showNextIcon,
   } = props;
   const nextIcon = showNextIcon ? (
-    <View
-      style={{
-        position: 'absolute',
-        right: 12,
-      }}
-      testID="nextIcon"
-    >
+    <View style={{ position: 'absolute', right: 12 }} testID="nextIcon">
       <SvgXml xml={Next} />
     </View>
   ) : null;

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
+    borderRadius: 16,
     backgroundColor: Colors.PINK_DARKER,
     marginVertical: 5,
     paddingHorizontal: 14,
