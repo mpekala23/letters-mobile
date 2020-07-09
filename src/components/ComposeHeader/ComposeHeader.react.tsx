@@ -1,7 +1,8 @@
 import React from 'react';
 import { Animated, Text, View } from 'react-native';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import { Prompts, getRandomPromptIx } from '@utils';
+import i18n from '@i18n';
 import Button from '../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 60;
@@ -79,33 +80,55 @@ class ComposeHeader extends React.Component<Props, State> {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={[Typography.FONT_BOLD, { flex: 1, fontSize: 18 }]}>
-            To: {this.props.recipientName}
+          <Text
+            style={[
+              Typography.FONT_MEDIUM,
+              { flex: 1, fontSize: 14, marginTop: 8 },
+            ]}
+          >
+            {i18n.t('Compose.to')}: {this.props.recipientName}
           </Text>
           <Button
-            buttonText={this.state.open ? 'Collapse' : 'Feeling Stuck?'}
+            buttonText={
+              this.state.open
+                ? i18n.t('Compose.collapse')
+                : i18n.t('Compose.needIdeas')
+            }
             onPress={() => {
               if (this.state.open) this.close();
               else this.open();
             }}
+            textStyle={{ fontSize: 14 }}
+            containerStyle={{ width: 130 }}
           />
         </View>
         {this.state.open || (!this.state.open && this.state.animating) ? (
-          <Animated.Text
-            style={[
-              Typography.FONT_BOLD,
-              { flex: 1, fontSize: 18 },
-              {
-                opacity: this.state.height.interpolate({
-                  inputRange: [this.props.closedHeight, this.props.openHeight],
-                  outputRange: [0, 1],
-                }),
-              },
-            ]}
-            testID="prompt"
+          <Animated.View
+            style={{
+              height: '60%',
+              backgroundColor: Colors.PINK_LIGHTEST,
+              borderRadius: 8,
+            }}
           >
-            {Prompts[this.state.promptIx]}
-          </Animated.Text>
+            <Animated.Text
+              style={[
+                Typography.FONT_REGULAR,
+                { flex: 1, fontSize: 16, padding: 12 },
+                {
+                  opacity: this.state.height.interpolate({
+                    inputRange: [
+                      this.props.closedHeight,
+                      this.props.openHeight,
+                    ],
+                    outputRange: [0, 1],
+                  }),
+                },
+              ]}
+              testID="prompt"
+            >
+              {Prompts[this.state.promptIx]}
+            </Animated.Text>
+          </Animated.View>
         ) : null}
       </Animated.View>
     );

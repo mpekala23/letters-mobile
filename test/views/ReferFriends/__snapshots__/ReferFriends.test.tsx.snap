@@ -17,7 +17,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           "backgroundColor": "white",
           "flex": 1,
           "flexDirection": "column",
-          "padding": 24,
+          "padding": 16,
         },
         Object {
           "paddingBottom": 0,
@@ -28,51 +28,126 @@ exports[`ReferFriends screen should match snapshot 1`] = `
     <View
       style={
         Object {
+          "alignItems": "center",
           "flex": 1,
           "justifyContent": "center",
         }
       }
     >
-      <Text
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={171}
+        bbWidth={218}
+        fill="none"
+        focusable={false}
+        height={171}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
         style={
           Array [
             Object {
-              "fontFamily": "Poppins-Regular",
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             Object {
-              "marginBottom": 24,
-              "textAlign": "center",
+              "left": 52,
+              "position": "absolute",
+              "top": -5,
+              "zIndex": 999,
+            },
+            Object {
+              "flex": 0,
+              "height": 171,
+              "width": 218,
             },
           ]
         }
+        vbHeight={171}
+        vbWidth={218}
+        width={218}
+        xml="<svg width=\\"218\\" height=\\"171\\" viewBox=\\"0 0 218 171\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\">
+<path d=\\"M61.0875 92C38.0946 92 -15.7744 135.961 7.87537 141.67C32.5738 147.633 58.9135 140.338 67 139.755\\" stroke=\\"#6D89B1\\" stroke-width=\\"3\\" stroke-dasharray=\\"4 4\\"/>
+<path d=\\"M113.675 114L79.3421 135.609L58 124.084L113.675 114Z\\" fill=\\"#6D89B1\\"/>
+<path d=\\"M113.675 116.521L80.27 138.49L77.9502 160.82L113.675 116.521Z\\" fill=\\"#6D89B1\\"/>
+</svg>"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        Estimated delivery date:
-        <Text
-          style={
+        <RNSVGGroup
+          fill={null}
+          propList={
             Array [
-              Object {
-                "fontFamily": "Poppins-Bold",
-              },
+              "fill",
             ]
           }
-        />
-      </Text>
-      <Text
+        >
+          <RNSVGPath
+            d="M61.0875 92C38.0946 92 -15.7744 135.961 7.87537 141.67C32.5738 147.633 58.9135 140.338 67 139.755"
+            propList={
+              Array [
+                "stroke",
+                "strokeWidth",
+                "strokeDasharray",
+              ]
+            }
+            stroke={4285368753}
+            strokeDasharray={
+              Array [
+                "4",
+                "4",
+              ]
+            }
+            strokeWidth={3}
+          />
+          <RNSVGPath
+            d="M113.675 114L79.3421 135.609L58 124.084L113.675 114Z"
+            fill={4285368753}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="M113.675 116.521L80.27 138.49L77.9502 160.82L113.675 116.521Z"
+            fill={4285368753}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+      <TouchableOpacity
+        activeOpacity={0.2}
         style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Regular",
-            },
-            Object {
-              "marginBottom": 36,
-              "textAlign": "center",
-            },
-          ]
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#f6993f",
+            "borderColor": "white",
+            "borderRadius": 65,
+            "borderWidth": 6,
+            "height": 130,
+            "justifyContent": "center",
+            "overflow": "hidden",
+            "width": 130,
+          }
         }
+        testID="profilePicture"
       >
-        Your letter to
-        is on the way! Thanks for trusting us to deliver your messages.
-      </Text>
+        <Image
+          accessibilityLabel="Profile Picture"
+          source={1}
+          style={
+            Object {
+              "height": 130,
+              "width": 130,
+            }
+          }
+        />
+      </TouchableOpacity>
       <Text
         style={
           Array [
@@ -80,134 +155,140 @@ exports[`ReferFriends screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Bold",
             },
             Object {
-              "marginBottom": 24,
+              "fontSize": 23,
+              "marginVertical": 12,
               "textAlign": "center",
             },
           ]
         }
       >
-        Do you know anyone that could benefit from Ameelio\`'\`s free services?
+        Your letter is on the way
       </Text>
-      <View
+      <Text
         style={
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
+          Array [
+            Object {
+              "fontFamily": "Poppins-Regular",
+            },
+            Object {
+              "marginBottom": 175,
+              "textAlign": "center",
+            },
+          ]
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
+        Your letter is estimated to arrive on
+        .
+         
+        Thanks again!
+      </Text>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "paddingHorizontal": 14,
+            },
+            Object {},
+            Object {
+              "width": "100%",
+            },
+            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "#FF7171",
-                "borderRadius": 16,
-                "borderWidth": 2,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
               },
               Object {},
-              Object {
-                "width": 80,
-              },
               Object {},
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 2,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.23,
-                "shadowRadius": 2.62,
-              },
+              Object {},
             ]
           }
-          testID="clickable"
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Medium",
-                },
-                Object {
-                  "color": "#FF7171",
-                  "fontSize": 20,
-                  "fontWeight": "700",
-                  "padding": 6,
-                },
-                Object {},
-                Object {
-                  "fontSize": 16,
-                },
-                Object {},
-              ]
-            }
-          >
-            Skip
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
+          Share on Facebook
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "width": "100%",
+            },
+            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.23,
+              "shadowRadius": 2.62,
+            },
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#FF7171",
-                "borderRadius": 16,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-                "paddingHorizontal": 14,
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
               },
               Object {},
-              Object {
-                "width": 80,
-              },
               Object {},
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 2,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.23,
-                "shadowRadius": 2.62,
-              },
+              Object {},
             ]
           }
-          testID="clickable"
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Medium",
-                },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "700",
-                  "padding": 6,
-                },
-                Object {},
-                Object {
-                  "fontSize": 16,
-                },
-                Object {},
-              ]
-            }
-          >
-            Share
-          </Text>
-        </TouchableOpacity>
-      </View>
+          Done
+        </Text>
+      </TouchableOpacity>
     </View>
   </View>
 </View>

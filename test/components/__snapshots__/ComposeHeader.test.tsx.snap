@@ -30,16 +30,18 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "Poppins-Bold",
+              "fontFamily": "Poppins-Medium",
             },
             Object {
               "flex": 1,
-              "fontSize": 18,
+              "fontSize": 14,
+              "marginTop": 8,
             },
           ]
         }
       >
-        To: 
+        To
+        : 
         Team A
       </Text>
       <TouchableOpacity
@@ -56,7 +58,9 @@ exports[`ComposeHeader component should match snapshot 1`] = `
               "paddingHorizontal": 14,
             },
             Object {},
-            Object {},
+            Object {
+              "width": 130,
+            },
             Object {},
             Object {
               "elevation": 4,
@@ -85,12 +89,14 @@ exports[`ComposeHeader component should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {},
+              Object {
+                "fontSize": 14,
+              },
               Object {},
             ]
           }
         >
-          Feeling Stuck?
+          Need Ideas?
         </Text>
       </TouchableOpacity>
     </View>

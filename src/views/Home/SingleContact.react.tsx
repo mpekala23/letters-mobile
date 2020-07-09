@@ -121,7 +121,10 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
           {i18n.t('SingleContactScreen.lettersTraveled')}:
         </Text>
         <Button
-          onPress={() => props.navigation.navigate('ChooseOption')}
+          onPress={() => {
+            props.setActiveContact(contact);
+            props.navigation.navigate('ChooseOption');
+          }}
           buttonText={i18n.t('SingleContactScreen.sendLetter')}
           textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
           containerStyle={Styles.sendLetterButton}

@@ -170,6 +170,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"
@@ -247,6 +250,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"
@@ -324,6 +330,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"
@@ -401,6 +410,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"
@@ -465,6 +477,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"
@@ -529,6 +544,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "fontFamily": "Poppins-Regular",
+              },
             ]
           }
           underlineColorAndroid="transparent"

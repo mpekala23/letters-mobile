@@ -4,11 +4,12 @@ import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { LetterTypes } from 'types';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setType } from '@store/Letter/LetterActions';
 import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import i18n from '@i18n';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -26,7 +27,15 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.screenBackground}>
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-        Choose an option
+        {i18n.t('Compose.chooseAnOption')}
+      </Text>
+      <Text
+        style={[
+          Typography.FONT_MEDIUM,
+          { fontSize: 14, color: Colors.GRAY_DARK, paddingBottom: 10 },
+        ]}
+      >
+        {i18n.t('CreditsCard.creditsResetDaily')}
       </Text>
       <LetterOptionCard
         type={LetterTypes.PostCards}

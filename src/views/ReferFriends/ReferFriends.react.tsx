@@ -1,12 +1,18 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
-import { Button } from '@components';
+import { Button, ProfilePic } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
+import { Contact } from '@store/Contact/ContactTypes';
+import { ProfilePicTypes } from 'types';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import AirplaneIcon from '@assets/views/ReferFriends/Airplane';
+import Icon from '@components/Icon/Icon.react';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -16,15 +22,12 @@ type ReferFriendsScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ReferFriendsScreenNavigationProp;
-  userName: string;
-  deliveryDate: string;
+  contact: Contact;
 }
 
 const onShare = async () => {
   const ameelioUrl = 'letters.ameelio.org';
-  // TO-DO: Edit message content once we have the content copy
-  const shareMessage = 'Insert share message';
-  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}&quote=${shareMessage}`;
+  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
   try {
     await facebookShare(sharingUrl);
   } catch (err) {
@@ -32,12 +35,8 @@ const onShare = async () => {
   }
 };
 
-/**
-A component for prompting users to refer friends to use Ameelio's services.
-*/
-const ReferFriendsScreen: React.FC<Props> = (props: Props) => {
-  const { userName, deliveryDate } = props;
-
+const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
+  const { contact } = props;
   return (
     <KeyboardAvoidingView
       style={Styles.trueBackground}
@@ -48,55 +47,59 @@ const ReferFriendsScreen: React.FC<Props> = (props: Props) => {
         style={{
           flex: 1,
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        {/* TO-DO: Add in image asset when finalized */}
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            { marginBottom: 24, textAlign: 'center' },
-          ]}
-        >
-          Estimated delivery date:
-          <Text style={[Typography.FONT_BOLD]}>{deliveryDate}</Text>
-        </Text>
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            { marginBottom: 36, textAlign: 'center' },
-          ]}
-        >
-          Your letter to
-          {userName}
-          is on the way! Thanks for trusting us to deliver your messages.
-        </Text>
+        <Icon
+          svg={AirplaneIcon}
+          style={{ position: 'absolute', top: -5, left: 52, zIndex: 999 }}
+        />
+        <ProfilePic
+          firstName={contact.firstName}
+          lastName={contact.lastName}
+          imageUri="ExamplePic"
+          type={ProfilePicTypes.SingleContact}
+        />
         <Text
           style={[
             Typography.FONT_BOLD,
-            { marginBottom: 24, textAlign: 'center' },
+            { fontSize: 23, marginVertical: 12, textAlign: 'center' },
           ]}
         >
-          Do you know anyone that could benefit from Ameelio`&apos;`s free
-          services?
+          {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWay')}
         </Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Button
-            buttonText="Skip"
-            reverse
-            containerStyle={{ width: 80 }}
-            textStyle={{ fontSize: 16 }}
-            onPress={() => props.navigation.navigate('Home')}
-          />
-          <Button
-            buttonText="Share"
-            containerStyle={{ width: 80 }}
-            textStyle={{ fontSize: 16 }}
-            onPress={() => onShare()}
-          />
-        </View>
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            { marginBottom: 175, textAlign: 'center' },
+          ]}
+        >
+          {/* TO-DO: Add in estimated delivery date after API integration */}
+          {i18n.t('ReferFriendsScreen.yourLetterIsEstimatedToArrive')}.{' '}
+          {i18n.t('ReferFriendsScreen.thanksAgain')}
+        </Text>
+        <Button
+          buttonText={i18n.t('ReferFriendsScreen.shareOnFacebook')}
+          onPress={() => onShare()}
+          containerStyle={{ width: '100%' }}
+        />
+        <Button
+          buttonText={i18n.t('ReferFriendsScreen.done')}
+          reverse
+          onPress={() => props.navigation.navigate('SingleContact')}
+          containerStyle={{ width: '100%' }}
+        />
       </View>
     </KeyboardAvoidingView>
   );
 };
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    contact: state.contact.active,
+  };
+};
+
+const ReferFriendsScreen = connect(mapStateToProps)(ReferFriendsScreenBase);
 
 export default ReferFriendsScreen;

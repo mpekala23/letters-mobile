@@ -42,7 +42,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
               "backgroundColor": "white",
               "flex": 1,
               "flexDirection": "column",
-              "padding": 10,
+              "padding": 16,
             },
             Object {
               "flex": 1,
@@ -51,57 +51,6 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
           ]
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FF7171",
-                "borderRadius": 16,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-                "paddingHorizontal": 14,
-              },
-              Object {},
-              Object {},
-              Object {},
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 2,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.23,
-                "shadowRadius": 2.62,
-              },
-            ]
-          }
-          testID="clickable"
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Medium",
-                },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "700",
-                  "padding": 6,
-                },
-                Object {},
-                Object {},
-                Object {},
-              ]
-            }
-          >
-            Next Page
-          </Text>
-        </TouchableOpacity>
         <View
           style={
             Object {
@@ -122,17 +71,19 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "Poppins-Bold",
+                    "fontFamily": "Poppins-Medium",
                   },
                   Object {
                     "flex": 1,
-                    "fontSize": 18,
+                    "fontSize": 14,
+                    "marginTop": 8,
                   },
                 ]
               }
             >
-              To: 
-              
+              To
+              : 
+              First
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -148,7 +99,9 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                     "paddingHorizontal": 14,
                   },
                   Object {},
-                  Object {},
+                  Object {
+                    "width": 130,
+                  },
                   Object {},
                   Object {
                     "elevation": 4,
@@ -177,12 +130,14 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                       "padding": 6,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "fontSize": 14,
+                    },
                     Object {},
                   ]
                 }
               >
-                Feeling Stuck?
+                Need Ideas?
               </Text>
             </TouchableOpacity>
           </View>
@@ -235,6 +190,9 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                 Object {
                   "flex": 1,
                   "fontSize": 18,
+                },
+                Object {
+                  "fontFamily": "Poppins-Regular",
                 },
               ]
             }
