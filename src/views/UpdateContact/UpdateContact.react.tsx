@@ -327,7 +327,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
           onPress={() => {
             popupAlert({
               title: i18n.t('UpdateContactScreen.areYouSure'),
-              message: i18n.t('UpdateContactScreen.deleteWarning'),
+              message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
+                contact.firstName
+              } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
               buttons: [
                 {
                   text: i18n.t('UpdateContactScreen.deleteContact'),

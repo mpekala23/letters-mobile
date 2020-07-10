@@ -151,7 +151,8 @@
     "save": "Save",
     "deleteProfile": "Delete Profile",
     "areYouSure": "Are you sure?",
-    "deleteWarning": "Once you delete the contact, you won't be able to recover it ever again.",
+    "deleteWarning1": "Once you delete the contact, you won't be able to recover it ever again. The history of all letters to",
+    "deleteWarning2": "will also be deleted",
     "deleteContact": "Delete contact",
     "dontDelete": "Don't delete"
   },
