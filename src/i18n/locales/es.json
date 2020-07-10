@@ -149,7 +149,11 @@
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
-    "deleteProfile": "Delete Profile"
+    "deleteProfile": "Delete Profile",
+    "areYouSure": "Are you sure?",
+    "deleteWarning": "Once you delete the contact, you won't be able to recover it ever again.",
+    "deleteContact": "Delete contact",
+    "dontDelete": "Don't delete"
   },
   "SupportFAQScreen": {
     "howCanWeHelp": "How can we help?",
