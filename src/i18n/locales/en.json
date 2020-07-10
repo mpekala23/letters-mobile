@@ -9,7 +9,8 @@
     "requestTimedOut": "The request timed out.",
     "requestIncomplete": "The request could not be completed.",
     "unsavedToken": "Unable to save login credentials for next time",
-    "cantLogout": "Unable to log out the user"
+    "cantLogout": "Unable to log out the user",
+    "loadingUser": "Unable to load your data. Some contacts and letters may be unavailable until you refresh."
   },
   "Permission": {
     "photos": "Can't access photo library"

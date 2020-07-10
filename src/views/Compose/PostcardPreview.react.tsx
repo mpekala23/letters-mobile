@@ -12,7 +12,7 @@ import {
   setStatus,
   clearComposing,
 } from '@store/Letter/LetterActions';
-import { createLetter } from '@api';
+import { createLetter, getContacts } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
@@ -91,6 +91,11 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.clearComposing();
             props.navigation.navigate('ContactSelector');
           } catch (err) {
+            const contacts = await getContacts();
+            console.log('about to send');
+            console.log(props.composing.recipientId);
+            console.log(contacts);
+            console.log(err);
             props.setDraft(true);
             dropdownError({
               message: i18n.t('Error.requestIncomplete'),

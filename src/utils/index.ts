@@ -4,7 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { STATES, STATES_DROPDOWN } from './States';
+import { ABBREV_TO_STATE, STATE_TO_ABBREV, STATES_DROPDOWN } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 import REFERERS from './Referers';
 
@@ -67,7 +67,7 @@ export function isValidPostal(postal: string): boolean {
 }
 
 export function isValidState(state: string): boolean {
-  return Object.values(STATES).indexOf(state) > -1;
+  return Object.values(ABBREV_TO_STATE).indexOf(state) > -1;
 }
 
 export function isValidCreditCard(card: string): boolean {
@@ -95,4 +95,4 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
-export { STATES, STATES_DROPDOWN };
+export { ABBREV_TO_STATE, STATE_TO_ABBREV, STATES_DROPDOWN };

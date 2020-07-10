@@ -26,6 +26,7 @@ import {
   setExisting as setExistingLetters,
 } from '@store/Letter/LetterActions';
 import i18n from '@i18n';
+import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 
 export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
@@ -240,7 +241,7 @@ function cleanContact(data: RawContact): Contact {
       type: 'Federal Prison', // TODO: does this field even exist on the backend?
       address: data.facility_address,
       city: data.facility_city,
-      state: data.facility_state,
+      state: ABBREV_TO_STATE[data.facility_state],
       postal: data.facility_postal,
     },
   };
@@ -289,7 +290,7 @@ export async function addContact(data: Contact): Promise<Contact[]> {
       facility_name: data.facility.name,
       facility_address: data.facility.address,
       facility_city: data.facility.city,
-      facility_state: data.facility.state,
+      facility_state: STATE_TO_ABBREV[data.facility.state],
       facility_postal: data.facility.postal,
       ...dormExtension,
       ...unitExtension,
@@ -298,9 +299,9 @@ export async function addContact(data: Contact): Promise<Contact[]> {
   });
   const body = await response.json();
   if (body.status !== 'OK') throw body;
-
+  const newContact = { ...data, id: body.id };
   const { existing } = store.getState().contact;
-  existing.push(data);
+  existing.push(newContact);
   store.dispatch(setExistingContacts(existing));
   store.dispatch(
     setAddingContact({

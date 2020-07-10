@@ -7,7 +7,7 @@ import { LetterTypes } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setType } from '@store/Letter/LetterActions';
+import { setType, setRecipientId } from '@store/Letter/LetterActions';
 import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
 import Styles from './Compose.styles';
 
@@ -19,7 +19,9 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
   letterState: LetterState;
+  recipientId: number;
   setType: (type: LetterTypes) => void;
+  setRecipientId: (id: number) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
@@ -32,6 +34,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         type={LetterTypes.Postcard}
         onPress={() => {
           props.setType(LetterTypes.Postcard);
+          props.setRecipientId(props.recipientId);
           props.navigation.navigate('ComposePostcard');
         }}
       />
@@ -39,6 +42,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         type={LetterTypes.Letter}
         onPress={() => {
           props.setType(LetterTypes.Letter);
+          props.setRecipientId(props.recipientId);
           props.navigation.navigate('ComposeLetter');
         }}
       />
@@ -48,10 +52,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   letterState: state.letter,
+  recipientId: state.contact.active.id,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setType: (type: LetterTypes) => dispatch(setType(type)),
+    setRecipientId: (id: number) => dispatch(setRecipientId(id)),
   };
 };
 const ChooseOptionScreen = connect(
