@@ -10,6 +10,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
@@ -176,7 +177,7 @@ class RegisterScreen extends React.Component<Props, State> {
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
           >
-            <PicUpload />
+            <PicUpload type={PicUploadTypes.Profile} width={136} height={136} />
             <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>

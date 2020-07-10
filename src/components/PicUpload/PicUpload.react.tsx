@@ -1,9 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, ViewStyle, Text, View, Image } from 'react-native';
+import { TouchableOpacity, ViewStyle, View, Image } from 'react-native';
 import i18n from '@i18n';
-import { Colors } from '@styles';
 import { pickImage } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Icon } from '@components';
+import Camera from '@assets/views/PicUpload/Camera';
+import Placeholder from '@assets/views/PicUpload/Placeholder';
+import Delete from '@assets/views/PicUpload/Delete';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -70,22 +73,36 @@ class PicUpload extends React.Component<Props, State> {
       innerCircle = (
         <Image
           source={{ uri: image }}
-          style={{ width: this.props.width, height: this.props.height }}
+          style={{
+            width: this.props.width,
+            height: this.props.height,
+          }}
         />
       );
     } else {
       innerCircle =
-        this.props.type === PicUploadTypes.Profile ? <View /> : <Text>+</Text>;
+        this.props.type === PicUploadTypes.Profile ? (
+          <View accessibilityLabel="profile placeholder">
+            <Icon svg={Camera} />
+          </View>
+        ) : (
+          <View accessibilityLabel="media placeholder">
+            <Icon svg={Placeholder} />
+          </View>
+        );
     }
 
     return (
       <TouchableOpacity
         style={[
-          { width: this.props.width, height: this.props.height },
+          {
+            width: this.props.width,
+            height: this.props.height,
+            marginHorizontal: 8,
+          },
           this.props.type === PicUploadTypes.Profile
             ? Styles.profileBackground
             : Styles.mediaBackground,
-          this.props.shapeBackground,
         ]}
         onPress={this.selectImage}
         testID="clickable"
@@ -93,20 +110,21 @@ class PicUpload extends React.Component<Props, State> {
         {innerCircle}
         {image && (
           <TouchableOpacity
-            style={{
-              position: 'absolute',
-              top: 5,
-              right: 5,
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: Colors.AMEELIO_RED,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={[
+              {
+                position: 'absolute',
+                width: 40,
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              this.props.type === PicUploadTypes.Profile
+                ? Styles.profileDelete
+                : Styles.mediaDelete,
+            ]}
             onPress={this.deleteImage}
           >
-            <Text>X</Text>
+            <Icon svg={Delete} />
           </TouchableOpacity>
         )}
       </TouchableOpacity>
