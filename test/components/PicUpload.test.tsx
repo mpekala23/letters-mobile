@@ -27,32 +27,38 @@ describe('PicUpload component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display blank with no image when type is profile', () => {
-    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+  it('should display profile placeholder icon when type is profile and no photo uploaded', () => {
+    const { getByTestId, getByLabelText } = setup({
+      type: PicUploadTypes.Profile,
+    });
     expect(getByTestId('clickable').children.length).toBe(1);
-    expect(getByTestId('clickable').children[0].children).toEqual([]);
+    expect(getByLabelText('profile placeholder')).toBeDefined();
   });
 
-  it('should display blank with no image when type is media', () => {
-    const { getByTestId } = setup();
+  it('should display media placeholder icon when type is media and no photo uploaded', () => {
+    const { getByTestId, getByLabelText } = setup();
     expect(getByTestId('clickable').children.length).toBe(1);
-    expect(getByTestId('clickable').children[0].children).toBeDefined();
+    expect(getByLabelText('media placeholder')).toBeDefined();
   });
 
-  it('should display blank with no image when error in pickImage', async () => {
+  it('should display placeholder icon with no image when error in pickImage', async () => {
     jest.useRealTimers();
-    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    const { getByTestId, getByLabelText } = setup({
+      type: PicUploadTypes.Profile,
+    });
     fireEvent.press(getByTestId('clickable'));
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
-    expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByLabelText('profile placeholder')).toBeDefined();
   });
 
-  it('should display blank with no image when pickImage cancelled', async () => {
+  it('should display placeholder icon with no image when pickImage cancelled', async () => {
     jest.useRealTimers();
-    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
+    const { getByTestId, getByLabelText } = setup({
+      type: PicUploadTypes.Profile,
+    });
     fireEvent.press(getByTestId('clickable'));
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
-    expect(getByTestId('clickable').children.length).toBe(1);
+    expect(getByLabelText('profile placeholder')).toBeDefined();
   });
 
   it('should display an image with path when pickImage succeeds', async () => {
