@@ -225,8 +225,12 @@ export async function addContact(
     credit: body.data.credit,
   };
   const { existing } = store.getState().contact;
-  existing.push(contactData);
-  store.dispatch(setExisting(existing));
+  const newExisting = [];
+  for (let ix = 0; ix < existing.length; ix += 1) {
+    newExisting.push(existing[ix]);
+  }
+  newExisting.push(contactData);
+  store.dispatch(setExisting(newExisting));
   store.dispatch(
     setAdding({
       id: -1,
@@ -239,7 +243,7 @@ export async function addContact(
       credit: 4,
     })
   );
-  return existing;
+  return newExisting;
 }
 
 export async function updateContact(

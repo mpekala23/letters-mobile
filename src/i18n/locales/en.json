@@ -145,7 +145,9 @@
     "reviewContact": "Review Contact",
     "clickToUploadContactImage": "Click to upload contact's image",
     "optionalUnit": "Unit (optional, only if needed)",
-    "optionalDorm": "Dorm (optional, only if needed)"
+    "optionalDorm": "Dorm (optional, only if needed)",
+    "invalidInmateNumber": "Invalid inmate number",
+    "contactAlreadyExists": "Contact already exists"
   },
   "SingleContactScreen": {
     "received": "received",
@@ -200,6 +202,16 @@
     "postCardsDesc": "1 photo, 300 characters",
     "lettersTitle": "Letters",
     "lettersDesc": "300 words"
+  },
+  "Alert": {
+    "weNeedProfilePermission": "We need your permission to upload a profile photo",
+    "weNeedNotificationsPermission": "We need your permission to send notifications",
+    "goToSettingsToUpdate": "Go to settings to update your permissions",
+    "goToSettings": "Go to settings",
+    "maybeLater": "Maybe later",
+    "emulatorDetected": "Emulator detected",
+    "mustUsePhysical": "You must use a physical device to receive push notifications",
+    "okay": "Okay"
   },
   "Compose": {
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",

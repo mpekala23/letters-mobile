@@ -1,3 +1,4 @@
+import Alert from './Alert/Alert.react';
 import Button from './Button/Button.react';
 import ContactSelectorCard from './Card/ContactSelectorCard.react';
 import CreditsCard from './Card/CreditsCard.react';
@@ -19,6 +20,7 @@ import Icon from './Icon/Icon.react';
 import Topbar from './Topbar/Topbar.react';
 
 export {
+  Alert,
   Button,
   ContactSelectorCard,
   CreditsCard,

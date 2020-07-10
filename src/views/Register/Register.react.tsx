@@ -16,7 +16,11 @@ import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { CheckBox } from 'react-native-elements';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -138,7 +142,14 @@ class RegisterScreen extends React.Component<Props, State> {
         await register(data);
       } catch (err) {
         if (err.message === 'Email in use') {
-          Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
+          popupAlert({
+            title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.requestTimedOut') });
         } else {
@@ -289,8 +300,8 @@ class RegisterScreen extends React.Component<Props, State> {
             onInvalid={() => this.setState({ valid: false })}
           />
           <CheckBox
-            checkedIcon={<Text>X</Text>}
-            uncheckedIcon={<Text>O</Text>}
+            checkedIcon={<Icon svg={CheckedIcon} />}
+            uncheckedIcon={<Icon svg={UncheckedIcon} />}
             center
             title="Remember Me"
             containerStyle={{
