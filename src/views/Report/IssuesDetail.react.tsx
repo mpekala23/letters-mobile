@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextStyle } from 'react-native';
+import { Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
 import { AppStackParamList } from '@navigations';
@@ -58,7 +58,7 @@ function defaultCTAButton(
   onPress: () => void,
   buttonText: string,
   textStyle: TextStyle,
-  containerStyle: Record<string, unknown>
+  containerStyle: ViewStyle
 ) {
   return (
     <Button

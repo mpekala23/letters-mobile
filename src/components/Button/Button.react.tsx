@@ -1,10 +1,10 @@
 import React from 'react';
-import { TouchableOpacity, Text, TextStyle } from 'react-native';
+import { TouchableOpacity, Text, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
 import Styles from './Button.styles';
 
 export interface Props {
-  containerStyle?: Record<string, unknown> | Record<string, unknown>[];
+  containerStyle?: ViewStyle | ViewStyle[];
   textStyle?: Record<string, unknown> | TextStyle | TextStyle[];
   disabledContainerStyle?: Record<string, unknown>;
   disabledTextStyle?: Record<string, unknown>;
