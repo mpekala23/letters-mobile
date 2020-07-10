@@ -64,7 +64,11 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                     this.setState({ current: null });
                   }}
                   textStyle={button.textStyle}
-                  containerStyle={[button.containerStyle, { width: '100%' }]}
+                  containerStyle={
+                    button.containerStyle
+                      ? button.containerStyle
+                      : { width: '100%' }
+                  }
                 />
               );
             })}

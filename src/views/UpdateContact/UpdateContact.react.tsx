@@ -332,13 +332,19 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 {
                   text: i18n.t('UpdateContactScreen.deleteContact'),
                   onPress: this.doDeleteContact,
-                  containerStyle: { backgroundColor: Colors.BLUE_DARKEST },
+                  containerStyle: {
+                    width: '100%',
+                    backgroundColor: Colors.BLUE_DARKEST,
+                  },
                 },
                 {
                   text: i18n.t('UpdateContactScreen.dontDelete'),
                   reverse: true,
                   textStyle: { color: Colors.BLUE_DARKEST },
-                  containerStyle: { borderColor: Colors.BLUE_DARKEST },
+                  containerStyle: {
+                    width: '100%',
+                    borderColor: Colors.BLUE_DARKEST,
+                  },
                 },
               ],
             });
