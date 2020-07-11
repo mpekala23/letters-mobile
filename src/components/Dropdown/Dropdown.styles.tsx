@@ -6,6 +6,7 @@ export default StyleSheet.create({
   commonBackground: {
     flex: 1,
     zIndex: 999,
+    elevation: 999,
     marginTop: STATUS_BAR_HEIGHT,
     marginHorizontal: 5,
     padding: STATUS_BAR_HEIGHT,

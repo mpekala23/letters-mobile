@@ -1,20 +1,24 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
 
 export default StyleSheet.create({
   profileBackground: {
-    borderRadius: 50,
-    backgroundColor: Colors.AMEELIO_BLUE,
+    borderRadius: 68,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },
   mediaBackground: {
     overflow: 'hidden',
-    borderRadius: 20,
-    borderWidth: 5,
-    borderColor: Colors.AMEELIO_GRAY,
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  profileDelete: {
+    top: 12,
+    right: 12,
+  },
+  mediaDelete: {
+    top: 3,
+    right: 3,
   },
 });

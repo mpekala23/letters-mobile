@@ -172,10 +172,64 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               props.setActiveContact(contact);
               props.navigation.navigate('MemoryLane');
             }}
-          />
-          {letterTrackingTitle}
-          {letterCards}
+            style={{ height: 100 }}
+          >
+            <Icon
+              svg={PencilIcon}
+              style={{ position: 'absolute', top: 8, right: 12 }}
+            />
+          </MemoryLaneCountCard>
         </View>
+        <ProfilePic
+          firstName={contact.firstName}
+          lastName={contact.lastName}
+          imageUri="ExamplePic"
+          type={ProfilePicTypes.SingleContact}
+        />
+        <Text
+          style={[
+            Typography.FONT_BOLD,
+            {
+              color: Colors.AMEELIO_BLACK,
+              fontSize: 25,
+            },
+          ]}
+        >
+          {contact.firstName} {contact.lastName}
+        </Text>
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+          <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.received')}:{' '}
+          {letters ? letters.length : 0}
+        </Text>
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+          <Emoji name="calendar" />{' '}
+          {i18n.t('SingleContactScreen.lastHeardFromYou')}:
+        </Text>
+        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+          <Emoji name="airplane" />{' '}
+          {i18n.t('SingleContactScreen.lettersTraveled')}:
+        </Text>
+        <Button
+          onPress={() => props.navigation.navigate('ChooseOption')}
+          buttonText={i18n.t('SingleContactScreen.sendLetter')}
+          textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
+          containerStyle={Styles.sendLetterButton}
+        />
+        <CreditsCard
+          credits={contact.credit}
+          onPress={() => {
+            /* Navigate to Add More credits flow */
+          }}
+        />
+        <MemoryLaneCountCard
+          letterCount={letters ? letters.length : 0}
+          onPress={() => {
+            props.setActiveContact(contact);
+            props.navigation.navigate('MemoryLane');
+          }}
+        />
+        {letterTrackingTitle}
+        {letterCards}
       </ScrollView>
     </View>
   );

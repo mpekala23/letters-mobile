@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
@@ -14,6 +14,7 @@ import {
   LetterTypes,
   LetterStatus,
   ZipcodeInfo,
+  Photo,
 } from 'types';
 import { loginUser, logoutUser } from '@store/User/UserActions';
 import {
@@ -29,6 +30,7 @@ import {
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 
+export const GENERAL_URL = 'https://letters-api-staging.ameelio.org/';
 export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
@@ -400,7 +402,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
         facility_name: data.facility.name,
         facility_address: data.facility.address,
         facility_city: data.facility.city,
-        facility_state: data.facility.state,
+        facility_state: STATE_TO_ABBREV[data.facility.state],
         facility_postal: data.facility.postal,
         ...dormExtension,
         ...unitExtension,
@@ -635,7 +637,36 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
   };
 }
 
-export async function uploadImage(image: Photo): Promise<string> {
-  console.log(image);
+export async function uploadImage(
+  image: Photo,
+  type: 'avatar' | 'letter'
+): Promise<Photo> {
+  const data = new FormData();
+
+  console.log('start upload image');
+
+  console.log(store.getState());
+
+  const photo = {
+    name: /* store.getState().user.user.id.toString() */ Date.now().toString(),
+    type: 'image',
+    uri:
+      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+  };
+
+  console.log('photo');
+  data.append('photo', photo);
+  data.append('type', type);
+
+  const body = await fetchAuthenticated(
+    url.resolve(GENERAL_URL, 'image/upload'),
+    {
+      method: 'POST',
+      body: data,
+    }
+  );
+  console.log('image upload done');
+  console.log(body);
+
   return image;
 }

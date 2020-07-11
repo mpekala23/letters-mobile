@@ -207,6 +207,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
         style={{
           position: 'absolute',
           zIndex: 999,
+          elevation: 999,
           top: this.state.height,
           width: '100%',
         }}

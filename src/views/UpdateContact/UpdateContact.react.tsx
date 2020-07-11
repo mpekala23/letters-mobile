@@ -18,7 +18,7 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes, Facility, Photo } from 'types';
 import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { updateContact, deleteContact } from '@api';
+import { updateContact, deleteContact, uploadImage } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
@@ -136,7 +136,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         state: this.props.contact.facility.state,
         postal: this.props.contact.facility.postal,
       };
-      const contact = {
+      const contact: Contact = {
         id: this.props.contact.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
@@ -146,9 +146,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         facility,
       };
       try {
+        const photo = await uploadImage(this.state.image);
+        contact.photo = photo;
         await updateContact(contact);
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
+        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }

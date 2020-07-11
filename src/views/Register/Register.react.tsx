@@ -10,13 +10,18 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { STATES_DROPDOWN, Validation, REFERERS } from '@utils';
 import { CheckBox } from 'react-native-elements';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -153,10 +158,15 @@ class RegisterScreen extends React.Component<Props, State> {
       try {
         await register(data);
       } catch (err) {
-        console.log(err);
-        if (err.message === 'Validation Error') {
-          if (err.data.email)
-            Alert.alert(i18n.t('RegisterScreen.emailAlreadyInUse'));
+        if (err.message === 'Email in use') {
+          popupAlert({
+            title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.requestTimedOut') });
         } else {
@@ -183,7 +193,7 @@ class RegisterScreen extends React.Component<Props, State> {
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
           >
-            <PicUpload />
+            <PicUpload type={PicUploadTypes.Profile} width={136} height={136} />
             <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
@@ -326,8 +336,8 @@ class RegisterScreen extends React.Component<Props, State> {
             onInvalid={() => this.setState({ valid: false })}
           />
           <CheckBox
-            checkedIcon={<Text>X</Text>}
-            uncheckedIcon={<Text>O</Text>}
+            checkedIcon={<Icon svg={CheckedIcon} />}
+            uncheckedIcon={<Icon svg={UncheckedIcon} />}
             center
             title="Remember Me"
             containerStyle={{
