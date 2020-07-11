@@ -45,6 +45,7 @@ export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
   apiToken: string;
+  rememberToken: string;
 }
 
 export interface UserState {
@@ -59,6 +60,7 @@ interface LoginUserAction {
   payload: {
     user: User;
     token: string;
+    remember: string;
   };
 }
 

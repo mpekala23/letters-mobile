@@ -1,5 +1,11 @@
-import React, { Dispatch } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React, { Dispatch, useState } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -18,6 +24,8 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getLetters } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -36,6 +44,7 @@ interface Props {
 
 const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   const { contact, letters } = props.route.params;
+  const [refreshing, setRefreshing] = useState(false);
 
   const letterCards =
     letters && letters.length > 0
@@ -72,80 +81,96 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
 
   return (
     <View style={Styles.trueBackground}>
-      <View style={Styles.profileCard}>
-        <LinearGradient
-          colors={['#ADD3FF', '#FFC9C9']}
-          style={Styles.profileCardHeader}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 0 }}
-        >
-          <TouchableOpacity
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        refreshControl={(
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={async () => {
+              setRefreshing(true);
+              try {
+                await getLetters();
+              } catch (err) {
+                dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
+              }
+              setRefreshing(false);
+            }}
+          />
+        )}
+      >
+        <View style={Styles.profileCard}>
+          <LinearGradient
+            colors={['#ADD3FF', '#FFC9C9']}
+            style={Styles.profileCardHeader}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 0 }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                props.setActiveContact(contact);
+                props.navigation.navigate('UpdateContact');
+              }}
+            >
+              <Icon
+                svg={PencilIcon}
+                style={{ position: 'absolute', top: 8, right: 12 }}
+              />
+            </TouchableOpacity>
+          </LinearGradient>
+          <ProfilePic
+            firstName={contact.firstName}
+            lastName={contact.lastName}
+            imageUri="ExamplePic"
+            type={ProfilePicTypes.SingleContact}
+          />
+          <Text
+            style={[
+              Typography.FONT_BOLD,
+              {
+                color: Colors.AMEELIO_BLACK,
+                fontSize: 25,
+              },
+            ]}
+          >
+            {contact.firstName} {contact.lastName}
+          </Text>
+          <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+            <Emoji name="love_letter" />{' '}
+            {i18n.t('SingleContactScreen.received')}:{' '}
+            {letters ? letters.length : 0}
+          </Text>
+          <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+            <Emoji name="calendar" />{' '}
+            {i18n.t('SingleContactScreen.lastHeardFromYou')}:
+          </Text>
+          <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+            <Emoji name="airplane" />{' '}
+            {i18n.t('SingleContactScreen.lettersTraveled')}:
+          </Text>
+          <Button
+            onPress={() => props.navigation.navigate('ChooseOption')}
+            buttonText={i18n.t('SingleContactScreen.sendLetter')}
+            textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
+            containerStyle={Styles.sendLetterButton}
+          />
+        </View>
+        <View style={Styles.actionItems}>
+          <CreditsCard
+            credits={contact.credit}
+            onPress={() => {
+              /* Navigate to Add More credits flow */
+            }}
+          />
+          <MemoryLaneCountCard
+            letterCount={letters ? letters.length : 0}
             onPress={() => {
               props.setActiveContact(contact);
-              props.navigation.navigate('UpdateContact');
+              props.navigation.navigate('MemoryLane');
             }}
-          >
-            <Icon
-              svg={PencilIcon}
-              style={{ position: 'absolute', top: 8, right: 12 }}
-            />
-          </TouchableOpacity>
-        </LinearGradient>
-        <ProfilePic
-          firstName={contact.firstName}
-          lastName={contact.lastName}
-          imageUri="ExamplePic"
-          type={ProfilePicTypes.SingleContact}
-        />
-        <Text
-          style={[
-            Typography.FONT_BOLD,
-            {
-              color: Colors.AMEELIO_BLACK,
-              fontSize: 25,
-            },
-          ]}
-        >
-          {contact.firstName} {contact.lastName}
-        </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.received')}:{' '}
-          {letters ? letters.length : 0}
-        </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="calendar" />{' '}
-          {i18n.t('SingleContactScreen.lastHeardFromYou')}:
-        </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="airplane" />{' '}
-          {i18n.t('SingleContactScreen.lettersTraveled')}:
-        </Text>
-        <Button
-          onPress={() => props.navigation.navigate('ChooseOption')}
-          buttonText={i18n.t('SingleContactScreen.sendLetter')}
-          textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
-          containerStyle={Styles.sendLetterButton}
-        />
-      </View>
-      <ScrollView
-        style={Styles.actionItems}
-        keyboardShouldPersistTaps="handled"
-      >
-        <CreditsCard
-          credits={contact.credit}
-          onPress={() => {
-            /* Navigate to Add More credits flow */
-          }}
-        />
-        <MemoryLaneCountCard
-          letterCount={letters ? letters.length : 0}
-          onPress={() => {
-            props.setActiveContact(contact);
-            props.navigation.navigate('MemoryLane');
-          }}
-        />
-        {letterTrackingTitle}
-        {letterCards}
+          />
+          {letterTrackingTitle}
+          {letterCards}
+        </View>
       </ScrollView>
     </View>
   );

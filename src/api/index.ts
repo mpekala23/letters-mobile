@@ -30,6 +30,13 @@ import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 
 export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
+export interface ApiResponse {
+  date: number;
+  status?: 'OK' | 'ERROR';
+  message?: string;
+  data: Record<string, unknown> | Record<string, unknown>[] | unknown;
+}
+
 export interface UserResponse {
   type: string;
   data: User;
@@ -52,7 +59,7 @@ export async function fetchAuthenticated(
   fetchUrl: string,
   options: Record<string, unknown> = {},
   timeout = 3000
-): Promise<Response> {
+): Promise<ApiResponse> {
   const requestOptions = {
     ...options,
     headers: {
@@ -61,7 +68,63 @@ export async function fetchAuthenticated(
       Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
     },
   };
-  return fetchTimeout(fetchUrl, requestOptions, timeout);
+  const response = await fetchTimeout(fetchUrl, requestOptions, timeout);
+  const body = await response.json();
+  const { rememberToken } = store.getState().user.authInfo;
+  if (
+    body.message &&
+    body.message === 'Unauthenticated.' &&
+    rememberToken !== ''
+  ) {
+    // attempt to refresh the api token using the remember token
+    const tokenResponse = await fetchTimeout(
+      url.resolve(API_URL, 'login/token'),
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: rememberToken,
+        }),
+      }
+    );
+    const tokenBody = await tokenResponse.json();
+    if (tokenBody.status !== 'OK') {
+      store.dispatch(logoutUser());
+      throw Error('Invalid token');
+    }
+    const userData: User = {
+      id: tokenBody.data.id,
+      firstName: tokenBody.data.first_name,
+      lastName: tokenBody.data.last_name,
+      email: tokenBody.data.email,
+      phone: tokenBody.data.phone,
+      address1: tokenBody.data.addr_line_1,
+      address2: tokenBody.data.addr_line_2 || '',
+      country: tokenBody.data.country,
+      postal: tokenBody.data.postal,
+      city: tokenBody.data.city,
+      state: tokenBody.data.state,
+    };
+    store.dispatch(
+      loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
+    );
+    // successfully logged in using the remember token, retry the original api call
+    const retryOptions = {
+      ...options,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
+      },
+    };
+    const retryResponse = await fetchTimeout(fetchUrl, retryOptions, timeout);
+    const retryBody = await retryResponse.json();
+    return retryBody;
+  }
+  return body;
 }
 
 export async function saveToken(token: string): Promise<void> {
@@ -103,7 +166,7 @@ export async function loginWithToken(): Promise<User> {
       city: body.data.city,
       state: body.data.state,
     };
-    store.dispatch(loginUser(userData, body.token));
+    store.dispatch(loginUser(userData, body.data.token, body.data.remember));
     return userData;
   } catch (err) {
     store.dispatch(logoutUser());
@@ -150,7 +213,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     city: body.data.city,
     state: body.data.state,
   };
-  store.dispatch(loginUser(userData, body.data.token));
+  store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
 
@@ -189,8 +252,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   }
   if (data.remember) {
     try {
-      // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
-      await saveToken(body.data.token);
+      await saveToken(body.data.remember);
     } catch (err) {
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
@@ -210,7 +272,13 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     city: body.data.city,
     state: body.data.state,
   };
-  store.dispatch(loginUser(userData, body.data.token));
+  store.dispatch(
+    loginUser(
+      userData,
+      body.data.token,
+      body.data.remember ? body.data.remember : ''
+    )
+  );
   return userData;
 }
 
@@ -249,16 +317,15 @@ function cleanContact(data: RawContact): Contact {
 
 export async function getContacts(page = 1): Promise<Contact[]> {
   const params = new URLSearchParams({ page: page.toString() });
-  const response = await fetchAuthenticated(
+  const body = await fetchAuthenticated(
     url.resolve(API_URL, `contacts?${params}`),
     {
       method: 'GET',
     }
   );
-  const body = await response.json();
-
-  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
-  const existingContacts = body.data.data.map((contact: RawContact) =>
+  const data = body.data as { data: RawContact[] };
+  if (body.status !== 'OK' || !data || !data.data) throw body;
+  const existingContacts = data.data.map((contact: RawContact) =>
     cleanContact(contact)
   );
   store.dispatch(setExistingContacts(existingContacts));
@@ -266,40 +333,40 @@ export async function getContacts(page = 1): Promise<Contact[]> {
 }
 
 export async function getContact(id: number): Promise<Contact> {
-  const response = await fetchAuthenticated(
-    url.resolve(API_URL, `contact/${id}`),
-    {
-      method: 'GET',
-    }
-  );
-  const body = await response.json();
+  const body = await fetchAuthenticated(url.resolve(API_URL, `contact/${id}`), {
+    method: 'GET',
+  });
   if (body.status !== 'OK' || !body.data) throw body;
-  return cleanContact(body.data);
+  return cleanContact(body.data as RawContact);
 }
 
-export async function addContact(data: Contact): Promise<Contact[]> {
-  if (!data.facility) throw Error('No facility');
-  const dormExtension = data.dorm ? { facility_dorm: data.dorm } : {};
-  const unitExtension = data.unit ? { facility_unit: data.unit } : {};
-  const response = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
+export async function addContact(contactData: Contact): Promise<Contact[]> {
+  if (!contactData.facility) throw Error('No facility');
+  const dormExtension = contactData.dorm
+    ? { facility_dorm: contactData.dorm }
+    : {};
+  const unitExtension = contactData.unit
+    ? { facility_unit: contactData.unit }
+    : {};
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
     method: 'POST',
     body: JSON.stringify({
-      first_name: data.firstName,
-      last_name: data.lastName,
-      inmate_number: data.inmateNumber,
-      facility_name: data.facility.name,
-      facility_address: data.facility.address,
-      facility_city: data.facility.city,
-      facility_state: STATE_TO_ABBREV[data.facility.state],
-      facility_postal: data.facility.postal,
+      first_name: contactData.firstName,
+      last_name: contactData.lastName,
+      inmate_number: contactData.inmateNumber,
+      facility_name: contactData.facility.name,
+      facility_address: contactData.facility.address,
+      facility_city: contactData.facility.city,
+      facility_state: STATE_TO_ABBREV[contactData.facility.state],
+      facility_postal: contactData.facility.postal,
       ...dormExtension,
       ...unitExtension,
-      relationship: data.relationship,
+      relationship: contactData.relationship,
     }),
   });
-  const body = await response.json();
   if (body.status !== 'OK') throw body;
-  const newContact = { ...data, id: body.id };
+  const data = body.data as Contact;
+  const newContact = { ...data, id: data.id };
   const { existing } = store.getState().contact;
   existing.push(newContact);
   store.dispatch(setExistingContacts(existing));
@@ -321,7 +388,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
   if (!data.facility) throw Error('No facility');
   const dormExtension = data.dorm ? { facility_dorm: data.dorm } : {};
   const unitExtension = data.unit ? { facility_unit: data.unit } : {};
-  const response = await fetchAuthenticated(
+  const body = await fetchAuthenticated(
     url.resolve(API_URL, `contact/${data.id}`),
     {
       method: 'PUT',
@@ -340,8 +407,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
       }),
     }
   );
-  const body = await response.json();
-  if (body.type === 'ERROR') throw body.data;
+  if (body.status === 'ERROR') throw body.data;
   const { existing } = store.getState().contact;
   const newExisting = [];
   for (let ix = 0; ix < existing.length; ix += 1) {
@@ -356,16 +422,10 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
 }
 
 export async function deleteContact(id: number): Promise<Contact[]> {
-  const response = await fetchAuthenticated(
-    url.resolve(API_URL, `contact/${id}`),
-    {
-      method: 'DELETE',
-    }
-  );
-  const body = await response.json();
-  if (body.type === 'ERROR') {
-    throw Error(body.data);
-  }
+  const body = await fetchAuthenticated(url.resolve(API_URL, `contact/${id}`), {
+    method: 'DELETE',
+  });
+  if (body.status === 'ERROR') throw body;
   const { existing } = store.getState().contact;
   const newExisting = existing.filter((contact) => contact.id !== id);
   store.dispatch(setExistingContacts(newExisting));
@@ -394,27 +454,31 @@ function cleanFacility(facility: RawFacility): Facility {
 
 export async function getFacilities(page = 1): Promise<Facility[]> {
   const params = new URLSearchParams({ page: page.toString() });
-  const response = await fetchAuthenticated(
+  const body = await fetchAuthenticated(
     url.resolve(API_URL, `facilities?${params}`),
     {
       method: 'GET',
     }
   );
-  const body = await response.json();
-  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
-  const facilities = body.data.data.map((facility: RawFacility) =>
+  const data = body.data as RawFacility[];
+  if (body.status !== 'OK' || !data || !data) throw body;
+  const facilities = data.map((facility: RawFacility) =>
     cleanFacility(facility)
   );
   return facilities;
 }
 
 export async function getFacility(id: number): Promise<Facility> {
-  const response = await fetchAuthenticated(
-    url.resolve(API_URL, `facility/${id}`)
-  );
-  const body = await response.json();
+  const body = await fetchAuthenticated(url.resolve(API_URL, `facility/${id}`));
   if (body.status !== 'OK' || !body.data) throw body;
-  return body.data;
+  return body.data as Facility;
+}
+
+interface RawTrackingEvent {
+  id: number;
+  name: string;
+  date: string;
+  location: string;
 }
 
 interface RawLetter {
@@ -426,17 +490,54 @@ interface RawLetter {
   delivered: boolean;
   attached_img_src: string;
   type: LetterTypes;
-  tracking_events: LetterTrackingEvent[];
+  tracking_events?: RawTrackingEvent[];
+}
+
+function cleanTrackingEvent(event: RawTrackingEvent): LetterTrackingEvent {
+  return {
+    id: event.id,
+    name: event.name,
+    location: event.location,
+    date: new Date(event.date),
+  };
 }
 
 // TODO: Once I know how to translate from a lob letter to front-end letter, fix this
 function cleanLetter(letter: RawLetter): Letter {
   const { type } = letter;
   let status: LetterStatus;
+  const trackingEvents = !letter.tracking_events
+    ? []
+    : letter.tracking_events.map((rawEvent) => cleanTrackingEvent(rawEvent));
   if (!letter.sent) {
     status = LetterStatus.Draft;
   } else {
-    status = LetterStatus.Created;
+    let inTransit = false;
+    let processedForDelivery = false;
+    let processedForDeliveryDate = new Date(Date.now());
+    for (let ix = 0; ix < trackingEvents.length; ix += 1) {
+      inTransit = inTransit || trackingEvents[ix].name === 'In Transit';
+      processedForDelivery =
+        processedForDelivery ||
+        trackingEvents[ix].name === 'Processed for Delivery';
+      if (trackingEvents[ix].name === 'Processed for Delivery') {
+        processedForDeliveryDate = trackingEvents[ix].date;
+      }
+    }
+    if (!inTransit) {
+      status = LetterStatus.Created;
+    } else if (!processedForDelivery) {
+      status = LetterStatus.Mailed;
+    } else {
+      const now = new Date(Date.now());
+      const timeDiff = now.getTime() - processedForDeliveryDate.getTime();
+      const dayDiff = timeDiff / (1000 * 3600 * 24);
+      if (dayDiff <= 5) {
+        status = LetterStatus.OutForDelivery;
+      } else {
+        status = LetterStatus.Delivered;
+      }
+    }
   }
   const isDraft = !letter.sent;
   const recipientId: number = letter.contact_id;
@@ -445,7 +546,6 @@ function cleanLetter(letter: RawLetter): Letter {
   const letterId = letter.id;
   const expectedDeliveryDate = letter.created_at;
   const dateCreated = letter.created_at;
-  const trackingEvents = letter.tracking_events;
   return {
     type,
     status,
@@ -462,18 +562,17 @@ function cleanLetter(letter: RawLetter): Letter {
 
 export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   const params = new URLSearchParams({ page: page.toString() });
-  const response = await fetchAuthenticated(
+  const body = await fetchAuthenticated(
     url.resolve(API_URL, `letters?${params}`),
     {
       method: 'GET',
     }
   );
-  const body = await response.json();
-  if (body.status !== 'OK' || !body.data || !body.data.data) throw body;
-  const rawLetters: RawLetter[] = body.data.data;
+  const data = body.data as { current_page: number; data: RawLetter[] };
+  if (body.status !== 'OK' || !data || !data.data) throw body;
   const existingLetters: Record<number, Letter[]> = {};
-  for (let ix = 0; ix < rawLetters.length; ix += 1) {
-    const rawLetter = rawLetters[ix];
+  for (let ix = 0; ix < data.data.length; ix += 1) {
+    const rawLetter = data.data[ix];
     if (rawLetter.contact_id in existingLetters) {
       existingLetters[rawLetter.contact_id].push(cleanLetter(rawLetter));
     } else {
@@ -496,11 +595,10 @@ export async function createLetter(letter: Letter): Promise<Letter> {
     reqBody = { ...reqBody, letter_id: letter.letterId };
   }
 
-  const response = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
     body: JSON.stringify(reqBody),
   });
-  const body = await response.json();
   if (body.status !== 'OK' || !body.data) throw body;
   // TODO: Figure out how letter_id is returned from actual API and update it here
   store.dispatch(addLetter(letter));

@@ -1,10 +1,10 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useState } from 'react';
 import {
   Text,
   KeyboardAvoidingView,
-  ScrollView,
   TouchableOpacity,
   Platform,
+  FlatList,
 } from 'react-native';
 import { Icon } from '@components';
 import { AppStackParamList } from '@navigations';
@@ -18,6 +18,8 @@ import i18n from '@i18n';
 import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
+import { getContacts } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -33,23 +35,25 @@ interface Props {
 }
 
 const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
-  const contactSelectorList = props.existingContacts.map((contact: Contact) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const renderItem = ({ item }: { item: Contact }): JSX.Element => {
     return (
       <ContactSelectorCard
-        firstName={contact.firstName}
-        lastName={contact.lastName}
-        letters={props.existingLetters[contact.id]}
+        firstName={item.firstName}
+        lastName={item.lastName}
+        letters={props.existingLetters[item.id]}
         onPress={() => {
-          props.setActiveContact(contact);
+          props.setActiveContact(item);
           props.navigation.navigate('SingleContact', {
-            contact,
-            letters: props.existingLetters[contact.id],
+            contact: item,
+            letters: props.existingLetters[item.id],
           });
         }}
-        key={contact.inmateNumber}
+        key={item.inmateNumber}
       />
     );
-  });
+  };
   return (
     <KeyboardAvoidingView
       style={Styles.trueBackground}
@@ -68,9 +72,20 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
       >
         {i18n.t('ContactSelectorScreen.yourLovedOnes')}
       </Text>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        {contactSelectorList}
-      </ScrollView>
+      <FlatList
+        data={props.existingContacts}
+        renderItem={renderItem}
+        onRefresh={async () => {
+          setRefreshing(true);
+          try {
+            await getContacts();
+          } catch (e) {
+            dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
+          }
+          setRefreshing(false);
+        }}
+        refreshing={refreshing}
+      />
       <TouchableOpacity
         style={Styles.addContactButton}
         onPress={() => {

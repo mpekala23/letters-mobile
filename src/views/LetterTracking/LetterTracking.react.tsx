@@ -21,7 +21,7 @@ interface Props {
   letter: Letter | null;
 }
 
-function mapStatusToTrackerBarHeight(type?: LetterStatus) {
+function mapStatusToTrackerBarHeight(type?: string) {
   switch (type) {
     case LetterStatus.InTransit:
       return 70;
@@ -73,7 +73,8 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
             marginTop: 40,
             marginLeft: 14,
             height: mapStatusToTrackerBarHeight(
-              props.letter.trackingEvents
+              props.letter.trackingEvents &&
+                props.letter.trackingEvents.length > 0
                 ? props.letter.trackingEvents[0].name
                 : undefined
             ),

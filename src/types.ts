@@ -66,9 +66,9 @@ export interface Letter {
 
 export interface LetterTrackingEvent {
   id: number;
-  name: LetterStatus;
+  name: string;
   location: string;
-  date: string;
+  date: Date;
 }
 
 export type TopbarRouteAction = {

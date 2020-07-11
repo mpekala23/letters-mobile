@@ -10,6 +10,7 @@ const initialState: UserState = {
     isLoadingToken: true,
     isLoggedIn: false,
     apiToken: '',
+    rememberToken: '',
   },
   user: {
     id: '',
@@ -37,6 +38,7 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: true,
           apiToken: action.payload.token,
+          rememberToken: action.payload.token,
         },
         user: action.payload.user,
       };
@@ -46,6 +48,7 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: false,
           apiToken: '',
+          rememberToken: '',
         },
         user: {
           id: '',
