@@ -4,6 +4,7 @@ import i18n from '@i18n';
 import { Colors } from '@styles';
 import { pickImage } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Photo } from 'types';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -17,12 +18,13 @@ export interface Props {
   children?: JSX.Element;
   width: number;
   height: number;
-  onSuccess?: (path: string) => void;
+  onSuccess?: (image: Photo) => void;
   onDelete?: () => void;
+  initial: Photo;
 }
 
 export interface State {
-  image: string | null;
+  image: Photo | null;
 }
 
 class PicUpload extends React.Component<Props, State> {
@@ -31,16 +33,17 @@ class PicUpload extends React.Component<Props, State> {
     shapeBackground: {},
     width: 100,
     height: 100,
+    initial: null,
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      image: null,
+      image: props.initial,
     };
   }
 
-  getImage = (): string | null => {
+  getImage = (): Photo | null => {
     return this.state.image;
   };
 
@@ -48,9 +51,20 @@ class PicUpload extends React.Component<Props, State> {
     try {
       const result = await pickImage();
       if (result) {
-        this.setState({ image: result.uri }, () => {
-          if (this.props.onSuccess) this.props.onSuccess(result.uri);
-        });
+        const image = {
+          uri: result.uri,
+          type: 'image',
+          width: result.width,
+          height: result.height,
+        };
+        this.setState(
+          {
+            image,
+          },
+          () => {
+            if (this.props.onSuccess) this.props.onSuccess(image);
+          }
+        );
       }
     } catch (err) {
       dropdownError({ message: i18n.t('Permission.photos') });
@@ -69,7 +83,7 @@ class PicUpload extends React.Component<Props, State> {
     if (image) {
       innerCircle = (
         <Image
-          source={{ uri: image }}
+          source={{ uri: image.uri }}
           style={{ width: this.props.width, height: this.props.height }}
         />
       );

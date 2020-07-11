@@ -79,25 +79,24 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
     ) : null;
 
+  const refresh = (
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={async () => {
+        setRefreshing(true);
+        try {
+          await getLetters();
+        } catch (err) {
+          dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
+        }
+        setRefreshing(false);
+      }}
+    />
+  );
+
   return (
     <View style={Styles.trueBackground}>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        refreshControl={(
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={async () => {
-              setRefreshing(true);
-              try {
-                await getLetters();
-              } catch (err) {
-                dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
-              }
-              setRefreshing(false);
-            }}
-          />
-        )}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" refreshControl={refresh}>
         <View style={Styles.profileCard}>
           <LinearGradient
             colors={['#ADD3FF', '#FFC9C9']}
@@ -109,6 +108,12 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               onPress={() => {
                 props.setActiveContact(contact);
                 props.navigation.navigate('UpdateContact');
+              }}
+              style={{
+                width: 50,
+                height: 50,
+                position: 'absolute',
+                right: 0,
               }}
             >
               <Icon

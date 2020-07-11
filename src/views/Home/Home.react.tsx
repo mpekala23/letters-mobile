@@ -16,6 +16,7 @@ import {
   updateContact,
   deleteContact,
   getLetters,
+  getZipcode,
 } from '@api';
 import { ContactState } from '@store/Contact/ContactTypes';
 
@@ -172,6 +173,19 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
         onPress={async () => {
           try {
             const res = await getLetters();
+            console.log('Successed');
+            console.log(res);
+          } catch (err) {
+            console.log('Errored');
+            console.log(err);
+          }
+        }}
+      />
+      <Button
+        buttonText="getZipcode"
+        onPress={async () => {
+          try {
+            const res = await getZipcode('90210');
             console.log('Successed');
             console.log(res);
           } catch (err) {

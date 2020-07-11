@@ -8,19 +8,20 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, ProfilePic, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
-import { ProfilePicTypes, Facility } from 'types';
+import { ProfilePicTypes, Facility, Photo } from 'types';
 import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -34,7 +35,7 @@ export interface Props {
 }
 
 export interface State {
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateContactScreenBase extends React.Component<Props, State> {
@@ -56,6 +57,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.contact.photo ? props.contact.photo : null,
+    };
 
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
@@ -197,7 +201,8 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.facilityName.current.state.value !==
           this.props.contact.facility.name ||
         this.facilityAddress.current.state.value !==
-          this.props.contact.facility.address
+          this.props.contact.facility.address ||
+        this.state.image !== this.props.contact.photo
       );
     }
     return false;
@@ -233,6 +238,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               lastName={contact.lastName}
               imageUri="ExamplePic"
               type={ProfilePicTypes.SingleContact}
+            />
+            <PicUpload
+              type={PicUploadTypes.Profile}
+              initial={this.props.contact.photo}
+              onSuccess={(image: Photo) => this.setState({ image })}
+              onDelete={() => this.setState({ image: null })}
             />
           </View>
           <Text

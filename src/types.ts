@@ -76,3 +76,16 @@ export type TopbarRouteAction = {
   text: string;
   action: () => void;
 };
+
+export interface ZipcodeInfo {
+  zip: string;
+  city: string;
+  state: string;
+}
+
+export interface Photo {
+  type?: 'image' | string;
+  width?: number;
+  height?: number;
+  uri: string;
+}

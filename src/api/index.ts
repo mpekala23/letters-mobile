@@ -13,6 +13,7 @@ import {
   LetterTrackingEvent,
   LetterTypes,
   LetterStatus,
+  ZipcodeInfo,
 } from 'types';
 import { loginUser, logoutUser } from '@store/User/UserActions';
 import {
@@ -612,4 +613,29 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   } else {
     throw Error('Share Url not supported');
   }
+}
+
+export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `zips/${zipcode}`),
+    {
+      method: 'GET',
+    }
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as {
+    zip: string;
+    city: string;
+    state_id: string;
+  };
+  return {
+    zip: data.zip,
+    city: data.city,
+    state: ABBREV_TO_STATE[data.state_id],
+  };
+}
+
+export async function uploadImage(image: Photo): Promise<string> {
+  console.log(image);
+  return image;
 }
