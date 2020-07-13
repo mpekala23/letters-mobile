@@ -84,6 +84,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               props.setActiveContact(contact);
               props.navigation.navigate('UpdateContact');
             }}
+            style={{ height: 100 }}
           >
             <Icon
               svg={PencilIcon}

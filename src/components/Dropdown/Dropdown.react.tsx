@@ -153,7 +153,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
         this.setState(
           (prevState) => {
             const newState = { ...prevState };
-            newState.notifQ.slice(1);
+            newState.notifQ.splice(0, 1);
             newState.dropped = false;
             newState.animating = false;
             return newState;
@@ -209,6 +209,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
         style={{
           position: 'absolute',
           zIndex: 999,
+          elevation: 999,
           top: this.state.height,
           width: '100%',
         }}

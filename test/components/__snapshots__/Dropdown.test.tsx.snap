@@ -13,6 +13,7 @@ exports[`Dropdown component should match snapshot 1`] = `
   <View
     style={
       Object {
+        "elevation": 999,
         "position": "absolute",
         "top": -100,
         "width": "100%",

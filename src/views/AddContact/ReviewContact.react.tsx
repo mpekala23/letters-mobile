@@ -27,6 +27,8 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -163,9 +165,23 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
-          Alert.alert('Invalid inmate number');
+          popupAlert({
+            title: i18n.t('ReviewContactScreen.invalidInmateNumber'),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else if (err.message === 'Contact already exists') {
-          Alert.alert('Contact already exists');
+          popupAlert({
+            title: i18n.t('ReviewContactScreen.contactAlreadyExists'),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
         } else {
           dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
@@ -228,7 +244,11 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 />
                 <View style={{ alignSelf: 'center', marginVertical: 10 }}>
                   <View style={{ alignSelf: 'center' }}>
-                    <PicUpload />
+                    <PicUpload
+                      type={PicUploadTypes.Profile}
+                      width={136}
+                      height={136}
+                    />
                   </View>
                   <Text
                     style={[Typography.FONT_REGULAR_ITALIC, { paddingTop: 12 }]}
