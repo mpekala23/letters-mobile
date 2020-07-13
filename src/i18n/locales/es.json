@@ -144,6 +144,15 @@
     "save": "Save",
     "deleteProfile": "Delete Profile"
   },
+  "UpdateProfileScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "cellPhone": "Cell phone",
+    "addressLine": "Address line",
+    "joined": "Joined",
+    "save": "Save",
+    "logOut": "Log out"
+  },
   "SupportFAQScreen": {
     "howCanWeHelp": "How can we help?",
     "cancelMyLetter": "I want to delete my letter",

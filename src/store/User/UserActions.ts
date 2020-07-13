@@ -1,4 +1,10 @@
-import { User, LOGIN_USER, LOGOUT_USER, UserActionTypes } from './UserTypes';
+import {
+  User,
+  LOGIN_USER,
+  LOGOUT_USER,
+  SET_USER,
+  UserActionTypes,
+} from './UserTypes';
 
 /** Logs in a user, either by loaded token or successful auth. */
 export function loginUser(user: User): UserActionTypes {
@@ -13,5 +19,13 @@ export function logoutUser(): UserActionTypes {
   return {
     type: LOGOUT_USER,
     payload: null,
+  };
+}
+
+/** Updates user profile  */
+export function setUser(user: User): UserActionTypes {
+  return {
+    type: SET_USER,
+    payload: user,
   };
 }

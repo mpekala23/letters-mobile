@@ -1,11 +1,9 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import { logout } from '@api';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
 import ExamplePic from '@assets/ExamplePic.jpg';
+import { NavigationContainerRef } from '@react-navigation/native';
 import { Typography } from '@styles';
-import i18n from '@i18n';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -13,6 +11,7 @@ export interface Props {
   lastName: string;
   imageUri?: string;
   type: ProfilePicTypes;
+  navigation?: NavigationContainerRef | null;
 }
 
 function mapProfileTypeToStyle(type: ProfilePicTypes) {
@@ -61,13 +60,8 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       style={mapProfileTypeToStyle(props.type).background}
       onPress={async () => {
-        try {
-          // TODO: Have this press direct to Edit Profile screen instead of logout once finished
-          await logout();
-        } catch (err) {
-          dropdownError({
-            message: i18n.t('Error.cantLogout'),
-          });
+        if (props.navigation) {
+          props.navigation.navigate('UpdateProfile');
         }
       }}
       testID="profilePicture"
