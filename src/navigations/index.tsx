@@ -18,6 +18,8 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
@@ -41,7 +43,12 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, Letter, SupportFAQTypes } from 'types';
+import {
+  NullableFacility,
+  Letter,
+  SupportFAQTypes,
+  DeliveryReportTypes,
+} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -74,6 +81,8 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  IssuesDetail: { issue: DeliveryReportTypes } | undefined;
+  IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
   LetterDetails: undefined;
@@ -252,6 +261,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{
             cardStyleInterpolator: fadeTransition,
           }}
+        />
+        <Stack.Screen
+          name="IssuesDetail"
+          component={IssuesDetailScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="IssuesDetailSecondary"
+          component={IssuesDetailSecondaryScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="Thanks"

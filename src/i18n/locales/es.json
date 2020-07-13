@@ -70,6 +70,28 @@
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
     "addManually": "Add Manually"
   },
+  "IssuesScreen": {
+    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "yepTheyReceivedIt": "Yep, they received it!",
+    "notSureYet": "I'm not sure yet...",
+    "notYetReceived": "They haven't received it"
+  },
+  "IssuesDetailScreen": {
+    "awesomeThanksForUsingOurService": "Awesome! Thanks for using our service :)",
+    "weWillCheckInTwoDays": "We'll check in with you again in two days.",
+    "whatsUp": "What's up?",
+    "weHopeYoullSendAnotherLetter": "We hope you'll send another letter soon!",
+    "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org",
+    "shareOnFacebook": "Share on Facebook",
+    "returnHome": "Return home",
+    "IHaventAskedMyLovedOne": "I haven't asked my loved one!",
+    "theyHaventReceivedLetter": "They haven't received the letter yet",
+    "wantToCheckWithFacility": "Want to check with the facility?",
+    "waitCoupleDays": "Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.",
+    "callFacility": "Call facility",
+    "IllWait": "I'll wait"
+  },
   "LetterTrackingScreen": {
     "letterTracking": "Letter tracking",
     "estimatedArrival": "Your letter is estimated to arrive on",

@@ -51,6 +51,14 @@ export enum SupportFAQTypes {
   TalkToAmeelio = 'TalkToAmeelio',
 }
 
+export enum DeliveryReportTypes {
+  received = 'received',
+  unsure = 'unsure',
+  notYetReceived = 'notYetReceived',
+  haveNotAsked = 'haveNotAsked',
+  haveNotReceived = 'haveNotReceived',
+}
+
 export interface Letter {
   type: LetterTypes;
   status: LetterStatus;
