@@ -18,6 +18,11 @@ const setup = () => {
       },
       existing: [],
     },
+    contact: {
+      active: {
+        id: 1,
+      },
+    },
   });
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
     return <Provider store={store}>{children}</Provider>;
@@ -43,7 +48,7 @@ describe('ChooseOption screen', () => {
     const { store, getByText } = setup();
     fireEvent.press(getByText('Post cards'));
     const actions = store.getActions();
-    expect(actions.length).toBe(1);
+    expect(actions.length).toBe(2);
     expect(actions[0].type).toBe('letter/set_type');
     expect(actions[0].payload).toBe('postcard');
   });
@@ -52,7 +57,7 @@ describe('ChooseOption screen', () => {
     const { store, getByText } = setup();
     fireEvent.press(getByText('Letters'));
     const actions = store.getActions();
-    expect(actions.length).toBe(1);
+    expect(actions.length).toBe(2);
     expect(actions[0].type).toBe('letter/set_type');
     expect(actions[0].payload).toBe('letter');
   });

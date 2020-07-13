@@ -47,10 +47,6 @@ export interface State {
 class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
-  static defaultProps = {
-    facilityData: [],
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -72,8 +68,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     );
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.onNavigationFocus();
+    await this.refreshFacilities();
   }
 
   componentWillUnmount() {

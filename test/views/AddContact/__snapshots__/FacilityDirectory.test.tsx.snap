@@ -186,24 +186,20 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           "width": "100%",
         }
       }
-      data={
-        Array [
-          Object {
-            "address": "P.O. Box 400",
-            "city": "Bethel",
-            "name": "Yukon Kskokwim Correctional Center",
-            "postal": "99559",
-            "state": "Alaska",
-            "type": "State Prison",
-          },
-        ]
-      }
+      data={Array []}
       disableVirtualization={false}
       horizontal={false}
       initialNumToRender={10}
       maxToRenderPerBatch={10}
       numColumns={1}
       onEndReachedThreshold={2}
+      refreshControl={
+        <RefreshControl
+          onRefresh={[Function]}
+          refreshing={true}
+        />
+      }
+      refreshing={true}
       removeClippedSubviews={false}
       scrollEventThrottle={50}
       stickyHeaderIndices={Array []}
@@ -211,85 +207,6 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       viewabilityConfigCallbackPairs={Array []}
       windowSize={21}
     >
-      <View
-        style={null}
-      >
-        <TouchableOpacity
-          activeOpacity={0.2}
-          style={
-            Array [
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 2,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.23,
-                "shadowRadius": 2.62,
-              },
-              Object {
-                "backgroundColor": "white",
-                "borderRadius": 7,
-                "marginBottom": 10,
-                "paddingHorizontal": 30,
-                "paddingVertical": 10,
-                "width": 675,
-              },
-              Object {},
-            ]
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Bold",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-              ]
-            }
-          >
-            Yukon Kskokwim Correctional Center
-          </Text>
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-                Object {
-                  "color": "#6E757C",
-                },
-              ]
-            }
-          >
-            State Prison
-          </Text>
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-                Object {
-                  "color": "#6E757C",
-                },
-              ]
-            }
-          >
-            P.O. Box 400
-             - 
-            Bethel
-            , 
-            Alaska
-             
-            99559
-          </Text>
-        </TouchableOpacity>
-      </View>
       <View>
         <View
           style={

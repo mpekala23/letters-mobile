@@ -239,8 +239,8 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
+                    "backgroundColor": "white",
                     "height": 200,
-                    "marginHorizontal": 8,
                     "width": 180,
                   },
                   Object {
@@ -249,6 +249,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
+                  Object {},
                 ]
               }
               testID="clickable"

@@ -70,16 +70,22 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           }
           testID="profilePicture"
         >
-          <Image
-            accessibilityLabel="Profile Picture"
-            source={1}
+          <Text
             style={
-              Object {
-                "height": 80,
-                "width": 80,
-              }
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
+                  "color": "white",
+                  "fontSize": 22,
+                  "fontWeight": "500",
+                },
+              ]
             }
-          />
+          >
+            JD
+          </Text>
         </TouchableOpacity>
       </View>
       <View
