@@ -33,11 +33,7 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       } catch (err) {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
-      try {
-        props.navigation.replace('Home');
-      } catch (err) {
-        dropdownError({ message: i18n.t('Error.loadingUser') });
-      }
+      props.navigation.replace('Home');
     }
     doSetup();
   }, []);

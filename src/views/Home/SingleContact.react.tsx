@@ -179,9 +179,9 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
               style={{ position: 'absolute', top: 8, right: 12 }}
             />
           </MemoryLaneCountCard>
+          {letterTrackingTitle}
+          {letterCards}
         </View>
-        {letterTrackingTitle}
-        {letterCards}
       </ScrollView>
     </View>
   );

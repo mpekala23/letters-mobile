@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import { Typography } from '@styles';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
-import { navigate } from '@navigations';
+import { navigate } from '@notifications';
+import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 
@@ -48,8 +49,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   );
 
   if (props.imageUri) {
-    const avatar =
-      props.type === ProfilePicTypes.SingleContact ? Avatar : AvatarSmall;
+    let avatar = AvatarTopbar;
+    if (props.type === ProfilePicTypes.SingleContact) avatar = Avatar;
+    else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
     insideCircle =
       props.imageUri.slice(props.imageUri.length - 4) === '.svg' ? (
         <Icon svg={avatar} />
@@ -63,15 +65,22 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <TouchableOpacity
-      style={mapProfileTypeToStyle(props.type).background}
-      onPress={async () => {
-        navigate('UpdateProfile');
-      }}
-      testID="profilePicture"
+    <View
+      pointerEvents={props.type === ProfilePicTypes.Contact ? 'none' : 'auto'}
     >
-      {insideCircle}
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={mapProfileTypeToStyle(props.type).background}
+        onPress={async () => {
+          if (props.type === ProfilePicTypes.SingleContact)
+            navigate('UpdateContact');
+          else if (props.type === ProfilePicTypes.Topbar)
+            navigate('UpdateProfile');
+        }}
+        testID="profilePicture"
+      >
+        {insideCircle}
+      </TouchableOpacity>
+    </View>
   );
 };
 

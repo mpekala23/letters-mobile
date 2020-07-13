@@ -238,53 +238,6 @@ export async function logout(): Promise<void> {
   return deleteToken();
 }
 
-export async function register(data: UserRegisterInfo): Promise<User> {
-  const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: data.email,
-      password: data.password,
-      password_confirmation: data.passwordConfirmation,
-      first_name: data.firstName,
-      last_name: data.lastName,
-      address_line_1: data.address1,
-      address_line_2: data.address2,
-      city: data.city,
-      state: data.state,
-      country: data.country,
-      referer: data.referer,
-      postal: data.postal,
-      phone: data.phone,
-    }),
-  });
-  const body = await response.json();
-  if (body.status !== 'OK' || body.exception) {
-    throw body;
-  }
-  if (data.remember) {
-    try {
-      await saveToken(body.data.remember);
-    } catch (err) {
-      dropdownError({
-        message: i18n.t('Error.unsavedToken'),
-      });
-    }
-  }
-  const userData = cleanUser(body.data);
-  store.dispatch(
-    loginUser(
-      userData,
-      body.data.token,
-      body.data.remember ? body.data.remember : ''
-    )
-  );
-  return userData;
-}
-
 export async function uploadImage(
   image: Photo,
   type: 'avatar' | 'letter'
@@ -323,6 +276,64 @@ export async function uploadImage(
     uri: body.data as string,
     type: 'image/jpeg',
   };
+}
+
+export async function register(data: UserRegisterInfo): Promise<User> {
+  let photoExtension = {};
+  let newPhoto;
+  if (data.photo) {
+    try {
+      newPhoto = await uploadImage(data.photo, 'avatar');
+      photoExtension = { s3_img_url: newPhoto.uri };
+    } catch (err) {
+      dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
+    }
+  }
+  const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+      password_confirmation: data.passwordConfirmation,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      address_line_1: data.address1,
+      address_line_2: data.address2,
+      city: data.city,
+      state: data.state,
+      country: data.country,
+      referer: data.referer,
+      postal: data.postal,
+      phone: data.phone,
+      ...photoExtension,
+    }),
+  });
+  const body = await response.json();
+  if (body.status !== 'OK' || body.exception) throw body;
+  await logout();
+  if (data.remember) {
+    try {
+      await saveToken(body.data.remember);
+    } catch (err) {
+      dropdownError({
+        message: i18n.t('Error.unsavedToken'),
+      });
+    }
+  }
+  const userData = cleanUser(body.data as RawUser);
+  userData.photo = newPhoto;
+  store.dispatch(
+    loginUser(
+      userData,
+      body.data.token,
+      body.data.remember ? body.data.remember : ''
+    )
+  );
+  return userData;
 }
 
 export async function updateProfile(data: User): Promise<User> {

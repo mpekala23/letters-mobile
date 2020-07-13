@@ -8,17 +8,17 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic, PicUpload } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
-import { ProfilePicTypes, Facility, Photo } from 'types';
+import { Facility, Photo } from 'types';
 import { Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { updateContact, deleteContact, uploadImage } from '@api';
+import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
@@ -148,7 +148,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       };
       try {
         await updateContact(contact);
-        this.props.navigation.navigate('SingleContact');
+        this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
@@ -209,7 +209,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   }
 
   render() {
-    const { contact } = this.props;
     return (
       <TouchableOpacity
         style={{

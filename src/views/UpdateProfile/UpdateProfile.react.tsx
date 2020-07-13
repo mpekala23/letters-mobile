@@ -8,18 +8,19 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, ProfilePic, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { UserState } from '@store/User/UserTypes';
-import { ProfilePicTypes } from 'types';
+import { UserState, User } from '@store/User/UserTypes';
+import { ProfilePicTypes, Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -33,8 +34,7 @@ export interface Props {
 }
 
 export interface State {
-  inputting: boolean;
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateProfileScreenBase extends React.Component<Props, State> {
@@ -52,6 +52,10 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.userState.user.photo ? props.userState.user.photo : null,
+    };
+
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.doUpdateProfile = this.doUpdateProfile.bind(this);
@@ -105,7 +109,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.phone.current &&
       this.address.current
     ) {
-      const user = {
+      const user: User = {
         id: this.props.userState.user.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
@@ -117,12 +121,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         postal: this.props.userState.user.postal,
         city: this.props.userState.user.city,
         state: this.props.userState.user.state,
-        imageUri: this.props.userState.user.imageUri,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         await updateProfile(user);
         this.props.navigation.pop();
       } catch (err) {
+        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
@@ -153,8 +158,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.phone.current.state.valid &&
-        this.address.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.address.current.state.valid;
       this.setValid(result);
     }
   }
@@ -172,7 +176,9 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.lastName.current.state.value !==
           this.props.userState.user.lastName ||
         this.phone.current.state.value !== this.props.userState.user.phone ||
-        this.address.current.state.value !== this.props.userState.user.address1
+        this.address.current.state.value !==
+          this.props.userState.user.address1 ||
+        this.state.image?.uri !== this.props.userState.user.photo?.uri
       );
     }
     return false;
@@ -196,11 +202,14 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
           enabled
         >
           <View style={Styles.profileCard}>
-            <ProfilePic
-              firstName={user.firstName}
-              lastName={user.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
+            <PicUpload
+              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+              width={130}
+              height={130}
+              type={PicUploadTypes.Profile}
+              initial={this.props.userState.user.photo}
+              onSuccess={(image: Photo) => this.setState({ image })}
+              onDelete={() => this.setState({ image: null })}
             />
             <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
               {user.firstName}

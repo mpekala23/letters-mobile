@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   ScrollView,
   Text,
@@ -22,6 +21,7 @@ import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Photo } from 'types';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -36,6 +36,7 @@ export interface Props {
 export interface State {
   valid: boolean;
   remember: boolean;
+  image: Photo | null;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -70,6 +71,7 @@ class RegisterScreen extends React.Component<Props, State> {
     this.state = {
       valid: false,
       remember: false,
+      image: null,
     };
   }
 
@@ -154,6 +156,7 @@ class RegisterScreen extends React.Component<Props, State> {
         passwordConfirmation: this.passwordConfirmation.current.state.value,
         remember: this.state.remember,
         referer: this.referer.current.state.value,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         await register(data);
@@ -193,7 +196,14 @@ class RegisterScreen extends React.Component<Props, State> {
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
           >
-            <PicUpload type={PicUploadTypes.Profile} width={136} height={136} />
+            <PicUpload
+              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+              width={130}
+              height={130}
+              type={PicUploadTypes.Profile}
+              onSuccess={(image: Photo) => this.setState({ image })}
+              onDelete={() => this.setState({ image: null })}
+            />
             <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
