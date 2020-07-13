@@ -2,9 +2,9 @@ import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import { Typography } from '@styles';
-import { logout } from '@api';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
+import { navigate } from '@navigations';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 
@@ -66,11 +66,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       style={mapProfileTypeToStyle(props.type).background}
       onPress={async () => {
-        if (props.type === ProfilePicTypes.Topbar) {
-          // TODO: link this once implemented
-          // navigate('UpdateProfile')
-          await logout();
-        }
+        navigate('UpdateProfile');
       }}
       testID="profilePicture"
     >

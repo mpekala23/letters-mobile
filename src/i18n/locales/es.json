@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "timedOut": "The request timed out",
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
+    "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
     "unableToUploadLetterPhoto": "Unable to upload the attached image. Ensure you are connected to the internet and try again."
   },
   "Permission": {
@@ -154,6 +155,15 @@
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
     "deleteProfile": "Delete Profile"
+  },
+  "UpdateProfileScreen": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "cellPhone": "Cell phone",
+    "addressLine": "Address line",
+    "joined": "Joined",
+    "save": "Save",
+    "logOut": "Log out"
   },
   "SupportFAQScreen": {
     "howCanWeHelp": "How can we help?",

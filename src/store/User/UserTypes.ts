@@ -1,5 +1,8 @@
+import { Photo } from 'types';
+
 export const LOGIN_USER = 'user/login_user';
 export const LOGOUT_USER = 'user/logout_user';
+export const SET_USER = 'user/set_user';
 
 // state types
 export interface UserRegisterInfo {
@@ -18,6 +21,7 @@ export interface UserRegisterInfo {
   referer: string;
   imageUri?: string;
   remember?: boolean;
+  photo?: Photo;
 }
 
 export interface UserLoginInfo {
@@ -27,7 +31,7 @@ export interface UserLoginInfo {
 }
 
 export interface User {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -38,7 +42,7 @@ export interface User {
   postal: string;
   city: string;
   state: string;
-  imageUri?: string;
+  photo?: Photo;
 }
 
 export interface AuthInfo {
@@ -54,7 +58,6 @@ export interface UserState {
 }
 
 // action types
-
 interface LoginUserAction {
   type: typeof LOGIN_USER;
   payload: {
@@ -69,4 +72,12 @@ interface LogoutUserAction {
   payload: null;
 }
 
-export type UserActionTypes = LoginUserAction | LogoutUserAction;
+interface SetUserAction {
+  type: typeof SET_USER;
+  payload: User;
+}
+
+export type UserActionTypes =
+  | LoginUserAction
+  | LogoutUserAction
+  | SetUserAction;

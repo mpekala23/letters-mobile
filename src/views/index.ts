@@ -28,6 +28,7 @@ import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import TermsScreen from './Login/Terms.react';
 import ThanksScreen from './Report/Thanks.react';
 import UpdateContactScreen from './UpdateContact/UpdateContact.react';
+import UpdateProfileScreen from './UpdateProfile/UpdateProfile.react';
 
 export {
   AddManuallyScreen,
@@ -60,4 +61,5 @@ export {
   TermsScreen,
   ThanksScreen,
   UpdateContactScreen,
+  UpdateProfileScreen,
 };

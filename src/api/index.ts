@@ -16,7 +16,7 @@ import {
   ZipcodeInfo,
   Photo,
 } from 'types';
-import { loginUser, logoutUser } from '@store/User/UserActions';
+import { loginUser, logoutUser, setUser } from '@store/User/UserActions';
 import {
   setAdding as setAddingContact,
   setExisting as setExistingContacts,
@@ -130,6 +130,43 @@ export async function fetchAuthenticated(
   return body;
 }
 
+interface RawUser {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  addr_line_1: string;
+  addr_line_2: string;
+  city: string;
+  state: string;
+  postal: string;
+  credit: number;
+  profile_img_path: string;
+  phone: string;
+  referer: string;
+  country: string;
+}
+
+function cleanUser(user: RawUser): User {
+  return {
+    id: user.id,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    email: user.email,
+    phone: user.phone,
+    address1: user.addr_line_1,
+    address2: user.addr_line_2,
+    country: user.country,
+    postal: user.postal,
+    city: user.city,
+    state: ABBREV_TO_STATE[user.state],
+    photo: {
+      type: 'image/jpeg',
+      uri: user.profile_img_path,
+    },
+  };
+}
+
 export async function saveToken(token: string): Promise<void> {
   return setItemAsync(Storage.RememberToken, token);
 }
@@ -156,19 +193,7 @@ export async function loginWithToken(): Promise<User> {
     });
     const body = await response.json();
     if (body.status !== 'OK') throw Error('Invalid token');
-    const userData: User = {
-      id: body.data.id,
-      firstName: body.data.first_name,
-      lastName: body.data.last_name,
-      email: body.data.email,
-      phone: body.data.phone,
-      address1: body.data.addr_line_1,
-      address2: body.data.addr_line_2 || '',
-      country: body.data.country,
-      postal: body.data.postal,
-      city: body.data.city,
-      state: body.data.state,
-    };
+    const userData = cleanUser(body.data);
     store.dispatch(loginUser(userData, body.data.token, body.data.remember));
     return userData;
   } catch (err) {
@@ -202,19 +227,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     }
   }
-  const userData: User = {
-    id: body.data.id,
-    firstName: body.data.first_name,
-    lastName: body.data.last_name,
-    email: body.data.email,
-    phone: body.data.phone,
-    address1: body.data.addr_line_1,
-    address2: body.data.addr_line_2 || '',
-    country: body.data.country,
-    postal: body.data.postal,
-    city: body.data.city,
-    state: body.data.state,
-  };
+  const userData = cleanUser(body.data);
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
@@ -261,19 +274,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       });
     }
   }
-  const userData: User = {
-    id: body.data.id,
-    firstName: body.data.first_name,
-    lastName: body.data.last_name,
-    email: body.data.email,
-    phone: body.data.phone,
-    address1: body.data.addr_line_1,
-    address2: body.data.addr_line_2 || null,
-    country: body.data.country,
-    postal: body.data.postal,
-    city: body.data.city,
-    state: body.data.state,
-  };
+  const userData = cleanUser(body.data);
   store.dispatch(
     loginUser(
       userData,
@@ -322,6 +323,51 @@ export async function uploadImage(
     uri: body.data as string,
     type: 'image/jpeg',
   };
+}
+
+export async function updateProfile(data: User): Promise<User> {
+  let imageExtension = {};
+  let newPhoto = data.photo ? { ...data.photo } : undefined;
+  const existingPhoto = store.getState().user.user.photo;
+  if (
+    newPhoto &&
+    ((existingPhoto && newPhoto.uri !== existingPhoto.uri) || !existingPhoto)
+  ) {
+    // there is a new photo and it is different from the existing photo (or there is no existing photo)
+    try {
+      newPhoto = await uploadImage(newPhoto, 'avatar');
+      imageExtension = { s3_image_url: newPhoto.uri };
+    } catch (err) {
+      newPhoto = undefined;
+      dropdownError({ message: 'Error.unableToUploadProfilePicture' });
+    }
+  }
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'user'), {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: data.id,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      address1: data.address1,
+      address2: data.address2,
+      country: data.country,
+      postal: data.postal,
+      city: data.city,
+      state: data.state,
+      ...imageExtension,
+    }),
+  });
+  if (body.status !== 'OK') throw body;
+  const userData = cleanUser(body.data as RawUser);
+  userData.photo = newPhoto;
+  store.dispatch(setUser(userData));
+  return userData;
 }
 
 interface RawContact {
