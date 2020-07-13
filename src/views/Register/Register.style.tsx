@@ -15,7 +15,7 @@ export default StyleSheet.create({
   scrollContent: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: 12,
     paddingBottom: 100,
   },
   fullWidth: {

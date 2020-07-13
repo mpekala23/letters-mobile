@@ -109,15 +109,11 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         >
           {contact.firstName} {contact.lastName}
         </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-          <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.received')}:{' '}
-          {letters ? letters.length : 0}
-        </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+        <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
           <Emoji name="calendar" />{' '}
           {i18n.t('SingleContactScreen.lastHeardFromYou')}:
         </Text>
-        <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+        <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
           <Emoji name="airplane" />{' '}
           {i18n.t('SingleContactScreen.lettersTraveled')}:
         </Text>
@@ -127,7 +123,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('ChooseOption');
           }}
           buttonText={i18n.t('SingleContactScreen.sendLetter')}
-          textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
+          textStyle={[Typography.FONT_BOLD, { fontSize: 20 }]}
           containerStyle={Styles.sendLetterButton}
         />
       </View>

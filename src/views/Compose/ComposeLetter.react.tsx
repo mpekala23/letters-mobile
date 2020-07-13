@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Button } from '@components';
+import { ComposeHeader, Input, Icon } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
@@ -21,6 +21,7 @@ import { WINDOW_WIDTH } from '@utils';
 import { Typography, Colors } from '@styles';
 import { Letter } from 'types';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import CheckIcon from '@assets/views/Compose/Check';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -192,7 +193,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                       { color: Colors.AMEELIO_BLUE },
                     ]}
                   >
-                    done
+                    <Icon svg={CheckIcon} />
                   </Text>
                 </TouchableOpacity>
               </TouchableOpacity>

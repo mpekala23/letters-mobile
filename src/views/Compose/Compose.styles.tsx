@@ -21,6 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'white',
+    marginBottom: 14,
   },
   keyboardButtonItem: {
     flexDirection: 'column',
