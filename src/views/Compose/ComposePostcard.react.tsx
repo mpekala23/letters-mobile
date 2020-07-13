@@ -173,7 +173,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   onSuccess={this.registerPhoto}
                   onDelete={this.deletePhoto}
                   type={PicUploadTypes.Media}
-                  width={200}
+                  width={180}
                   height={200}
                 />
               </Animated.View>

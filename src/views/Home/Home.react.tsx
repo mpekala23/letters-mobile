@@ -37,12 +37,17 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Hello</Text>
+    <View style={{ flex: 1, padding: 16 }}>
       <Button
-        buttonText="Delivery Reporting"
+        buttonText="View Contacts List"
         onPress={() => {
-          props.navigation.navigate('Issues');
+          props.navigation.navigate('ContactSelector');
+        }}
+      />
+      <Button
+        buttonText="Update Profile"
+        onPress={() => {
+          props.navigation.navigate('UpdateProfile');
         }}
       />
     </View>

@@ -37,6 +37,7 @@ import {
   TermsScreen,
   ThanksScreen,
   UpdateContactScreen,
+  UpdateProfileScreen,
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
@@ -95,6 +96,7 @@ export type AppStackParamList = {
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
+  UpdateProfile: undefined;
 };
 
 interface RouteDetails {
@@ -129,6 +131,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   SingleContact: { title: 'Single Contact', profile: true },
   Thanks: { title: 'Thanks', profile: false },
   UpdateContact: { title: 'Update Contact', profile: false },
+  UpdateProfile: { title: 'Update Profile', profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -327,6 +330,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{
             cardStyleInterpolator: fadeTransition,
           }}
+        />
+        <Stack.Screen
+          name="UpdateProfile"
+          component={UpdateProfileScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>
     );
