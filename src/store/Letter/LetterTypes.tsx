@@ -1,4 +1,4 @@
-import { LetterTypes, Letter, LetterStatus } from 'types';
+import { LetterTypes, Letter, LetterStatus, Photo } from 'types';
 
 export const SET_COMPOSING = 'letter/set_composing';
 export const SET_ACTIVE = 'letter/set_active';
@@ -7,7 +7,7 @@ export const SET_STATUS = 'letter/set_status';
 export const SET_DRAFT = 'letter/set_draft';
 export const SET_RECIPIENT_ID = 'letter/set_recipient_id';
 export const SET_CONTENT = 'letter/set_content';
-export const SET_PHOTO_PATH = 'letter/set_photo_path';
+export const SET_PHOTO = 'letter/set_photo';
 export const SET_LETTER_ID = 'letter/set_letter_id';
 export const CLEAR_COMPOSING = 'letter/clear_composing';
 export const SET_EXISTING = 'letter/set_existing';
@@ -54,9 +54,9 @@ interface SetContentAction {
   payload: string;
 }
 
-interface SetPhotoPathAction {
-  type: typeof SET_PHOTO_PATH;
-  payload: string;
+interface SetPhotoAction {
+  type: typeof SET_PHOTO;
+  payload: Photo | undefined;
 }
 
 interface SetLetterIdAction {
@@ -87,7 +87,7 @@ export type LetterActionTypes =
   | SetDraftAction
   | SetRecipientIdAction
   | SetContentAction
-  | SetPhotoPathAction
+  | SetPhotoAction
   | SetLetterIdAction
   | ClearComposingAction
   | SetExistingAction

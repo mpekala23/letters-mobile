@@ -38,7 +38,7 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: true,
           apiToken: action.payload.token,
-          rememberToken: action.payload.token,
+          rememberToken: action.payload.remember,
         },
         user: action.payload.user,
       };

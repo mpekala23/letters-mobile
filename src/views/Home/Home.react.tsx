@@ -146,7 +146,7 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
         buttonText="getFacilities"
         onPress={async () => {
           try {
-            const res = await getFacilities();
+            const res = await getFacilities('CT');
             console.log('Successed');
             console.log(res);
           } catch (err) {

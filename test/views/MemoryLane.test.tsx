@@ -27,8 +27,10 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
         isDraft: true,
         recipientId: 8,
         content: "I'm trying out this new service called Ameelio...",
-        photoPath:
-          'https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png',
+        photo: {
+          uri:
+            'https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png',
+        },
       },
       ...letterOverrides,
     ],

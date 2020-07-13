@@ -24,7 +24,6 @@ const setup = (letterOverrides = []) => {
         isDraft: false,
         recipientId: 8,
         content: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: '',
       },
     ],
     letterOverrides
@@ -71,7 +70,6 @@ describe('Single Contact Screen', () => {
         isDraft: false,
         recipientId: 8,
         content: 'Redux Letter 1',
-        photoPath: '',
       },
       {
         type: LetterTypes.Postcard,
@@ -79,7 +77,6 @@ describe('Single Contact Screen', () => {
         isDraft: false,
         recipientId: 8,
         content: 'Redux Letter 2',
-        photoPath: '',
       },
     ]);
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');

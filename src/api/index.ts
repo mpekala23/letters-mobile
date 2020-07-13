@@ -195,7 +195,6 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   }
   if (cred.remember) {
     try {
-      // TODO: Once documentation is complete, ensure that this is wherere the info will be stored
       await saveToken(body.data.remember);
     } catch (err) {
       dropdownError({
@@ -285,6 +284,46 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   return userData;
 }
 
+export async function uploadImage(
+  image: Photo,
+  type: 'avatar' | 'letter'
+): Promise<Photo> {
+  const data = new FormData();
+
+  const photo = {
+    name: store.getState().user.user.id.toString() + Date.now().toString(),
+    type: 'image/jpeg',
+    path:
+      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+    uri:
+      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+  };
+
+  data.append('img', photo);
+  data.append('type', type);
+
+  const response = await fetchTimeout(
+    url.resolve(GENERAL_URL, 'image/upload'),
+    {
+      method: 'POST',
+      body: data,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
+      },
+    },
+    20000
+  );
+  const body: ApiResponse = await response.json();
+  if (body.status !== 'OK') throw body;
+
+  return {
+    uri: body.data as string,
+    type: 'image/jpeg',
+  };
+}
+
 interface RawContact {
   id: number;
   state: string;
@@ -297,9 +336,18 @@ interface RawContact {
   facility_address: string;
   facility_city: string;
   facility_postal: string;
+  profile_img_path: string;
 }
 
 function cleanContact(data: RawContact): Contact {
+  const photoExtension = data.profile_img_path
+    ? {
+        photo: {
+          type: 'image/jpeg',
+          uri: data.profile_img_path,
+        },
+      }
+    : {};
   return {
     id: data.id,
     firstName: data.first_name,
@@ -315,6 +363,7 @@ function cleanContact(data: RawContact): Contact {
       state: ABBREV_TO_STATE[data.facility_state],
       postal: data.facility_postal,
     },
+    ...photoExtension,
   };
 }
 
@@ -389,6 +438,22 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
 
 export async function updateContact(data: Contact): Promise<Contact[]> {
   if (!data.facility) throw Error('No facility');
+  let imageExtension = {};
+  let newPhoto = data.photo ? { ...data.photo } : undefined;
+  const existingPhoto = store.getState().contact.active.photo;
+  if (
+    newPhoto &&
+    ((existingPhoto && newPhoto.uri !== existingPhoto.uri) || !existingPhoto)
+  ) {
+    // there is a new photo and it is different from the existing photo (or there is no existing photo)
+    try {
+      newPhoto = await uploadImage(newPhoto, 'avatar');
+      imageExtension = { s3_image_url: newPhoto.uri };
+    } catch (err) {
+      newPhoto = undefined;
+      dropdownError({ message: 'Error.unableToUploadContactPicture' });
+    }
+  }
   const dormExtension = data.dorm ? { facility_dorm: data.dorm } : {};
   const unitExtension = data.unit ? { facility_unit: data.unit } : {};
   const body = await fetchAuthenticated(
@@ -406,16 +471,19 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
         facility_postal: data.facility.postal,
         ...dormExtension,
         ...unitExtension,
+        ...imageExtension,
         relationship: data.relationship,
       }),
     }
   );
   if (body.status === 'ERROR') throw body.data;
+  const updatedContact = { ...data };
+  updatedContact.photo = newPhoto;
   const { existing } = store.getState().contact;
   const newExisting = [];
   for (let ix = 0; ix < existing.length; ix += 1) {
-    if (existing[ix].id === data.id) {
-      newExisting.push(data);
+    if (existing[ix].id === updatedContact.id) {
+      newExisting.push(updatedContact);
     } else {
       newExisting.push(existing[ix]);
     }
@@ -455,10 +523,9 @@ function cleanFacility(facility: RawFacility): Facility {
   };
 }
 
-export async function getFacilities(page = 1): Promise<Facility[]> {
-  const params = new URLSearchParams({ page: page.toString() });
+export async function getFacilities(state: string): Promise<Facility[]> {
   const body = await fetchAuthenticated(
-    url.resolve(API_URL, `facilities?${params}`),
+    url.resolve(API_URL, `facility/query/state/${state}`),
     {
       method: 'GET',
     }
@@ -545,7 +612,10 @@ function cleanLetter(letter: RawLetter): Letter {
   const isDraft = !letter.sent;
   const recipientId: number = letter.contact_id;
   const { content } = letter;
-  const photoPath = letter.attached_img_src;
+  const photo = {
+    type: 'image/jpeg',
+    uri: letter.attached_img_src,
+  };
   const letterId = letter.id;
   const expectedDeliveryDate = letter.created_at;
   const dateCreated = letter.created_at;
@@ -555,7 +625,7 @@ function cleanLetter(letter: RawLetter): Letter {
     isDraft,
     recipientId,
     content,
-    photoPath,
+    photo,
     letterId,
     expectedDeliveryDate,
     dateCreated,
@@ -587,16 +657,33 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
 }
 
 export async function createLetter(letter: Letter): Promise<Letter> {
-  let reqBody: Record<string, unknown> = {
-    contact_id: letter.recipientId,
-    content: letter.content,
-    is_draft: letter.isDraft,
-    s3_img_url: letter.photoPath,
-    type: letter.type,
-  };
-  if (letter.letterId) {
-    reqBody = { ...reqBody, letter_id: letter.letterId };
+  const createdLetter = { ...letter };
+  let imageExtension = {};
+  if (createdLetter.photo) {
+    try {
+      createdLetter.photo = await uploadImage(createdLetter.photo, 'letter');
+      imageExtension = { s3_img_url: createdLetter.photo.uri };
+    } catch (err) {
+      const uploadError: ApiResponse = {
+        status: 'ERROR',
+        message: 'Unable to upload image.',
+        date: Date.now(),
+        data: {},
+      };
+      throw uploadError;
+    }
   }
+  const letterExtension = createdLetter.letterId
+    ? { letter_id: createdLetter.letterId }
+    : {};
+  const reqBody: Record<string, unknown> = {
+    contact_id: createdLetter.recipientId,
+    content: createdLetter.content,
+    is_draft: createdLetter.isDraft,
+    type: createdLetter.type,
+    ...imageExtension,
+    ...letterExtension,
+  };
 
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
@@ -604,8 +691,8 @@ export async function createLetter(letter: Letter): Promise<Letter> {
   });
   if (body.status !== 'OK' || !body.data) throw body;
   // TODO: Figure out how letter_id is returned from actual API and update it here
-  store.dispatch(addLetter(letter));
-  return letter;
+  store.dispatch(addLetter(createdLetter));
+  return createdLetter;
 }
 
 export async function facebookShare(shareUrl: string): Promise<void> {
@@ -635,38 +722,4 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
   };
-}
-
-export async function uploadImage(
-  image: Photo,
-  type: 'avatar' | 'letter'
-): Promise<Photo> {
-  const data = new FormData();
-
-  console.log('start upload image');
-
-  console.log(store.getState());
-
-  const photo = {
-    name: /* store.getState().user.user.id.toString() */ Date.now().toString(),
-    type: 'image',
-    uri:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
-  };
-
-  console.log('photo');
-  data.append('photo', photo);
-  data.append('type', type);
-
-  const body = await fetchAuthenticated(
-    url.resolve(GENERAL_URL, 'image/upload'),
-    {
-      method: 'POST',
-      body: data,
-    }
-  );
-  console.log('image upload done');
-  console.log(body);
-
-  return image;
 }

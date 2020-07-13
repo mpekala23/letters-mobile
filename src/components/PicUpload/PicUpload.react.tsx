@@ -4,10 +4,10 @@ import i18n from '@i18n';
 import { pickImage } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Photo } from 'types';
-import { Icon } from '@components';
 import Camera from '@assets/views/PicUpload/Camera';
 import Placeholder from '@assets/views/PicUpload/Placeholder';
 import Delete from '@assets/views/PicUpload/Delete';
+import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -109,11 +109,12 @@ class PicUpload extends React.Component<Props, State> {
           {
             width: this.props.width,
             height: this.props.height,
-            marginHorizontal: 8,
+            backgroundColor: 'white',
           },
           this.props.type === PicUploadTypes.Profile
             ? Styles.profileBackground
             : Styles.mediaBackground,
+          this.props.shapeBackground,
         ]}
         onPress={this.selectImage}
         testID="clickable"

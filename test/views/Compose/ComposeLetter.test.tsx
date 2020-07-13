@@ -20,7 +20,6 @@ const setup = () => {
         recipientId: -1,
         recipientName: '',
         content: '',
-        photoPath: '',
         letterId: -1,
       },
     },

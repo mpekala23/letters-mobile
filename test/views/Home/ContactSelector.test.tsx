@@ -28,7 +28,6 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
     isDraft: true,
     recipientId: 8,
     content: "I'm trying out this new service called Ameelio...",
-    photoPath: '',
     ...lettersOverrides,
   };
 

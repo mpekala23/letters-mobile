@@ -144,14 +144,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         relationship: this.props.contact.relationship,
         credit: 4,
         facility,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
-        const photo = await uploadImage(this.state.image);
-        contact.photo = photo;
         await updateContact(contact);
-        this.props.navigation.navigate('ContactSelector');
+        this.props.navigation.navigate('SingleContact');
       } catch (err) {
-        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
@@ -184,8 +182,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.facilityAddress.current.state.valid;
       this.setValid(result);
     }
   }
@@ -205,7 +202,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
           this.props.contact.facility.name ||
         this.facilityAddress.current.state.value !==
           this.props.contact.facility.address ||
-        this.state.image !== this.props.contact.photo
+        this.state.image?.uri !== this.props.contact.photo?.uri
       );
     }
     return false;
@@ -215,7 +212,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     const { contact } = this.props;
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: 'white', padding: 16 }}
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          padding: 16,
+        }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
@@ -236,13 +237,10 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
             />
-            <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
-            />
             <PicUpload
+              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+              width={130}
+              height={130}
               type={PicUploadTypes.Profile}
               initial={this.props.contact.photo}
               onSuccess={(image: Photo) => this.setState({ image })}

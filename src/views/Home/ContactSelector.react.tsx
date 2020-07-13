@@ -42,6 +42,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
       <ContactSelectorCard
         firstName={item.firstName}
         lastName={item.lastName}
+        imageUri={item.photo?.uri}
         letters={props.existingLetters[item.id]}
         onPress={() => {
           props.setActiveContact(item);

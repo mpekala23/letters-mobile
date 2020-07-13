@@ -9,7 +9,7 @@ import {
   SET_DRAFT,
   SET_RECIPIENT_ID,
   SET_CONTENT,
-  SET_PHOTO_PATH,
+  SET_PHOTO,
   SET_LETTER_ID,
   CLEAR_COMPOSING,
   SET_EXISTING,
@@ -23,7 +23,6 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    photoPath: '',
     dateCreated: '06/29/20',
     trackingEvents: [],
   },
@@ -33,99 +32,10 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    photoPath: '',
     dateCreated: '06/29/20',
     trackingEvents: [],
   },
-  existing: {
-    8: [
-      {
-        letterId: 1,
-        type: LetterTypes.Postcard,
-        status: LetterStatus.Mailed,
-        isDraft: true,
-        recipientId: 8,
-        content: "I'm trying out this new service called Ameelio...",
-        expectedDeliveryDate: '2019-06-30',
-        trackingEvents: [
-          {
-            id: 1,
-            name: LetterStatus.Mailed,
-            location: '20002',
-            date: new Date('2019-07-12T15:51:41.000Z'),
-          },
-        ],
-        dateCreated: '06/29/20',
-        photoPath:
-          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
-      },
-      {
-        letterId: 2,
-        type: LetterTypes.Postcard,
-        status: LetterStatus.InTransit,
-        isDraft: true,
-        recipientId: 8,
-        expectedDeliveryDate: '2019-06-30',
-        trackingEvents: [
-          {
-            id: 1,
-            name: LetterStatus.InTransit,
-            location: '90210',
-            date: new Date('2019-06-25T12:28:41.000Z'),
-          },
-          {
-            id: 2,
-            name: LetterStatus.Mailed,
-            location: '10001',
-            date: new Date('2019-06-23T15:51:41.000Z'),
-          },
-        ],
-        content:
-          "Hi Emily! How are you doing? I'm sending you a letter through Ameelio. It is a great service! ",
-        dateCreated: '06/26/20',
-        photoPath:
-          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
-      },
-      {
-        letterId: 3,
-        type: LetterTypes.Postcard,
-        status: LetterStatus.OutForDelivery,
-        isDraft: false,
-        recipientId: 8,
-        content: "I'm trying out this new service called Ameelio...",
-        dateCreated: '06/14/20',
-        photoPath:
-          'https://wp.lob.com/wp-content/uploads/2020/04/ameelio_logo_blog.jpg',
-        expectedDeliveryDate: '2019-06-30',
-        trackingEvents: [
-          {
-            id: 2,
-            name: LetterStatus.OutForDelivery,
-            location: '06520',
-            date: new Date('2019-06-30T15:21:41.000Z'),
-          },
-          {
-            id: 3,
-            name: LetterStatus.InLocalArea,
-            location: '06511',
-            date: new Date('2019-06-29T14:38:41.000Z'),
-          },
-          {
-            id: 4,
-            name: LetterStatus.InTransit,
-            location: '90210',
-            date: new Date('2019-06-25T12:28:41.000Z'),
-          },
-          {
-            id: 5,
-            name: LetterStatus.Mailed,
-            location: '20002',
-            date: new Date('2019-06-23T15:11:41.000Z'),
-          },
-        ],
-      },
-    ],
-  },
+  existing: {},
 };
 
 export default function LetterReducer(
@@ -155,8 +65,8 @@ export default function LetterReducer(
     case SET_CONTENT:
       currentState.composing.content = action.payload;
       return currentState;
-    case SET_PHOTO_PATH:
-      currentState.composing.photoPath = action.payload;
+    case SET_PHOTO:
+      currentState.composing.photo = action.payload;
       return currentState;
     case SET_LETTER_ID:
       currentState.composing.letterId = action.payload;

@@ -24,15 +24,20 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     async function doSetup() {
       try {
-        const values = await Promise.all([
-          Notifs.setup(),
-          getContacts(),
-          getLetters(),
-        ]);
+        await Notifs.setup();
+      } catch (err) {
+        dropdownError({ message: i18n.t('Permission.notifs') });
+      }
+      try {
+        await Promise.all([getContacts(), getLetters()]);
       } catch (err) {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
-      props.navigation.replace('Home');
+      try {
+        props.navigation.replace('Home');
+      } catch (err) {
+        dropdownError({ message: i18n.t('Error.loadingUser') });
+      }
     }
     doSetup();
   }, []);

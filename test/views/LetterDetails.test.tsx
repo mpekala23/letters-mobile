@@ -15,7 +15,6 @@ const setup = (letterOverrides = {}) => {
     isDraft: true,
     recipientId: 8,
     content: "I'm trying out this new service called Ameelio...",
-    photoPath: '',
     letterId: 1,
     expectedDeliveryDate: '2019-06-30',
     dateCreated: '06/26/2019',

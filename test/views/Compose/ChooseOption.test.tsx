@@ -15,7 +15,6 @@ const setup = () => {
         type: LetterTypes.Postcard,
         recipient: null,
         content: '',
-        photoPath: '',
       },
       existing: [],
     },

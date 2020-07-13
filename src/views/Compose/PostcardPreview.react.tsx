@@ -39,9 +39,9 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
       <View style={{ flex: 1 }}>
         <GenericCard style={Styles.postcardBackground}>
           <View style={{ flex: 1 }}>
-            {props.composing.photoPath !== '' && (
+            {props.composing.photo && (
               <Image
-                source={{ uri: props.composing.photoPath }}
+                source={{ uri: props.composing.photo?.uri }}
                 style={{ width: '100%', aspectRatio: 1 }}
               />
             )}
@@ -91,15 +91,14 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.clearComposing();
             props.navigation.navigate('ContactSelector');
           } catch (err) {
-            const contacts = await getContacts();
-            console.log('about to send');
-            console.log(props.composing.recipientId);
-            console.log(contacts);
-            console.log(err);
             props.setDraft(true);
-            dropdownError({
-              message: i18n.t('Error.requestIncomplete'),
-            });
+            if (err.message === 'Unable to upload image.') {
+              dropdownError({ message: i18n.t('unableToUploadLetterPhoto') });
+            } else {
+              dropdownError({
+                message: i18n.t('Error.requestIncomplete'),
+              });
+            }
           }
         }}
       />

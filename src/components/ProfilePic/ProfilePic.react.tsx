@@ -1,12 +1,11 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { ProfilePicTypes } from 'types';
-import ExamplePic from '@assets/ExamplePic.jpg';
 import { Typography } from '@styles';
-import i18n from '@i18n';
-import { navigate } from '@navigations';
 import { logout } from '@api';
+import Avatar from '@assets/components/ProfilePic/Avatar';
+import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
+import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -49,13 +48,18 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   );
 
   if (props.imageUri) {
-    insideCircle = (
-      <Image
-        style={mapProfileTypeToStyle(props.type).image}
-        source={ExamplePic}
-        accessibilityLabel="Profile Picture"
-      />
-    );
+    const avatar =
+      props.type === ProfilePicTypes.SingleContact ? Avatar : AvatarSmall;
+    insideCircle =
+      props.imageUri.slice(props.imageUri.length - 4) === '.svg' ? (
+        <Icon svg={avatar} />
+      ) : (
+        <Image
+          style={mapProfileTypeToStyle(props.type).image}
+          source={{ uri: props.imageUri }}
+          accessibilityLabel="Profile Picture"
+        />
+      );
   }
 
   return (

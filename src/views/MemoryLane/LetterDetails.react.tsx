@@ -19,12 +19,10 @@ interface Props {
 
 const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const { letter } = props;
-  const photos = letter.photoPath ? (
+  const photos = letter.photo ? (
     <Image
       style={Styles.memoryLanePicture}
-      source={{
-        uri: letter.photoPath,
-      }}
+      source={letter.photo}
       testID="memoryLaneImage"
     />
   ) : null;
@@ -51,7 +49,6 @@ const mapStateToProps = (state: AppState) => ({
         recipientId: -1,
         recipientName: '',
         content: '',
-        photoPath: '',
         dateCreated: '',
         trackingEvents: [],
       },

@@ -34,7 +34,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
             key={letter.letterId}
             text={letter.content}
             date={letter.dateCreated ? letter.dateCreated : ''}
-            imageUri={letter.photoPath ? letter.photoPath : ''}
+            imageUri={letter.photo ? letter.photo.uri : ''}
             onPress={() => {
               props.setActiveLetter(letter);
               props.navigation.navigate('LetterDetails');

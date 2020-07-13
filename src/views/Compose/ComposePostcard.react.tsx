@@ -13,16 +13,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import {
-  setPhotoPath,
-  setDraft,
-  setContent,
-} from '@store/Letter/LetterActions';
+import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { WINDOW_WIDTH } from '@utils';
 import { Colors, Typography } from '@styles';
-import { Letter } from 'types';
+import { Letter, Photo } from 'types';
 import PicUpload, {
   PicUploadTypes,
 } from '@components/PicUpload/PicUpload.react';
@@ -38,7 +34,7 @@ interface Props {
   composing: Letter;
   recipientName: string;
   setContent: (content: string) => void;
-  setPhotoPath: (path: string) => void;
+  setPhoto: (photo: Photo | undefined) => void;
   setDraft: (value: boolean) => void;
 }
 
@@ -86,12 +82,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.props.setContent(value);
   }
 
-  registerPhoto(photo: string): void {
-    this.props.setPhotoPath(photo);
+  registerPhoto(photo: Photo): void {
+    this.props.setPhoto(photo);
   }
 
   deletePhoto(): void {
-    this.props.setPhotoPath('');
+    this.props.setPhoto(undefined);
   }
 
   render(): JSX.Element {
@@ -246,7 +242,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setContent: (content: string) => dispatch(setContent(content)),
-    setPhotoPath: (path: string) => dispatch(setPhotoPath(path)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };
