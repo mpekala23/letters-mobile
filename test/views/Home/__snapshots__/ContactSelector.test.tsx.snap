@@ -122,38 +122,42 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 ]
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#f6993f",
-                    "borderRadius": 40,
-                    "height": 80,
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "width": 80,
-                  }
-                }
-                testID="profilePicture"
+              <View
+                pointerEvents="none"
               >
-                <Text
+                <TouchableOpacity
+                  activeOpacity={0.2}
                   style={
-                    Array [
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      },
-                      Object {
-                        "color": "white",
-                        "fontSize": 22,
-                        "fontWeight": "500",
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#f6993f",
+                      "borderRadius": 40,
+                      "height": 80,
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "width": 80,
+                    }
                   }
+                  testID="profilePicture"
                 >
-                  FL
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        },
+                        Object {
+                          "color": "white",
+                          "fontSize": 22,
+                          "fontWeight": "500",
+                        },
+                      ]
+                    }
+                  >
+                    FL
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             <View
               style={

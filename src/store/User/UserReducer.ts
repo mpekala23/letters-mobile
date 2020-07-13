@@ -14,7 +14,7 @@ const initialState: UserState = {
     rememberToken: '',
   },
   user: {
-    id: '',
+    id: -1,
     firstName: '',
     lastName: '',
     email: '',
@@ -53,7 +53,7 @@ export default function UserReducer(
           rememberToken: '',
         },
         user: {
-          id: '',
+          id: -1,
           firstName: '',
           lastName: '',
           email: '',

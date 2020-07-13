@@ -60,8 +60,8 @@ exports[`Register screen should match snapshot 1`] = `
             Array [
               Object {
                 "backgroundColor": "white",
-                "height": 136,
-                "width": 136,
+                "height": 130,
+                "width": 130,
               },
               Object {
                 "alignItems": "center",
@@ -69,7 +69,10 @@ exports[`Register screen should match snapshot 1`] = `
                 "justifyContent": "center",
                 "overflow": "hidden",
               },
-              Object {},
+              Object {
+                "borderColor": "white",
+                "borderWidth": 6,
+              },
             ]
           }
           testID="clickable"

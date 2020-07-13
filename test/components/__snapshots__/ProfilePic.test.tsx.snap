@@ -10,31 +10,35 @@ exports[`ProfilePic component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-    testID="profilePicture"
+  <View
+    pointerEvents="auto"
   >
-    <Text
+    <TouchableOpacity
+      activeOpacity={0.2}
       style={
-        Array [
-          Object {
-            "fontFamily": "Poppins-Regular",
-          },
-          Object {
-            "color": "white",
-            "fontSize": 22,
-            "fontWeight": "500",
-          },
-        ]
+        Object {
+          "flex": 1,
+        }
       }
+      testID="profilePicture"
     >
-      TA
-    </Text>
-  </TouchableOpacity>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "Poppins-Regular",
+            },
+            Object {
+              "color": "white",
+              "fontSize": 22,
+              "fontWeight": "500",
+            },
+          ]
+        }
+      >
+        TA
+      </Text>
+    </TouchableOpacity>
+  </View>
 </View>
 `;

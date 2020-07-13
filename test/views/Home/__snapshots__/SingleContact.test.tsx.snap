@@ -177,40 +177,44 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             </RNSVGSvgView>
           </TouchableOpacity>
         </ViewManagerAdapter_ExpoLinearGradient>
-        <TouchableOpacity
-          activeOpacity={0.2}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f6993f",
-              "borderColor": "white",
-              "borderRadius": 65,
-              "borderWidth": 6,
-              "height": 130,
-              "justifyContent": "center",
-              "overflow": "hidden",
-              "width": 130,
-            }
-          }
-          testID="profilePicture"
+        <View
+          pointerEvents="auto"
         >
-          <Text
+          <TouchableOpacity
+            activeOpacity={0.2}
             style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-                Object {
-                  "color": "white",
-                  "fontSize": 22,
-                  "fontWeight": "500",
-                },
-              ]
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#f6993f",
+                "borderColor": "white",
+                "borderRadius": 65,
+                "borderWidth": 6,
+                "height": 130,
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "width": 130,
+              }
             }
+            testID="profilePicture"
           >
-            FL
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                  Object {
+                    "color": "white",
+                    "fontSize": 22,
+                    "fontWeight": "500",
+                  },
+                ]
+              }
+            >
+              FL
+            </Text>
+          </TouchableOpacity>
+        </View>
         <Text
           style={
             Array [
@@ -665,106 +669,116 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             1 Letter
           </Text>
         </TouchableOpacity>
-      </View>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-              "fontSize": 20,
-            },
-            Object {
-              "color": "#6D6D6D",
-              "paddingTop": 12,
-            },
-          ]
-        }
-      >
-        Letter Tracking
-      </Text>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 6,
-              "marginVertical": 6,
-              "padding": 15,
-              "width": "100%",
-            },
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 2,
-                "width": 0,
-              },
-              "shadowOpacity": 0.23,
-              "shadowRadius": 2.62,
-            },
-            undefined,
-          ]
-        }
-        testID="letterStatusCard"
-      >
-        <View
+        <Text
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+                "fontSize": 20,
+              },
+              Object {
+                "color": "#6D6D6D",
+                "paddingTop": 12,
+              },
+            ]
           }
+        >
+          Letter Tracking
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "white",
+                "borderRadius": 6,
+                "marginVertical": 6,
+                "padding": 15,
+                "width": "100%",
+              },
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.23,
+                "shadowRadius": 2.62,
+              },
+              undefined,
+            ]
+          }
+          testID="letterStatusCard"
         >
           <View
             style={
-              Array [
-                Object {
-                  "borderRadius": 3,
-                  "height": "100%",
-                  "marginRight": 15,
-                  "width": 6,
-                },
-                Object {
-                  "backgroundColor": "#09863D",
-                },
-              ]
-            }
-          />
-          <View
-            style={
               Object {
-                "flex": 1,
+                "flexDirection": "row",
               }
             }
           >
             <View
               style={
+                Array [
+                  Object {
+                    "borderRadius": 3,
+                    "height": "100%",
+                    "marginRight": 15,
+                    "width": 6,
+                  },
+                  Object {
+                    "backgroundColor": "#09863D",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                  "marginBottom": 10,
+                  "flex": 1,
                 }
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Bold",
-                    },
-                    Object {
-                      "color": "#282828",
-                      "fontSize": 20,
-                    },
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "marginBottom": 10,
+                  }
                 }
               >
-                Out for Delivery
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontFamily": "Poppins-Bold",
+                      },
+                      Object {
+                        "color": "#282828",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "flex": 1,
+                      },
+                    ]
+                  }
+                >
+                  Out for Delivery
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#6E757C",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  05/11/2020
+                </Text>
+              </View>
               <Text
                 style={
                   Object {
@@ -773,22 +787,12 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                05/11/2020
+                Hi Emily! How are you doing? I'm trying out this...
               </Text>
             </View>
-            <Text
-              style={
-                Object {
-                  "color": "#6E757C",
-                  "fontSize": 16,
-                }
-              }
-            >
-              Hi Emily! How are you doing? I'm trying out this...
-            </Text>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   </View>
 </View>
