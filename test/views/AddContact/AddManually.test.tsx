@@ -87,7 +87,7 @@ describe('Add Manually Screen', () => {
         name: 'Facility Name',
         postal: '23232',
         state: 'Minnesota',
-        type: 'State Prison',
+        type: 'Federal',
       },
       phyState: 'Minnesota',
     });

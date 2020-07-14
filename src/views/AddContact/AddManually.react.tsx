@@ -12,7 +12,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
-import { Facility } from 'types';
+import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
 import CommonStyles from './AddContact.styles';
@@ -226,7 +226,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
               ) {
                 const facility: Facility = {
                   name: this.facilityName.current.state.value,
-                  type: 'State Prison',
+                  type: PrisonTypes.Federal,
                   address: this.facilityAddress.current.state.value,
                   city: this.facilityCity.current.state.value,
                   state: this.facilityState.current.state.value,

@@ -66,7 +66,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     this.setValid = this.setValid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
 
@@ -185,27 +184,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.facilityAddress.current.state.valid;
       this.setValid(result);
     }
-  }
-
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.facilityName.current &&
-      this.facilityAddress.current &&
-      this.props.contact.facility
-    ) {
-      return (
-        this.firstName.current.state.value !== this.props.contact.firstName ||
-        this.lastName.current.state.value !== this.props.contact.lastName ||
-        this.facilityName.current.state.value !==
-          this.props.contact.facility.name ||
-        this.facilityAddress.current.state.value !==
-          this.props.contact.facility.address ||
-        this.state.image?.uri !== this.props.contact.photo?.uri
-      );
-    }
-    return false;
   }
 
   render() {

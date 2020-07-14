@@ -15,6 +15,7 @@ import {
   LetterStatus,
   ZipcodeInfo,
   Photo,
+  PrisonTypes,
 } from 'types';
 import { loginUser, logoutUser, setUser } from '@store/User/UserActions';
 import {
@@ -193,7 +194,7 @@ export async function loginWithToken(): Promise<User> {
     });
     const body = await response.json();
     if (body.status !== 'OK') throw Error('Invalid token');
-    const userData = cleanUser(body.data);
+    const userData = cleanUser(body.data as RawUser);
     store.dispatch(loginUser(userData, body.data.token, body.data.remember));
     return userData;
   } catch (err) {
@@ -227,7 +228,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     }
   }
-  const userData = cleanUser(body.data);
+  const userData = cleanUser(body.data as RawUser);
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
@@ -414,7 +415,7 @@ function cleanContact(data: RawContact): Contact {
     credit: 4, // TODO: how do credits work on the backend? is this even in V0
     facility: {
       name: data.facility_name,
-      type: 'Federal Prison', // TODO: does this field even exist on the backend?
+      type: PrisonTypes.Federal, // TODO: once this is supported on the backend, update this field
       address: data.facility_address,
       city: data.facility_city,
       state: ABBREV_TO_STATE[data.facility_state],
@@ -572,7 +573,7 @@ interface RawFacility {
 function cleanFacility(facility: RawFacility): Facility {
   return {
     name: facility.name,
-    type: facility.federal ? 'State Prison' : 'Federal Prison',
+    type: facility.federal ? PrisonTypes.Federal : PrisonTypes.State,
     address: facility.address,
     city: facility.city,
     state: facility.state,
@@ -629,7 +630,6 @@ function cleanTrackingEvent(event: RawTrackingEvent): LetterTrackingEvent {
   };
 }
 
-// TODO: Once I know how to translate from a lob letter to front-end letter, fix this
 function cleanLetter(letter: RawLetter): Letter {
   const { type } = letter;
   let status: LetterStatus;

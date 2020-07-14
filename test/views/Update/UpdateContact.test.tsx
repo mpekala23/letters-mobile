@@ -25,7 +25,7 @@ const setup = (contactOverrides = []) => {
       name: 'Facility Name',
       postal: '23232',
       state: 'MN',
-      type: 'State Prison',
+      type: 'State',
     },
     ...contactOverrides,
   };
@@ -76,7 +76,7 @@ describe('Update Contact Screen', () => {
         name: 'Facility Name',
         postal: '23232',
         state: 'MN',
-        type: 'State Prison',
+        type: 'State',
       },
     });
     expect(getByPlaceholderText('First name').props.value).toBe('First test');

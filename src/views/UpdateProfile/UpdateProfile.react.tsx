@@ -59,7 +59,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.doUpdateProfile = this.doUpdateProfile.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.unsubscribeFocus = this.props.navigation.addListener(
@@ -127,7 +126,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         await updateProfile(user);
         this.props.navigation.pop();
       } catch (err) {
-        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
@@ -161,27 +159,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.address.current.state.valid;
       this.setValid(result);
     }
-  }
-
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.phone.current &&
-      this.address.current
-    ) {
-      return (
-        this.firstName.current.state.value !==
-          this.props.userState.user.firstName ||
-        this.lastName.current.state.value !==
-          this.props.userState.user.lastName ||
-        this.phone.current.state.value !== this.props.userState.user.phone ||
-        this.address.current.state.value !==
-          this.props.userState.user.address1 ||
-        this.state.image?.uri !== this.props.userState.user.photo?.uri
-      );
-    }
-    return false;
   }
 
   render() {

@@ -2,7 +2,7 @@
 // probably want a specific type for state abbrevs
 export interface Facility {
   name: string;
-  type: 'Federal Prison' | 'State Prison';
+  type: PrisonTypes;
   address: string;
   city: string;
   state: string;
@@ -22,8 +22,8 @@ export enum Storage {
 }
 
 export enum PrisonTypes {
-  State = 'StatePrison',
-  Federal = 'FederalPrison',
+  State = 'State',
+  Federal = 'Federal',
 }
 
 export enum SupportFAQTypes {
