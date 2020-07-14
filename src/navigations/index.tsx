@@ -102,7 +102,7 @@ export type AppStackParamList = {
 interface RouteDetails {
   title: string;
   profile: boolean;
-  shown?: boolean; // default behavior is true
+  shown?: boolean;
 }
 
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
