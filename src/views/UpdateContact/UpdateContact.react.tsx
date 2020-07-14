@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes, Facility } from 'types';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
@@ -323,6 +323,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         <Button
           buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
           onPress={this.doDeleteContact}
+          containerStyle={{ backgroundColor: Colors.BLUE_DARKEST }}
         />
       </TouchableOpacity>
     );

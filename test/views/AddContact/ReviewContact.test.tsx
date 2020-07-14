@@ -65,31 +65,31 @@ describe('Review Contact Screen', () => {
 
   it('should have add contact button be enabled only when all fields are valid', () => {
     const { getByPlaceholderText, getByText } = setup();
-    const addButton = getByText('Add Contact');
-    expect(addButton.parentNode.props.style[1]).toEqual({});
+    const nextButton = getByText('Next');
+    expect(nextButton.parentNode.props.style[1]).toEqual({});
     fireEvent.changeText(getByPlaceholderText('State'), '');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(getByPlaceholderText('State'), 'Minnesota');
     fireEvent.changeText(getByPlaceholderText('First Name'), '');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(getByPlaceholderText('First Name'), 'First name');
     fireEvent.changeText(getByPlaceholderText('Last Name'), '');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(getByPlaceholderText('Last Name'), 'Last name');
     fireEvent.changeText(getByPlaceholderText('Postal'), '213');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(getByPlaceholderText('Postal'), '21389');
     fireEvent.changeText(getByPlaceholderText('Facility Name'), '');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(getByPlaceholderText('Facility Name'), 'A facility');
     fireEvent.changeText(getByPlaceholderText('Facility Address'), '');
-    expect(addButton.parentNode.props.style[1].backgroundColor).toBeDefined();
+    expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
     fireEvent.changeText(
       getByPlaceholderText('Facility Address'),
       'An address'
     );
     // now all fields are valid again, should be enabled
-    expect(addButton.parentNode.props.style[1]).toEqual({});
+    expect(nextButton.parentNode.props.style[1]).toEqual({});
   });
 
   it('should load initial values for fields from the redux store', () => {
@@ -105,15 +105,9 @@ describe('Review Contact Screen', () => {
     expect(getByPlaceholderText('Last Name').props.value).toBe('Last test');
   });
 
-  it('should navigate to the facility directory screen when the back button is pressed', () => {
-    const { navigation, getByText } = setup();
-    fireEvent.press(getByText('Back'));
-    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory');
-  });
-
   it('should make an api call when add contact button is pressed', () => {
     const { getByText } = setup();
-    fireEvent.press(getByText('Add Contact'));
+    fireEvent.press(getByText('Next'));
     expect(addContact).toHaveBeenCalledTimes(1);
   });
 });

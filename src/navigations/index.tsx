@@ -126,7 +126,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   LetterTracking: { title: 'Letter Tracking', profile: true },
   MemoryLane: { title: 'Memory Lane', profile: true },
   PostcardPreview: { title: 'Postcard Preview', profile: false },
-  ReferFriends: { title: 'Refer Friends', profile: false },
+  ReferFriends: { title: 'Spread the Word', profile: false },
   ReviewContact: { title: 'Review Contact', profile: false },
   SingleContact: { title: 'Single Contact', profile: true },
   Thanks: { title: 'Thanks', profile: false },

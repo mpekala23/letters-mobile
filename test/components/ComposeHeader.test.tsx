@@ -28,20 +28,20 @@ describe('ComposeHeader component', () => {
   it('should update button text when feeling stuck is open', async () => {
     jest.useRealTimers();
     const { queryByText } = setup();
-    const button = queryByText('Feeling Stuck?');
+    const button = queryByText('Need Ideas?');
     expect(button).toBeTruthy();
     fireEvent.press(button);
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the animation
     expect(button.children[0]).toBe('Collapse');
     fireEvent.press(button);
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the animation
-    expect(button.children[0]).toBe('Feeling Stuck?');
+    expect(button.children[0]).toBe('Need Ideas?');
   });
 
   it('should display prompt when open', async () => {
     jest.useRealTimers();
     const { queryByTestId, queryByText } = setup();
-    const button = queryByText('Feeling Stuck?');
+    const button = queryByText('Need Ideas?');
     let prompt = queryByTestId('prompt');
     expect(prompt).toBeFalsy();
     fireEvent.press(button);

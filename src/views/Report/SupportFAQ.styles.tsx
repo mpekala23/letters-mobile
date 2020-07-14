@@ -13,10 +13,9 @@ export default StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1.5,
     borderRadius: 15,
-    width: '100%',
-    height: 50,
     alignSelf: 'center',
     marginBottom: 14,
+    paddingVertical: 4,
   },
   needHelpButton: {
     backgroundColor: '#FC7272',
@@ -43,5 +42,7 @@ export default StyleSheet.create({
     color: 'black',
     fontWeight: '500',
     textAlign: 'center',
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });

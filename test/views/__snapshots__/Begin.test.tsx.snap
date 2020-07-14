@@ -233,11 +233,12 @@ exports[`Begin screen should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
+              "paddingHorizontal": 14,
             },
             Object {},
             Object {
@@ -247,6 +248,15 @@ exports[`Begin screen should match snapshot 1`] = `
               "width": "100%",
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -254,6 +264,9 @@ exports[`Begin screen should match snapshot 1`] = `
         <Text
           style={
             Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
               Object {
                 "color": "white",
                 "fontSize": 20,
@@ -282,11 +295,12 @@ exports[`Begin screen should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
+              "paddingHorizontal": 14,
             },
             Object {},
             Object {
@@ -297,6 +311,15 @@ exports[`Begin screen should match snapshot 1`] = `
               "height": 50,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -304,6 +327,9 @@ exports[`Begin screen should match snapshot 1`] = `
         <Text
           style={
             Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
               Object {
                 "color": "white",
                 "fontSize": 20,

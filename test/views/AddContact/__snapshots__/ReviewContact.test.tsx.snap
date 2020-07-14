@@ -259,6 +259,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "height": 50,
                     },
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -321,6 +324,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -383,6 +389,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -445,6 +454,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -507,6 +519,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -569,6 +584,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -633,6 +651,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -697,6 +718,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -744,13 +768,12 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "white",
-              "borderColor": "#3490dc",
-              "borderRadius": 4,
-              "borderWidth": 1,
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
+              "paddingHorizontal": 14,
             },
             Object {},
             Object {
@@ -758,6 +781,15 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               "margin": 10,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -766,45 +798,8 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "#3490dc",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "fontFamily": "Poppins-Medium",
               },
-              Object {},
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          Back
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-            },
-            Object {},
-            Object {
-              "flex": 1,
-              "margin": 10,
-            },
-            Object {},
-          ]
-        }
-        testID="clickable"
-      >
-        <Text
-          style={
-            Array [
               Object {
                 "color": "white",
                 "fontSize": 20,
@@ -817,8 +812,69 @@ exports[`Review Contact Screen should match snapshot 1`] = `
             ]
           }
         >
-          Add Contact
+          Next
         </Text>
+        <View
+          style={
+            Object {
+              "position": "absolute",
+              "right": 12,
+            }
+          }
+          testID="nextIcon"
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={21}
+            bbWidth={24}
+            fill="none"
+            focusable={false}
+            height={21}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 21,
+                  "width": 24,
+                },
+              ]
+            }
+            vbHeight={21}
+            vbWidth={24}
+            width={24}
+            xml="<svg width=\\"24\\" height=\\"21\\" viewBox=\\"0 0 24 21\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<path d=\\"M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z\\" fill=\\"white\\"/>
+</svg>
+"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGPath
+                d="M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z"
+                fill={4294967295}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+              />
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
       </TouchableOpacity>
     </View>
   </TouchableOpacity>

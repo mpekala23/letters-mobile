@@ -140,6 +140,9 @@ exports[`Login screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -204,6 +207,9 @@ exports[`Login screen should match snapshot 1`] = `
                     Object {},
                     Object {},
                     Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
                   ]
                 }
                 underlineColorAndroid="transparent"
@@ -388,11 +394,12 @@ exports[`Login screen should match snapshot 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
+                    "backgroundColor": "#FF7171",
+                    "borderRadius": 16,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
+                    "paddingHorizontal": 14,
                   },
                   Object {},
                   Object {
@@ -402,6 +409,15 @@ exports[`Login screen should match snapshot 1`] = `
                     "width": "100%",
                   },
                   Object {},
+                  Object {
+                    "elevation": 4,
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.22,
+                  },
                 ]
               }
               testID="clickable"
@@ -409,6 +425,9 @@ exports[`Login screen should match snapshot 1`] = `
               <Text
                 style={
                   Array [
+                    Object {
+                      "fontFamily": "Poppins-Medium",
+                    },
                     Object {
                       "color": "white",
                       "fontSize": 20,
@@ -444,24 +463,14 @@ exports[`Login screen should match snapshot 1`] = `
                 Forgot Your Password?
               </Text>
               <TouchableOpacity
-                activeOpacity={0.7}
+                activeOpacity={0.2}
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#3490dc",
-                      "borderRadius": 4,
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                      "marginVertical": 5,
-                    },
-                    Object {},
-                    Object {
-                      "backgroundColor": "white",
-                      "marginBottom": 30,
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "backgroundColor": "white",
+                    "marginBottom": 10,
+                    "marginLeft": 4,
+                    "marginTop": 11,
+                  }
                 }
                 testID="clickable"
               >
@@ -469,16 +478,11 @@ exports[`Login screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "white",
-                        "fontSize": 20,
-                        "fontWeight": "700",
-                        "padding": 6,
+                        "fontFamily": "Poppins-Regular",
                       },
-                      Object {},
                       Object {
                         "color": "#FF7171",
                         "fontSize": 16,
-                        "fontWeight": "500",
                       },
                       Object {},
                     ]
@@ -530,7 +534,9 @@ exports[`Login screen should match snapshot 1`] = `
                       },
                       Object {
                         "color": "#FF7171",
+                        "fontSize": 16,
                       },
+                      Object {},
                     ]
                   }
                 >
@@ -560,7 +566,9 @@ exports[`Login screen should match snapshot 1`] = `
                       },
                       Object {
                         "color": "#FF7171",
+                        "fontSize": 16,
                       },
+                      Object {},
                     ]
                   }
                 >
@@ -583,15 +591,25 @@ exports[`Login screen should match snapshot 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
+                    "backgroundColor": "#FF7171",
+                    "borderRadius": 16,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
+                    "paddingHorizontal": 14,
                   },
                   Object {},
                   Object {},
                   Object {},
+                  Object {
+                    "elevation": 4,
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.22,
+                  },
                 ]
               }
               testID="clickable"
@@ -599,6 +617,9 @@ exports[`Login screen should match snapshot 1`] = `
               <Text
                 style={
                   Array [
+                    Object {
+                      "fontFamily": "Poppins-Medium",
+                    },
                     Object {
                       "color": "white",
                       "fontSize": 20,
