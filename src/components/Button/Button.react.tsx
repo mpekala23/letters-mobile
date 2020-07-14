@@ -1,12 +1,18 @@
 import React from 'react';
-import { TouchableOpacity, Text, TextStyle, View } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { Typography } from '@styles';
 import Next from '@assets/components/Button/Next';
 import { SvgXml } from 'react-native-svg';
 import Styles from './Button.styles';
 
 export interface Props {
-  containerStyle?: Record<string, unknown> | Record<string, unknown>[];
+  containerStyle?: ViewStyle | ViewStyle[];
   textStyle?: Record<string, unknown> | TextStyle | TextStyle[];
   disabledContainerStyle?: Record<string, unknown>;
   disabledTextStyle?: Record<string, unknown>;

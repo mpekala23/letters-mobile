@@ -225,24 +225,96 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Array [
                   Object {
                     "height": 200,
-                    "width": 200,
+                    "marginHorizontal": 8,
+                    "width": 180,
                   },
                   Object {
                     "alignItems": "center",
-                    "borderColor": "#6E757C",
-                    "borderRadius": 20,
-                    "borderWidth": 5,
+                    "borderRadius": 4,
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
                 ]
               }
               testID="clickable"
             >
-              <Text>
-                +
-              </Text>
+              <View
+                accessibilityLabel="media placeholder"
+              >
+                <RNSVGSvgView
+                  align="xMidYMid"
+                  bbHeight={185}
+                  bbWidth={164}
+                  fill="none"
+                  focusable={false}
+                  height={185}
+                  meetOrSlice={0}
+                  minX={0}
+                  minY={0}
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "borderWidth": 0,
+                      },
+                      Object {
+                        "flex": 0,
+                        "height": 185,
+                        "width": 164,
+                      },
+                    ]
+                  }
+                  vbHeight={185}
+                  vbWidth={164}
+                  width={164}
+                  xml="<svg width=\\"164\\" height=\\"185\\" viewBox=\\"0 0 164 185\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<rect x=\\"1.5\\" y=\\"1.5\\" width=\\"161\\" height=\\"182\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
+<path d=\\"M81.5 75V110M99 92.5H64\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+</svg>
+"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <RNSVGGroup
+                    fill={null}
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
+                  >
+                    <RNSVGRect
+                      height={182}
+                      propList={
+                        Array [
+                          "stroke",
+                          "strokeWidth",
+                        ]
+                      }
+                      rx={6.5}
+                      stroke={4291611852}
+                      strokeWidth={3}
+                      width={161}
+                      x={1.5}
+                      y={1.5}
+                    />
+                    <RNSVGPath
+                      d="M81.5 75V110M99 92.5H64"
+                      propList={
+                        Array [
+                          "stroke",
+                          "strokeWidth",
+                          "strokeLinecap",
+                          "strokeLinejoin",
+                        ]
+                      }
+                      stroke={4291611852}
+                      strokeLinecap={1}
+                      strokeLinejoin={1}
+                      strokeWidth={3}
+                    />
+                  </RNSVGGroup>
+                </RNSVGSvgView>
+              </View>
             </TouchableOpacity>
           </View>
         </View>

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { Button } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
+import i18n from '@i18n';
+import { DeliveryReportTypes } from 'types';
 import ReportStyles from './Report.styles';
 
 type IssueScreenNavigationProp = StackNavigationProp<
@@ -14,78 +16,57 @@ type IssueScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: IssueScreenNavigationProp;
 }
-enum Problems {
-  wasntReceived = "Letter wasn't received",
-  delayed = 'Letter was delayed',
-  other = 'Other',
-}
 
 const IssuesScreen: React.FC<Props> = (props: Props) => {
-  const [selected, setSelected] = useState<Problems | null>(null);
-
   return (
     <View style={ReportStyles.background}>
       <Text
         style={[
           Typography.FONT_BOLD,
           ReportStyles.question,
-          { marginHorizontal: 10, marginBottom: 50 },
+          { marginBottom: 10 },
         ]}
       >
-        Did you have one of these issues?
+        {i18n.t('IssuesScreen.hasYourLovedOneReceivedLetter')}
+      </Text>
+      <Text
+        style={[
+          Typography.FONT_REGULAR,
+          ReportStyles.description,
+          { marginBottom: 50 },
+        ]}
+      >
+        {i18n.t('IssuesScreen.letUsKnowIfThereIsAProblem')}
       </Text>
       <Button
-        buttonText={Problems.wasntReceived}
+        buttonText={i18n.t('IssuesScreen.yepTheyReceivedIt')}
         onPress={() => {
-          setSelected(
-            selected === Problems.wasntReceived ? null : Problems.wasntReceived
-          );
+          props.navigation.navigate('IssuesDetail', {
+            issue: DeliveryReportTypes.received,
+          });
         }}
-        containerStyle={
-          selected === Problems.wasntReceived
-            ? { backgroundColor: Colors.SELECT, width: '100%' }
-            : { width: '100%' }
-        }
-        textStyle={
-          selected === Problems.wasntReceived ? { color: 'white' } : {}
-        }
-        reverse
+        containerStyle={ReportStyles.buttonReverse}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
       <Button
-        buttonText={Problems.delayed}
+        buttonText={i18n.t('IssuesScreen.notSureYet')}
         onPress={() => {
-          setSelected(selected === Problems.delayed ? null : Problems.delayed);
+          props.navigation.navigate('IssuesDetail', {
+            issue: DeliveryReportTypes.unsure,
+          });
         }}
-        containerStyle={
-          selected === Problems.delayed
-            ? { backgroundColor: Colors.SELECT, width: '100%' }
-            : { width: '100%' }
-        }
-        textStyle={selected === Problems.delayed ? { color: 'white' } : {}}
-        reverse
+        containerStyle={ReportStyles.buttonReverse}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
       <Button
-        buttonText={Problems.other}
+        buttonText={i18n.t('IssuesScreen.notYetReceived')}
         onPress={() => {
-          setSelected(selected === Problems.other ? null : Problems.other);
+          props.navigation.navigate('IssuesDetail', {
+            issue: DeliveryReportTypes.notYetReceived,
+          });
         }}
-        containerStyle={
-          selected === Problems.other
-            ? { backgroundColor: Colors.SELECT, width: '100%' }
-            : { width: '100%' }
-        }
-        textStyle={selected === Problems.other ? { color: 'white' } : {}}
-        reverse
-      />
-      <Button
-        buttonText="Report the problem"
-        onPress={() => {
-          if (selected === Problems.other)
-            props.navigation.navigate('ExplainProblem');
-          else props.navigation.navigate('Thanks');
-        }}
-        containerStyle={{ marginTop: 40, width: '100%' }}
-        enabled={!!selected}
+        containerStyle={ReportStyles.buttonReverse}
+        textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
       />
     </View>
   );

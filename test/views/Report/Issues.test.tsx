@@ -1,5 +1,6 @@
 import React from 'react';
 import { IssuesScreen } from '@views';
+import { DeliveryReportTypes } from 'types';
 import { render, fireEvent, toJSON } from '@testing-library/react-native';
 
 const setup = () => {
@@ -17,30 +18,27 @@ describe('Issues screen', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("should navigate to thanks screen when wasn't received issue pressed", async () => {
+  it('should navigate to IssuesDetail screen when button #1 is pressed', async () => {
     const { navigation, getByText } = setup();
-    const receivedButton = getByText("Letter wasn't received");
-    fireEvent.press(receivedButton);
-    const reportButton = getByText('Report the problem');
-    fireEvent.press(reportButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('Thanks');
+    fireEvent.press(getByText('Yep, they received it!'));
+    expect(navigation.navigate).toHaveBeenCalledWith('IssuesDetail', {
+      issue: DeliveryReportTypes.received,
+    });
   });
 
-  it('should navigate to thanks screen when delayed issue pressed', async () => {
+  it('should navigate to IssuesDetail screen when button #2 is pressed', async () => {
     const { navigation, getByText } = setup();
-    const delayedButton = getByText('Letter was delayed');
-    fireEvent.press(delayedButton);
-    const reportButton = getByText('Report the problem');
-    fireEvent.press(reportButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('Thanks');
+    fireEvent.press(getByText("I'm not sure yet..."));
+    expect(navigation.navigate).toHaveBeenCalledWith('IssuesDetail', {
+      issue: DeliveryReportTypes.unsure,
+    });
   });
 
-  it('should navigate to explain problem screen when other pressed', async () => {
+  it('should navigate to IssuesDetail screen when button #3 is pressed', async () => {
     const { navigation, getByText } = setup();
-    const otherButton = getByText('Other');
-    fireEvent.press(otherButton);
-    const reportButton = getByText('Report the problem');
-    fireEvent.press(reportButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('ExplainProblem');
+    fireEvent.press(getByText("They haven't received it"));
+    expect(navigation.navigate).toHaveBeenCalledWith('IssuesDetail', {
+      issue: DeliveryReportTypes.notYetReceived,
+    });
   });
 });

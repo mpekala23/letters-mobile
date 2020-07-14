@@ -42,6 +42,7 @@ exports[`First Letter screen should match snapshot 1`] = `
             Object {
               "fontSize": 23,
               "textAlign": "center",
+              "width": "80%",
             },
           ]
         }
