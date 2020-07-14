@@ -175,7 +175,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   "borderColor": "rgba(0,0,0,0)",
                   "borderRadius": 8,
                   "borderWidth": 2,
-                  "color": "#9A9A9A",
+                  "color": "black",
                   "fontSize": 16,
                   "paddingHorizontal": 10,
                   "textAlignVertical": "center",

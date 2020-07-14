@@ -245,7 +245,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -287,14 +287,19 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   <TouchableOpacity
                     activeOpacity={0.2}
                     style={
-                      Object {
-                        "borderBottomWidth": 1,
-                        "borderColor": "#282828",
-                        "borderTopWidth": 1,
-                        "height": 50,
-                        "justifyContent": "center",
-                        "width": "100%",
-                      }
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {
+                          "borderBottomWidth": 0,
+                        },
+                      ]
                     }
                   >
                     <Text
@@ -343,7 +348,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -417,7 +422,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -491,7 +496,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -565,7 +570,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -639,7 +644,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -713,7 +718,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
@@ -789,7 +794,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
+                      "color": "black",
                       "fontSize": 16,
                       "paddingHorizontal": 10,
                       "textAlignVertical": "center",
