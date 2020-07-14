@@ -157,7 +157,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="valid"
+            testID="invalid"
           />
           <View
             testID="unfocused"
@@ -191,6 +191,8 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Object {
                   "flex": 1,
                   "fontSize": 18,
+                  "paddingTop": 8,
+                  "textAlignVertical": "top",
                 },
                 Object {
                   "fontFamily": "Poppins-Regular",
@@ -347,7 +349,6 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 "flexDirection": "row",
                 "height": 50,
                 "justifyContent": "space-between",
-                "marginBottom": 14,
                 "width": "100%",
               }
             }

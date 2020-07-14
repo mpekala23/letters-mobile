@@ -61,23 +61,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
   static defaultProps = {
-    facilityData: [
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-      example,
-    ],
+    facilityData: [example],
   };
 
   constructor(props: Props) {

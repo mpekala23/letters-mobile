@@ -24,8 +24,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
         Array [
           Object {
             "flex": 1,
-            "flexDirection": "column",
-            "justifyContent": "center",
           },
           Object {
             "paddingBottom": 0,
@@ -700,7 +698,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="valid"
+                testID="invalid"
               />
               <View
                 testID="unfocused"
@@ -776,7 +774,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="valid"
+                testID="invalid"
               />
               <View
                 testID="unfocused"
@@ -840,131 +838,131 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           </View>
         </ScrollView>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "alignSelf": "center",
-          "backgroundColor": "#FFF5F5",
-          "flexDirection": "row",
-          "padding": 15,
-        }
-      }
-    >
-      <TouchableOpacity
-        activeOpacity={0.7}
+      <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {},
-            Object {
-              "flex": 1,
-              "margin": 10,
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
+          Object {
+            "alignSelf": "center",
+            "backgroundColor": "#FFF5F5",
+            "flexDirection": "row",
+            "padding": 15,
+          }
         }
-        testID="clickable"
       >
-        <Text
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "alignItems": "center",
+                "backgroundColor": "#FF7171",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+                "paddingHorizontal": 14,
               },
+              Object {},
               Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "flex": 1,
+                "margin": 10,
               },
               Object {},
-              Object {},
-              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
             ]
           }
+          testID="clickable"
         >
-          Next
-        </Text>
-        <View
-          style={
-            Object {
-              "position": "absolute",
-              "right": 12,
-            }
-          }
-          testID="nextIcon"
-        >
-          <RNSVGSvgView
-            align="xMidYMid"
-            bbHeight={21}
-            bbWidth={24}
-            fill="none"
-            focusable={false}
-            height={21}
-            meetOrSlice={0}
-            minX={0}
-            minY={0}
+          <Text
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
-                  "borderWidth": 0,
+                  "fontFamily": "Poppins-Medium",
                 },
                 Object {
-                  "flex": 0,
-                  "height": 21,
-                  "width": 24,
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
                 },
+                Object {},
+                Object {},
+                Object {},
               ]
             }
-            vbHeight={21}
-            vbWidth={24}
-            width={24}
-            xml="<svg width=\\"24\\" height=\\"21\\" viewBox=\\"0 0 24 21\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+          >
+            Next
+          </Text>
+          <View
+            style={
+              Object {
+                "position": "absolute",
+                "right": 12,
+              }
+            }
+            testID="nextIcon"
+          >
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={21}
+              bbWidth={24}
+              fill="none"
+              focusable={false}
+              height={21}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  Object {
+                    "flex": 0,
+                    "height": 21,
+                    "width": 24,
+                  },
+                ]
+              }
+              vbHeight={21}
+              vbWidth={24}
+              width={24}
+              xml="<svg width=\\"24\\" height=\\"21\\" viewBox=\\"0 0 24 21\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z\\" fill=\\"white\\"/>
 </svg>
 "
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <RNSVGGroup
-              fill={null}
-              propList={
-                Array [
-                  "fill",
-                ]
-              }
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <RNSVGPath
-                d="M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z"
-                fill={4294967295}
+              <RNSVGGroup
+                fill={null}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-              />
-            </RNSVGGroup>
-          </RNSVGSvgView>
-        </View>
-      </TouchableOpacity>
+              >
+                <RNSVGPath
+                  d="M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z"
+                  fill={4294967295}
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGSvgView>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   </TouchableOpacity>
 </View>

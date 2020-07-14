@@ -21,211 +21,226 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
   >
     <View
       style={
-        Object {
-          "flexDirection": "row",
-          "paddingHorizontal": 16,
-          "paddingTop": 16,
-        }
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "paddingBottom": 0,
+          },
+        ]
       }
     >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "white",
+            "elevation": 5,
+            "paddingBottom": 8,
+            "paddingHorizontal": 16,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.25,
+            "shadowRadius": 3.84,
+            "width": "100%",
           }
         }
       >
-        <Text
+        <View
           style={
             Object {
-              "fontFamily": "Poppins-Bold",
-              "fontSize": 24,
+              "alignSelf": "flex-start",
+              "flexDirection": "row",
+              "paddingTop": 16,
             }
           }
         >
-          Facility Directory
-        </Text>
-      </View>
-      <RNSVGSvgView
-        align="xMidYMid"
-        bbHeight={22}
-        bbWidth={22}
-        fill="none"
-        focusable={false}
-        height={22}
-        meetOrSlice={0}
-        minX={0}
-        minY={0}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
-            },
-            Object {
-              "margin": 16,
-            },
-            Object {
-              "flex": 0,
-              "height": 22,
-              "width": 22,
-            },
-          ]
-        }
-        vbHeight={22}
-        vbWidth={22}
-        width={22}
-        xml="<svg width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 22 22\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                  "fontSize": 24,
+                }
+              }
+            >
+              Facility Directory
+            </Text>
+          </View>
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={22}
+            bbWidth={22}
+            fill="none"
+            focusable={false}
+            height={22}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "margin": 16,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 22,
+                  "width": 22,
+                },
+              ]
+            }
+            vbHeight={22}
+            vbWidth={22}
+            width={22}
+            xml="<svg width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 22 22\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M18.5833 20.75V3.41667C18.5833 2.84203 18.3551 2.29093 17.9487 1.8846C17.5424 1.47827 16.9913 1.25 16.4167 1.25H5.58333C5.0087 1.25 4.4576 1.47827 4.05127 1.8846C3.64494 2.29093 3.41667 2.84203 3.41667 3.41667V20.75M18.5833 20.75H3.41667M18.5833 20.75H20.75M18.5833 20.75H13.1667M3.41667 20.75H1.25M3.41667 20.75H8.83333M13.1667 20.75V15.3333C13.1667 15.046 13.0525 14.7705 12.8494 14.5673C12.6462 14.3641 12.3707 14.25 12.0833 14.25H9.91667C9.62935 14.25 9.3538 14.3641 9.15063 14.5673C8.94747 14.7705 8.83333 15.046 8.83333 15.3333V20.75M13.1667 20.75H8.83333M7.75 5.58333H8.83333M7.75 9.91667H8.83333M13.1667 5.58333H14.25M13.1667 9.91667H14.25\\" stroke=\\"black\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 "
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <RNSVGGroup
-          fill={null}
-          propList={
-            Array [
-              "fill",
-            ]
-          }
-        >
-          <RNSVGPath
-            d="M18.5833 20.75V3.41667C18.5833 2.84203 18.3551 2.29093 17.9487 1.8846C17.5424 1.47827 16.9913 1.25 16.4167 1.25H5.58333C5.0087 1.25 4.4576 1.47827 4.05127 1.8846C3.64494 2.29093 3.41667 2.84203 3.41667 3.41667V20.75M18.5833 20.75H3.41667M18.5833 20.75H20.75M18.5833 20.75H13.1667M3.41667 20.75H1.25M3.41667 20.75H8.83333M13.1667 20.75V15.3333C13.1667 15.046 13.0525 14.7705 12.8494 14.5673C12.6462 14.3641 12.3707 14.25 12.0833 14.25H9.91667C9.62935 14.25 9.3538 14.3641 9.15063 14.5673C8.94747 14.7705 8.83333 15.046 8.83333 15.3333V20.75M13.1667 20.75H8.83333M7.75 5.58333H8.83333M7.75 9.91667H8.83333M13.1667 5.58333H14.25M13.1667 9.91667H14.25"
-            propList={
-              Array [
-                "stroke",
-                "strokeWidth",
-                "strokeLinecap",
-                "strokeLinejoin",
-              ]
-            }
-            stroke={4278190080}
-            strokeLinecap={1}
-            strokeLinejoin={1}
-            strokeWidth={2}
-          />
-        </RNSVGGroup>
-      </RNSVGSvgView>
-    </View>
-    <View
-      pointerEvents="auto"
-      style={
-        Object {
-          "backgroundColor": "#F2F2F2",
-          "borderRadius": 8,
-          "height": 50,
-          "marginBottom": 10,
-          "marginLeft": 16,
-          "marginTop": 4,
-          "overflow": "hidden",
-          "width": "91%",
-        }
-      }
-      testID="parent"
-    >
-      <View
-        testID="valid"
-      />
-      <View
-        testID="unfocused"
-      />
-      <TextInput
-        allowFontScaling={true}
-        multiline={false}
-        numberOfLines={1}
-        placeholder="Search Facility"
-        rejectResponderTermination={true}
-        secureTextEntry={false}
-        style={
-          Array [
-            Object {
-              "borderColor": "rgba(0,0,0,0)",
-              "borderRadius": 8,
-              "borderWidth": 2,
-              "color": "black",
-              "fontSize": 16,
-              "paddingHorizontal": 10,
-              "textAlignVertical": "center",
-              "width": "100%",
-            },
-            Object {
-              "color": "#282828",
-            },
-            Object {},
-            Object {
-              "height": 50,
-            },
-            Object {
-              "borderRadius": 20,
-              "padding": 20,
-            },
-            Object {
-              "fontFamily": "Poppins-Regular",
-            },
-          ]
-        }
-        underlineColorAndroid="transparent"
-        value=""
-      />
-      <View
-        style={
-          Object {
-            "height": 0,
-            "width": "100%",
-            "zIndex": 5,
-          }
-        }
-      >
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          nestedScrollEnabled={true}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGPath
+                d="M18.5833 20.75V3.41667C18.5833 2.84203 18.3551 2.29093 17.9487 1.8846C17.5424 1.47827 16.9913 1.25 16.4167 1.25H5.58333C5.0087 1.25 4.4576 1.47827 4.05127 1.8846C3.64494 2.29093 3.41667 2.84203 3.41667 3.41667V20.75M18.5833 20.75H3.41667M18.5833 20.75H20.75M18.5833 20.75H13.1667M3.41667 20.75H1.25M3.41667 20.75H8.83333M13.1667 20.75V15.3333C13.1667 15.046 13.0525 14.7705 12.8494 14.5673C12.6462 14.3641 12.3707 14.25 12.0833 14.25H9.91667C9.62935 14.25 9.3538 14.3641 9.15063 14.5673C8.94747 14.7705 8.83333 15.046 8.83333 15.3333V20.75M13.1667 20.75H8.83333M7.75 5.58333H8.83333M7.75 9.91667H8.83333M13.1667 5.58333H14.25M13.1667 9.91667H14.25"
+                propList={
+                  Array [
+                    "stroke",
+                    "strokeWidth",
+                    "strokeLinecap",
+                    "strokeLinejoin",
+                  ]
+                }
+                stroke={4278190080}
+                strokeLinecap={1}
+                strokeLinejoin={1}
+                strokeWidth={2}
+              />
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+        <View
+          pointerEvents="auto"
           style={
             Object {
-              "flex": 1,
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "marginTop": 4,
+              "overflow": "hidden",
+              "width": "100%",
+            }
+          }
+          testID="parent"
+        >
+          <View
+            testID="invalid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Search Facility"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {
+                  "color": "#282828",
+                },
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {
+                  "borderRadius": 20,
+                },
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              style={
+                Object {
+                  "flex": 1,
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <ScrollView
+        collapsable={false}
+        contentContainerStyle={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          }
+        }
+        scrollEnabled={true}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 24,
               "width": "100%",
             }
           }
         />
-      </View>
-    </View>
-    <ScrollView
-      contentContainerStyle={
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "paddingTop": 10,
-          "width": "100%",
-        }
-      }
-      data={
-        Array [
-          Object {
-            "address": "P.O. Box 400",
-            "city": "Bethel",
-            "name": "Yukon Kskokwim Correctional Center",
-            "postal": "99559",
-            "state": "AK",
-            "type": "State Prison",
-          },
-        ]
-      }
-      disableVirtualization={false}
-      horizontal={false}
-      initialNumToRender={10}
-      maxToRenderPerBatch={10}
-      numColumns={1}
-      onEndReachedThreshold={2}
-      removeClippedSubviews={false}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      updateCellsBatchingPeriod={50}
-      viewabilityConfigCallbackPairs={Array []}
-      windowSize={21}
-    >
-      <View
-        style={null}
-      >
         <TouchableOpacity
           activeOpacity={0.2}
           style={
@@ -303,8 +318,6 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             99559
           </Text>
         </TouchableOpacity>
-      </View>
-      <View>
         <View
           style={
             Object {
@@ -382,144 +395,152 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
-    <View
-      style={
-        Object {
-          "alignSelf": "center",
-          "backgroundColor": "#FFF5F5",
-          "flexDirection": "row",
-          "padding": 15,
-        }
-      }
-    >
-      <TouchableOpacity
-        activeOpacity={1}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF9E9E",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-            },
-            Object {
-              "flex": 1,
-              "margin": 10,
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          Next
-        </Text>
         <View
           style={
             Object {
-              "position": "absolute",
-              "right": 12,
+              "height": 24,
+              "width": "100%",
             }
           }
-          testID="nextIcon"
+        />
+      </ScrollView>
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+            "backgroundColor": "#FFF5F5",
+            "flexDirection": "row",
+            "padding": 15,
+          }
+        }
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FF7171",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+                "paddingHorizontal": 14,
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FF9E9E",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {
+                "flex": 1,
+                "margin": 10,
+              },
+              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
+            ]
+          }
+          testID="clickable"
         >
-          <RNSVGSvgView
-            align="xMidYMid"
-            bbHeight={21}
-            bbWidth={24}
-            fill="none"
-            focusable={false}
-            height={21}
-            meetOrSlice={0}
-            minX={0}
-            minY={0}
+          <Text
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
-                  "borderWidth": 0,
+                  "fontFamily": "Poppins-Medium",
                 },
                 Object {
-                  "flex": 0,
-                  "height": 21,
-                  "width": 24,
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
                 },
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {},
               ]
             }
-            vbHeight={21}
-            vbWidth={24}
-            width={24}
-            xml="<svg width=\\"24\\" height=\\"21\\" viewBox=\\"0 0 24 21\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+          >
+            Next
+          </Text>
+          <View
+            style={
+              Object {
+                "position": "absolute",
+                "right": 12,
+              }
+            }
+            testID="nextIcon"
+          >
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={21}
+              bbWidth={24}
+              fill="none"
+              focusable={false}
+              height={21}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  Object {
+                    "flex": 0,
+                    "height": 21,
+                    "width": 24,
+                  },
+                ]
+              }
+              vbHeight={21}
+              vbWidth={24}
+              width={24}
+              xml="<svg width=\\"24\\" height=\\"21\\" viewBox=\\"0 0 24 21\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z\\" fill=\\"white\\"/>
 </svg>
 "
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <RNSVGGroup
-              fill={null}
-              propList={
-                Array [
-                  "fill",
-                ]
-              }
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <RNSVGPath
-                d="M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z"
-                fill={4294967295}
+              <RNSVGGroup
+                fill={null}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-              />
-            </RNSVGGroup>
-          </RNSVGSvgView>
-        </View>
-      </TouchableOpacity>
+              >
+                <RNSVGPath
+                  d="M24 10.5L16.2772 21H12.1188L18.6535 12.25H0V8.75H18.6535L12.1188 0H16.2772L24 10.5Z"
+                  fill={4294967295}
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGSvgView>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   </TouchableOpacity>
 </View>

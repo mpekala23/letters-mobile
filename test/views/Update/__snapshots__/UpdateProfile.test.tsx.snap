@@ -16,7 +16,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
       Object {
         "backgroundColor": "white",
         "flex": 1,
-        "padding": 16,
+        "paddingHorizontal": 16,
       }
     }
   >
@@ -34,72 +34,6 @@ exports[`Update Profile Screen should match snapshot 1`] = `
         ]
       }
     >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <TouchableOpacity
-          activeOpacity={0.2}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f6993f",
-              "borderColor": "white",
-              "borderRadius": 65,
-              "borderWidth": 6,
-              "height": 130,
-              "justifyContent": "center",
-              "overflow": "hidden",
-              "width": 130,
-            }
-          }
-          testID="profilePicture"
-        >
-          <Image
-            accessibilityLabel="Profile Picture"
-            source={1}
-            style={
-              Object {
-                "height": 130,
-                "width": 130,
-              }
-            }
-          />
-        </TouchableOpacity>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Bold",
-              },
-              Object {
-                "fontSize": 24,
-              },
-            ]
-          }
-        >
-          Team
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#6D6D6D",
-                "paddingBottom": 6,
-              },
-            ]
-          }
-        >
-          Joined
-        </Text>
-      </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
@@ -109,6 +43,80 @@ exports[`Update Profile Screen should match snapshot 1`] = `
           }
         }
       >
+        <View
+          style={
+            Object {
+              "height": 24,
+              "width": "100%",
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#f6993f",
+                "borderColor": "white",
+                "borderRadius": 65,
+                "borderWidth": 6,
+                "height": 130,
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "width": 130,
+              }
+            }
+            testID="profilePicture"
+          >
+            <Image
+              accessibilityLabel="Profile Picture"
+              source={1}
+              style={
+                Object {
+                  "height": 130,
+                  "width": 130,
+                }
+              }
+            />
+          </TouchableOpacity>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 24,
+                },
+              ]
+            }
+          >
+            Team
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "#6D6D6D",
+                  "paddingBottom": 6,
+                },
+              ]
+            }
+          >
+            Joined
+          </Text>
+        </View>
         <Text
           style={
             Array [
@@ -465,62 +473,71 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             />
           </View>
         </View>
-      </ScrollView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {},
-            Object {
-              "backgroundColor": "#436697",
-              "borderRadius": 16,
-              "height": 48,
-              "width": "100%",
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
-      >
-        <Text
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "alignItems": "center",
+                "backgroundColor": "#FF7171",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+                "paddingHorizontal": 14,
               },
+              Object {},
               Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "backgroundColor": "#436697",
+                "borderRadius": 16,
+                "height": 48,
+                "marginTop": 16,
+                "width": "100%",
               },
               Object {},
-              Object {},
-              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
             ]
           }
+          testID="clickable"
         >
-          Log out
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {},
+                Object {},
+              ]
+            }
+          >
+            Log out
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={
+            Object {
+              "height": 16,
+              "width": "100%",
+            }
+          }
+        />
+      </ScrollView>
     </View>
   </TouchableOpacity>
 </View>
