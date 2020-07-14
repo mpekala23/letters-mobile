@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import AmeelioBirdBlue from '@assets/AmeelioBirdBlueSmall';
@@ -7,6 +7,7 @@ import AmeelioContact from '@assets/views/Onboarding/AmeelioContact';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
+import People from '@assets/views/Onboarding/People.png';
 import Styles from './Begin.styles';
 
 type BeginScreenNavigationProp = StackNavigationProp<
@@ -31,8 +32,14 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         {i18n.t('BeginScreen.forFree')}.
       </Text>
-      <View style={{ paddingBottom: 60 }}>
-        <Icon svg={AmeelioContact} />
+      <View style={{ paddingBottom: 60, paddingTop: 30 }}>
+        <Image
+          source={People}
+          width={191}
+          height={276.6}
+          resizeMode="cover"
+          style={{ width: 191, height: 276.6 }}
+        />
       </View>
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button

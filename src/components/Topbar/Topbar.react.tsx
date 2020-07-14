@@ -29,7 +29,7 @@ class Topbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      shown: true,
+      shown: false,
       title: '',
       profile: true,
     };
