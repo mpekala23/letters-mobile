@@ -28,37 +28,37 @@ describe('PicUpload component', () => {
   });
 
   it('should display profile placeholder icon when type is profile and no photo uploaded', () => {
-    const { getByTestId, getByLabelText } = setup({
+    const { getByTestId } = setup({
       type: PicUploadTypes.Profile,
     });
     expect(getByTestId('clickable').children.length).toBe(1);
-    expect(getByLabelText('profile placeholder')).toBeDefined();
+    expect(getByTestId('profile placeholder')).toBeDefined();
   });
 
   it('should display media placeholder icon when type is media and no photo uploaded', () => {
-    const { getByTestId, getByLabelText } = setup();
+    const { getByTestId } = setup();
     expect(getByTestId('clickable').children.length).toBe(1);
-    expect(getByLabelText('media placeholder')).toBeDefined();
+    expect(getByTestId('media placeholder')).toBeDefined();
   });
 
   it('should display placeholder icon with no image when error in pickImage', async () => {
     jest.useRealTimers();
-    const { getByTestId, getByLabelText } = setup({
+    const { getByTestId } = setup({
       type: PicUploadTypes.Profile,
     });
     fireEvent.press(getByTestId('clickable'));
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
-    expect(getByLabelText('profile placeholder')).toBeDefined();
+    expect(getByTestId('profile placeholder')).toBeDefined();
   });
 
   it('should display placeholder icon with no image when pickImage cancelled', async () => {
     jest.useRealTimers();
-    const { getByTestId, getByLabelText } = setup({
+    const { getByTestId } = setup({
       type: PicUploadTypes.Profile,
     });
     fireEvent.press(getByTestId('clickable'));
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
-    expect(getByLabelText('profile placeholder')).toBeDefined();
+    expect(getByTestId('profile placeholder')).toBeDefined();
   });
 
   it('should display an image with path when pickImage succeeds', async () => {

@@ -25,10 +25,10 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           "elevation": 4,
           "shadowColor": "#000",
           "shadowOffset": Object {
-            "height": 2,
+            "height": 4,
             "width": 0,
           },
-          "shadowOpacity": 0.23,
+          "shadowOpacity": 0.2,
           "shadowRadius": 2.62,
         },
         undefined,
@@ -107,7 +107,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#6D6D6D",
@@ -134,7 +134,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#6D6D6D",
@@ -159,7 +159,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#6D6D6D",

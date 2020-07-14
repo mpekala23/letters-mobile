@@ -13,7 +13,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#EDEDED",
+        "backgroundColor": "#FAFAFA",
         "flex": 1,
         "flexDirection": "column",
       }
@@ -24,7 +24,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         Object {
           "alignItems": "center",
           "backgroundColor": "white",
-          "height": 360,
+          "height": 340,
           "justifyContent": "center",
           "padding": 16,
           "paddingTop": 60,
@@ -214,35 +214,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "Poppins-Medium",
-            },
-            Object {
-              "color": "#393939",
-              "fontSize": 16,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#000",
-            }
-          }
-        >
-          💌
-        </Text>
-         
-        received
-        :
-         
-        1
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Medium",
+              "fontFamily": "Poppins-Regular",
             },
             Object {
               "color": "#393939",
@@ -268,7 +240,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "Poppins-Medium",
+              "fontFamily": "Poppins-Regular",
             },
             Object {
               "color": "#393939",
@@ -305,7 +277,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             },
             Object {},
             Object {
-              "marginBottom": 12,
+              "marginBottom": 16,
               "width": "100%",
             },
             Object {},
@@ -335,9 +307,14 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "padding": 6,
               },
               Object {},
-              Object {
-                "fontSize": 20,
-              },
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 20,
+                },
+              ],
               Object {},
             ]
           }
@@ -368,10 +345,10 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "elevation": 4,
               "shadowColor": "#000",
               "shadowOffset": Object {
-                "height": 2,
+                "height": 4,
                 "width": 0,
               },
-              "shadowOpacity": 0.23,
+              "shadowOpacity": 0.2,
               "shadowRadius": 2.62,
             },
             undefined,
@@ -471,10 +448,10 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "elevation": 4,
               "shadowColor": "#000",
               "shadowOffset": Object {
-                "height": 2,
+                "height": 4,
                 "width": 0,
               },
-              "shadowOpacity": 0.23,
+              "shadowOpacity": 0.2,
               "shadowRadius": 2.62,
             },
             undefined,
@@ -687,10 +664,10 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               "elevation": 4,
               "shadowColor": "#000",
               "shadowOffset": Object {
-                "height": 2,
+                "height": 4,
                 "width": 0,
               },
-              "shadowOpacity": 0.23,
+              "shadowOpacity": 0.2,
               "shadowRadius": 2.62,
             },
             undefined,
