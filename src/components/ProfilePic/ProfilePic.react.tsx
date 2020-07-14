@@ -45,7 +45,16 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   }
 
   let insideCircle = (
-    <Text style={[Typography.FONT_REGULAR, Styles.initials]}>{initials}</Text>
+    <Text
+      style={[
+        Typography.FONT_REGULAR,
+        props.type === ProfilePicTypes.SingleContact
+          ? Styles.initialsBig
+          : Styles.initials,
+      ]}
+    >
+      {initials}
+    </Text>
   );
 
   if (props.imageUri) {

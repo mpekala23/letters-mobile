@@ -24,7 +24,7 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters } from '@api';
+import { getLetters, getContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './SingleContact.styles';
 
@@ -86,6 +86,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         setRefreshing(true);
         try {
           await getLetters();
+          await getContact(props.route.params.contact.id);
         } catch (err) {
           dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
         }

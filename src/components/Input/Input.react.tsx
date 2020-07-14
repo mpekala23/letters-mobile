@@ -137,12 +137,15 @@ class Input extends React.Component<Props, State> {
   doValidate = (): void => {
     const { value } = this.state;
     const { required, validate, onValid, onInvalid } = this.props;
-
     let result = true;
-    if (validate) {
-      result = validateFormat(validate, value);
-    }
-    if (required && value.length === 0) {
+    if (value && value.length) {
+      if (validate) {
+        result = validateFormat(validate, value);
+      }
+      if (required && value.length === 0) {
+        result = false;
+      }
+    } else {
       result = false;
     }
     if (result === this.state.valid) {

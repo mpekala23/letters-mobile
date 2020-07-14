@@ -8,14 +8,14 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic, PicUpload } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { UserState, User } from '@store/User/UserTypes';
-import { ProfilePicTypes, Photo } from 'types';
+import { Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
@@ -126,12 +126,14 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         await updateProfile(user);
         this.props.navigation.pop();
       } catch (err) {
+        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
   };
 
   loadValuesFromStore() {
+    console.log(this.props.userState);
     if (
       this.firstName.current &&
       this.lastName.current &&

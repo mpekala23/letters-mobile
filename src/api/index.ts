@@ -142,13 +142,15 @@ interface RawUser {
   state: string;
   postal: string;
   credit: number;
-  profile_img_path: string;
+  s3_img_url?: string;
+  profile_img_path?: string;
   phone: string;
   referer: string;
   country: string;
 }
 
 function cleanUser(user: RawUser): User {
+  const photoUri = user.s3_img_url || user.profile_img_path;
   return {
     id: user.id,
     firstName: user.first_name,
@@ -163,7 +165,7 @@ function cleanUser(user: RawUser): User {
     state: ABBREV_TO_STATE[user.state],
     photo: {
       type: 'image/jpeg',
-      uri: user.profile_img_path,
+      uri: photoUri || '',
     },
   };
 }
@@ -228,7 +230,11 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     }
   }
+  console.log('login body');
+  console.log(body);
   const userData = cleanUser(body.data as RawUser);
+  console.log('login user');
+  console.log(userData);
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
@@ -351,30 +357,33 @@ export async function updateProfile(data: User): Promise<User> {
       imageExtension = { s3_image_url: newPhoto.uri };
     } catch (err) {
       newPhoto = undefined;
-      dropdownError({ message: 'Error.unableToUploadProfilePicture' });
+      dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
-  const body = await fetchAuthenticated(url.resolve(API_URL, 'user'), {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      id: data.id,
-      first_name: data.firstName,
-      last_name: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      address1: data.address1,
-      address2: data.address2,
-      country: data.country,
-      postal: data.postal,
-      city: data.city,
-      state: data.state,
-      ...imageExtension,
-    }),
-  });
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `user/${store.getState().user.user.id}`),
+    {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: data.id,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        addr_line_1: data.address1,
+        addr_line_2: data.address2,
+        country: data.country,
+        postal: data.postal,
+        city: data.city,
+        state: data.state,
+        ...imageExtension,
+      }),
+    }
+  );
   if (body.status !== 'OK') throw body;
   const userData = cleanUser(body.data as RawUser);
   userData.photo = newPhoto;
@@ -394,15 +403,15 @@ interface RawContact {
   facility_address: string;
   facility_city: string;
   facility_postal: string;
-  profile_img_path: string;
+  s3_img_url: string;
 }
 
 function cleanContact(data: RawContact): Contact {
-  const photoExtension = data.profile_img_path
+  const photoExtension = data.s3_img_url
     ? {
         photo: {
           type: 'image/jpeg',
-          uri: data.profile_img_path,
+          uri: data.s3_img_url,
         },
       }
     : {};

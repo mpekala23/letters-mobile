@@ -161,12 +161,17 @@ class RegisterScreen extends React.Component<Props, State> {
       try {
         await register(data);
       } catch (err) {
-        if (err.message === 'Email in use') {
+        if (err.data && err.data.email) {
           popupAlert({
-            title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
+            title: i18n.t('RegisterScreen.emailAlreadyInUse'),
             buttons: [
               {
+                text: i18n.t('RegisterScreen.login'),
+                onPress: () => this.props.navigation.replace('Login'),
+              },
+              {
                 text: i18n.t('Alert.okay'),
+                reverse: true,
               },
             ],
           });
