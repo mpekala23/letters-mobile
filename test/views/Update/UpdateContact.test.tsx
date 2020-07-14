@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { UpdateContactScreen } from '@views';
-import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { render, toJSON } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { deleteContact } from '@api';
 
 const mockStore = configureStore([]);
 
 jest.mock('@api', () => ({
   updateContact: jest.fn(),
-  deleteContact: jest.fn(),
 }));
 
 const setup = (contactOverrides = []) => {
@@ -81,11 +79,5 @@ describe('Update Contact Screen', () => {
     });
     expect(getByPlaceholderText('First name').props.value).toBe('First test');
     expect(getByPlaceholderText('Last name').props.value).toBe('Last test');
-  });
-
-  it('should make an api call when delete profile button is pressed', () => {
-    const { getByText } = setup();
-    fireEvent.press(getByText('Delete Profile'));
-    expect(deleteContact).toHaveBeenCalledTimes(1);
   });
 });

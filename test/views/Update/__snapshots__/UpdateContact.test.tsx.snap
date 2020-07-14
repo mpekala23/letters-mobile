@@ -49,7 +49,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             "alignItems": "center",
             "backgroundColor": "white",
             "justifyContent": "center",
-            "paddingTop": 22,
+            "paddingTop": 32,
           }
         }
       >

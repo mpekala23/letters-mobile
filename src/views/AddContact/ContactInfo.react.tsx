@@ -152,7 +152,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 20 }} />
+              <View style={{ width: '100%' }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader

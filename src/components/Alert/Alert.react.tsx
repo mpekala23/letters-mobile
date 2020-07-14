@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ViewStyle, TextStyle } from 'react-native';
 import { Typography } from '@styles';
 import Button from '../Button/Button.react';
 import Styles from './Alert.styles';
@@ -8,6 +8,8 @@ interface AlertButton {
   text?: string;
   reverse?: boolean;
   onPress?: () => void;
+  textStyle?: TextStyle | TextStyle[];
+  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 interface AlertInfo {
@@ -61,7 +63,12 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                     if (button.onPress) button.onPress();
                     this.setState({ current: null });
                   }}
-                  containerStyle={{ width: '100%' }}
+                  textStyle={button.textStyle}
+                  containerStyle={
+                    button.containerStyle
+                      ? button.containerStyle
+                      : { width: '100%' }
+                  }
                 />
               );
             })}

@@ -21,6 +21,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -322,8 +323,34 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         </ScrollView>
         <Button
           buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
-          onPress={this.doDeleteContact}
           containerStyle={{ backgroundColor: Colors.BLUE_DARKEST }}
+          onPress={() => {
+            popupAlert({
+              title: i18n.t('UpdateContactScreen.areYouSure'),
+              message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
+                contact.firstName
+              } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
+              buttons: [
+                {
+                  text: i18n.t('UpdateContactScreen.deleteContact'),
+                  onPress: this.doDeleteContact,
+                  containerStyle: {
+                    width: '100%',
+                    backgroundColor: Colors.BLUE_DARKEST,
+                  },
+                },
+                {
+                  text: i18n.t('UpdateContactScreen.dontDelete'),
+                  reverse: true,
+                  textStyle: { color: Colors.BLUE_DARKEST },
+                  containerStyle: {
+                    width: '100%',
+                    borderColor: Colors.BLUE_DARKEST,
+                  },
+                },
+              ],
+            });
+          }}
         />
       </TouchableOpacity>
     );

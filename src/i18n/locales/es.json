@@ -68,7 +68,8 @@
     "facilityDirectory": "Facility Directory",
     "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
-    "addManually": "Add Manually"
+    "addManually": "Add Manually",
+    "searchFacility": "Search Facility"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
@@ -171,7 +172,12 @@
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
-    "deleteProfile": "Delete Profile"
+    "deleteProfile": "Delete Profile",
+    "areYouSure": "Are you sure?",
+    "deleteWarning1": "Once you delete the contact, you won't be able to recover it ever again. The history of all letters to",
+    "deleteWarning2": "will also be deleted",
+    "deleteContact": "Delete contact",
+    "dontDelete": "Don't delete"
   },
   "UpdateProfileScreen": {
     "firstName": "First name",
