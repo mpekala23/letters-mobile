@@ -78,15 +78,15 @@ describe('Facility Directory Screen', () => {
     expect(navigation.navigate).toHaveBeenCalledTimes(1);
   });
 
-  it('should have the selected facility have a pink background', () => {
+  it('should have the selected facility have a pink border', () => {
     const { getByText } = setup();
     const facility = getByText('State Prison').parentNode;
-    expect(facility.props.style[1].backgroundColor).toBe('white');
+    expect(facility.props.style[1].borderColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
     fireEvent.press(facility);
-    expect(facility.props.style[2].backgroundColor).toBe('#FFE8E8');
+    expect(facility.props.style[2].borderColor).toBe('#FF7171');
     fireEvent.press(facility);
-    expect(facility.props.style[1].backgroundColor).toBe('white');
+    expect(facility.props.style[1].borderColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
   });
 

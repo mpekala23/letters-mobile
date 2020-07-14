@@ -68,7 +68,8 @@
     "facilityDirectory": "Facility Directory",
     "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
-    "addManually": "Add Manually"
+    "addManually": "Add Manually",
+    "searchFacility": "Search Facility"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",

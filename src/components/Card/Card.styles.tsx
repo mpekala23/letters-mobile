@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Typography } from '@styles';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.23,
+    shadowOpacity: 0.2,
     shadowRadius: 2.62,
     elevation: 4,
   },

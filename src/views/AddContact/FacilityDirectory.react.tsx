@@ -179,7 +179,13 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 16,
+            paddingTop: 16,
+          }}
+        >
           <Typography.PageHeader
             text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
           />
@@ -188,7 +194,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <Input
           parentStyle={Styles.searchParent}
           inputStyle={Styles.searchInput}
-          placeholder={i18n.t('FacilityDirectoryScreen.facilityName')}
+          placeholder={i18n.t('FacilityDirectoryScreen.searchFacility')}
           onChangeText={(val: string) => {
             this.setState({ search: val });
           }}
@@ -205,7 +211,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             onPress={() => {
               const contact = this.props.contactState.adding;
               contact.facility = this.state.selected;
-
               this.props.setAdding(contact);
               this.props.navigation.setParams({
                 newFacility: null,
