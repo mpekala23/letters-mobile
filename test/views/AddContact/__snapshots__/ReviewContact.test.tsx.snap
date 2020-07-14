@@ -147,7 +147,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                         },
                       ]
                     }
-                    testID="profile placeholder"
                     vbHeight={55}
                     vbWidth={55}
                     width={110}
@@ -736,14 +735,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 <View />
               </View>
             </View>
-            <View
-              style={
-                Object {
-                  "height": 12,
-                  "width": "100%",
-                }
-              }
-            />
           </View>
         </ScrollView>
       </View>

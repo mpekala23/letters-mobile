@@ -54,13 +54,6 @@ exports[`Add Manually Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "width": "100%",
-              }
-            }
-          />
-          <View
-            style={
-              Object {
                 "backgroundColor": "white",
                 "flex": 1,
                 "padding": 16,

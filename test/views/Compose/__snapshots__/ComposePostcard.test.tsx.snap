@@ -261,7 +261,6 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                     },
                   ]
                 }
-                testID="media placeholder"
                 vbHeight={185}
                 vbWidth={164}
                 width={164}

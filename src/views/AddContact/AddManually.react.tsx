@@ -89,7 +89,6 @@ class AddManuallyScreen extends React.Component<Props, State> {
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%' }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
                   <Typography.PageHeader

@@ -96,7 +96,6 @@ exports[`Register screen should match snapshot 1`] = `
                 },
               ]
             }
-            testID="profile placeholder"
             vbHeight={55}
             vbWidth={55}
             width={110}

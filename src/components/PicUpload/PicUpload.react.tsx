@@ -3,10 +3,10 @@ import { TouchableOpacity, ViewStyle, View, Image } from 'react-native';
 import i18n from '@i18n';
 import { pickImage } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { SvgXml } from 'react-native-svg';
 import Camera from '@assets/views/PicUpload/Camera';
 import Placeholder from '@assets/views/PicUpload/Placeholder';
 import Delete from '@assets/views/PicUpload/Delete';
+import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 
 export enum PicUploadTypes {
@@ -82,9 +82,13 @@ class PicUpload extends React.Component<Props, State> {
     } else {
       innerCircle =
         this.props.type === PicUploadTypes.Profile ? (
-          <SvgXml xml={Camera} testID="profile placeholder" />
+          <View testID="profile placeholder">
+            <Icon svg={Camera} />
+          </View>
         ) : (
-          <SvgXml xml={Placeholder} testID="media placeholder" />
+          <View testID="media placeholder">
+            <Icon svg={Placeholder} />
+          </View>
         );
     }
 
@@ -120,7 +124,7 @@ class PicUpload extends React.Component<Props, State> {
             ]}
             onPress={this.deleteImage}
           >
-            <SvgXml xml={Delete} />
+            <Icon svg={Delete} />
           </TouchableOpacity>
         )}
       </TouchableOpacity>
