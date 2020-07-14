@@ -7,9 +7,8 @@ import { connect } from 'react-redux';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
-import { Button } from '@components';
-import { popupAlert } from '@components/Alert/Alert.react';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Button, Input } from '@components';
+import { STATES_DROPDOWN, Validation } from '@utils';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
