@@ -4,12 +4,12 @@ import { Colors } from '@styles';
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#FAFAFA',
     flexDirection: 'column',
   },
   profileCard: {
     backgroundColor: 'white',
-    height: 360,
+    height: 340,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
   sendLetterButton: {
     width: '100%',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   profileCardInfo: {
     color: Colors.GRAY_DARKER,

@@ -15,7 +15,7 @@ export default StyleSheet.create({
   contactbackground: {
     flex: 1,
     backgroundColor: 'white',
-    paddingHorizontal: 10,
+    padding: 16,
   },
   fullWidth: {
     width: '100%',

@@ -53,7 +53,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           <View
             style={
               Object {
-                "height": 28,
                 "width": "100%",
               }
             }
@@ -64,7 +63,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "white",
                   "flex": 1,
-                  "paddingHorizontal": 10,
+                  "padding": 16,
                 },
                 Object {
                   "alignItems": "center",
@@ -126,7 +125,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   testID="clickable"
                 >
                   <View
-                    accessibilityLabel="profile placeholder"
+                    testID="profile placeholder"
                   >
                     <RNSVGSvgView
                       align="xMidYMid"
@@ -833,14 +832,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 />
               </View>
             </View>
-            <View
-              style={
-                Object {
-                  "height": 80,
-                  "width": "100%",
-                }
-              }
-            />
           </View>
         </ScrollView>
       </View>

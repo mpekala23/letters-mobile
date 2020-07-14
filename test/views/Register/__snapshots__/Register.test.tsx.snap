@@ -31,7 +31,7 @@ exports[`Register screen should match snapshot 1`] = `
           "alignItems": "center",
           "justifyContent": "center",
           "paddingBottom": 100,
-          "paddingTop": 50,
+          "paddingTop": 12,
         }
       }
       keyboardShouldPersistTaps="handled"
@@ -74,7 +74,7 @@ exports[`Register screen should match snapshot 1`] = `
           testID="clickable"
         >
           <View
-            accessibilityLabel="profile placeholder"
+            testID="profile placeholder"
           >
             <RNSVGSvgView
               align="xMidYMid"

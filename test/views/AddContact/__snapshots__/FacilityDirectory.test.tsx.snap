@@ -16,7 +16,6 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       Object {
         "backgroundColor": "white",
         "flex": 1,
-        "paddingTop": 20,
       }
     }
   >
@@ -24,7 +23,8 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       style={
         Object {
           "flexDirection": "row",
-          "paddingHorizontal": 10,
+          "paddingHorizontal": 16,
+          "paddingTop": 16,
         }
       }
     >
@@ -116,10 +116,10 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           "borderRadius": 8,
           "height": 50,
           "marginBottom": 10,
-          "marginLeft": 10,
-          "marginTop": 10,
+          "marginLeft": 16,
+          "marginTop": 4,
           "overflow": "hidden",
-          "width": "95%",
+          "width": "91%",
         }
       }
       testID="parent"
@@ -134,7 +134,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
         allowFontScaling={true}
         multiline={false}
         numberOfLines={1}
-        placeholder="Facility Name"
+        placeholder="Search Facility"
         rejectResponderTermination={true}
         secureTextEntry={false}
         style={
@@ -158,7 +158,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             },
             Object {
               "borderRadius": 20,
-              "padding": 10,
+              "padding": 20,
             },
             Object {
               "fontFamily": "Poppins-Regular",
@@ -242,7 +242,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
               },
               Object {
                 "backgroundColor": "white",
+                "borderColor": "white",
                 "borderRadius": 7,
+                "borderWidth": 2,
                 "marginBottom": 10,
                 "paddingHorizontal": 30,
                 "paddingVertical": 10,
