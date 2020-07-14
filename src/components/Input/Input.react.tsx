@@ -79,10 +79,7 @@ class Input extends React.Component<Props, State> {
       focused: false,
       valid: !(props.validate || props.required),
       dirty: false,
-      currentHeight:
-        this.props.options.length > 0
-          ? new Animated.Value(props.height)
-          : new Animated.Value(props.height),
+      currentHeight: new Animated.Value(props.height),
       results: [],
       shown: false,
     };
@@ -236,10 +233,13 @@ class Input extends React.Component<Props, State> {
         keyboardShouldPersistTaps="always"
         nestedScrollEnabled
       >
-        {results.map((result: string) => {
+        {results.map((result: string, index: number) => {
           return (
             <TouchableOpacity
-              style={Styles.optionContainer}
+              style={[
+                Styles.optionContainer,
+                index === results.length - 1 ? { borderBottomWidth: 0 } : {},
+              ]}
               onPress={() => {
                 this.set(result);
                 if (!this.props.nextInput && this.inputRef.current)
@@ -315,9 +315,7 @@ class Input extends React.Component<Props, State> {
             Styles.baseInputStyle,
             calcInputStyle,
             validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
-            options.length > 0
-              ? { height: this.props.height }
-              : { height: this.props.height },
+            { height: this.props.height },
             inputStyle,
             Typography.FONT_REGULAR,
           ]}

@@ -26,7 +26,7 @@ export default StyleSheet.create({
     borderColor: 'rgba(0,0,0,0)',
     paddingHorizontal: 10,
     fontSize: 16,
-    color: '#9A9A9A',
+    color: 'black',
     textAlignVertical: 'center',
   },
   inputStyleFocused: {
@@ -58,9 +58,9 @@ export default StyleSheet.create({
     width: '100%',
     height: OPTION_HEIGHT,
     justifyContent: 'center',
-    borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: Colors.AMEELIO_BLACK,
+    borderColor: Colors.GRAY_DARK,
+    paddingHorizontal: 10,
   },
   secureButtonsContainer: {
     position: 'absolute',

@@ -42,24 +42,6 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
         onPress={() => props.navigation.navigate('ContactSelector')}
         containerStyle={{ margin: 16 }}
       />
-      <Input
-        parentStyle={{
-          marginBottom: 8,
-          width: '100%',
-          backgroundColor: 'white',
-        }}
-        placeholder="State"
-        validate={Validation.State}
-        options={STATES_DROPDOWN}
-      />
-      <Input
-        parentStyle={{
-          marginBottom: 8,
-          width: '100%',
-          backgroundColor: 'white',
-        }}
-        placeholder="State"
-      />
     </View>
   );
 };
