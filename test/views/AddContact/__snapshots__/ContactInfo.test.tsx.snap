@@ -294,7 +294,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
-                  "height": 60,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -321,11 +321,10 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
-                      "flex": 1,
+                      "color": "black",
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
@@ -342,8 +341,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -353,7 +350,1449 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Alaska
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Alabama
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Arkansas
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      American Samoa
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Arizona
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      California
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Colorado
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Connecticut
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      District of Columbia
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Delaware
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Florida
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Georgia
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Guam
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Hawaii
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Iowa
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Idaho
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Illinois
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Indiana
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Kansas
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Kentucky
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Louisiana
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Massachusetts
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Maryland
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Maine
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Michigan
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Minnesota
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Missouri
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Mississippi
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Montana
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      North Carolina
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      North Dakota
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Nebraska
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      New Hampshire
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      New Jersey
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      New Mexico
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Nevada
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      New York
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Ohio
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Oklahoma
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Oregon
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Pennsylvania
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Puerto Rico
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Rhode Island
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      South Carolina
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      South Dakota
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Tennessee
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Texas
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Utah
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Virginia
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Virgin Islands
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Vermont
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Washington
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Wisconsin
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      West Virginia
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {
+                          "borderBottomWidth": 0,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Wyoming
+                    </Text>
+                  </TouchableOpacity>
+                </ScrollView>
               </View>
             </View>
             <View
@@ -362,6 +1801,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -388,16 +1828,17 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
-                      "flex": 1,
+                      "color": "black",
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -407,8 +1848,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -418,7 +1857,16 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -427,6 +1875,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -453,16 +1902,17 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
-                      "flex": 1,
+                      "color": "black",
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -472,8 +1922,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -483,7 +1931,16 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -492,6 +1949,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -518,16 +1976,17 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
-                      "flex": 1,
+                      "color": "black",
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -537,8 +1996,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -548,7 +2005,16 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -557,7 +2023,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
-                  "height": 60,
+                  "height": 50,
                   "marginBottom": 0,
                   "overflow": "hidden",
                   "width": "100%",
@@ -584,11 +2050,10 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       "borderColor": "rgba(0,0,0,0)",
                       "borderRadius": 8,
                       "borderWidth": 2,
-                      "color": "#9A9A9A",
-                      "flex": 1,
+                      "color": "black",
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
@@ -605,8 +2070,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -616,7 +2079,357 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Mother
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Father
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Brother
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Sister
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Sibling
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Daughter
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Son
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Grandmother
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Grandfather
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Grandaughter
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Grandson
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Friend
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Array [
+                        Object {
+                          "borderBottomWidth": 1,
+                          "borderColor": "#6D6D6D",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "paddingHorizontal": 10,
+                          "width": "100%",
+                        },
+                        Object {
+                          "borderBottomWidth": 0,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Other
+                    </Text>
+                  </TouchableOpacity>
+                </ScrollView>
               </View>
             </View>
           </View>
