@@ -18,6 +18,8 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
@@ -35,12 +37,18 @@ import {
   TermsScreen,
   ThanksScreen,
   UpdateContactScreen,
+  UpdateProfileScreen,
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, Letter, SupportFAQTypes } from 'types';
+import {
+  NullableFacility,
+  Letter,
+  SupportFAQTypes,
+  DeliveryReportTypes,
+} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -73,6 +81,8 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  IssuesDetail: { issue: DeliveryReportTypes } | undefined;
+  IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
   LetterDetails: undefined;
@@ -86,6 +96,7 @@ export type AppStackParamList = {
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
+  UpdateProfile: undefined;
 };
 
 interface RouteDetails {
@@ -120,6 +131,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   SingleContact: { title: 'Single Contact', profile: true },
   Thanks: { title: 'Thanks', profile: false },
   UpdateContact: { title: 'Update Contact', profile: false },
+  UpdateProfile: { title: 'Update Profile', profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -251,6 +263,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
+          name="IssuesDetail"
+          component={IssuesDetailScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="IssuesDetailSecondary"
+          component={IssuesDetailSecondaryScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
           name="Thanks"
           component={ThanksScreen}
           options={{
@@ -308,6 +330,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{
             cardStyleInterpolator: fadeTransition,
           }}
+        />
+        <Stack.Screen
+          name="UpdateProfile"
+          component={UpdateProfileScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
         />
       </>
     );

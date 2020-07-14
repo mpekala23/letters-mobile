@@ -16,7 +16,7 @@ exports[`Issues screen should match snapshot 1`] = `
         "alignItems": "center",
         "backgroundColor": "white",
         "flex": 1,
-        "paddingHorizontal": 30,
+        "paddingHorizontal": 16,
         "paddingTop": 40,
       }
     }
@@ -30,177 +30,38 @@ exports[`Issues screen should match snapshot 1`] = `
           Object {
             "fontSize": 23,
             "textAlign": "center",
+            "width": "80%",
+          },
+          Object {
+            "marginBottom": 10,
+          },
+        ]
+      }
+    >
+      Has your loved one received the leter?
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "Poppins-Regular",
+          },
+          Object {
+            "color": "#6D6D6D",
+            "fontSize": 16,
+            "textAlign": "center",
+            "width": "80%",
           },
           Object {
             "marginBottom": 50,
-            "marginHorizontal": 10,
           },
         ]
       }
     >
-      Did you have one of these issues?
+      We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!
     </Text>
     <TouchableOpacity
       activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#FF7171",
-            "borderRadius": 16,
-            "borderWidth": 2,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "width": "100%",
-          },
-          Object {},
-          Object {
-            "elevation": 4,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-          },
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Medium",
-            },
-            Object {
-              "color": "#FF7171",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {},
-            Object {},
-            Object {},
-          ]
-        }
-      >
-        Letter wasn't received
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#FF7171",
-            "borderRadius": 16,
-            "borderWidth": 2,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "width": "100%",
-          },
-          Object {},
-          Object {
-            "elevation": 4,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-          },
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Medium",
-            },
-            Object {
-              "color": "#FF7171",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {},
-            Object {},
-            Object {},
-          ]
-        }
-      >
-        Letter was delayed
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#FF7171",
-            "borderRadius": 16,
-            "borderWidth": 2,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "width": "100%",
-          },
-          Object {},
-          Object {
-            "elevation": 4,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-          },
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Medium",
-            },
-            Object {
-              "color": "#FF7171",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {},
-            Object {},
-            Object {},
-          ]
-        }
-      >
-        Other
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={1}
       style={
         Array [
           Object {
@@ -212,16 +73,13 @@ exports[`Issues screen should match snapshot 1`] = `
             "marginVertical": 5,
             "paddingHorizontal": 14,
           },
+          Object {},
           Object {
-            "alignItems": "center",
-            "backgroundColor": "#FF9E9E",
-            "borderRadius": 16,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {
-            "marginTop": 40,
+            "backgroundColor": "white",
+            "borderColor": "#FF7171",
+            "borderRadius": 8,
+            "borderWidth": 2,
+            "height": 44,
             "width": "100%",
           },
           Object {},
@@ -250,6 +108,65 @@ exports[`Issues screen should match snapshot 1`] = `
               "fontWeight": "700",
               "padding": 6,
             },
+            Object {},
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 15,
+              },
+            ],
+            Object {},
+          ]
+        }
+      >
+        Yep, they received it!
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FF7171",
+            "borderRadius": 16,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "paddingHorizontal": 14,
+          },
+          Object {},
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#FF7171",
+            "borderRadius": 8,
+            "borderWidth": 2,
+            "height": 44,
+            "width": "100%",
+          },
+          Object {},
+          Object {
+            "elevation": 4,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 5,
+              "width": 0,
+            },
+            "shadowOpacity": 0.22,
+          },
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "Poppins-Medium",
+            },
             Object {
               "color": "white",
               "fontSize": 20,
@@ -257,11 +174,85 @@ exports[`Issues screen should match snapshot 1`] = `
               "padding": 6,
             },
             Object {},
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 15,
+              },
+            ],
             Object {},
           ]
         }
       >
-        Report the problem
+        I'm not sure yet...
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FF7171",
+            "borderRadius": 16,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "paddingHorizontal": 14,
+          },
+          Object {},
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#FF7171",
+            "borderRadius": 8,
+            "borderWidth": 2,
+            "height": 44,
+            "width": "100%",
+          },
+          Object {},
+          Object {
+            "elevation": 4,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 5,
+              "width": 0,
+            },
+            "shadowOpacity": 0.22,
+          },
+        ]
+      }
+      testID="clickable"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "Poppins-Medium",
+            },
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "padding": 6,
+            },
+            Object {},
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 15,
+              },
+            ],
+            Object {},
+          ]
+        }
+      >
+        They haven't received it
       </Text>
     </TouchableOpacity>
   </View>

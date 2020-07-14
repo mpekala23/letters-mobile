@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Issues Detail Secondary screen should match snapshot 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flex": 1,
+        "paddingHorizontal": 16,
+        "paddingTop": 40,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "Poppins-Bold",
+          },
+          Object {
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": "80%",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "Poppins-Regular",
+            "fontSize": 16,
+          },
+          Object {
+            "padding": 16,
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+    <View
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+      testID="callToActionButton"
+    />
+  </View>
+</View>
+`;
