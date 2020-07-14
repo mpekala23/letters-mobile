@@ -3,7 +3,6 @@ import { Text, View, Image } from 'react-native';
 import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import AmeelioBirdBlue from '@assets/AmeelioBirdBlueSmall';
-import AmeelioContact from '@assets/views/Onboarding/AmeelioContact';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
