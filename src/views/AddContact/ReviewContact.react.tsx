@@ -232,7 +232,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 28 }} />
+              <View style={{ width: '100%' }} />
               <View
                 style={[
                   CommonStyles.contactbackground,
@@ -321,7 +321,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ReviewContactScreen.optionalDorm')}
                 />
-                <View style={{ width: '100%', height: 80 }} />
               </View>
             </ScrollView>
           </View>

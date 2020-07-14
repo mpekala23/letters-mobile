@@ -30,7 +30,7 @@ exports[`PicUpload component should match snapshot 1`] = `
     testID="clickable"
   >
     <View
-      accessibilityLabel="media placeholder"
+      testID="media placeholder"
     >
       <RNSVGSvgView
         align="xMidYMid"
