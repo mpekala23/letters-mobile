@@ -315,14 +315,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             <View style={CommonStyles.bottomButtonContainer}>
               <Button
                 onPress={() => {
-                  /* TODO */
-                }}
-                buttonText={i18n.t('ContactInfoScreen.back')}
-                reverse
-                containerStyle={CommonStyles.bottomButton}
-              />
-              <Button
-                onPress={() => {
                   if (
                     this.stateRef.current &&
                     this.firstName.current &&
@@ -347,6 +339,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 buttonText={i18n.t('ContactInfoScreen.next')}
                 enabled={this.state.valid}
                 containerStyle={CommonStyles.bottomButton}
+                showNextIcon
               />
             </View>
           </View>

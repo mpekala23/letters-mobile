@@ -123,6 +123,13 @@
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
+  "ReferFriendsScreen": {
+    "yourLetterIsOnTheWay": "Your letter is on the way",
+    "yourLetterIsEstimatedToArrive": "Your letter is estimated to arrive on",
+    "thanksAgain": "Thanks again!",
+    "shareOnFacebook": "Share on Facebook",
+    "done": "Done"
+  },
   "RegisterScreen": {
     "clickToUploadProfileImage": "Click to upload profile image.",
     "privacyText": "We value your privacy. We will only use your address information as the return address for the mailed letter.",
@@ -223,9 +230,15 @@
     "okay": "Okay"
   },
   "Compose": {
+    "chooseAnOption": "Choose an option",
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
-    "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
+    "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
     "send": "Send Letter",
-    "preview": "Letter Preview"
+    "sendPostcard": "Send Postcard",
+    "preview": "Letter Preview",
+    "next": "Next",
+    "to": "To",
+    "collapse": "Collapse",
+    "needIdeas": "Need Ideas?"
   }
 }

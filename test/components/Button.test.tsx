@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 import { Colors } from '@styles';
+import Next from '@assets/components/Button/Next';
 
 const setup = (propOverrides = {}) => {
   const props = {
@@ -30,15 +31,15 @@ describe('Button component', () => {
       textStyle,
     });
     expect(getByTestId('clickable').props.style[2]).toEqual(containerStyle);
-    expect(getByText('press me').props.style[2]).toEqual(textStyle);
+    expect(getByText('press me').props.style[3]).toEqual(textStyle);
   });
 
   it('should implement a reverse style', () => {
     const { getByText } = setup({
       reverse: true,
     });
-    expect(getByText('press me').props.style[0].color).toEqual(
-      Colors.AMEELIO_BLUE
+    expect(getByText('press me').props.style[1].color).toEqual(
+      Colors.PINK_DARKER
     );
   });
 
@@ -53,7 +54,7 @@ describe('Button component', () => {
     expect(getByTestId('clickable').props.style[3]).toEqual(
       disabledContainerStyle
     );
-    expect(getByText('press me').props.style[3]).toEqual(disabledTextStyle);
+    expect(getByText('press me').props.style[4]).toEqual(disabledTextStyle);
   });
 
   it('should implement a link style', () => {
@@ -79,5 +80,12 @@ describe('Button component', () => {
     });
     fireEvent.press(getByTestId('clickable'));
     expect(props.onPress).toHaveBeenCalledTimes(0);
+  });
+
+  it('should show next arrow icon when prop is true', () => {
+    const { getByTestId } = setup({
+      showNextIcon: true,
+    });
+    expect(getByTestId('nextIcon').children[0].props.xml).toBe(Next);
   });
 });

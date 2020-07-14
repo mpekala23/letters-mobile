@@ -43,6 +43,7 @@ export default StyleSheet.create({
   },
   footerBackground: {
     marginTop: 20,
+    alignItems: 'center',
   },
   searchParent: {
     marginTop: 10,
@@ -54,9 +55,6 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
   addManuallyButton: {
-    backgroundColor: Colors.PINK_DARKER,
-    borderRadius: 15,
-    width: '100%',
-    height: 50,
+    width: 200,
   },
 });

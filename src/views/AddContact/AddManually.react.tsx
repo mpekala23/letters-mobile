@@ -167,14 +167,6 @@ class AddManuallyScreen extends React.Component<Props, State> {
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
             onPress={() => {
-              this.props.navigation.navigate('FacilityDirectory');
-            }}
-            buttonText={i18n.t('ContactInfoScreen.back')}
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
-            onPress={() => {
               if (
                 this.facilityName.current &&
                 this.facilityAddress.current &&
@@ -199,6 +191,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
             buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}
+            showNextIcon
           />
         </View>
       </TouchableOpacity>

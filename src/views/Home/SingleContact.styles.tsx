@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   profileCard: {
     backgroundColor: 'white',
-    height: 350,
+    height: 360,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -25,10 +25,7 @@ export default StyleSheet.create({
     left: 16,
   },
   sendLetterButton: {
-    backgroundColor: '#FC7272',
-    borderRadius: 15,
     width: '100%',
-    height: 50,
     marginBottom: 12,
   },
   profileCardInfo: {

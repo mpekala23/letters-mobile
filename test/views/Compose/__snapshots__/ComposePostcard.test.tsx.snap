@@ -42,7 +42,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               "backgroundColor": "white",
               "flex": 1,
               "flexDirection": "column",
-              "padding": 10,
+              "padding": 16,
             },
             Object {
               "flex": 1,
@@ -51,43 +51,6 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           ]
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#3490dc",
-                "borderRadius": 4,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-              },
-              Object {},
-              Object {},
-              Object {},
-            ]
-          }
-          testID="clickable"
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "700",
-                  "padding": 6,
-                },
-                Object {},
-                Object {},
-                Object {},
-              ]
-            }
-          >
-            Next Page
-          </Text>
-        </TouchableOpacity>
         <View
           style={
             Object {
@@ -108,17 +71,19 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "Poppins-Bold",
+                    "fontFamily": "Poppins-Medium",
                   },
                   Object {
                     "flex": 1,
-                    "fontSize": 18,
+                    "fontSize": 14,
+                    "marginTop": 8,
                   },
                 ]
               }
             >
-              To: 
-              
+              To
+              : 
+              First
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -126,15 +91,27 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#3490dc",
-                    "borderRadius": 4,
+                    "backgroundColor": "#FF7171",
+                    "borderRadius": 16,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
+                    "paddingHorizontal": 14,
                   },
                   Object {},
+                  Object {
+                    "width": 130,
+                  },
                   Object {},
-                  Object {},
+                  Object {
+                    "elevation": 4,
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.22,
+                  },
                 ]
               }
               testID="clickable"
@@ -143,18 +120,23 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
+                      "fontFamily": "Poppins-Medium",
+                    },
+                    Object {
                       "color": "white",
                       "fontSize": 20,
                       "fontWeight": "700",
                       "padding": 6,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "fontSize": 14,
+                    },
                     Object {},
                   ]
                 }
               >
-                Feeling Stuck?
+                Need Ideas?
               </Text>
             </TouchableOpacity>
           </View>
@@ -207,6 +189,9 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Object {
                   "flex": 1,
                   "fontSize": 18,
+                },
+                Object {
+                  "fontFamily": "Poppins-Regular",
                 },
               ]
             }

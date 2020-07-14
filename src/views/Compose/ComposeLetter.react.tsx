@@ -16,9 +16,11 @@ import { AppState } from '@store/types';
 import { setMessage, setDraft } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
+import { Contact } from '@store/Contact/ContactTypes';
 import { WINDOW_WIDTH } from '@utils';
 import { Typography, Colors } from '@styles';
 import { Letter } from 'types';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -29,6 +31,7 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
+  contact: Contact;
   setMessage: (message: string) => void;
   setDraft: (value: boolean) => void;
 }
@@ -40,6 +43,8 @@ interface State {
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
+
+  private unsubscribeBlur: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -54,15 +59,29 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
     this.props.setDraft(true);
+    setProfileOverride({
+      enabled: true,
+      text: i18n.t('Compose.next'),
+      action: () => this.props.navigation.navigate('LetterPreview'),
+    });
   }
+
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
 
   updateWordsLeft(value: string): void {
     let s = value;
@@ -110,15 +129,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <Button
-              buttonText="Next Page"
-              onPress={() => {
-                // TODO: Once [Mobile Component Librar] Bars is done,
-                // replace this with a press of the next button in the navbar
-                this.props.navigation.navigate('LetterPreview');
-              }}
-            />
-            <ComposeHeader recipientName={this.props.composing.recipientName} />
+            <ComposeHeader recipientName={this.props.contact.firstName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -195,6 +206,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  contact: state.contact.active,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {

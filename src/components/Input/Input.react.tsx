@@ -317,6 +317,7 @@ class Input extends React.Component<Props, State> {
             validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
             options.length > 0 ? { height: this.props.height } : {},
             inputStyle,
+            Typography.FONT_REGULAR,
           ]}
           value={this.state.value}
         />

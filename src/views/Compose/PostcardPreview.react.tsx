@@ -15,6 +15,7 @@ import {
 import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
+import { Contact } from '@store/Contact/ContactTypes';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Stamp from '@assets/views/Compose/Stamp';
 import Styles from './Compose.styles';
@@ -27,6 +28,7 @@ type PostcardPreviewScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: PostcardPreviewScreenNavigationProp;
   composing: Letter;
+  contact: Contact;
   setDraft: (value: boolean) => void;
   setStatus: (status: LetterStatus) => void;
   clearComposing: () => void;
@@ -49,7 +51,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <Icon svg={Stamp} style={{ alignSelf: 'flex-end' }} />
             <Text style={Typography.FONT_REGULAR}>
-              To: {props.composing.recipientName}{' '}
+              {i18n.t('Compose.to')}: {props.contact.firstName}
             </Text>
             <GrayBar />
             <GrayBar />
@@ -71,8 +73,8 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
         style={[
           Typography.FONT_REGULAR,
           {
-            fontSize: 20,
-            color: Colors.GRAY_DARK,
+            fontSize: 12,
+            color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
             margin: 10,
           },
@@ -81,14 +83,14 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
         {i18n.t('Compose.warningCantCancel')}
       </Text>
       <Button
-        buttonText={i18n.t('Compose.send')}
+        buttonText={i18n.t('Compose.sendPostcard')}
         onPress={async () => {
           try {
             props.setDraft(false);
             await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
-            props.navigation.navigate('ContactSelector');
+            props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
             dropdownError({
@@ -103,6 +105,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  contact: state.contact.active,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
