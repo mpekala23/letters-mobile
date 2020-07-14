@@ -81,7 +81,7 @@ class Input extends React.Component<Props, State> {
       dirty: false,
       currentHeight:
         this.props.options.length > 0
-          ? new Animated.Value(props.height + VERTICAL_MARGIN * 2)
+          ? new Animated.Value(props.height)
           : new Animated.Value(props.height),
       results: [],
       shown: false,

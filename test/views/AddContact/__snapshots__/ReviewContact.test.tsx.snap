@@ -218,7 +218,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
-                  "height": 60,
+                  "height": 50,
                   "marginBottom": 10,
                   "marginTop": 10,
                   "overflow": "hidden",
@@ -247,10 +247,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
@@ -267,8 +266,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="Minnesota"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -278,7 +275,40 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <TouchableOpacity
+                    activeOpacity={0.2}
+                    style={
+                      Object {
+                        "borderBottomWidth": 1,
+                        "borderColor": "#282828",
+                        "borderTopWidth": 1,
+                        "height": 50,
+                        "justifyContent": "center",
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        }
+                      }
+                    >
+                      Minnesota
+                    </Text>
+                  </TouchableOpacity>
+                </ScrollView>
               </View>
             </View>
             <View
@@ -287,6 +317,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -314,15 +345,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -332,8 +364,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="First"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -343,7 +373,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -352,6 +391,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -379,15 +419,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -397,8 +438,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="Last"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -408,7 +447,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -417,6 +465,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -444,15 +493,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -462,8 +512,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="23232"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -473,7 +521,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -482,6 +539,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -509,15 +567,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -527,8 +586,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="Facility Name"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -538,7 +595,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -547,6 +613,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -574,15 +641,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {},
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -592,8 +660,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value="Address"
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -603,7 +669,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -612,6 +687,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -639,17 +715,18 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {
                       "color": "#282828",
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -659,8 +736,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -670,7 +745,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
@@ -679,6 +763,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 Object {
                   "backgroundColor": "#F2F2F2",
                   "borderRadius": 8,
+                  "height": 50,
                   "marginBottom": 10,
                   "overflow": "hidden",
                   "width": "100%",
@@ -706,17 +791,18 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                       "borderRadius": 8,
                       "borderWidth": 2,
                       "color": "#9A9A9A",
-                      "flex": 1,
                       "fontSize": 16,
-                      "padding": 10,
-                      "textAlignVertical": "top",
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
                       "width": "100%",
                     },
                     Object {
                       "color": "#282828",
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "height": 50,
+                    },
                     Object {},
                     Object {
                       "fontFamily": "Poppins-Regular",
@@ -726,8 +812,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
-              <View />
-              <View />
               <View
                 style={
                   Object {
@@ -737,7 +821,16 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                <View />
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
               </View>
             </View>
             <View
