@@ -136,19 +136,21 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               inputStyle={{
                 fontSize: 18,
                 flex: 1,
+                textAlignVertical: 'top',
+                paddingTop: 8,
               }}
               onChangeText={this.changeText}
               onFocus={() => {
                 Animated.timing(this.state.keyboardOpacity, {
                   toValue: 1,
-                  duration: 50,
+                  duration: Platform.OS === 'ios' ? 100 : 0,
                   useNativeDriver: false,
                 }).start();
               }}
               onBlur={() => {
                 Animated.timing(this.state.keyboardOpacity, {
                   toValue: 0,
-                  duration: 50,
+                  duration: Platform.OS === 'ios' ? 100 : 0,
                   useNativeDriver: false,
                 }).start();
               }}

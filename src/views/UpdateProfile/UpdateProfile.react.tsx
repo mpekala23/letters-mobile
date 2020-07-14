@@ -185,41 +185,43 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         style={{
           flex: 1,
           backgroundColor: 'white',
-          padding: 16,
+          paddingHorizontal: 16,
         }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : -200}
           enabled
         >
-          <View style={Styles.profileCard}>
-            <ProfilePic
-              firstName={user.firstName}
-              lastName={user.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
-            />
-            <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
-              {user.firstName}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_MEDIUM,
-                { color: Colors.GRAY_DARK, paddingBottom: 6 },
-              ]}
-            >
-              {/* Add in user's joined date after API integration */}
-              {i18n.t('UpdateProfileScreen.joined')}
-            </Text>
-          </View>
           <ScrollView
             keyboardShouldPersistTaps="handled"
             scrollEnabled
             style={{ width: '100%' }}
           >
+            <View style={{ width: '100%', height: 24 }} />
+            <View style={Styles.profileCard}>
+              <ProfilePic
+                firstName={user.firstName}
+                lastName={user.lastName}
+                imageUri="ExamplePic"
+                type={ProfilePicTypes.SingleContact}
+              />
+              <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
+                {user.firstName}
+              </Text>
+              <Text
+                style={[
+                  Typography.FONT_MEDIUM,
+                  { color: Colors.GRAY_DARK, paddingBottom: 6 },
+                ]}
+              >
+                {/* Add in user's joined date after API integration */}
+                {i18n.t('UpdateProfileScreen.joined')}
+              </Text>
+            </View>
             <Text
               style={[
                 Typography.FONT_BOLD,
@@ -298,12 +300,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
+            <Button
+              buttonText={i18n.t('UpdateProfileScreen.logOut')}
+              onPress={async () => logout()}
+              containerStyle={Styles.logOutButton}
+            />
+            <View style={{ width: '100%', height: 16 }} />
           </ScrollView>
-          <Button
-            buttonText={i18n.t('UpdateProfileScreen.logOut')}
-            onPress={async () => logout()}
-            containerStyle={Styles.logOutButton}
-          />
         </KeyboardAvoidingView>
       </TouchableOpacity>
     );

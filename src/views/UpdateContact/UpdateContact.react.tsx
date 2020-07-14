@@ -208,150 +208,162 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     const { contact } = this.props;
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: 'white', padding: 16 }}
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+        }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
-        />
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled
-          style={{ width: '100%' }}
-        >
-          <View style={Styles.profileCard}>
-            <LinearGradient
-              colors={['#ADD3FF', '#FFC9C9']}
-              style={Styles.profileCardHeader}
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 0 }}
-            />
-            <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
-            />
-          </View>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.firstName')}
-          </Text>
-          <Input
-            ref={this.firstName}
-            placeholder={i18n.t('UpdateContactScreen.firstName')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.lastName}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.lastName')}
-          </Text>
-          <Input
-            ref={this.lastName}
-            placeholder={i18n.t('UpdateContactScreen.lastName')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.facilityName}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.addressLine1')}
-          </Text>
-          <Input
-            ref={this.facilityName}
-            placeholder={i18n.t('UpdateContactScreen.addressLine1')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.facilityAddress}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.addressLine2')}
-          </Text>
-          <Input
-            ref={this.facilityAddress}
-            placeholder={i18n.t('UpdateContactScreen.addressLine2')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-          />
-
-          <Input
-            ref={this.unit}
-            placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
-          />
-          <Input
-            ref={this.dorm}
-            placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
-          />
-        </ScrollView>
-        <Button
-          buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
-          containerStyle={{ backgroundColor: Colors.BLUE_DARKEST }}
-          onPress={() => {
-            popupAlert({
-              title: i18n.t('UpdateContactScreen.areYouSure'),
-              message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
-                contact.firstName
-              } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
-              buttons: [
-                {
-                  text: i18n.t('UpdateContactScreen.deleteContact'),
-                  onPress: this.doDeleteContact,
-                  containerStyle: {
-                    width: '100%',
-                    backgroundColor: Colors.BLUE_DARKEST,
-                  },
-                },
-                {
-                  text: i18n.t('UpdateContactScreen.dontDelete'),
-                  reverse: true,
-                  textStyle: { color: Colors.BLUE_DARKEST },
-                  containerStyle: {
-                    width: '100%',
-                    borderColor: Colors.BLUE_DARKEST,
-                  },
-                },
-              ],
-            });
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingHorizontal: 16,
           }}
-        />
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : -200}
+          enabled
+        >
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            scrollEnabled
+            style={{ width: '100%' }}
+          >
+            <View style={{ width: '100%', height: 16 }} />
+            <View style={Styles.profileCard}>
+              <LinearGradient
+                colors={['#ADD3FF', '#FFC9C9']}
+                style={Styles.profileCardHeader}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
+              />
+              <ProfilePic
+                firstName={contact.firstName}
+                lastName={contact.lastName}
+                imageUri="ExamplePic"
+                type={ProfilePicTypes.SingleContact}
+              />
+            </View>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.firstName')}
+            </Text>
+            <Input
+              ref={this.firstName}
+              placeholder={i18n.t('UpdateContactScreen.firstName')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.lastName}
+            />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.lastName')}
+            </Text>
+            <Input
+              ref={this.lastName}
+              placeholder={i18n.t('UpdateContactScreen.lastName')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.facilityName}
+            />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.addressLine1')}
+            </Text>
+            <Input
+              ref={this.facilityName}
+              placeholder={i18n.t('UpdateContactScreen.addressLine1')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.facilityAddress}
+            />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.addressLine2')}
+            </Text>
+            <Input
+              ref={this.facilityAddress}
+              placeholder={i18n.t('UpdateContactScreen.addressLine2')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+            />
+
+            <Input
+              ref={this.unit}
+              placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
+            />
+            <Input
+              ref={this.dorm}
+              placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
+            />
+            <Button
+              buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
+              containerStyle={Styles.deleteButton}
+              onPress={() => {
+                popupAlert({
+                  title: i18n.t('UpdateContactScreen.areYouSure'),
+                  message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
+                    contact.firstName
+                  } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
+                  buttons: [
+                    {
+                      text: i18n.t('UpdateContactScreen.deleteContact'),
+                      onPress: this.doDeleteContact,
+                      containerStyle: {
+                        width: '100%',
+                        backgroundColor: Colors.BLUE_DARKEST,
+                      },
+                    },
+                    {
+                      text: i18n.t('UpdateContactScreen.dontDelete'),
+                      reverse: true,
+                      textStyle: { color: Colors.BLUE_DARKEST },
+                      containerStyle: {
+                        width: '100%',
+                        borderColor: Colors.BLUE_DARKEST,
+                      },
+                    },
+                  ],
+                });
+              }}
+            />
+            <View style={{ width: '100%', height: 16 }} />
+          </ScrollView>
+        </KeyboardAvoidingView>
       </TouchableOpacity>
     );
   }

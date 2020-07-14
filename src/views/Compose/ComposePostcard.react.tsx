@@ -130,7 +130,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 100}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : -200}
           pointerEvents="box-none"
         >
           <View
@@ -148,19 +148,21 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               inputStyle={{
                 fontSize: 18,
                 flex: 1,
+                textAlignVertical: 'top',
+                paddingTop: 8,
               }}
               onChangeText={this.changeText}
               onFocus={() => {
                 Animated.timing(this.state.keyboardOpacity, {
                   toValue: 1,
-                  duration: 100,
+                  duration: Platform.OS === 'ios' ? 100 : 0,
                   useNativeDriver: false,
                 }).start();
               }}
               onBlur={() => {
                 Animated.timing(this.state.keyboardOpacity, {
                   toValue: 0,
-                  duration: 100,
+                  duration: Platform.OS === 'ios' ? 100 : 0,
                   useNativeDriver: false,
                 }).start();
               }}
