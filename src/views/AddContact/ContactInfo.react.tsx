@@ -99,7 +99,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         this.relationship.current.setState({ dirty: false });
     }
 
-    if (this.stateRef.current) this.stateRef.current.set(addingContact.state);
+    if (this.stateRef.current)
+      this.stateRef.current.set(
+        addingContact.facility ? addingContact.facility.state : ''
+      );
     if (this.firstName.current)
       this.firstName.current.set(addingContact.firstName);
     if (this.lastName.current)
@@ -137,7 +140,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : -200}
           enabled
         >
           <View
