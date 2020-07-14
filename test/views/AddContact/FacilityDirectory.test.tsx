@@ -8,7 +8,7 @@ import configureStore from 'redux-mock-store';
 
 const mockStore = configureStore([]);
 
-const setup = (facilityOverrides = {}, routeOverrides = {}) => {
+const setup = (contactOverrides = {}, routeOverrides = {}) => {
   const navigation = {
     navigate: jest.fn(),
     addListener: jest.fn(),
@@ -27,7 +27,7 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
     inmateNumber: '',
     relationship: '',
     facility: null,
-    ...facilityOverrides,
+    ...contactOverrides,
   };
   const initialState = {
     adding: contact,
@@ -183,5 +183,17 @@ describe('Facility Directory Screen', () => {
       expect(facility.props.style[2].backgroundColor).toBe(Colors.SELECT);
     }, 1);
     expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
+  });
+
+  it('should show hint message when contact state is Pennsylvania', () => {
+    const { getByTestId } = setup({
+      state: 'Pennsylvania',
+      firstName: 'First test',
+      lastName: 'Last test',
+      inmateNumber: '8',
+      relationship: 'Brother',
+      facility: null,
+    });
+    expect(getByTestId('hintText')).toBeDefined();
   });
 });
