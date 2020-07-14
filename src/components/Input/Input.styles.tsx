@@ -20,15 +20,14 @@ export default StyleSheet.create({
     width: '100%',
   },
   baseInputStyle: {
-    flex: 1,
     width: '100%',
     borderRadius: 8,
     borderWidth: 2,
     borderColor: 'rgba(0,0,0,0)',
-    padding: 10,
+    paddingHorizontal: 10,
     fontSize: 16,
     color: '#9A9A9A',
-    textAlignVertical: 'top',
+    textAlignVertical: 'center',
   },
   inputStyleFocused: {
     color: Colors.AMEELIO_BLACK,

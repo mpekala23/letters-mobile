@@ -7,9 +7,8 @@ import { connect } from 'react-redux';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Notifs from '@notifications';
-import { Button } from '@components';
-import { popupAlert } from '@components/Alert/Alert.react';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Button, Input } from '@components';
+import { STATES_DROPDOWN, Validation } from '@utils';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
@@ -42,6 +41,24 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
         buttonText="View Contact List"
         onPress={() => props.navigation.navigate('ContactSelector')}
         containerStyle={{ margin: 16 }}
+      />
+      <Input
+        parentStyle={{
+          marginBottom: 8,
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+        placeholder="State"
+        validate={Validation.State}
+        options={STATES_DROPDOWN}
+      />
+      <Input
+        parentStyle={{
+          marginBottom: 8,
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+        placeholder="State"
       />
     </View>
   );
