@@ -71,13 +71,14 @@ describe('api loginWithToken', () => {
       phone: '4324324432',
       address1: 'Somewhere',
       address2: undefined,
+      credit: undefined,
       country: 'USA',
       postal: '12345',
       city: 'New Haven',
       state: 'Connecticut',
       photo: {
         type: 'image/jpeg',
-        uri: undefined,
+        uri: '',
       },
     });
     expect(error).toBeFalsy();

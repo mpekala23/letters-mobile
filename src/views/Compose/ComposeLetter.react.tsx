@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Button, PicUpload } from '@components';
+import { ComposeHeader, Input, Button, PicUpload, Icon } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
@@ -20,6 +20,8 @@ import { WINDOW_WIDTH } from '@utils';
 import { Typography, Colors } from '@styles';
 import { Letter, Photo } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import CheckIcon from '@assets/views/Compose/Check';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -46,6 +48,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -61,15 +65,29 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
     this.props.setDraft(true);
+    setProfileOverride({
+      enabled: true,
+      text: i18n.t('Compose.next'),
+      action: () => this.props.navigation.navigate('LetterPreview'),
+    });
   }
+
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
 
   registerPhoto(photo: Photo): void {
     this.props.setPhoto(photo);
@@ -220,7 +238,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                       { color: Colors.AMEELIO_BLUE },
                     ]}
                   >
-                    done
+                    <Icon svg={CheckIcon} />
                   </Text>
                 </TouchableOpacity>
               </TouchableOpacity>

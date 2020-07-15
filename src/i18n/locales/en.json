@@ -78,7 +78,30 @@
     "facilityDirectory": "Facility Directory",
     "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
-    "addManually": "Add Manually"
+    "addManually": "Add Manually",
+    "searchFacility": "Search Facility"
+  },
+  "IssuesScreen": {
+    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "yepTheyReceivedIt": "Yep, they received it!",
+    "notSureYet": "I'm not sure yet...",
+    "notYetReceived": "They haven't received it"
+  },
+  "IssuesDetailScreen": {
+    "awesomeThanksForUsingOurService": "Awesome! Thanks for using our service :)",
+    "weWillCheckInTwoDays": "We'll check in with you again in two days.",
+    "whatsUp": "What's up?",
+    "weHopeYoullSendAnotherLetter": "We hope you'll send another letter soon!",
+    "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org",
+    "shareOnFacebook": "Share on Facebook",
+    "returnHome": "Return home",
+    "IHaventAskedMyLovedOne": "I haven't asked my loved one!",
+    "theyHaventReceivedLetter": "They haven't received the letter yet",
+    "wantToCheckWithFacility": "Want to check with the facility?",
+    "waitCoupleDays": "Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.",
+    "callFacility": "Call facility",
+    "IllWait": "I'll wait"
   },
   "LetterTrackingScreen": {
     "letterTracking": "Letter tracking",
@@ -119,6 +142,13 @@
     "regularMedia": "News/Radio/TV",
     "internet": "Internet Search",
     "other": "Other"
+  },
+  "ReferFriendsScreen": {
+    "yourLetterIsOnTheWay": "Your letter is on the way",
+    "yourLetterIsEstimatedToArrive": "Your letter is estimated to arrive on",
+    "thanksAgain": "Thanks again!",
+    "shareOnFacebook": "Share on Facebook",
+    "done": "Done"
   },
   "RegisterScreen": {
     "clickToUploadProfileImage": "Click to upload profile image.",
@@ -164,7 +194,12 @@
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
-    "deleteProfile": "Delete Profile"
+    "deleteProfile": "Delete Profile",
+    "areYouSure": "Are you sure?",
+    "deleteWarning1": "Once you delete the contact, you won't be able to recover it ever again. The history of all letters to",
+    "deleteWarning2": "will also be deleted",
+    "deleteContact": "Delete contact",
+    "dontDelete": "Don't delete"
   },
   "UpdateProfileScreen": {
     "firstName": "First name",
@@ -223,9 +258,15 @@
     "okay": "Okay"
   },
   "Compose": {
+    "chooseAnOption": "Choose an option",
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
-    "warningCantCancel": "Warning: your letters cannot be cancelled once sent",
+    "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
     "send": "Send Letter",
-    "preview": "Letter Preview"
+    "sendPostcard": "Send Postcard",
+    "preview": "Letter Preview",
+    "next": "Next",
+    "to": "To",
+    "collapse": "Collapse",
+    "needIdeas": "Need Ideas?"
   }
 }

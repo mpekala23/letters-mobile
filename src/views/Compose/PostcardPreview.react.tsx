@@ -12,7 +12,7 @@ import {
   setStatus,
   clearComposing,
 } from '@store/Letter/LetterActions';
-import { createLetter, getContacts } from '@api';
+import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
@@ -50,7 +50,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <Icon svg={Stamp} style={{ alignSelf: 'flex-end' }} />
             <Text style={Typography.FONT_REGULAR}>
-              To: {props.recipientName}{' '}
+              {i18n.t('Compose.to')}: {props.recipientName}
             </Text>
             <GrayBar />
             <GrayBar />
@@ -72,8 +72,8 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
         style={[
           Typography.FONT_REGULAR,
           {
-            fontSize: 20,
-            color: Colors.GRAY_DARK,
+            fontSize: 12,
+            color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
             margin: 10,
           },
@@ -82,14 +82,14 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
         {i18n.t('Compose.warningCantCancel')}
       </Text>
       <Button
-        buttonText={i18n.t('Compose.send')}
+        buttonText={i18n.t('Compose.sendPostcard')}
         onPress={async () => {
           try {
             props.setDraft(false);
             await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
-            props.navigation.navigate('ContactSelector');
+            props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
             if (err.message === 'Unable to upload image.') {

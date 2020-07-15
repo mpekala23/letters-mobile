@@ -39,6 +39,11 @@ const setup = (letterOverrides = []) => {
 
   const store = mockStore({
     letter: initialLetterState,
+    user: {
+      user: {
+        credit: 4,
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {

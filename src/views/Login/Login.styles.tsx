@@ -28,7 +28,9 @@ export default StyleSheet.create({
   },
   forgotContainer: {
     backgroundColor: 'white',
-    marginBottom: 30,
+    marginLeft: 4,
+    marginTop: 11,
+    marginBottom: 10,
   },
   forgotText: {
     color: Colors.PINK_DARKER,

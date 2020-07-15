@@ -114,7 +114,6 @@ class AddManuallyScreen extends React.Component<Props, State> {
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 20 }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
                   <Typography.PageHeader
@@ -209,14 +208,6 @@ class AddManuallyScreen extends React.Component<Props, State> {
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
             onPress={() => {
-              this.props.navigation.navigate('FacilityDirectory');
-            }}
-            buttonText={i18n.t('ContactInfoScreen.back')}
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
-            onPress={() => {
               if (
                 this.facilityName.current &&
                 this.facilityAddress.current &&
@@ -243,6 +234,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
             buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}
+            showNextIcon
           />
         </View>
       </TouchableOpacity>

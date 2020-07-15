@@ -16,7 +16,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
         "backgroundColor": "white",
         "flex": 1,
         "flexDirection": "column",
-        "padding": 10,
+        "padding": 16,
       }
     }
   >
@@ -28,12 +28,29 @@ exports[`ChooseOption screen should match snapshot 1`] = `
           },
           Object {
             "fontSize": 22,
-            "marginVertical": 10,
+            "marginBottom": 4,
+            "marginTop": 10,
           },
         ]
       }
     >
       Choose an option
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "Poppins-Medium",
+          },
+          Object {
+            "color": "#6D6D6D",
+            "fontSize": 14,
+            "paddingBottom": 10,
+          },
+        ]
+      }
+    >
+      Credits reset daily
     </Text>
     <TouchableOpacity
       activeOpacity={0.2}
@@ -55,10 +72,10 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             "elevation": 4,
             "shadowColor": "#000",
             "shadowOffset": Object {
-              "height": 2,
+              "height": 4,
               "width": 0,
             },
-            "shadowOpacity": 0.23,
+            "shadowOpacity": 0.2,
             "shadowRadius": 2.62,
           },
           undefined,
@@ -222,10 +239,10 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             "elevation": 4,
             "shadowColor": "#000",
             "shadowOffset": Object {
-              "height": 2,
+              "height": 4,
               "width": 0,
             },
-            "shadowOpacity": 0.23,
+            "shadowOpacity": 0.2,
             "shadowRadius": 2.62,
           },
           undefined,

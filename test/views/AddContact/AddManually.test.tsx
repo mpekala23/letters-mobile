@@ -92,10 +92,4 @@ describe('Add Manually Screen', () => {
       phyState: 'Minnesota',
     });
   });
-
-  it('should navigate to the facility directory screen when the back button is pressed', () => {
-    const { navigation, getByText } = setup();
-    fireEvent.press(getByText('Back'));
-    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory');
-  });
 });

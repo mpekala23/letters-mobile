@@ -30,16 +30,18 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "fontFamily": "Poppins-Bold",
+              "fontFamily": "Poppins-Medium",
             },
             Object {
               "flex": 1,
-              "fontSize": 18,
+              "fontSize": 14,
+              "marginTop": 8,
             },
           ]
         }
       >
-        To: 
+        To
+        : 
         Team A
       </Text>
       <TouchableOpacity
@@ -48,15 +50,27 @@ exports[`ComposeHeader component should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
+              "paddingHorizontal": 14,
             },
             Object {},
+            Object {
+              "width": 130,
+            },
             Object {},
-            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -65,18 +79,23 @@ exports[`ComposeHeader component should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
                 "color": "white",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,
               },
               Object {},
-              Object {},
+              Object {
+                "fontSize": 14,
+              },
               Object {},
             ]
           }
         >
-          Feeling Stuck?
+          Need Ideas?
         </Text>
       </TouchableOpacity>
     </View>

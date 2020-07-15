@@ -86,11 +86,12 @@ const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
         {letterTracker}
       </View>
       <Button
+        reverse
         onPress={() => {
           props.navigation.navigate('SupportFAQ');
         }}
         buttonText={i18n.t('LetterTrackingScreen.needHelp')}
-        textStyle={(Typography.FONT_BOLD, { fontSize: 14 })}
+        textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
         containerStyle={Styles.needHelpButton}
       />
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>

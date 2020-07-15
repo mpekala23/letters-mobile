@@ -26,6 +26,9 @@ const setup = () => {
     contact: {
       active: {
         firstName: 'First Name',
+        lastName: 'Last',
+        inmateNumber: '6',
+        relationship: 'Brother',
       },
     },
   });

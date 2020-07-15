@@ -13,33 +13,20 @@ export default StyleSheet.create({
   header: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 24,
-    left: '30%',
+    top: 60,
   },
   ameelioLogo: {
     fontSize: 26,
-    paddingTop: 18,
+    paddingTop: 4,
     paddingLeft: 4,
-    color: Colors.PINK_DARKER,
+    color: Colors.AMEELIO_BLUE,
   },
   titleText: {
-    fontSize: 24,
+    width: '80%',
+    fontSize: 20,
     textAlign: 'center',
   },
   baseText: {
     fontSize: 18,
-  },
-  registerButton: {
-    backgroundColor: Colors.PINK_DARKER,
-    borderRadius: 15,
-    width: '100%',
-    height: 50,
-  },
-  loginButton: {
-    backgroundColor: 'white',
-    borderColor: Colors.PINK_DARKER,
-    borderWidth: 2,
-    borderRadius: 15,
-    height: 50,
   },
 });

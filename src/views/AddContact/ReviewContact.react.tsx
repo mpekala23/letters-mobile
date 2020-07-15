@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   View,
   ScrollView,
@@ -228,7 +227,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%', height: 28 }} />
+              <View style={{ width: '100%' }} />
               <View
                 style={[
                   CommonStyles.contactbackground,
@@ -317,25 +316,17 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ReviewContactScreen.optionalDorm')}
                 />
-                <View style={{ width: '100%', height: 80 }} />
               </View>
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
-            onPress={() => {
-              this.props.navigation.navigate('FacilityDirectory');
-            }}
-            buttonText="Back"
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
             onPress={this.doAddContact}
-            buttonText="Add Contact"
+            buttonText={i18n.t('ContactInfoScreen.next')}
             enabled={this.state.valid}
             containerStyle={CommonStyles.bottomButton}
+            showNextIcon
           />
         </View>
       </TouchableOpacity>

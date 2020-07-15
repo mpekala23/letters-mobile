@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Button } from '@components';
+import { ComposeHeader, Input, Icon, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
@@ -16,12 +16,16 @@ import { AppState } from '@store/types';
 import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
+import { Contact } from '@store/Contact/ContactTypes';
 import { WINDOW_WIDTH } from '@utils';
 import { Colors, Typography } from '@styles';
 import { Letter, Photo } from 'types';
 import PicUpload, {
   PicUploadTypes,
 } from '@components/PicUpload/PicUpload.react';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import ImageIcon from '@assets/views/Compose/Image';
+import CheckIcon from '@assets/views/Compose/Check';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -48,6 +52,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -63,15 +69,29 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
     this.props.setDraft(true);
+    setProfileOverride({
+      enabled: true,
+      text: i18n.t('Compose.next'),
+      action: () => this.props.navigation.navigate('PostcardPreview'),
+    });
   }
+
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
 
   updateCharsLeft(value: string): void {
     this.setState({ charsLeft: 300 - value.length });
@@ -206,7 +226,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                     }
                   }}
                 >
-                  <Text>pic</Text>
+                  <Icon svg={ImageIcon} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[Styles.keyboardButtonItem, { flex: 1 }]}
@@ -223,7 +243,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                       },
                     ]}
                   >
-                    done
+                    <Icon svg={CheckIcon} />
                   </Text>
                 </TouchableOpacity>
               </TouchableOpacity>

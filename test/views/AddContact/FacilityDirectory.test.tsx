@@ -104,9 +104,9 @@ describe('Facility Directory Screen', () => {
     expect(facility.props.style[1].backgroundColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
     fireEvent.press(facility);
-    expect(facility.props.style[2].backgroundColor).toBe('#FFE8E8');
+    expect(facility.props.style[2].borderColor).toBe('#FF7171');
     fireEvent.press(facility);
-    expect(facility.props.style[1].backgroundColor).toBe('white');
+    expect(facility.props.style[1].borderColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
   });
 

@@ -16,8 +16,7 @@ import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
-import { setUser } from '@store/User/UserActions';
-import { UserActionTypes, User } from '@store/User/UserTypes';
+import { UserActionTypes } from '@store/User/UserTypes';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -37,7 +36,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.screenBackground}>
       <View style={{ flex: 1 }}>
-        <Text style={[Typography.FONT_BOLD, { fontSize: 36 }]}>
+        <Text style={[Typography.FONT_BOLD, { fontSize: 20 }]}>
           {i18n.t('Compose.preview')}
         </Text>
         <GrayBar />
@@ -53,8 +52,8 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
         style={[
           Typography.FONT_REGULAR,
           {
-            fontSize: 20,
-            color: Colors.GRAY_DARK,
+            fontSize: 12,
+            color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
             margin: 10,
           },
@@ -70,7 +69,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
-            props.navigation.navigate('ContactSelector');
+            props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
             if (err.message === 'Unable to upload image.') {

@@ -29,19 +29,18 @@ exports[`Begin screen should match snapshot 1`] = `
       style={
         Object {
           "flexDirection": "row",
-          "left": "30%",
           "position": "absolute",
-          "top": 24,
+          "top": 60,
         }
       }
     >
       <RNSVGSvgView
         align="xMidYMid"
-        bbHeight={50}
-        bbWidth={50}
+        bbHeight={40}
+        bbWidth={40}
         fill="none"
         focusable={false}
-        height={50}
+        height={40}
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -53,28 +52,23 @@ exports[`Begin screen should match snapshot 1`] = `
             },
             Object {
               "flex": 0,
-              "height": 50,
-              "width": 50,
+              "height": 40,
+              "width": 40,
             },
           ]
         }
         vbHeight={145}
         vbWidth={143}
-        width={50}
-        xml="<svg width=\\"50\\" height=\\"50\\" viewBox=\\"0 0 143 145\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
-<g clip-path=\\"url(#clip0)\\">
-<path d=\\"M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z\\" fill=\\"#FF7171\\"/>
-<path d=\\"M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z\\" fill=\\"#FF7171\\"/>
-<path d=\\"M4 132.727L39.9963 102L27.786 134.689L4 132.727Z\\" fill=\\"#FF7171\\"/>
-<path d=\\"M69.31 29.0881L33.8369 124.055L59.9659 117.383L93.5357 108.811L69.31 29.0881Z\\" fill=\\"#FF7171\\"/>
-<path d=\\"M79.7896 56.2477L116.047 46.9957L94.5042 104.67L79.7896 56.2477Z\\" fill=\\"#FF7171\\"/>
-<path d=\\"M110.17 68.6877L118.507 46.3659L143 60.2105L110.17 68.6877Z\\" fill=\\"#FF7171\\"/>
-</g>
-<defs>
-<clipPath id=\\"clip0\\">
-<rect width=\\"143\\" height=\\"145\\" fill=\\"white\\"/>
-</clipPath>
-</defs>
+        width={40}
+        xml="<svg width=\\"40\\" height=\\"40\\" viewBox=\\"0 0 143 145\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+    <g clip-path=\\"url(#clip0)\\">
+        <path d=\\"M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z\\" fill=\\"#448AF3\\"/>
+        <path d=\\"M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z\\" fill=\\"#448AF3\\"/>
+        <path d=\\"M4 132.727L39.9963 102L27.786 134.689L4 132.727Z\\" fill=\\"#448AF3\\"/>
+        <path d=\\"M69.31 29.0881L33.8369 124.055L59.9659 117.383L93.5357 108.811L69.31 29.0881Z\\" fill=\\"#448AF3\\"/>
+        <path d=\\"M79.7896 56.2477L116.047 46.9957L94.5042 104.67L79.7896 56.2477Z\\" fill=\\"#448AF3\\"/>
+        <path d=\\"M110.17 68.6877L118.507 46.3659L143 60.2104L110.17 68.6877Z\\" fill=\\"#448AF3\\"/>
+    </g>
 </svg>
 "
         xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +86,7 @@ exports[`Begin screen should match snapshot 1`] = `
           >
             <RNSVGPath
               d="M5.06982 26.7918L29.6294 24.8912L45.7298 77.8561L5.06982 26.7918Z"
-              fill={4294930801}
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -101,7 +95,7 @@ exports[`Begin screen should match snapshot 1`] = `
             />
             <RNSVGPath
               d="M24.2925 0L48.3623 79.2049L68.6478 24.8912L24.2925 0Z"
-              fill={4294930801}
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -110,7 +104,7 @@ exports[`Begin screen should match snapshot 1`] = `
             />
             <RNSVGPath
               d="M4 132.727L39.9963 102L27.786 134.689L4 132.727Z"
-              fill={4294930801}
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -119,7 +113,7 @@ exports[`Begin screen should match snapshot 1`] = `
             />
             <RNSVGPath
               d="M69.31 29.0881L33.8369 124.055L59.9659 117.383L93.5357 108.811L69.31 29.0881Z"
-              fill={4294930801}
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -128,7 +122,7 @@ exports[`Begin screen should match snapshot 1`] = `
             />
             <RNSVGPath
               d="M79.7896 56.2477L116.047 46.9957L94.5042 104.67L79.7896 56.2477Z"
-              fill={4294930801}
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -136,8 +130,8 @@ exports[`Begin screen should match snapshot 1`] = `
               }
             />
             <RNSVGPath
-              d="M110.17 68.6877L118.507 46.3659L143 60.2105L110.17 68.6877Z"
-              fill={4294930801}
+              d="M110.17 68.6877L118.507 46.3659L143 60.2104L110.17 68.6877Z"
+              fill={4282682099}
               propList={
                 Array [
                   "fill",
@@ -145,24 +139,6 @@ exports[`Begin screen should match snapshot 1`] = `
               }
             />
           </RNSVGGroup>
-          <RNSVGDefs>
-            <RNSVGClipPath
-              name="clip0"
-            >
-              <RNSVGRect
-                fill={4294967295}
-                height={145}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-                width={143}
-                x={0}
-                y={0}
-              />
-            </RNSVGClipPath>
-          </RNSVGDefs>
         </RNSVGGroup>
       </RNSVGSvgView>
       <Text
@@ -172,10 +148,10 @@ exports[`Begin screen should match snapshot 1`] = `
               "fontFamily": "Poppins-Bold",
             },
             Object {
-              "color": "#FF7171",
+              "color": "#448AF3",
               "fontSize": 26,
               "paddingLeft": 4,
-              "paddingTop": 18,
+              "paddingTop": 4,
             },
           ]
         }
@@ -190,8 +166,9 @@ exports[`Begin screen should match snapshot 1`] = `
             "fontFamily": "Poppins-Bold",
           },
           Object {
-            "fontSize": 24,
+            "fontSize": 20,
             "textAlign": "center",
+            "width": "80%",
           },
         ]
       }
@@ -206,11 +183,9 @@ exports[`Begin screen should match snapshot 1`] = `
             "fontFamily": "Poppins-Bold",
           },
           Object {
-            "fontSize": 24,
+            "fontSize": 20,
             "textAlign": "center",
-          },
-          Object {
-            "paddingBottom": "80%",
+            "width": "80%",
           },
         ]
       }
@@ -218,6 +193,27 @@ exports[`Begin screen should match snapshot 1`] = `
       for free
       .
     </Text>
+    <View
+      style={
+        Object {
+          "paddingBottom": 60,
+          "paddingTop": 30,
+        }
+      }
+    >
+      <Image
+        height={276.6}
+        resizeMode="cover"
+        source={1}
+        style={
+          Object {
+            "height": 276.6,
+            "width": 191,
+          }
+        }
+        width={191}
+      />
+    </View>
     <View
       style={
         Object {
@@ -233,20 +229,27 @@ exports[`Begin screen should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
+              "paddingHorizontal": 14,
             },
             Object {},
             Object {
-              "backgroundColor": "#FF7171",
-              "borderRadius": 15,
-              "height": 50,
-              "width": "100%",
+              "height": 47,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -254,6 +257,9 @@ exports[`Begin screen should match snapshot 1`] = `
         <Text
           style={
             Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
               Object {
                 "color": "white",
                 "fontSize": 20,
@@ -282,21 +288,28 @@ exports[`Begin screen should match snapshot 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#3490dc",
-              "borderRadius": 4,
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
             },
             Object {},
             Object {
-              "backgroundColor": "white",
-              "borderColor": "#FF7171",
-              "borderRadius": 15,
-              "borderWidth": 2,
-              "height": 50,
+              "height": 47,
             },
             Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
           ]
         }
         testID="clickable"
@@ -305,7 +318,10 @@ exports[`Begin screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "color": "white",
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
                 "fontSize": 20,
                 "fontWeight": "700",
                 "padding": 6,

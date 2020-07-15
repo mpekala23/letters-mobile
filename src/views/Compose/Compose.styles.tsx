@@ -3,14 +3,15 @@ import { Colors } from '@styles';
 
 export default StyleSheet.create({
   screenBackground: {
-    padding: 10,
+    padding: 16,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
   },
   headerText: {
     fontSize: 22,
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 4,
   },
   keyboardButtonContainer: {
     width: '100%',
@@ -20,6 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'white',
+    marginBottom: 14,
   },
   keyboardButtonItem: {
     flexDirection: 'column',

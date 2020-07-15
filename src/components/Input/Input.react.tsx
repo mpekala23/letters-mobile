@@ -17,7 +17,6 @@ import Styles, {
   INPUT_HEIGHT,
   DROP_HEIGHT,
   OPTION_HEIGHT,
-  VERTICAL_MARGIN,
 } from './Input.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -57,7 +56,6 @@ class Input extends React.Component<Props, State> {
 
   static defaultProps = {
     parentStyle: {},
-    scrollStyle: {},
     inputStyle: {},
     placeholder: '',
     onFocus: (): null => null,
@@ -80,10 +78,7 @@ class Input extends React.Component<Props, State> {
       focused: false,
       valid: !(props.validate || props.required),
       dirty: false,
-      currentHeight:
-        this.props.options.length > 0
-          ? new Animated.Value(props.height + VERTICAL_MARGIN * 2)
-          : new Animated.Value(props.height),
+      currentHeight: new Animated.Value(props.height),
       results: [],
       shown: false,
     };
@@ -173,10 +168,10 @@ class Input extends React.Component<Props, State> {
           DROP_HEIGHT,
           INPUT_HEIGHT + this.state.results.length * OPTION_HEIGHT
         ),
-        INPUT_HEIGHT + VERTICAL_MARGIN * 2
+        INPUT_HEIGHT
       );
     } else {
-      target = INPUT_HEIGHT + VERTICAL_MARGIN * 2;
+      target = INPUT_HEIGHT;
     }
     Animated.timing(this.state.currentHeight, {
       toValue: target,
@@ -234,15 +229,19 @@ class Input extends React.Component<Props, State> {
 
   renderOptions(): JSX.Element {
     const { results } = this.state;
-    return this.state.focused ? (
+    return (
       <ScrollView
         style={Styles.optionScroll}
         keyboardShouldPersistTaps="always"
+        nestedScrollEnabled
       >
-        {results.map((result: string) => {
+        {results.map((result: string, index: number) => {
           return (
             <TouchableOpacity
-              style={Styles.optionContainer}
+              style={[
+                Styles.optionContainer,
+                index === results.length - 1 ? { borderBottomWidth: 0 } : {},
+              ]}
               onPress={() => {
                 this.set(result);
                 if (!this.props.nextInput && this.inputRef.current)
@@ -256,8 +255,6 @@ class Input extends React.Component<Props, State> {
           );
         })}
       </ScrollView>
-    ) : (
-      <View />
     );
   }
 
@@ -293,7 +290,9 @@ class Input extends React.Component<Props, State> {
           Styles.parentStyle,
           this.props.options.length > 0 ? { marginBottom: 0 } : {},
           parentStyle,
-          options.length > 0 ? { height: this.state.currentHeight } : {},
+          options.length > 0
+            ? { height: this.state.currentHeight }
+            : { height: this.props.height },
         ]}
         testID="parent"
         pointerEvents={enabled ? 'auto' : 'none'}
@@ -318,12 +317,13 @@ class Input extends React.Component<Props, State> {
             Styles.baseInputStyle,
             calcInputStyle,
             validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
-            options.length > 0 ? { height: this.props.height } : {},
+            { height: this.props.height },
             inputStyle,
+            Typography.FONT_REGULAR,
           ]}
           value={this.state.value}
         />
-        {validate === Validation.CreditCard ? (
+        {validate === Validation.CreditCard && (
           <View
             style={[
               {
@@ -338,10 +338,8 @@ class Input extends React.Component<Props, State> {
           >
             <Icon svg={CreditCard} />
           </View>
-        ) : (
-          <View />
         )}
-        {secure && this.state.focused ? (
+        {secure && this.state.focused && (
           <View style={Styles.secureButtonsContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -362,8 +360,6 @@ class Input extends React.Component<Props, State> {
               <Icon svg={TogglePassword} />
             </TouchableOpacity>
           </View>
-        ) : (
-          <View />
         )}
         <Animated.View
           style={[

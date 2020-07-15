@@ -6,7 +6,6 @@ export default StyleSheet.create({
   facilityBackground: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 20,
   },
   shadow: {
     shadowColor: '#000',
@@ -30,10 +29,13 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 7,
+    borderWidth: 2,
+    borderColor: 'white',
     marginBottom: 10,
   },
   selectedBackground: {
-    backgroundColor: Colors.PINK_LIGHTER,
+    borderWidth: 2,
+    borderColor: Colors.PINK_DARKER,
   },
   itemTitle: {
     fontSize: 16,
@@ -43,20 +45,18 @@ export default StyleSheet.create({
   },
   footerBackground: {
     marginTop: 20,
+    alignItems: 'center',
   },
   searchParent: {
-    marginTop: 10,
-    marginLeft: 10,
-    width: '95%',
+    marginTop: 4,
+    marginLeft: 16,
+    width: '91%',
   },
   searchInput: {
-    padding: 10,
+    padding: 20,
     borderRadius: 20,
   },
   addManuallyButton: {
-    backgroundColor: Colors.PINK_DARKER,
-    borderRadius: 15,
-    width: '100%',
-    height: 50,
+    width: 200,
   },
 });

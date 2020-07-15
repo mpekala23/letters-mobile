@@ -18,6 +18,8 @@ import {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
@@ -42,11 +44,17 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, Letter, SupportFAQTypes } from 'types';
+import {
+  NullableFacility,
+  Letter,
+  SupportFAQTypes,
+  DeliveryReportTypes,
+} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
   setProfile,
+  setShown,
 } from '@components/Topbar/Topbar.react';
 import { Contact } from '@store/Contact/ContactTypes';
 import { NavigationContainer } from '@react-navigation/native';
@@ -74,6 +82,8 @@ export type AppStackParamList = {
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
+  IssuesDetail: { issue: DeliveryReportTypes } | undefined;
+  IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
   LetterDetails: undefined;
@@ -94,28 +104,30 @@ export type AppStackParamList = {
 interface RouteDetails {
   title: string;
   profile: boolean;
+  shown?: boolean;
 }
 
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
+  Begin: { title: '', profile: false, shown: false },
   Splash: { title: 'Splash', profile: false },
   Login: { title: 'Login', profile: false },
   Terms: { title: 'Terms of Service', profile: false },
   Privacy: { title: 'Privacy Policy', profile: false },
   Register: { title: 'Register', profile: false },
   AddManually: { title: 'Add Manually', profile: false },
-  ChooseOption: { title: 'Choose Option', profile: false },
-  ComposeLetter: { title: 'Compose Letter', profile: false },
-  ComposePostcard: { title: 'Compose Postcard', profile: false },
+  ChooseOption: { title: 'Compose', profile: false },
+  ComposeLetter: { title: 'Compose', profile: false },
+  ComposePostcard: { title: 'Compose', profile: false },
   ContactInfo: { title: 'Contact Info', profile: false },
-  ContactSelector: { title: 'Contact Selector', profile: true },
+  ContactSelector: { title: 'Contacts', profile: true },
   ExplainProblem: { title: 'Explain Problem', profile: false },
-  FacilityDirectory: { title: 'Facility Directory', profile: false },
+  FacilityDirectory: { title: '', profile: false },
   FirstLetter: { title: 'First Letter', profile: false },
   Home: { title: 'Home', profile: true },
   Issues: { title: 'Issues', profile: false },
   LetterDetails: { title: 'Letter Details', profile: true },
-  LetterPreview: { title: 'Letter Preview', profile: false },
-  LetterTracking: { title: 'Letter Tracking', profile: true },
+  LetterPreview: { title: 'Last Step', profile: false },
+  LetterTracking: { title: 'Tracking', profile: true },
   MemoryLane: { title: 'Memory Lane', profile: true },
   PostcardPreview: { title: 'Postcard Preview', profile: false },
   ReferFriends: { title: 'Refer Friends', profile: false },
@@ -263,6 +275,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
+          name="IssuesDetail"
+          component={IssuesDetailScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
+          name="IssuesDetailSecondary"
+          component={IssuesDetailSecondaryScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
+        <Stack.Screen
           name="Thanks"
           component={ThanksScreen}
           options={{
@@ -367,9 +389,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
           setProfile(mapRouteNameToDetails[name].profile);
+          if (
+            mapRouteNameToDetails[name].shown === undefined ||
+            mapRouteNameToDetails[name].shown === true
+          )
+            setShown(true);
+          else setShown(false);
         } else {
           setTitle('');
           setProfile(true);
+          setShown(true);
         }
       }}
     >

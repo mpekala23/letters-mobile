@@ -132,7 +132,6 @@ describe('Contact Info Screen', () => {
         inmateNumber: '2',
         relationship: 'Mother',
         facility: null,
-        credit: 4,
       },
     });
   });
@@ -170,14 +169,14 @@ describe('Contact Info Screen', () => {
   });
 
   it('should update the state databases to search when user inputs a valid state', () => {
-    const { queryByText, getByText, getByPlaceholderText } = setup();
+    const { queryAllByText, getAllByText, getByPlaceholderText } = setup();
     fireEvent.changeText(getByPlaceholderText('State'), 'Iowa');
-    expect(getByText('Iowa')).toBeDefined();
+    expect(getAllByText('Iowa')).toBeDefined();
     const stateInput = getByPlaceholderText('State');
     fireEvent.changeText(stateInput, 'Not a valid state');
-    expect(getByText('Iowa')).toBeDefined();
+    expect(getAllByText('Iowa')).toBeDefined();
     fireEvent.changeText(stateInput, 'Kansas');
-    expect(queryByText('Iowa')).toBeFalsy();
-    expect(getByText('Kansas')).toBeDefined();
+    expect(queryAllByText('Iowa').length).toBeFalsy();
+    expect(getAllByText('Kansas')).toBeDefined();
   });
 });

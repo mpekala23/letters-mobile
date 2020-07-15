@@ -12,7 +12,9 @@ const setup = (propOverrides = {}) => {
     trackingEvent: {
       id: 1,
       name: 'Mailed',
-      location: 'Zipcode',
+      location: {
+        city: 'City',
+      },
       date: '2019-07-12T15:51:41.000Z',
       ...propOverrides,
     },
@@ -35,9 +37,9 @@ describe('Letter Tracker component', () => {
     expect(getByText('Mailed')).toBeDefined();
   });
 
-  it('should display zipcode', () => {
+  it('should display city', () => {
     const { getByText } = setup();
-    expect(getByText('Zipcode')).toBeDefined();
+    expect(getByText('City')).toBeDefined();
   });
 
   it('should display formatted date', () => {

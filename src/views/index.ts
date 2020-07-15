@@ -10,12 +10,14 @@ import FirstLetterScreen from './Report/FirstLetter.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
+import IssuesDetailScreen from './Report/IssuesDetail.react';
+import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
+import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
 import LetterPreviewScreen from './Compose/LetterPreview.react';
 import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
 import LoginScreen from './Login/Login.react';
-import PostcardPreviewScreen from './Compose/PostcardPreview.react';
-import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
 import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
+import PostcardPreviewScreen from './Compose/PostcardPreview.react';
 import PrivacyScreen from './Login/Privacy.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
@@ -43,12 +45,14 @@ export {
   FacilityDirectoryScreen,
   HomeScreen,
   IssuesScreen,
+  IssuesDetailScreen,
+  IssuesDetailSecondaryScreen,
   LetterPreviewScreen,
   LetterDetailsScreen,
   LoginScreen,
-  PostcardPreviewScreen,
   LetterTrackingScreen,
   MemoryLaneScreen,
+  PostcardPreviewScreen,
   PrivacyScreen,
   ReferFriendsScreen,
   RegisterScreen,

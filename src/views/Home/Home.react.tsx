@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactState } from '@store/Contact/ContactTypes';
-import { Button } from '@components';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
@@ -30,10 +29,6 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <Text>Hello</Text>
-      <Button
-        buttonText="Go to contact selector"
-        onPress={() => props.navigation.navigate('ContactSelector')}
-      />
     </ScrollView>
   );
 };

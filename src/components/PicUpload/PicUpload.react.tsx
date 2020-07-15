@@ -93,11 +93,11 @@ class PicUpload extends React.Component<Props, State> {
     } else {
       innerCircle =
         this.props.type === PicUploadTypes.Profile ? (
-          <View accessibilityLabel="profile placeholder">
+          <View testID="profile placeholder">
             <Icon svg={Camera} />
           </View>
         ) : (
-          <View accessibilityLabel="media placeholder">
+          <View testID="media placeholder">
             <Icon svg={Placeholder} />
           </View>
         );

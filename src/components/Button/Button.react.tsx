@@ -1,10 +1,18 @@
 import React from 'react';
-import { TouchableOpacity, Text, TextStyle } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { Typography } from '@styles';
+import Next from '@assets/components/Button/Next';
+import { SvgXml } from 'react-native-svg';
 import Styles from './Button.styles';
 
 export interface Props {
-  containerStyle?: Record<string, unknown> | Record<string, unknown>[];
+  containerStyle?: ViewStyle | ViewStyle[];
   textStyle?: Record<string, unknown> | TextStyle | TextStyle[];
   disabledContainerStyle?: Record<string, unknown>;
   disabledTextStyle?: Record<string, unknown>;
@@ -14,6 +22,7 @@ export interface Props {
   enabled?: boolean;
   onPress: () => void;
   children?: JSX.Element;
+  showNextIcon?: boolean;
 }
 
 const Button: React.FC<Props> = (props: Props) => {
@@ -28,7 +37,13 @@ const Button: React.FC<Props> = (props: Props) => {
     link,
     enabled,
     children,
+    showNextIcon,
   } = props;
+  const nextIcon = showNextIcon ? (
+    <View style={{ position: 'absolute', right: 12 }} testID="nextIcon">
+      <SvgXml xml={Next} />
+    </View>
+  ) : null;
   if (!link) {
     return (
       <TouchableOpacity
@@ -37,6 +52,7 @@ const Button: React.FC<Props> = (props: Props) => {
           enabled ? {} : Styles.buttonBackgroundDisabled,
           containerStyle,
           enabled ? {} : disabledContainerStyle,
+          Styles.shadow,
         ]}
         activeOpacity={enabled ? 0.7 : 1.0}
         onPress={() => {
@@ -48,6 +64,7 @@ const Button: React.FC<Props> = (props: Props) => {
       >
         <Text
           style={[
+            Typography.FONT_MEDIUM,
             props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
             enabled ? {} : Styles.buttonTextDisabled,
             textStyle,
@@ -56,6 +73,7 @@ const Button: React.FC<Props> = (props: Props) => {
         >
           {buttonText}
         </Text>
+        {nextIcon}
       </TouchableOpacity>
     );
   }
@@ -69,7 +87,7 @@ const Button: React.FC<Props> = (props: Props) => {
       style={containerStyle}
       testID="clickable"
     >
-      <Text style={[Typography.FONT_REGULAR, Styles.linkText]}>
+      <Text style={[Typography.FONT_REGULAR, Styles.linkText, textStyle]}>
         {buttonText || children}
       </Text>
     </TouchableOpacity>
