@@ -6,7 +6,7 @@ import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles, { barHeight } from './Topbar.styles';
+import Styles from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 }
 
 interface State {
+  shown: boolean;
   title: string;
   profile: boolean;
   profileOverride?: {
@@ -28,6 +29,7 @@ class Topbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      shown: false,
       title: '',
       profile: true,
     };
@@ -40,9 +42,8 @@ class Topbar extends React.Component<Props, State> {
         <ProfilePic
           firstName={this.props.userState.user.firstName}
           lastName={this.props.userState.user.lastName}
-          imageUri={this.props.userState.user.imageUri}
+          imageUri={this.props.userState.user.photo?.uri}
           type={ProfilePicTypes.Topbar}
-          navigation={this.props.navigation}
         />
       );
     } else if (this.state.profileOverride) {
@@ -74,7 +75,12 @@ class Topbar extends React.Component<Props, State> {
       topRight = <View testID="blank" />;
     }
     return (
-      <View style={Styles.barContainer}>
+      <View
+        style={[
+          Styles.barContainer,
+          { display: this.state.shown ? 'flex' : 'none' },
+        ]}
+      >
         {this.props.navigation && this.props.navigation.canGoBack() && (
           <TouchableOpacity
             style={Styles.backContainer}
@@ -94,6 +100,10 @@ class Topbar extends React.Component<Props, State> {
 }
 
 export const topbarRef = createRef<Topbar>();
+
+export const setShown = (val: boolean): void => {
+  if (topbarRef.current) topbarRef.current.setState({ shown: val });
+};
 
 export const setTitle = (val: string): void => {
   if (topbarRef.current) topbarRef.current.setState({ title: val });

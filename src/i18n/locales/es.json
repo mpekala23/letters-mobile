@@ -9,15 +9,25 @@
     "requestTimedOut": "The request timed out.",
     "requestIncomplete": "The request could not be completed.",
     "unsavedToken": "Unable to save login credentials for next time",
-    "cantLogout": "Unable to log out the user"
+    "cantLogout": "Unable to log out the user",
+    "loadingUser": "Unable to load your data. Some contacts and letters may be unavailable until you refresh.",
+    "cantRefreshContacts": "Unable to refresh your contacts",
+    "cantRefreshLetters": "Unable to refresh your letters",
+    "cantRefreshFacilities": "Unable to refresh your facilities",
+    "timedOut": "The request timed out",
+    "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
+    "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
+    "unableToUploadLetterPhoto": "Unable to upload the attached image. Ensure you are connected to the internet and try again."
   },
   "Permission": {
-    "photos": "Can't access photo library"
+    "photos": "Can't access photo library",
+    "notifs": "Can't register notifications. Ensure that this is enabled in settings."
   },
   "AddManuallyScreen": {
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
+    "facilityState": "Facility State",
     "facilityPostal": "Facility Postal"
   },
   "BeginScreen": {
@@ -129,6 +139,15 @@
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
+  "Referers": {
+    "ambassador": "Heard from an Ameelio Ambassador",
+    "recommendation": "Recommendation from Friends or Family",
+    "lovedOne": "Incarcerated Loved-One",
+    "socialMedia": "Facebook/Instagram",
+    "regularMedia": "News/Radio/TV",
+    "internet": "Internet Search",
+    "other": "Other"
+  },
   "ReferFriendsScreen": {
     "yourLetterIsOnTheWay": "Your letter is on the way",
     "yourLetterIsEstimatedToArrive": "Your letter is estimated to arrive on",
@@ -152,7 +171,10 @@
     "emailAddress": "E-mail Address",
     "password": "Password",
     "register": "Register",
-    "emailAlreadyInUse": "Email already in use."
+    "emailAlreadyInUse": "Email already in use.",
+    "confirmPassword": "Confirm Password",
+    "referer": "How did you hear about Ameelio?",
+    "login": "Log In"
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",

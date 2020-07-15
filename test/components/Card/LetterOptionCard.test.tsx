@@ -5,7 +5,7 @@ import { LetterTypes } from '../../../src/types';
 
 const setup = (propOverrides = {}) => {
   const props = {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     onPress: jest.fn(),
     ...propOverrides,
   };

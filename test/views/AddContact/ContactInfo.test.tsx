@@ -24,7 +24,6 @@ const setup = (
     },
   };
   const contact = {
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
@@ -128,13 +127,11 @@ describe('Contact Info Screen', () => {
       type: SET_ADDING,
       payload: {
         id: -1,
-        state: 'Minnesota',
         firstName: 'First',
         lastName: 'Last',
         inmateNumber: '2',
         relationship: 'Mother',
         facility: null,
-        credit: 4,
       },
     });
   });
@@ -151,18 +148,18 @@ describe('Contact Info Screen', () => {
       'Mother'
     );
     fireEvent.press(nextButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory');
+    expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory', {
+      phyState: 'Minnesota',
+    });
   });
 
   it('should load initial values for fields from the redux store', () => {
     const { getByPlaceholderText } = setup({
-      state: 'Minnesota',
       firstName: 'First',
       lastName: 'Last',
       inmateNumber: '6',
       relationship: 'Sister',
     });
-    expect(getByPlaceholderText('State').props.value).toBe('Minnesota');
     expect(getByPlaceholderText('First Name').props.value).toBe('First');
     expect(getByPlaceholderText('Last Name').props.value).toBe('Last');
     expect(getByPlaceholderText('Inmate Number').props.value).toBe('6');
@@ -171,16 +168,9 @@ describe('Contact Info Screen', () => {
     );
   });
 
-  it('should prompt users to search their home state databases initially', () => {
-    const { getAllByText } = setup({}, { state: 'Iowa' });
-    expect(getAllByText('Iowa')).toBeDefined();
-  });
-
   it('should update the state databases to search when user inputs a valid state', () => {
-    const { queryAllByText, getAllByText, getByPlaceholderText } = setup(
-      {},
-      { state: 'Iowa' }
-    );
+    const { queryAllByText, getAllByText, getByPlaceholderText } = setup();
+    fireEvent.changeText(getByPlaceholderText('State'), 'Iowa');
     expect(getAllByText('Iowa')).toBeDefined();
     const stateInput = getByPlaceholderText('State');
     fireEvent.changeText(stateInput, 'Not a valid state');

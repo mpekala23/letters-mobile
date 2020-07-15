@@ -15,8 +15,8 @@ exports[`PicUpload component should match snapshot 1`] = `
     style={
       Array [
         Object {
+          "backgroundColor": "white",
           "height": 100,
-          "marginHorizontal": 8,
           "width": 100,
         },
         Object {
@@ -25,6 +25,7 @@ exports[`PicUpload component should match snapshot 1`] = `
           "justifyContent": "center",
           "overflow": "hidden",
         },
+        Object {},
       ]
     }
     testID="clickable"

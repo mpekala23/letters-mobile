@@ -125,7 +125,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       testID="parent"
     >
       <View
-        testID="valid"
+        testID="invalid"
       />
       <View
         testID="unfocused"
@@ -198,24 +198,20 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           "width": "100%",
         }
       }
-      data={
-        Array [
-          Object {
-            "address": "P.O. Box 400",
-            "city": "Bethel",
-            "name": "Yukon Kskokwim Correctional Center",
-            "postal": "99559",
-            "state": "AK",
-            "type": "State Prison",
-          },
-        ]
-      }
+      data={Array []}
       disableVirtualization={false}
       horizontal={false}
       initialNumToRender={10}
       maxToRenderPerBatch={10}
       numColumns={1}
       onEndReachedThreshold={2}
+      refreshControl={
+        <RefreshControl
+          onRefresh={[Function]}
+          refreshing={true}
+        />
+      }
+      refreshing={true}
       removeClippedSubviews={false}
       scrollEventThrottle={50}
       stickyHeaderIndices={Array []}
@@ -223,87 +219,6 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
       viewabilityConfigCallbackPairs={Array []}
       windowSize={21}
     >
-      <View
-        style={null}
-      >
-        <TouchableOpacity
-          activeOpacity={0.2}
-          style={
-            Array [
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 2,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.23,
-                "shadowRadius": 2.62,
-              },
-              Object {
-                "backgroundColor": "white",
-                "borderColor": "white",
-                "borderRadius": 7,
-                "borderWidth": 2,
-                "marginBottom": 10,
-                "paddingHorizontal": 30,
-                "paddingVertical": 10,
-                "width": 675,
-              },
-              Object {},
-            ]
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Bold",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-              ]
-            }
-          >
-            Yukon Kskokwim Correctional Center
-          </Text>
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-                Object {
-                  "color": "#6E757C",
-                },
-              ]
-            }
-          >
-            State Prison
-          </Text>
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-                Object {
-                  "color": "#6E757C",
-                },
-              ]
-            }
-          >
-            P.O. Box 400
-             - 
-            Bethel
-            , 
-            AK
-             
-            99559
-          </Text>
-        </TouchableOpacity>
-      </View>
       <View>
         <View
           style={
@@ -394,6 +309,60 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
         }
       }
     >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "flex": 1,
+              "margin": 10,
+            },
+            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          Back
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         activeOpacity={1}
         style={

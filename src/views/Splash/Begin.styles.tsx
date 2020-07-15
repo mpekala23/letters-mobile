@@ -13,8 +13,7 @@ export default StyleSheet.create({
   header: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 10,
-    left: '30%',
+    top: 60,
   },
   ameelioLogo: {
     fontSize: 26,

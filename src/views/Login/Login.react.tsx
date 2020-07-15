@@ -55,7 +55,7 @@ class LoginScreen extends React.Component<Props, State> {
 
   devSkip = async (): Promise<void> => {
     if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org');
-    if (this.passwordRef.current) this.passwordRef.current.set('password');
+    if (this.passwordRef.current) this.passwordRef.current.set('ThisGood1');
     setTimeout(() => {
       this.onLogin();
     }, 10);

@@ -40,6 +40,11 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: 'white',
   },
+  initialsBig: {
+    fontSize: 36,
+    fontWeight: '500',
+    color: 'white',
+  },
   contactPic: {
     width: contactSize,
     height: contactSize,

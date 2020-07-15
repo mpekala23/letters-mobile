@@ -19,12 +19,10 @@ interface Props {
 
 const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const { letter } = props;
-  const photos = letter.photoPath ? (
+  const photos = letter.photo ? (
     <Image
       style={Styles.memoryLanePicture}
-      source={{
-        uri: letter.photoPath,
-      }}
+      source={letter.photo}
       testID="memoryLaneImage"
     />
   ) : null;
@@ -34,7 +32,7 @@ const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
         <Text style={Styles.baseText}>{letter.dateCreated}</Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={Styles.letterText}>{letter.message}</Text>
+        <Text style={Styles.letterText}>{letter.content}</Text>
         {photos}
       </ScrollView>
     </View>
@@ -45,13 +43,12 @@ const mapStateToProps = (state: AppState) => ({
   letter: state.letter.active
     ? state.letter.active
     : {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
-        photoPath: '',
+        content: '',
         dateCreated: '',
         trackingEvents: [],
       },
