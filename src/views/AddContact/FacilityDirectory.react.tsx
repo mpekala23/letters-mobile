@@ -200,7 +200,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   render() {
     const facilityDirectoryHint =
-      this.props.contactState.adding.state === 'Pennsylvania' ? (
+      this.state.phyState === 'Pennsylvania' ? (
         <View style={Styles.hintBackground} testID="hintText">
           <Text style={[Typography.FONT_MEDIUM]}>
             {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint1')}{' '}

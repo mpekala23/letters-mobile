@@ -31,6 +31,7 @@ const setup = (contactOverrides = {}, routeOverrides = {}) => {
   const route = {
     params: {
       newFacility: null,
+      phyState: '',
       ...routeOverrides,
     },
   };
@@ -70,9 +71,8 @@ const setup = (contactOverrides = {}, routeOverrides = {}) => {
   };
 };
 
-function sleep(ms: number) {
-  jest.useRealTimers();
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function sleep() {
+  jest.useFakeTimers();
 }
 
 describe('Facility Directory Screen', () => {
@@ -84,7 +84,7 @@ describe('Facility Directory Screen', () => {
 
   it('should have next button be disabled until facility selected', async () => {
     const { navigation, getByText } = setup();
-    await sleep(1);
+    await sleep();
     const nextButton = getByText('Next');
     fireEvent.press(nextButton);
     expect(
@@ -99,7 +99,7 @@ describe('Facility Directory Screen', () => {
 
   it('should have the selected facility have a pink background', async () => {
     const { getByText } = setup();
-    await sleep(1);
+    await sleep();
     const facility = getByText('Yukon Kskokwim Correctional Center').parentNode;
     expect(facility.props.style[1].backgroundColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
@@ -112,7 +112,7 @@ describe('Facility Directory Screen', () => {
 
   it('should dispatch facility info to the redux store when the next button is pressed', async () => {
     const { store, getByText } = setup();
-    await sleep(1);
+    await sleep();
     const nextButton = getByText('Next');
     fireEvent.press(nextButton);
     expect(store.getActions().length).toBe(0);
@@ -148,7 +148,7 @@ describe('Facility Directory Screen', () => {
 
   it('should navigate to the review contact screen when the next button is pressed', async () => {
     const { navigation, getByText } = setup();
-    await sleep(1);
+    await sleep();
     const nextButton = getByText('Next');
     fireEvent.press(getByText('Yukon Kskokwim Correctional Center'));
     fireEvent.press(nextButton);
@@ -171,7 +171,7 @@ describe('Facility Directory Screen', () => {
         type: 'State Prison',
       },
     });
-    await sleep(1);
+    await sleep();
     const facility = getByText('Yukon Kskokwim Correctional Center').parentNode;
     expect(facility.props.style[1].backgroundColor).toBe('white');
   });
@@ -197,19 +197,18 @@ describe('Facility Directory Screen', () => {
         },
       }
     );
-    await sleep(1);
+    await sleep();
     expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
   });
 
   it('should show hint message when contact state is Pennsylvania', () => {
-    const { getByTestId } = setup({
-      state: 'Pennsylvania',
-      firstName: 'First test',
-      lastName: 'Last test',
-      inmateNumber: '8',
-      relationship: 'Brother',
-      facility: null,
-    });
+    const { getByTestId } = setup(
+      {},
+      {
+        newFacility: {},
+        phyState: 'Pennsylvania',
+      }
+    );
     expect(getByTestId('hintText')).toBeDefined();
   });
 });
