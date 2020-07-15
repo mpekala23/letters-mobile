@@ -30,6 +30,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SetupScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
@@ -70,14 +71,14 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  AddManually: undefined;
+  AddManually: { phyState: string };
   ChooseOption: undefined;
   ComposeLetter: undefined;
   ComposePostcard: undefined;
-  ContactInfo: { addFromSelector: boolean } | undefined;
+  ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   ExplainProblem: undefined;
-  FacilityDirectory: { newFacility: NullableFacility } | undefined;
+  FacilityDirectory: { newFacility?: NullableFacility; phyState: string };
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
@@ -90,6 +91,7 @@ export type AppStackParamList = {
   MemoryLane: undefined;
   ReferFriends: undefined;
   ReviewContact: undefined;
+  Setup: undefined;
   SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
   Splash: undefined;
   SupportFAQ: undefined;
@@ -127,10 +129,11 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   LetterPreview: { title: 'Last Step', profile: false },
   LetterTracking: { title: 'Tracking', profile: true },
   MemoryLane: { title: 'Memory Lane', profile: true },
-  PostcardPreview: { title: 'Preview', profile: false },
-  ReferFriends: { title: 'Spread the Word', profile: false },
-  ReviewContact: { title: '', profile: false },
-  SingleContact: { title: '', profile: true },
+  PostcardPreview: { title: 'Postcard Preview', profile: false },
+  ReferFriends: { title: 'Refer Friends', profile: false },
+  ReviewContact: { title: 'Review Contact', profile: false },
+  Setup: { title: '', profile: false },
+  SingleContact: { title: 'Single Contact', profile: true },
   Thanks: { title: 'Thanks', profile: false },
   UpdateContact: { title: 'Update Contact', profile: false },
   UpdateProfile: { title: 'Update Profile', profile: false },
@@ -178,6 +181,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (props.authInfo.isLoggedIn) {
     screens = (
       <>
+        <Stack.Screen
+          name="Setup"
+          component={SetupScreen}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={HomeScreen}

@@ -8,22 +8,18 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Icon } from '@components';
+import { ComposeHeader, Input, Icon, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import {
-  setMessage,
-  setPhotoPath,
-  setDraft,
-} from '@store/Letter/LetterActions';
+import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import { Contact } from '@store/Contact/ContactTypes';
 import { WINDOW_WIDTH } from '@utils';
 import { Colors, Typography } from '@styles';
-import { Letter } from 'types';
+import { Letter, Photo } from 'types';
 import PicUpload, {
   PicUploadTypes,
 } from '@components/PicUpload/PicUpload.react';
@@ -40,9 +36,9 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
-  contact: Contact;
-  setMessage: (message: string) => void;
-  setPhotoPath: (path: string) => void;
+  recipientName: string;
+  setContent: (content: string) => void;
+  setPhoto: (photo: Photo | undefined) => void;
   setDraft: (value: boolean) => void;
 }
 
@@ -103,15 +99,15 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   changeText(value: string): void {
     this.updateCharsLeft(value);
-    this.props.setMessage(value);
+    this.props.setContent(value);
   }
 
-  registerPhoto(photo: string): void {
-    this.props.setPhotoPath(photo);
+  registerPhoto(photo: Photo): void {
+    this.props.setPhoto(photo);
   }
 
   deletePhoto(): void {
-    this.props.setPhotoPath('');
+    this.props.setPhoto(undefined);
   }
 
   render(): JSX.Element {
@@ -142,7 +138,15 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <ComposeHeader recipientName={this.props.contact.firstName} />
+            <Button
+              buttonText="Next Page"
+              onPress={() => {
+                // TODO: Once [Mobile Component Librar] Bars is done,
+                // replace this with a press of the next button in the navbar
+                this.props.navigation.navigate('PostcardPreview');
+              }}
+            />
+            <ComposeHeader recipientName={this.props.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -253,12 +257,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
-  contact: state.contact.active,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
-    setMessage: (message: string) => dispatch(setMessage(message)),
-    setPhotoPath: (path: string) => dispatch(setPhotoPath(path)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };

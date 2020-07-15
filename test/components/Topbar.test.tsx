@@ -55,7 +55,7 @@ describe('Topbar component', () => {
       {
         isLoggedIn: true,
       },
-      { imageUri: 'placeholder' }
+      { photo: { uri: 'placeholder' } }
     );
     expect(getByLabelText('Profile Picture')).toBeDefined();
   });

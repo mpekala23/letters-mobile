@@ -14,7 +14,6 @@ jest.mock('@api', () => ({
 const setup = (contactOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = {
-    state: 'Minnesota',
     firstName: 'First',
     lastName: 'Last',
     inmateNumber: '6',
@@ -24,7 +23,7 @@ const setup = (contactOverrides = {}) => {
       city: 'City',
       name: 'Facility Name',
       postal: '23232',
-      state: 'MN',
+      state: 'Minnesota',
       type: 'State Prison',
     },
     ...contactOverrides,

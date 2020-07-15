@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, createRef } from 'react';
 import {
   Animated,
   View,
@@ -8,18 +8,18 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Icon } from '@components';
+import { ComposeHeader, Input, Button, PicUpload, Icon } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage, setDraft } from '@store/Letter/LetterActions';
+import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
 import { WINDOW_WIDTH } from '@utils';
 import { Typography, Colors } from '@styles';
-import { Letter } from 'types';
+import { Letter, Photo } from 'types';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CheckIcon from '@assets/views/Compose/Check';
 import Styles from './Compose.styles';
@@ -32,9 +32,10 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
-  contact: Contact;
-  setMessage: (message: string) => void;
+  recipientName: string;
+  setContent: (content: string) => void;
   setDraft: (value: boolean) => void;
+  setPhoto: (photo: Photo | undefined) => void;
 }
 
 interface State {
@@ -43,6 +44,8 @@ interface State {
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
+  private picRef = createRef<PicUpload>();
+
   private unsubscribeFocus: () => void;
 
   private unsubscribeBlur: () => void;
@@ -55,6 +58,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
+    this.registerPhoto = this.registerPhoto.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
@@ -84,6 +89,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     setProfileOverride(undefined);
   };
 
+  registerPhoto(photo: Photo): void {
+    this.props.setPhoto(photo);
+  }
+
+  deletePhoto(): void {
+    this.props.setPhoto(undefined);
+  }
+
   updateWordsLeft(value: string): void {
     let s = value;
     s = s.replace(/\n/g, ' '); // newlines to space
@@ -99,7 +112,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   changeText(value: string): void {
     this.updateWordsLeft(value);
-    this.props.setMessage(value);
+    this.props.setContent(value);
   }
 
   render(): JSX.Element {
@@ -130,7 +143,15 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <ComposeHeader recipientName={this.props.contact.firstName} />
+            <Button
+              buttonText="Next Page"
+              onPress={() => {
+                // TODO: Once [Mobile Component Librar] Bars is done,
+                // replace this with a press of the next button in the navbar
+                this.props.navigation.navigate('LetterPreview');
+              }}
+            />
+            <ComposeHeader recipientName={this.props.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}
               inputStyle={{
@@ -155,7 +176,31 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               placeholder={i18n.t('Compose.placeholder')}
               numLines={100}
               testId="input"
-            />
+            >
+              <Animated.View
+                style={[
+                  {
+                    opacity: this.state.keyboardOpacity.interpolate({
+                      inputRange: [0, 0.1, 1],
+                      outputRange: [1, 0.5, 0],
+                    }),
+                    height: this.state.keyboardOpacity.interpolate({
+                      inputRange: [0, 0.8, 1],
+                      outputRange: [200, 200, 0],
+                    }),
+                  },
+                ]}
+              >
+                <PicUpload
+                  ref={this.picRef}
+                  onSuccess={this.registerPhoto}
+                  onDelete={this.deletePhoto}
+                  type={PicUploadTypes.Media}
+                  width={180}
+                  height={200}
+                />
+              </Animated.View>
+            </Input>
             <Animated.View
               style={{
                 opacity: this.state.keyboardOpacity,
@@ -207,11 +252,12 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
-  contact: state.contact.active,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
-    setMessage: (message: string) => dispatch(setMessage(message)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };
