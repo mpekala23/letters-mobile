@@ -35,6 +35,11 @@ exports[`Update Profile Screen should match snapshot 1`] = `
       }
     >
       <ScrollView
+        contentContainerStyle={
+          Object {
+            "paddingVertical": 24,
+          }
+        }
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
         style={
@@ -43,14 +48,6 @@ exports[`Update Profile Screen should match snapshot 1`] = `
           }
         }
       >
-        <View
-          style={
-            Object {
-              "height": 24,
-              "width": "100%",
-            }
-          }
-        />
         <View
           style={
             Object {
@@ -529,14 +526,6 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             Log out
           </Text>
         </TouchableOpacity>
-        <View
-          style={
-            Object {
-              "height": 16,
-              "width": "100%",
-            }
-          }
-        />
       </ScrollView>
     </View>
   </TouchableOpacity>

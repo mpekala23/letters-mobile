@@ -35,6 +35,11 @@ exports[`Update Contact Screen should match snapshot 1`] = `
       }
     >
       <ScrollView
+        contentContainerStyle={
+          Object {
+            "paddingVertical": 16,
+          }
+        }
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
         style={
@@ -43,14 +48,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           }
         }
       >
-        <View
-          style={
-            Object {
-              "height": 16,
-              "width": "100%",
-            }
-          }
-        />
         <View
           style={
             Object {
@@ -680,14 +677,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             Delete Profile
           </Text>
         </TouchableOpacity>
-        <View
-          style={
-            Object {
-              "height": 16,
-              "width": "100%",
-            }
-          }
-        />
       </ScrollView>
     </View>
   </TouchableOpacity>
