@@ -15,6 +15,9 @@ import {
 } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { getFacilities } from '@api';
+import { STATE_TO_ABBREV } from '@utils';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import CommonStyles from './AddContact.styles';
 import Styles from './FacilityDirectory.styles';
 
@@ -24,56 +27,50 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 >;
 
 export interface Props {
-  facilityData: Facility[];
   navigation: ContactInfoScreenNavigationProp;
   route: {
-    params: { newFacility: NullableFacility };
+    params: { newFacility?: NullableFacility; phyState: string };
   };
   contactState: ContactState;
   setAdding: (contact: Contact) => void;
 }
 
 export interface State {
+  facilityData: Facility[];
+  phyState: string;
   search: string;
   selected: Facility | null;
   manual: Facility | null;
+  refreshing: boolean;
 }
-
-const example: Facility = {
-  name: 'Yukon Kskokwim Correctional Center',
-  type: 'State Prison',
-  address: 'P.O. Box 400',
-  city: 'Bethel',
-  state: 'AK',
-  postal: '99559',
-};
 
 class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
-  static defaultProps = {
-    facilityData: [example],
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
+      facilityData: [],
+      phyState: '',
       search: '',
       selected: null,
       manual: null,
+      refreshing: true,
     };
     this.renderItem = this.renderItem.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.filterData = this.filterData.bind(this);
+    this.refreshFacilities = this.refreshFacilities.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.onNavigationFocus();
+    await this.refreshFacilities();
   }
 
   componentWillUnmount() {
@@ -89,13 +86,31 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     } else {
       this.setState({ selected: this.props.contactState.adding.facility });
     }
-    this.props.navigation.setParams({ newFacility: null });
+    let phyState;
+    if (this.props.route.params && this.props.route.params.phyState) {
+      phyState = this.props.route.params.phyState;
+      this.setState({ phyState: this.props.route.params.phyState });
+    }
+    this.props.navigation.setParams({ newFacility: null, phyState });
+    this.refreshFacilities();
+  }
+
+  async refreshFacilities() {
+    try {
+      const { phyState } = this.props.route.params;
+      this.setState({ refreshing: true });
+      const facilities = await getFacilities(STATE_TO_ABBREV[phyState]);
+      this.setState({ facilityData: facilities, refreshing: false });
+    } catch (err) {
+      dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });
+      this.setState({ refreshing: false });
+    }
   }
 
   filterData() {
     const result = [];
-    for (let ix = 0; ix < this.props.facilityData.length; ix += 1) {
-      const facility = this.props.facilityData[ix];
+    for (let ix = 0; ix < this.state.facilityData.length; ix += 1) {
+      const facility = this.state.facilityData[ix];
       const search = this.state.search.toLowerCase();
       if (
         facility.name.toLowerCase().indexOf(search) > -1 ||
@@ -165,7 +180,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           containerStyle={Styles.addManuallyButton}
           onPress={() => {
             this.setState({ selected: null });
-            this.props.navigation.navigate('AddManually');
+            this.props.navigation.navigate('AddManually', {
+              phyState: this.state.phyState,
+            });
           }}
         />
       </View>
@@ -202,11 +219,29 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <FlatList
           data={this.filterData()}
           renderItem={this.renderItem}
+          onRefresh={this.refreshFacilities}
+          refreshing={this.state.refreshing}
           contentContainerStyle={Styles.flatBackground}
           ListFooterComponent={this.renderFooter}
           keyExtractor={(item) => item.name}
         />
         <View style={CommonStyles.bottomButtonContainer}>
+          <Button
+            onPress={() => {
+              const contact = this.props.contactState.adding;
+              contact.facility = this.state.selected;
+              this.props.setAdding(contact);
+              this.props.navigation.setParams({
+                newFacility: null,
+              });
+              this.props.navigation.navigate('ContactInfo', {
+                phyState: this.props.route.params.phyState,
+              });
+            }}
+            buttonText={i18n.t('ContactInfoScreen.back')}
+            reverse
+            containerStyle={CommonStyles.bottomButton}
+          />
           <Button
             onPress={() => {
               const contact = this.props.contactState.adding;

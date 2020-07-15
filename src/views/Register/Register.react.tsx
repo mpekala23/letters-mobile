@@ -14,13 +14,14 @@ import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { STATES_DROPDOWN, Validation, REFERERS } from '@utils';
 import { CheckBox } from 'react-native-elements';
 import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Photo } from 'types';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -35,6 +36,7 @@ export interface Props {
 export interface State {
   valid: boolean;
   remember: boolean;
+  image: Photo | null;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -60,11 +62,16 @@ class RegisterScreen extends React.Component<Props, State> {
 
   private password = createRef<Input>();
 
+  private passwordConfirmation = createRef<Input>();
+
+  private referer = createRef<Input>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
       remember: false,
+      image: null,
     };
   }
 
@@ -76,9 +83,12 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.country.current) this.country.current.set('USA');
     if (this.postal.current) this.postal.current.set('12345');
     if (this.city.current) this.city.current.set('New Haven');
-    if (this.phyState.current) this.phyState.current.set('Conneticut');
+    if (this.phyState.current) this.phyState.current.set('Connecticut');
     if (this.email.current) this.email.current.set('team@ameelio.org');
     if (this.password.current) this.password.current.set('ThisGood1');
+    if (this.passwordConfirmation.current)
+      this.passwordConfirmation.current.set('ThisGood1');
+    if (this.referer.current) this.referer.current.set('Other');
     this.updateValid();
   };
 
@@ -93,7 +103,9 @@ class RegisterScreen extends React.Component<Props, State> {
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
-      this.password.current
+      this.password.current &&
+      this.passwordConfirmation.current &&
+      this.referer.current
     ) {
       const result =
         this.firstName.current.state.valid &&
@@ -103,9 +115,12 @@ class RegisterScreen extends React.Component<Props, State> {
         this.country.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
-        // this.phyState.current.state.valid &&
+        this.phyState.current.state.valid &&
         this.email.current.state.valid &&
-        this.password.current.state.valid;
+        this.password.current.state.valid &&
+        this.passwordConfirmation.current.state.value ===
+          this.password.current.state.value &&
+        this.referer.current.state.valid;
       this.setState({ valid: result });
     }
   };
@@ -122,7 +137,9 @@ class RegisterScreen extends React.Component<Props, State> {
       this.city.current &&
       this.phyState.current &&
       this.email.current &&
-      this.password.current
+      this.password.current &&
+      this.passwordConfirmation.current &&
+      this.referer.current
     ) {
       const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
@@ -136,17 +153,25 @@ class RegisterScreen extends React.Component<Props, State> {
         state: this.phyState.current.state.value,
         email: this.email.current.state.value,
         password: this.password.current.state.value,
+        passwordConfirmation: this.passwordConfirmation.current.state.value,
         remember: this.state.remember,
+        referer: this.referer.current.state.value,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         await register(data);
       } catch (err) {
-        if (err.message === 'Email in use') {
+        if (err.data && err.data.email) {
           popupAlert({
-            title: i18n.t(i18n.t('RegisterScreen.emailAlreadyInUse')),
+            title: i18n.t('RegisterScreen.emailAlreadyInUse'),
             buttons: [
               {
+                text: i18n.t('RegisterScreen.login'),
+                onPress: () => this.props.navigation.replace('Login'),
+              },
+              {
                 text: i18n.t('Alert.okay'),
+                reverse: true,
               },
             ],
           });
@@ -176,8 +201,15 @@ class RegisterScreen extends React.Component<Props, State> {
             accessibilityLabel="Tap to upload profile image"
             style={Styles.picContainer}
           >
-            <PicUpload type={PicUploadTypes.Profile} width={136} height={136} />
-            <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 10 }]}>
+            <PicUpload
+              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+              width={130}
+              height={130}
+              type={PicUploadTypes.Profile}
+              onSuccess={(image: Photo) => this.setState({ image })}
+              onDelete={() => this.setState({ image: null })}
+            />
+            <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
           </View>
@@ -290,6 +322,25 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             secure
             validate={Validation.Password}
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+          />
+          <Input
+            ref={this.passwordConfirmation}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.confirmPassword')}
+            required
+            secure
+            validate={Validation.Password}
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+          />
+          <Input
+            ref={this.referer}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.referer')}
+            required
+            options={REFERERS}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />

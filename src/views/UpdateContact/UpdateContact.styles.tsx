@@ -22,4 +22,9 @@ export default StyleSheet.create({
     width: '100%',
     height: 50,
   },
+  roundPicUpload: {
+    borderWidth: 10,
+    borderColor: 'white',
+    borderRadius: 65,
+  },
 });

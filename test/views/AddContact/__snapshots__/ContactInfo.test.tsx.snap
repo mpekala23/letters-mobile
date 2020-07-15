@@ -226,7 +226,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       ]
                     }
                   >
-                    CT
+                    
                   </Text>
                    
                   database

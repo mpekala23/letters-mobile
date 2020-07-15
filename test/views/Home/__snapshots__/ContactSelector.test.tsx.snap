@@ -43,182 +43,225 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
       Your loved ones
     </Text>
     <ScrollView
-      keyboardShouldPersistTaps="handled"
+      data={
+        Array [
+          Object {
+            "firstName": "First",
+            "inmateNumber": "6",
+            "lastName": "Last",
+            "relationship": "Brother",
+            "state": "Minnesota",
+          },
+        ]
+      }
+      disableVirtualization={false}
+      horizontal={false}
+      initialNumToRender={10}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onEndReachedThreshold={2}
+      refreshControl={
+        <RefreshControl
+          onRefresh={[Function]}
+          refreshing={false}
+        />
+      }
+      refreshing={false}
+      removeClippedSubviews={false}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
     >
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 6,
-              "marginVertical": 6,
-              "padding": 15,
-              "width": "100%",
-            },
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 4,
-                "width": 0,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 2.62,
-            },
-            undefined,
-          ]
-        }
-        testID="ContactSelectorCard"
+      <View
+        style={null}
       >
-        <View
+        <TouchableOpacity
+          activeOpacity={0.2}
           style={
             Array [
               Object {
-                "flex": 1,
-                "flexDirection": "row",
+                "backgroundColor": "white",
+                "borderRadius": 6,
+                "marginVertical": 6,
+                "padding": 15,
+                "width": "100%",
               },
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 4,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.2,
+                "shadowRadius": 2.62,
+              },
+              undefined,
             ]
           }
+          testID="ContactSelectorCard"
         >
           <View
             style={
               Array [
                 Object {
-                  "paddingTop": 12,
+                  "flex": 1,
+                  "flexDirection": "row",
                 },
               ]
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#F4F4F4",
-                  "borderRadius": 40,
-                  "height": 80,
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                  "width": 80,
-                }
-              }
-              testID="profilePicture"
-            >
-              <Image
-                accessibilityLabel="Profile Picture"
-                source={1}
-                style={
+                Array [
                   Object {
-                    "height": 80,
-                    "width": 80,
+                    "paddingTop": 12,
+                  },
+                ]
+              }
+            >
+              <View
+                pointerEvents="none"
+              >
+                <TouchableOpacity
+                  activeOpacity={0.2}
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#f6993f",
+                      "borderRadius": 40,
+                      "height": 80,
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "width": 80,
+                    }
                   }
+                  testID="profilePicture"
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "Poppins-Regular",
+                        },
+                        Object {
+                          "color": "white",
+                          "fontSize": 22,
+                          "fontWeight": "500",
+                        },
+                      ]
+                    }
+                  >
+                    FL
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "paddingLeft": 18,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                      "fontSize": 20,
+                    },
+                  ]
                 }
-              />
-            </TouchableOpacity>
+              >
+                First
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                    Object {
+                      "color": "#6D6D6D",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#000",
+                    }
+                  }
+                >
+                  💌
+                </Text>
+                 
+                received
+                :
+                 
+                0
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                    Object {
+                      "color": "#6D6D6D",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#000",
+                    }
+                  }
+                >
+                  📆
+                </Text>
+                 
+                last heard from you
+                :
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                    Object {
+                      "color": "#6D6D6D",
+                      "paddingBottom": 4,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#000",
+                    }
+                  }
+                >
+                  ✈️
+                </Text>
+                 
+                letters traveled
+                :
+              </Text>
+            </View>
           </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "paddingLeft": 18,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Bold",
-                    "fontSize": 20,
-                  },
-                ]
-              }
-            >
-              First
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                  Object {
-                    "color": "#6D6D6D",
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "color": "#000",
-                  }
-                }
-              >
-                💌
-              </Text>
-               
-              received
-              :
-               
-              0
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                  Object {
-                    "color": "#6D6D6D",
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "color": "#000",
-                  }
-                }
-              >
-                📆
-              </Text>
-               
-              last heard from you
-              :
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                  Object {
-                    "color": "#6D6D6D",
-                    "paddingBottom": 4,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "color": "#000",
-                  }
-                }
-              >
-                ✈️
-              </Text>
-               
-              letters traveled
-              :
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
     <TouchableOpacity
       activeOpacity={0.2}

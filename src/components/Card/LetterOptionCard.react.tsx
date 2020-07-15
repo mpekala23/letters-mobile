@@ -26,16 +26,16 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
     >
       <Icon
-        svg={props.type === LetterTypes.PostCards ? PostCardsIcon : LettersIcon}
+        svg={props.type === LetterTypes.Postcard ? PostCardsIcon : LettersIcon}
         style={{ position: 'absolute', right: 0, bottom: 0 }}
       />
       <Text style={[Typography.FONT_BOLD, CardStyles.cardTitle]}>
-        {props.type === LetterTypes.PostCards
+        {props.type === LetterTypes.Postcard
           ? i18n.t('LetterTypes.postCardsTitle')
           : i18n.t('LetterTypes.lettersTitle')}
       </Text>
       <Text style={CardStyles.cardData}>
-        {props.type === LetterTypes.PostCards
+        {props.type === LetterTypes.Postcard
           ? i18n.t('LetterTypes.postCardsDesc')
           : i18n.t('LetterTypes.lettersDesc')}
       </Text>

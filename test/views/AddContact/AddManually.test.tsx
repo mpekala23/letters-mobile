@@ -9,7 +9,6 @@ const mockStore = configureStore([]);
 const setup = (contactOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = {
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
@@ -62,6 +61,7 @@ describe('Add Manually Screen', () => {
     );
     fireEvent.changeText(getByPlaceholderText('Facility Address'), 'Address');
     fireEvent.changeText(getByPlaceholderText('Facility City'), 'City');
+    fireEvent.changeText(getByPlaceholderText('Facility State'), 'Minnesota');
     fireEvent.changeText(getByPlaceholderText('Facility Postal'), '23232');
     fireEvent.press(nextButton);
     expect(getByText('Next').parentNode.props.style[1]).toEqual({});
@@ -77,6 +77,7 @@ describe('Add Manually Screen', () => {
     );
     fireEvent.changeText(getByPlaceholderText('Facility Address'), 'Address');
     fireEvent.changeText(getByPlaceholderText('Facility City'), 'City');
+    fireEvent.changeText(getByPlaceholderText('Facility State'), 'Minnesota');
     fireEvent.changeText(getByPlaceholderText('Facility Postal'), '23232');
     fireEvent.press(nextButton);
     expect(navigation.navigate).toHaveBeenCalledWith('FacilityDirectory', {
@@ -85,9 +86,10 @@ describe('Add Manually Screen', () => {
         city: 'City',
         name: 'Facility Name',
         postal: '23232',
-        state: 'MN',
-        type: 'State Prison',
+        state: 'Minnesota',
+        type: 'Federal',
       },
+      phyState: 'Minnesota',
     });
   });
 });

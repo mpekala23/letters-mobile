@@ -8,19 +8,20 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
-import { ProfilePicTypes, Facility } from 'types';
-import { Colors, Typography } from '@styles';
+import { Facility, Photo } from 'types';
+import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './UpdateContact.styles';
 
@@ -35,7 +36,7 @@ export interface Props {
 }
 
 export interface State {
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateContactScreenBase extends React.Component<Props, State> {
@@ -57,13 +58,15 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.contact.photo ? props.contact.photo : null,
+    };
 
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.setValid = this.setValid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
 
@@ -110,7 +113,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   doDeleteContact = async () => {
     try {
-      await deleteContact(this.props.contact);
+      await deleteContact(this.props.contact.id);
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
       dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -133,18 +136,18 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         state: this.props.contact.facility.state,
         postal: this.props.contact.facility.postal,
       };
-      const contact = {
+      const contact: Contact = {
         id: this.props.contact.id,
-        state: this.props.contact.state,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
-        inmate_number: this.props.contact.inmateNumber,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contact.inmateNumber,
         relationship: this.props.contact.relationship,
         facility,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         await updateContact(contact);
-        this.props.navigation.navigate('ContactSelector');
+        this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
@@ -178,37 +181,19 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.facilityAddress.current.state.valid;
       this.setValid(result);
     }
   }
 
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.facilityName.current &&
-      this.facilityAddress.current &&
-      this.props.contact.facility
-    ) {
-      return (
-        this.firstName.current.state.value !== this.props.contact.firstName ||
-        this.lastName.current.state.value !== this.props.contact.lastName ||
-        this.facilityName.current.state.value !==
-          this.props.contact.facility.name ||
-        this.facilityAddress.current.state.value !==
-          this.props.contact.facility.address
-      );
-    }
-    return false;
-  }
-
   render() {
-    const { contact } = this.props;
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: 'white', padding: 16 }}
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          padding: 16,
+        }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
@@ -229,11 +214,14 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
             />
-            <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
+            <PicUpload
+              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+              width={130}
+              height={130}
+              type={PicUploadTypes.Profile}
+              initial={this.props.contact.photo}
+              onSuccess={(image: Photo) => this.setState({ image })}
+              onDelete={() => this.setState({ image: null })}
             />
           </View>
           <Text
@@ -328,7 +316,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             popupAlert({
               title: i18n.t('UpdateContactScreen.areYouSure'),
               message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
-                contact.firstName
+                this.props.contact.firstName
               } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
               buttons: [
                 {

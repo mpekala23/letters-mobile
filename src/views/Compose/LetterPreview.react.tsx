@@ -16,6 +16,7 @@ import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { UserActionTypes } from '@store/User/UserTypes';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -43,7 +44,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
           >
-            {props.composing.message}
+            {props.composing.content}
           </Text>
         </ScrollView>
       </View>
@@ -71,9 +72,13 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
-            dropdownError({
-              message: i18n.t('Error.requestIncomplete'),
-            });
+            if (err.message === 'Unable to upload image.') {
+              dropdownError({ message: i18n.t('unableToUploadLetterPhoto') });
+            } else {
+              dropdownError({
+                message: i18n.t('Error.requestIncomplete'),
+              });
+            }
           }
         }}
       />

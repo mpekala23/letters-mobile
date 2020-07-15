@@ -39,12 +39,17 @@ describe('Register screen', () => {
     fireEvent.changeText(getByPlaceholderText('Country'), 'USA');
     fireEvent.changeText(getByPlaceholderText('Zip Code'), '12345');
     fireEvent.changeText(getByPlaceholderText('City'), 'New Haven');
-    fireEvent.changeText(getByPlaceholderText('State'), 'CT');
+    fireEvent.changeText(getByPlaceholderText('State'), 'Iowa');
     fireEvent.changeText(
       getByPlaceholderText('E-mail Address'),
       'team@ameelio.org'
     );
     fireEvent.changeText(getByPlaceholderText('Password'), 'ThisGood1');
+    fireEvent.changeText(getByPlaceholderText('Confirm Password'), 'ThisGood1');
+    fireEvent.changeText(
+      getByPlaceholderText('How did you hear about Ameelio?'),
+      'Other'
+    );
     fireEvent.press(getByText('Register'));
     expect(register).toHaveBeenCalledTimes(1);
   });

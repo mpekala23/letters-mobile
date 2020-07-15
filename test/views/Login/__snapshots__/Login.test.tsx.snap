@@ -110,7 +110,7 @@ exports[`Login screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="valid"
+                testID="invalid"
               />
               <View
                 testID="unfocused"
@@ -186,7 +186,7 @@ exports[`Login screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="valid"
+                testID="invalid"
               />
               <View
                 testID="unfocused"

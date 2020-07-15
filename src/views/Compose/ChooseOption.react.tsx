@@ -7,7 +7,7 @@ import { LetterTypes } from 'types';
 import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setType } from '@store/Letter/LetterActions';
+import { setType, setRecipientId } from '@store/Letter/LetterActions';
 import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
 import Styles from './Compose.styles';
@@ -20,7 +20,9 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
   letterState: LetterState;
+  recipientId: number;
   setType: (type: LetterTypes) => void;
+  setRecipientId: (id: number) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
@@ -38,16 +40,18 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         {i18n.t('CreditsCard.creditsResetDaily')}
       </Text>
       <LetterOptionCard
-        type={LetterTypes.PostCards}
+        type={LetterTypes.Postcard}
         onPress={() => {
-          props.setType(LetterTypes.PostCards);
+          props.setType(LetterTypes.Postcard);
+          props.setRecipientId(props.recipientId);
           props.navigation.navigate('ComposePostcard');
         }}
       />
       <LetterOptionCard
-        type={LetterTypes.Letters}
+        type={LetterTypes.Letter}
         onPress={() => {
-          props.setType(LetterTypes.Letters);
+          props.setType(LetterTypes.Letter);
+          props.setRecipientId(props.recipientId);
           props.navigation.navigate('ComposeLetter');
         }}
       />
@@ -57,10 +61,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   letterState: state.letter,
+  recipientId: state.contact.active.id,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setType: (type: LetterTypes) => dispatch(setType(type)),
+    setRecipientId: (id: number) => dispatch(setRecipientId(id)),
   };
 };
 const ChooseOptionScreen = connect(

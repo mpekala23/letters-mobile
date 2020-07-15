@@ -43,15 +43,19 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           >
             {this.state.current.title}
           </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              { fontSize: 16, textAlign: 'center' },
-            ]}
-          >
-            {this.state.current.message}
-          </Text>
-          <View style={{ height: 40 }} />
+          {this.state.current.message && (
+            <>
+              <Text
+                style={[
+                  Typography.FONT_REGULAR,
+                  { fontSize: 16, textAlign: 'center' },
+                ]}
+              >
+                {this.state.current.message}
+              </Text>
+              <View style={{ height: 40 }} />
+            </>
+          )}
           {this.state.current.buttons &&
             this.state.current.buttons.map((button) => {
               return (

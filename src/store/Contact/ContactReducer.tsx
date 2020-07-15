@@ -10,23 +10,19 @@ import {
 const initialState: ContactState = {
   adding: {
     id: -1,
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
     relationship: '',
     facility: null,
-    credit: 4,
   },
   active: {
     id: -1,
-    state: '',
     firstName: '',
     lastName: '',
     inmateNumber: '',
     relationship: '',
     facility: null,
-    credit: 4,
   },
   existing: [],
 };

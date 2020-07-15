@@ -15,7 +15,6 @@ import {
 import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Stamp from '@assets/views/Compose/Stamp';
 import Styles from './Compose.styles';
@@ -28,7 +27,7 @@ type PostcardPreviewScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: PostcardPreviewScreenNavigationProp;
   composing: Letter;
-  contact: Contact;
+  recipientName: string;
   setDraft: (value: boolean) => void;
   setStatus: (status: LetterStatus) => void;
   clearComposing: () => void;
@@ -40,9 +39,9 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
       <View style={{ flex: 1 }}>
         <GenericCard style={Styles.postcardBackground}>
           <View style={{ flex: 1 }}>
-            {props.composing.photoPath !== '' && (
+            {props.composing.photo && (
               <Image
-                source={{ uri: props.composing.photoPath }}
+                source={{ uri: props.composing.photo?.uri }}
                 style={{ width: '100%', aspectRatio: 1 }}
               />
             )}
@@ -51,7 +50,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <Icon svg={Stamp} style={{ alignSelf: 'flex-end' }} />
             <Text style={Typography.FONT_REGULAR}>
-              {i18n.t('Compose.to')}: {props.contact.firstName}
+              {i18n.t('Compose.to')}: {props.recipientName}
             </Text>
             <GrayBar />
             <GrayBar />
@@ -65,7 +64,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
           >
-            {props.composing.message}
+            {props.composing.content}
           </Text>
         </GenericCard>
       </View>
@@ -93,9 +92,13 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
-            dropdownError({
-              message: i18n.t('Error.requestIncomplete'),
-            });
+            if (err.message === 'Unable to upload image.') {
+              dropdownError({ message: i18n.t('unableToUploadLetterPhoto') });
+            } else {
+              dropdownError({
+                message: i18n.t('Error.requestIncomplete'),
+              });
+            }
           }
         }}
       />
@@ -105,7 +108,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
-  contact: state.contact.active,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {

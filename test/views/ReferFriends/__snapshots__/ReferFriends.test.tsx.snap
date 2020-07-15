@@ -120,34 +120,42 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#F4F4F4",
-            "borderColor": "white",
-            "borderRadius": 65,
-            "borderWidth": 6,
-            "height": 130,
-            "justifyContent": "center",
-            "overflow": "hidden",
-            "width": 130,
-          }
-        }
-        testID="profilePicture"
+      <View
+        pointerEvents="auto"
       >
-        <Image
-          accessibilityLabel="Profile Picture"
-          source={1}
+        <TouchableOpacity
+          activeOpacity={0.2}
           style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#f6993f",
+              "borderColor": "white",
+              "borderRadius": 65,
+              "borderWidth": 6,
               "height": 130,
+              "justifyContent": "center",
+              "overflow": "hidden",
               "width": 130,
             }
           }
-        />
-      </TouchableOpacity>
+          testID="profilePicture"
+        >
+          <Image
+            accessibilityLabel="Profile Picture"
+            source={
+              Object {
+                "uri": "ExamplePic",
+              }
+            }
+            style={
+              Object {
+                "height": 130,
+                "width": 130,
+              }
+            }
+          />
+        </TouchableOpacity>
+      </View>
       <Text
         style={
           Array [
