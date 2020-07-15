@@ -22,6 +22,7 @@ import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -315,7 +316,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             popupAlert({
               title: i18n.t('UpdateContactScreen.areYouSure'),
               message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
-                contact.firstName
+                this.props.contact.firstName
               } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
               buttons: [
                 {
