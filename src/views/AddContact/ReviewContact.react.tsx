@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   View,
   ScrollView,
@@ -97,7 +96,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
-      this.stateRef.current.set(this.props.contactState.adding.state);
+      this.stateRef.current.set(this.props.contactState.adding.facility.state);
       this.firstName.current.set(this.props.contactState.adding.firstName);
       this.lastName.current.set(this.props.contactState.adding.lastName);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
@@ -126,19 +125,15 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         type: this.props.contactState.adding.facility.type,
         address: this.facilityAddress.current.state.value,
         city: this.props.contactState.adding.facility.city,
-        state: this.props.contactState.adding.facility.state,
+        state: this.stateRef.current.state.value,
         postal: this.postal.current.state.value,
       };
-      // TO-DO: Replace random contactId for mocking purposes with real Ids
-      const randomContactId = Math.floor(Math.random() * 1000);
-      const contact = {
-        id: randomContactId,
-        state: this.stateRef.current.state.value,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
-        inmate_number: this.props.contactState.adding.inmateNumber,
+      const contact: Contact = {
+        id: -1,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
-        credit: 4,
         facility,
       };
       try {
@@ -146,10 +141,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         // Check if contact being added already exists
         for (let ix = 0; ix < existing.length; ix += 1) {
           if (
-            existing[ix].firstName === contact.first_name &&
-            existing[ix].lastName === contact.last_name &&
-            existing[ix].inmateNumber === contact.inmate_number &&
-            existing[ix].state === contact.state &&
+            contact.facility &&
+            existing[ix].firstName === contact.firstName &&
+            existing[ix].lastName === contact.lastName &&
+            existing[ix].inmateNumber === contact.inmateNumber &&
             existing[ix].relationship === contact.relationship &&
             existing[ix].facility?.name === contact.facility.name &&
             existing[ix].facility?.address === contact.facility.address &&

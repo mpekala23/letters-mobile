@@ -8,18 +8,19 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { UserState } from '@store/User/UserTypes';
-import { ProfilePicTypes } from 'types';
+import { UserState, User } from '@store/User/UserTypes';
+import { Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -33,8 +34,7 @@ export interface Props {
 }
 
 export interface State {
-  inputting: boolean;
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateProfileScreenBase extends React.Component<Props, State> {
@@ -52,10 +52,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.userState.user.photo ? props.userState.user.photo : null,
+    };
+
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.doUpdateProfile = this.doUpdateProfile.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.unsubscribeFocus = this.props.navigation.addListener(
@@ -105,7 +108,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.phone.current &&
       this.address.current
     ) {
-      const user = {
+      const user: User = {
         id: this.props.userState.user.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
@@ -117,7 +120,9 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         postal: this.props.userState.user.postal,
         city: this.props.userState.user.city,
         state: this.props.userState.user.state,
-        imageUri: this.props.userState.user.imageUri,
+        photo: this.state.image ? this.state.image : undefined,
+        credit: this.props.userState.user.credit,
+        joined: this.props.userState.user.joined,
       };
       try {
         await updateProfile(user);
@@ -153,29 +158,9 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.phone.current.state.valid &&
-        this.address.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.address.current.state.valid;
       this.setValid(result);
     }
-  }
-
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.phone.current &&
-      this.address.current
-    ) {
-      return (
-        this.firstName.current.state.value !==
-          this.props.userState.user.firstName ||
-        this.lastName.current.state.value !==
-          this.props.userState.user.lastName ||
-        this.phone.current.state.value !== this.props.userState.user.phone ||
-        this.address.current.state.value !== this.props.userState.user.address1
-      );
-    }
-    return false;
   }
 
   render() {
@@ -203,11 +188,14 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
             contentContainerStyle={{ paddingVertical: 24 }}
           >
             <View style={Styles.profileCard}>
-              <ProfilePic
-                firstName={user.firstName}
-                lastName={user.lastName}
-                imageUri="ExamplePic"
-                type={ProfilePicTypes.SingleContact}
+              <PicUpload
+                shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+                width={130}
+                height={130}
+                type={PicUploadTypes.Profile}
+                initial={this.props.userState.user.photo}
+                onSuccess={(image: Photo) => this.setState({ image })}
+                onDelete={() => this.setState({ image: null })}
               />
               <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
                 {user.firstName}
@@ -219,7 +207,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 ]}
               >
                 {/* Add in user's joined date after API integration */}
-                {i18n.t('UpdateProfileScreen.joined')}
+                {i18n.t('UpdateProfileScreen.joined')}{' '}
+                {this.props.userState.user.joined}
               </Text>
             </View>
             <Text

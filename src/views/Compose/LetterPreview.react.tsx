@@ -43,7 +43,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
           >
-            {props.composing.message}
+            {props.composing.content}
           </Text>
         </ScrollView>
       </View>
@@ -71,9 +71,13 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('ReferFriends');
           } catch (err) {
             props.setDraft(true);
-            dropdownError({
-              message: i18n.t('Error.requestIncomplete'),
-            });
+            if (err.message === 'Unable to upload image.') {
+              dropdownError({ message: i18n.t('unableToUploadLetterPhoto') });
+            } else {
+              dropdownError({
+                message: i18n.t('Error.requestIncomplete'),
+              });
+            }
           }
         }}
       />

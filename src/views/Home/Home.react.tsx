@@ -1,31 +1,23 @@
-import React, { useCallback, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, ScrollView } from 'react-native';
 import { Notif } from '@store/Notif/NotifTypes';
 import { useFocusEffect } from '@react-navigation/native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Notifs from '@notifications';
-import { Button, Input } from '@components';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { ContactState } from '@store/Contact/ContactTypes';
+import { Button } from '@components';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
 interface Props {
   currentNotif: Notif | null;
+  contactState: ContactState;
   navigation: HomeScreenNavigationProp;
 }
 
 const HomeScreenBase: React.FC<Props> = (props: Props) => {
-  // runs only on the first render
-  useEffect(() => {
-    async function doSetup() {
-      await Notifs.setup();
-    }
-    doSetup();
-  }, []);
-
   // runs when the screen is focused with a new current notification
   useFocusEffect(
     useCallback(() => {
@@ -36,19 +28,20 @@ const HomeScreenBase: React.FC<Props> = (props: Props) => {
   );
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <ScrollView style={{ flex: 1 }}>
+      <Text>Hello</Text>
       <Button
-        buttonText="View Contact List"
+        buttonText="Contact Selector"
         onPress={() => props.navigation.navigate('ContactSelector')}
-        containerStyle={{ margin: 16 }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
 const mapStateToProps = (state: AppState) => {
   return {
     currentNotif: state.notif.currentNotif,
+    contactState: state.contact,
   };
 };
 

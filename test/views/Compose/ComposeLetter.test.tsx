@@ -14,19 +14,18 @@ const setup = () => {
   const store = mockStore({
     letter: {
       composing: {
-        type: LetterTypes.Letters,
+        type: LetterTypes.Letter,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
-        photoPath: '',
+        content: '',
         letterId: -1,
       },
     },
     contact: {
       active: {
-        firstName: 'First',
+        firstName: 'First Name',
         lastName: 'Last',
         inmateNumber: '6',
         relationship: 'Brother',
@@ -58,7 +57,7 @@ describe('ComposeLetter screen', () => {
     const { getByPlaceholderText, store } = setup();
     const input = getByPlaceholderText(i18n.t('Compose.placeholder'));
     fireEvent.changeText(input, 'new text');
-    expect(store.getActions()[1].type).toBe('letter/set_message');
+    expect(store.getActions()[1].type).toBe('letter/set_content');
     expect(store.getActions()[1].payload).toBe('new text');
   });
 
@@ -69,5 +68,8 @@ describe('ComposeLetter screen', () => {
     expect(getByText('298 left')).toBeDefined();
   });
 
-  // TODO: Once new navbar is done, add next / back navigation test
+  it('should display the first name', () => {
+    const { getByText } = setup();
+    expect(getByText('To: First Name')).toBeDefined();
+  });
 });

@@ -19,12 +19,11 @@ const setup = (letterOverrides = []) => {
   const letters = Object.assign(
     [
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: "Hi Emily! How are you doing? I'm trying out this...",
-        photoPath: '',
+        content: "Hi Emily! How are you doing? I'm trying out this...",
       },
     ],
     letterOverrides
@@ -40,6 +39,11 @@ const setup = (letterOverrides = []) => {
 
   const store = mockStore({
     letter: initialLetterState,
+    user: {
+      user: {
+        credit: 4,
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -58,7 +62,7 @@ const setup = (letterOverrides = []) => {
 
 describe('Single Contact Screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<SingleContactScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
@@ -66,20 +70,18 @@ describe('Single Contact Screen', () => {
   it('should load values for letters from the redux store', () => {
     const { getByText } = setup([
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: 'Redux Letter 1',
-        photoPath: '',
+        content: 'Redux Letter 1',
       },
       {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
         recipientId: 8,
-        message: 'Redux Letter 2',
-        photoPath: '',
+        content: 'Redux Letter 2',
       },
     ]);
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');

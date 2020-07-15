@@ -55,32 +55,42 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           ]
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.2}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f6993f",
-              "borderRadius": 40,
-              "height": 80,
-              "justifyContent": "center",
-              "overflow": "hidden",
-              "width": 80,
-            }
-          }
-          testID="profilePicture"
+        <View
+          pointerEvents="none"
         >
-          <Image
-            accessibilityLabel="Profile Picture"
-            source={1}
+          <TouchableOpacity
+            activeOpacity={0.2}
             style={
               Object {
+                "alignItems": "center",
+                "backgroundColor": "#f6993f",
+                "borderRadius": 40,
                 "height": 80,
+                "justifyContent": "center",
+                "overflow": "hidden",
                 "width": 80,
               }
             }
-          />
-        </TouchableOpacity>
+            testID="profilePicture"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                  Object {
+                    "color": "white",
+                    "fontSize": 22,
+                    "fontWeight": "500",
+                  },
+                ]
+              }
+            >
+              JD
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View
         style={

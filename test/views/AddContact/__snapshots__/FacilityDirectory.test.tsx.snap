@@ -196,6 +196,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             underlineColorAndroid="transparent"
             value=""
           />
+<<<<<<< HEAD
           <View
             style={
               Object {
@@ -225,6 +226,67 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             "alignItems": "center",
             "justifyContent": "center",
           }
+=======
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      pointerEvents="auto"
+      style={
+        Object {
+          "backgroundColor": "#F2F2F2",
+          "borderRadius": 8,
+          "height": 50,
+          "marginBottom": 10,
+          "marginLeft": 16,
+          "marginTop": 4,
+          "overflow": "hidden",
+          "width": "91%",
+        }
+      }
+      testID="parent"
+    >
+      <View
+        testID="invalid"
+      />
+      <View
+        testID="unfocused"
+      />
+      <TextInput
+        allowFontScaling={true}
+        multiline={false}
+        numberOfLines={1}
+        placeholder="Search Facility"
+        rejectResponderTermination={true}
+        secureTextEntry={false}
+        style={
+          Array [
+            Object {
+              "borderColor": "rgba(0,0,0,0)",
+              "borderRadius": 8,
+              "borderWidth": 2,
+              "color": "black",
+              "fontSize": 16,
+              "paddingHorizontal": 10,
+              "textAlignVertical": "center",
+              "width": "100%",
+            },
+            Object {
+              "color": "#282828",
+            },
+            Object {},
+            Object {
+              "height": 50,
+            },
+            Object {
+              "borderRadius": 20,
+              "padding": 20,
+            },
+            Object {
+              "fontFamily": "Poppins-Regular",
+            },
+          ]
+>>>>>>> master
         }
         scrollEnabled={true}
         style={
@@ -241,6 +303,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             }
           }
         />
+<<<<<<< HEAD
         <TouchableOpacity
           activeOpacity={0.2}
           style={
@@ -318,6 +381,41 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             99559
           </Text>
         </TouchableOpacity>
+=======
+      </View>
+    </View>
+    <ScrollView
+      contentContainerStyle={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "paddingTop": 10,
+          "width": "100%",
+        }
+      }
+      data={Array []}
+      disableVirtualization={false}
+      horizontal={false}
+      initialNumToRender={10}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onEndReachedThreshold={2}
+      refreshControl={
+        <RefreshControl
+          onRefresh={[Function]}
+          refreshing={true}
+        />
+      }
+      refreshing={true}
+      removeClippedSubviews={false}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View>
+>>>>>>> master
         <View
           style={
             Object {
@@ -395,8 +493,103 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             </Text>
           </TouchableOpacity>
         </View>
+<<<<<<< HEAD
         <View
           style={
+=======
+      </View>
+    </ScrollView>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "backgroundColor": "#FFF5F5",
+          "flexDirection": "row",
+          "padding": 15,
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 16,
+              "borderWidth": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {},
+            Object {
+              "flex": 1,
+              "margin": 10,
+            },
+            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          Back
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "paddingHorizontal": 14,
+            },
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FF9E9E",
+              "borderRadius": 16,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
+            Object {
+              "flex": 1,
+              "margin": 10,
+            },
+            Object {},
+>>>>>>> master
             Object {
               "height": 24,
               "width": "100%",

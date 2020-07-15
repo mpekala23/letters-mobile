@@ -36,7 +36,7 @@ export interface Props {
   userState: UserState;
   contactState: ContactState;
   route: {
-    params: { addFromSelector: boolean };
+    params: { addFromSelector?: boolean; phyState?: string };
   };
   setAdding: (contact: Contact) => void;
 }
@@ -99,10 +99,16 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         this.relationship.current.setState({ dirty: false });
     }
 
-    if (this.stateRef.current)
-      this.stateRef.current.set(
-        addingContact.facility ? addingContact.facility.state : ''
-      );
+    if (this.stateRef.current) {
+      if (addingContact.facility)
+        this.stateRef.current.set(addingContact.facility.state);
+      else if (this.props.route.params && this.props.route.params.phyState) {
+        this.stateRef.current.set(this.props.route.params.phyState);
+      } else {
+        this.stateRef.current.set('');
+      }
+      this.setState({ stateToSearch: this.stateRef.current.state.value });
+    }
     if (this.firstName.current)
       this.firstName.current.set(addingContact.firstName);
     if (this.lastName.current)
@@ -231,7 +237,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={() => {
-                    if (this.stateRef.current)
+                    if (
+                      this.stateRef.current &&
+                      this.stateRef.current.state.valid
+                    )
                       this.setState({
                         stateToSearch: this.stateRef.current?.state.value,
                       });
@@ -328,17 +337,17 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   ) {
                     const contact: Contact = {
                       id: -1,
-                      state: this.stateRef.current.state.value,
                       firstName: this.firstName.current.state.value,
                       lastName: this.lastName.current.state.value,
                       inmateNumber: this.inmateNumber.current.state.value,
                       relationship: this.relationship.current.state.value,
                       facility: this.props.contactState.adding.facility,
-                      credit: 4,
                     };
                     this.props.setAdding(contact);
+                    this.props.navigation.navigate('FacilityDirectory', {
+                      phyState: this.stateRef.current.state.value,
+                    });
                   }
-                  this.props.navigation.navigate('FacilityDirectory');
                 }}
                 buttonText={i18n.t('ContactInfoScreen.next')}
                 enabled={this.state.valid}

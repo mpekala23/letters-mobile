@@ -41,7 +41,7 @@ describe('api loginWithToken', () => {
     fetchMock.post(
       `*`,
       JSON.stringify({
-        status: 'SUCCESS',
+        status: 'OK',
         data: {
           id: '6',
           first_name: 'Team',
@@ -70,11 +70,16 @@ describe('api loginWithToken', () => {
       email: 'team@ameelio.org',
       phone: '4324324432',
       address1: 'Somewhere',
-      address2: '',
+      address2: undefined,
+      credit: undefined,
       country: 'USA',
       postal: '12345',
       city: 'New Haven',
-      state: 'CT',
+      state: 'Connecticut',
+      photo: {
+        type: 'image/jpeg',
+        uri: '',
+      },
     });
     expect(error).toBeFalsy();
   });

@@ -162,9 +162,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                   },
                 ]
               }
-            >
-              20002
-            </Text>
+            />
           </View>
           <View
             style={

@@ -11,8 +11,8 @@ import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
-import { Validation } from '@utils';
-import { Facility } from 'types';
+import { Validation, STATES_DROPDOWN } from '@utils';
+import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
 import CommonStyles from './AddContact.styles';
@@ -24,6 +24,11 @@ type AddManuallyScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: AddManuallyScreenNavigationProp;
+  route: {
+    params: {
+      phyState: string;
+    };
+  };
 }
 
 export interface State {
@@ -38,7 +43,11 @@ class AddManuallyScreen extends React.Component<Props, State> {
 
   private facilityCity = createRef<Input>();
 
+  private facilityState = createRef<Input>();
+
   private facilityPostal = createRef<Input>();
+
+  private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -47,6 +56,20 @@ class AddManuallyScreen extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus(): void {
+    if (this.facilityState.current)
+      this.facilityState.current.set(this.props.route.params.phyState);
   }
 
   updateValid(): void {
@@ -54,12 +77,14 @@ class AddManuallyScreen extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
+      this.facilityState.current &&
       this.facilityPostal.current
     ) {
       const result =
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
+        this.facilityState.current.state.valid &&
         this.facilityPostal.current.state.valid;
       this.setState({ valid: result });
     }
@@ -143,6 +168,23 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
+                  nextInput={this.facilityState}
+                />
+                <Input
+                  ref={this.facilityState}
+                  parentStyle={CommonStyles.fullWidth}
+                  placeholder={i18n.t('AddManuallyScreen.facilityState')}
+                  required
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
+                  validate={Validation.State}
+                  options={STATES_DROPDOWN}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.facilityPostal}
                 />
                 <Input
@@ -170,11 +212,12 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   this.facilityName.current &&
                   this.facilityAddress.current &&
                   this.facilityCity.current &&
-                  this.facilityPostal.current
+                  this.facilityPostal.current &&
+                  this.facilityState.current
                 ) {
                   const facility: Facility = {
                     name: this.facilityName.current.state.value,
-                    type: 'State Prison',
+                    type: PrisonTypes.Federal,
                     address: this.facilityAddress.current.state.value,
                     city: this.facilityCity.current.state.value,
                     state: 'MN',
@@ -182,6 +225,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   };
                   this.props.navigation.navigate('FacilityDirectory', {
                     newFacility: facility,
+                    phyState: this.facilityState.current.state.value,
                   });
                 } else {
                   this.props.navigation.navigate('FacilityDirectory');

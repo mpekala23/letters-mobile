@@ -17,7 +17,6 @@ import Styles, {
   INPUT_HEIGHT,
   DROP_HEIGHT,
   OPTION_HEIGHT,
-  VERTICAL_MARGIN,
 } from './Input.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -133,7 +132,6 @@ class Input extends React.Component<Props, State> {
   doValidate = (): void => {
     const { value } = this.state;
     const { required, validate, onValid, onInvalid } = this.props;
-
     let result = true;
     if (value && value.length) {
       if (validate) {
