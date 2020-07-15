@@ -18,7 +18,7 @@ import i18n from '@i18n';
 import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts } from '@api';
+import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './ContactSelector.styles';
 
@@ -80,6 +80,7 @@ const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
           setRefreshing(true);
           try {
             await getContacts();
+            await getUser();
           } catch (e) {
             dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
           }

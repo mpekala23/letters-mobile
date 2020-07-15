@@ -12,7 +12,6 @@ export interface Contact {
   inmateNumber: string;
   relationship: string;
   facility: Facility | null;
-  credit: number;
   dorm?: string;
   unit?: string;
   photo?: Photo;

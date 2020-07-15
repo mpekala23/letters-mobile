@@ -86,18 +86,20 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     } else {
       this.setState({ selected: this.props.contactState.adding.facility });
     }
+    let phyState;
     if (this.props.route.params && this.props.route.params.phyState) {
+      phyState = this.props.route.params.phyState;
       this.setState({ phyState: this.props.route.params.phyState });
     }
-    this.props.navigation.setParams({ newFacility: null });
+    this.props.navigation.setParams({ newFacility: null, phyState });
     this.refreshFacilities();
   }
 
   async refreshFacilities() {
     try {
-      const { phyState } = this.state;
+      const { phyState } = this.props.route.params;
       this.setState({ refreshing: true });
-      const facilities = await getFacilities(phyState);
+      const facilities = await getFacilities(STATE_TO_ABBREV[phyState]);
       this.setState({ facilityData: facilities, refreshing: false });
     } catch (err) {
       dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });

@@ -24,8 +24,10 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact } from '@api';
+import { getLetters, getContact, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { UserState } from '@store/User/UserTypes';
+import { AppState } from '@store/types';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -38,6 +40,7 @@ interface Props {
   route: {
     params: { contact: Contact; letters?: Letter[] };
   };
+  userState: UserState;
   setActiveLetter: (letter: Letter) => void;
   setActiveContact: (contact: Contact) => void;
 }
@@ -87,6 +90,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         try {
           await getLetters();
           await getContact(props.route.params.contact.id);
+          await getUser();
         } catch (err) {
           dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
         }
@@ -162,7 +166,7 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
         </View>
         <View style={Styles.actionItems}>
           <CreditsCard
-            credits={contact.credit}
+            credits={props.userState.user.credit}
             onPress={() => {
               /* Navigate to Add More credits flow */
             }}
@@ -188,6 +192,9 @@ const SingleContactScreenBase: React.FC<Props> = (props: Props) => {
   );
 };
 
+const mapStateToProps = (state: AppState) => ({
+  userState: state.user,
+});
 const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes>
 ) => {
@@ -197,7 +204,7 @@ const mapDispatchToProps = (
   };
 };
 const SingleContactScreen = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SingleContactScreenBase);
 

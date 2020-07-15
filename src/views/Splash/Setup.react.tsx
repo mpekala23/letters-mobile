@@ -8,6 +8,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
+import store from '@store';
 
 type SetupScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -16,6 +17,7 @@ type SetupScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: SetupScreenNavigationProp;
+  isLoggedIn: boolean;
 }
 
 // screen that is hit after authentication, to setup notifs and do things like load user contacts and letters
@@ -33,7 +35,8 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       } catch (err) {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
-      props.navigation.replace('Home');
+      if (store.getState().user.authInfo.isLoggedIn)
+        props.navigation.replace('Home');
     }
     doSetup();
   }, []);

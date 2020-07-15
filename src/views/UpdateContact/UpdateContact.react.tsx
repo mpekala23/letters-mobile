@@ -141,7 +141,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         lastName: this.lastName.current.state.value,
         inmateNumber: this.props.contact.inmateNumber,
         relationship: this.props.contact.relationship,
-        credit: 4,
         facility,
         photo: this.state.image ? this.state.image : undefined,
       };

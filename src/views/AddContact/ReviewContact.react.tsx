@@ -135,7 +135,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         lastName: this.lastName.current.state.value,
         inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
-        credit: 4,
         facility,
       };
       try {

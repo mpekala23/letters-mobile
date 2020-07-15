@@ -25,6 +25,7 @@ const initialState: UserState = {
     postal: '',
     city: '',
     state: '',
+    credit: 0,
   },
 };
 
@@ -64,6 +65,7 @@ export default function UserReducer(
           postal: '',
           city: '',
           state: '',
+          credit: 0,
         },
       };
     case SET_USER:

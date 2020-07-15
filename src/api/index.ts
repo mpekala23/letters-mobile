@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
@@ -111,6 +112,7 @@ export async function fetchAuthenticated(
       postal: tokenBody.data.postal,
       city: tokenBody.data.city,
       state: tokenBody.data.state,
+      credit: tokenBody.data.credit,
     };
     store.dispatch(
       loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
@@ -167,6 +169,7 @@ function cleanUser(user: RawUser): User {
       type: 'image/jpeg',
       uri: photoUri || '',
     },
+    credit: user.credit,
   };
 }
 
@@ -230,11 +233,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     }
   }
-  console.log('login body');
-  console.log(body);
   const userData = cleanUser(body.data as RawUser);
-  console.log('login user');
-  console.log(userData);
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
@@ -343,8 +342,20 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   return userData;
 }
 
+export async function getUser(): Promise<User> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `user/${store.getState().user.user.id}`),
+    {
+      method: 'GET',
+    }
+  );
+  if (body.status !== 'OK') throw body;
+  const userData = cleanUser(body.data as RawUser);
+  store.dispatch(setUser(userData));
+  return userData;
+}
+
 export async function updateProfile(data: User): Promise<User> {
-  let imageExtension = {};
   let newPhoto = data.photo ? { ...data.photo } : undefined;
   const existingPhoto = store.getState().user.user.photo;
   if (
@@ -354,7 +365,6 @@ export async function updateProfile(data: User): Promise<User> {
     // there is a new photo and it is different from the existing photo (or there is no existing photo)
     try {
       newPhoto = await uploadImage(newPhoto, 'avatar');
-      imageExtension = { s3_image_url: newPhoto.uri };
     } catch (err) {
       newPhoto = undefined;
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
@@ -380,7 +390,7 @@ export async function updateProfile(data: User): Promise<User> {
         postal: data.postal,
         city: data.city,
         state: data.state,
-        ...imageExtension,
+        s3_img_url: newPhoto?.uri,
       }),
     }
   );
@@ -403,25 +413,26 @@ interface RawContact {
   facility_address: string;
   facility_city: string;
   facility_postal: string;
-  s3_img_url: string;
+  s3_img_url?: string;
+  profile_img_path?: string;
 }
 
 function cleanContact(data: RawContact): Contact {
-  const photoExtension = data.s3_img_url
-    ? {
-        photo: {
-          type: 'image/jpeg',
-          uri: data.s3_img_url,
-        },
-      }
-    : {};
+  const photoExtension =
+    data.s3_img_url || data.profile_img_path
+      ? {
+          photo: {
+            type: 'image/jpeg',
+            uri: data.s3_img_url || data.profile_img_path || '',
+          },
+        }
+      : {};
   return {
     id: data.id,
     firstName: data.first_name,
     lastName: data.last_name,
     inmateNumber: data.inmate_number,
     relationship: data.relationship,
-    credit: 4, // TODO: how do credits work on the backend? is this even in V0
     facility: {
       name: data.facility_name,
       type: PrisonTypes.Federal, // TODO: once this is supported on the backend, update this field
@@ -497,7 +508,6 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
       inmateNumber: '',
       relationship: '',
       facility: null,
-      credit: 4,
     })
   );
   return existing;
@@ -505,7 +515,6 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
 
 export async function updateContact(data: Contact): Promise<Contact[]> {
   if (!data.facility) throw Error('No facility');
-  let imageExtension = {};
   let newPhoto = data.photo ? { ...data.photo } : undefined;
   const existingPhoto = store.getState().contact.active.photo;
   if (
@@ -515,7 +524,6 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
     // there is a new photo and it is different from the existing photo (or there is no existing photo)
     try {
       newPhoto = await uploadImage(newPhoto, 'avatar');
-      imageExtension = { s3_image_url: newPhoto.uri };
     } catch (err) {
       newPhoto = undefined;
       dropdownError({ message: 'Error.unableToUploadContactPicture' });
@@ -538,7 +546,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
         facility_postal: data.facility.postal,
         ...dormExtension,
         ...unitExtension,
-        ...imageExtension,
+        s3_img_url: newPhoto?.uri,
         relationship: data.relationship,
       }),
     }
@@ -591,12 +599,10 @@ function cleanFacility(facility: RawFacility): Facility {
 }
 
 export async function getFacilities(state: string): Promise<Facility[]> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `facility/query/state/${state}`),
-    {
-      method: 'GET',
-    }
-  );
+  const path = url.resolve(API_URL, `facility/query/state/${state}`);
+  const body = await fetchAuthenticated(path, {
+    method: 'GET',
+  });
   const data = body.data as RawFacility[];
   if (body.status !== 'OK' || !data || !data) throw body;
   const facilities = data.map((facility: RawFacility) =>
@@ -630,21 +636,46 @@ interface RawLetter {
   tracking_events?: RawTrackingEvent[];
 }
 
-function cleanTrackingEvent(event: RawTrackingEvent): LetterTrackingEvent {
+export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `zips/${zipcode}`),
+    {
+      method: 'GET',
+    }
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as {
+    zip: string;
+    city: string;
+    state_id: string;
+  };
+  return {
+    zip: data.zip,
+    city: data.city,
+    state: ABBREV_TO_STATE[data.state_id],
+  };
+}
+
+async function cleanTrackingEvent(
+  event: RawTrackingEvent
+): Promise<LetterTrackingEvent> {
+  const location = await getZipcode(event.location);
   return {
     id: event.id,
     name: event.name,
-    location: event.location,
+    location,
     date: new Date(event.date),
   };
 }
 
-function cleanLetter(letter: RawLetter): Letter {
+async function cleanLetter(letter: RawLetter): Promise<Letter> {
   const { type } = letter;
   let status: LetterStatus;
   const trackingEvents = !letter.tracking_events
     ? []
-    : letter.tracking_events.map((rawEvent) => cleanTrackingEvent(rawEvent));
+    : await Promise.all(
+        letter.tracking_events.map((rawEvent) => cleanTrackingEvent(rawEvent))
+      );
   if (!letter.sent) {
     status = LetterStatus.Draft;
   } else {
@@ -713,9 +744,9 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   for (let ix = 0; ix < data.data.length; ix += 1) {
     const rawLetter = data.data[ix];
     if (rawLetter.contact_id in existingLetters) {
-      existingLetters[rawLetter.contact_id].push(cleanLetter(rawLetter));
+      existingLetters[rawLetter.contact_id].push(await cleanLetter(rawLetter));
     } else {
-      existingLetters[rawLetter.contact_id] = [cleanLetter(rawLetter)];
+      existingLetters[rawLetter.contact_id] = [await cleanLetter(rawLetter)];
     }
   }
   store.dispatch(setExistingLetters(existingLetters));
@@ -768,24 +799,4 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   } else {
     throw Error('Share Url not supported');
   }
-}
-
-export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `zips/${zipcode}`),
-    {
-      method: 'GET',
-    }
-  );
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as {
-    zip: string;
-    city: string;
-    state_id: string;
-  };
-  return {
-    zip: data.zip,
-    city: data.city,
-    state: ABBREV_TO_STATE[data.state_id],
-  };
 }

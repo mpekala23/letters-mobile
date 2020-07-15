@@ -16,6 +16,8 @@ import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { setUser } from '@store/User/UserActions';
+import { UserActionTypes, User } from '@store/User/UserTypes';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -88,7 +90,9 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
 });
-const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<LetterActionTypes | UserActionTypes>
+) => {
   return {
     clearComposing: () => dispatch(clearComposing()),
     setDraft: (value: boolean) => dispatch(setDraft(value)),

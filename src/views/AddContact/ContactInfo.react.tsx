@@ -349,7 +349,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                       inmateNumber: this.inmateNumber.current.state.value,
                       relationship: this.relationship.current.state.value,
                       facility: this.props.contactState.adding.facility,
-                      credit: 4,
                     };
                     this.props.setAdding(contact);
                     this.props.navigation.navigate('FacilityDirectory', {

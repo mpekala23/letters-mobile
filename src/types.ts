@@ -67,7 +67,7 @@ export interface Letter {
 export interface LetterTrackingEvent {
   id: number;
   name: string;
-  location: string;
+  location: ZipcodeInfo;
   date: Date;
 }
 

@@ -119,21 +119,20 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         country: this.props.userState.user.country,
         postal: this.props.userState.user.postal,
         city: this.props.userState.user.city,
-        state: this.props.userState.user.state,
+        state: this.props.userState.user.state || 'CT',
         photo: this.state.image ? this.state.image : undefined,
+        credit: this.props.userState.user.credit,
       };
       try {
         await updateProfile(user);
         this.props.navigation.pop();
       } catch (err) {
-        console.log(err);
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
     }
   };
 
   loadValuesFromStore() {
-    console.log(this.props.userState);
     if (
       this.firstName.current &&
       this.lastName.current &&

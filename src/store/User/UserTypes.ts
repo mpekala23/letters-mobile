@@ -43,6 +43,7 @@ export interface User {
   city: string;
   state: string;
   photo?: Photo;
+  credit: number;
 }
 
 export interface AuthInfo {
