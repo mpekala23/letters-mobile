@@ -220,7 +220,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     type: PrisonTypes.Federal,
                     address: this.facilityAddress.current.state.value,
                     city: this.facilityCity.current.state.value,
-                    state: 'MN',
+                    state: this.facilityState.current.state.value,
                     postal: this.facilityPostal.current.state.value,
                   };
                   this.props.navigation.navigate('FacilityDirectory', {
