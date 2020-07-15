@@ -16,7 +16,6 @@ import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
-import { UserActionTypes } from '@store/User/UserTypes';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<

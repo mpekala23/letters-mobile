@@ -1,5 +1,13 @@
 import React, { Dispatch } from 'react';
-import { View, FlatList, Text, TouchableOpacity, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  RefreshControl,
+} from 'react-native';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,6 +23,7 @@ import {
 } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { ScrollView } from 'react-native-gesture-handler';
 import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -161,7 +170,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             width: '100%',
             height: 1,
             backgroundColor: Colors.GRAY_LIGHT,
-            marginBottom: 30,
+            marginBottom: 8,
           }}
         />
         {this.renderItem({ item: this.state.manual })}
@@ -207,75 +216,92 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           </Text>
         </View>
       ) : null;
+
+    const refresh = (
+      <RefreshControl
+        refreshing={this.state.refreshing}
+        onRefresh={async () => {
+          this.setState({ refreshing: true });
+          try {
+            const facilities = await getFacilities(
+              STATE_TO_ABBREV[this.props.route.params.phyState]
+            );
+            this.setState({ facilityData: facilities });
+          } catch (err) {
+            dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });
+          }
+          this.setState({ refreshing: false });
+        }}
+      />
+    );
+
     return (
       <TouchableOpacity
         style={Styles.facilityBackground}
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 16,
-            paddingTop: 16,
-          }}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
+          enabled
         >
-          <Typography.PageHeader
-            text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
-          />
-          <Icon svg={FacilityIcon} style={{ margin: 16 }} />
-        </View>
-        {facilityDirectoryHint}
-        <Input
-          parentStyle={Styles.searchParent}
-          inputStyle={Styles.searchInput}
-          placeholder={i18n.t('FacilityDirectoryScreen.searchFacility')}
-          onChangeText={(val: string) => {
-            this.setState({ search: val });
-          }}
-        />
-        <FlatList
-          data={this.filterData()}
-          renderItem={this.renderItem}
-          onRefresh={this.refreshFacilities}
-          refreshing={this.state.refreshing}
-          contentContainerStyle={Styles.flatBackground}
-          ListFooterComponent={this.renderFooter}
-          keyExtractor={(item) => item.name}
-        />
-        <View style={CommonStyles.bottomButtonContainer}>
-          <Button
-            onPress={() => {
-              const contact = this.props.contactState.adding;
-              contact.facility = this.state.selected;
-              this.props.setAdding(contact);
-              this.props.navigation.setParams({
-                newFacility: null,
-              });
-              this.props.navigation.navigate('ContactInfo', {
-                phyState: this.props.route.params.phyState,
-              });
+          <View style={Styles.topSection}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignSelf: 'flex-start',
+                paddingTop: 16,
+              }}
+            >
+              <Typography.PageHeader
+                text={i18n.t('FacilityDirectoryScreen.facilityDirectory')}
+              />
+              <Icon svg={FacilityIcon} style={{ margin: 16 }} />
+            </View>
+            {facilityDirectoryHint}
+            <Input
+              parentStyle={Styles.searchParent}
+              inputStyle={Styles.searchInput}
+              placeholder={i18n.t('FacilityDirectoryScreen.searchFacility')}
+              onChangeText={(val: string) => {
+                this.setState({ search: val });
+              }}
+            />
+          </View>
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            buttonText={i18n.t('ContactInfoScreen.back')}
-            reverse
-            containerStyle={CommonStyles.bottomButton}
-          />
-          <Button
-            onPress={() => {
-              const contact = this.props.contactState.adding;
-              contact.facility = this.state.selected;
-              this.props.setAdding(contact);
-              this.props.navigation.setParams({
-                newFacility: null,
-              });
-              this.props.navigation.navigate('ReviewContact');
-            }}
-            buttonText={i18n.t('ContactInfoScreen.next')}
-            enabled={this.state.selected !== null}
-            containerStyle={CommonStyles.bottomButton}
-            showNextIcon
-          />
-        </View>
+            scrollEnabled
+            refreshControl={refresh}
+          >
+            <View style={{ width: '100%', height: 24 }} />
+            {this.filterData().map((value) => this.renderItem({ item: value }))}
+            {this.renderFooter()}
+            <View style={{ width: '100%', height: 24 }} />
+          </ScrollView>
+          <View style={CommonStyles.bottomButtonContainer}>
+            <Button
+              onPress={() => {
+                const contact = this.props.contactState.adding;
+                contact.facility = this.state.selected;
+                this.props.setAdding(contact);
+                this.props.navigation.setParams({
+                  newFacility: null,
+                });
+                this.props.navigation.navigate('ReviewContact');
+              }}
+              buttonText={i18n.t('ContactInfoScreen.next')}
+              enabled={this.state.selected !== null}
+              containerStyle={CommonStyles.bottomButton}
+              showNextIcon
+            />
+          </View>
+        </KeyboardAvoidingView>
       </TouchableOpacity>
     );
   }

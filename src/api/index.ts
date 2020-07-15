@@ -113,6 +113,7 @@ export async function fetchAuthenticated(
       city: tokenBody.data.city,
       state: tokenBody.data.state,
       credit: tokenBody.data.credit,
+      joined: tokenBody.data.created_at,
     };
     store.dispatch(
       loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
@@ -149,6 +150,7 @@ interface RawUser {
   phone: string;
   referer: string;
   country: string;
+  created_at: string;
 }
 
 function cleanUser(user: RawUser): User {
@@ -170,6 +172,7 @@ function cleanUser(user: RawUser): User {
       uri: photoUri || '',
     },
     credit: user.credit,
+    joined: new Date(user.created_at),
   };
 }
 

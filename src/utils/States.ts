@@ -176,7 +176,7 @@ export const STATES_DROPDOWN = [
   ['Wyoming', 'WY'],
 ];
 
-export const STATE_TO_INMATE_DB = {
+export const STATE_TO_INMATE_DB: Record<string, Record<string, string>> = {
   AK: { link: '' },
   AL: { link: 'http://www.doc.state.al.us/InmateSearch' },
   AR: { link: 'https://corrections.az.gov/public-resources/inmate-datasearch' },
