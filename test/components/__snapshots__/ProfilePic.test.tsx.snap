@@ -26,8 +26,8 @@ exports[`ProfilePic component should match snapshot 1`] = `
             "fontFamily": "Poppins-Regular",
           },
           Object {
-            "color": "white",
-            "fontSize": 22,
+            "color": "#6D6D6D",
+            "fontSize": 20,
             "fontWeight": "500",
           },
         ]

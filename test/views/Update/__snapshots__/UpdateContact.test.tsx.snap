@@ -88,7 +88,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#f6993f",
+              "backgroundColor": "#F4F4F4",
               "borderColor": "white",
               "borderRadius": 65,
               "borderWidth": 6,

@@ -474,7 +474,7 @@ exports[`Login screen should match snapshot 1`] = `
                 style={
                   Object {
                     "fontSize": 16,
-                    "paddingTop": 11,
+                    "paddingTop": 16,
                   }
                 }
               >
@@ -487,7 +487,7 @@ exports[`Login screen should match snapshot 1`] = `
                     "backgroundColor": "white",
                     "marginBottom": 10,
                     "marginLeft": 4,
-                    "marginTop": 11,
+                    "marginTop": 16,
                   }
                 }
                 testID="clickable"

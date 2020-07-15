@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -8,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -119,7 +119,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
                   {i18n.t('LoginScreen.welcomeBack')}
                 </Text>
-                <Text style={[Typography.FONT_REGULAR, Styles.welcomeBackText]}>
+                <Text style={[Typography.FONT_REGULAR, Styles.subtitle]}>
                   {i18n.t('LoginScreen.logInWithEmailAndPassword')}
                 </Text>
                 <Input
@@ -164,13 +164,13 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                 />
                 <Button
-                  containerStyle={Styles.loginButton}
+                  containerStyle={Styles.button}
                   textStyle={Typography.FONT_BOLD}
                   buttonText={i18n.t('LoginScreen.login')}
                   onPress={this.onLogin}
                 />
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ paddingTop: 11, fontSize: 16 }}>
+                  <Text style={{ paddingTop: 16, fontSize: 16 }}>
                     {i18n.t('LoginScreen.forgotYourPassword')}
                   </Text>
                   <Button
@@ -178,7 +178,9 @@ class LoginScreen extends React.Component<Props, State> {
                     containerStyle={Styles.forgotContainer}
                     buttonText={i18n.t('LoginScreen.resetIt')}
                     onPress={() => {
-                      /* TO-DO: Navigate to Reset Password screen */
+                      Linking.openURL(
+                        'https://letters.ameelio.org/password/reset'
+                      );
                       Keyboard.dismiss();
                     }}
                   />

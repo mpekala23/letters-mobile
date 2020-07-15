@@ -30,7 +30,7 @@ exports[`Register screen should match snapshot 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "paddingBottom": 100,
+          "paddingBottom": 36,
           "paddingTop": 12,
         }
       }
@@ -51,6 +51,7 @@ exports[`Register screen should match snapshot 1`] = `
             "flexDirection": "column",
             "justifyContent": "center",
             "marginBottom": 20,
+            "marginTop": 10,
           }
         }
       >
@@ -151,7 +152,7 @@ exports[`Register screen should match snapshot 1`] = `
                 "fontFamily": "Poppins-Regular-Italic",
               },
               Object {
-                "marginTop": 5,
+                "marginTop": 10,
               },
             ]
           }
@@ -159,45 +160,11 @@ exports[`Register screen should match snapshot 1`] = `
           Click to upload profile image.
         </Text>
       </View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#D0E5FD",
-            "borderColor": "#BEDAFC",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginBottom": 15,
-            "padding": 10,
-            "width": "100%",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Bold",
-              },
-              Object {
-                "color": "#124181",
-                "fontSize": 16,
-                "fontWeight": "400",
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          We value your privacy. We will only use your address information as the return address for the mailed letter.
-        </Text>
-      </View>
       <TouchableOpacity
         activeOpacity={0.2}
         style={
           Object {
-            "marginBottom": 10,
+            "marginBottom": 20,
           }
         }
         testID="clickable"
@@ -217,56 +184,6 @@ exports[`Register screen should match snapshot 1`] = `
           }
         >
           Already have an account?
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {},
-            Object {},
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {},
-              Object {},
-              Object {},
-            ]
-          }
-        >
-          Dev Skip
         </Text>
       </TouchableOpacity>
       <View
@@ -2684,6 +2601,56 @@ exports[`Register screen should match snapshot 1`] = `
             Remember Me
           </Text>
         </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FF7171",
+              "borderRadius": 16,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "paddingHorizontal": 14,
+            },
+            Object {},
+            Object {},
+            Object {},
+            Object {
+              "elevation": 4,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+            },
+          ]
+        }
+        testID="clickable"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "white",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          Dev Skip
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         activeOpacity={1}
