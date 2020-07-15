@@ -89,9 +89,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
 });
-const mapDispatchToProps = (
-  dispatch: Dispatch<LetterActionTypes | UserActionTypes>
-) => {
+const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     clearComposing: () => dispatch(clearComposing()),
     setDraft: (value: boolean) => dispatch(setDraft(value)),

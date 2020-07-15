@@ -119,7 +119,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         country: this.props.userState.user.country,
         postal: this.props.userState.user.postal,
         city: this.props.userState.user.city,
-        state: this.props.userState.user.state || 'CT',
+        state: this.props.userState.user.state,
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
       };
