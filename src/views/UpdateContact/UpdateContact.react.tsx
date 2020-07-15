@@ -230,8 +230,8 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             keyboardShouldPersistTaps="handled"
             scrollEnabled
             style={{ width: '100%' }}
+            contentContainerStyle={{ paddingVertical: 16 }}
           >
-            <View style={{ width: '100%', height: 16 }} />
             <View style={Styles.profileCard}>
               <LinearGradient
                 colors={['#ADD3FF', '#FFC9C9']}
@@ -361,7 +361,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 });
               }}
             />
-            <View style={{ width: '100%', height: 16 }} />
           </ScrollView>
         </KeyboardAvoidingView>
       </TouchableOpacity>

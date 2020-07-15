@@ -200,8 +200,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
             keyboardShouldPersistTaps="handled"
             scrollEnabled
             style={{ width: '100%' }}
+            contentContainerStyle={{ paddingVertical: 24 }}
           >
-            <View style={{ width: '100%', height: 24 }} />
             <View style={Styles.profileCard}>
               <ProfilePic
                 firstName={user.firstName}
@@ -305,7 +305,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onPress={async () => logout()}
               containerStyle={Styles.logOutButton}
             />
-            <View style={{ width: '100%', height: 16 }} />
           </ScrollView>
         </KeyboardAvoidingView>
       </TouchableOpacity>
