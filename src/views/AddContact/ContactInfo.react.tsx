@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  Linking,
 } from 'react-native';
 import { Button, Icon, Input } from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { STATES, STATES_DROPDOWN, STATES_DATABASE, Validation } from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAdding } from '@store/Contact/ContactActions';
@@ -129,6 +130,24 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   render() {
+    const tapHereToSearchStateDatabase =
+      STATES_DATABASE[this.state.stateToSearch] !== '' ? (
+        <Button
+          link
+          containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
+          onPress={() => console.log(STATES[this.state.stateToSearch])}
+        >
+          <Text style={{ color: Colors.PINK_DARKER }}>
+            {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
+            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_DARKER }]}>
+              {this.state.stateToSearch}
+            </Text>{' '}
+            {i18n.t('ContactInfoScreen.database')}.
+          </Text>
+        </Button>
+      ) : (
+        <Text>There is no database for this state.</Text>
+      );
     return (
       <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'white' }}
@@ -170,26 +189,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     /* TODO */
                   }}
                 />
-                <Button
-                  link
-                  containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
-                  onPress={() => {
-                    /* TODO */
-                  }}
-                >
-                  <Text style={{ color: Colors.PINK_DARKER }}>
-                    {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-                    <Text
-                      style={[
-                        Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARKER },
-                      ]}
-                    >
-                      {this.state.stateToSearch}
-                    </Text>{' '}
-                    {i18n.t('ContactInfoScreen.database')}.
-                  </Text>
-                </Button>
+                {tapHereToSearchStateDatabase}
                 <Button
                   link
                   containerStyle={{
@@ -198,7 +198,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     alignSelf: 'flex-start',
                   }}
                   onPress={() => {
-                    /* TODO */
+                    Linking.openURL('https://www.bop.gov/inmateloc/');
                   }}
                 >
                   <Text style={{ color: Colors.PINK_DARKER }}>

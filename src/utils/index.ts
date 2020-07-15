@@ -4,7 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { STATES, STATES_DROPDOWN } from './States';
+import { STATES, STATES_DROPDOWN, STATES_DATABASE } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 
 export { Prompts, getRandomPromptIx };
@@ -93,4 +93,4 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
-export { STATES, STATES_DROPDOWN };
+export { STATES, STATES_DROPDOWN, STATES_DATABASE };
