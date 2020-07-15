@@ -3,6 +3,20 @@ import { WINDOW_WIDTH } from '@utils';
 import { Colors } from '@styles';
 
 export default StyleSheet.create({
+  topSection: {
+    width: '100%',
+    backgroundColor: 'white',
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
   facilityBackground: {
     flex: 1,
     backgroundColor: 'white',
@@ -49,11 +63,9 @@ export default StyleSheet.create({
   },
   searchParent: {
     marginTop: 4,
-    marginLeft: 16,
-    width: '91%',
+    width: '100%',
   },
   searchInput: {
-    padding: 20,
     borderRadius: 20,
   },
   addManuallyButton: {

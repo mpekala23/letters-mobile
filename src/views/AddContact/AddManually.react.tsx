@@ -94,12 +94,13 @@ class AddManuallyScreen extends React.Component<Props, State> {
     return (
       <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'white' }}
-        onPress={() => Keyboard.dismiss()}
+        onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <View
@@ -204,39 +205,39 @@ class AddManuallyScreen extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
+          <View style={CommonStyles.bottomButtonContainer}>
+            <Button
+              onPress={() => {
+                if (
+                  this.facilityName.current &&
+                  this.facilityAddress.current &&
+                  this.facilityCity.current &&
+                  this.facilityPostal.current &&
+                  this.facilityState.current
+                ) {
+                  const facility: Facility = {
+                    name: this.facilityName.current.state.value,
+                    type: PrisonTypes.Federal,
+                    address: this.facilityAddress.current.state.value,
+                    city: this.facilityCity.current.state.value,
+                    state: this.facilityState.current.state.value,
+                    postal: this.facilityPostal.current.state.value,
+                  };
+                  this.props.navigation.navigate('FacilityDirectory', {
+                    newFacility: facility,
+                    phyState: this.facilityState.current.state.value,
+                  });
+                } else {
+                  this.props.navigation.navigate('FacilityDirectory');
+                }
+              }}
+              buttonText={i18n.t('ContactInfoScreen.next')}
+              enabled={this.state.valid}
+              containerStyle={CommonStyles.bottomButton}
+              showNextIcon
+            />
+          </View>
         </KeyboardAvoidingView>
-        <View style={CommonStyles.bottomButtonContainer}>
-          <Button
-            onPress={() => {
-              if (
-                this.facilityName.current &&
-                this.facilityAddress.current &&
-                this.facilityCity.current &&
-                this.facilityState.current &&
-                this.facilityPostal.current
-              ) {
-                const facility: Facility = {
-                  name: this.facilityName.current.state.value,
-                  type: PrisonTypes.Federal,
-                  address: this.facilityAddress.current.state.value,
-                  city: this.facilityCity.current.state.value,
-                  state: this.facilityState.current.state.value,
-                  postal: this.facilityPostal.current.state.value,
-                };
-                this.props.navigation.navigate('FacilityDirectory', {
-                  newFacility: facility,
-                  phyState: facility.state,
-                });
-              } else {
-                this.props.navigation.navigate('FacilityDirectory');
-              }
-            }}
-            buttonText={i18n.t('ContactInfoScreen.next')}
-            enabled={this.state.valid}
-            containerStyle={CommonStyles.bottomButton}
-            showNextIcon
-          />
-        </View>
       </TouchableOpacity>
     );
   }

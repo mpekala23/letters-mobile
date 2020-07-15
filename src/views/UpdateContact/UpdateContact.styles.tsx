@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   profileCard: {
@@ -21,6 +22,9 @@ export default StyleSheet.create({
     borderRadius: 15,
     width: '100%',
     height: 50,
+  },
+  deleteButton: {
+    backgroundColor: Colors.BLUE_DARKEST,
   },
   roundPicUpload: {
     borderWidth: 10,
