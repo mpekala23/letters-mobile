@@ -201,7 +201,7 @@ describe('Facility Directory Screen', () => {
     expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
   });
 
-  it('should show hint message when contact state is Pennsylvania', () => {
+  it('should show hint message when contact state is Pennsylvania', async () => {
     const { getByTestId } = setup(
       {},
       {
@@ -209,6 +209,7 @@ describe('Facility Directory Screen', () => {
         phyState: 'Pennsylvania',
       }
     );
+    await sleep();
     expect(getByTestId('hintText')).toBeDefined();
   });
 });
