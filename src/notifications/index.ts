@@ -111,7 +111,7 @@ class NotifsBase {
     // in order to make it so that a notification which was just acted upon is properly purged
     // from future notifications, a one second offset on the current time is needed
     const ONE_SECOND = 1000;
-    const currentTime = new Date().getTime() + ONE_SECOND;
+    const currentTime = new Date(Date.now()).getTime() + ONE_SECOND;
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];
     for (let ix = 0; ix < futureNotifs.length; ix += 1) {
@@ -147,7 +147,7 @@ class NotifsBase {
     nativeNotif: NativeNotif,
     hours: number
   ) => {
-    const time = new Date().getTime() + 1000 * 60 * 60 * hours;
+    const time = new Date(Date.now()).getTime() + 1000 * 60 * 60 * hours;
     const id = await Notifications.scheduleLocalNotificationAsync(nativeNotif, {
       time,
     });
@@ -166,7 +166,7 @@ class NotifsBase {
     nativeNotif: NativeNotif,
     days: number
   ) => {
-    const time = new Date().getTime() + 1000 * 60 * 60 * 24 * days;
+    const time = new Date(Date.now()).getTime() + 1000 * 60 * 60 * 24 * days;
     const id = await Notifications.scheduleLocalNotificationAsync(nativeNotif, {
       time,
     });

@@ -170,7 +170,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <View

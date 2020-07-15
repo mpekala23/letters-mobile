@@ -212,8 +212,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <View
@@ -319,16 +320,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
+          <View style={CommonStyles.bottomButtonContainer}>
+            <Button
+              onPress={this.doAddContact}
+              buttonText={i18n.t('ContactInfoScreen.next')}
+              enabled={this.state.valid}
+              containerStyle={CommonStyles.bottomButton}
+              showNextIcon
+            />
+          </View>
         </KeyboardAvoidingView>
-        <View style={CommonStyles.bottomButtonContainer}>
-          <Button
-            onPress={this.doAddContact}
-            buttonText={i18n.t('ContactInfoScreen.next')}
-            enabled={this.state.valid}
-            containerStyle={CommonStyles.bottomButton}
-            showNextIcon
-          />
-        </View>
       </TouchableOpacity>
     );
   }

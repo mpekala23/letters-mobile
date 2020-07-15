@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,

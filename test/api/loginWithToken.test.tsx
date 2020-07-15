@@ -54,6 +54,7 @@ describe('api loginWithToken', () => {
           city: 'New Haven',
           state: 'CT',
           token: 'dummy token',
+          created_at: '2020-07-15T19:32:49.825Z',
         },
       }),
       { overwriteRoutes: false }
@@ -75,6 +76,7 @@ describe('api loginWithToken', () => {
       country: 'USA',
       postal: '12345',
       city: 'New Haven',
+      joined: new Date('2020-07-15T19:32:49.825Z'),
       state: 'Connecticut',
       photo: {
         type: 'image/jpeg',

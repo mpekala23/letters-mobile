@@ -44,6 +44,7 @@ export interface User {
   state: string;
   photo?: Photo;
   credit: number;
+  joined: Date;
 }
 
 export interface AuthInfo {
