@@ -154,93 +154,24 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 </RNSVGGroup>
               </RNSVGSvgView>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <Text
               style={
                 Object {
-                  "alignSelf": "flex-start",
+                  "color": "#FF7171",
+                  "fontSize": 16,
                   "marginTop": 10,
                 }
               }
-              testID="clickable"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Regular",
-                    },
-                    Object {
-                      "color": "#FF7171",
-                      "fontSize": 16,
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                Need help finding your inmate ID?
-              </Text>
-            </TouchableOpacity>
+              Need help finding your inmate ID?
+            </Text>
             <TouchableOpacity
               activeOpacity={0.2}
               style={
                 Object {
                   "alignSelf": "flex-start",
-                  "marginTop": 10,
-                }
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Regular",
-                    },
-                    Object {
-                      "color": "#FF7171",
-                      "fontSize": 16,
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "#FF7171",
-                    }
-                  }
-                >
-                  Tap here to search the
-                   
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "fontFamily": "Poppins-Bold",
-                        },
-                        Object {
-                          "color": "#FF7171",
-                        },
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                   
-                  database
-                  .
-                </Text>
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.2}
-              style={
-                Object {
-                  "alignSelf": "flex-start",
-                  "marginBottom": 30,
-                  "marginTop": 10,
+                  "marginBottom": 12,
+                  "marginTop": 12,
                 }
               }
               testID="clickable"

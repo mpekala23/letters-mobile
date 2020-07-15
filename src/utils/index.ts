@@ -8,7 +8,7 @@ import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
   STATES_DROPDOWN,
-  STATES_DATABASE,
+  STATE_TO_INMATE_DB,
 } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 import REFERERS from './Referers';
@@ -100,4 +100,9 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
-export { ABBREV_TO_STATE, STATE_TO_ABBREV, STATES_DROPDOWN, STATES_DATABASE };
+export {
+  ABBREV_TO_STATE,
+  STATE_TO_ABBREV,
+  STATES_DROPDOWN,
+  STATE_TO_INMATE_DB,
+};

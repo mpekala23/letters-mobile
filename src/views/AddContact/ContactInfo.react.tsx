@@ -13,7 +13,12 @@ import { Button, Icon, Input } from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { STATES, STATES_DROPDOWN, STATES_DATABASE, Validation } from '@utils';
+import {
+  STATE_TO_ABBREV,
+  STATE_TO_INMATE_DB,
+  STATES_DROPDOWN,
+  Validation,
+} from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAdding } from '@store/Contact/ContactActions';
@@ -66,7 +71,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     this.state = {
       inputting: false,
       valid: false,
-      stateToSearch: props.userState.user.state,
+      stateToSearch: '',
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -139,12 +144,14 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   render() {
+    const inmateDatabaseLink =
+      STATE_TO_INMATE_DB[STATE_TO_ABBREV[this.state.stateToSearch]]?.link;
     const tapHereToSearchStateDatabase =
-      STATES_DATABASE[this.state.stateToSearch] !== '' ? (
+      inmateDatabaseLink && inmateDatabaseLink !== '' ? (
         <Button
           link
-          containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
-          onPress={() => console.log(STATES[this.state.stateToSearch])}
+          containerStyle={{ marginBottom: 20, alignSelf: 'flex-start' }}
+          onPress={() => Linking.openURL(inmateDatabaseLink)}
         >
           <Text style={{ color: Colors.PINK_DARKER }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
@@ -154,9 +161,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             {i18n.t('ContactInfoScreen.database')}.
           </Text>
         </Button>
-      ) : (
-        <Text>There is no database for this state.</Text>
-      );
+      ) : null;
     return (
       <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'white' }}
@@ -188,22 +193,20 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   />
                   <Icon svg={Letter} style={{ margin: 16 }} />
                 </View>
-                <Button
-                  link
-                  buttonText={i18n.t(
-                    'ContactInfoScreen.needHelpFindingYourInmateID'
-                  )}
-                  containerStyle={{ marginTop: 10, alignSelf: 'flex-start' }}
-                  onPress={() => {
-                    /* TODO */
+                <Text
+                  style={{
+                    color: Colors.PINK_DARKER,
+                    marginTop: 10,
+                    fontSize: 16,
                   }}
-                />
-                {tapHereToSearchStateDatabase}
+                >
+                  {i18n.t('ContactInfoScreen.needHelpFindingYourInmateID')}
+                </Text>
                 <Button
                   link
                   containerStyle={{
-                    marginTop: 10,
-                    marginBottom: 30,
+                    marginTop: 12,
+                    marginBottom: 12,
                     alignSelf: 'flex-start',
                   }}
                   onPress={() => {
@@ -223,6 +226,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     {i18n.t('ContactInfoScreen.database')}.
                   </Text>
                 </Button>
+                {tapHereToSearchStateDatabase}
                 <Input
                   ref={this.stateRef}
                   parentStyle={(CommonStyles.fullWidth, { marginBottom: 10 })}
