@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, Platform } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '@utils';
 
 /**
@@ -20,6 +20,7 @@ class Statusbar extends React.Component<
     return (
       <View
         style={{
+          height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : undefined,
           zIndex: 998,
         }}
       >

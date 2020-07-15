@@ -223,7 +223,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             paddingHorizontal: 16,
           }}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : -200}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <ScrollView

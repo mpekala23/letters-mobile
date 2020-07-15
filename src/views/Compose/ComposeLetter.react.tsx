@@ -118,7 +118,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
           }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 100}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           pointerEvents="box-none"
         >
           <View
