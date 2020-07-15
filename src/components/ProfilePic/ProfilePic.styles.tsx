@@ -13,7 +13,7 @@ export default StyleSheet.create({
     height: contactSize,
     borderRadius: contactSize / 2,
     overflow: 'hidden',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
   },
   singleContactBackground: {
     alignItems: 'center',
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     height: singleContactSize,
     borderRadius: singleContactSize / 2,
     overflow: 'hidden',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
     borderWidth: 6,
     borderColor: 'white',
   },
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     height: userSize,
     borderRadius: userSize / 2,
     overflow: 'hidden',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
   },
   initials: {
     fontSize: 20,

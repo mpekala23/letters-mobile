@@ -156,7 +156,7 @@ exports[`Register screen should match snapshot 1`] = `
                 "fontFamily": "Poppins-Regular-Italic",
               },
               Object {
-                "marginTop": 10,
+                "marginTop": 5,
               },
             ]
           }
