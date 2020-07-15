@@ -216,7 +216,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           </Text>
         </View>
       ) : null;
-
     const refresh = (
       <RefreshControl
         refreshing={this.state.refreshing}
