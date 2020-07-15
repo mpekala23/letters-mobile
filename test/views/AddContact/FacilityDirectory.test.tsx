@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FacilityDirectoryScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { SET_ADDING } from '@store/Contact/ContactTypes';
-import { Colors } from '@styles';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getFacilities } from '@api';
@@ -22,7 +21,7 @@ jest.mock('@api', () => ({
 
 const mockStore = configureStore([]);
 
-const setup = (contactOverrides = {}, routeOverrides = {}) => {
+const setup = (facilityOverrides = {}, routeOverrides = {}) => {
   const navigation = {
     navigate: jest.fn(),
     addListener: jest.fn(),
@@ -31,7 +30,7 @@ const setup = (contactOverrides = {}, routeOverrides = {}) => {
   const route = {
     params: {
       newFacility: null,
-      phyState: '',
+      physState: '',
       ...routeOverrides,
     },
   };
@@ -41,7 +40,7 @@ const setup = (contactOverrides = {}, routeOverrides = {}) => {
     inmateNumber: '',
     relationship: '',
     facility: null,
-    ...contactOverrides,
+    ...facilityOverrides,
   };
   const initialState = {
     adding: contact,
@@ -71,8 +70,9 @@ const setup = (contactOverrides = {}, routeOverrides = {}) => {
   };
 };
 
-function sleep() {
-  jest.useFakeTimers();
+function sleep(ms: number) {
+  jest.useRealTimers();
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 describe('Facility Directory Screen', () => {
@@ -84,7 +84,7 @@ describe('Facility Directory Screen', () => {
 
   it('should have next button be disabled until facility selected', async () => {
     const { navigation, getByText } = setup();
-    await sleep();
+    await sleep(1);
     const nextButton = getByText('Next');
     fireEvent.press(nextButton);
     expect(
@@ -99,7 +99,7 @@ describe('Facility Directory Screen', () => {
 
   it('should have the selected facility have a pink background', async () => {
     const { getByText } = setup();
-    await sleep();
+    await sleep(1);
     const facility = getByText('Yukon Kskokwim Correctional Center').parentNode;
     expect(facility.props.style[1].backgroundColor).toBe('white');
     expect(facility.props.style[2]).toEqual({});
@@ -112,7 +112,7 @@ describe('Facility Directory Screen', () => {
 
   it('should dispatch facility info to the redux store when the next button is pressed', async () => {
     const { store, getByText } = setup();
-    await sleep();
+    await sleep(1);
     const nextButton = getByText('Next');
     fireEvent.press(nextButton);
     expect(store.getActions().length).toBe(0);
@@ -148,7 +148,7 @@ describe('Facility Directory Screen', () => {
 
   it('should navigate to the review contact screen when the next button is pressed', async () => {
     const { navigation, getByText } = setup();
-    await sleep();
+    await sleep(1);
     const nextButton = getByText('Next');
     fireEvent.press(getByText('Yukon Kskokwim Correctional Center'));
     fireEvent.press(nextButton);
@@ -171,7 +171,7 @@ describe('Facility Directory Screen', () => {
         type: 'State Prison',
       },
     });
-    await sleep();
+    await sleep(1);
     const facility = getByText('Yukon Kskokwim Correctional Center').parentNode;
     expect(facility.props.style[1].backgroundColor).toBe('white');
   });
@@ -197,7 +197,7 @@ describe('Facility Directory Screen', () => {
         },
       }
     );
-    await sleep();
+    await sleep(1);
     expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
   });
 
@@ -209,7 +209,7 @@ describe('Facility Directory Screen', () => {
         phyState: 'Pennsylvania',
       }
     );
-    await sleep();
+    await sleep(1);
     expect(getByTestId('hintText')).toBeDefined();
   });
 });
