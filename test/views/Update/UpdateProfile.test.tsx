@@ -30,7 +30,7 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     postal: '12345',
     city: 'New Haven',
     state: 'CT',
-    joined: new Date(6),
+    joined: new Date('Thursday, July 16, 2020'),
     ...userOverrides,
   };
   const store = mockStore({
