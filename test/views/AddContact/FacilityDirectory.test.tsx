@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FacilityDirectoryScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { SET_ADDING } from '@store/Contact/ContactTypes';
-import { Colors } from '@styles';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getFacilities } from '@api';
@@ -31,6 +30,7 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
   const route = {
     params: {
       newFacility: null,
+      phyState: '',
       ...routeOverrides,
     },
   };
@@ -199,5 +199,17 @@ describe('Facility Directory Screen', () => {
     );
     await sleep(1);
     expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
+  });
+
+  it('should show hint message when contact state is Pennsylvania', async () => {
+    const { getByTestId } = setup(
+      {},
+      {
+        newFacility: {},
+        phyState: 'Pennsylvania',
+      }
+    );
+    await sleep(1);
+    expect(getByTestId('hintText')).toBeDefined();
   });
 });

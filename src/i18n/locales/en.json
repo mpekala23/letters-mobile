@@ -79,7 +79,12 @@
     "facilityName": "Facility Name",
     "dontSeeTheFacility": "Don't see the facility you're looking for?",
     "addManually": "Add Manually",
-    "searchFacility": "Search Facility"
+    "searchFacility": "Search Facility",
+    "PennsylvaniaHint1": "If you're sending a letter to an inmate in a",
+    "PennsylvaniaHint2": "in Pennsylvania, please select",
+    "PennsylvaniaHint3": "in the facility directory.",
+    "statePrison": "State Prison",
+    "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",

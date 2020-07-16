@@ -199,6 +199,23 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   render() {
+    const facilityDirectoryHint =
+      this.state.phyState === 'Pennsylvania' ? (
+        <View style={Styles.hintBackground} testID="hintText">
+          <Text style={[Typography.FONT_MEDIUM]}>
+            {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint1')}{' '}
+            <Text style={Typography.FONT_BOLD}>
+              {i18n.t('FacilityDirectoryScreen.statePrison')}{' '}
+            </Text>
+            {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint2')}{' '}
+            <Text style={Typography.FONT_BOLD}>
+              &apos;{i18n.t('FacilityDirectoryScreen.smartCommunications')}
+              &apos;
+            </Text>{' '}
+            {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint3')}
+          </Text>
+        </View>
+      ) : null;
     const refresh = (
       <RefreshControl
         refreshing={this.state.refreshing}
@@ -242,6 +259,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               />
               <Icon svg={FacilityIcon} style={{ margin: 16 }} />
             </View>
+            {facilityDirectoryHint}
             <Input
               parentStyle={Styles.searchParent}
               inputStyle={Styles.searchInput}

@@ -71,4 +71,15 @@ export default StyleSheet.create({
   addManuallyButton: {
     width: 200,
   },
+  hintBackground: {
+    backgroundColor: Colors.BLUE_LIGHTER,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Colors.BLUE_LIGHT,
+    borderRadius: 4,
+    padding: 6,
+    marginHorizontal: 16,
+    marginBottom: 8,
+  },
 });
