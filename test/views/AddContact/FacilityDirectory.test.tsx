@@ -138,14 +138,6 @@ describe('Facility Directory Screen', () => {
     });
   });
 
-  it('should navigate to the contact info screen when the back button is pressed', () => {
-    const { navigation, getByText } = setup();
-    fireEvent.press(getByText('Back'));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', {
-      phyState: undefined,
-    });
-  });
-
   it('should navigate to the add manually screen when the add manually button is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('Add Manually'));

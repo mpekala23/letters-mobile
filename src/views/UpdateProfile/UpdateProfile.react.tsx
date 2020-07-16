@@ -122,6 +122,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         state: this.props.userState.user.state,
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
+        joined: this.props.userState.user.joined,
       };
       try {
         await updateProfile(user);
@@ -169,44 +170,47 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         style={{
           flex: 1,
           backgroundColor: 'white',
-          padding: 16,
+          paddingHorizontal: 16,
         }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
-          <View style={Styles.profileCard}>
-            <PicUpload
-              shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
-              width={130}
-              height={130}
-              type={PicUploadTypes.Profile}
-              initial={this.props.userState.user.photo}
-              onSuccess={(image: Photo) => this.setState({ image })}
-              onDelete={() => this.setState({ image: null })}
-            />
-            <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
-              {user.firstName}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_MEDIUM,
-                { color: Colors.GRAY_DARK, paddingBottom: 6 },
-              ]}
-            >
-              {/* Add in user's joined date after API integration */}
-              {i18n.t('UpdateProfileScreen.joined')}
-            </Text>
-          </View>
           <ScrollView
             keyboardShouldPersistTaps="handled"
             scrollEnabled
             style={{ width: '100%' }}
+            contentContainerStyle={{ paddingVertical: 24 }}
           >
+            <View style={Styles.profileCard}>
+              <PicUpload
+                shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+                width={130}
+                height={130}
+                type={PicUploadTypes.Profile}
+                initial={this.props.userState.user.photo}
+                onSuccess={(image: Photo) => this.setState({ image })}
+                onDelete={() => this.setState({ image: null })}
+              />
+              <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
+                {user.firstName}
+              </Text>
+              <Text
+                style={[
+                  Typography.FONT_MEDIUM,
+                  { color: Colors.GRAY_DARK, paddingBottom: 6 },
+                ]}
+              >
+                {/* Add in user's joined date after API integration */}
+                {i18n.t('UpdateProfileScreen.joined')}{' '}
+                {this.props.userState.user.joined}
+              </Text>
+            </View>
             <Text
               style={[
                 Typography.FONT_BOLD,
@@ -285,12 +289,12 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
+            <Button
+              buttonText={i18n.t('UpdateProfileScreen.logOut')}
+              onPress={async () => logout()}
+              containerStyle={Styles.logOutButton}
+            />
           </ScrollView>
-          <Button
-            buttonText={i18n.t('UpdateProfileScreen.logOut')}
-            onPress={async () => logout()}
-            containerStyle={Styles.logOutButton}
-          />
         </KeyboardAvoidingView>
       </TouchableOpacity>
     );

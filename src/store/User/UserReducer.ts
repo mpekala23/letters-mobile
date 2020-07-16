@@ -26,6 +26,7 @@ const initialState: UserState = {
     city: '',
     state: '',
     credit: 0,
+    joined: new Date(Date.now()),
   },
 };
 
@@ -66,6 +67,7 @@ export default function UserReducer(
           city: '',
           state: '',
           credit: 0,
+          joined: new Date(Date.now()),
         },
       };
     case SET_USER:
