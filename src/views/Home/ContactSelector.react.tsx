@@ -96,6 +96,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         <FlatList
           data={this.props.existingContacts}
           renderItem={this.renderItem}
+          keyExtractor={(item) => item.inmateNumber.toString()}
           onRefresh={async () => {
             this.setState({ refreshing: true });
             try {

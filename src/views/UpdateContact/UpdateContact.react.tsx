@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   Keyboard,
@@ -361,7 +361,6 @@ const mapStateToProps = (state: AppState) => {
     contact: state.contact.active,
   };
 };
-
 const UpdateContactScreen = connect(mapStateToProps)(UpdateContactScreenBase);
 
 export default UpdateContactScreen;

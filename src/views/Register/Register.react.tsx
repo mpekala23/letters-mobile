@@ -379,7 +379,7 @@ class RegisterScreen extends React.Component<Props, State> {
               });
             }}
           />
-          <Button buttonText="Dev Skip" onPress={this.devSkip} />
+          {null && <Button buttonText="Dev Skip" onPress={this.devSkip} />}
           <Button
             containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}
