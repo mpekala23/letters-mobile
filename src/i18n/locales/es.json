@@ -273,5 +273,20 @@
     "to": "To",
     "collapse": "Collapse",
     "needIdeas": "Need Ideas?"
+  },
+  "Notifs": {
+    "your": "Your",
+    "to": "to",
+    "isOnItsWay": "is on its way!",
+    "expectedDelivery": "Expected delivery",
+    "yourLetterIsOut": "Your letter is out for delivery. It will reach the facility by",
+    "hasYourLovedOne": "Has your loved one received your letter?",
+    "letUsKnow": "Let us know!",
+    "returnedToSender": "Your letter was returned to sender!",
+    "getInTouch": "Get in touch with us to discover what happened.",
+    "youreOneTapAway": "You're one tap away from sending your first letter.",
+    "clickHereToBegin": "Click here to begin.",
+    "readyToSend": "Ready to send your first letter to",
+    "readyToSendAnother": "Ready to send another letter to"
   }
 }
