@@ -211,7 +211,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 ]
               }
             >
-              FL
+              
             </Text>
           </TouchableOpacity>
         </View>
@@ -228,9 +228,8 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             ]
           }
         >
-          First
+          First Name
            
-          Last
         </Text>
         <Text
           style={

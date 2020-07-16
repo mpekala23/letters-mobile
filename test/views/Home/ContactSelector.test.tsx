@@ -44,6 +44,7 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
   const store = mockStore({
     contact: initialContactState,
     letter: initialLetterState,
+    notif: { currentNotif: null },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {

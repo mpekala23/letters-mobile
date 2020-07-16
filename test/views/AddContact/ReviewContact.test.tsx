@@ -34,6 +34,9 @@ const setup = (contactOverrides = {}) => {
   };
   const store = mockStore({
     contact: initialState,
+    letter: {
+      existing: {},
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {

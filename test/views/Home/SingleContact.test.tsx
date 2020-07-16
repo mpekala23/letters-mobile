@@ -7,7 +7,7 @@ import { LetterTypes, LetterStatus } from 'types';
 
 const mockStore = configureStore([]);
 
-const setup = (letterOverrides = []) => {
+const setup = (letterOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = {
     state: 'Minnesota',
@@ -16,18 +16,18 @@ const setup = (letterOverrides = []) => {
     inmateNumber: '6',
     relationship: 'Brother',
   };
-  const letters = Object.assign(
-    [
+  const letters = {
+    6: [
       {
         type: LetterTypes.Postcard,
         status: LetterStatus.OutForDelivery,
         isDraft: false,
-        recipientId: 8,
+        recipientId: 6,
         content: "Hi Emily! How are you doing? I'm trying out this...",
       },
     ],
-    letterOverrides
-  );
+    ...letterOverrides,
+  };
 
   const route = {
     params: { contact, letters },
@@ -43,6 +43,15 @@ const setup = (letterOverrides = []) => {
       user: {
         credit: 4,
       },
+    },
+    contact: {
+      active: {
+        firstName: 'First Name',
+        id: 6,
+      },
+    },
+    notif: {
+      currentNotif: null,
     },
   });
 
@@ -68,22 +77,24 @@ describe('Single Contact Screen', () => {
   });
 
   it('should load values for letters from the redux store', () => {
-    const { getByText } = setup([
-      {
-        type: LetterTypes.Postcard,
-        status: LetterStatus.OutForDelivery,
-        isDraft: false,
-        recipientId: 8,
-        content: 'Redux Letter 1',
-      },
-      {
-        type: LetterTypes.Postcard,
-        status: LetterStatus.OutForDelivery,
-        isDraft: false,
-        recipientId: 8,
-        content: 'Redux Letter 2',
-      },
-    ]);
+    const { getByText } = setup({
+      6: [
+        {
+          type: LetterTypes.Postcard,
+          status: LetterStatus.OutForDelivery,
+          isDraft: false,
+          recipientId: 8,
+          content: 'Redux Letter 1',
+        },
+        {
+          type: LetterTypes.Postcard,
+          status: LetterStatus.OutForDelivery,
+          isDraft: false,
+          recipientId: 8,
+          content: 'Redux Letter 2',
+        },
+      ],
+    });
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');
     expect(getByText('Redux Letter 2').props.children).toBe('Redux Letter 2');
   });

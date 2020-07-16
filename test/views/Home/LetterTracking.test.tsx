@@ -40,6 +40,7 @@ const setup = (letterOverrides = {}) => {
 
   const store = mockStore({
     letter: initialLetterState,
+    notif: { currentNotif: null },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
