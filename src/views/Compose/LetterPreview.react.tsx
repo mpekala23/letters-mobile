@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import { Button, GrayBar } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
@@ -46,10 +46,21 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
         <GrayBar />
         <ScrollView>
           <Text
-            style={[Typography.FONT_REGULAR, { marginTop: 20, fontSize: 14 }]}
+            style={[
+              Typography.FONT_REGULAR,
+              { marginVertical: 20, fontSize: 14 },
+            ]}
           >
             {props.composing.content}
           </Text>
+          <View style={{ flex: 1 }}>
+            {props.composing.photo && (
+              <Image
+                source={props.composing.photo}
+                style={{ width: '100%', aspectRatio: 1 }}
+              />
+            )}
+          </View>
         </ScrollView>
       </View>
       <Text

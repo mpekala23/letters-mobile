@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
+  Linking,
 } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from '@navigations';
@@ -78,7 +79,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             return (
               <LetterStatusCard
                 status={letter.status}
-                date="05/11/2020"
+                date={letter.dateCreated ? letter.dateCreated : ''}
                 description={letter.content}
                 onPress={() => {
                   this.props.setActiveLetter(letter);
@@ -193,12 +194,15 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <CreditsCard
               credits={this.props.userState.user.credit}
               onPress={() => {
-                /* Navigate to Add More credits flow */
+                Linking.openURL(
+                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20day&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20daily%20letter%20limit%3F"
+                );
               }}
             />
             <MemoryLaneCountCard
               letterCount={letters ? letters.length : 0}
               onPress={() => {
+                this.props.setActiveContact(contact);
                 this.props.navigation.navigate('MemoryLane');
               }}
               style={{ height: 100 }}

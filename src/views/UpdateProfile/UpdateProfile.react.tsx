@@ -21,6 +21,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import moment from 'moment';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -165,6 +166,9 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   render() {
     const { user } = this.props.userState;
+    const joinedDate = moment(this.props.userState.user.joined).format(
+      'MMM DD, YYYY'
+    );
     return (
       <TouchableOpacity
         style={{
@@ -206,9 +210,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                   { color: Colors.GRAY_DARK, paddingBottom: 6 },
                 ]}
               >
-                {/* Add in user's joined date after API integration */}
-                {i18n.t('UpdateProfileScreen.joined')}{' '}
-                {this.props.userState.user.joined.toDateString()}
+                {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
               </Text>
             </View>
             <Text

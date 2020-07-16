@@ -38,7 +38,7 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
       if (store.getState().user.authInfo.isLoggedIn)
-        props.navigation.replace('Home');
+        props.navigation.replace('ContactSelector');
     }
     doSetup();
   }, []);

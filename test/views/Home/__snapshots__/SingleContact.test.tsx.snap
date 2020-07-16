@@ -786,7 +786,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  05/11/2020
+                  Invalid date
                 </Text>
               </View>
               <Text

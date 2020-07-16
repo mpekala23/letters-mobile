@@ -15,7 +15,6 @@ exports[`PicUpload component should match snapshot 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "white",
           "height": 100,
           "width": 100,
         },

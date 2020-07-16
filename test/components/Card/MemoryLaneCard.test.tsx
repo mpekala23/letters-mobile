@@ -5,7 +5,7 @@ import { fireEvent, render, toJSON } from '@testing-library/react-native';
 const setup = (propOverrides = {}) => {
   const props = {
     text: 'Text',
-    date: 'Date',
+    date: '2019-07-12',
     imageUri: 'test',
     color: 'green',
     onPress: jest.fn(),
@@ -37,7 +37,7 @@ describe('Memory Lane Card component', () => {
 
   it('should display date', () => {
     const { getByText } = setup();
-    expect(getByText('Date')).toBeDefined();
+    expect(getByText('Jul 12, 2019')).toBeDefined();
   });
 
   it('should display memory lane image', () => {

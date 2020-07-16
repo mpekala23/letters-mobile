@@ -2,10 +2,14 @@ import React from 'react';
 import { LetterStatusCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
+jest.mock('moment', () => () => ({
+  format: () => 'Jul 12',
+}));
+
 const setup = (propOverrides = {}) => {
   const props = {
     status: 'Status',
-    date: 'Date',
+    date: '2019-07-12',
     description: 'Description',
     color: 'green',
     onPress: jest.fn(),
@@ -37,7 +41,7 @@ describe('Letter Status Card component', () => {
 
   it('should display date', () => {
     const { getByText } = setup();
-    expect(getByText('Date')).toBeDefined();
+    expect(getByText('Jul 12')).toBeDefined();
   });
 
   it('should display description', () => {

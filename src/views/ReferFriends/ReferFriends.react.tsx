@@ -1,18 +1,15 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
-import { Button, ProfilePic } from '@components';
+import { Button } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
-import { ProfilePicTypes } from 'types';
-import { connect } from 'react-redux';
-import { AppState } from '@store/types';
-import AirplaneIcon from '@assets/views/ReferFriends/Airplane';
 import Icon from '@components/Icon/Icon.react';
+import Mailbox from '@assets/views/ReferFriends/Mailbox';
+import moment from 'moment';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -22,7 +19,6 @@ type ReferFriendsScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ReferFriendsScreenNavigationProp;
-  contact: Contact;
 }
 
 const onShare = async () => {
@@ -35,8 +31,7 @@ const onShare = async () => {
   }
 };
 
-const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
-  const { contact } = props;
+const ReferFriendsScreen: React.FC<Props> = (props: Props) => {
   return (
     <KeyboardAvoidingView
       style={Styles.trueBackground}
@@ -50,16 +45,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           alignItems: 'center',
         }}
       >
-        <Icon
-          svg={AirplaneIcon}
-          style={{ position: 'absolute', top: -5, left: 52, zIndex: 999 }}
-        />
-        <ProfilePic
-          firstName={contact.firstName}
-          lastName={contact.lastName}
-          imageUri="ExamplePic"
-          type={ProfilePicTypes.SingleContact}
-        />
+        <Icon svg={Mailbox} />
         <Text
           style={[
             Typography.FONT_BOLD,
@@ -71,11 +57,16 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
         <Text
           style={[
             Typography.FONT_REGULAR,
-            { marginBottom: 175, textAlign: 'center' },
+            {
+              marginBottom: 130,
+              textAlign: 'center',
+              color: Colors.GRAY_DARK,
+              fontSize: 14,
+            },
           ]}
         >
-          {/* TO-DO: Add in estimated delivery date after API integration */}
-          {i18n.t('ReferFriendsScreen.yourLetterIsEstimatedToArrive')}.{' '}
+          {i18n.t('ReferFriendsScreen.yourLetterIsEstimatedToArrive')}{' '}
+          {moment(Date.now() + 1000 * 60 * 60 * 24 * 6).format('MMM DD, YYYY')}.{' '}
           {i18n.t('ReferFriendsScreen.thanksAgain')}
         </Text>
         <Button
@@ -93,13 +84,5 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
     </KeyboardAvoidingView>
   );
 };
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    contact: state.contact.active,
-  };
-};
-
-const ReferFriendsScreen = connect(mapStateToProps)(ReferFriendsScreenBase);
 
 export default ReferFriendsScreen;
