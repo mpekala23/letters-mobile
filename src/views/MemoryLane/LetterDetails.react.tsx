@@ -24,7 +24,7 @@ const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const photos = letter.photo?.uri ? (
     <Image
       style={Styles.memoryLanePicture}
-      source={{ uri: letter.photo.uri }}
+      source={letter.photo}
       testID="memoryLaneImage"
     />
   ) : null;

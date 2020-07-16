@@ -51,7 +51,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
           <View style={{ flex: 1 }}>
             {props.composing.photo && (
               <Image
-                source={{ uri: props.composing.photo?.uri }}
+                source={props.composing.photo}
                 style={{ width: '100%', aspectRatio: 1 }}
               />
             )}

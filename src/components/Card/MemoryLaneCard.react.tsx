@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle, Image } from 'react-native';
 import moment from 'moment';
+import Default from '@assets/views/Onboarding/DefaultMemoryPreview.png';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -26,11 +27,13 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
     >
       <Image
         style={CardStyles.memoryLanePicture}
-        source={{
-          uri: props.imageUri
-            ? props.imageUri
-            : 'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-dark-gray-solid-color-background.jpg',
-        }}
+        source={
+          props.imageUri
+            ? {
+                uri: props.imageUri,
+              }
+            : Default
+        }
         testID="memoryLaneImage"
       />
       <View style={CardStyles.memoryLaneTextBackground}>
