@@ -106,3 +106,35 @@ export {
   STATES_DROPDOWN,
   STATE_TO_INMATE_DB,
 };
+
+const mapNumToDay: Record<number, string> = {
+  0: 'Sunday',
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Wednesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
+};
+
+export function threeBusinessDaysFromNow(): string {
+  const today = new Date(Date.now()).getDay();
+  if (today <= 2) {
+    // Sunday through Tuesday just add three
+    return mapNumToDay[(today + 3) % 7];
+  }
+  if (today <= 5) {
+    return mapNumToDay[(today + 5) % 7];
+  }
+  return mapNumToDay[(today + 4) % 7];
+}
+
+export function hoursTill8Tomorrow(): number {
+  const today = new Date();
+  const hourOfDay = today.getHours();
+  const minuteOfDay = today.getMinutes();
+  if (hourOfDay < 20) {
+    return 24 + 19 + minuteOfDay / 60 - hourOfDay;
+  }
+  return hourOfDay - 20;
+}

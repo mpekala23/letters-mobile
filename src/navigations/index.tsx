@@ -44,19 +44,13 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import {
-  NullableFacility,
-  Letter,
-  SupportFAQTypes,
-  DeliveryReportTypes,
-} from 'types';
+import { NullableFacility, SupportFAQTypes, DeliveryReportTypes } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
   setProfile,
   setShown,
 } from '@components/Topbar/Topbar.react';
-import { Contact } from '@store/Contact/ContactTypes';
 import { NavigationContainer } from '@react-navigation/native';
 
 export { navigationRef, navigate };
@@ -92,7 +86,7 @@ export type AppStackParamList = {
   ReferFriends: undefined;
   ReviewContact: undefined;
   Setup: undefined;
-  SingleContact: { contact: Contact; letters?: Letter[] } | undefined;
+  SingleContact: undefined;
   Splash: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
