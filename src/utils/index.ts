@@ -4,7 +4,12 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ABBREV_TO_STATE, STATE_TO_ABBREV, STATES_DROPDOWN } from './States';
+import {
+  ABBREV_TO_STATE,
+  STATE_TO_ABBREV,
+  STATES_DROPDOWN,
+  STATE_TO_INMATE_DB,
+} from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 import REFERERS from './Referers';
 
@@ -95,4 +100,9 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
-export { ABBREV_TO_STATE, STATE_TO_ABBREV, STATES_DROPDOWN };
+export {
+  ABBREV_TO_STATE,
+  STATE_TO_ABBREV,
+  STATES_DROPDOWN,
+  STATE_TO_INMATE_DB,
+};
