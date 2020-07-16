@@ -213,20 +213,14 @@ class RegisterScreen extends React.Component<Props, State> {
               {i18n.t('RegisterScreen.clickToUploadProfileImage')}
             </Text>
           </View>
-          <View style={Styles.privacyBackground}>
-            <Text style={[Typography.FONT_BOLD, Styles.privacyText]}>
-              {i18n.t('RegisterScreen.privacyText')}
-            </Text>
-          </View>
           <Button
             link
             buttonText={i18n.t('RegisterScreen.alreadyHaveAnAccount')}
-            containerStyle={{ marginBottom: 10 }}
+            containerStyle={{ marginBottom: 20 }}
             onPress={() => {
               this.props.navigation.navigate('Login');
             }}
           />
-          <Button buttonText="Dev Skip" onPress={this.devSkip} />
           <Input
             ref={this.firstName}
             parentStyle={Styles.fullWidth}
@@ -367,6 +361,7 @@ class RegisterScreen extends React.Component<Props, State> {
               });
             }}
           />
+          <Button buttonText="Dev Skip" onPress={this.devSkip} />
           <Button
             containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}

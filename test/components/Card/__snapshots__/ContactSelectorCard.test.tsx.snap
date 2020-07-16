@@ -63,7 +63,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#f6993f",
+                "backgroundColor": "#F4F4F4",
                 "borderRadius": 40,
                 "height": 80,
                 "justifyContent": "center",
@@ -80,8 +80,8 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
                     "fontFamily": "Poppins-Regular",
                   },
                   Object {
-                    "color": "white",
-                    "fontSize": 22,
+                    "color": "#6D6D6D",
+                    "fontSize": 20,
                     "fontWeight": "500",
                   },
                 ]
