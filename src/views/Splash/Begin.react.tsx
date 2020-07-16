@@ -25,13 +25,13 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         <Icon svg={AmeelioBirdBlue} />
         <Text style={[Typography.FONT_BOLD, Styles.ameelioLogo]}>Ameelio</Text>
       </View>
-      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
+      <Text style={[Typography.FONT_BOLD, Styles.titleText, { marginTop: 40 }]}>
         {i18n.t('BeginScreen.connectWithYourLovedOnes')},
       </Text>
       <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         {i18n.t('BeginScreen.forFree')}.
       </Text>
-      <View style={{ paddingBottom: 60, paddingTop: 30 }}>
+      <View style={{ paddingBottom: 80, paddingTop: 18 }}>
         <Image
           source={People}
           width={191}
