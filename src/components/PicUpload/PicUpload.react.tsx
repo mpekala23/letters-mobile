@@ -109,7 +109,6 @@ class PicUpload extends React.Component<Props, State> {
           {
             width: this.props.width,
             height: this.props.height,
-            backgroundColor: 'white',
           },
           this.props.type === PicUploadTypes.Profile
             ? Styles.profileBackground

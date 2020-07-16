@@ -23,7 +23,7 @@ const setup = (letterOverrides = {}) => {
         id: 1,
         name: LetterStatus.Mailed,
         location: '20002',
-        date: '2019-07-12T15:51:41.000Z',
+        date: '2019-07-12',
       },
     ],
     ...letterOverrides,
@@ -61,7 +61,7 @@ describe('Letter Details Screen', () => {
 
   it('should display created date', () => {
     const { getByText } = setup();
-    expect(getByText('06/26/2019')).toBeDefined();
+    expect(getByText('Jun 26, 2019')).toBeDefined();
   });
 
   it('should display letter content', () => {

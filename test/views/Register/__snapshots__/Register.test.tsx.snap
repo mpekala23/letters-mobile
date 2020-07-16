@@ -60,7 +60,6 @@ exports[`Register screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "backgroundColor": "white",
                 "height": 130,
                 "width": 130,
               },

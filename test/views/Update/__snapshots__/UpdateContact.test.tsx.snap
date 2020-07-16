@@ -54,7 +54,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               "alignItems": "center",
               "backgroundColor": "white",
               "justifyContent": "center",
-              "paddingTop": 32,
+              "paddingTop": 20,
             }
           }
         >
@@ -93,7 +93,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "white",
                   "height": 130,
                   "width": 130,
                 },
@@ -104,6 +103,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "backgroundColor": "white",
                   "borderColor": "white",
                   "borderWidth": 6,
                 },

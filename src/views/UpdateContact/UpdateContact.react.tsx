@@ -221,7 +221,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 end={{ x: 1, y: 0 }}
               />
               <PicUpload
-                shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+                shapeBackground={{
+                  borderWidth: 6,
+                  borderColor: 'white',
+                  backgroundColor: 'white',
+                }}
                 width={130}
                 height={130}
                 type={PicUploadTypes.Profile}
