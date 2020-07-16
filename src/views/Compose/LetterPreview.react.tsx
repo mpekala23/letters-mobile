@@ -93,7 +93,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              1 / 60
+              1 / 60 // TODO: Replace with notification from backend when ready + not beta testing
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -110,7 +110,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              2 / 60
+              2 / 60 // TODO: Replace with notification from backend when ready + not beta testing
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -121,7 +121,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   screen: 'Issues',
                 },
               },
-              3 / 60
+              3 / 60 // TODO: Replace with notification from backend when ready + not beta testing
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -135,7 +135,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              4 / 60
+              4 / 60 // TODO: Replace with notification from backend when ready + not beta testing
             );
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
             Notifs.scheduleNotificationInDays(
@@ -154,7 +154,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              hoursTill8Tomorrow() / 24 + 14
+              hoursTill8Tomorrow() / 24 + 14 // TODO: Replace with notification from backend when ready + not beta testing
             );
             props.navigation.navigate('ReferFriends');
           } catch (err) {

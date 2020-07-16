@@ -17,8 +17,6 @@ export enum NotifTypes {
   Drought = 'Drought',
 }
 
-// what is necessary to communicate with the notification API
-// necessary to keep separately because we cannot retrive title and body once it's processed
 export interface NativeNotif {
   title: string;
   body: string;
