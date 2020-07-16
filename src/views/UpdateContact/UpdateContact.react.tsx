@@ -361,7 +361,6 @@ const mapStateToProps = (state: AppState) => {
     contact: state.contact.active,
   };
 };
-
 const UpdateContactScreen = connect(mapStateToProps)(UpdateContactScreenBase);
 
 export default UpdateContactScreen;

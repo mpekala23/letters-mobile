@@ -22,6 +22,7 @@ import { Letter, Photo } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CheckIcon from '@assets/views/Compose/Check';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -83,7 +84,18 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       text: i18n.t('Compose.next'),
       action: () => {
         Keyboard.dismiss();
-        this.props.navigation.navigate('LetterPreview');
+        if (this.props.composing.content.length <= 0) {
+          popupAlert({
+            title: i18n.t('Compose.letterMustHaveContent'),
+            buttons: [
+              {
+                text: i18n.t('Alert.okay'),
+              },
+            ],
+          });
+        } else {
+          this.props.navigation.navigate('LetterPreview');
+        }
       },
     });
   }

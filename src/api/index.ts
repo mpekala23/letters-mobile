@@ -23,6 +23,7 @@ import {
   setAdding as setAddingContact,
   setExisting as setExistingContacts,
   clearContacts,
+  setActive as setActiveContact,
 } from '@store/Contact/ContactActions';
 import { Contact } from '@store/Contact/ContactTypes';
 import {
@@ -313,7 +314,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_1: data.address1,
       address_line_2: data.address2,
       city: data.city,
-      state: data.state,
+      state: STATE_TO_ABBREV[data.state],
       country: data.country,
       referer: data.referer,
       postal: data.postal,
@@ -567,6 +568,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
     }
   }
   store.dispatch(setExistingContacts(newExisting));
+  store.dispatch(setActiveContact(updatedContact));
   return newExisting;
 }
 

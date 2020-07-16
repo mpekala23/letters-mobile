@@ -214,7 +214,9 @@ class LoginScreen extends React.Component<Props, State> {
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
                 </View>
-                <Button onPress={this.devSkip} buttonText="Dev Skip" />
+                {null && (
+                  <Button onPress={this.devSkip} buttonText="Dev Skip" />
+                )}
                 <View style={{ width: '100%', height: 100 }} />
               </View>
             </ScrollView>
