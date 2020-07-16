@@ -9,6 +9,7 @@ import i18n from '@i18n';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import store from '@store';
+import { handleNotif } from '@store/Notif/NotifiActions';
 
 type SetupScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -27,6 +28,7 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
     async function doSetup() {
       try {
         await Notifs.setup();
+        store.dispatch(handleNotif());
       } catch (err) {
         dropdownError({ message: i18n.t('Permission.notifs') });
       }

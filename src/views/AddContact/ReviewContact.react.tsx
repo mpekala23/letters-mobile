@@ -12,7 +12,7 @@ import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload } from '@components';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
 import {
@@ -28,6 +28,8 @@ import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import Notifs from '@notifications';
+import { NotifTypes } from '@store/Notif/NotifTypes';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -38,6 +40,7 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
+  hasSentLetter: boolean;
   setAdding: (contact: Contact) => void;
 }
 
@@ -157,6 +160,23 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           }
         }
         await addContact(contact);
+        Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
+        if (!this.props.hasSentLetter) {
+          Notifs.scheduleNotificationInHours(
+            {
+              title: `${i18n.t('Notifs.readyToSend')} ${contact.firstName}?`,
+              body: `${i18n.t('Notifs.clickHereToBegin')}`,
+              data: {
+                type: NotifTypes.NoFirstLetter,
+                screen: 'SingleContact',
+                data: {
+                  contactId: contact.id,
+                },
+              },
+            },
+            hoursTill8Tomorrow() + 24
+          );
+        }
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
@@ -337,6 +357,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
+  hasSentLetter: state.letter.existing !== {},
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

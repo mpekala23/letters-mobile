@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch } from 'react';
 import {
   Text,
   KeyboardAvoidingView,
@@ -20,6 +20,8 @@ import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
+import { handleNotif } from '@store/Notif/NotifiActions';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -27,89 +29,114 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
   'ContactSelector'
 >;
 
+interface State {
+  refreshing: boolean;
+}
+
 interface Props {
   existingContacts: Contact[];
   existingLetters: Record<number, Letter[]>;
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
+  currentNotif: Notif | null;
+  handleNotif: () => void;
 }
 
-const ContactSelectorScreenBase: React.FC<Props> = (props: Props) => {
-  const [refreshing, setRefreshing] = useState(false);
+class ContactSelectorScreenBase extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
 
-  const renderItem = ({ item }: { item: Contact }): JSX.Element => {
+  componentDidMount() {
+    if (
+      this.props.currentNotif &&
+      this.props.currentNotif.screen === 'ContactSelector'
+    )
+      this.props.handleNotif();
+  }
+
+  renderItem = ({ item }: { item: Contact }): JSX.Element => {
     return (
       <ContactSelectorCard
         firstName={item.firstName}
         lastName={item.lastName}
         imageUri={item.photo?.uri}
-        letters={props.existingLetters[item.id]}
+        letters={this.props.existingLetters[item.id]}
         onPress={() => {
-          props.setActiveContact(item);
-          props.navigation.navigate('SingleContact', {
-            contact: item,
-            letters: props.existingLetters[item.id],
-          });
+          this.props.setActiveContact(item);
+          this.props.navigation.navigate('SingleContact');
         }}
         key={item.inmateNumber}
       />
     );
   };
-  return (
-    <KeyboardAvoidingView
-      style={Styles.trueBackground}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      enabled
-    >
-      <Text
-        style={[
-          Typography.FONT_BOLD,
-          {
-            color: Colors.GRAY_DARK,
-            fontSize: 20,
-            paddingBottom: 16,
-          },
-        ]}
+
+  render() {
+    return (
+      <KeyboardAvoidingView
+        style={Styles.trueBackground}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        enabled
       >
-        {i18n.t('ContactSelectorScreen.yourLovedOnes')}
-      </Text>
-      <FlatList
-        data={props.existingContacts}
-        renderItem={renderItem}
-        onRefresh={async () => {
-          setRefreshing(true);
-          try {
-            await getContacts();
-            await getUser();
-          } catch (e) {
-            dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
-          }
-          setRefreshing(false);
-        }}
-        refreshing={refreshing}
-      />
-      <TouchableOpacity
-        style={Styles.addContactButton}
-        onPress={() => {
-          props.navigation.navigate('ContactInfo', { addFromSelector: true });
-        }}
-        testID="addContact"
-      >
-        <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
-  );
-};
+        <Text
+          style={[
+            Typography.FONT_BOLD,
+            {
+              color: Colors.GRAY_DARK,
+              fontSize: 20,
+              paddingBottom: 16,
+            },
+          ]}
+        >
+          {i18n.t('ContactSelectorScreen.yourLovedOnes')}
+        </Text>
+        <FlatList
+          data={this.props.existingContacts}
+          renderItem={this.renderItem}
+          onRefresh={async () => {
+            this.setState({ refreshing: true });
+            try {
+              await getContacts();
+              await getUser();
+            } catch (e) {
+              dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
+            }
+            this.setState({ refreshing: false });
+          }}
+          refreshing={this.state.refreshing}
+        />
+        <TouchableOpacity
+          style={Styles.addContactButton}
+          onPress={() => {
+            this.props.navigation.navigate('ContactInfo', {
+              addFromSelector: true,
+            });
+          }}
+          testID="addContact"
+        >
+          <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    );
+  }
+}
 
 const mapStateToProps = (state: AppState) => {
   return {
     existingContacts: state.contact.existing,
     existingLetters: state.letter.existing,
+    currentNotif: state.notif.currentNotif,
   };
 };
-const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
+) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
+    handleNotif: () => dispatch(handleNotif()),
   };
 };
 const ContactSelectorScreen = connect(

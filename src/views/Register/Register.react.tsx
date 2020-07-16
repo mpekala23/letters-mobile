@@ -14,7 +14,12 @@ import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { STATES_DROPDOWN, Validation, REFERERS } from '@utils';
+import {
+  STATES_DROPDOWN,
+  Validation,
+  REFERERS,
+  hoursTill8Tomorrow,
+} from '@utils';
 import { CheckBox } from 'react-native-elements';
 import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
@@ -22,6 +27,8 @@ import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Photo } from 'types';
+import Notifs from '@notifications';
+import { NotifTypes } from '@store/Notif/NotifTypes';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -160,6 +167,17 @@ class RegisterScreen extends React.Component<Props, State> {
       };
       try {
         await register(data);
+        Notifs.scheduleNotificationInHours(
+          {
+            title: `${i18n.t('Notifs.youreOneTapAway')}`,
+            body: `${i18n.t('Notifs.clickHereToBegin')}`,
+            data: {
+              type: NotifTypes.NoFirstContact,
+              screen: 'ContactSelector',
+            },
+          },
+          hoursTill8Tomorrow()
+        );
       } catch (err) {
         if (err.data && err.data.email) {
           popupAlert({

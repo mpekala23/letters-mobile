@@ -208,7 +208,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               >
                 {/* Add in user's joined date after API integration */}
                 {i18n.t('UpdateProfileScreen.joined')}{' '}
-                {this.props.userState.user.joined}
+                {this.props.userState.user.joined.toDateString()}
               </Text>
             </View>
             <Text
