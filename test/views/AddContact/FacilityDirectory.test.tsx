@@ -30,7 +30,7 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
   const route = {
     params: {
       newFacility: null,
-      physState: '',
+      phyState: '',
       ...routeOverrides,
     },
   };

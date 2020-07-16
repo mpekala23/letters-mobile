@@ -172,7 +172,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                 />
                 <Input
                   ref={this.facilityState}
-                  parentStyle={(CommonStyles.fullWidth, { marginBottom: 10 })}
+                  parentStyle={[CommonStyles.fullWidth, { marginBottom: 10 }]}
                   placeholder={i18n.t('AddManuallyScreen.facilityState')}
                   required
                   onFocus={() => {
