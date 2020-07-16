@@ -3,8 +3,6 @@ import { Text, ScrollView } from 'react-native';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button } from '@components';
-import Notifs from '@notifications';
-import { NotifTypes } from '@store/Notif/NotifTypes';
 
 type HomeScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Home'>;
 
