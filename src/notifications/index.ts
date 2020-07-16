@@ -128,6 +128,7 @@ class NotifsBase {
 
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
+    if (notification.origin === 'received') return;
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();

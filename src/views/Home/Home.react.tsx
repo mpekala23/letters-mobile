@@ -20,21 +20,6 @@ const HomeScreen: React.FC<Props> = (props: Props) => {
         buttonText="Contact Selector"
         onPress={() => props.navigation.navigate('ContactSelector')}
       />
-      <Button
-        buttonText="Send Notif"
-        onPress={() => {
-          Notifs.scheduleNotificationInHours(
-            {
-              title: 'Test Notif',
-              body: 'Test body',
-              data: {
-                type: NotifTypes.FirstLetter,
-              },
-            },
-            1 / 60 / 30
-          );
-        }}
-      />
     </ScrollView>
   );
 };
