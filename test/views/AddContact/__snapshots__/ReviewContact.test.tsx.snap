@@ -108,7 +108,6 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "white",
                         "height": 136,
                         "width": 136,
                       },

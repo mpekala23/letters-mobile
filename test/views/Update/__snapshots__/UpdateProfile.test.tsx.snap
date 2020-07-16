@@ -61,7 +61,6 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "white",
                   "height": 130,
                   "width": 130,
                 },
@@ -179,6 +178,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
           >
             Joined
              
+            Jul 16, 2020
           </Text>
         </View>
         <Text

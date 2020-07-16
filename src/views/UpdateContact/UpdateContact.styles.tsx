@@ -6,7 +6,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 32,
+    paddingTop: 20,
   },
   profileCardHeader: {
     backgroundColor: '#FC7272',

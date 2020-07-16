@@ -113,9 +113,10 @@ exports[`Topbar component should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "Poppins-Bold",
+            "fontFamily": "Poppins-Medium",
           },
           Object {
+            "color": "#6D6D6D",
             "fontSize": 16,
           },
         ]

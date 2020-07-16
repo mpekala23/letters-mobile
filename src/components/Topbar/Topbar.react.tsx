@@ -90,7 +90,12 @@ class Topbar extends React.Component<Props, State> {
             <Icon svg={BackButton} />
           </TouchableOpacity>
         )}
-        <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
+        <Text
+          style={[
+            Typography.FONT_MEDIUM,
+            { fontSize: 16, color: Colors.GRAY_DARK },
+          ]}
+        >
           {this.state.title}
         </Text>
         <View style={{ position: 'absolute', right: 19 }}>{topRight}</View>

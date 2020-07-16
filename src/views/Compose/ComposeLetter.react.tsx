@@ -81,7 +81,10 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     setProfileOverride({
       enabled: true,
       text: i18n.t('Compose.next'),
-      action: () => this.props.navigation.navigate('LetterPreview'),
+      action: () => {
+        Keyboard.dismiss();
+        this.props.navigation.navigate('LetterPreview');
+      },
     });
   }
 
@@ -143,14 +146,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <Button
-              buttonText="Next Page"
-              onPress={() => {
-                // TODO: Once [Mobile Component Librar] Bars is done,
-                // replace this with a press of the next button in the navbar
-                this.props.navigation.navigate('LetterPreview');
-              }}
-            />
             <ComposeHeader recipientName={this.props.recipientName} />
             <Input
               parentStyle={{ flex: 1 }}

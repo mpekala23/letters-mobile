@@ -51,56 +51,6 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
           ]
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FF7171",
-                "borderRadius": 16,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "marginVertical": 5,
-                "paddingHorizontal": 14,
-              },
-              Object {},
-              Object {},
-              Object {},
-              Object {
-                "elevation": 4,
-                "shadowColor": "#000",
-                "shadowOffset": Object {
-                  "height": 5,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.22,
-              },
-            ]
-          }
-          testID="clickable"
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Medium",
-                },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "700",
-                  "padding": 6,
-                },
-                Object {},
-                Object {},
-                Object {},
-              ]
-            }
-          >
-            Next Page
-          </Text>
-        </TouchableOpacity>
         <View
           style={
             Object {
@@ -285,7 +235,6 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "white",
                     "height": 200,
                     "width": 180,
                   },
