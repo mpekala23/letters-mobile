@@ -482,6 +482,16 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
   const unitExtension = contactData.unit
     ? { facility_unit: contactData.unit }
     : {};
+  let photoExtension = {};
+  let newPhoto;
+  if (contactData.photo) {
+    try {
+      newPhoto = await uploadImage(contactData.photo, 'avatar');
+      photoExtension = { s3_img_url: newPhoto.uri };
+    } catch (err) {
+      dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
+    }
+  }
   const body = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
     method: 'POST',
     body: JSON.stringify({
@@ -495,14 +505,15 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
       facility_postal: contactData.facility.postal,
       ...dormExtension,
       ...unitExtension,
+      ...photoExtension,
       relationship: contactData.relationship,
     }),
   });
   if (body.status !== 'OK') throw body;
-  const data = body.data as Contact;
-  const newContact = { ...data, id: data.id };
+  const data = body.data as RawContact;
+  const newContact = cleanContact(data);
   const { existing } = store.getState().contact;
-  existing.push(newContact);
+  existing.unshift(newContact);
   store.dispatch(setExistingContacts(existing));
   store.dispatch(
     setAddingContact({
