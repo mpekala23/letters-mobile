@@ -339,7 +339,7 @@ class RegisterScreen extends React.Component<Props, State> {
             placeholder={i18n.t('RegisterScreen.password')}
             required
             secure
-            validate={Validation.Password}
+            // TO-DO: Add validation pending hint message
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -349,7 +349,7 @@ class RegisterScreen extends React.Component<Props, State> {
             placeholder={i18n.t('RegisterScreen.confirmPassword')}
             required
             secure
-            validate={Validation.Password}
+            // TO-DO: Add validation pending hint message
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />

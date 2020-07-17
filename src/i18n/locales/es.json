@@ -272,7 +272,9 @@
     "next": "Next",
     "to": "To",
     "collapse": "Collapse",
-    "needIdeas": "Need Ideas?"
+    "needIdeas": "Need Ideas?",
+    "letterMustHaveContent": "Your letter can't be empty.",
+    "postcardMustHaveContent": "Your postcard can't be empty"
   },
   "Notifs": {
     "your": "Your",

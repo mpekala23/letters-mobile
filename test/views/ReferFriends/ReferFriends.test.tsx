@@ -11,6 +11,10 @@ jest.mock('@api', () => ({
   facebookShare: jest.fn(),
 }));
 
+jest.mock('moment', () => () => ({
+  format: () => 'Jul 12',
+}));
+
 const setup = (contactOverrides = []) => {
   const navigation = { navigate: jest.fn() };
   const contact = {
