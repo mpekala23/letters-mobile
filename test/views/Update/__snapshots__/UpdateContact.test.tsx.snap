@@ -103,7 +103,6 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "white",
                   "borderColor": "white",
                   "borderWidth": 6,
                 },
