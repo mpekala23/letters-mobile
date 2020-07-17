@@ -11,6 +11,10 @@ jest.mock('@api', () => ({
   facebookShare: jest.fn(),
 }));
 
+jest.mock('moment', () => () => ({
+  format: () => 'Jul 12',
+}));
+
 const setup = (contactOverrides = []) => {
   const navigation = { navigate: jest.fn() };
   const contact = {
@@ -48,11 +52,11 @@ const setup = (contactOverrides = []) => {
 };
 
 describe('ReferFriends screen', () => {
-  // it('should match snapshot', () => {
-  //   const { container } = setup();
-  //   const tree = toJSON(container);
-  //   expect(tree).toMatchSnapshot();
-  // });
+  it('should match snapshot', () => {
+    const { container } = setup();
+    const tree = toJSON(container);
+    expect(tree).toMatchSnapshot();
+  });
 
   it('should return to SingleContact screen when done is pressed', async () => {
     const { navigation, getByText } = setup();
