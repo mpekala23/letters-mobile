@@ -609,7 +609,7 @@ function cleanFacility(facility: RawFacility): Facility {
     type: facility.federal ? PrisonTypes.Federal : PrisonTypes.State,
     address: facility.address,
     city: facility.city,
-    state: facility.state,
+    state: ABBREV_TO_STATE[facility.state],
     postal: facility.postal,
   };
 }
