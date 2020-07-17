@@ -57,7 +57,12 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             {props.composing.photo && (
               <Image
                 source={props.composing.photo}
-                style={{ width: '100%', aspectRatio: 1 }}
+                style={{
+                  height: 275,
+                  width: '100%',
+                  borderRadius: 10,
+                  aspectRatio: 1,
+                }}
               />
             )}
           </View>
