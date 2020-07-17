@@ -20,7 +20,7 @@ import {
   ContactActionTypes,
   ContactState,
 } from '@store/Contact/ContactTypes';
-import { Facility } from 'types';
+import { Facility, Photo } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from '@store/Contact/ContactActions';
@@ -37,15 +37,16 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
   'ReviewContact'
 >;
 
+export interface State {
+  valid: boolean;
+  image: Photo | null;
+}
+
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
   hasSentLetter: boolean;
   setAdding: (contact: Contact) => void;
-}
-
-export interface State {
-  valid: boolean;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -71,6 +72,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
+      image: null,
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -138,6 +140,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
         facility,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         const { existing } = store.getState().contact;
@@ -264,6 +267,8 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       type={PicUploadTypes.Profile}
                       width={136}
                       height={136}
+                      onSuccess={(image: Photo) => this.setState({ image })}
+                      onDelete={() => this.setState({ image: null })}
                     />
                   </View>
                   <Text
