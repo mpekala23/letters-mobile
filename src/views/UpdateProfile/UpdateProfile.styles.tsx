@@ -13,4 +13,8 @@ export default StyleSheet.create({
     height: 48,
     marginTop: 16,
   },
+  baseText: {
+    fontSize: 14,
+    paddingBottom: 4,
+  },
 });

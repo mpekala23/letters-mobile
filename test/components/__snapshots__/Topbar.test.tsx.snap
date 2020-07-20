@@ -18,10 +18,10 @@ exports[`Topbar component should match snapshot 1`] = `
           "backgroundColor": "white",
           "elevation": 5,
           "flexDirection": "row",
-          "height": 70,
+          "height": 80,
           "justifyContent": "center",
-          "paddingBottom": 5,
           "paddingHorizontal": 10,
+          "paddingTop": 10,
           "shadowColor": "#000",
           "shadowOffset": Object {
             "height": 4,
@@ -42,9 +42,10 @@ exports[`Topbar component should match snapshot 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "height": 70,
+          "height": 80,
           "justifyContent": "center",
           "left": 19,
+          "paddingTop": 10,
           "position": "absolute",
           "width": 30,
         }
@@ -127,6 +128,7 @@ exports[`Topbar component should match snapshot 1`] = `
     <View
       style={
         Object {
+          "paddingTop": 10,
           "position": "absolute",
           "right": 19,
         }
