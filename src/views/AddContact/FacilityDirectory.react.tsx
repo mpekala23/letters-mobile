@@ -148,6 +148,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             this.setState({ selected: item });
           }
         }}
+        key={item.address}
       >
         <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
           {item.name}
