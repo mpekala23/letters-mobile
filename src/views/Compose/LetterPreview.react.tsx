@@ -20,6 +20,7 @@ import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
 import { threeBusinessDaysFromNow, hoursTill8Tomorrow } from '@utils';
+import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -37,6 +38,16 @@ interface Props {
 }
 
 const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
+  const image = props.composing.photo;
+  let width = 275;
+  let height = 275;
+  if (image && image.width && image.height) {
+    if (image.width > image.height) {
+      height = (image.height / image.width) * width;
+    } else {
+      width = (image.width / image.height) * height;
+    }
+  }
   return (
     <View style={Styles.screenBackground}>
       <View style={{ flex: 1 }}>
@@ -58,8 +69,8 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
               <Image
                 source={props.composing.photo}
                 style={{
-                  height: 275,
-                  width: '100%',
+                  height,
+                  width,
                   borderRadius: 10,
                   aspectRatio:
                     props.composing.photo.width && props.composing.photo.height

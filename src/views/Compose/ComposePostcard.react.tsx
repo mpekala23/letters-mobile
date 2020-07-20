@@ -201,6 +201,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   width={180}
                   height={200}
                   allowsEditing={false}
+                  shapeBackground={{ left: 10, bottom: 10 }}
                 />
               </Animated.View>
             </Input>
