@@ -21,6 +21,7 @@ import { Typography, Colors } from '@styles';
 import { Letter, Photo } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import ImageIcon from '@assets/views/Compose/Image';
 import CheckIcon from '@assets/views/Compose/Check';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
@@ -239,6 +240,17 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                     {this.state.wordsLeft} left
                   </Text>
                 </View>
+                <TouchableOpacity
+                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
+                  onPress={async () => {
+                    Keyboard.dismiss();
+                    if (this.picRef.current) {
+                      await this.picRef.current.selectImage();
+                    }
+                  }}
+                >
+                  <Icon svg={ImageIcon} />
+                </TouchableOpacity>
                 <TouchableOpacity
                   style={[Styles.keyboardButtonItem, { flex: 1 }]}
                   onPress={Keyboard.dismiss}

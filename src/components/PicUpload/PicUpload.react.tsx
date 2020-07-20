@@ -161,7 +161,7 @@ class PicUpload extends React.Component<Props, State> {
   render(): JSX.Element {
     const { image } = this.state;
     let innerCircle;
-    if (image) {
+    if (image && image.uri.slice(-4) !== '.svg') {
       innerCircle = (
         <Image
           source={{ uri: image.uri }}
@@ -208,7 +208,7 @@ class PicUpload extends React.Component<Props, State> {
         testID="clickable"
       >
         {innerCircle}
-        {image && (
+        {image && image.uri.slice(-4) !== '.svg' && (
           <TouchableOpacity
             style={[
               {

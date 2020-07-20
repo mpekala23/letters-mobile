@@ -43,11 +43,18 @@ interface Props {
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
+  private unsubscribeFocus: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       refreshing: false,
     };
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
   }
 
   componentDidMount() {
@@ -56,6 +63,21 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       this.props.currentNotif.screen === 'ContactSelector'
     )
       this.props.handleNotif();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  async onNavigationFocus() {
+    this.setState({ refreshing: true });
+    try {
+      await getContacts();
+      await getUser();
+    } catch (e) {
+      dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
+    }
+    this.setState({ refreshing: false });
   }
 
   renderItem = ({ item }: { item: Contact }): JSX.Element => {
@@ -73,6 +95,22 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       />
     );
   };
+
+  static renderInitialMessage(): JSX.Element {
+    return (
+      <Text
+        style={[
+          Typography.FONT_MEDIUM,
+          {
+            color: Colors.GRAY_DARK,
+            fontSize: 16,
+          },
+        ]}
+      >
+        {i18n.t('ContactSelectorScreen.youDoNotHaveAnyContactsYet')}
+      </Text>
+    );
+  }
 
   render() {
     return (
@@ -96,6 +134,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         <FlatList
           data={this.props.existingContacts}
           renderItem={this.renderItem}
+          ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           keyExtractor={(item) => item.inmateNumber.toString()}
           onRefresh={async () => {
             this.setState({ refreshing: true });

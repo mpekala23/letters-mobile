@@ -224,7 +224,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 shapeBackground={{
                   borderWidth: 6,
                   borderColor: 'white',
-                  backgroundColor: 'white',
                 }}
                 width={130}
                 height={130}
