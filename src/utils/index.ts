@@ -4,6 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
+import { Image } from 'react-native-svg';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -22,11 +23,44 @@ export const STATUS_BAR_WIDTH = 100;
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 
+export async function getCameraPermission(): Promise<
+  ImagePicker.PermissionStatus
+> {
+  const { status } = await Permissions.askAsync(Permissions.CAMERA);
+  return status;
+}
+
 export async function getCameraRollPermission(): Promise<
   ImagePicker.PermissionStatus
 > {
   const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
   return status;
+}
+
+export async function takeImage(
+  {
+    aspect,
+    allowsEditing,
+  }: { allowsEditing: boolean; aspect: [number, number] } = {
+    allowsEditing: true,
+    aspect: [3, 3],
+  }
+): Promise<null | ImageInfo> {
+  let cameraStatus = (await ImagePicker.getCameraPermissionsAsync()).status;
+  if (cameraStatus !== 'granted') {
+    cameraStatus = (await Permissions.askAsync(Permissions.CAMERA)).status;
+  }
+  if (cameraStatus !== 'granted') throw Error('Need permission');
+  const result = await ImagePicker.launchCameraAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing,
+    aspect,
+    quality: 1,
+  });
+  if (result.cancelled) {
+    return null;
+  }
+  return result;
 }
 
 export async function pickImage(
@@ -38,6 +72,13 @@ export async function pickImage(
     aspect: [3, 3],
   }
 ): Promise<null | ImageInfo> {
+  let libraryStatus = (await ImagePicker.getCameraRollPermissionsAsync())
+    .status;
+  if (libraryStatus !== 'granted') {
+    libraryStatus = (await Permissions.askAsync(Permissions.CAMERA_ROLL))
+      .status;
+  }
+  if (libraryStatus !== 'granted') throw Error('Need permission');
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     allowsEditing,
