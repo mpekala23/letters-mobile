@@ -61,7 +61,11 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   height: 275,
                   width: '100%',
                   borderRadius: 10,
-                  aspectRatio: 1,
+                  aspectRatio:
+                    props.composing.photo.width && props.composing.photo.height
+                      ? props.composing.photo.width /
+                        props.composing.photo.height
+                      : 1,
                 }}
               />
             )}

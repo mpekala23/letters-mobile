@@ -23,6 +23,8 @@ export interface Props {
   height: number;
   onSuccess?: (image: Photo) => void;
   onDelete?: () => void;
+  aspect: [number, number];
+  allowsEditing: boolean;
   initial: Photo;
 }
 
@@ -36,6 +38,8 @@ class PicUpload extends React.Component<Props, State> {
     shapeBackground: {},
     width: 100,
     height: 100,
+    aspect: [3, 3],
+    allowsEditing: true,
     initial: null,
   };
 
@@ -52,7 +56,10 @@ class PicUpload extends React.Component<Props, State> {
 
   selectImage = async (): Promise<void> => {
     try {
-      const result = await pickImage();
+      const result = await pickImage({
+        aspect: this.props.aspect,
+        allowsEditing: this.props.allowsEditing,
+      });
       if (result) {
         const image = {
           uri: result.uri,
@@ -87,7 +94,15 @@ class PicUpload extends React.Component<Props, State> {
       innerCircle = (
         <Image
           source={{ uri: image.uri }}
-          style={{ width: this.props.width, height: this.props.height }}
+          style={{
+            width:
+              image.width && image.height
+                ? (image.width / image.height) * this.props.height
+                : this.props.width,
+            height: this.props.height,
+            aspectRatio:
+              image.width && image.height ? image.width / image.height : 1,
+          }}
         />
       );
     } else {
@@ -107,7 +122,10 @@ class PicUpload extends React.Component<Props, State> {
       <TouchableOpacity
         style={[
           {
-            width: this.props.width,
+            width:
+              image && image.width && image.height
+                ? (image.width / image.height) * this.props.height
+                : this.props.width,
             height: this.props.height,
           },
           this.props.type === PicUploadTypes.Profile

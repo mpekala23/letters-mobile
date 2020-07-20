@@ -29,11 +29,19 @@ export async function getCameraRollPermission(): Promise<
   return status;
 }
 
-export async function pickImage(): Promise<null | ImageInfo> {
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
+export async function pickImage(
+  {
+    aspect,
+    allowsEditing,
+  }: { allowsEditing: boolean; aspect: [number, number] } = {
     allowsEditing: true,
     aspect: [3, 3],
+  }
+): Promise<null | ImageInfo> {
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing,
+    aspect,
     quality: 1,
   });
   if (result.cancelled) {
