@@ -65,7 +65,8 @@
     "next": "Next"
   },
   "ContactSelectorScreen": {
-    "yourLovedOnes": "Your loved ones"
+    "yourLovedOnes": "Your loved ones",
+    "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below."
   },
   "CreditsCard": {
     "credit": "Credit",
