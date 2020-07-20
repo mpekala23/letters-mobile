@@ -44,7 +44,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
       >
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          scrollEnabled={false}
           style={
             Object {
               "width": "100%",
@@ -156,11 +155,16 @@ exports[`Contact Info Screen should match snapshot 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#FF7171",
-                  "fontSize": 16,
-                  "marginTop": 10,
-                }
+                Array [
+                  Object {
+                    "fontFamily": "Poppins-Medium",
+                  },
+                  Object {
+                    "color": "#6D6D6D",
+                    "fontSize": 16,
+                    "marginTop": 10,
+                  },
+                ]
               }
             >
               Need help finding your inmate ID?

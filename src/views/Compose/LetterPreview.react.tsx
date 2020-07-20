@@ -72,7 +72,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
         style={[
           Typography.FONT_REGULAR,
           {
-            fontSize: 12,
+            fontSize: 16,
             color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
             margin: 10,
