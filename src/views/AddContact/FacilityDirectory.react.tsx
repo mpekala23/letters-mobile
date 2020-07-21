@@ -101,9 +101,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     this.loadValuesFromStore();
     setProfileOverride({
-      enabled:
-        this.state.selected !== null ||
-        (this.props.route.params && this.props.route.params.newFacility),
+      enabled: this.state.selected !== null,
       text: i18n.t('ContactInfoScreen.next'),
       action: () => {
         const contact = this.props.contactState.adding;
@@ -135,10 +133,15 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   loadValuesFromStore() {
     if (this.props.route.params && this.props.route.params.newFacility) {
-      this.setState({
-        manual: this.props.route.params.newFacility,
-        selected: this.props.route.params.newFacility,
-      });
+      this.setState(
+        {
+          manual: this.props.route.params.newFacility,
+          selected: this.props.route.params.newFacility,
+        },
+        () => {
+          this.setValid(true);
+        }
+      );
     } else {
       this.setState({ selected: this.props.contactState.adding.facility });
     }
