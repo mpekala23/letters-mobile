@@ -211,7 +211,11 @@
     "firstName": "First name",
     "lastName": "Last name",
     "cellPhone": "Cell phone",
-    "addressLine": "Address line",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "zipcode": "Zip Code",
+    "city": "City",
+    "state": "State",
     "joined": "Joined",
     "save": "Save",
     "logOut": "Log out"

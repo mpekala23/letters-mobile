@@ -3,6 +3,9 @@ import { Animated, Text, View } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { Prompts, getRandomPromptIx } from '@utils';
 import i18n from '@i18n';
+import Shuffle from '@assets/views/Compose/Shuffle';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 60;
@@ -88,6 +91,20 @@ class ComposeHeader extends React.Component<Props, State> {
           >
             {i18n.t('Compose.to')}: {this.props.recipientName}
           </Text>
+          {this.state.open ? (
+            <TouchableOpacity
+              onPress={() => {
+                this.setState((prevState) => {
+                  return {
+                    ...prevState,
+                    promptIx: (prevState.promptIx + 1) % Prompts.length,
+                  };
+                });
+              }}
+            >
+              <Icon svg={Shuffle} style={{ marginRight: 16 }} />
+            </TouchableOpacity>
+          ) : null}
           <Button
             buttonText={
               this.state.open

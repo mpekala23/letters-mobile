@@ -22,6 +22,7 @@ import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import moment from 'moment';
+import { STATES_DROPDOWN, Validation } from '@utils';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -45,7 +46,15 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   private phone = createRef<Input>();
 
-  private address = createRef<Input>();
+  private address1 = createRef<Input>();
+
+  private address2 = createRef<Input>();
+
+  private postal = createRef<Input>();
+
+  private city = createRef<Input>();
+
+  private phyState = createRef<Input>();
 
   private unsubscribeFocus: () => void;
 
@@ -107,7 +116,11 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.address2.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
       const user: User = {
         id: this.props.userState.user.id,
@@ -115,12 +128,12 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         lastName: this.lastName.current.state.value,
         email: this.props.userState.user.email,
         phone: this.phone.current.state.value,
-        address1: this.address.current.state.value,
-        address2: this.props.userState.user.address2,
+        address1: this.address1.current.state.value,
+        address2: this.address2.current.state.value,
         country: this.props.userState.user.country,
-        postal: this.props.userState.user.postal,
-        city: this.props.userState.user.city,
-        state: this.props.userState.user.state,
+        postal: this.postal.current.state.value,
+        city: this.city.current.state.value,
+        state: this.phyState.current.state.value,
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
         joined: this.props.userState.user.joined,
@@ -139,12 +152,24 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.address2.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
       this.firstName.current.set(this.props.userState.user.firstName);
       this.lastName.current.set(this.props.userState.user.lastName);
       this.phone.current.set(this.props.userState.user.phone);
-      this.address.current.set(this.props.userState.user.address1);
+      this.address1.current.set(this.props.userState.user.address1);
+      this.address2.current.set(
+        this.props.userState.user.address2
+          ? this.props.userState.user.address2
+          : ''
+      );
+      this.postal.current.set(this.props.userState.user.postal);
+      this.city.current.set(this.props.userState.user.city);
+      this.phyState.current.set(this.props.userState.user.state);
     }
   }
 
@@ -153,13 +178,19 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.phone.current.state.valid &&
-        this.address.current.state.valid;
+        this.address1.current.state.valid &&
+        this.postal.current.state.valid &&
+        this.city.current.state.valid &&
+        this.phyState.current.state.valid;
       this.setValid(result);
     }
   }
@@ -213,80 +244,96 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
               </Text>
             </View>
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.firstName')}
             </Text>
             <Input
               ref={this.firstName}
-              parentStyle={{ width: '100%' }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.firstName')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.lastName')}
             </Text>
             <Input
               ref={this.lastName}
-              parentStyle={{ width: '100%', marginBottom: 10 }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.lastName')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.phone}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.cellPhone')}
             </Text>
             <Input
               ref={this.phone}
-              parentStyle={{ width: '100%', marginBottom: 10 }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.cellPhone')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
-              nextInput={this.address}
+              nextInput={this.address1}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              {i18n.t('UpdateProfileScreen.addressLine')}
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.addressLine1')}
             </Text>
             <Input
-              ref={this.address}
-              placeholder={i18n.t('UpdateProfileScreen.addressLine')}
+              ref={this.address1}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.address2}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.addressLine2')}
+            </Text>
+            <Input
+              ref={this.address2}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
+              onValid={this.updateValid}
+              nextInput={this.city}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.city')}
+            </Text>
+            <Input
+              ref={this.city}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.city')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.phyState}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.state')}
+            </Text>
+            <Input
+              ref={this.phyState}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.state')}
+              required
+              validate={Validation.State}
+              options={STATES_DROPDOWN}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.postal}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.zipcode')}
+            </Text>
+            <Input
+              ref={this.postal}
+              placeholder={i18n.t('UpdateProfileScreen.zipcode')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}

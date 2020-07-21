@@ -393,7 +393,7 @@ export async function updateProfile(data: User): Promise<User> {
         country: data.country,
         postal: data.postal,
         city: data.city,
-        state: data.state,
+        state: STATE_TO_ABBREV[data.state],
         s3_img_url: newPhoto?.uri,
       }),
     }

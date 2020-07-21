@@ -13,4 +13,12 @@ export default StyleSheet.create({
     height: 48,
     marginTop: 16,
   },
+  baseText: {
+    fontSize: 14,
+    paddingBottom: 4,
+  },
+  parentStyle: {
+    width: '100%',
+    marginBottom: 10,
+  },
 });
