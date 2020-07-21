@@ -98,7 +98,9 @@ class Topbar extends React.Component<Props, State> {
         >
           {this.state.title}
         </Text>
-        <View style={{ position: 'absolute', right: 19 }}>{topRight}</View>
+        <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
+          {topRight}
+        </View>
       </View>
     );
   }

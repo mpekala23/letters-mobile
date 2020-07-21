@@ -37,8 +37,13 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       } catch (err) {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
-      if (store.getState().user.authInfo.isLoggedIn)
-        props.navigation.replace('ContactSelector');
+      if (store.getState().user.authInfo.isLoggedIn) {
+        if (store.getState().contact.existing.length === 0) {
+          props.navigation.replace('ContactInfo', {});
+        } else {
+          props.navigation.replace('ContactSelector');
+        }
+      }
     }
     doSetup();
   }, []);

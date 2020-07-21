@@ -165,7 +165,7 @@ function cleanUser(user: RawUser): User {
     address2: user.addr_line_2,
     postal: user.postal,
     city: user.city,
-    state: ABBREV_TO_STATE[user.state],
+    state: ABBREV_TO_STATE[user.state] || user.state,
     photo: {
       type: 'image/jpeg',
       uri: photoUri || '',
@@ -387,7 +387,7 @@ export async function updateProfile(data: User): Promise<User> {
         addr_line_1: data.address1,
         addr_line_2: data.address2,
         city: data.city,
-        state: data.state,
+        state: STATE_TO_ABBREV[data.state],
         postal: data.postal,
         country: 'United States of America',
         s3_img_url: newPhoto?.uri,

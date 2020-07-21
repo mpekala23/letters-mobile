@@ -48,7 +48,6 @@ export interface Props {
 }
 
 export interface State {
-  inputting: boolean;
   valid: boolean;
   stateToSearch: string;
 }
@@ -69,7 +68,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      inputting: false,
       valid: false,
       stateToSearch: '',
     };
@@ -183,8 +181,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
           >
             <ScrollView
               keyboardShouldPersistTaps="handled"
-              keyboardDismissMode="none"
-              scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
               <View style={{ width: '100%' }} />
@@ -196,11 +192,14 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   <Icon svg={Letter} style={{ margin: 16 }} />
                 </View>
                 <Text
-                  style={{
-                    color: Colors.PINK_DARKER,
-                    marginTop: 10,
-                    fontSize: 16,
-                  }}
+                  style={[
+                    Typography.FONT_MEDIUM,
+                    {
+                      color: Colors.GRAY_DARK,
+                      marginTop: 10,
+                      fontSize: 16,
+                    },
+                  ]}
                 >
                   {i18n.t('ContactInfoScreen.needHelpFindingYourInmateID')}
                 </Text>
@@ -212,7 +211,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     alignSelf: 'flex-start',
                   }}
                   onPress={() => {
-                    Linking.openURL('https://www.bop.gov/inmateloc/');
+                    Linking.openURL(
+                      'https://www.bop.gov/mobile/find_inmate/byname.jsp'
+                    );
                   }}
                 >
                   <Text style={{ color: Colors.PINK_DARKER }}>
@@ -235,12 +236,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.state')}
                   options={STATES_DROPDOWN}
                   validate={Validation.State}
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={() => {
                     if (
                       this.stateRef.current &&
@@ -259,12 +254,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.lastName}
@@ -274,12 +263,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.inmateNumber}
@@ -289,12 +272,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                   nextInput={this.relationship}
@@ -319,12 +296,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     i18n.t('ContactInfoScreen.friend'),
                     i18n.t('ContactInfoScreen.other'),
                   ]}
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setState({ valid: false })}
                 />
