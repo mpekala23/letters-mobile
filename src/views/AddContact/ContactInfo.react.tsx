@@ -183,6 +183,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
           >
             <ScrollView
               keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="none"
               scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >

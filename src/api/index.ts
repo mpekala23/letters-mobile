@@ -312,6 +312,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_1: data.address1,
       address_line_2: data.address2,
       city: data.city,
+      country: 'United States of America',
       state: STATE_TO_ABBREV[data.state],
       referer: data.referer,
       postal: data.postal,

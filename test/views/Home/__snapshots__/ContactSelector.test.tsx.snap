@@ -69,6 +69,7 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
       refreshing={false}
       removeClippedSubviews={false}
       scrollEventThrottle={50}
+      showsVerticalScrollIndicator={false}
       stickyHeaderIndices={Array []}
       updateCellsBatchingPeriod={50}
       viewabilityConfigCallbackPairs={Array []}

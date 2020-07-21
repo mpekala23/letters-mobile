@@ -43,6 +43,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
         }
       >
         <ScrollView
+          keyboardDismissMode="none"
           keyboardShouldPersistTaps="handled"
           scrollEnabled={false}
           style={
@@ -284,6 +285,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <ScrollView
                   keyboardShouldPersistTaps="always"
                   nestedScrollEnabled={true}
+                  scrollEnabled={true}
                   style={
                     Object {
                       "flex": 1,
@@ -1791,6 +1793,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <ScrollView
                   keyboardShouldPersistTaps="always"
                   nestedScrollEnabled={true}
+                  scrollEnabled={true}
                   style={
                     Object {
                       "flex": 1,
@@ -1865,6 +1868,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <ScrollView
                   keyboardShouldPersistTaps="always"
                   nestedScrollEnabled={true}
+                  scrollEnabled={true}
                   style={
                     Object {
                       "flex": 1,
@@ -1939,6 +1943,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <ScrollView
                   keyboardShouldPersistTaps="always"
                   nestedScrollEnabled={true}
+                  scrollEnabled={true}
                   style={
                     Object {
                       "flex": 1,
@@ -2013,6 +2018,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 <ScrollView
                   keyboardShouldPersistTaps="always"
                   nestedScrollEnabled={true}
+                  scrollEnabled={true}
                   style={
                     Object {
                       "flex": 1,

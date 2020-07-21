@@ -261,6 +261,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,
@@ -350,6 +351,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,
@@ -439,6 +441,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,
@@ -528,6 +531,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,

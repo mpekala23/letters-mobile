@@ -49,10 +49,13 @@ export interface State {
   currentHeight: Animated.Value;
   results: string[];
   shown: boolean;
+  scroll: boolean;
 }
 
 class Input extends React.Component<Props, State> {
   private inputRef = createRef<TextInput>();
+
+  private scrollRef = createRef<ScrollView>();
 
   static defaultProps = {
     parentStyle: {},
@@ -81,6 +84,7 @@ class Input extends React.Component<Props, State> {
       currentHeight: new Animated.Value(props.height),
       results: [],
       shown: false,
+      scroll: true,
     };
     if (this.state.valid) {
       props.onValid();
@@ -233,6 +237,7 @@ class Input extends React.Component<Props, State> {
       <ScrollView
         style={Styles.optionScroll}
         keyboardShouldPersistTaps="always"
+        scrollEnabled={this.state.scroll}
         nestedScrollEnabled
       >
         {results.map((result: string, index: number) => {
