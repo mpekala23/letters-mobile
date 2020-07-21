@@ -143,6 +143,8 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         inmateNumber: this.props.contact.inmateNumber,
         relationship: this.props.contact.relationship,
         facility,
+        dorm: this.dorm.current?.state.value,
+        unit: this.unit.current?.state.value,
         photo: this.state.image ? this.state.image : undefined,
       };
       try {
@@ -160,12 +162,20 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
+      this.unit.current &&
+      this.dorm.current &&
       this.props.contact.facility
     ) {
       this.firstName.current.set(this.props.contact.firstName);
       this.lastName.current.set(this.props.contact.lastName);
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
+      this.dorm.current.set(
+        this.props.contact.dorm ? this.props.contact.dorm : ''
+      );
+      this.unit.current.set(
+        this.props.contact.unit ? this.props.contact.unit : ''
+      );
     }
   }
 
@@ -252,15 +262,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.lastName')}
             </Text>
             <Input
@@ -271,15 +273,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.facilityName}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.addressLine1')}
             </Text>
             <Input
@@ -290,15 +284,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.facilityAddress}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.addressLine2')}
             </Text>
             <Input
@@ -308,11 +294,28 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
-
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                Styles.baseText,
+                { color: Colors.GRAY_DARK },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.optionalUnit')}
+            </Text>
             <Input
               ref={this.unit}
               placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
             />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                Styles.baseText,
+                { color: Colors.GRAY_DARK },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.optionalDorm')}
+            </Text>
             <Input
               ref={this.dorm}
               placeholder={i18n.t('UpdateContactScreen.optionalDorm')}

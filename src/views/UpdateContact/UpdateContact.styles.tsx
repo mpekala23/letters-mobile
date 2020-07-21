@@ -31,4 +31,8 @@ export default StyleSheet.create({
     borderColor: 'white',
     borderRadius: 65,
   },
+  baseText: {
+    fontSize: 14,
+    paddingBottom: 4,
+  },
 });

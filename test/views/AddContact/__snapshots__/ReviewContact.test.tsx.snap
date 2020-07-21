@@ -906,7 +906,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               ]
             }
           >
-            Next
+            Add Contact
           </Text>
           <View
             style={

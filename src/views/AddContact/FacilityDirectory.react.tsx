@@ -27,7 +27,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import CommonStyles from './AddContact.styles';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -56,6 +56,8 @@ export interface State {
 class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -75,18 +77,63 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   async componentDidMount() {
-    this.onNavigationFocus();
+    this.loadValuesFromStore();
     await this.refreshFacilities();
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
+
   onNavigationFocus() {
+    this.loadValuesFromStore();
+    setProfileOverride({
+      enabled:
+        this.state.selected !== null ||
+        (this.props.route.params && this.props.route.params.newFacility),
+      text: i18n.t('ContactInfoScreen.next'),
+      action: () => {
+        const contact = this.props.contactState.adding;
+        contact.facility = this.state.selected;
+        this.props.setAdding(contact);
+        this.props.navigation.setParams({
+          newFacility: null,
+        });
+        this.props.navigation.navigate('ReviewContact');
+      },
+    });
+  }
+
+  setValid(val: boolean) {
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: () => {
+        const contact = this.props.contactState.adding;
+        contact.facility = this.state.selected;
+        this.props.setAdding(contact);
+        this.props.navigation.setParams({
+          newFacility: null,
+        });
+        this.props.navigation.navigate('ReviewContact');
+      },
+    });
+  }
+
+  loadValuesFromStore() {
     if (this.props.route.params && this.props.route.params.newFacility) {
       this.setState({
         manual: this.props.route.params.newFacility,
@@ -144,8 +191,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={() => {
           if (this.state.selected === item) {
             this.setState({ selected: null });
+            this.setValid(false);
           } else {
             this.setState({ selected: item });
+            this.setValid(true);
           }
         }}
         key={item.name + item.address}
@@ -285,23 +334,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             {this.renderFooter()}
             <View style={{ width: '100%', height: 24 }} />
           </ScrollView>
-          <View style={CommonStyles.bottomButtonContainer}>
-            <Button
-              onPress={() => {
-                const contact = this.props.contactState.adding;
-                contact.facility = this.state.selected;
-                this.props.setAdding(contact);
-                this.props.navigation.setParams({
-                  newFacility: null,
-                });
-                this.props.navigation.navigate('ReviewContact');
-              }}
-              buttonText={i18n.t('ContactInfoScreen.next')}
-              enabled={this.state.selected !== null}
-              containerStyle={CommonStyles.bottomButton}
-              showNextIcon
-            />
-          </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>
     );
