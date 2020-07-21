@@ -39,9 +39,9 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       }
       if (store.getState().user.authInfo.isLoggedIn) {
         if (store.getState().contact.existing.length === 0) {
-          props.navigation.replace('ContactInfo');
+          props.navigation.navigate('ContactInfo');
         } else {
-          props.navigation.replace('ContactSelector');
+          props.navigation.navigate('ContactSelector');
         }
       }
     }
