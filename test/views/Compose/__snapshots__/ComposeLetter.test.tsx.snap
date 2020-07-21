@@ -244,7 +244,10 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                  },
                 ]
               }
               testID="clickable"

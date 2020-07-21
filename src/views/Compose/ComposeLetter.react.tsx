@@ -208,6 +208,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                   type={PicUploadTypes.Media}
                   width={180}
                   height={200}
+                  allowsEditing={false}
+                  shapeBackground={{ left: 10, bottom: 10 }}
                 />
               </Animated.View>
             </Input>
