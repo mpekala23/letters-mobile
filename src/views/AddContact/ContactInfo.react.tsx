@@ -106,10 +106,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     }
 
     if (this.stateRef.current) {
-      if (addingContact.facility)
-        this.stateRef.current.set(addingContact.facility.state);
-      else if (this.props.route.params && this.props.route.params.phyState) {
+      if (this.props.route.params && this.props.route.params.phyState) {
         this.stateRef.current.set(this.props.route.params.phyState);
+      } else if (addingContact.facility) {
+        this.stateRef.current.set(addingContact.facility.state);
       } else {
         this.stateRef.current.set('');
       }
@@ -349,6 +349,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                       facility: this.props.contactState.adding.facility,
                     };
                     this.props.setAdding(contact);
+                    this.props.navigation.setParams({
+                      phyState: this.stateRef.current.state.value,
+                    });
                     this.props.navigation.navigate('FacilityDirectory', {
                       phyState: this.stateRef.current.state.value,
                     });

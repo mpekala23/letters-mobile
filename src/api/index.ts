@@ -386,9 +386,10 @@ export async function updateProfile(data: User): Promise<User> {
         phone: data.phone,
         addr_line_1: data.address1,
         addr_line_2: data.address2,
-        postal: data.postal,
         city: data.city,
         state: data.state,
+        postal: data.postal,
+        country: 'United States of America',
         s3_img_url: newPhoto?.uri,
       }),
     }
