@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 import { Colors } from '@styles';
+import { sleep } from '@utils';
 import Next from '@assets/components/Button/Next';
 
 const setup = (propOverrides = {}) => {
@@ -87,5 +88,16 @@ describe('Button component', () => {
       showNextIcon: true,
     });
     expect(getByTestId('nextIcon').children[0].props.xml).toBe(Next);
+  });
+
+  it('should implement blocking', () => {
+    const { getByTestId, getByText } = setup({
+      blocking: true,
+      onPress: async () => {
+        await sleep(1000);
+      },
+    });
+    fireEvent.press(getByText('press me'));
+    expect(getByTestId('loading')).toBeDefined();
   });
 });

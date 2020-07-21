@@ -16,7 +16,7 @@ jest.mock('moment', () => () => ({
 }));
 
 const setup = (contactOverrides = []) => {
-  const navigation = { navigate: jest.fn() };
+  const navigation = { replace: jest.fn() };
   const contact = {
     firstName: 'First',
     lastName: 'Last',
@@ -62,7 +62,7 @@ describe('ReferFriends screen', () => {
     const { navigation, getByText } = setup();
     const doneButton = getByText('Done');
     fireEvent.press(doneButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('SingleContact');
+    expect(navigation.replace).toHaveBeenCalledWith('SingleContact');
   });
 
   it('should make api call on share press', async () => {
