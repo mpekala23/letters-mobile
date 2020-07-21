@@ -255,17 +255,15 @@ export async function uploadImage(
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),
     type: 'image/jpeg',
-    path:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
     uri:
       Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
   };
 
-  data.append('img', photo);
+  data.append('file', photo);
   data.append('type', type);
 
   const response = await fetchTimeout(
-    url.resolve(GENERAL_URL, 'image/upload'),
+    url.resolve(GENERAL_URL, 'file/upload'),
     {
       method: 'POST',
       body: data,

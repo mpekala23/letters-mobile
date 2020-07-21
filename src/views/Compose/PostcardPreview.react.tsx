@@ -180,7 +180,9 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
           } catch (err) {
             props.setDraft(true);
             if (err.message === 'Unable to upload image.') {
-              dropdownError({ message: i18n.t('unableToUploadLetterPhoto') });
+              dropdownError({
+                message: i18n.t('Error.unableToUploadLetterPhoto'),
+              });
             } else {
               dropdownError({
                 message: i18n.t('Error.requestIncomplete'),
