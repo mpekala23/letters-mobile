@@ -277,6 +277,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               alignItems: 'center',
             }}
             scrollEnabled
+            overScrollMode="always"
             refreshControl={refresh}
           >
             <View style={{ width: '100%', height: 24 }} />

@@ -136,6 +136,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           renderItem={this.renderItem}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           keyExtractor={(item) => item.inmateNumber.toString()}
+          showsVerticalScrollIndicator={false}
           onRefresh={async () => {
             this.setState({ refreshing: true });
             try {

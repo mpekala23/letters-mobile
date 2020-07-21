@@ -208,6 +208,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,
@@ -226,6 +227,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
             "justifyContent": "center",
           }
         }
+        overScrollMode="always"
         refreshControl={
           <RefreshControl
             onRefresh={[Function]}

@@ -109,7 +109,6 @@ export async function fetchAuthenticated(
       phone: tokenBody.data.phone,
       address1: tokenBody.data.addr_line_1,
       address2: tokenBody.data.addr_line_2 || '',
-      country: tokenBody.data.country,
       postal: tokenBody.data.postal,
       city: tokenBody.data.city,
       state: tokenBody.data.state,
@@ -164,10 +163,9 @@ function cleanUser(user: RawUser): User {
     phone: user.phone,
     address1: user.addr_line_1,
     address2: user.addr_line_2,
-    country: user.country,
     postal: user.postal,
     city: user.city,
-    state: ABBREV_TO_STATE[user.state],
+    state: ABBREV_TO_STATE[user.state] || user.state,
     photo: {
       type: 'image/jpeg',
       uri: photoUri || '',
@@ -257,17 +255,15 @@ export async function uploadImage(
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),
     type: 'image/jpeg',
-    path:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
     uri:
       Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
   };
 
-  data.append('img', photo);
+  data.append('file', photo);
   data.append('type', type);
 
   const response = await fetchTimeout(
-    url.resolve(GENERAL_URL, 'image/upload'),
+    url.resolve(GENERAL_URL, 'file/upload'),
     {
       method: 'POST',
       body: data,
@@ -314,8 +310,8 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_1: data.address1,
       address_line_2: data.address2,
       city: data.city,
+      country: 'United States of America',
       state: STATE_TO_ABBREV[data.state],
-      country: data.country,
       referer: data.referer,
       postal: data.postal,
       phone: data.phone,
@@ -390,10 +386,10 @@ export async function updateProfile(data: User): Promise<User> {
         phone: data.phone,
         addr_line_1: data.address1,
         addr_line_2: data.address2,
-        country: data.country,
-        postal: data.postal,
         city: data.city,
         state: STATE_TO_ABBREV[data.state],
+        postal: data.postal,
+        country: 'United States of America',
         s3_img_url: newPhoto?.uri,
       }),
     }

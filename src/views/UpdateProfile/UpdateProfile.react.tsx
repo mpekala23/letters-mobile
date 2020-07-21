@@ -130,7 +130,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         phone: this.phone.current.state.value,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
-        country: this.props.userState.user.country,
         postal: this.postal.current.state.value,
         city: this.city.current.state.value,
         state: this.phyState.current.state.value,

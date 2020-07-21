@@ -36,7 +36,6 @@ describe('Register screen', () => {
       '4324324432'
     );
     fireEvent.changeText(getByPlaceholderText('Address Line 1'), 'Somewhere');
-    fireEvent.changeText(getByPlaceholderText('Country'), 'USA');
     fireEvent.changeText(getByPlaceholderText('Zip Code'), '12345');
     fireEvent.changeText(getByPlaceholderText('City'), 'New Haven');
     fireEvent.changeText(getByPlaceholderText('State'), 'Iowa');

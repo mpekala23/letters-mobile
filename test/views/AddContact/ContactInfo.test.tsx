@@ -38,7 +38,6 @@ const setup = (
     email: 'team@ameelio.org',
     cell: '4324324432',
     address1: 'Somewhere',
-    country: 'USA',
     zipcode: '12345',
     city: 'New Haven',
     state: 'CT',
