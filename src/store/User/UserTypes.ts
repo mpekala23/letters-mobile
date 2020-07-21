@@ -14,7 +14,6 @@ export interface UserRegisterInfo {
   phone: string;
   address1: string;
   address2?: string;
-  country: string;
   postal: string;
   city: string;
   state: string;
@@ -38,7 +37,6 @@ export interface User {
   phone: string;
   address1: string;
   address2?: string;
-  country: string;
   postal: string;
   city: string;
   state: string;

@@ -57,13 +57,11 @@ class RegisterScreen extends React.Component<Props, State> {
 
   private address2 = createRef<Input>();
 
-  private country = createRef<Input>();
-
-  private postal = createRef<Input>();
-
   private city = createRef<Input>();
 
   private phyState = createRef<Input>();
+
+  private postal = createRef<Input>();
 
   private email = createRef<Input>();
 
@@ -87,7 +85,6 @@ class RegisterScreen extends React.Component<Props, State> {
     if (this.lastName.current) this.lastName.current.set('Ameelio');
     if (this.phone.current) this.phone.current.set('4324324432');
     if (this.address1.current) this.address1.current.set('Somewhere');
-    if (this.country.current) this.country.current.set('USA');
     if (this.postal.current) this.postal.current.set('12345');
     if (this.city.current) this.city.current.set('New Haven');
     if (this.phyState.current) this.phyState.current.set('Connecticut');
@@ -105,7 +102,6 @@ class RegisterScreen extends React.Component<Props, State> {
       this.lastName.current &&
       this.phone.current &&
       this.address1.current &&
-      this.country.current &&
       this.postal.current &&
       this.city.current &&
       this.phyState.current &&
@@ -119,7 +115,6 @@ class RegisterScreen extends React.Component<Props, State> {
         this.lastName.current.state.valid &&
         this.phone.current.state.valid &&
         this.address1.current.state.valid &&
-        this.country.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
         this.phyState.current.state.valid &&
@@ -139,7 +134,6 @@ class RegisterScreen extends React.Component<Props, State> {
       this.phone.current &&
       this.address1.current &&
       this.address2.current &&
-      this.country.current &&
       this.postal.current &&
       this.city.current &&
       this.phyState.current &&
@@ -154,7 +148,6 @@ class RegisterScreen extends React.Component<Props, State> {
         phone: this.phone.current.state.value,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
-        country: this.country.current.state.value,
         postal: this.postal.current.state.value,
         city: this.city.current.state.value,
         state: this.phyState.current.state.value,
@@ -282,25 +275,6 @@ class RegisterScreen extends React.Component<Props, State> {
             ref={this.address2}
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t('RegisterScreen.addressLine2')}
-            nextInput={this.country}
-          />
-          <Input
-            ref={this.country}
-            parentStyle={Styles.fullWidth}
-            placeholder={i18n.t('RegisterScreen.country')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.postal}
-          />
-          <Input
-            ref={this.postal}
-            parentStyle={Styles.fullWidth}
-            placeholder={i18n.t('RegisterScreen.zipcode')}
-            required
-            validate={Validation.Postal}
-            onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
             nextInput={this.city}
           />
           <Input
@@ -319,6 +293,16 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.State}
             options={STATES_DROPDOWN}
             required
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.postal}
+          />
+          <Input
+            ref={this.postal}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.zipcode')}
+            required
+            validate={Validation.Postal}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.email}
