@@ -291,16 +291,6 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.postal}
-          />
-          <Input
-            ref={this.postal}
-            parentStyle={Styles.fullWidth}
-            placeholder={i18n.t('RegisterScreen.zipcode')}
-            required
-            validate={Validation.Postal}
-            onValid={this.updateValid}
-            onInvalid={() => this.setState({ valid: false })}
             nextInput={this.city}
           />
           <Input
@@ -319,6 +309,16 @@ class RegisterScreen extends React.Component<Props, State> {
             validate={Validation.State}
             options={STATES_DROPDOWN}
             required
+            onValid={this.updateValid}
+            onInvalid={() => this.setState({ valid: false })}
+            nextInput={this.postal}
+          />
+          <Input
+            ref={this.postal}
+            parentStyle={Styles.fullWidth}
+            placeholder={i18n.t('RegisterScreen.zipcode')}
+            required
+            validate={Validation.Postal}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.email}

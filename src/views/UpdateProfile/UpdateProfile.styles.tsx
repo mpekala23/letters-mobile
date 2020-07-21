@@ -17,4 +17,8 @@ export default StyleSheet.create({
     fontSize: 14,
     paddingBottom: 4,
   },
+  parentStyle: {
+    width: '100%',
+    marginBottom: 10,
+  },
 });
