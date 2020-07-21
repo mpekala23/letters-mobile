@@ -279,7 +279,10 @@
     "collapse": "Collapse",
     "needIdeas": "Need Ideas?",
     "letterMustHaveContent": "Your letter can't be empty.",
-    "postcardMustHaveContent": "Your postcard can't be empty"
+    "postcardMustHaveContent": "Your postcard can't be empty",
+    "uploadAnImage": "Upload an Image",
+    "takePhoto": "Take photo",
+    "uploadExistingPhoto": "Upload existing photo"
   },
   "Notifs": {
     "your": "Your",

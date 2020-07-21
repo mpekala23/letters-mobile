@@ -1,12 +1,19 @@
 import React from 'react';
-import { TouchableOpacity, ViewStyle, View, Image } from 'react-native';
+import {
+  TouchableOpacity,
+  ViewStyle,
+  View,
+  Image,
+  Linking,
+} from 'react-native';
 import i18n from '@i18n';
-import { pickImage } from '@utils';
+import { pickImage, takeImage } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Photo } from 'types';
 import Camera from '@assets/views/PicUpload/Camera';
 import Placeholder from '@assets/views/PicUpload/Placeholder';
 import Delete from '@assets/views/PicUpload/Delete';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 
@@ -23,6 +30,8 @@ export interface Props {
   height: number;
   onSuccess?: (image: Photo) => void;
   onDelete?: () => void;
+  aspect: [number, number];
+  allowsEditing: boolean;
   initial: Photo;
 }
 
@@ -36,6 +45,8 @@ class PicUpload extends React.Component<Props, State> {
     shapeBackground: {},
     width: 100,
     height: 100,
+    aspect: [3, 3],
+    allowsEditing: true,
     initial: null,
   };
 
@@ -51,27 +62,94 @@ class PicUpload extends React.Component<Props, State> {
   };
 
   selectImage = async (): Promise<void> => {
-    try {
-      const result = await pickImage();
-      if (result) {
-        const image = {
-          uri: result.uri,
-          type: 'image',
-          width: result.width,
-          height: result.height,
-        };
-        this.setState(
-          {
-            image,
+    popupAlert({
+      title: i18n.t('Compose.uploadAnImage'),
+      buttons: [
+        {
+          text: i18n.t('Compose.takePhoto'),
+          onPress: async () => {
+            try {
+              const result = await takeImage({
+                aspect: this.props.aspect,
+                allowsEditing: this.props.allowsEditing,
+              });
+              if (result) {
+                const image = {
+                  uri: result.uri,
+                  type: 'image',
+                  width: result.width,
+                  height: result.height,
+                };
+                this.setState(
+                  {
+                    image,
+                  },
+                  () => {
+                    if (this.props.onSuccess) this.props.onSuccess(image);
+                  }
+                );
+              }
+            } catch (err) {
+              popupAlert({
+                title: i18n.t('Permission.photos'),
+                buttons: [
+                  {
+                    text: i18n.t('Alert.goToSettings'),
+                    onPress: () => Linking.openURL('app-settings:'),
+                  },
+                  {
+                    text: i18n.t('Alert.okay'),
+                    reverse: true,
+                  },
+                ],
+              });
+            }
           },
-          () => {
-            if (this.props.onSuccess) this.props.onSuccess(image);
-          }
-        );
-      }
-    } catch (err) {
-      dropdownError({ message: i18n.t('Permission.photos') });
-    }
+        },
+        {
+          text: i18n.t('Compose.uploadExistingPhoto'),
+          reverse: true,
+          onPress: async () => {
+            try {
+              const result = await pickImage({
+                aspect: this.props.aspect,
+                allowsEditing: this.props.allowsEditing,
+              });
+              if (result) {
+                const image = {
+                  uri: result.uri,
+                  type: 'image',
+                  width: result.width,
+                  height: result.height,
+                };
+                this.setState(
+                  {
+                    image,
+                  },
+                  () => {
+                    if (this.props.onSuccess) this.props.onSuccess(image);
+                  }
+                );
+              }
+            } catch (err) {
+              popupAlert({
+                title: i18n.t('Permission.photos'),
+                buttons: [
+                  {
+                    text: i18n.t('Alert.goToSettings'),
+                    onPress: () => Linking.openURL('app-settings:'),
+                  },
+                  {
+                    text: i18n.t('Alert.okay'),
+                    reverse: true,
+                  },
+                ],
+              });
+            }
+          },
+        },
+      ],
+    });
   };
 
   deleteImage = (): void => {
@@ -87,7 +165,15 @@ class PicUpload extends React.Component<Props, State> {
       innerCircle = (
         <Image
           source={{ uri: image.uri }}
-          style={{ width: this.props.width, height: this.props.height }}
+          style={{
+            width:
+              image.width && image.height
+                ? (image.width / image.height) * this.props.height
+                : this.props.width,
+            height: this.props.height,
+            aspectRatio:
+              image.width && image.height ? image.width / image.height : 1,
+          }}
         />
       );
     } else {
@@ -107,7 +193,10 @@ class PicUpload extends React.Component<Props, State> {
       <TouchableOpacity
         style={[
           {
-            width: this.props.width,
+            width:
+              image && image.width && image.height
+                ? (image.width / image.height) * this.props.height
+                : this.props.width,
             height: this.props.height,
           },
           this.props.type === PicUploadTypes.Profile
