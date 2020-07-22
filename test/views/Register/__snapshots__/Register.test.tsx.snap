@@ -2941,6 +2941,9 @@ exports[`Register screen should match snapshot 1`] = `
               },
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

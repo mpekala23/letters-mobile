@@ -96,6 +96,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: true,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 
@@ -108,6 +109,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 

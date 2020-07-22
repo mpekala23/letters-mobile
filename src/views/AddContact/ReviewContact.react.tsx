@@ -349,6 +349,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           </View>
           <View style={CommonStyles.bottomButtonContainer}>
             <Button
+              blocking
               onPress={this.doAddContact}
               buttonText={i18n.t('ReviewContactScreen.addContact')}
               enabled={this.state.valid}

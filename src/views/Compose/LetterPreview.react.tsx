@@ -98,6 +98,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
       <Button
         buttonText={i18n.t('Compose.send')}
+        blocking
         onPress={async () => {
           try {
             props.setDraft(false);
@@ -187,7 +188,10 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
               },
               hoursTill8Tomorrow() / 24 + 14 // TODO: Replace with notification from backend when ready + not beta testing
             );
-            props.navigation.navigate('ReferFriends');
+            props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'ReferFriends' }],
+            });
           } catch (err) {
             props.setDraft(true);
             if (err.message === 'Unable to upload image.') {

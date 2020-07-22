@@ -222,6 +222,9 @@ exports[`First Letter screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -275,6 +278,9 @@ exports[`First Letter screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

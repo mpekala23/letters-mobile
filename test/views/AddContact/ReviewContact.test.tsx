@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ReviewContactScreen } from '@views';
-import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { render, toJSON, fireEvent, act } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { addContact } from '@api';
+import { sleep } from '@utils';
 
 const mockStore = configureStore([]);
 
@@ -107,9 +108,13 @@ describe('Review Contact Screen', () => {
     expect(getByPlaceholderText('Last Name').props.value).toBe('Last test');
   });
 
-  it('should make an api call when add contact button is pressed', () => {
+  it('should make an api call when add contact button is pressed', async () => {
+    jest.useRealTimers();
     const { getByText } = setup();
-    fireEvent.press(getByText('Add Contact'));
+    await act(async () => {
+      fireEvent.press(getByText('Add Contact'));
+      await sleep(10);
+    });
     expect(addContact).toHaveBeenCalledTimes(1);
   });
 });

@@ -89,7 +89,15 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           <Button
             buttonText={i18n.t('ReferFriendsScreen.done')}
             reverse
-            onPress={() => props.navigation.navigate('SingleContact')}
+            onPress={() => {
+              props.navigation.reset({
+                index: 0,
+                routes: [
+                  { name: 'ContactSelector' },
+                  { name: 'SingleContact' },
+                ],
+              });
+            }}
             containerStyle={{ width: '100%' }}
           />
         </View>

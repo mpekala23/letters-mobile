@@ -459,6 +459,9 @@ exports[`Login screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Bold",
                     },
                     Object {},
+                    Object {
+                      "opacity": 1,
+                    },
                   ]
                 }
               >

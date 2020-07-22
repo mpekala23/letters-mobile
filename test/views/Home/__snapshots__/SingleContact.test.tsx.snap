@@ -360,6 +360,9 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   "fontSize": 20,
                 },
                 Object {},
+                Object {
+                  "opacity": 1,
+                },
               ]
             }
           >

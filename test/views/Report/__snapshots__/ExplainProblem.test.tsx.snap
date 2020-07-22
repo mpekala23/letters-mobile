@@ -128,6 +128,9 @@ exports[`Explain Problem screen should match snapshot 1`] = `
               Object {},
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
