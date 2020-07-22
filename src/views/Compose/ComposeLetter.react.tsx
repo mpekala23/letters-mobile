@@ -8,7 +8,13 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { ComposeHeader, Input, Button, PicUpload, Icon } from '@components';
+import {
+  ComposeHeader,
+  Input,
+  ComposeTools,
+  PicUpload,
+  Icon,
+} from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
@@ -213,59 +219,11 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                 />
               </Animated.View>
             </Input>
-            <Animated.View
-              style={{
-                opacity: this.state.keyboardOpacity,
-                position: 'absolute',
-                bottom: 0,
-                width: WINDOW_WIDTH,
-              }}
-            >
-              <TouchableOpacity
-                activeOpacity={1.0}
-                style={Styles.keyboardButtonContainer}
-              >
-                <View style={[Styles.keyboardButtonItem, { flex: 1 }]}>
-                  <Text
-                    style={[
-                      Typography.FONT_REGULAR,
-                      {
-                        color:
-                          this.state.wordsLeft >= 0
-                            ? Colors.GRAY_DARK
-                            : Colors.AMEELIO_RED,
-                      },
-                    ]}
-                  >
-                    {this.state.wordsLeft} left
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
-                  onPress={async () => {
-                    Keyboard.dismiss();
-                    if (this.picRef.current) {
-                      await this.picRef.current.selectImage();
-                    }
-                  }}
-                >
-                  <Icon svg={ImageIcon} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
-                  onPress={Keyboard.dismiss}
-                >
-                  <Text
-                    style={[
-                      Typography.FONT_REGULAR,
-                      { color: Colors.AMEELIO_BLUE },
-                    ]}
-                  >
-                    <Icon svg={CheckIcon} />
-                  </Text>
-                </TouchableOpacity>
-              </TouchableOpacity>
-            </Animated.View>
+            <ComposeTools
+              keyboardOpacity={this.state.keyboardOpacity}
+              picRef={this.picRef}
+              wordsLeft={this.state.wordsLeft}
+            />
           </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>
