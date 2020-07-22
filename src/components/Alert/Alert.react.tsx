@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { Text, View, ViewStyle, TextStyle } from 'react-native';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
 import Styles, { GRAY_BACK } from './Alert.styles';
 import { setStatusBackground } from '../Statusbar/Statusbar.react';
@@ -49,7 +49,11 @@ class Alert extends React.Component<Record<string, unknown>, State> {
               <Text
                 style={[
                   Typography.FONT_REGULAR,
-                  { fontSize: 16, textAlign: 'center' },
+                  {
+                    fontSize: 16,
+                    textAlign: 'center',
+                    color: Colors.GRAY_DARK,
+                  },
                 ]}
               >
                 {this.state.current.message}

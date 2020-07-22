@@ -353,6 +353,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                 "flexDirection": "row",
                 "height": 50,
                 "justifyContent": "space-between",
+                "paddingBottom": 5,
                 "width": "100%",
               }
             }

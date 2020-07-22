@@ -10,11 +10,12 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, Icon } from '@components';
+import { Input, Icon } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
 import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -49,6 +50,8 @@ class AddManuallyScreen extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -56,20 +59,69 @@ class AddManuallyScreen extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onAddFacility = this.onAddFacility.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentWillUnmount(): void {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
+
   onNavigationFocus(): void {
-    if (this.facilityState.current)
-      this.facilityState.current.set(this.props.route.params.phyState);
+    this.loadValuesFromStore();
+    setProfileOverride({
+      enabled: this.state.valid,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onAddFacility,
+    });
+  }
+
+  onAddFacility(): void {
+    if (
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.facilityCity.current &&
+      this.facilityPostal.current &&
+      this.facilityState.current
+    ) {
+      const facility: Facility = {
+        name: this.facilityName.current.state.value,
+        type: PrisonTypes.Federal,
+        address: this.facilityAddress.current.state.value,
+        city: this.facilityCity.current.state.value,
+        state: this.facilityState.current.state.value,
+        postal: this.facilityPostal.current.state.value,
+      };
+      this.props.navigation.navigate('FacilityDirectory', {
+        newFacility: facility,
+        phyState: this.facilityState.current.state.value,
+      });
+    } else {
+      this.props.navigation.navigate('FacilityDirectory');
+    }
+  }
+
+  setValid(val: boolean): void {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onAddFacility,
+    });
   }
 
   updateValid(): void {
@@ -86,8 +138,13 @@ class AddManuallyScreen extends React.Component<Props, State> {
         this.facilityCity.current.state.valid &&
         this.facilityState.current.state.valid &&
         this.facilityPostal.current.state.valid;
-      this.setState({ valid: result });
+      this.setValid(result);
     }
+  }
+
+  loadValuesFromStore(): void {
+    if (this.facilityState.current)
+      this.facilityState.current.set(this.props.route.params.phyState);
   }
 
   render(): JSX.Element {
@@ -137,7 +194,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityAddress}
                 />
                 <Input
@@ -152,7 +209,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityCity}
                 />
                 <Input
@@ -167,7 +224,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityState}
                 />
                 <Input
@@ -184,7 +241,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   validate={Validation.State}
                   options={STATES_DROPDOWN}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityPostal}
                 />
                 <Input
@@ -200,42 +257,10 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                 />
               </View>
             </ScrollView>
-          </View>
-          <View style={CommonStyles.bottomButtonContainer}>
-            <Button
-              onPress={() => {
-                if (
-                  this.facilityName.current &&
-                  this.facilityAddress.current &&
-                  this.facilityCity.current &&
-                  this.facilityPostal.current &&
-                  this.facilityState.current
-                ) {
-                  const facility: Facility = {
-                    name: this.facilityName.current.state.value,
-                    type: PrisonTypes.Federal,
-                    address: this.facilityAddress.current.state.value,
-                    city: this.facilityCity.current.state.value,
-                    state: this.facilityState.current.state.value,
-                    postal: this.facilityPostal.current.state.value,
-                  };
-                  this.props.navigation.navigate('FacilityDirectory', {
-                    newFacility: facility,
-                    phyState: this.facilityState.current.state.value,
-                  });
-                } else {
-                  this.props.navigation.navigate('FacilityDirectory');
-                }
-              }}
-              buttonText={i18n.t('ContactInfoScreen.next')}
-              enabled={this.state.valid}
-              containerStyle={CommonStyles.bottomButton}
-              showNextIcon
-            />
           </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>

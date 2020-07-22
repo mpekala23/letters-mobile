@@ -353,6 +353,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 "flexDirection": "row",
                 "height": 50,
                 "justifyContent": "space-between",
+                "paddingBottom": 5,
                 "width": "100%",
               }
             }
@@ -496,7 +497,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Regular",
                     },
                     Object {
-                      "color": "#6D6D6D",
+                      "color": "#448AF3",
                     },
                   ]
                 }

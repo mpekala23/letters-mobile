@@ -67,7 +67,7 @@ describe('Review Contact Screen', () => {
 
   it('should have add contact button be enabled only when all fields are valid', () => {
     const { getByPlaceholderText, getByText } = setup();
-    const nextButton = getByText('Next');
+    const nextButton = getByText('Add Contact');
     expect(nextButton.parentNode.props.style[1]).toEqual({});
     fireEvent.changeText(getByPlaceholderText('State'), '');
     expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
@@ -109,7 +109,7 @@ describe('Review Contact Screen', () => {
 
   it('should make an api call when add contact button is pressed', () => {
     const { getByText } = setup();
-    fireEvent.press(getByText('Next'));
+    fireEvent.press(getByText('Add Contact'));
     expect(addContact).toHaveBeenCalledTimes(1);
   });
 });

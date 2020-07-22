@@ -86,6 +86,7 @@ class Topbar extends React.Component<Props, State> {
                   fontSize: 16,
                 },
               ]}
+              testID="topRightText"
             >
               {this.state.profileOverride.text}
             </Text>
