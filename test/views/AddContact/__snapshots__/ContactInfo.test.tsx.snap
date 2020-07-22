@@ -161,13 +161,13 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                   },
                   Object {
                     "color": "#6D6D6D",
-                    "fontSize": 16,
-                    "marginTop": 10,
+                    "fontSize": 15,
+                    "marginTop": 8,
                   },
                 ]
               }
             >
-              Need help finding your inmate ID?
+              Need help finding your loved one's inmate ID?
             </Text>
             <TouchableOpacity
               activeOpacity={0.2}

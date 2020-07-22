@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
@@ -61,7 +61,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           imageUri={contact.photo?.uri}
           type={ProfilePicTypes.SingleContact}
         />
-        <View style={{ flex: 0, marginBottom: 100 }}>
+        <View style={{ flex: 0, marginBottom: 95 }}>
           <Text
             style={[
               Typography.FONT_BOLD,
@@ -70,21 +70,13 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           >
             {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWay')}
           </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              {
-                textAlign: 'center',
-                color: Colors.GRAY_DARK,
-                fontSize: 14,
-                marginTop: 8,
-              },
-            ]}
-          >
-            {i18n.t('ReferFriendsScreen.yourLetterIsEstimatedToArrive')}{' '}
-            {moment(new Date(Date.now() + 1000 * 60 * 60 * 24 * 6)).format(
-              'MMM DD, YYYY'
-            )}
+          <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
+            {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}{' '}
+            <Text style={Typography.FONT_BOLD}>
+              {moment(new Date(Date.now() + 1000 * 60 * 60 * 24 * 6)).format(
+                'MMM DD, YYYY'
+              )}
+            </Text>
             . {i18n.t('ReferFriendsScreen.thanksAgain')}
           </Text>
         </View>

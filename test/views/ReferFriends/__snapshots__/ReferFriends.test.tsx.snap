@@ -163,7 +163,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
         style={
           Object {
             "flex": 0,
-            "marginBottom": 100,
+            "marginBottom": 95,
           }
         }
       >
@@ -180,7 +180,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
             ]
           }
         >
-          Your letter is on the way
+          Your letter is on the way!
         </Text>
         <Text
           style={
@@ -190,18 +190,26 @@ exports[`ReferFriends screen should match snapshot 1`] = `
               },
               Object {
                 "color": "#6D6D6D",
-                "fontSize": 14,
-                "marginTop": 8,
+                "fontSize": 16,
+                "marginTop": 6,
                 "textAlign": "center",
               },
             ]
           }
         >
-          Your letter is estimated to arrive on
+          We estimate that your letter will arrive on
            
-          Jul 12
+          <Text
+            style={
+              Object {
+                "fontFamily": "Poppins-Bold",
+              }
+            }
+          >
+            Jul 12
+          </Text>
           . 
-          Thank you for trusting Ameelio.
+          Thank you for trusting Ameelio to connect you with your loved one.
         </Text>
       </View>
       <View

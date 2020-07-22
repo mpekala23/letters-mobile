@@ -38,7 +38,7 @@
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
-    "needHelpFindingYourInmateID": "Need help finding your inmate ID?",
+    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
     "tapHereToSearch": "Tap here to search the",
     "database": "database",
     "federal": "Federal",
@@ -152,9 +152,9 @@
     "other": "Other"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWay": "Your letter is on the way",
-    "yourLetterIsEstimatedToArrive": "Your letter is estimated to arrive on",
-    "thanksAgain": "Thank you for trusting Ameelio.",
+    "yourLetterIsOnTheWay": "Your letter is on the way!",
+    "weEstimateYourLetterToArriveOn": "We estimate that your letter will arrive on",
+    "thanksAgain": "Thank you for trusting Ameelio to connect you with your loved one.",
     "shareOnFacebook": "Share on Facebook",
     "done": "Done"
   },
