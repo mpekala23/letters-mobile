@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@components';
-import { fireEvent, render, toJSON } from '@testing-library/react-native';
+import { fireEvent, render, toJSON, act } from '@testing-library/react-native';
 import { Colors } from '@styles';
 import { sleep } from '@utils';
 import Next from '@assets/components/Button/Next';
@@ -97,7 +97,9 @@ describe('Button component', () => {
         await sleep(1000);
       },
     });
-    fireEvent.press(getByText('press me'));
+    act(() => {
+      fireEvent.press(getByText('press me'));
+    });
     expect(getByTestId('loading')).toBeDefined();
   });
 });

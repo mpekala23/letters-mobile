@@ -74,6 +74,7 @@ class Topbar extends React.Component<Props, State> {
             <Image
               source={Loading}
               style={{ width: 25, height: 25, right: 10 }}
+              testID="loading"
             />
           ) : (
             <Text

@@ -104,6 +104,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -169,6 +172,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -234,6 +240,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -299,6 +308,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -364,6 +376,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -429,6 +444,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -494,6 +512,9 @@ exports[`Support FAQ screen should match snapshot 1`] = `
                 "textAlign": "center",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

@@ -9,13 +9,14 @@ export default StyleSheet.create({
     borderTopColor: Colors.GRAY_MEDIUM,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: 'white',
-    paddingBottom: 5,
   },
   keyboardButtonItem: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     maxWidth: 120,
+    height: '100%',
   },
 });

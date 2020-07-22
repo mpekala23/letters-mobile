@@ -65,11 +65,7 @@ const Button: React.FC<Props> = (props: Props) => {
           if (enabled && !blocked) {
             if (blocking) {
               setBlocked(true);
-              try {
-                await onPress();
-              } catch (err) {
-                /* should be handled in onPress */
-              }
+              await onPress();
               setBlocked(false);
             } else {
               onPress();
@@ -85,6 +81,7 @@ const Button: React.FC<Props> = (props: Props) => {
             enabled ? {} : Styles.buttonTextDisabled,
             textStyle,
             enabled ? {} : disabledTextStyle,
+            { opacity: blocked ? 0 : 1 },
           ]}
         >
           {buttonText}
@@ -94,7 +91,7 @@ const Button: React.FC<Props> = (props: Props) => {
           <Image
             testID="loading"
             source={Loading}
-            style={{ width: 20, height: 20 }}
+            style={{ width: 20, height: 20, position: 'absolute' }}
           />
         )}
       </TouchableOpacity>

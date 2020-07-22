@@ -459,6 +459,9 @@ exports[`Login screen should match snapshot 1`] = `
                       "fontFamily": "Poppins-Bold",
                     },
                     Object {},
+                    Object {
+                      "opacity": 1,
+                    },
                   ]
                 }
               >
@@ -605,56 +608,6 @@ exports[`Login screen should match snapshot 1`] = `
                 .
               </Text>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#FF7171",
-                    "borderRadius": 16,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "marginVertical": 5,
-                    "paddingHorizontal": 14,
-                  },
-                  Object {},
-                  Object {},
-                  Object {},
-                  Object {
-                    "elevation": 4,
-                    "shadowColor": "#000",
-                    "shadowOffset": Object {
-                      "height": 5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.22,
-                  },
-                ]
-              }
-              testID="clickable"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Medium",
-                    },
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {},
-                    Object {},
-                  ]
-                }
-              >
-                Dev Skip
-              </Text>
-            </TouchableOpacity>
             <View
               style={
                 Object {

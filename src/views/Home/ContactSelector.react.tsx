@@ -22,7 +22,6 @@ import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
-import { sleep } from '@utils';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -144,7 +143,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
               await getContacts();
               await getUser();
             } catch (err) {
-              console.log(err);
               dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
             }
             this.setState({ refreshing: false });

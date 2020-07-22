@@ -133,6 +133,9 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       "fontSize": 14,
                     },
                     Object {},
+                    Object {
+                      "opacity": 1,
+                    },
                   ]
                 }
               >
@@ -347,13 +350,13 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             activeOpacity={1}
             style={
               Object {
+                "alignItems": "center",
                 "backgroundColor": "white",
                 "borderTopColor": "#9A9A9A",
                 "borderTopWidth": 0.3,
                 "flexDirection": "row",
                 "height": 50,
                 "justifyContent": "space-between",
-                "paddingBottom": 5,
                 "width": "100%",
               }
             }
@@ -364,6 +367,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
@@ -396,6 +400,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
@@ -481,6 +486,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
