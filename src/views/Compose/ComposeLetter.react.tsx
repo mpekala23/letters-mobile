@@ -43,6 +43,7 @@ interface Props {
 interface State {
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
+  valid: boolean;
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
@@ -57,11 +58,13 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     this.state = {
       keyboardOpacity: new Animated.Value(0),
       wordsLeft: 300,
+      valid: true,
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
     this.registerPhoto = this.registerPhoto.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
+    this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
@@ -81,23 +84,34 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     this.props.setDraft(true);
     setProfileOverride({
-      enabled: true,
+      enabled: this.state.valid,
       text: i18n.t('Compose.next'),
-      action: () => {
-        Keyboard.dismiss();
-        if (this.props.composing.content.length <= 0) {
-          popupAlert({
-            title: i18n.t('Compose.letterMustHaveContent'),
-            buttons: [
-              {
-                text: i18n.t('Alert.okay'),
-              },
-            ],
-          });
-        } else {
-          this.props.navigation.navigate('LetterPreview');
-        }
-      },
+      action: this.onNextPress,
+    });
+  }
+
+  onNextPress(): void {
+    Keyboard.dismiss();
+    if (this.props.composing.content.length <= 0) {
+      popupAlert({
+        title: i18n.t('Compose.letterMustHaveContent'),
+        buttons: [
+          {
+            text: i18n.t('Alert.okay'),
+          },
+        ],
+      });
+    } else {
+      this.props.navigation.navigate('LetterPreview');
+    }
+  }
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('Compose.next'),
+      action: this.onNextPress,
     });
   }
 
@@ -124,6 +138,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       numWords = 0;
     }
     this.setState({ wordsLeft: 300 - numWords });
+    this.setValid(300 - numWords >= 0);
   }
 
   changeText(value: string): void {

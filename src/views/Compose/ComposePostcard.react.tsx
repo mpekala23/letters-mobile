@@ -45,6 +45,7 @@ interface Props {
 interface State {
   keyboardOpacity: Animated.Value;
   charsLeft: number;
+  valid: boolean;
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
@@ -59,11 +60,13 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.state = {
       keyboardOpacity: new Animated.Value(0),
       charsLeft: 300,
+      valid: true,
     };
     this.updateCharsLeft = this.updateCharsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
     this.registerPhoto = this.registerPhoto.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
+    this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
@@ -83,23 +86,34 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     this.props.setDraft(true);
     setProfileOverride({
-      enabled: true,
+      enabled: this.state.valid,
       text: i18n.t('Compose.next'),
-      action: () => {
-        Keyboard.dismiss();
-        if (this.props.composing.content.length <= 0) {
-          popupAlert({
-            title: i18n.t('Compose.postcardMustHaveContent'),
-            buttons: [
-              {
-                text: i18n.t('Alert.okay'),
-              },
-            ],
-          });
-        } else {
-          this.props.navigation.navigate('PostcardPreview');
-        }
-      },
+      action: this.onNextPress,
+    });
+  }
+
+  onNextPress(): void {
+    Keyboard.dismiss();
+    if (this.props.composing.content.length <= 0) {
+      popupAlert({
+        title: i18n.t('Compose.postcardMustHaveContent'),
+        buttons: [
+          {
+            text: i18n.t('Alert.okay'),
+          },
+        ],
+      });
+    } else {
+      this.props.navigation.navigate('PostcardPreview');
+    }
+  }
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('Compose.next'),
+      action: this.onNextPress,
     });
   }
 
@@ -109,6 +123,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   updateCharsLeft(value: string): void {
     this.setState({ charsLeft: 300 - value.length });
+    this.setValid(300 - value.length >= 0);
   }
 
   changeText(value: string): void {
