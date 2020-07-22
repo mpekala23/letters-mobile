@@ -10,7 +10,7 @@ import PicUpload from '../PicUpload/PicUpload.react';
 
 interface Props {
   keyboardOpacity: Animated.Value;
-  wordsLeft: number;
+  numLeft: number;
   picRef: RefObject<PicUpload>;
 }
 
@@ -34,11 +34,11 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               Typography.FONT_REGULAR,
               {
                 color:
-                  props.wordsLeft >= 0 ? Colors.GRAY_DARK : Colors.AMEELIO_RED,
+                  props.numLeft >= 0 ? Colors.GRAY_DARK : Colors.AMEELIO_RED,
               },
             ]}
           >
-            {props.wordsLeft} left
+            {props.numLeft} left
           </Text>
         </View>
         <TouchableOpacity

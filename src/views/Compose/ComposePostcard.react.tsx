@@ -208,7 +208,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
               picRef={this.picRef}
-              wordsLeft={this.state.charsLeft}
+              numLeft={this.state.charsLeft}
             />
           </View>
         </KeyboardAvoidingView>

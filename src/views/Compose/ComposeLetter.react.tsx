@@ -222,7 +222,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
               picRef={this.picRef}
-              wordsLeft={this.state.wordsLeft}
+              numLeft={this.state.wordsLeft}
             />
           </View>
         </KeyboardAvoidingView>
