@@ -111,6 +111,9 @@ exports[`Support FAQ Detail screen should match snapshot 1`] = `
                 "fontSize": 18,
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

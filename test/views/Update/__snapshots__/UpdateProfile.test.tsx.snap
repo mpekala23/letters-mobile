@@ -982,6 +982,9 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 Object {},
                 Object {},
                 Object {},
+                Object {
+                  "opacity": 1,
+                },
               ]
             }
           >

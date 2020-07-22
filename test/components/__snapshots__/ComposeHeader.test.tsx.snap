@@ -92,6 +92,9 @@ exports[`ComposeHeader component should match snapshot 1`] = `
                 "fontSize": 14,
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

@@ -187,3 +187,12 @@ export function hoursTill8Tomorrow(): number {
   }
   return hourOfDay - 20;
 }
+
+export function sleep(ms: number, error = false): Promise<void> {
+  return new Promise((resolve, reject) =>
+    setTimeout(() => {
+      if (error) reject();
+      else resolve();
+    }, ms)
+  );
+}

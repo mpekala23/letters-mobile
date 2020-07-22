@@ -279,6 +279,9 @@ exports[`Begin screen should match snapshot 1`] = `
                 },
               ],
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -334,6 +337,9 @@ exports[`Begin screen should match snapshot 1`] = `
                 "color": "#FF7171",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

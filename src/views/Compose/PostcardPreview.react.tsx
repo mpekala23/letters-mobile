@@ -87,6 +87,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
       <Button
         buttonText={i18n.t('Compose.sendPostcard')}
+        blocking
         onPress={async () => {
           try {
             props.setDraft(false);
@@ -176,7 +177,10 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
               },
               hoursTill8Tomorrow() / 24 + 14
             );
-            props.navigation.navigate('ReferFriends');
+            props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'ReferFriends' }],
+            });
           } catch (err) {
             props.setDraft(true);
             if (err.message === 'Unable to upload image.') {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { RegisterScreen } from '@views';
 import { register } from '@api';
-import { render, fireEvent, toJSON } from '@testing-library/react-native';
+import { render, fireEvent, toJSON, act } from '@testing-library/react-native';
 import fetchMock from 'jest-fetch-mock';
+import { sleep } from '@utils';
 
 process.env.MOCK_API_IP = 'test_mock_api';
 
@@ -26,6 +27,7 @@ describe('Register screen', () => {
   });
 
   it('should have register button be disabled until all fields are valid', async () => {
+    jest.useRealTimers();
     const { getByPlaceholderText, getByText } = setup();
     fireEvent.press(getByText('Register'));
     expect(register).toHaveBeenCalledTimes(0);
@@ -49,7 +51,10 @@ describe('Register screen', () => {
       getByPlaceholderText('How did you hear about Ameelio?'),
       'Other'
     );
-    fireEvent.press(getByText('Register'));
+    await act(async () => {
+      fireEvent.press(getByText('Register'));
+      await sleep(10);
+    });
     expect(register).toHaveBeenCalledTimes(1);
   });
 });

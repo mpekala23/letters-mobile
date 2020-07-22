@@ -6,7 +6,7 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-import { Icon } from '@components';
+import { Icon, Button } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
@@ -142,7 +142,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
             try {
               await getContacts();
               await getUser();
-            } catch (e) {
+            } catch (err) {
               dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
             }
             this.setState({ refreshing: false });
