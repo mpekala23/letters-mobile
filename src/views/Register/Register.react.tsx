@@ -368,6 +368,7 @@ class RegisterScreen extends React.Component<Props, State> {
             containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}
             enabled={this.state.valid}
+            blocking
             onPress={this.doRegister}
           />
         </ScrollView>
