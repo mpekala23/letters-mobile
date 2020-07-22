@@ -266,6 +266,9 @@ exports[`ReferFriends screen should match snapshot 1`] = `
                 Object {},
                 Object {},
                 Object {},
+                Object {
+                  "opacity": 1,
+                },
               ]
             }
           >
@@ -319,6 +322,9 @@ exports[`ReferFriends screen should match snapshot 1`] = `
                 Object {},
                 Object {},
                 Object {},
+                Object {
+                  "opacity": 1,
+                },
               ]
             }
           >
