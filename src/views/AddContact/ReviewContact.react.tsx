@@ -141,6 +141,8 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         relationship: this.props.contactState.adding.relationship,
         facility,
         photo: this.state.image ? this.state.image : undefined,
+        unit: this.unit.current?.state.value,
+        dorm: this.dorm.current?.state.value,
       };
       try {
         const { existing } = store.getState().contact;
@@ -348,7 +350,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           <View style={CommonStyles.bottomButtonContainer}>
             <Button
               onPress={this.doAddContact}
-              buttonText={i18n.t('ContactInfoScreen.next')}
+              buttonText={i18n.t('ReviewContactScreen.addContact')}
               enabled={this.state.valid}
               containerStyle={CommonStyles.bottomButton}
               showNextIcon

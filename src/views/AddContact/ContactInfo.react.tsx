@@ -30,6 +30,7 @@ import {
 import { UserState } from '@store/User/UserTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -65,6 +66,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
+  private unsubscribeBlur: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -72,24 +75,78 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       stateToSearch: '',
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentDidMount() {
-    this.onNavigationFocus();
+    this.loadValuesFromStore();
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
-    const addingContact = this.props.contactState.adding;
+    this.loadValuesFromStore();
+    setProfileOverride({
+      enabled: this.state.valid,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onNextPress,
+    });
+  }
 
+  onNavigationBlur = () => {
+    setProfileOverride(undefined);
+  };
+
+  onNextPress() {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current &&
+      this.relationship.current
+    ) {
+      const contact: Contact = {
+        id: -1,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.inmateNumber.current.state.value,
+        relationship: this.relationship.current.state.value,
+        facility: this.props.contactState.adding.facility,
+      };
+      this.props.setAdding(contact);
+      this.props.navigation.setParams({
+        phyState: this.stateRef.current.state.value,
+      });
+      this.props.navigation.navigate('FacilityDirectory', {
+        phyState: this.stateRef.current.state.value,
+      });
+    }
+  }
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onNextPress,
+    });
+  }
+
+  loadValuesFromStore() {
+    const addingContact = this.props.contactState.adding;
     if (this.props.route.params && this.props.route.params.addFromSelector) {
       if (this.stateRef.current)
         this.stateRef.current.setState({ dirty: false });
@@ -137,7 +194,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         this.lastName.current.state.valid &&
         this.inmateNumber.current.state.valid &&
         this.relationship.current.state.valid;
-      this.setState({ valid: result });
+      this.setValid(result);
     }
   }
 
@@ -255,7 +312,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.lastName}
                 />
                 <Input
@@ -264,7 +321,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.inmateNumber}
                 />
                 <Input
@@ -273,7 +330,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.relationship}
                 />
                 <Input
@@ -297,43 +354,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     i18n.t('ContactInfoScreen.other'),
                   ]}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                 />
               </View>
             </ScrollView>
-            <View style={CommonStyles.bottomButtonContainer}>
-              <Button
-                onPress={() => {
-                  if (
-                    this.stateRef.current &&
-                    this.firstName.current &&
-                    this.lastName.current &&
-                    this.inmateNumber.current &&
-                    this.relationship.current
-                  ) {
-                    const contact: Contact = {
-                      id: -1,
-                      firstName: this.firstName.current.state.value,
-                      lastName: this.lastName.current.state.value,
-                      inmateNumber: this.inmateNumber.current.state.value,
-                      relationship: this.relationship.current.state.value,
-                      facility: this.props.contactState.adding.facility,
-                    };
-                    this.props.setAdding(contact);
-                    this.props.navigation.setParams({
-                      phyState: this.stateRef.current.state.value,
-                    });
-                    this.props.navigation.navigate('FacilityDirectory', {
-                      phyState: this.stateRef.current.state.value,
-                    });
-                  }
-                }}
-                buttonText={i18n.t('ContactInfoScreen.next')}
-                enabled={this.state.valid}
-                containerStyle={CommonStyles.bottomButton}
-                showNextIcon
-              />
-            </View>
           </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>

@@ -465,7 +465,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             ]
           }
         >
-          Adress line 2
+          Address line 2
         </Text>
         <View
           pointerEvents="auto"
@@ -491,7 +491,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             allowFontScaling={true}
             multiline={false}
             numberOfLines={1}
-            placeholder="Adress line 2"
+            placeholder="Address line 2"
             rejectResponderTermination={true}
             secureTextEntry={false}
             style={
@@ -542,6 +542,24 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             />
           </View>
         </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "fontSize": 14,
+                "paddingBottom": 4,
+              },
+              Object {
+                "color": "#6D6D6D",
+              },
+            ]
+          }
+        >
+          Unit (optional, only if needed)
+        </Text>
         <View
           pointerEvents="auto"
           style={
@@ -619,6 +637,24 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             />
           </View>
         </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "fontSize": 14,
+                "paddingBottom": 4,
+              },
+              Object {
+                "color": "#6D6D6D",
+              },
+            ]
+          }
+        >
+          Dorm (optional, only if needed)
+        </Text>
         <View
           pointerEvents="auto"
           style={

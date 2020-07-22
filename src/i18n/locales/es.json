@@ -183,7 +183,8 @@
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "invalidInmateNumber": "Invalid inmate number",
-    "contactAlreadyExists": "Contact already exists"
+    "contactAlreadyExists": "Contact already exists",
+    "addContact": "Add Contact"
   },
   "SingleContactScreen": {
     "received": "received",
@@ -196,7 +197,7 @@
     "firstName": "First name",
     "lastName": "Last name",
     "addressLine1": "Address line 1",
-    "addressLine2": "Adress line 2",
+    "addressLine2": "Address line 2",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
