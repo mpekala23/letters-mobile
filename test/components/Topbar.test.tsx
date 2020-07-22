@@ -113,7 +113,8 @@ describe('Topbar component', () => {
     expect(dummy).toHaveBeenCalledTimes(0);
   });
 
-  it('should implement profileOverride blocking buttons', () => {
+  it('should implement profileOverride blocking buttons', async () => {
+    jest.useRealTimers();
     const { getByText, getByTestId } = setup();
     act(() => {
       setProfile(false);
@@ -121,7 +122,7 @@ describe('Topbar component', () => {
         enabled: true,
         text: 'press me',
         action: async () => {
-          await sleep(1000);
+          await sleep(100);
         },
         blocking: true,
       });
@@ -129,5 +130,6 @@ describe('Topbar component', () => {
     expect(getByText('press me')).toBeDefined();
     fireEvent.press(getByText('press me'));
     expect(getByTestId('loading')).toBeDefined();
+    await sleep(100);
   });
 });

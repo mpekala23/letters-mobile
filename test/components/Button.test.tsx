@@ -90,16 +90,18 @@ describe('Button component', () => {
     expect(getByTestId('nextIcon').children[0].props.xml).toBe(Next);
   });
 
-  it('should implement blocking', () => {
+  it('should implement blocking', async () => {
+    jest.useRealTimers();
     const { getByTestId, getByText } = setup({
       blocking: true,
       onPress: async () => {
-        await sleep(1000);
+        await sleep(100);
       },
     });
     act(() => {
       fireEvent.press(getByText('press me'));
     });
     expect(getByTestId('loading')).toBeDefined();
+    await sleep(100);
   });
 });
