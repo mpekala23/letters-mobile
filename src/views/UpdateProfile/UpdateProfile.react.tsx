@@ -289,6 +289,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
               required
+              validate={Validation.Address}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.address2}
@@ -300,6 +301,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               ref={this.address2}
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
+              validate={Validation.Address}
               onValid={this.updateValid}
               nextInput={this.city}
             />
@@ -311,6 +313,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.city')}
               required
+              validate={Validation.City}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.phyState}
@@ -336,6 +339,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               ref={this.postal}
               placeholder={i18n.t('UpdateProfileScreen.zipcode')}
               required
+              validate={Validation.Postal}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />

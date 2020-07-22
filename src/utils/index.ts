@@ -4,7 +4,6 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { Image } from 'react-native-svg';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -98,6 +97,9 @@ export enum Validation {
   Postal = 'Postal',
   State = 'State',
   CreditCard = 'CreditCard',
+  InmateNumber = 'InmateNumber',
+  Address = 'Address',
+  City = 'City',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -130,6 +132,18 @@ export function isValidCreditCard(card: string): boolean {
   );
 }
 
+export function isValidInmateNumber(number: string): boolean {
+  return /^[0-9-]*$/.test(number);
+}
+
+export function isValidAddress(address: string): boolean {
+  return /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9'.-\s,#"‘’“”]*$/.test(address);
+}
+
+export function isValidCity(city: string): boolean {
+  return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
+}
+
 export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
@@ -144,6 +158,12 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidState(value);
     case Validation.CreditCard:
       return isValidCreditCard(value);
+    case Validation.InmateNumber:
+      return isValidInmateNumber(value);
+    case Validation.Address:
+      return isValidAddress(value);
+    case Validation.City:
+      return isValidCity(value);
     default:
       return false;
   }

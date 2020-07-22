@@ -77,7 +77,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
     this.unsubscribeBlur();
   }
 
-  onNavigationBlur = () => {
+  onNavigationBlur = (): void => {
     setProfileOverride(undefined);
   };
 
@@ -202,6 +202,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
                   required
+                  validate={Validation.Address}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -217,6 +218,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityCity')}
                   required
+                  validate={Validation.City}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
