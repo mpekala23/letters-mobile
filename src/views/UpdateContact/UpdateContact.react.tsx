@@ -96,6 +96,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       enabled: true,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
+      blocking: true,
     });
   }
 
@@ -108,6 +109,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
+      blocking: true,
     });
   }
 

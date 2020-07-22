@@ -82,7 +82,8 @@ export interface LetterTrackingEvent {
 export type TopbarRouteAction = {
   enabled: boolean;
   text: string;
-  action: () => void;
+  action: () => void | Promise<void>;
+  blocking?: boolean;
 };
 
 export interface ZipcodeInfo {
