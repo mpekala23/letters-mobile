@@ -267,6 +267,7 @@ class RegisterScreen extends React.Component<Props, State> {
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t('RegisterScreen.addressLine1')}
             required
+            validate={Validation.Address}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.address2}
@@ -274,6 +275,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
+            validate={Validation.Address}
             placeholder={i18n.t('RegisterScreen.addressLine2')}
             nextInput={this.city}
           />
@@ -282,6 +284,7 @@ class RegisterScreen extends React.Component<Props, State> {
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t('RegisterScreen.city')}
             required
+            validate={Validation.City}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.phyState}
@@ -333,6 +336,7 @@ class RegisterScreen extends React.Component<Props, State> {
             placeholder={i18n.t('RegisterScreen.confirmPassword')}
             required
             secure
+            mustMatch={this.password.current?.state.value}
             // TO-DO: Add validation pending hint message
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}

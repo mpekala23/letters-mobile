@@ -1,8 +1,9 @@
 import React from 'react';
 import { LoginScreen } from '@views';
 import { login } from '@api';
-import { render, fireEvent, toJSON } from '@testing-library/react-native';
+import { render, fireEvent, toJSON, act } from '@testing-library/react-native';
 import fetchMock from 'jest-fetch-mock';
+import { sleep } from '@utils';
 
 jest.mock('@api', () => ({
   login: jest.fn(),
@@ -27,7 +28,8 @@ describe('Login screen', () => {
   });
 
   it('should make an api call on login', async () => {
-    const { getByText } = setup({
+    jest.useRealTimers();
+    const { getByText, getByPlaceholderText } = setup({
       data: {
         id: '6',
         firstName: 'Team',
@@ -39,9 +41,19 @@ describe('Login screen', () => {
         city: 'New Haven',
         state: 'CT',
       },
-      type: 'success',
+      status: 'OK',
     });
-    fireEvent.press(getByText('Log in'));
+    act(() => {
+      fireEvent.changeText(
+        getByPlaceholderText('E-mail Address'),
+        'team@ameelio.org'
+      );
+      fireEvent.changeText(getByPlaceholderText('Password'), 'ThisGood1');
+    });
+    await act(async () => {
+      fireEvent.press(getByText('Log in'));
+      await sleep(100);
+    });
     expect(login).toHaveBeenCalledTimes(1);
   });
 

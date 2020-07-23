@@ -39,6 +39,8 @@ export interface Props {
   numLines: number;
   children?: JSX.Element;
   testId?: string;
+  allowsEmoji: boolean;
+  mustMatch?: string;
 }
 
 export interface State {
@@ -72,6 +74,8 @@ class Input extends React.Component<Props, State> {
     nextInput: false,
     height: INPUT_HEIGHT,
     numLines: 1,
+    allowsEmoji: false,
+    required: false,
   };
 
   constructor(props: Props) {
@@ -135,17 +139,20 @@ class Input extends React.Component<Props, State> {
 
   doValidate = (): void => {
     const { value } = this.state;
-    const { required, validate, onValid, onInvalid } = this.props;
+    const { required, validate, onValid, onInvalid, mustMatch } = this.props;
     let result = true;
-    if (value && value.length) {
+    if (value || validate || required) {
       if (validate) {
         result = validateFormat(validate, value);
       }
-      if (required && value.length === 0) {
+      if (required && !/\S/.test(value)) {
         result = false;
       }
     } else {
       result = false;
+    }
+    if (mustMatch) {
+      result = result && mustMatch === value;
     }
     if (result === this.state.valid) {
       return;
