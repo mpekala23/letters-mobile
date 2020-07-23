@@ -182,45 +182,30 @@ exports[`Contact Info Screen should match snapshot 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Regular",
-                    },
-                    Object {
-                      "color": "#FF7171",
-                      "fontSize": 16,
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "color": "#FF7171",
+                  }
                 }
               >
+                Tap here to search the
+                 
                 <Text
                   style={
-                    Object {
-                      "color": "#FF7171",
-                    }
+                    Array [
+                      Object {
+                        "fontFamily": "Poppins-Bold",
+                      },
+                      Object {
+                        "color": "#FF7171",
+                      },
+                    ]
                   }
                 >
-                  Tap here to search the
-                   
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "fontFamily": "Poppins-Bold",
-                        },
-                        Object {
-                          "color": "#FF7171",
-                        },
-                      ]
-                    }
-                  >
-                    Federal
-                  </Text>
-                   
-                  database
-                  .
+                  Federal
                 </Text>
+                 
+                database
+                .
               </Text>
             </TouchableOpacity>
             <View
