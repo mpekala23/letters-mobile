@@ -24,6 +24,14 @@ interface RawTrackingEvent {
   location: string;
 }
 
+interface RawImage {
+  id: number;
+  letter_id: number;
+  created_at: string;
+  updated_at: string;
+  img_src: string;
+}
+
 interface RawLetter {
   id: number;
   created_at: string;
@@ -31,7 +39,7 @@ interface RawLetter {
   content: string;
   sent: boolean;
   delivered: boolean;
-  attached_img_src: string;
+  images: RawImage[];
   type: LetterTypes;
   tracking_events?: RawTrackingEvent[];
 }
@@ -91,7 +99,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
   const { content } = letter;
   const photo = {
     type: 'image/jpeg',
-    uri: letter.attached_img_src,
+    uri: letter.images.length !== 0 ? letter.images[0].img_src : '',
   };
   const letterId = letter.id;
   const expectedDeliveryDate = letter.created_at;
@@ -139,7 +147,9 @@ export async function createLetter(letter: Letter): Promise<Letter> {
   if (createdLetter.photo) {
     try {
       createdLetter.photo = await uploadImage(createdLetter.photo, 'letter');
-      imageExtension = { s3_img_url: createdLetter.photo.uri };
+      imageExtension = {
+        s3_img_urls: [createdLetter.photo.uri],
+      };
     } catch (err) {
       const uploadError: ApiResponse = {
         status: 'ERROR',

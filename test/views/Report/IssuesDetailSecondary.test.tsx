@@ -29,7 +29,7 @@ describe('Issues Detail Secondary screen', () => {
       issue: DeliveryReportTypes.haveNotAsked,
     });
     fireEvent.press(getByText('Return home'));
-    expect(navigation.navigate).toHaveBeenCalledWith('Home');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
   });
 
   // TO-DO: Test 'Call facility' button action
@@ -39,6 +39,6 @@ describe('Issues Detail Secondary screen', () => {
       issue: DeliveryReportTypes.haveNotReceived,
     });
     fireEvent.press(getByText("I'll wait"));
-    expect(navigation.navigate).toHaveBeenCalledWith('Home');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
   });
 });

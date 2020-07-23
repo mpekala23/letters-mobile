@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setType, setRecipientId } from '@store/Letter/LetterActions';
 import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import { UserState } from '@store/User/UserTypes';
+import { STATE_TO_ABBREV } from '@utils';
 import i18n from '@i18n';
 import Styles from './Compose.styles';
 
@@ -20,12 +22,14 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
   letterState: LetterState;
+  userState: UserState;
   recipientId: number;
   setType: (type: LetterTypes) => void;
   setRecipientId: (id: number) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
+  const { user } = props.userState;
   return (
     <View style={Styles.screenBackground}>
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
@@ -33,11 +37,13 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
       <Text
         style={[
-          Typography.FONT_MEDIUM,
+          Typography.FONT_REGULAR,
           { fontSize: 14, color: Colors.GRAY_DARK, paddingBottom: 10 },
         ]}
       >
-        {i18n.t('CreditsCard.creditsResetDaily')}
+        {i18n.t('Compose.psYourLovedOneWillRespondTo')} {user.address1}
+        {user.address2 ? ` ${user.address2}` : ''}, {user.city},{' '}
+        {STATE_TO_ABBREV[user.state]} {user.postal}.
       </Text>
       <LetterOptionCard
         type={LetterTypes.Postcard}
@@ -61,6 +67,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   letterState: state.letter,
+  userState: state.user,
   recipientId: state.contact.active.id,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
