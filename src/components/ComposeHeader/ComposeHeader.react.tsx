@@ -151,10 +151,11 @@ class ComposeHeader extends React.Component<Props, State> {
             </Animated.Text>
           </Button>
         </View>
-        {this.state.open || (!this.state.open && this.state.animating) ? (
+        {this.state.open || this.state.animating ? (
           <Animated.View
             style={{
-              height: '60%',
+              height: 72,
+              width: '100%',
               backgroundColor: Colors.PINK_LIGHTEST,
               borderRadius: 8,
               opacity: this.state.progress,
@@ -163,8 +164,10 @@ class ComposeHeader extends React.Component<Props, State> {
             <Animated.Text
               style={[
                 Typography.FONT_REGULAR,
-                { flex: 1, fontSize: 16, padding: 12 },
                 {
+                  flex: 1,
+                  fontSize: 16,
+                  padding: 12,
                   opacity: this.state.progress,
                 },
               ]}
