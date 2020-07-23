@@ -12,7 +12,7 @@ import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
-import { Facility, NullableFacility } from 'types';
+import { Facility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAdding } from '@store/Contact/ContactActions';
@@ -38,7 +38,7 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ContactInfoScreenNavigationProp;
   route: {
-    params: { newFacility?: NullableFacility; phyState: string };
+    params: { phyState: string };
   };
   contactState: ContactState;
   setAdding: (contact: Contact) => void;
@@ -107,9 +107,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         const contact = this.props.contactState.adding;
         contact.facility = this.state.selected;
         this.props.setAdding(contact);
-        this.props.navigation.setParams({
-          newFacility: null,
-        });
         this.props.navigation.navigate('ReviewContact');
       },
     });
@@ -123,34 +120,19 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         const contact = this.props.contactState.adding;
         contact.facility = this.state.selected;
         this.props.setAdding(contact);
-        this.props.navigation.setParams({
-          newFacility: null,
-        });
         this.props.navigation.navigate('ReviewContact');
       },
     });
   }
 
   loadValuesFromStore() {
-    if (this.props.route.params && this.props.route.params.newFacility) {
-      this.setState(
-        {
-          manual: this.props.route.params.newFacility,
-          selected: this.props.route.params.newFacility,
-        },
-        () => {
-          this.setValid(true);
-        }
-      );
-    } else {
-      this.setState({ selected: this.props.contactState.adding.facility });
-    }
+    this.setState({ selected: this.props.contactState.adding.facility });
     let phyState;
     if (this.props.route.params && this.props.route.params.phyState) {
       phyState = this.props.route.params.phyState;
       this.setState({ phyState: this.props.route.params.phyState });
     }
-    this.props.navigation.setParams({ newFacility: null, phyState });
+    this.props.navigation.setParams({ phyState });
     this.refreshFacilities();
   }
 
