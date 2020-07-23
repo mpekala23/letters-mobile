@@ -52,6 +52,8 @@ import Topbar, {
   setShown,
 } from '@components/Topbar/Topbar.react';
 import { NavigationContainer } from '@react-navigation/native';
+import { Platform } from 'react-native';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
 export { navigationRef, navigate };
 
@@ -153,6 +155,57 @@ const fadeTransition = (
   };
 };
 
+const leftRightTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateX: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_WIDTH, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const topBottomTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const bottomTopTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
 const NavigatorBase: React.FC<Props> = (props: Props) => {
   const topbar = (
     <Topbar
@@ -165,213 +218,86 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   // Determine which views should be accessible
   let screens;
   if (props.authInfo.isLoadingToken) {
-    screens = (
-      <Stack.Screen
-        name="Splash"
-        component={SplashScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-    );
+    screens = <Stack.Screen name="Splash" component={SplashScreen} />;
   } else if (props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screen
-          name="Setup"
-          component={SetupScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="ComposeLetter"
-          component={ComposeLetterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="Setup" component={SetupScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
+        <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
           name="ComposePostcard"
           component={ComposePostcardScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name="LetterPreview"
-          component={LetterPreviewScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="LetterPreview" component={LetterPreviewScreen} />
         <Stack.Screen
           name="PostcardPreview"
           component={PostcardPreviewScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
           options={{
-            cardStyleInterpolator: fadeTransition,
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : bottomTopTransition,
           }}
         />
         <Stack.Screen
           name="FacilityDirectory"
           component={FacilityDirectoryScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
         />
-        <Stack.Screen
-          name="AddManually"
-          component={AddManuallyScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ReferFriends"
-          component={ReferFriendsScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ReviewContact"
-          component={ReviewContactScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ExplainProblem"
-          component={ExplainProblemScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="FirstLetter"
-          component={FirstLetterScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="Issues"
-          component={IssuesScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="IssuesDetail"
-          component={IssuesDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="AddManually" component={AddManuallyScreen} />
+        <Stack.Screen name="ReferFriends" component={ReferFriendsScreen} />
+        <Stack.Screen name="ReviewContact" component={ReviewContactScreen} />
+        <Stack.Screen name="ExplainProblem" component={ExplainProblemScreen} />
+        <Stack.Screen name="FirstLetter" component={FirstLetterScreen} />
+        <Stack.Screen name="Issues" component={IssuesScreen} />
+        <Stack.Screen name="IssuesDetail" component={IssuesDetailScreen} />
         <Stack.Screen
           name="IssuesDetailSecondary"
           component={IssuesDetailSecondaryScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name="Thanks"
-          component={ThanksScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
+        <Stack.Screen name="Thanks" component={ThanksScreen} />
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
         />
-        <Stack.Screen
-          name="SingleContact"
-          component={SingleContactScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="LetterTracking"
-          component={LetterTrackingScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="MemoryLane"
-          component={MemoryLaneScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="LetterDetails"
-          component={LetterDetailsScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="SupportFAQ"
-          component={SupportFAQScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="SingleContact" component={SingleContactScreen} />
+        <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
+        <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
+        <Stack.Screen name="LetterDetails" component={LetterDetailsScreen} />
+        <Stack.Screen name="SupportFAQ" component={SupportFAQScreen} />
         <Stack.Screen
           name="SupportFAQDetail"
           component={SupportFAQDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="UpdateContact"
           component={UpdateContactScreen}
           options={{
-            cardStyleInterpolator: fadeTransition,
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
         <Stack.Screen
           name="UpdateProfile"
           component={UpdateProfileScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
+          }}
         />
       </>
     );
   } else {
     screens = (
       <>
-        <Stack.Screen
-          name="Begin"
-          component={BeginScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Terms"
-          component={TermsScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Privacy"
-          component={PrivacyScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="Begin" component={BeginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Terms" component={TermsScreen} />
+        <Stack.Screen name="Privacy" component={PrivacyScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </>
     );
   }
@@ -397,7 +323,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       }}
     >
       {topbar}
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator:
+            Platform.OS === 'ios' ? fadeTransition : leftRightTransition,
+        }}
+      >
         {screens}
       </Stack.Navigator>
     </NavigationContainer>
