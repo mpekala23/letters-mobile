@@ -42,6 +42,7 @@ interface Props {
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
+  console.log(props.composing);
   const { user } = props.userState;
   return (
     <View style={Styles.screenBackground}>
