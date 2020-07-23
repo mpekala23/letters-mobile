@@ -79,7 +79,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             fontSize: 16,
             color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
-            margin: 10,
           },
         ]}
       >
