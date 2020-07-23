@@ -24,7 +24,7 @@ export interface Props {
   enabled?: boolean;
   blocking?: boolean;
   onPress: () => void | Promise<void>;
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   showNextIcon?: boolean;
 }
 
@@ -74,18 +74,22 @@ const Button: React.FC<Props> = (props: Props) => {
         }}
         testID="clickable"
       >
-        <Text
-          style={[
-            Typography.FONT_MEDIUM,
-            props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
-            enabled ? {} : Styles.buttonTextDisabled,
-            textStyle,
-            enabled ? {} : disabledTextStyle,
-            { opacity: blocked ? 0 : 1 },
-          ]}
-        >
-          {buttonText}
-        </Text>
+        {buttonText ? (
+          <Text
+            style={[
+              Typography.FONT_MEDIUM,
+              props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
+              enabled ? {} : Styles.buttonTextDisabled,
+              textStyle,
+              enabled ? {} : disabledTextStyle,
+              { opacity: blocked ? 0 : 1 },
+            ]}
+          >
+            {buttonText}
+          </Text>
+        ) : (
+          children
+        )}
         {nextIcon}
         {blocked && (
           <Image
@@ -107,9 +111,13 @@ const Button: React.FC<Props> = (props: Props) => {
       style={containerStyle}
       testID="clickable"
     >
-      <Text style={[Typography.FONT_REGULAR, Styles.linkText, textStyle]}>
-        {buttonText || children}
-      </Text>
+      {buttonText ? (
+        <Text style={[Typography.FONT_REGULAR, Styles.linkText, textStyle]}>
+          {buttonText}
+        </Text>
+      ) : (
+        children
+      )}
     </TouchableOpacity>
   );
 };

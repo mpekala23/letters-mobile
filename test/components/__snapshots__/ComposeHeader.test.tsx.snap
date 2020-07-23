@@ -59,6 +59,7 @@ exports[`ComposeHeader component should match snapshot 1`] = `
             },
             Object {},
             Object {
+              "height": 35,
               "width": 130,
             },
             Object {},
@@ -77,25 +78,26 @@ exports[`ComposeHeader component should match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
-              },
-              Object {},
-              Object {
-                "fontSize": 14,
-              },
-              Object {},
-              Object {
-                "opacity": 1,
-              },
-            ]
+            Object {
+              "color": "white",
+              "fontFamily": "Poppins-Bold",
+              "fontSize": 14,
+              "opacity": 0,
+              "position": "absolute",
+            }
+          }
+        >
+          Collapse
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "white",
+              "fontFamily": "Poppins-Bold",
+              "fontSize": 14,
+              "opacity": 1,
+              "position": "absolute",
+            }
           }
         >
           Need Ideas?

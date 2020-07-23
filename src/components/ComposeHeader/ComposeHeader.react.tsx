@@ -21,7 +21,7 @@ interface Props {
 interface State {
   open: boolean;
   animating: boolean;
-  height: Animated.Value;
+  progress: Animated.Value;
   promptIx: number;
 }
 
@@ -36,7 +36,7 @@ class ComposeHeader extends React.Component<Props, State> {
     this.state = {
       open: false,
       animating: false,
-      height: new Animated.Value(props.closedHeight),
+      progress: new Animated.Value(0),
       promptIx: getRandomPromptIx(),
     };
   }
@@ -44,8 +44,8 @@ class ComposeHeader extends React.Component<Props, State> {
   open(): void {
     if (this.state.animating) return;
     this.setState({ animating: true }, () => {
-      Animated.timing(this.state.height, {
-        toValue: this.props.openHeight,
+      Animated.timing(this.state.progress, {
+        toValue: 1,
         duration: ANIM_DURATION,
         useNativeDriver: false,
       }).start(() => {
@@ -57,8 +57,8 @@ class ComposeHeader extends React.Component<Props, State> {
   close(): void {
     if (this.state.animating) return;
     this.setState({ animating: true }, () => {
-      Animated.timing(this.state.height, {
-        toValue: this.props.closedHeight,
+      Animated.timing(this.state.progress, {
+        toValue: 0,
         duration: ANIM_DURATION,
         useNativeDriver: false,
       }).start(() => {
@@ -78,7 +78,10 @@ class ComposeHeader extends React.Component<Props, State> {
     return (
       <Animated.View
         style={{
-          height: this.state.height,
+          height: this.state.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [this.props.closedHeight, this.props.openHeight],
+          }),
           width: '100%',
         }}
       >
@@ -91,7 +94,7 @@ class ComposeHeader extends React.Component<Props, State> {
           >
             {i18n.t('Compose.to')}: {this.props.recipientName}
           </Text>
-          {this.state.open ? (
+          {this.state.open || this.state.animating ? (
             <TouchableOpacity
               onPress={() => {
                 this.setState((prevState) => {
@@ -102,43 +105,70 @@ class ComposeHeader extends React.Component<Props, State> {
                 });
               }}
             >
-              <Icon svg={Shuffle} style={{ marginRight: 16 }} />
+              <Animated.View style={{ opacity: this.state.progress }}>
+                <Icon svg={Shuffle} style={{ marginRight: 16 }} />
+              </Animated.View>
             </TouchableOpacity>
           ) : null}
           <Button
-            buttonText={
-              this.state.open
-                ? i18n.t('Compose.collapse')
-                : i18n.t('Compose.needIdeas')
-            }
             onPress={() => {
               if (this.state.open) this.close();
               else this.open();
             }}
-            textStyle={{ fontSize: 14 }}
-            containerStyle={{ width: 130 }}
-          />
+            containerStyle={{ width: 130, height: 35 }}
+          >
+            <Animated.Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  color: 'white',
+                  position: 'absolute',
+                  opacity: this.state.progress.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [0, 0.3, 1],
+                  }),
+                },
+              ]}
+            >
+              {i18n.t('Compose.collapse')}
+            </Animated.Text>
+            <Animated.Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  color: 'white',
+                  position: 'absolute',
+                  opacity: this.state.progress.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [1, 0.3, 0],
+                  }),
+                },
+              ]}
+            >
+              {i18n.t('Compose.needIdeas')}
+            </Animated.Text>
+          </Button>
         </View>
-        {this.state.open || (!this.state.open && this.state.animating) ? (
+        {this.state.open || this.state.animating ? (
           <Animated.View
             style={{
-              height: '60%',
+              height: 72,
+              width: '100%',
               backgroundColor: Colors.PINK_LIGHTEST,
               borderRadius: 8,
+              opacity: this.state.progress,
             }}
           >
             <Animated.Text
               style={[
                 Typography.FONT_REGULAR,
-                { flex: 1, fontSize: 16, padding: 12 },
                 {
-                  opacity: this.state.height.interpolate({
-                    inputRange: [
-                      this.props.closedHeight,
-                      this.props.openHeight,
-                    ],
-                    outputRange: [0, 1],
-                  }),
+                  flex: 1,
+                  fontSize: 16,
+                  padding: 12,
+                  opacity: this.state.progress,
                 },
               ]}
               testID="prompt"

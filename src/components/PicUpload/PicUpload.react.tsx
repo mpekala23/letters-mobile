@@ -5,14 +5,14 @@ import {
   View,
   Image,
   Linking,
+  Keyboard,
 } from 'react-native';
 import i18n from '@i18n';
 import { pickImage, takeImage } from '@utils';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Photo } from 'types';
-import Camera from '@assets/views/PicUpload/Camera';
-import Placeholder from '@assets/views/PicUpload/Placeholder';
-import Delete from '@assets/views/PicUpload/Delete';
+import Camera from '@assets/components/PicUpload/Camera';
+import Placeholder from '@assets/components/PicUpload/Placeholder';
+import Delete from '@assets/components/PicUpload/Delete';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
@@ -204,7 +204,10 @@ class PicUpload extends React.Component<Props, State> {
             : Styles.mediaBackground,
           this.props.shapeBackground,
         ]}
-        onPress={this.selectImage}
+        onPress={() => {
+          Keyboard.dismiss();
+          this.selectImage();
+        }}
         testID="clickable"
       >
         {innerCircle}

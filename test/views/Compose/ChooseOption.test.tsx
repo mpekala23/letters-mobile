@@ -4,17 +4,25 @@ import { render, fireEvent, toJSON } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { LetterTypes } from 'types';
+import { popupAlert } from '@components/Alert/Alert.react';
+
+jest.mock('@components/Alert/Alert.react', () => ({
+  popupAlert: jest.fn(),
+}));
 
 const mockStore = configureStore([]);
 
-const setup = () => {
+const setup = (composingOverride = {}) => {
   const navigation = { navigate: jest.fn() };
   const store = mockStore({
     letter: {
       composing: {
-        type: LetterTypes.Postcard,
-        recipient: null,
-        content: '',
+        ...{
+          type: LetterTypes.Postcard,
+          recipient: null,
+          content: '',
+        },
+        ...composingOverride,
       },
       existing: [],
     },
@@ -69,5 +77,29 @@ describe('ChooseOption screen', () => {
     expect(actions.length).toBe(2);
     expect(actions[0].type).toBe('letter/set_type');
     expect(actions[0].payload).toBe('letter');
+  });
+
+  it('should show an alert after pressing Letters when draft exists with content', () => {
+    const { getByText } = setup({ content: 'non-empty' });
+    fireEvent.press(getByText('Letters'));
+    expect(popupAlert).toHaveBeenCalled();
+  });
+
+  it('should show an alert after pressing Post cards when draft exists with content', () => {
+    const { getByText } = setup({ content: 'non-empty' });
+    fireEvent.press(getByText('Post cards'));
+    expect(popupAlert).toHaveBeenCalled();
+  });
+
+  it('should show an alert after pressing Letters when draft exists with photo', () => {
+    const { getByText } = setup({ photo: { uri: 'dummy' } });
+    fireEvent.press(getByText('Letters'));
+    expect(popupAlert).toHaveBeenCalled();
+  });
+
+  it('should show an alert after pressing Post cards when draft exists with photo', () => {
+    const { getByText } = setup({ photo: { uri: 'dummy' } });
+    fireEvent.press(getByText('Post cards'));
+    expect(popupAlert).toHaveBeenCalled();
   });
 });

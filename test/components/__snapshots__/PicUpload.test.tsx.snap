@@ -34,11 +34,11 @@ exports[`PicUpload component should match snapshot 1`] = `
     >
       <RNSVGSvgView
         align="xMidYMid"
-        bbHeight={185}
-        bbWidth={164}
+        bbHeight={200}
+        bbWidth={200}
         fill="none"
         focusable={false}
-        height={185}
+        height={200}
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -50,17 +50,17 @@ exports[`PicUpload component should match snapshot 1`] = `
             },
             Object {
               "flex": 0,
-              "height": 185,
-              "width": 164,
+              "height": 200,
+              "width": 200,
             },
           ]
         }
-        vbHeight={185}
-        vbWidth={164}
-        width={164}
-        xml="<svg width=\\"164\\" height=\\"185\\" viewBox=\\"0 0 164 185\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
-<rect x=\\"1.5\\" y=\\"1.5\\" width=\\"161\\" height=\\"182\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
-<path d=\\"M81.5 75V110M99 92.5H64\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+        vbHeight={200}
+        vbWidth={200}
+        width={200}
+        xml="<svg width=\\"200\\" height=\\"200\\" viewBox=\\"0 0 200 200\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<rect x=\\"2\\" y=\\"2\\" width=\\"196\\" height=\\"196\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
+<path d=\\"M98 75V120 M75 98H120\\" stroke=\\"#CCCCCC\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 "
         xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ exports[`PicUpload component should match snapshot 1`] = `
           }
         >
           <RNSVGRect
-            height={182}
+            height={196}
             propList={
               Array [
                 "stroke",
@@ -84,12 +84,12 @@ exports[`PicUpload component should match snapshot 1`] = `
             rx={6.5}
             stroke={4291611852}
             strokeWidth={3}
-            width={161}
-            x={1.5}
-            y={1.5}
+            width={196}
+            x={2}
+            y={2}
           />
           <RNSVGPath
-            d="M81.5 75V110M99 92.5H64"
+            d="M98 75V120 M75 98H120"
             propList={
               Array [
                 "stroke",
@@ -101,7 +101,7 @@ exports[`PicUpload component should match snapshot 1`] = `
             stroke={4291611852}
             strokeLinecap={1}
             strokeLinejoin={1}
-            strokeWidth={3}
+            strokeWidth={4}
           />
         </RNSVGGroup>
       </RNSVGSvgView>
