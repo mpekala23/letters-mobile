@@ -38,7 +38,7 @@
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
-    "needHelpFindingYourInmateID": "Need help finding your inmate ID?",
+    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
     "tapHereToSearch": "Tap here to search the",
     "database": "database",
     "federal": "Federal",
@@ -69,11 +69,13 @@
     "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below."
   },
   "CreditsCard": {
-    "credit": "Credit",
-    "credits": "Credits",
-    "left": "left",
-    "addMore": "Add more",
-    "creditsResetDaily": "Credits reset daily"
+    "letter": "letter",
+    "letters": "letters",
+    "leftThisWeek": "left this week",
+    "sendMore": "Send more",
+    "youUsedAllYourLetters": "You used all your letters for today",
+    "creditsResetDaily": "Your letters reset weekly, on Monday at 4:00AM EST.",
+    "comeBackOnMondayForMore": "Come back on Monday for more."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -152,9 +154,9 @@
     "other": "Other"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWay": "Your letter is on the way",
-    "yourLetterIsEstimatedToArrive": "Your letter is estimated to arrive on",
-    "thanksAgain": "Thank you for trusting Ameelio.",
+    "yourLetterIsOnTheWay": "Your letter is on the way!",
+    "weEstimateYourLetterToArriveOn": "We estimate that your letter will arrive on",
+    "thanksAgain": "Thank you for trusting Ameelio to connect you with your loved one.",
     "shareOnFacebook": "Share on Facebook",
     "done": "Done"
   },

@@ -50,7 +50,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
         ]
       }
     >
-      Credits reset daily
+      Your letters reset weekly, on Monday at 4:00AM EST.
     </Text>
     <TouchableOpacity
       activeOpacity={0.2}

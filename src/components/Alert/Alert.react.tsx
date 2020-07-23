@@ -1,5 +1,11 @@
 import React, { createRef } from 'react';
-import { Text, View, ViewStyle, TextStyle } from 'react-native';
+import {
+  Text,
+  View,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacity,
+} from 'react-native';
 import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
 import Styles, { GRAY_BACK } from './Alert.styles';
@@ -34,7 +40,10 @@ class Alert extends React.Component<Record<string, unknown>, State> {
   render(): JSX.Element {
     if (!this.state.current) return <View />;
     return (
-      <View style={Styles.trueBackground}>
+      <TouchableOpacity
+        style={Styles.trueBackground}
+        onPress={() => this.setState({ current: null })}
+      >
         <View style={Styles.alertBackground}>
           <Text
             style={[
@@ -83,7 +92,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
               );
             })}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
