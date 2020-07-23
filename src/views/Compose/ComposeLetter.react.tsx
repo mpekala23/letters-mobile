@@ -256,7 +256,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               onChangeText={this.changeText}
               placeholder={i18n.t('Compose.placeholder')}
               numLines={100}
-              initialValue={this.props.composing.content}
               testId="input"
             >
               <Animated.View
