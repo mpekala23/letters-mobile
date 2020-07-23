@@ -99,7 +99,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
   const { content } = letter;
   const photo = {
     type: 'image/jpeg',
-    uri: letter.images[0].img_src,
+    uri: letter.images.length !== 0 ? letter.images[0].img_src : '',
   };
   const letterId = letter.id;
   const expectedDeliveryDate = letter.created_at;
