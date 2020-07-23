@@ -3,13 +3,22 @@ import { Text, View } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { LetterTypes } from 'types';
+import { LetterTypes, Letter, Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setType, setRecipientId } from '@store/Letter/LetterActions';
-import { LetterState, LetterActionTypes } from '@store/Letter/LetterTypes';
+import {
+  setType,
+  setRecipientId,
+  setContent,
+  setPhoto,
+} from '@store/Letter/LetterActions';
+import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
+import { popupAlert } from '@components/Alert/Alert.react';
+import { setActive as setActiveContact } from '@store/Contact/ContactActions';
+import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -19,10 +28,14 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
-  letterState: LetterState;
+  composing: Letter;
   recipientId: number;
+  existingContacts: Contact[];
   setType: (type: LetterTypes) => void;
   setRecipientId: (id: number) => void;
+  setContent: (content: string) => void;
+  setPhoto: (photo: Photo | undefined) => void;
+  setActiveContact: (contact: Contact) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
@@ -42,17 +55,133 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       <LetterOptionCard
         type={LetterTypes.Postcard}
         onPress={() => {
-          props.setType(LetterTypes.Postcard);
-          props.setRecipientId(props.recipientId);
-          props.navigation.navigate('ComposePostcard');
+          if (props.composing.content.length > 0 || props.composing.photo) {
+            popupAlert({
+              title: i18n.t('Compose.letterInProgress'),
+              message: i18n.t('Compose.continueWritingAnd'),
+              buttons: [
+                {
+                  text: i18n.t('Compose.continueWriting'),
+                  onPress: () => {
+                    let contact: Contact | undefined;
+                    for (
+                      let ix = 0;
+                      ix < props.existingContacts.length;
+                      ix += 1
+                    ) {
+                      if (
+                        props.existingContacts[ix].id ===
+                        props.composing.recipientId
+                      ) {
+                        contact = props.existingContacts[ix];
+                        break;
+                      }
+                    }
+                    if (contact) {
+                      props.setRecipientId(contact.id);
+                      props.setActiveContact(contact);
+                      props.setType(props.composing.type);
+                      if (props.composing.type === LetterTypes.Letter) {
+                        props.navigation.navigate('ComposeLetter');
+                      } else {
+                        props.navigation.navigate('ComposePostcard');
+                      }
+                    } else {
+                      dropdownError({
+                        message: i18n.t('Compose.draftContactDeleted'),
+                      });
+                      props.setType(LetterTypes.Postcard);
+                      props.setRecipientId(props.recipientId);
+                      props.setContent('');
+                      props.setPhoto(undefined);
+                      props.navigation.navigate('ComposePostcard');
+                    }
+                  },
+                },
+                {
+                  text: i18n.t('Compose.startNewLetter'),
+                  reverse: true,
+                  onPress: () => {
+                    props.setType(LetterTypes.Postcard);
+                    props.setRecipientId(props.recipientId);
+                    props.setContent('');
+                    props.setPhoto(undefined);
+                    props.navigation.navigate('ComposePostcard');
+                  },
+                },
+              ],
+            });
+          } else {
+            props.setType(LetterTypes.Postcard);
+            props.setRecipientId(props.recipientId);
+            props.navigation.navigate('ComposePostcard');
+          }
         }}
       />
       <LetterOptionCard
         type={LetterTypes.Letter}
         onPress={() => {
-          props.setType(LetterTypes.Letter);
-          props.setRecipientId(props.recipientId);
-          props.navigation.navigate('ComposeLetter');
+          if (props.composing.content.length > 0 || props.composing.photo) {
+            popupAlert({
+              title: i18n.t('Compose.letterInProgress'),
+              message: i18n.t('Compose.continueWritingAnd'),
+              buttons: [
+                {
+                  text: i18n.t('Compose.continueWriting'),
+                  onPress: () => {
+                    let contact: Contact | undefined;
+                    for (
+                      let ix = 0;
+                      ix < props.existingContacts.length;
+                      ix += 1
+                    ) {
+                      if (
+                        props.existingContacts[ix].id ===
+                        props.composing.recipientId
+                      ) {
+                        contact = props.existingContacts[ix];
+                        break;
+                      }
+                    }
+                    if (contact) {
+                      props.setRecipientId(contact.id);
+                      props.setActiveContact(contact);
+                      props.setType(props.composing.type);
+                      if (props.composing.type === LetterTypes.Letter) {
+                        props.navigation.navigate('ComposeLetter');
+                      } else {
+                        props.navigation.navigate('ComposePostcard');
+                      }
+                    } else {
+                      dropdownError({
+                        message: i18n.t('Compose.draftContactDeleted'),
+                      });
+                      props.setType(LetterTypes.Letter);
+                      props.setRecipientId(props.recipientId);
+                      props.setContent('');
+                      props.setPhoto(undefined);
+                      props.navigation.navigate('ComposeLetter');
+                    }
+                  },
+                },
+                {
+                  text: i18n.t('Compose.startNewLetter'),
+                  reverse: true,
+                  onPress: () => {
+                    props.setType(LetterTypes.Letter);
+                    props.setRecipientId(props.recipientId);
+                    props.setContent('');
+                    props.setPhoto(undefined);
+                    props.navigation.navigate('ComposeLetter');
+                  },
+                },
+              ],
+            });
+          } else {
+            props.setType(LetterTypes.Letter);
+            props.setRecipientId(props.recipientId);
+            props.navigation.navigate('ComposeLetter');
+          }
         }}
       />
     </View>
@@ -60,13 +189,19 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  letterState: state.letter,
+  composing: state.letter.composing,
   recipientId: state.contact.active.id,
+  existingContacts: state.contact.existing,
 });
-const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<LetterActionTypes | ContactActionTypes>
+) => {
   return {
     setType: (type: LetterTypes) => dispatch(setType(type)),
     setRecipientId: (id: number) => dispatch(setRecipientId(id)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
+    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
   };
 };
 const ChooseOptionScreen = connect(

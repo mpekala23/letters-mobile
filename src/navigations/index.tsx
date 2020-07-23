@@ -218,11 +218,21 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   // Determine which views should be accessible
   let screens;
   if (props.authInfo.isLoadingToken) {
-    screens = <Stack.Screen name="Splash" component={SplashScreen} />;
+    screens = (
+      <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+        options={{ cardStyleInterpolator: fadeTransition }}
+      />
+    );
   } else if (props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screen name="Setup" component={SetupScreen} />
+        <Stack.Screen
+          name="Setup"
+          component={SetupScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
         <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
@@ -262,6 +272,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen name="SingleContact" component={SingleContactScreen} />
         <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
@@ -293,7 +304,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
-        <Stack.Screen name="Begin" component={BeginScreen} />
+        <Stack.Screen
+          name="Begin"
+          component={BeginScreen}
+          options={{ cardStyleInterpolator: fadeTransition }}
+        />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Privacy" component={PrivacyScreen} />

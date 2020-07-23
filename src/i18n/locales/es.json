@@ -129,7 +129,9 @@
     "termsConditionAnd": " and ",
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
-    "incorrectUsernameOrPassword": "Incorrect username or password"
+    "incorrectEmail": "Incorrect email",
+    "incorrectPassword": "Incorrect password",
+    "emailAndPasswordRequired": "Email and password are required"
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
@@ -283,7 +285,12 @@
     "postcardMustHaveContent": "Your postcard can't be empty",
     "uploadAnImage": "Upload an Image",
     "takePhoto": "Take photo",
-    "uploadExistingPhoto": "Upload existing photo"
+    "uploadExistingPhoto": "Upload existing photo",
+    "letterInProgress": "You have a letter in progress",
+    "continueWritingAnd": "Continue writing and send that letter to your loved one",
+    "continueWriting": "Continue writing",
+    "startNewLetter": "Start new letter",
+    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter."
   },
   "Notifs": {
     "your": "Your",
