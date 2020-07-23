@@ -43,6 +43,7 @@ interface State {
   photoWidth: number;
   photoHeight: number;
   open: boolean;
+  valid: boolean;
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
@@ -66,11 +67,13 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       photoWidth: 200,
       photoHeight: 200,
       open: false,
+      valid: true,
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
     this.registerPhoto = this.registerPhoto.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
+    this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
@@ -126,24 +129,26 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     }
     this.props.setDraft(true);
     setProfileOverride({
-      enabled: true,
+      enabled: this.state.valid,
       text: i18n.t('Compose.next'),
-      action: () => {
-        Keyboard.dismiss();
-        if (this.props.composing.content.length <= 0) {
-          popupAlert({
-            title: i18n.t('Compose.letterMustHaveContent'),
-            buttons: [
-              {
-                text: i18n.t('Alert.okay'),
-              },
-            ],
-          });
-        } else {
-          this.props.navigation.navigate('LetterPreview');
-        }
-      },
+      action: this.onNextPress,
     });
+  }
+
+  onNextPress(): void {
+    Keyboard.dismiss();
+    if (this.props.composing.content.length <= 0) {
+      popupAlert({
+        title: i18n.t('Compose.letterMustHaveContent'),
+        buttons: [
+          {
+            text: i18n.t('Alert.okay'),
+          },
+        ],
+      });
+    } else {
+      this.props.navigation.navigate('LetterPreview');
+    }
   }
 
   onNavigationBlur = () => {
@@ -166,6 +171,15 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       useNativeDriver: false,
     }).start();
     this.setState({ open: false });
+  }
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('Compose.next'),
+      action: this.onNextPress,
+    });
   }
 
   registerPhoto(photo: Photo): void {
@@ -207,6 +221,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       numWords = 0;
     }
     this.setState({ wordsLeft: 300 - numWords });
+    this.setValid(300 - numWords >= 0);
   }
 
   changeText(value: string): void {

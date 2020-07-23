@@ -58,7 +58,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
               {props.status}
             </Text>
             <Text style={CardStyles.date}>
-              {moment(props.date).format('MMM DD, YYYY')}
+              {moment(new Date(props.date)).format('MMM DD, YYYY')}
             </Text>
           </View>
           <Text style={CardStyles.letterStatusData}>{props.description}</Text>
