@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     contact_id,
     content,
     is_draft,
-    s3_image_url,
+    s3_img_urls,
     type,
     size,
   } = req.body;
@@ -27,7 +27,7 @@ module.exports = (req, res) => {
       contact_id,
       content,
       is_draft,
-      s3_image_url,
+      s3_img_urls,
       type,
       size,
     },

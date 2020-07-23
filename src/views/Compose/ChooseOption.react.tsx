@@ -14,11 +14,13 @@ import {
   setPhoto,
 } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { STATE_TO_ABBREV } from '@utils';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { UserState } from '@store/User/UserTypes';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -29,6 +31,7 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
   composing: Letter;
+  userState: UserState;
   recipientId: number;
   existingContacts: Contact[];
   setType: (type: LetterTypes) => void;
@@ -39,6 +42,7 @@ interface Props {
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
+  const { user } = props.userState;
   return (
     <View style={Styles.screenBackground}>
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
@@ -46,11 +50,13 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
       <Text
         style={[
-          Typography.FONT_MEDIUM,
+          Typography.FONT_REGULAR,
           { fontSize: 14, color: Colors.GRAY_DARK, paddingBottom: 10 },
         ]}
       >
-        {i18n.t('CreditsCard.creditsResetDaily')}
+        {i18n.t('Compose.psYourLovedOneWillRespondTo')} {user.address1}
+        {user.address2 ? ` ${user.address2}` : ''}, {user.city},{' '}
+        {STATE_TO_ABBREV[user.state]} {user.postal}.
       </Text>
       <LetterOptionCard
         type={LetterTypes.Postcard}
@@ -190,6 +196,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
+  userState: state.user,
   recipientId: state.contact.active.id,
   existingContacts: state.contact.existing,
 });

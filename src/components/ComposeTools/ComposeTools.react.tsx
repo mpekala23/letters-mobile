@@ -22,6 +22,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
         position: 'absolute',
         bottom: 0,
         width: WINDOW_WIDTH,
+        paddingVertical: 6,
       }}
     >
       <TouchableOpacity
@@ -56,11 +57,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
           style={[Styles.keyboardButtonItem, { flex: 1 }]}
           onPress={Keyboard.dismiss}
         >
-          <Text
-            style={[Typography.FONT_REGULAR, { color: Colors.AMEELIO_BLUE }]}
-          >
-            <Icon svg={CheckIcon} />
-          </Text>
+          <Icon svg={CheckIcon} />
         </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>

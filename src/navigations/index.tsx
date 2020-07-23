@@ -44,7 +44,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, SupportFAQTypes, DeliveryReportTypes } from 'types';
+import { SupportFAQTypes, DeliveryReportTypes } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -74,7 +74,7 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   ExplainProblem: undefined;
-  FacilityDirectory: { newFacility?: NullableFacility; phyState: string };
+  FacilityDirectory: { phyState: string };
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;

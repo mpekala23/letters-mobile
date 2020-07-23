@@ -164,6 +164,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   screen: 'LetterTracking',
                   data: {
                     contactId: props.activeContact.id,
+                    letterId: letterId || -1,
                   },
                 },
               },

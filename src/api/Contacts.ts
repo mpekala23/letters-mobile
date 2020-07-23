@@ -27,11 +27,15 @@ interface RawContact {
   facility_address: string;
   facility_city: string;
   facility_postal: string;
+  dorm: string;
+  unit: string;
   s3_img_url?: string;
   profile_img_path?: string;
 }
 
 function cleanContact(data: RawContact): Contact {
+  const dormExtension = data.dorm ? { dorm: data.dorm } : {};
+  const unitExtension = data.unit ? { unit: data.unit } : {};
   const photoExtension =
     data.s3_img_url || data.profile_img_path
       ? {
@@ -55,6 +59,8 @@ function cleanContact(data: RawContact): Contact {
       state: ABBREV_TO_STATE[data.facility_state],
       postal: data.facility_postal,
     },
+    ...dormExtension,
+    ...unitExtension,
     ...photoExtension,
   };
 }

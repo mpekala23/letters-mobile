@@ -352,6 +352,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             Object {
               "bottom": 0,
               "opacity": 0,
+              "paddingVertical": 6,
               "position": "absolute",
               "width": 750,
             }
@@ -507,74 +508,61 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 ]
               }
             >
-              <Text
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                class="feather feather-check"
+                fill="none"
+                focusable={false}
+                height={24}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                stroke="gray"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 style={
                   Array [
                     Object {
-                      "fontFamily": "Poppins-Regular",
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
                     },
                     Object {
-                      "color": "#448AF3",
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
                     },
                   ]
                 }
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
+                xml="<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"gray\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" class=\\"feather feather-check\\"><polyline points=\\"20 6 9 17 4 12\\"></polyline></svg>"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  class="feather feather-check"
-                  fill="none"
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  stroke="gray"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
+                      "fill",
+                      "stroke",
+                      "strokeWidth",
+                      "strokeLinecap",
+                      "strokeLinejoin",
                     ]
                   }
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                  xml="<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"gray\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" class=\\"feather feather-check\\"><polyline points=\\"20 6 9 17 4 12\\"></polyline></svg>"
-                  xmlns="http://www.w3.org/2000/svg"
+                  stroke={4286611584}
+                  strokeLinecap={1}
+                  strokeLinejoin={1}
+                  strokeWidth={2}
                 >
-                  <RNSVGGroup
-                    fill={null}
-                    propList={
-                      Array [
-                        "fill",
-                        "stroke",
-                        "strokeWidth",
-                        "strokeLinecap",
-                        "strokeLinejoin",
-                      ]
-                    }
-                    stroke={4286611584}
-                    strokeLinecap={1}
-                    strokeLinejoin={1}
-                    strokeWidth={2}
-                  >
-                    <RNSVGPath
-                      d="M20 6 9 17 4 12"
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </Text>
+                  <RNSVGPath
+                    d="M20 6 9 17 4 12"
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </TouchableOpacity>
           </TouchableOpacity>
         </View>

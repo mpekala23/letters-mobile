@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -15,6 +15,14 @@ import { Validation, STATES_DROPDOWN } from '@utils';
 import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setAdding } from '@store/Contact/ContactActions';
+import {
+  ContactState,
+  Contact,
+  ContactActionTypes,
+} from '@store/Contact/ContactTypes';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CommonStyles from './AddContact.styles';
 
@@ -30,6 +38,8 @@ export interface Props {
       phyState: string;
     };
   };
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
@@ -37,7 +47,7 @@ export interface State {
   valid: boolean;
 }
 
-class AddManuallyScreen extends React.Component<Props, State> {
+class AddManuallyScreenBase extends React.Component<Props, State> {
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
@@ -106,13 +116,14 @@ class AddManuallyScreen extends React.Component<Props, State> {
         state: this.facilityState.current.state.value,
         postal: this.facilityPostal.current.state.value,
       };
-      this.props.navigation.navigate('FacilityDirectory', {
-        newFacility: facility,
-        phyState: this.facilityState.current.state.value,
-      });
+      const contact = this.props.contactState.adding;
+      contact.facility = facility;
+      this.props.setAdding(contact);
+      this.props.navigation.navigate('ReviewContact');
     } else {
       this.props.navigation.navigate('FacilityDirectory');
     }
+    Keyboard.dismiss();
   }
 
   setValid(val: boolean): void {
@@ -143,6 +154,17 @@ class AddManuallyScreen extends React.Component<Props, State> {
   }
 
   loadValuesFromStore(): void {
+    const addingFacility = this.props.contactState.adding.facility;
+    if (addingFacility) {
+      if (this.facilityName.current)
+        this.facilityName.current.set(addingFacility.name);
+      if (this.facilityAddress.current)
+        this.facilityAddress.current.set(addingFacility.address);
+      if (this.facilityCity.current)
+        this.facilityCity.current.set(addingFacility.city);
+      if (this.facilityPostal.current)
+        this.facilityPostal.current.set(addingFacility.postal);
+    }
     if (this.facilityState.current)
       this.facilityState.current.set(this.props.route.params.phyState);
   }
@@ -269,5 +291,18 @@ class AddManuallyScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const AddManuallyScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddManuallyScreenBase);
 
 export default AddManuallyScreen;

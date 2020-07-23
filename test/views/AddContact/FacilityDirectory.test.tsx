@@ -29,7 +29,6 @@ const setup = (facilityOverrides = {}, routeOverrides = {}) => {
   };
   const route = {
     params: {
-      newFacility: null,
       phyState: '',
       ...routeOverrides,
     },
@@ -124,36 +123,10 @@ describe('Facility Directory Screen', () => {
     expect(facility.props.style[1].backgroundColor).toBe('white');
   });
 
-  it('should load initial facility from manual add', async () => {
-    const { navigation } = setup(
-      {
-        state: 'MN',
-        firstName: 'First',
-        lastName: 'Last',
-        inmateNumber: '6',
-        relationship: 'Sister',
-        facility: null,
-      },
-      {
-        newFacility: {
-          address: 'P.O. Box 400',
-          city: 'Bethel',
-          name: 'New Yukon Kskokwim Correctional Center',
-          postal: '99559',
-          state: 'AK',
-          type: 'State Prison',
-        },
-      }
-    );
-    await sleep(1);
-    expect(navigation.setParams).toHaveBeenCalledWith({ newFacility: null });
-  });
-
   it('should show hint message when contact state is Pennsylvania', async () => {
     const { getByTestId } = setup(
       {},
       {
-        newFacility: {},
         phyState: 'Pennsylvania',
       }
     );
