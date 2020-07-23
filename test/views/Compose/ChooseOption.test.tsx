@@ -18,6 +18,15 @@ const setup = () => {
       },
       existing: [],
     },
+    user: {
+      user: {
+        address1: 'Somewhere',
+        address2: 'Apt A',
+        city: 'Springfield',
+        state: 'Illinois',
+        postal: '90210',
+      },
+    },
     contact: {
       active: {
         id: 1,

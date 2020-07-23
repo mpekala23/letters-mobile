@@ -131,7 +131,9 @@
     "termsConditionAnd": " and ",
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
-    "incorrectUsernameOrPassword": "Incorrect username or password"
+    "incorrectEmail": "Incorrect email",
+    "incorrectPassword": "Incorrect password",
+    "emailAndPasswordRequired": "Email and password are required"
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
@@ -272,6 +274,7 @@
   },
   "Compose": {
     "chooseAnOption": "Choose an option",
+    "psYourLovedOneWillRespondTo": "P.S. Your loved ones will be able to respond to you via the return address:",
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
     "send": "Send Letter",
