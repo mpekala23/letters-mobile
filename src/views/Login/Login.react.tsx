@@ -70,17 +70,27 @@ class LoginScreen extends React.Component<Props, State> {
           this.passwordRef.current && this.passwordRef.current.state.value,
         remember: this.state.remember,
       };
+      if (cred.email.length <= 0 || cred.password.length <= 0) {
+        popupAlert({
+          title: i18n.t('LoginScreen.emailAndPasswordRequired'),
+          buttons: [
+            {
+              text: i18n.t('Alert.okay'),
+            },
+          ],
+        });
+        return;
+      }
       try {
         await login(cred);
       } catch (err) {
-        if (err.message === 'Incorrect credentials') {
-          popupAlert({
-            title: i18n.t('LoginScreen.incorrectUsernameOrPassword'),
-            buttons: [
-              {
-                text: i18n.t('Alert.okay'),
-              },
-            ],
+        if (err.message === 'Invalid Email') {
+          dropdownError({
+            message: i18n.t('LoginScreen.incorrectEmail'),
+          });
+        } else if (err.message === 'Invalid Password') {
+          dropdownError({
+            message: i18n.t('LoginScreen.incorrectPassword'),
           });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.timedOut') });
@@ -167,6 +177,7 @@ class LoginScreen extends React.Component<Props, State> {
                   containerStyle={Styles.button}
                   textStyle={Typography.FONT_BOLD}
                   buttonText={i18n.t('LoginScreen.login')}
+                  blocking
                   onPress={this.onLogin}
                 />
                 <View style={{ flexDirection: 'row' }}>

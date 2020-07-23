@@ -131,7 +131,9 @@
     "termsConditionAnd": " and ",
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
-    "incorrectUsernameOrPassword": "Incorrect username or password"
+    "incorrectEmail": "Incorrect email",
+    "incorrectPassword": "Incorrect password",
+    "emailAndPasswordRequired": "Email and password are required"
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",

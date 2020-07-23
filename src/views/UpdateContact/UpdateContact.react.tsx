@@ -23,6 +23,7 @@ import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Validation } from '@utils';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -293,6 +294,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               ref={this.facilityAddress}
               placeholder={i18n.t('UpdateContactScreen.addressLine2')}
               required
+              validate={Validation.Address}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />

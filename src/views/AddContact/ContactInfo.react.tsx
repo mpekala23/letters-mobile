@@ -329,6 +329,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
+                  validate={Validation.InmateNumber}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.relationship}
