@@ -119,7 +119,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              1 / 60
+              1 / 60 / 10
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -136,7 +136,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   },
                 },
               },
-              2 / 60
+              2 / 60 / 10
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -145,9 +145,13 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 data: {
                   type: NotifTypes.HasReceived,
                   screen: 'Issues',
+                  data: {
+                    contactId: props.activeContact.id,
+                    letterId: letterId || -1,
+                  },
                 },
               },
-              3 / 60
+              3 / 60 / 10
             );
             Notifs.scheduleNotificationInHours(
               {
@@ -158,10 +162,11 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                   screen: 'LetterTracking',
                   data: {
                     contactId: props.activeContact.id,
+                    letterId: letterId || -1,
                   },
                 },
               },
-              4 / 60
+              4 / 60 / 10
             );
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
             Notifs.scheduleNotificationInDays(

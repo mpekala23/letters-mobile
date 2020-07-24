@@ -81,7 +81,12 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
       );
     case DeliveryReportTypes.unsure:
       return defaultCTAButton(
-        () => props.navigation.navigate('ContactSelector'),
+        () => {
+          props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }],
+          });
+        },
         i18n.t('IssuesDetailScreen.returnHome'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
@@ -108,7 +113,12 @@ function mapIssueToDetailsSecondaryCTA(
   switch (type) {
     case DeliveryReportTypes.received:
       return defaultCTAButton(
-        () => props.navigation.navigate('ContactSelector'),
+        () => {
+          props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }],
+          });
+        },
         i18n.t('IssuesDetailScreen.returnHome'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
