@@ -23,6 +23,7 @@ import PicUpload, {
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { WINDOW_WIDTH } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -300,6 +301,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   height={this.state.photoHeight}
                   allowsEditing={false}
                   shapeBackground={{ left: 10, bottom: 10 }}
+                  segmentOnPressLog={() => {
+                    Segment.trackWithProperties(
+                      'Compose - Click on Add Image',
+                      { Option: 'Photo' }
+                    );
+                  }}
+                  segmentSuccessLog={() => {
+                    Segment.trackWithProperties('Compose - Add Image Success', {
+                      Option: 'Photo',
+                    });
+                  }}
+                  segmentErrorLogEvent="Compose - Add Image Error"
                 />
               </Animated.View>
             </Input>

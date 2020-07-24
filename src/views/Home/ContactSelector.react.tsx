@@ -6,7 +6,7 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-import { Icon, Button } from '@components';
+import { Icon } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
@@ -22,6 +22,7 @@ import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -155,6 +156,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
             this.props.navigation.navigate('ContactInfo', {
               addFromSelector: true,
             });
+            Segment.track('Contact Selector - Click on Add Contact');
           }}
           testID="addContact"
         >

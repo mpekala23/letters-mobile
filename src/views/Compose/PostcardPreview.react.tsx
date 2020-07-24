@@ -23,6 +23,7 @@ import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
 import { threeBusinessDaysFromNow, hoursTill8Tomorrow } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type PostcardPreviewScreenNavigationProp = StackNavigationProp<
@@ -99,6 +100,9 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             props.clearComposing();
             props.setContent('');
             props.setPhoto(undefined);
+            Segment.trackWithProperties('Compose - Click on Send', {
+              Option: 'Photo',
+            });
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
             Notifs.scheduleNotificationInHours(
               {
@@ -188,6 +192,10 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             });
           } catch (err) {
             props.setDraft(true);
+            Segment.trackWithProperties('Review - Send Letter Failure', {
+              Option: 'Photo',
+              'Error Type': err,
+            });
             if (err.message === 'Unable to upload image.') {
               dropdownError({
                 message: i18n.t('Error.unableToUploadLetterPhoto'),
