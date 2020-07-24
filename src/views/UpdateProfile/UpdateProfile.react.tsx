@@ -23,6 +23,7 @@ import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import moment from 'moment';
 import { STATES_DROPDOWN, Validation } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -141,6 +142,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       };
       try {
         await updateProfile(user);
+        Segment.track('Edit Profile - Click on Save');
         this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -232,6 +234,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 initial={this.props.userState.user.photo}
                 onSuccess={(image: Photo) => this.setState({ image })}
                 onDelete={() => this.setState({ image: null })}
+                segmentOnPressLog={() => {
+                  Segment.track('Edit Profile - Click on Upload Image');
+                }}
+                segmentSuccessLog={() => {
+                  Segment.track('Edit Profile - Upload Image Success');
+                }}
+                segmentErrorLogEvent="Edit Profile - Upload Image Error"
               />
               <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
                 {user.firstName}

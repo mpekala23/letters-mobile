@@ -10,6 +10,7 @@ import { AppState } from '@store/types';
 import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
 import i18n from '@i18n';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './MemoryLane.styles';
 
 type MemoryLaneScreenNavigationProp = StackNavigationProp<
@@ -37,6 +38,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
             imageUri={letter.photo ? letter.photo.uri : ''}
             onPress={() => {
               props.setActiveLetter(letter);
+              Segment.track('Memory Lane - Click on Memory Card');
               props.navigation.navigate('LetterDetails');
             }}
             style={{ width: '45%', marginLeft: 6 }}

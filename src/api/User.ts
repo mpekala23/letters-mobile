@@ -11,6 +11,7 @@ import { loginUser, logoutUser, setUser } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import {
   uploadImage,
   fetchTimeout,
@@ -86,6 +87,7 @@ export async function loginWithToken(): Promise<User> {
     const body = await response.json();
     if (body.status !== 'OK') throw Error('Invalid token');
     const userData = cleanUser(body.data as RawUser);
+    Segment.identify(userData.id.toString());
     store.dispatch(loginUser(userData, body.data.token, body.data.remember));
     return userData;
   } catch (err) {
@@ -120,6 +122,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     }
   }
   const userData = cleanUser(body.data as RawUser);
+  Segment.identify(userData.id.toString());
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }
@@ -178,6 +181,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   }
   const userData = cleanUser(body.data as RawUser);
   userData.photo = newPhoto;
+  Segment.identify(userData.id.toString());
   store.dispatch(
     loginUser(
       userData,
