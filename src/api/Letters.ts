@@ -177,7 +177,11 @@ export async function createLetter(letter: Letter): Promise<Letter> {
     body: JSON.stringify(reqBody),
   });
   if (body.status !== 'OK' || !body.data) throw body;
-  // TODO: Figure out how letter_id is returned from actual API and update it here
+  const data = body.data as RawLetter;
+  createdLetter.letterId = data.id;
+  createdLetter.dateCreated = data.created_at;
+  console.log('body', data);
+  console.log('created', createdLetter);
   store.dispatch(addLetter(createdLetter));
   return createdLetter;
 }

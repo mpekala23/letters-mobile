@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { Button, LetterTracker, GrayBar } from '@components';
@@ -114,6 +114,25 @@ class LetterTrackingScreenBase extends React.Component<Props> {
         </Text>
         <ScrollView keyboardShouldPersistTaps="handled">
           <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
+          {this.props.letter.photo?.uri ? (
+            <Image
+              style={[
+                Styles.trackingPhoto,
+                {
+                  height: 275,
+                  width:
+                    this.props.letter.photo.width &&
+                    this.props.letter.photo.height
+                      ? (this.props.letter.photo.width /
+                          this.props.letter.photo.height) *
+                        275
+                      : 275,
+                },
+              ]}
+              source={this.props.letter.photo}
+              testID="memoryLaneImage"
+            />
+          ) : null}
         </ScrollView>
       </View>
     );
