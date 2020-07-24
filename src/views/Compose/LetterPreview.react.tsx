@@ -5,12 +5,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Letter, LetterStatus } from 'types';
+import { Letter, LetterStatus, Photo } from 'types';
 import { Typography, Colors } from '@styles';
 import {
   setDraft,
   setStatus,
   clearComposing,
+  setContent,
+  setPhoto,
 } from '@store/Letter/LetterActions';
 import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -20,7 +22,6 @@ import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
 import { threeBusinessDaysFromNow, hoursTill8Tomorrow } from '@utils';
-import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 import Styles from './Compose.styles';
 
 type LetterPreviewScreenNavigationProp = StackNavigationProp<
@@ -35,6 +36,8 @@ interface Props {
   setDraft: (value: boolean) => void;
   setStatus: (status: LetterStatus) => void;
   clearComposing: () => void;
+  setContent: (content: string) => void;
+  setPhoto: (photo: Photo | undefined) => void;
 }
 
 const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
@@ -105,6 +108,8 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
             const { letterId } = await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
+            props.setContent('');
+            props.setPhoto(undefined);
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
             Notifs.scheduleNotificationInHours(
               {
@@ -220,6 +225,8 @@ const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
     clearComposing: () => dispatch(clearComposing()),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
     setStatus: (status: LetterStatus) => dispatch(setStatus(status)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
   };
 };
 const LetterPreviewScreen = connect(

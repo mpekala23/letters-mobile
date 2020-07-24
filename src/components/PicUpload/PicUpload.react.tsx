@@ -80,6 +80,7 @@ class PicUpload extends React.Component<Props, State> {
                   width: result.width,
                   height: result.height,
                 };
+
                 this.setState(
                   {
                     image,
@@ -119,8 +120,8 @@ class PicUpload extends React.Component<Props, State> {
                 const image = {
                   uri: result.uri,
                   type: 'image',
-                  width: result.width,
-                  height: result.height,
+                  width: Math.min(result.width, result.height),
+                  height: Math.min(result.width, result.height),
                 };
                 this.setState(
                   {
