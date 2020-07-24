@@ -25,8 +25,7 @@ interface Props {
 
 class IssuesScreenBase extends React.Component<Props> {
   componentDidMount(): void {
-    if (this.props.currentNotif && this.props.currentNotif.screen === 'Issues')
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render(): JSX.Element {

@@ -112,7 +112,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 ).toDateString()}`,
                 data: {
                   type: NotifTypes.OnItsWay,
-                  screen: 'LetterTracking',
                   data: {
                     contactId: props.activeContact.id,
                     letterId: letterId || -1,
@@ -129,7 +128,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 )}: ${threeBusinessDaysFromNow()}`,
                 data: {
                   type: NotifTypes.OutForDelivery,
-                  screen: 'LetterTracking',
                   data: {
                     contactId: props.activeContact.id,
                     letterId: letterId || -1,
@@ -144,7 +142,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 body: `${i18n.t('Notifs.letUsKnow')}`,
                 data: {
                   type: NotifTypes.HasReceived,
-                  screen: 'Issues',
                   data: {
                     contactId: props.activeContact.id,
                     letterId: letterId || -1,
@@ -159,7 +156,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 body: `${i18n.t('Notifs.getInTouch')}`,
                 data: {
                   type: NotifTypes.ReturnedToSender,
-                  screen: 'LetterTracking',
                   data: {
                     contactId: props.activeContact.id,
                     letterId: letterId || -1,
@@ -179,7 +175,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 body: `${i18n.t('Notifs.clickHereToBegin')}`,
                 data: {
                   type: NotifTypes.Drought,
-                  screen: 'SingleContact',
                   data: {
                     contactId: props.activeContact.id,
                   },

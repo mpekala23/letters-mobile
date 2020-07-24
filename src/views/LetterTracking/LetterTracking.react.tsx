@@ -40,11 +40,7 @@ function mapStatusToTrackerBarHeight(type?: string) {
 
 class LetterTrackingScreenBase extends React.Component<Props> {
   componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'LetterTracking'
-    )
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {

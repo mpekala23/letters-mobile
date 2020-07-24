@@ -3,8 +3,8 @@ import { IssuesDetailSecondaryScreen } from '@views';
 import { DeliveryReportTypes } from 'types';
 import { render, fireEvent, toJSON } from '@testing-library/react-native';
 
-const setup = (issueOverrides: Record<string, unknown>) => {
-  const navigation = { navigate: jest.fn() };
+const setup = (issueOverrides: Record<string, unknown> = {}) => {
+  const navigation = { navigate: jest.fn(), reset: jest.fn() };
   const route = {
     params: { issue: '', ...issueOverrides },
   };
@@ -19,7 +19,7 @@ const setup = (issueOverrides: Record<string, unknown>) => {
 
 describe('Issues Detail Secondary screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<IssuesDetailSecondaryScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
@@ -29,7 +29,7 @@ describe('Issues Detail Secondary screen', () => {
       issue: DeliveryReportTypes.haveNotAsked,
     });
     fireEvent.press(getByText('Return home'));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
+    expect(navigation.reset).toHaveBeenCalled();
   });
 
   // TO-DO: Test 'Call facility' button action
@@ -39,6 +39,6 @@ describe('Issues Detail Secondary screen', () => {
       issue: DeliveryReportTypes.haveNotReceived,
     });
     fireEvent.press(getByText("I'll wait"));
-    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
+    expect(navigation.reset).toHaveBeenCalled();
   });
 });

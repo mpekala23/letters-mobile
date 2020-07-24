@@ -62,11 +62,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'SingleContact'
-    )
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {

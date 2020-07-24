@@ -3,8 +3,8 @@ import { SupportFAQDetailScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { SupportFAQTypes } from '../../src/types';
 
-const setup = (issueOverrides: Record<string, unknown>) => {
-  const navigation = { navigate: jest.fn() };
+const setup = (issueOverrides: Record<string, unknown> = {}) => {
+  const navigation = { navigate: jest.fn(), reset: jest.fn() };
   const route = {
     params: { issue: '', ...issueOverrides },
   };
@@ -17,7 +17,7 @@ const setup = (issueOverrides: Record<string, unknown>) => {
 
 describe('Support FAQ Detail screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<SupportFAQDetailScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
@@ -48,7 +48,7 @@ describe('Support FAQ Detail screen', () => {
       issue: SupportFAQTypes.WrongMailingAddress,
     });
     fireEvent.press(getByText('Update address'));
-    expect(navigation.navigate).toHaveBeenCalledWith('UpdateContact');
+    expect(navigation.reset).toHaveBeenCalled();
   });
 
   // TO-DO: Should navigate to update profile screen when WrongReturnAddress button is pressed
