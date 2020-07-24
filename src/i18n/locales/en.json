@@ -200,8 +200,11 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "addressLine1": "Address line 1",
-    "addressLine2": "Address line 2",
+    "facilityName": "Facility Name",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "Facility City",
+    "facilityState": "Facility State",
+    "facilityPostal": "Facility Postal",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
