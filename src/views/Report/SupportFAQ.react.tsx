@@ -6,6 +6,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './SupportFAQ.styles';
 
 type SupportFAQScreenNavigationProp = StackNavigationProp<
@@ -29,6 +30,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.DeleteLetter,
             });
+            Segment.track('In-App Reporting - Want to Delete Letter');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.cancelMyLetter')}
@@ -40,6 +42,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.NotArrived,
             });
+            Segment.track('In-App Reporting - More than Six Days');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.notYetArrived')}
@@ -51,6 +54,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.WrongMailingAddress,
             });
+            Segment.track('In-App Reporting - Wrong Mailing Address');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wrongMailingAddress')}
@@ -62,6 +66,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.WrongReturnAddress,
             });
+            Segment.track('In-App Reporting - Wrong Return Address');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wrongReturnAddress')}
@@ -73,6 +78,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.TrackingNumber,
             });
+            Segment.track('In-App Reporting - USPS Tracking Number');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wouldLikeTrackingNumber')}
@@ -84,6 +90,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.TrackingError,
             });
+            Segment.track('In-App Reporting - Something Wrong');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.somethingWrongWithTracking')}
@@ -95,6 +102,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
             props.navigation.navigate('SupportFAQDetail', {
               issue: SupportFAQTypes.TalkToAmeelio,
             });
+            Segment.track('In-App Reporting - Talk to Ameelio');
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.talkToAmeelio')}
