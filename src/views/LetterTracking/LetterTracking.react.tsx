@@ -11,6 +11,7 @@ import moment from 'moment';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './LetterTracking.styles';
 
 type LetterTrackingScreenNavigationProp = StackNavigationProp<
@@ -104,6 +105,7 @@ class LetterTrackingScreenBase extends React.Component<Props> {
           reverse
           onPress={() => {
             this.props.navigation.navigate('SupportFAQ');
+            Segment.track('In-App Reporting - Click on I Need Help');
           }}
           buttonText={i18n.t('LetterTrackingScreen.needHelp')}
           textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
