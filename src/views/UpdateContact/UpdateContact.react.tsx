@@ -24,6 +24,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Validation, STATES_DROPDOWN } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -123,6 +124,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   doDeleteContact = async () => {
     try {
       await deleteContact(this.props.contact.id);
+      Segment.track('Edit Contact - Delete Contact');
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
       dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -161,6 +163,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       };
       try {
         await updateContact(contact);
+        Segment.track('Edit Contact - Click on Save');
         this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -257,8 +260,19 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 height={130}
                 type={PicUploadTypes.Profile}
                 initial={this.props.contact.photo}
-                onSuccess={(image: Photo) => this.setState({ image })}
-                onDelete={() => this.setState({ image: null })}
+                onSuccess={(image: Photo) => {
+                  this.setState({ image });
+                }}
+                onDelete={() => {
+                  this.setState({ image: null });
+                }}
+                segmentOnPressLog={() => {
+                  Segment.track('Edit Contact - Click on Upload Image');
+                }}
+                segmentSuccessLog={() => {
+                  Segment.track('Edit Contact - Upload Image Success');
+                }}
+                segmentErrorLogEvent="Edit Contact - Upload Image Error"
               />
             </View>
             <Text

@@ -21,6 +21,7 @@ import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -61,6 +62,9 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       <LetterOptionCard
         type={LetterTypes.Postcard}
         onPress={() => {
+          Segment.trackWithProperties('Compose - Click on Compose Option', {
+            Option: 'Photo',
+          });
           if (props.composing.content.length > 0 || props.composing.photo) {
             popupAlert({
               title: i18n.t('Compose.letterInProgress'),
@@ -127,6 +131,9 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       <LetterOptionCard
         type={LetterTypes.Letter}
         onPress={() => {
+          Segment.trackWithProperties('Compose - Click on Compose Option', {
+            Option: 'Letter',
+          });
           if (props.composing.content.length > 0 || props.composing.photo) {
             popupAlert({
               title: i18n.t('Compose.letterInProgress'),

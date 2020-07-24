@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
+import * as Segment from 'expo-analytics-segment';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -39,6 +40,9 @@ export default class App extends React.Component<null, State> {
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();
+    const androidWriteKey = 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD';
+    const iosWriteKey = 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy';
+    Segment.initialize({ androidWriteKey, iosWriteKey });
     try {
       await loginWithToken();
     } catch (err) {

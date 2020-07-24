@@ -15,6 +15,7 @@ import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Colors } from '@styles';
+import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 
@@ -34,6 +35,9 @@ export interface Props {
   aspect: [number, number];
   allowsEditing: boolean;
   initial: Photo;
+  segmentOnPressLog?: () => void;
+  segmentSuccessLog?: () => void;
+  segmentErrorLogEvent?: string;
 }
 
 export interface State {
@@ -87,11 +91,20 @@ class PicUpload extends React.Component<Props, State> {
                     image,
                   },
                   () => {
-                    if (this.props.onSuccess) this.props.onSuccess(image);
+                    if (this.props.onSuccess) {
+                      this.props.onSuccess(image);
+                      if (this.props.segmentSuccessLog)
+                        this.props.segmentSuccessLog();
+                    }
                   }
                 );
               }
             } catch (err) {
+              if (this.props.segmentErrorLogEvent)
+                Segment.trackWithProperties(this.props.segmentErrorLogEvent, {
+                  'Error Type': err,
+                  'Photo Option': 'Take Photo',
+                });
               popupAlert({
                 title: i18n.t('Permission.photos'),
                 buttons: [
@@ -135,11 +148,20 @@ class PicUpload extends React.Component<Props, State> {
                     image,
                   },
                   () => {
-                    if (this.props.onSuccess) this.props.onSuccess(image);
+                    if (this.props.onSuccess) {
+                      this.props.onSuccess(image);
+                      if (this.props.segmentSuccessLog)
+                        this.props.segmentSuccessLog();
+                    }
                   }
                 );
               }
             } catch (err) {
+              if (this.props.segmentErrorLogEvent)
+                Segment.trackWithProperties(this.props.segmentErrorLogEvent, {
+                  'Error Type': err,
+                  'Photo Option': 'Upload Existing Photo',
+                });
               popupAlert({
                 title: i18n.t('Permission.photos'),
                 buttons: [
@@ -222,6 +244,7 @@ class PicUpload extends React.Component<Props, State> {
           onPress={() => {
             Keyboard.dismiss();
             this.selectImage();
+            if (this.props.segmentOnPressLog) this.props.segmentOnPressLog();
           }}
           testID="clickable"
         >
