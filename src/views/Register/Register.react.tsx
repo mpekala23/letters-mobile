@@ -29,6 +29,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Photo } from 'types';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -128,6 +129,7 @@ class RegisterScreen extends React.Component<Props, State> {
   };
 
   doRegister = async (): Promise<void> => {
+    Segment.track("Signup - Clicks 'Create Account'");
     if (
       this.firstName.current &&
       this.lastName.current &&
@@ -160,6 +162,7 @@ class RegisterScreen extends React.Component<Props, State> {
       };
       try {
         await register(data);
+        Segment.track('Signup - Account Created');
         Notifs.scheduleNotificationInHours(
           {
             title: `${i18n.t('Notifs.youreOneTapAway')}`,
@@ -173,6 +176,9 @@ class RegisterScreen extends React.Component<Props, State> {
         );
       } catch (err) {
         if (err.data && err.data.email) {
+          Segment.trackWithProperties('Signup - Account Creation Error', {
+            'Error Type': 'invalid email',
+          });
           popupAlert({
             title: i18n.t('RegisterScreen.emailAlreadyInUse'),
             buttons: [

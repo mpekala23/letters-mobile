@@ -30,6 +30,7 @@ import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
+import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -115,6 +116,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   }
 
   doAddContact = async () => {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'review',
+    });
     if (
       this.state.valid &&
       this.stateRef.current &&
@@ -165,6 +169,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           }
         }
         await addContact(contact);
+        Segment.track('Add Contact - Success');
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
           Notifs.scheduleNotificationInHours(
@@ -185,6 +190,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'missing inmate ID',
+          });
           popupAlert({
             title: i18n.t('ReviewContactScreen.invalidInmateNumber'),
             buttons: [
@@ -194,6 +202,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             ],
           });
         } else if (err.message === 'Contact already exists') {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'contact already exists',
+          });
           popupAlert({
             title: i18n.t('ReviewContactScreen.contactAlreadyExists'),
             buttons: [
@@ -203,6 +214,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             ],
           });
         } else {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'other',
+          });
           dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
       }
@@ -269,7 +283,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       type={PicUploadTypes.Profile}
                       width={136}
                       height={136}
-                      onSuccess={(image: Photo) => this.setState({ image })}
+                      onSuccess={(image: Photo) => {
+                        Segment.track('Add Contact - Upload Image');
+                        this.setState({ image });
+                      }}
                       onDelete={() => this.setState({ image: null })}
                     />
                   </View>
