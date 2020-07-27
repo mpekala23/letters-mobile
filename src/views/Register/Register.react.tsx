@@ -29,6 +29,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Photo } from 'types';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -320,6 +321,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.password}
             parentStyle={Styles.fullWidth}
+            validate={Validation.Password}
             placeholder={i18n.t('RegisterScreen.password')}
             required
             secure
@@ -327,6 +329,15 @@ class RegisterScreen extends React.Component<Props, State> {
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
+          {this.password.current &&
+            !this.password.current.state.valid &&
+            this.password.current.state.dirty && (
+              <Text
+                style={[Typography.FONT_REGULAR, { color: Colors.AMEELIO_RED }]}
+              >
+                The password must be at least 8 characters
+              </Text>
+            )}
           <Input
             ref={this.passwordConfirmation}
             parentStyle={Styles.fullWidth}

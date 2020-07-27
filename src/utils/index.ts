@@ -112,8 +112,7 @@ export function isValidPhone(phone: string): boolean {
 }
 
 export function isValidPassword(password: string): boolean {
-  // at least 8 characters, one uppercase, one lowercase, one number
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
+  return password.length >= 8;
 }
 
 export function isValidPostal(postal: string): boolean {
