@@ -1,3 +1,5 @@
+import { uploadPushToken } from './Common';
+
 import {
   addContact,
   updateContact,
@@ -20,6 +22,7 @@ import {
 } from './User';
 
 export {
+  uploadPushToken,
   addContact,
   updateContact,
   deleteContact,

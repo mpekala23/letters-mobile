@@ -165,3 +165,14 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     state: ABBREV_TO_STATE[data.state_id],
   };
 }
+
+export async function uploadPushToken(token: string): Promise<void> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `exponent/devices/subscribe`),
+    {
+      method: 'POST',
+      expo_token: token,
+    }
+  );
+  if (body.status !== 'OK') throw body;
+}
