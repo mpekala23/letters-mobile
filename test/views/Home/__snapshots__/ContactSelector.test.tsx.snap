@@ -243,6 +243,8 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                  
                 last heard from you
                 :
+                 
+                
               </Text>
               <Text
                 style={

@@ -248,39 +248,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#393939",
-                "fontSize": 16,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            💌
-          </Text>
-           
-          received
-          :
-           
-          1
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 16,
+                "fontSize": 14,
               },
             ]
           }
@@ -297,16 +269,21 @@ exports[`Single Contact Screen should match snapshot 1`] = `
            
           last heard from you
           :
+           
+          Jul 27
         </Text>
         <Text
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#393939",
-                "fontSize": 16,
+                "fontSize": 14,
+              },
+              Object {
+                "paddingBottom": 8,
               },
             ]
           }

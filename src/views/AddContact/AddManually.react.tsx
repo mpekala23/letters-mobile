@@ -24,6 +24,7 @@ import {
   ContactActionTypes,
 } from '@store/Contact/ContactTypes';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -101,6 +102,9 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
   }
 
   onAddFacility(): void {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'manual',
+    });
     if (
       this.facilityName.current &&
       this.facilityAddress.current &&
