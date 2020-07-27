@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
 
 export default StyleSheet.create({
   screenBackground: {
@@ -12,9 +11,5 @@ export default StyleSheet.create({
     fontSize: 22,
     marginTop: 10,
     marginBottom: 4,
-  },
-  postcardBackground: {
-    flexDirection: 'row',
-    height: 'auto',
   },
 });

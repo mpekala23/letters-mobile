@@ -48,7 +48,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           <Text
             style={[
               Typography.FONT_BOLD,
-              { fontSize: 23, textAlign: 'center', marginBottom: 10 },
+              { fontSize: 20, textAlign: 'center', marginBottom: 18 },
             ]}
           >
             {this.state.current.title}
@@ -67,7 +67,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
               >
                 {this.state.current.message}
               </Text>
-              <View style={{ height: 40 }} />
+              <View style={{ height: 32 }} />
             </>
           )}
           {this.state.current.buttons &&

@@ -9,7 +9,7 @@ import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 60;
-const DEFAULT_OPEN_HEIGHT = 120;
+const DEFAULT_OPEN_HEIGHT = 150;
 const ANIM_DURATION = 250;
 
 interface Props {
@@ -154,7 +154,7 @@ class ComposeHeader extends React.Component<Props, State> {
         {this.state.open || this.state.animating ? (
           <Animated.View
             style={{
-              height: 72,
+              height: 100,
               width: '100%',
               backgroundColor: Colors.PINK_LIGHTEST,
               borderRadius: 8,
