@@ -169,7 +169,6 @@ class RegisterScreen extends React.Component<Props, State> {
             body: `${i18n.t('Notifs.clickHereToBegin')}`,
             data: {
               type: NotifTypes.NoFirstContact,
-              screen: 'ContactSelector',
             },
           },
           hoursTill8Tomorrow()

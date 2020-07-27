@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   profileCardInfo: {
     color: Colors.GRAY_DARKER,
-    fontSize: 16,
+    fontSize: 14,
   },
   actionItems: {
     padding: 16,

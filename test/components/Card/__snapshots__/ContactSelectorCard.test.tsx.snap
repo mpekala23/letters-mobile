@@ -57,6 +57,17 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
       >
         <View
           pointerEvents="none"
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F4F4F4",
+              "borderRadius": 40,
+              "height": 80,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": 80,
+            }
+          }
         >
           <TouchableOpacity
             activeOpacity={0.2}
@@ -164,6 +175,8 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
            
           last heard from you
           :
+           
+          Jul 27
         </Text>
         <Text
           style={

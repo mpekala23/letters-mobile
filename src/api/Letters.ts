@@ -9,6 +9,9 @@ import {
   addLetter,
   setExisting as setExistingLetters,
 } from '@store/Letter/LetterActions';
+import { setUser } from '@store/User/UserActions';
+import { popupAlert } from '@components/Alert/Alert.react';
+import i18n from '@i18n';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -142,6 +145,13 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
 }
 
 export async function createLetter(letter: Letter): Promise<Letter> {
+  const { user } = store.getState().user;
+  if (user.credit <= 0) {
+    popupAlert({
+      title: i18n.t('Compose.notEnoughCredits'),
+      buttons: [{ text: i18n.t('Alert.okay') }],
+    });
+  }
   const createdLetter = { ...letter };
   let imageExtension = {};
   if (createdLetter.photo) {
@@ -177,8 +187,12 @@ export async function createLetter(letter: Letter): Promise<Letter> {
     body: JSON.stringify(reqBody),
   });
   if (body.status !== 'OK' || !body.data) throw body;
-  // TODO: Figure out how letter_id is returned from actual API and update it here
+  const data = body.data as RawLetter;
+  createdLetter.letterId = data.id;
+  createdLetter.dateCreated = data.created_at;
   store.dispatch(addLetter(createdLetter));
+  user.credit -= 1;
+  store.dispatch(setUser(user));
   return createdLetter;
 }
 

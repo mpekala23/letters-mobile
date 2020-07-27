@@ -179,6 +179,19 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         </ViewManagerAdapter_ExpoLinearGradient>
         <View
           pointerEvents="auto"
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F4F4F4",
+              "borderColor": "white",
+              "borderRadius": 65,
+              "borderWidth": 6,
+              "height": 130,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": 130,
+            }
+          }
         >
           <TouchableOpacity
             activeOpacity={0.2}
@@ -235,39 +248,11 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#393939",
-                "fontSize": 16,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            💌
-          </Text>
-           
-          received
-          :
-           
-          1
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 16,
+                "fontSize": 14,
               },
             ]
           }
@@ -284,16 +269,21 @@ exports[`Single Contact Screen should match snapshot 1`] = `
            
           last heard from you
           :
+           
+          Jul 27
         </Text>
         <Text
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
                 "color": "#393939",
-                "fontSize": 16,
+                "fontSize": 14,
+              },
+              Object {
+                "paddingBottom": 8,
               },
             ]
           }
