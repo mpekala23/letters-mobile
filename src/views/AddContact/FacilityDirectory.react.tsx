@@ -254,18 +254,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     const refresh = (
       <RefreshControl
         refreshing={this.state.refreshing}
-        onRefresh={async () => {
-          this.setState({ refreshing: true });
-          try {
-            const facilities = await getFacilities(
-              STATE_TO_ABBREV[this.props.route.params.phyState]
-            );
-            this.setState({ facilityData: facilities });
-          } catch (err) {
-            dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });
-          }
-          this.setState({ refreshing: false });
-        }}
+        onRefresh={this.refreshFacilities}
       />
     );
 

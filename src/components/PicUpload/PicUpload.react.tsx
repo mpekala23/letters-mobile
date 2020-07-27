@@ -14,6 +14,7 @@ import Camera from '@assets/components/PicUpload/Camera';
 import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Colors } from '@styles';
 import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
@@ -133,8 +134,14 @@ class PicUpload extends React.Component<Props, State> {
                 const image = {
                   uri: result.uri,
                   type: 'image',
-                  width: Math.min(result.width, result.height),
-                  height: Math.min(result.width, result.height),
+                  width:
+                    this.props.type === PicUploadTypes.Profile
+                      ? Math.min(result.width, result.height)
+                      : result.width,
+                  height:
+                    this.props.type === PicUploadTypes.Profile
+                      ? Math.min(result.width, result.height)
+                      : result.height,
                 };
                 this.setState(
                   {
@@ -213,48 +220,56 @@ class PicUpload extends React.Component<Props, State> {
     }
 
     return (
-      <TouchableOpacity
-        style={[
-          {
-            width:
-              image && image.width && image.height
-                ? (image.width / image.height) * this.props.height
-                : this.props.width,
-            height: this.props.height,
-          },
+      <View
+        style={
           this.props.type === PicUploadTypes.Profile
-            ? Styles.profileBackground
-            : Styles.mediaBackground,
-          this.props.shapeBackground,
-        ]}
-        onPress={() => {
-          Keyboard.dismiss();
-          this.selectImage();
-          if (this.props.segmentOnPressLog) this.props.segmentOnPressLog();
-        }}
-        testID="clickable"
+            ? { backgroundColor: Colors.GRAY_LIGHTER, borderRadius: 100 }
+            : {}
+        }
       >
-        {innerCircle}
-        {image && image.uri.slice(-4) !== '.svg' && (
-          <TouchableOpacity
-            style={[
-              {
-                position: 'absolute',
-                width: 40,
-                height: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
-              this.props.type === PicUploadTypes.Profile
-                ? Styles.profileDelete
-                : Styles.mediaDelete,
-            ]}
-            onPress={this.deleteImage}
-          >
-            <Icon svg={Delete} />
-          </TouchableOpacity>
-        )}
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            {
+              width:
+                image && image.width && image.height
+                  ? (image.width / image.height) * this.props.height
+                  : this.props.width,
+              height: this.props.height,
+            },
+            this.props.type === PicUploadTypes.Profile
+              ? Styles.profileBackground
+              : Styles.mediaBackground,
+            this.props.shapeBackground,
+          ]}
+          onPress={() => {
+            Keyboard.dismiss();
+            this.selectImage();
+            if (this.props.segmentOnPressLog) this.props.segmentOnPressLog();
+          }}
+          testID="clickable"
+        >
+          {innerCircle}
+          {image && image.uri.slice(-4) !== '.svg' && (
+            <TouchableOpacity
+              style={[
+                {
+                  position: 'absolute',
+                  width: 40,
+                  height: 40,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
+                this.props.type === PicUploadTypes.Profile
+                  ? Styles.profileDelete
+                  : Styles.mediaDelete,
+              ]}
+              onPress={this.deleteImage}
+            >
+              <Icon svg={Delete} />
+            </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+      </View>
     );
   }
 }

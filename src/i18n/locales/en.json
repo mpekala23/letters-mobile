@@ -200,8 +200,11 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "addressLine1": "Address line 1",
-    "addressLine2": "Address line 2",
+    "facilityName": "Facility Name",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "Facility City",
+    "facilityState": "Facility State",
+    "facilityPostal": "Facility Postal",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
@@ -293,7 +296,8 @@
     "continueWritingAnd": "Continue writing and send that letter to your loved one",
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new letter",
-    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter."
+    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
+    "notEnoughCredits": "Not enough credits"
   },
   "Notifs": {
     "your": "Your",

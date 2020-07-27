@@ -179,6 +179,19 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         </ViewManagerAdapter_ExpoLinearGradient>
         <View
           pointerEvents="auto"
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F4F4F4",
+              "borderColor": "white",
+              "borderRadius": 65,
+              "borderWidth": 6,
+              "height": 130,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": 130,
+            }
+          }
         >
           <TouchableOpacity
             activeOpacity={0.2}

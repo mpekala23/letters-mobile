@@ -69,15 +69,29 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
     case SupportFAQTypes.NotArrived:
       return null;
     case SupportFAQTypes.WrongMailingAddress:
-      return defaultCTAButton(
-        () => props.navigation.navigate('UpdateContact'),
-        i18n.t('SupportFAQDetailScreen.updateAddress')
-      );
+      return defaultCTAButton(() => {
+        props.navigation.reset({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+            { name: 'UpdateContact' },
+          ],
+        });
+      }, i18n.t('SupportFAQDetailScreen.updateAddress'));
     case SupportFAQTypes.WrongReturnAddress:
-      return defaultCTAButton(
-        () => props.navigation.navigate('UpdateProfile'),
-        i18n.t('SupportFAQDetailScreen.updateProfile')
-      );
+      return defaultCTAButton(() => {
+        props.navigation.reset({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+            { name: 'UpdateContact' },
+          ],
+        });
+      }, i18n.t('SupportFAQDetailScreen.updateProfile'));
     case SupportFAQTypes.TrackingNumber:
       return null;
     default:

@@ -25,13 +25,6 @@ export interface NativeNotif {
 
 export interface Notif {
   type: NotifTypes;
-  screen?:
-    | 'FirstLetter'
-    | 'Home'
-    | 'LetterTracking'
-    | 'Issues'
-    | 'ContactSelector'
-    | 'SingleContact';
   data?: { contactId: number; letterId?: number };
 }
 

@@ -29,6 +29,18 @@ export function navigate(name: string, params = {}): void {
   if (navigationRef.current) navigationRef.current.navigate(name, params);
 }
 
+export function resetNavigation({
+  index,
+  routes,
+}: {
+  index: number;
+  routes: { name: string }[];
+}): void {
+  if (navigationRef.current) {
+    navigationRef.current.reset({ index, routes });
+  }
+}
+
 class NotifsBase {
   private expoPushToken = '';
 
@@ -136,53 +148,111 @@ class NotifsBase {
       try {
         await loginWithToken();
       } catch (err) {
-        navigate('Login');
+        resetNavigation({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        });
         return;
       }
     }
     let contact: Contact | null = null;
     let letter: Letter | null = null;
+    const getContact = (id: number): Contact | null => {
+      for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
+        if (id === state.contact.existing[ix].id) {
+          return state.contact.existing[ix];
+        }
+      }
+      return null;
+    };
+    const getLetter = (contactId: number, letterId: number): Letter | null => {
+      for (let jx = 0; jx < state.letter.existing[contactId].length; jx += 1) {
+        if (letterId === state.letter.existing[contactId][jx].letterId) {
+          return state.letter.existing[contactId][jx];
+        }
+      }
+      return null;
+    };
     switch (notif.type) {
       case NotifTypes.FirstLetter:
-        navigate(notif.screen || 'FirstLetter');
+        navigate('FirstLetter');
         break;
       case NotifTypes.OnItsWay:
       case NotifTypes.OutForDelivery:
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
-        for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
-          if (notif.data.contactId === state.contact.existing[ix].id) {
-            contact = state.contact.existing[ix];
-          }
-        }
+        contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
-        for (
-          let jx = 0;
-          jx < state.letter.existing[contact.id].length;
-          jx += 1
-        ) {
-          if (
-            notif.data.letterId ===
-            state.letter.existing[contact.id][jx].letterId
-          ) {
-            letter = state.letter.existing[contact.id][jx];
-          }
-        }
+        letter = getLetter(contact.id, notif.data.letterId);
         if (!letter) {
-          navigate('SingleContact');
+          resetNavigation({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          });
           break;
         }
         store.dispatch(setActiveLetter(letter));
-        navigate(notif.screen || 'LetterTracking');
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+          ],
+        });
         break;
       case NotifTypes.HasReceived:
-        navigate(notif.screen || 'Issues');
+        if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
+        contact = getContact(notif.data.contactId);
+        if (!contact) break;
+        store.dispatch(setActiveContact(contact));
+        letter = getLetter(contact.id, notif.data.letterId);
+        if (!letter) {
+          resetNavigation({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          });
+          break;
+        }
+        store.dispatch(setActiveLetter(letter));
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+            { name: 'Issues' },
+          ],
+        });
         break;
       case NotifTypes.ReturnedToSender:
-        navigate(notif.screen || 'LetterTracking');
+        if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
+        contact = getContact(notif.data.contactId);
+        if (!contact) break;
+        store.dispatch(setActiveContact(contact));
+        letter = getLetter(contact.id, notif.data.letterId);
+        if (!letter) {
+          resetNavigation({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          });
+          break;
+        }
+        store.dispatch(setActiveLetter(letter));
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+          ],
+        });
         break;
       case NotifTypes.NoFirstContact:
-        navigate(notif.screen || 'ContactSelector');
+        resetNavigation({
+          index: 0,
+          routes: [{ name: 'ContactSelector' }, { name: 'ContactInfo' }],
+        });
         break;
       case NotifTypes.NoFirstLetter:
         if (notif.data && notif.data.contactId) {
@@ -195,7 +265,10 @@ class NotifsBase {
         } else {
           break;
         }
-        navigate(notif.screen || 'SingleContact');
+        resetNavigation({
+          index: 0,
+          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+        });
         break;
       default:
         break;

@@ -53,13 +53,14 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
       >
         <Icon
           svg={Airplane}
-          style={{ position: 'absolute', top: -5, left: 52, zIndex: 999 }}
+          style={{ position: 'absolute', top: -5, zIndex: 999 }}
         />
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
           imageUri={contact.photo?.uri}
           type={ProfilePicTypes.SingleContact}
+          disabled
         />
         <View style={{ flex: 0, marginBottom: 95 }}>
           <Text
