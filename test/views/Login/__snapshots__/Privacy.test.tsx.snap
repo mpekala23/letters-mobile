@@ -71,7 +71,7 @@ exports[`Terms of Service screen should match snapshot 1`] = `
     <Text
       style={
         Object {
-          "paddingBottom": 12,
+          "paddingVertical": 12,
         }
       }
     >
@@ -242,7 +242,8 @@ exports[`Terms of Service screen should match snapshot 1`] = `
       >
         here
       </Text>
-       and other agreements. We also reserve the right to access or disclose any information to protect the rights, property, or safety of Ameelio, our employees, our Users, or others.
+       
+      and other agreements. We also reserve the right to access or disclose any information to protect the rights, property, or safety of Ameelio, our employees, our Users, or others.
     </Text>
     <Text
       style={
@@ -338,7 +339,8 @@ exports[`Terms of Service screen should match snapshot 1`] = `
         >
           Terms of Service
         </Text>
-         and this Privacy Policy. If you are a parent or legal guardian agreeing to the Terms of Service of this Policy for the benefit of a child who is 13 or older but under the age of 18, you are fully responsible for the child’s use of the Services.
+         
+        and this Privacy Policy. If you are a parent or legal guardian agreeing to the Terms of Service of this Policy for the benefit of a child who is 13 or older but under the age of 18, you are fully responsible for the child’s use of the Services.
       </Text>
     </Text>
     <Text

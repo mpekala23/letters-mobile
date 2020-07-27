@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -10,11 +10,20 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, Icon } from '@components';
-import { Validation } from '@utils';
-import { Facility } from 'types';
+import { Input, Icon } from '@components';
+import { Validation, STATES_DROPDOWN } from '@utils';
+import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setAdding } from '@store/Contact/ContactActions';
+import {
+  ContactState,
+  Contact,
+  ContactActionTypes,
+} from '@store/Contact/ContactTypes';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -24,6 +33,13 @@ type AddManuallyScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: AddManuallyScreenNavigationProp;
+  route: {
+    params: {
+      phyState: string;
+    };
+  };
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
@@ -31,14 +47,20 @@ export interface State {
   valid: boolean;
 }
 
-class AddManuallyScreen extends React.Component<Props, State> {
+class AddManuallyScreenBase extends React.Component<Props, State> {
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
 
   private facilityCity = createRef<Input>();
 
+  private facilityState = createRef<Input>();
+
   private facilityPostal = createRef<Input>();
+
+  private unsubscribeFocus: () => void;
+
+  private unsubscribeBlur: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -47,6 +69,70 @@ class AddManuallyScreen extends React.Component<Props, State> {
       valid: false,
     };
     this.updateValid = this.updateValid.bind(this);
+    this.onAddFacility = this.onAddFacility.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+    this.onNavigationBlur = this.onNavigationBlur.bind(this);
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
+  }
+
+  onNavigationBlur = (): void => {
+    setProfileOverride(undefined);
+  };
+
+  onNavigationFocus(): void {
+    this.loadValuesFromStore();
+    setProfileOverride({
+      enabled: this.state.valid,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onAddFacility,
+    });
+  }
+
+  onAddFacility(): void {
+    if (
+      this.facilityName.current &&
+      this.facilityAddress.current &&
+      this.facilityCity.current &&
+      this.facilityPostal.current &&
+      this.facilityState.current
+    ) {
+      const facility: Facility = {
+        name: this.facilityName.current.state.value,
+        type: PrisonTypes.Federal,
+        address: this.facilityAddress.current.state.value,
+        city: this.facilityCity.current.state.value,
+        state: this.facilityState.current.state.value,
+        postal: this.facilityPostal.current.state.value,
+      };
+      const contact = this.props.contactState.adding;
+      contact.facility = facility;
+      this.props.setAdding(contact);
+      this.props.navigation.navigate('ReviewContact');
+    } else {
+      this.props.navigation.navigate('FacilityDirectory');
+    }
+    Keyboard.dismiss();
+  }
+
+  setValid(val: boolean): void {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('ContactInfoScreen.next'),
+      action: this.onAddFacility,
+    });
   }
 
   updateValid(): void {
@@ -54,27 +140,46 @@ class AddManuallyScreen extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
+      this.facilityState.current &&
       this.facilityPostal.current
     ) {
       const result =
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
+        this.facilityState.current.state.valid &&
         this.facilityPostal.current.state.valid;
-      this.setState({ valid: result });
+      this.setValid(result);
     }
+  }
+
+  loadValuesFromStore(): void {
+    const addingFacility = this.props.contactState.adding.facility;
+    if (addingFacility) {
+      if (this.facilityName.current)
+        this.facilityName.current.set(addingFacility.name);
+      if (this.facilityAddress.current)
+        this.facilityAddress.current.set(addingFacility.address);
+      if (this.facilityCity.current)
+        this.facilityCity.current.set(addingFacility.city);
+      if (this.facilityPostal.current)
+        this.facilityPostal.current.set(addingFacility.postal);
+    }
+    if (this.facilityState.current)
+      this.facilityState.current.set(this.props.route.params.phyState);
   }
 
   render(): JSX.Element {
     return (
       <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'white' }}
-        onPress={() => Keyboard.dismiss()}
+        onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <View
@@ -111,7 +216,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityAddress}
                 />
                 <Input
@@ -119,6 +224,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
                   required
+                  validate={Validation.Address}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -126,7 +232,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityCity}
                 />
                 <Input
@@ -134,6 +240,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityCity')}
                   required
+                  validate={Validation.City}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -141,7 +248,24 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
+                  nextInput={this.facilityState}
+                />
+                <Input
+                  ref={this.facilityState}
+                  parentStyle={[CommonStyles.fullWidth, { marginBottom: 10 }]}
+                  placeholder={i18n.t('AddManuallyScreen.facilityState')}
+                  required
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
+                  validate={Validation.State}
+                  options={STATES_DROPDOWN}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityPostal}
                 />
                 <Input
@@ -157,45 +281,28 @@ class AddManuallyScreen extends React.Component<Props, State> {
                     this.setState({ inputting: false });
                   }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
                 />
               </View>
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
-        <View style={CommonStyles.bottomButtonContainer}>
-          <Button
-            onPress={() => {
-              if (
-                this.facilityName.current &&
-                this.facilityAddress.current &&
-                this.facilityCity.current &&
-                this.facilityPostal.current
-              ) {
-                const facility: Facility = {
-                  name: this.facilityName.current.state.value,
-                  type: 'State Prison',
-                  address: this.facilityAddress.current.state.value,
-                  city: this.facilityCity.current.state.value,
-                  state: 'MN',
-                  postal: this.facilityPostal.current.state.value,
-                };
-                this.props.navigation.navigate('FacilityDirectory', {
-                  newFacility: facility,
-                });
-              } else {
-                this.props.navigation.navigate('FacilityDirectory');
-              }
-            }}
-            buttonText={i18n.t('ContactInfoScreen.next')}
-            enabled={this.state.valid}
-            containerStyle={CommonStyles.bottomButton}
-            showNextIcon
-          />
-        </View>
       </TouchableOpacity>
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const AddManuallyScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddManuallyScreenBase);
 
 export default AddManuallyScreen;

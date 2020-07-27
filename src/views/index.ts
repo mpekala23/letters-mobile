@@ -22,6 +22,7 @@ import PrivacyScreen from './Login/Privacy.react';
 import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
 import RegisterScreen from './Register/Register.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
+import SetupScreen from './Splash/Setup.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Splash/Splash.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
@@ -56,6 +57,7 @@ export {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
+  SetupScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,

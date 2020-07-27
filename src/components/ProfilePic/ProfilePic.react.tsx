@@ -1,9 +1,12 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
-import ExamplePic from '@assets/ExamplePic.jpg';
-import { NavigationContainerRef } from '@react-navigation/native';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
+import Avatar from '@assets/components/ProfilePic/Avatar';
+import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
+import { navigate } from '@notifications';
+import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
+import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 
 export interface Props {
@@ -11,7 +14,7 @@ export interface Props {
   lastName: string;
   imageUri?: string;
   type: ProfilePicTypes;
-  navigation?: NavigationContainerRef | null;
+  disabled?: boolean;
 }
 
 function mapProfileTypeToStyle(type: ProfilePicTypes) {
@@ -43,31 +46,57 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   }
 
   let insideCircle = (
-    <Text style={[Typography.FONT_REGULAR, Styles.initials]}>{initials}</Text>
+    <Text
+      style={[
+        Typography.FONT_REGULAR,
+        props.type === ProfilePicTypes.SingleContact
+          ? Styles.initialsBig
+          : Styles.initials,
+      ]}
+    >
+      {initials}
+    </Text>
   );
 
   if (props.imageUri) {
-    insideCircle = (
-      <Image
-        style={mapProfileTypeToStyle(props.type).image}
-        source={ExamplePic}
-        accessibilityLabel="Profile Picture"
-      />
-    );
+    let avatar = AvatarTopbar;
+    if (props.type === ProfilePicTypes.SingleContact) avatar = Avatar;
+    else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
+    insideCircle =
+      props.imageUri.slice(props.imageUri.length - 4) === '.svg' ? (
+        <Icon svg={avatar} />
+      ) : (
+        <Image
+          style={mapProfileTypeToStyle(props.type).image}
+          source={{ uri: props.imageUri }}
+          accessibilityLabel="Profile Picture"
+        />
+      );
   }
 
   return (
-    <TouchableOpacity
+    <View
+      pointerEvents={
+        props.type === ProfilePicTypes.Contact || props.disabled
+          ? 'none'
+          : 'auto'
+      }
       style={mapProfileTypeToStyle(props.type).background}
-      onPress={async () => {
-        if (props.navigation) {
-          props.navigation.navigate('UpdateProfile');
-        }
-      }}
-      testID="profilePicture"
     >
-      {insideCircle}
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={mapProfileTypeToStyle(props.type).background}
+        onPress={async () => {
+          if (props.disabled) return;
+          if (props.type === ProfilePicTypes.SingleContact)
+            navigate('UpdateContact');
+          else if (props.type === ProfilePicTypes.Topbar)
+            navigate('UpdateProfile');
+        }}
+        testID="profilePicture"
+      >
+        {insideCircle}
+      </TouchableOpacity>
+    </View>
   );
 };
 

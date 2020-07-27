@@ -7,6 +7,4 @@ const app = express();
 
 app.use('/api', apiMocker('mock-api'));
 
-// eslint-disable-next-line no-console
-console.log(`Mock API Server is up and running at: http://localhost:${port}`);
 app.listen(port);

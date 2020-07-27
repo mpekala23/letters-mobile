@@ -26,10 +26,10 @@ const setup = (authOverrides = {}, userOverrides = {}) => {
     email: 'team@ameelio.org',
     phone: '4324324432',
     address1: 'Somewhere',
-    country: 'USA',
     postal: '12345',
     city: 'New Haven',
     state: 'CT',
+    joined: new Date('Thursday, July 16, 2020'),
     ...userOverrides,
   };
   const store = mockStore({

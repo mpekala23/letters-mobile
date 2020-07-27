@@ -8,18 +8,22 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { UserState } from '@store/User/UserTypes';
-import { ProfilePicTypes } from 'types';
+import { UserState, User } from '@store/User/UserTypes';
+import { Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import moment from 'moment';
+import { STATES_DROPDOWN, Validation } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -33,8 +37,7 @@ export interface Props {
 }
 
 export interface State {
-  inputting: boolean;
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateProfileScreenBase extends React.Component<Props, State> {
@@ -44,7 +47,15 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   private phone = createRef<Input>();
 
-  private address = createRef<Input>();
+  private address1 = createRef<Input>();
+
+  private address2 = createRef<Input>();
+
+  private postal = createRef<Input>();
+
+  private city = createRef<Input>();
+
+  private phyState = createRef<Input>();
 
   private unsubscribeFocus: () => void;
 
@@ -52,10 +63,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.userState.user.photo ? props.userState.user.photo : null,
+    };
+
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.doUpdateProfile = this.doUpdateProfile.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.unsubscribeFocus = this.props.navigation.addListener(
@@ -83,6 +97,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: true,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 
@@ -95,6 +110,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 
@@ -103,24 +119,30 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.address2.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
-      const user = {
+      const user: User = {
         id: this.props.userState.user.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         email: this.props.userState.user.email,
         phone: this.phone.current.state.value,
-        address1: this.address.current.state.value,
-        address2: this.props.userState.user.address2,
-        country: this.props.userState.user.country,
-        postal: this.props.userState.user.postal,
-        city: this.props.userState.user.city,
-        state: this.props.userState.user.state,
-        imageUri: this.props.userState.user.imageUri,
+        address1: this.address1.current.state.value,
+        address2: this.address2.current.state.value,
+        postal: this.postal.current.state.value,
+        city: this.city.current.state.value,
+        state: this.phyState.current.state.value,
+        photo: this.state.image ? this.state.image : undefined,
+        credit: this.props.userState.user.credit,
+        joined: this.props.userState.user.joined,
       };
       try {
         await updateProfile(user);
+        Segment.track('Edit Profile - Click on Save');
         this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -133,12 +155,24 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.address2.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
       this.firstName.current.set(this.props.userState.user.firstName);
       this.lastName.current.set(this.props.userState.user.lastName);
       this.phone.current.set(this.props.userState.user.phone);
-      this.address.current.set(this.props.userState.user.address1);
+      this.address1.current.set(this.props.userState.user.address1);
+      this.address2.current.set(
+        this.props.userState.user.address2
+          ? this.props.userState.user.address2
+          : ''
+      );
+      this.postal.current.set(this.props.userState.user.postal);
+      this.city.current.set(this.props.userState.user.city);
+      this.phyState.current.set(this.props.userState.user.state);
     }
   }
 
@@ -147,163 +181,183 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.firstName.current &&
       this.lastName.current &&
       this.phone.current &&
-      this.address.current
+      this.address1.current &&
+      this.postal.current &&
+      this.city.current &&
+      this.phyState.current
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.phone.current.state.valid &&
-        this.address.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.address1.current.state.valid &&
+        this.postal.current.state.valid &&
+        this.city.current.state.valid &&
+        this.phyState.current.state.valid;
       this.setValid(result);
     }
   }
 
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.phone.current &&
-      this.address.current
-    ) {
-      return (
-        this.firstName.current.state.value !==
-          this.props.userState.user.firstName ||
-        this.lastName.current.state.value !==
-          this.props.userState.user.lastName ||
-        this.phone.current.state.value !== this.props.userState.user.phone ||
-        this.address.current.state.value !== this.props.userState.user.address1
-      );
-    }
-    return false;
-  }
-
   render() {
     const { user } = this.props.userState;
+    const joinedDate = moment(this.props.userState.user.joined).format(
+      'MMM DD, YYYY'
+    );
     return (
       <TouchableOpacity
         style={{
           flex: 1,
           backgroundColor: 'white',
-          padding: 16,
+          paddingHorizontal: 16,
         }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
           style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
-          <View style={Styles.profileCard}>
-            <ProfilePic
-              firstName={user.firstName}
-              lastName={user.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
-            />
-            <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
-              {user.firstName}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_MEDIUM,
-                { color: Colors.GRAY_DARK, paddingBottom: 6 },
-              ]}
-            >
-              {/* Add in user's joined date after API integration */}
-              {i18n.t('UpdateProfileScreen.joined')}
-            </Text>
-          </View>
           <ScrollView
             keyboardShouldPersistTaps="handled"
             scrollEnabled
             style={{ width: '100%' }}
+            contentContainerStyle={{ paddingVertical: 24 }}
           >
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <View style={Styles.profileCard}>
+              <PicUpload
+                shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+                width={130}
+                height={130}
+                type={PicUploadTypes.Profile}
+                initial={this.props.userState.user.photo}
+                onSuccess={(image: Photo) => this.setState({ image })}
+                onDelete={() => this.setState({ image: null })}
+                segmentOnPressLog={() => {
+                  Segment.track('Edit Profile - Click on Upload Image');
+                }}
+                segmentSuccessLog={() => {
+                  Segment.track('Edit Profile - Upload Image Success');
+                }}
+                segmentErrorLogEvent="Edit Profile - Upload Image Error"
+              />
+              <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
+                {user.firstName}
+              </Text>
+              <Text
+                style={[
+                  Typography.FONT_MEDIUM,
+                  { color: Colors.GRAY_DARK, paddingBottom: 6 },
+                ]}
+              >
+                {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
+              </Text>
+            </View>
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.firstName')}
             </Text>
             <Input
               ref={this.firstName}
-              parentStyle={{ width: '100%' }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.firstName')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.lastName')}
             </Text>
             <Input
               ref={this.lastName}
-              parentStyle={{ width: '100%', marginBottom: 10 }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.lastName')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.phone}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.cellPhone')}
             </Text>
             <Input
               ref={this.phone}
-              parentStyle={{ width: '100%', marginBottom: 10 }}
+              parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.cellPhone')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
-              nextInput={this.address}
+              nextInput={this.address1}
             />
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              {i18n.t('UpdateProfileScreen.addressLine')}
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.addressLine1')}
             </Text>
             <Input
-              ref={this.address}
-              placeholder={i18n.t('UpdateProfileScreen.addressLine')}
+              ref={this.address1}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
               required
+              validate={Validation.Address}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.address2}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.addressLine2')}
+            </Text>
+            <Input
+              ref={this.address2}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
+              validate={Validation.Address}
+              onValid={this.updateValid}
+              nextInput={this.city}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.city')}
+            </Text>
+            <Input
+              ref={this.city}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.city')}
+              required
+              validate={Validation.City}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.phyState}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.state')}
+            </Text>
+            <Input
+              ref={this.phyState}
+              parentStyle={Styles.parentStyle}
+              placeholder={i18n.t('UpdateProfileScreen.state')}
+              required
+              validate={Validation.State}
+              options={STATES_DROPDOWN}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.postal}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateProfileScreen.zipcode')}
+            </Text>
+            <Input
+              ref={this.postal}
+              placeholder={i18n.t('UpdateProfileScreen.zipcode')}
+              required
+              validate={Validation.Postal}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
+            <Button
+              buttonText={i18n.t('UpdateProfileScreen.logOut')}
+              onPress={async () => logout()}
+              containerStyle={Styles.logOutButton}
+            />
           </ScrollView>
-          <Button
-            buttonText={i18n.t('UpdateProfileScreen.logOut')}
-            onPress={async () => logout()}
-            containerStyle={Styles.logOutButton}
-          />
         </KeyboardAvoidingView>
       </TouchableOpacity>
     );

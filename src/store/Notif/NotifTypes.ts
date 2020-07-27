@@ -6,12 +6,17 @@ export const SET_CURRENT_NOTIF = 'notification/set_current_notif';
 export const SET_PAST_NOTIFS = 'notification/set_past_notifs';
 export const SET_FUTURE_NOTIFS = 'notification/set_future_notifs';
 
-export enum NotifType {
+export enum NotifTypes {
   FirstLetter = 'FirstLetter',
+  OnItsWay = 'OnItsWay',
+  OutForDelivery = 'OutForDelivery',
+  HasReceived = 'HasReceived',
+  ReturnedToSender = 'ReturnedToSender',
+  NoFirstContact = 'NoFirstContact',
+  NoFirstLetter = 'NoFirstLetter',
+  Drought = 'Drought',
 }
 
-// what is necessary to communicate with the notification API
-// necessary to keep separately because we cannot retrive title and body once it's processed
 export interface NativeNotif {
   title: string;
   body: string;
@@ -19,9 +24,8 @@ export interface NativeNotif {
 }
 
 export interface Notif {
-  type: NotifType;
-  screen?: 'FirstLetter' | 'Home';
-  data?: Record<string, unknown>[];
+  type: NotifTypes;
+  data?: { contactId: number; letterId?: number };
 }
 
 export interface FutureNotif {

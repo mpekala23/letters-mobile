@@ -69,7 +69,7 @@ exports[`Letter Tracker component should match snapshot 1`] = `
             ]
           }
         >
-          Zipcode
+          City
         </Text>
       </View>
       <View

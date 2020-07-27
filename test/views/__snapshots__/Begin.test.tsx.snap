@@ -30,7 +30,7 @@ exports[`Begin screen should match snapshot 1`] = `
         Object {
           "flexDirection": "row",
           "position": "absolute",
-          "top": 60,
+          "top": 40,
         }
       }
     >
@@ -170,6 +170,9 @@ exports[`Begin screen should match snapshot 1`] = `
             "textAlign": "center",
             "width": "80%",
           },
+          Object {
+            "marginTop": 40,
+          },
         ]
       }
     >
@@ -196,8 +199,8 @@ exports[`Begin screen should match snapshot 1`] = `
     <View
       style={
         Object {
-          "paddingBottom": 60,
-          "paddingTop": 30,
+          "paddingBottom": 80,
+          "paddingTop": 18,
         }
       }
     >
@@ -276,6 +279,9 @@ exports[`Begin screen should match snapshot 1`] = `
                 },
               ],
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -331,6 +337,9 @@ exports[`Begin screen should match snapshot 1`] = `
                 "color": "#FF7171",
               },
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

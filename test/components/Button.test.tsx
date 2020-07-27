@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '@components';
-import { fireEvent, render, toJSON } from '@testing-library/react-native';
+import { fireEvent, render, toJSON, act } from '@testing-library/react-native';
 import { Colors } from '@styles';
+import { sleep } from '@utils';
 import Next from '@assets/components/Button/Next';
 
 const setup = (propOverrides = {}) => {

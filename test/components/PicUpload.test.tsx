@@ -60,15 +60,4 @@ describe('PicUpload component', () => {
     await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
     expect(getByTestId('profile placeholder')).toBeDefined();
   });
-
-  it('should display an image with path when pickImage succeeds', async () => {
-    jest.useRealTimers();
-    const { getByTestId } = setup({ type: PicUploadTypes.Profile });
-    fireEvent.press(getByTestId('clickable'));
-    await new Promise((resolve) => setTimeout(resolve, 500)); // await the call
-    expect(getByTestId('clickable').children.length).toBe(2);
-    expect(getByTestId('clickable').children[0].props.source.uri).toBe(
-      'dummy_image_path'
-    );
-  });
 });

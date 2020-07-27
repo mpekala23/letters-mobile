@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComposeHeader } from '@components';
-import { fireEvent, render, toJSON } from '@testing-library/react-native';
+import { fireEvent, render, toJSON, act } from '@testing-library/react-native';
 
 const setup = (propOverrides = {}) => {
   const props = {
@@ -30,12 +30,14 @@ describe('ComposeHeader component', () => {
     const { queryByText } = setup();
     const button = queryByText('Need Ideas?');
     expect(button).toBeTruthy();
-    fireEvent.press(button);
-    await new Promise((resolve) => setTimeout(resolve, 500)); // await the animation
-    expect(button.children[0]).toBe('Collapse');
-    fireEvent.press(button);
-    await new Promise((resolve) => setTimeout(resolve, 500)); // await the animation
-    expect(button.children[0]).toBe('Need Ideas?');
+    act(() => {
+      fireEvent.press(button);
+    });
+    expect(queryByText('Collapse')).toBeDefined();
+    act(() => {
+      fireEvent.press(button);
+    });
+    expect(queryByText('Need Ideas?')).toBeDefined();
   });
 
   it('should display prompt when open', async () => {

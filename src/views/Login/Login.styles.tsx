@@ -14,13 +14,13 @@ export default StyleSheet.create({
   fullWidth: {
     width: '100%',
   },
-  welcomeBackText: {
+  subtitle: {
     fontSize: 14,
     paddingTop: 6,
     paddingBottom: 28,
     color: Colors.GRAY_DARK,
   },
-  loginButton: {
+  button: {
     backgroundColor: Colors.PINK_DARKER,
     borderRadius: 15,
     width: '100%',
@@ -29,7 +29,7 @@ export default StyleSheet.create({
   forgotContainer: {
     backgroundColor: 'white',
     marginLeft: 4,
-    marginTop: 11,
+    marginTop: 16,
     marginBottom: 10,
   },
   forgotText: {

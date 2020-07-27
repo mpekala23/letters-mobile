@@ -65,7 +65,7 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {location}
+            {location.city}
           </Text>
         </View>
         <View

@@ -119,6 +119,9 @@ exports[`Issues screen should match snapshot 1`] = `
               },
             ],
             Object {},
+            Object {
+              "opacity": 1,
+            },
           ]
         }
       >
@@ -184,6 +187,9 @@ exports[`Issues screen should match snapshot 1`] = `
               },
             ],
             Object {},
+            Object {
+              "opacity": 1,
+            },
           ]
         }
       >
@@ -249,6 +255,9 @@ exports[`Issues screen should match snapshot 1`] = `
               },
             ],
             Object {},
+            Object {
+              "opacity": 1,
+            },
           ]
         }
       >

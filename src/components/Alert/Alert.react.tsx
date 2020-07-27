@@ -1,8 +1,16 @@
 import React, { createRef } from 'react';
-import { Text, View, ViewStyle, TextStyle } from 'react-native';
-import { Typography } from '@styles';
+import {
+  Text,
+  View,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
+import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
-import Styles from './Alert.styles';
+import Styles, { GRAY_BACK } from './Alert.styles';
+import { setStatusBackground } from '../Statusbar/Statusbar.react';
 
 interface AlertButton {
   text?: string;
@@ -20,6 +28,7 @@ interface AlertInfo {
 
 interface State {
   current: AlertInfo | null;
+  opacity: Animated.Value;
 }
 
 class Alert extends React.Component<Record<string, unknown>, State> {
@@ -27,53 +36,83 @@ class Alert extends React.Component<Record<string, unknown>, State> {
     super(props);
     this.state = {
       current: null,
+      opacity: new Animated.Value(0.0),
     };
+    this.setCurrent = this.setCurrent.bind(this);
+  }
+
+  setCurrent(info: AlertInfo | null): void {
+    if (info) this.setState({ current: info });
+    Animated.timing(this.state.opacity, {
+      toValue: info ? 1.0 : 0.0,
+      duration: info ? 0 : 80,
+      useNativeDriver: true,
+    }).start(() => {
+      this.setState({ current: info });
+    });
   }
 
   render(): JSX.Element {
     if (!this.state.current) return <View />;
     return (
-      <View style={Styles.trueBackground}>
-        <View style={Styles.alertBackground}>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              { fontSize: 23, textAlign: 'center', marginBottom: 10 },
-            ]}
-          >
-            {this.state.current.title}
-          </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              { fontSize: 16, textAlign: 'center' },
-            ]}
-          >
-            {this.state.current.message}
-          </Text>
-          <View style={{ height: 40 }} />
-          {this.state.current.buttons &&
-            this.state.current.buttons.map((button) => {
-              return (
-                <Button
-                  key={button.text}
-                  buttonText={button.text}
-                  reverse={button.reverse}
-                  onPress={() => {
-                    if (button.onPress) button.onPress();
-                    this.setState({ current: null });
-                  }}
-                  textStyle={button.textStyle}
-                  containerStyle={
-                    button.containerStyle
-                      ? button.containerStyle
-                      : { width: '100%' }
-                  }
-                />
-              );
-            })}
-        </View>
-      </View>
+      <Animated.View
+        style={[Styles.trueBackground, { opacity: this.state.opacity }]}
+      >
+        <TouchableOpacity
+          style={Styles.trueBackground}
+          onPress={() => this.setCurrent(null)}
+          activeOpacity={1.0}
+        >
+          <View style={Styles.alertBackground}>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                { fontSize: 23, textAlign: 'center', marginBottom: 10 },
+              ]}
+            >
+              {this.state.current.title}
+            </Text>
+            {this.state.current.message && (
+              <>
+                <Text
+                  style={[
+                    Typography.FONT_REGULAR,
+                    {
+                      fontSize: 16,
+                      textAlign: 'center',
+                      color: Colors.GRAY_DARK,
+                    },
+                  ]}
+                >
+                  {this.state.current.message}
+                </Text>
+                <View style={{ height: 40 }} />
+              </>
+            )}
+            {this.state.current.buttons &&
+              this.state.current.buttons.map((button) => {
+                return (
+                  <Button
+                    key={button.text}
+                    buttonText={button.text}
+                    reverse={button.reverse}
+                    onPress={() => {
+                      if (button.onPress) button.onPress();
+                      this.setCurrent(null);
+                      setStatusBackground('white');
+                    }}
+                    textStyle={button.textStyle}
+                    containerStyle={
+                      button.containerStyle
+                        ? button.containerStyle
+                        : { width: '100%' }
+                    }
+                  />
+                );
+              })}
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 }
@@ -82,13 +121,12 @@ const alertRef = createRef<Alert>();
 const AlertInstance = (): JSX.Element => <Alert ref={alertRef} key="Alert" />;
 
 export function popupAlert(pop: AlertInfo): void {
+  setStatusBackground(GRAY_BACK);
   if (alertRef.current)
-    alertRef.current.setState({
-      current: {
-        title: pop.title,
-        message: pop.message,
-        buttons: pop.buttons,
-      },
+    alertRef.current.setCurrent({
+      title: pop.title,
+      message: pop.message,
+      buttons: pop.buttons,
     });
 }
 

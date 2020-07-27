@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import React, { Dispatch } from 'react';
+import { Text, ScrollView, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { Button, LetterTracker, GrayBar } from '@components';
@@ -9,6 +9,9 @@ import { AppState } from '@store/types';
 import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
 import moment from 'moment';
 import i18n from '@i18n';
+import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
+import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './LetterTracking.styles';
 
 type LetterTrackingScreenNavigationProp = StackNavigationProp<
@@ -19,9 +22,11 @@ type LetterTrackingScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: LetterTrackingScreenNavigationProp;
   letter: Letter | null;
+  currentNotif: Notif | null;
+  handleNotif: () => void;
 }
 
-function mapStatusToTrackerBarHeight(type?: LetterStatus) {
+function mapStatusToTrackerBarHeight(type?: string) {
   switch (type) {
     case LetterStatus.InTransit:
       return 70;
@@ -34,79 +39,114 @@ function mapStatusToTrackerBarHeight(type?: LetterStatus) {
   }
 }
 
-const LetterTrackingScreenBase: React.FC<Props> = (props: Props) => {
-  if (!props.letter) {
-    props.navigation.navigate('SingleContact');
-    return <View />;
+class LetterTrackingScreenBase extends React.Component<Props> {
+  componentDidMount() {
+    if (this.props.currentNotif) this.props.handleNotif();
   }
-  const deliveryDate = moment(props.letter.expectedDeliveryDate).format(
-    'MMM DD'
-  );
-  const chronologicalEvents = props.letter.trackingEvents?.slice().reverse();
-  const letterTracker = chronologicalEvents?.map(
-    (trackingEvent: LetterTrackingEvent) => {
-      return (
-        <LetterTracker trackingEvent={trackingEvent} key={trackingEvent.id} />
-      );
+
+  render() {
+    if (!this.props.letter) {
+      this.props.navigation.navigate('SingleContact');
+      return <View />;
     }
-  );
-  return (
-    <View style={Styles.trueBackground}>
-      <View style={{ paddingBottom: 12 }}>
-        <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-          {i18n.t('LetterTrackingScreen.letterTracking')}
-        </Text>
-        <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
-          {i18n.t('LetterTrackingScreen.estimatedArrival')}
-        </Text>
-        <Text
-          style={[Typography.FONT_BOLD, Styles.baseText]}
-          testID="deliveryDate"
-        >
-          {deliveryDate}
-        </Text>
-      </View>
-      <GrayBar />
-      <View style={{ paddingTop: 24 }}>
-        <View
-          style={{
-            marginTop: 40,
-            marginLeft: 14,
-            height: mapStatusToTrackerBarHeight(
-              props.letter.trackingEvents
-                ? props.letter.trackingEvents[0].name
-                : undefined
-            ),
-            width: 7,
-            backgroundColor: Colors.GRAY_LIGHT,
-            position: 'absolute',
+    const deliveryDate = moment(this.props.letter.expectedDeliveryDate).format(
+      'MMM DD'
+    );
+    const chronologicalEvents = this.props.letter.trackingEvents
+      ?.slice()
+      .reverse();
+    const letterTracker = chronologicalEvents?.map(
+      (trackingEvent: LetterTrackingEvent) => {
+        return (
+          <LetterTracker trackingEvent={trackingEvent} key={trackingEvent.id} />
+        );
+      }
+    );
+    return (
+      <View style={Styles.trueBackground}>
+        <View style={{ paddingBottom: 12 }}>
+          <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+            {i18n.t('LetterTrackingScreen.letterTracking')}
+          </Text>
+          <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            {i18n.t('LetterTrackingScreen.estimatedArrival')}
+          </Text>
+          <Text
+            style={[Typography.FONT_BOLD, Styles.baseText]}
+            testID="deliveryDate"
+          >
+            {deliveryDate}
+          </Text>
+        </View>
+        <GrayBar />
+        <View style={{ paddingTop: 24 }}>
+          <View
+            style={{
+              marginTop: 40,
+              marginLeft: 14,
+              height: mapStatusToTrackerBarHeight(
+                this.props.letter.trackingEvents &&
+                  this.props.letter.trackingEvents.length > 0
+                  ? this.props.letter.trackingEvents[0].name
+                  : undefined
+              ),
+              width: 7,
+              backgroundColor: Colors.GRAY_LIGHT,
+              position: 'absolute',
+            }}
+          />
+          {letterTracker}
+        </View>
+        <Button
+          reverse
+          onPress={() => {
+            this.props.navigation.navigate('SupportFAQ');
+            Segment.track('In-App Reporting - Click on I Need Help');
           }}
+          buttonText={i18n.t('LetterTrackingScreen.needHelp')}
+          textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+          containerStyle={Styles.needHelpButton}
         />
-        {letterTracker}
+        <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+          {i18n.t('LetterTrackingScreen.letterContent')}
+        </Text>
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
+          {this.props.letter.photo?.uri ? (
+            <Image
+              style={[
+                Styles.trackingPhoto,
+                {
+                  height: 275,
+                  width:
+                    this.props.letter.photo.width &&
+                    this.props.letter.photo.height
+                      ? (this.props.letter.photo.width /
+                          this.props.letter.photo.height) *
+                        275
+                      : 275,
+                },
+              ]}
+              source={this.props.letter.photo}
+              testID="memoryLaneImage"
+            />
+          ) : null}
+        </ScrollView>
       </View>
-      <Button
-        reverse
-        onPress={() => {
-          props.navigation.navigate('SupportFAQ');
-        }}
-        buttonText={i18n.t('LetterTrackingScreen.needHelp')}
-        textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
-        containerStyle={Styles.needHelpButton}
-      />
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-        {i18n.t('LetterTrackingScreen.letterContent')}
-      </Text>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={{ fontSize: 15 }}>{props.letter.message}</Text>
-      </ScrollView>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = (state: AppState) => ({
   letter: state.letter.active,
+  currentNotif: state.notif.currentNotif,
 });
-
-const LetterTrackingScreen = connect(mapStateToProps)(LetterTrackingScreenBase);
+const mapDispatchToProps = (dispatch: Dispatch<NotifActionTypes>) => ({
+  handleNotif: () => dispatch(handleNotif()),
+});
+const LetterTrackingScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LetterTrackingScreenBase);
 
 export default LetterTrackingScreen;

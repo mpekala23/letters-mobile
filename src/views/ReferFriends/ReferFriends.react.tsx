@@ -11,8 +11,9 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import AirplaneIcon from '@assets/views/ReferFriends/Airplane';
 import Icon from '@components/Icon/Icon.react';
+import Airplane from '@assets/views/ReferFriends/Airplane';
+import moment from 'moment';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -46,49 +47,61 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
           alignItems: 'center',
+          justifyContent: 'space-around',
         }}
       >
         <Icon
-          svg={AirplaneIcon}
-          style={{ position: 'absolute', top: -5, left: 52, zIndex: 999 }}
+          svg={Airplane}
+          style={{ position: 'absolute', top: -5, zIndex: 999 }}
         />
         <ProfilePic
           firstName={contact.firstName}
           lastName={contact.lastName}
-          imageUri="ExamplePic"
+          imageUri={contact.photo?.uri}
           type={ProfilePicTypes.SingleContact}
+          disabled
         />
-        <Text
-          style={[
-            Typography.FONT_BOLD,
-            { fontSize: 23, marginVertical: 12, textAlign: 'center' },
-          ]}
-        >
-          {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWay')}
-        </Text>
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            { marginBottom: 175, textAlign: 'center' },
-          ]}
-        >
-          {/* TO-DO: Add in estimated delivery date after API integration */}
-          {i18n.t('ReferFriendsScreen.yourLetterIsEstimatedToArrive')}.{' '}
-          {i18n.t('ReferFriendsScreen.thanksAgain')}
-        </Text>
-        <Button
-          buttonText={i18n.t('ReferFriendsScreen.shareOnFacebook')}
-          onPress={() => onShare()}
-          containerStyle={{ width: '100%' }}
-        />
-        <Button
-          buttonText={i18n.t('ReferFriendsScreen.done')}
-          reverse
-          onPress={() => props.navigation.navigate('SingleContact')}
-          containerStyle={{ width: '100%' }}
-        />
+        <View style={{ flex: 0, marginBottom: 95 }}>
+          <Text
+            style={[
+              Typography.FONT_BOLD,
+              { fontSize: 23, textAlign: 'center' },
+            ]}
+          >
+            {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWay')}
+          </Text>
+          <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
+            {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}{' '}
+            <Text style={Typography.FONT_BOLD}>
+              {moment(new Date(Date.now() + 1000 * 60 * 60 * 24 * 6)).format(
+                'MMM DD, YYYY'
+              )}
+            </Text>
+            . {i18n.t('ReferFriendsScreen.thanksAgain')}
+          </Text>
+        </View>
+        <View style={{ justifyContent: 'flex-end', width: '100%' }}>
+          <Button
+            buttonText={i18n.t('ReferFriendsScreen.shareOnFacebook')}
+            onPress={() => onShare()}
+            containerStyle={{ width: '100%' }}
+          />
+          <Button
+            buttonText={i18n.t('ReferFriendsScreen.done')}
+            reverse
+            onPress={() => {
+              props.navigation.reset({
+                index: 0,
+                routes: [
+                  { name: 'ContactSelector' },
+                  { name: 'SingleContact' },
+                ],
+              });
+            }}
+            containerStyle={{ width: '100%' }}
+          />
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
