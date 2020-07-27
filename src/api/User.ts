@@ -88,6 +88,7 @@ export async function loginWithToken(): Promise<User> {
     if (body.status !== 'OK') throw Error('Invalid token');
     const userData = cleanUser(body.data as RawUser);
     Segment.identify(userData.id.toString());
+    Segment.track('Login Success');
     store.dispatch(loginUser(userData, body.data.token, body.data.remember));
     return userData;
   } catch (err) {
@@ -123,6 +124,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   }
   const userData = cleanUser(body.data as RawUser);
   Segment.identify(userData.id.toString());
+  Segment.track('Login Success');
   store.dispatch(loginUser(userData, body.data.token, body.data.remember));
   return userData;
 }

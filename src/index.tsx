@@ -43,11 +43,16 @@ export default class App extends React.Component<null, State> {
     const androidWriteKey = 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD';
     const iosWriteKey = 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy';
     Segment.initialize({ androidWriteKey, iosWriteKey });
+    Segment.track('App Open');
     try {
       await loginWithToken();
     } catch (err) {
       /* Unable to load token */
     }
+  }
+
+  componentWillUnmount(): void {
+    Segment.track('App Closed');
   }
 
   async loadFontsAsync(): Promise<void> {
