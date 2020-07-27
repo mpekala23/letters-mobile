@@ -178,7 +178,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
               data: {
                 type: NotifTypes.NoFirstLetter,
-                screen: 'SingleContact',
                 data: {
                   contactId: contact.id,
                 },
@@ -284,10 +283,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       width={136}
                       height={136}
                       onSuccess={(image: Photo) => {
-                        Segment.track('Add Contact - Upload Image');
                         this.setState({ image });
                       }}
                       onDelete={() => this.setState({ image: null })}
+                      segmentOnPressLog={() => {
+                        Segment.track('Add Contact - Press Upload Image');
+                      }}
+                      segmentSuccessLog={() => {
+                        Segment.track('Add Contact - Upload Image');
+                      }}
+                      segmentErrorLogEvent="Add Contact - Failed Upload Image"
                     />
                   </View>
                   <Text

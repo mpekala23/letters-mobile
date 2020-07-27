@@ -218,7 +218,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <MemoryLaneCountCard
               letterCount={letters ? letters.length : 0}
               onPress={() => {
-                Segment.track('Contact View - Click on Memory Lane Card');
                 this.props.setActiveContact(contact);
                 this.props.navigation.navigate('MemoryLane');
               }}
