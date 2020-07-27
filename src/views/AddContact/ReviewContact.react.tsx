@@ -173,7 +173,6 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
               data: {
                 type: NotifTypes.NoFirstLetter,
-                screen: 'SingleContact',
                 data: {
                   contactId: contact.id,
                 },

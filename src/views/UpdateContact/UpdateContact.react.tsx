@@ -23,7 +23,7 @@ import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
-import { Validation } from '@utils';
+import { Validation, STATES_DROPDOWN } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateContact.styles';
 
@@ -49,6 +49,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
+
+  private facilityCity = createRef<Input>();
+
+  private facilityState = createRef<Input>();
+
+  private facilityPostal = createRef<Input>();
 
   private unit = createRef<Input>();
 
@@ -131,15 +137,18 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
+      this.facilityCity.current &&
+      this.facilityState.current &&
+      this.facilityPostal.current &&
       this.props.contact.facility
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
         type: this.props.contact.facility.type,
         address: this.facilityAddress.current.state.value,
-        city: this.props.contact.facility.city,
-        state: this.props.contact.facility.state,
-        postal: this.props.contact.facility.postal,
+        city: this.facilityCity.current.state.value,
+        state: this.facilityState.current.state.value,
+        postal: this.facilityPostal.current.state.value,
       };
       const contact: Contact = {
         id: this.props.contact.id,
@@ -168,6 +177,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
+      this.facilityCity.current &&
+      this.facilityState.current &&
+      this.facilityPostal.current &&
       this.unit.current &&
       this.dorm.current &&
       this.props.contact.facility
@@ -176,6 +188,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current.set(this.props.contact.lastName);
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
+      this.facilityCity.current.set(this.props.contact.facility.city);
+      this.facilityState.current.set(this.props.contact.facility.state);
+      this.facilityPostal.current.set(this.props.contact.facility.postal);
       this.dorm.current.set(
         this.props.contact.dorm ? this.props.contact.dorm : ''
       );
@@ -291,24 +306,58 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               nextInput={this.facilityName}
             />
             <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
-              {i18n.t('UpdateContactScreen.addressLine1')}
+              {i18n.t('UpdateContactScreen.facilityName')}
             </Text>
             <Input
               ref={this.facilityName}
-              placeholder={i18n.t('UpdateContactScreen.addressLine1')}
+              placeholder={i18n.t('UpdateContactScreen.facilityName')}
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.facilityAddress}
             />
             <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
-              {i18n.t('UpdateContactScreen.addressLine2')}
+              {i18n.t('UpdateContactScreen.facilityAddress')}
             </Text>
             <Input
               ref={this.facilityAddress}
-              placeholder={i18n.t('UpdateContactScreen.addressLine2')}
+              placeholder={i18n.t('UpdateContactScreen.facilityAddress')}
               required
               validate={Validation.Address}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.facilityCity')}
+            </Text>
+            <Input
+              ref={this.facilityCity}
+              placeholder={i18n.t('UpdateContactScreen.facilityCity')}
+              required
+              validate={Validation.City}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.facilityState')}
+            </Text>
+            <Input
+              ref={this.facilityState}
+              placeholder={i18n.t('UpdateContactScreen.facilityState')}
+              required
+              validate={Validation.State}
+              options={STATES_DROPDOWN}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.facilityPostal')}
+            </Text>
+            <Input
+              ref={this.facilityPostal}
+              placeholder={i18n.t('UpdateContactScreen.facilityPostal')}
+              required
+              validate={Validation.Postal}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />

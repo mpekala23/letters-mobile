@@ -63,17 +63,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'SingleContact'
-    )
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
     const contact = this.props.activeContact;
     const letters = this.props.existingLetters;
-
     const letterCards =
       letters && letters.length > 0
         ? letters.map((letter: Letter) => {
@@ -195,6 +190,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
               textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
               containerStyle={Styles.sendLetterButton}
+              enabled={this.props.userState.user.credit > 0}
             />
           </View>
           <View style={Styles.actionItems}>

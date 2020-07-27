@@ -4,7 +4,7 @@ import { render, fireEvent, toJSON } from '@testing-library/react-native';
 import { SupportFAQTypes } from '../../src/types';
 
 const setup = () => {
-  const navigation = { navigate: jest.fn() };
+  const navigation = { navigate: jest.fn(), reset: jest.fn() };
   return {
     navigation,
     ...render(<SupportFAQScreen navigation={navigation} />),
