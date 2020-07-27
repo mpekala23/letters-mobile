@@ -19,88 +19,100 @@ exports[`Single Contact Screen should match snapshot 1`] = `
       }
     }
   >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "white",
-          "height": 340,
-          "justifyContent": "center",
-          "padding": 16,
-          "paddingTop": 60,
-        }
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      refreshControl={
+        <RefreshControl
+          onRefresh={[Function]}
+          refreshing={false}
+        />
       }
     >
-      <ViewManagerAdapter_ExpoLinearGradient
-        proxiedProperties={
-          Object {
-            "colors": Array [
-              4289582079,
-              4294953417,
-            ],
-            "endPoint": Array [
-              1,
-              0,
-            ],
-            "locations": undefined,
-            "startPoint": Array [
-              0,
-              1,
-            ],
-          }
-        }
+      <View
         style={
           Object {
-            "backgroundColor": "#FC7272",
-            "borderRadius": 10,
-            "height": 100,
-            "left": 16,
-            "position": "absolute",
-            "top": 16,
-            "width": "100%",
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "height": 340,
+            "justifyContent": "center",
+            "padding": 16,
+            "paddingTop": 60,
           }
         }
       >
-        <TouchableOpacity
-          activeOpacity={0.2}
+        <ViewManagerAdapter_ExpoLinearGradient
+          proxiedProperties={
+            Object {
+              "colors": Array [
+                4289582079,
+                4294953417,
+              ],
+              "endPoint": Array [
+                1,
+                0,
+              ],
+              "locations": undefined,
+              "startPoint": Array [
+                0,
+                1,
+              ],
+            }
+          }
           style={
             Object {
+              "backgroundColor": "#FC7272",
+              "borderRadius": 10,
               "height": 100,
+              "left": 16,
+              "position": "absolute",
+              "top": 16,
+              "width": "100%",
             }
           }
         >
-          <RNSVGSvgView
-            align="xMidYMid"
-            bbHeight={37}
-            bbWidth={37}
-            fill="none"
-            focusable={false}
-            height={37}
-            meetOrSlice={0}
-            minX={0}
-            minY={0}
+          <TouchableOpacity
+            activeOpacity={0.2}
             style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderWidth": 0,
-                },
-                Object {
-                  "position": "absolute",
-                  "right": 12,
-                  "top": 8,
-                },
-                Object {
-                  "flex": 0,
-                  "height": 37,
-                  "width": 37,
-                },
-              ]
+              Object {
+                "height": 50,
+                "position": "absolute",
+                "right": 0,
+                "width": 50,
+              }
             }
-            vbHeight={37}
-            vbWidth={37}
-            width={37}
-            xml="<svg width=\\"37\\" height=\\"37\\" viewBox=\\"0 0 37 37\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+          >
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={37}
+              bbWidth={37}
+              fill="none"
+              focusable={false}
+              height={37}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  Object {
+                    "position": "absolute",
+                    "right": 12,
+                    "top": 8,
+                  },
+                  Object {
+                    "flex": 0,
+                    "height": 37,
+                    "width": 37,
+                  },
+                ]
+              }
+              vbHeight={37}
+              vbWidth={37}
+              width={37}
+              xml="<svg width=\\"37\\" height=\\"37\\" viewBox=\\"0 0 37 37\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
     <g opacity=\\"0.77\\">
     <circle r=\\"18.5\\" transform=\\"matrix(1 0 0 -1 18.5 18.5)\\" fill=\\"#E3E3E3\\"/>
     <path 
@@ -111,189 +123,114 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         stroke-linejoin=\\"round\\"/>
     </g>
 </svg>"
-            xmlns="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <RNSVGGroup
+                fill={null}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+              >
+                <RNSVGGroup
+                  opacity={0.77}
+                >
+                  <RNSVGCircle
+                    cx={0}
+                    cy={0}
+                    fill={4293125091}
+                    matrix={
+                      Array [
+                        1,
+                        0,
+                        0,
+                        -1,
+                        18.5,
+                        18.5,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
+                    r={18.5}
+                  />
+                  <RNSVGPath
+                    d="M22.232 12.232L25.768 15.768L22.232 12.232ZM23.732 10.732C24.2009 10.2631 24.8369 9.99969 25.5 9.99969C26.1631 9.99969 26.7991 10.2631 27.268 10.732C27.7369 11.2009 28.0003 11.8369 28.0003 12.5C28.0003 13.1632 27.7369 13.7991 27.268 14.268L13.5 28.036H10V24.464L23.732 10.732V10.732Z"
+                    propList={
+                      Array [
+                        "stroke",
+                        "strokeWidth",
+                        "strokeLinecap",
+                        "strokeLinejoin",
+                      ]
+                    }
+                    stroke={4285368753}
+                    strokeLinecap={1}
+                    strokeLinejoin={1}
+                    strokeWidth={2}
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGSvgView>
+          </TouchableOpacity>
+        </ViewManagerAdapter_ExpoLinearGradient>
+        <View
+          pointerEvents="auto"
+        >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F4F4F4",
+                "borderColor": "white",
+                "borderRadius": 65,
+                "borderWidth": 6,
+                "height": 130,
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "width": 130,
+              }
+            }
+            testID="profilePicture"
           >
-            <RNSVGGroup
-              fill={null}
-              propList={
+            <Text
+              style={
                 Array [
-                  "fill",
+                  Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                  Object {
+                    "color": "white",
+                    "fontSize": 36,
+                    "fontWeight": "500",
+                  },
                 ]
               }
             >
-              <RNSVGGroup
-                opacity={0.77}
-              >
-                <RNSVGCircle
-                  cx={0}
-                  cy={0}
-                  fill={4293125091}
-                  matrix={
-                    Array [
-                      1,
-                      0,
-                      0,
-                      -1,
-                      18.5,
-                      18.5,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                  r={18.5}
-                />
-                <RNSVGPath
-                  d="M22.232 12.232L25.768 15.768L22.232 12.232ZM23.732 10.732C24.2009 10.2631 24.8369 9.99969 25.5 9.99969C26.1631 9.99969 26.7991 10.2631 27.268 10.732C27.7369 11.2009 28.0003 11.8369 28.0003 12.5C28.0003 13.1632 27.7369 13.7991 27.268 14.268L13.5 28.036H10V24.464L23.732 10.732V10.732Z"
-                  propList={
-                    Array [
-                      "stroke",
-                      "strokeWidth",
-                      "strokeLinecap",
-                      "strokeLinejoin",
-                    ]
-                  }
-                  stroke={4285368753}
-                  strokeLinecap={1}
-                  strokeLinejoin={1}
-                  strokeWidth={2}
-                />
-              </RNSVGGroup>
-            </RNSVGGroup>
-          </RNSVGSvgView>
-        </TouchableOpacity>
-      </ViewManagerAdapter_ExpoLinearGradient>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#f6993f",
-            "borderColor": "white",
-            "borderRadius": 65,
-            "borderWidth": 6,
-            "height": 130,
-            "justifyContent": "center",
-            "overflow": "hidden",
-            "width": 130,
-          }
-        }
-        testID="profilePicture"
-      >
-        <Image
-          accessibilityLabel="Profile Picture"
-          source={1}
-          style={
-            Object {
-              "height": 130,
-              "width": 130,
-            }
-          }
-        />
-      </TouchableOpacity>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-            },
-            Object {
-              "color": "#282828",
-              "fontSize": 25,
-            },
-          ]
-        }
-      >
-        First
-         
-        Last
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Regular",
-            },
-            Object {
-              "color": "#393939",
-              "fontSize": 16,
-            },
-          ]
-        }
-      >
+              
+            </Text>
+          </TouchableOpacity>
+        </View>
         <Text
           style={
-            Object {
-              "color": "#000",
-            }
-          }
-        >
-          📆
-        </Text>
-         
-        last heard from you
-        :
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Regular",
-            },
-            Object {
-              "color": "#393939",
-              "fontSize": 16,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#000",
-            }
-          }
-        >
-          ✈️
-        </Text>
-         
-        letters traveled
-        :
-      </Text>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {},
-            Object {
-              "marginBottom": 16,
-              "width": "100%",
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
               },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
-      >
+              Object {
+                "color": "#282828",
+                "fontSize": 25,
+              },
+            ]
+          }
+        >
+          First Name
+           
+        </Text>
         <Text
           style={
             Array [
@@ -301,195 +238,289 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "fontFamily": "Poppins-Medium",
               },
               Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "color": "#393939",
+                "fontSize": 16,
               },
-              Object {},
-              Array [
-                Object {
-                  "fontFamily": "Poppins-Bold",
-                },
-                Object {
-                  "fontSize": 20,
-                },
-              ],
-              Object {},
             ]
           }
         >
-          Send letter
+          <Text
+            style={
+              Object {
+                "color": "#000",
+              }
+            }
+          >
+            💌
+          </Text>
+           
+          received
+          :
+           
+          1
         </Text>
-      </TouchableOpacity>
-    </View>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      style={
-        Object {
-          "padding": 16,
-        }
-      }
-    >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#393939",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#000",
+              }
+            }
+          >
+            📆
+          </Text>
+           
+          last heard from you
+          :
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#393939",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#000",
+              }
+            }
+          >
+            ✈️
+          </Text>
+           
+          letters traveled
+          :
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FF7171",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+                "paddingHorizontal": 14,
+              },
+              Object {},
+              Object {
+                "marginBottom": 16,
+                "width": "100%",
+              },
+              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
+            ]
+          }
+          testID="clickable"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {
+                  "fontSize": 20,
+                },
+                Object {},
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+          >
+            Send letter
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 6,
-              "marginVertical": 6,
-              "padding": 15,
-              "width": "100%",
-            },
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 4,
-                "width": 0,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 2.62,
-            },
-            undefined,
-          ]
+          Object {
+            "padding": 16,
+          }
         }
-        testID="creditsCard"
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "backgroundColor": "white",
+                "borderRadius": 6,
+                "marginVertical": 6,
+                "padding": 15,
+                "width": "100%",
+              },
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 4,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.2,
+                "shadowRadius": 2.62,
+              },
+              undefined,
+            ]
           }
+          testID="creditsCard"
         >
           <View
             style={
               Object {
-                "flex": 1,
+                "flexDirection": "row",
               }
             }
           >
             <View
               style={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
+                  "flex": 1,
                 }
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Bold",
-                    },
-                    Object {
-                      "color": "#282828",
-                      "fontSize": 20,
-                    },
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
                 }
-              >
-                 
-                Credits
-                 
-                left
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
               >
                 <Text
                   style={
-                    Object {
-                      "color": "#FF7171",
-                      "fontSize": 16,
-                    }
+                    Array [
+                      Object {
+                        "fontFamily": "Poppins-Bold",
+                      },
+                      Object {
+                        "color": "#282828",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "flex": 1,
+                      },
+                    ]
                   }
                 >
-                  Add more
+                  4 letters left this week
                 </Text>
-              </TouchableOpacity>
-            </View>
-            <Text
-              style={
-                Object {
-                  "color": "#6E757C",
-                  "fontSize": 14,
+              </View>
+              <Text
+                style={
+                  Object {
+                    "color": "#6E757C",
+                    "fontSize": 14,
+                  }
                 }
-              }
-            >
-              Credits reset daily
-            </Text>
+              >
+                Your letters reset weekly, on Monday at 4:00AM EST.
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 6,
-              "marginVertical": 6,
-              "padding": 15,
-              "width": "100%",
-            },
-            Object {
-              "flexDirection": "column",
-              "height": 90,
-              "justifyContent": "space-between",
-            },
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 4,
-                "width": 0,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 2.62,
-            },
-            undefined,
-          ]
-        }
-      >
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight={81}
-          bbWidth={110}
-          fill="none"
-          focusable={false}
-          height={81}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
+        <TouchableOpacity
+          activeOpacity={0.2}
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
+                "backgroundColor": "white",
+                "borderRadius": 6,
+                "marginVertical": 6,
+                "padding": 15,
+                "width": "100%",
               },
               Object {
-                "bottom": 0,
-                "position": "absolute",
-                "right": 0,
+                "flexDirection": "column",
+                "height": 90,
+                "justifyContent": "space-between",
               },
               Object {
-                "flex": 0,
-                "height": 81,
-                "width": 110,
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 4,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.2,
+                "shadowRadius": 2.62,
+              },
+              Object {
+                "height": 100,
               },
             ]
           }
-          vbHeight={81}
-          vbWidth={110}
-          width={110}
-          xml="<svg width=\\"110\\" height=\\"81\\" viewBox=\\"0 0 110 81\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={81}
+            bbWidth={110}
+            fill="none"
+            focusable={false}
+            height={81}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "bottom": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 81,
+                  "width": 110,
+                },
+              ]
+            }
+            vbHeight={81}
+            vbWidth={110}
+            width={110}
+            xml="<svg width=\\"110\\" height=\\"81\\" viewBox=\\"0 0 110 81\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
     <path 
         d=\\"M47.5706 53.6627L37.0489 29.9342C37.0217 29.8728 36.9956 29.811 36.9706 29.7489C36.6395 28.9256 36.5056 28.0382 36.5804 27.1549C36.6607 26.205 36.98 25.2891 37.5097 24.4885L51.0564 4.03486C51.6922 3.074 52.6052 2.31858 53.6801 1.86392C54.755 1.40926 55.9437 1.27574 57.0962 1.48019L81.6382 5.82326C82.5985 5.9936 83.5008 6.39281 84.2652 6.98546C84.976 7.53652 85.5471 8.23898 85.9354 9.03809C85.9647 9.09839 85.993 9.15924 86.0202 9.22062L96.5418 32.9491C97.1668 34.3586 97.1929 35.9528 96.6144 37.381C96.0359 38.8093 94.9001 39.9546 93.457 40.565L55.3683 56.6755C53.9252 57.2859 52.2929 57.3114 50.8305 56.7464C49.3682 56.1814 48.1955 55.0721 47.5706 53.6627Z\\" fill=\\"#4883D8\\"/>
     <path 
@@ -518,220 +549,231 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         stroke-linejoin=\\"round\\"
     />
 </svg>"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <RNSVGGroup
-            fill={null}
-            propList={
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGPath
+                d="M47.5706 53.6627L37.0489 29.9342C37.0217 29.8728 36.9956 29.811 36.9706 29.7489C36.6395 28.9256 36.5056 28.0382 36.5804 27.1549C36.6607 26.205 36.98 25.2891 37.5097 24.4885L51.0564 4.03486C51.6922 3.074 52.6052 2.31858 53.6801 1.86392C54.755 1.40926 55.9437 1.27574 57.0962 1.48019L81.6382 5.82326C82.5985 5.9936 83.5008 6.39281 84.2652 6.98546C84.976 7.53652 85.5471 8.23898 85.9354 9.03809C85.9647 9.09839 85.993 9.15924 86.0202 9.22062L96.5418 32.9491C97.1668 34.3586 97.1929 35.9528 96.6144 37.381C96.0359 38.8093 94.9001 39.9546 93.457 40.565L55.3683 56.6755C53.9252 57.2859 52.2929 57.3114 50.8305 56.7464C49.3682 56.1814 48.1955 55.0721 47.5706 53.6627Z"
+                fill={4282942424}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M47.5706 53.6627L37.0489 29.9342C36.6609 29.0595 36.5 28.1049 36.5804 27.1549C36.6607 26.205 36.98 25.2891 37.5097 24.4885L51.0564 4.03486C51.6922 3.074 52.6052 2.31858 53.6801 1.86392C54.755 1.40926 55.9437 1.27574 57.0962 1.48019L81.6382 5.82326C82.5985 5.9936 83.5008 6.39281 84.2652 6.98546C85.0296 7.5781 85.6324 8.34586 86.0202 9.22062L96.5418 32.9491M47.5706 53.6627C48.1955 55.0721 49.3682 56.1814 50.8305 56.7464C52.2929 57.3114 53.9252 57.2859 55.3683 56.6755L93.457 40.565C94.9001 39.9546 96.0359 38.8093 96.6144 37.381C97.1929 35.9528 97.1668 34.3586 96.5418 32.9491M47.5706 53.6627L60.6327 33.9379M96.5418 32.9491L72.8755 28.7595M60.6327 33.9379L36.9664 29.7482M60.6327 33.9379L64.6297 34.6454C65.7822 34.8499 66.9709 34.7164 68.0458 34.2617C69.1207 33.8071 70.0337 33.0516 70.6695 32.0908L72.8755 28.7595M72.8755 28.7595L85.9377 9.03462"
+                propList={
+                  Array [
+                    "stroke",
+                    "strokeWidth",
+                    "strokeLinecap",
+                    "strokeLinejoin",
+                  ]
+                }
+                stroke={4294967295}
+                strokeLinecap={1}
+                strokeLinejoin={1}
+                strokeWidth={2.5}
+              />
+              <RNSVGPath
+                d="M2.14354 66.9231L7.24924 51.5077C7.26244 51.4678 7.27633 51.4282 7.29091 51.3889C7.48406 50.8677 7.79709 50.3962 8.20657 50.0109C8.64694 49.5965 9.18523 49.2947 9.77367 49.1322L24.8138 44.9864C25.52 44.7914 26.2696 44.8051 26.9679 45.0257C27.6663 45.2463 28.282 45.664 28.7375 46.2261L38.4421 58.1896C38.8216 58.6579 39.0769 59.2105 39.1854 59.7982C39.2862 60.3448 39.2572 60.9061 39.1012 61.439C39.0895 61.4792 39.077 61.5192 39.0638 61.5591L33.9581 76.9745C33.6548 77.8902 32.9915 78.6506 32.1141 79.0887C31.2368 79.5267 30.2172 79.6064 29.2796 79.3102L4.535 71.4924C3.59747 71.1962 2.81882 70.5484 2.37033 69.6915C1.92185 68.8346 1.84027 67.8388 2.14354 66.9231Z"
+                fill={4282942424}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M2.14354 66.9231L7.24924 51.5077C7.43736 50.9394 7.76619 50.4253 8.20657 50.0109C8.64694 49.5965 9.18523 49.2947 9.77367 49.1322L24.8138 44.9864C25.52 44.7914 26.2696 44.8051 26.9679 45.0257C27.6663 45.2463 28.282 45.664 28.7375 46.2261L38.4421 58.1896C38.8216 58.6579 39.0769 59.2105 39.1854 59.7982C39.2938 60.386 39.2521 60.9909 39.0638 61.5591L33.9581 76.9745M2.14354 66.9231C1.84027 67.8388 1.92185 68.8346 2.37033 69.6915C2.81882 70.5484 3.59747 71.1962 4.535 71.4924L29.2796 79.3102C30.2172 79.6064 31.2368 79.5267 32.1141 79.0887C32.9915 78.6506 33.6548 77.8902 33.9581 76.9745M2.14354 66.9231L16.6468 62.9242M33.9581 76.9745L24.6005 65.4371M16.6468 62.9242L7.28926 51.3869M16.6468 62.9242L18.2272 64.8728C18.6828 65.4348 19.2985 65.8525 19.9969 66.0732C20.6952 66.2938 21.4448 66.3075 22.151 66.1125L24.6005 65.4371M24.6005 65.4371L39.1038 61.4383"
+                propList={
+                  Array [
+                    "stroke",
+                    "strokeWidth",
+                    "strokeLinecap",
+                    "strokeLinejoin",
+                  ]
+                }
+                stroke={4294967295}
+                strokeLinecap={1}
+                strokeLinejoin={1}
+                strokeWidth={2.5}
+              />
+              <RNSVGPath
+                d="M91.4096 74.6696L90.5997 62.2197C90.5976 62.1875 90.5961 62.1553 90.5951 62.1231C90.5824 61.6963 90.6693 61.2702 90.8498 60.8777C91.0438 60.4556 91.3401 60.0855 91.7123 59.8001L101.227 52.5103C101.674 52.1678 102.211 51.9613 102.772 51.9171C103.333 51.8728 103.892 51.9926 104.379 52.2615L114.739 57.9821C115.145 58.2062 115.486 58.526 115.733 58.9133C115.962 59.2734 116.103 59.6815 116.146 60.1059C116.149 60.1379 116.152 60.1701 116.154 60.2023L116.964 72.6522C117.012 73.3917 116.759 74.1245 116.26 74.6895C115.762 75.2544 115.059 75.6052 114.306 75.6647L94.4304 77.2338C93.6773 77.2932 92.936 77.0565 92.3695 76.5756C91.803 76.0947 91.4577 75.4091 91.4096 74.6696Z"
+                fill={4282942424}
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M91.4096 74.6696L90.5997 62.2197C90.5698 61.7608 90.6557 61.2998 90.8498 60.8777C91.0438 60.4556 91.3401 60.0855 91.7123 59.8001L101.227 52.5103C101.674 52.1678 102.211 51.9613 102.772 51.9171C103.333 51.8728 103.892 51.9926 104.379 52.2615L114.739 57.9821C115.145 58.2062 115.486 58.526 115.733 58.9133C115.979 59.3006 116.124 59.7433 116.154 60.2023L116.964 72.6522M91.4096 74.6696C91.4577 75.4091 91.803 76.0947 92.3695 76.5756C92.936 77.0565 93.6773 77.2932 94.4304 77.2338L114.306 75.6647C115.059 75.6052 115.762 75.2544 116.26 74.6895C116.759 74.1245 117.012 73.3917 116.964 72.6522M91.4096 74.6696L100.584 67.6393M116.964 72.6522L106.973 67.135M100.584 67.6393L90.5934 62.1221M100.584 67.6393L102.272 68.5711C102.758 68.84 103.317 68.9599 103.878 68.9156C104.439 68.8713 104.977 68.6649 105.423 68.3223L106.973 67.135M106.973 67.135L116.148 60.1047"
+                propList={
+                  Array [
+                    "stroke",
+                    "strokeWidth",
+                    "strokeLinecap",
+                    "strokeLinejoin",
+                  ]
+                }
+                stroke={4294967295}
+                strokeLinecap={1}
+                strokeLinejoin={1}
+                strokeWidth={2.5}
+              />
+            </RNSVGGroup>
+          </RNSVGSvgView>
+          <Text
+            style={
               Array [
-                "fill",
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "#6E757C",
+                  "fontSize": 18,
+                },
               ]
             }
           >
-            <RNSVGPath
-              d="M47.5706 53.6627L37.0489 29.9342C37.0217 29.8728 36.9956 29.811 36.9706 29.7489C36.6395 28.9256 36.5056 28.0382 36.5804 27.1549C36.6607 26.205 36.98 25.2891 37.5097 24.4885L51.0564 4.03486C51.6922 3.074 52.6052 2.31858 53.6801 1.86392C54.755 1.40926 55.9437 1.27574 57.0962 1.48019L81.6382 5.82326C82.5985 5.9936 83.5008 6.39281 84.2652 6.98546C84.976 7.53652 85.5471 8.23898 85.9354 9.03809C85.9647 9.09839 85.993 9.15924 86.0202 9.22062L96.5418 32.9491C97.1668 34.3586 97.1929 35.9528 96.6144 37.381C96.0359 38.8093 94.9001 39.9546 93.457 40.565L55.3683 56.6755C53.9252 57.2859 52.2929 57.3114 50.8305 56.7464C49.3682 56.1814 48.1955 55.0721 47.5706 53.6627Z"
-              fill={4282942424}
-              propList={
-                Array [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M47.5706 53.6627L37.0489 29.9342C36.6609 29.0595 36.5 28.1049 36.5804 27.1549C36.6607 26.205 36.98 25.2891 37.5097 24.4885L51.0564 4.03486C51.6922 3.074 52.6052 2.31858 53.6801 1.86392C54.755 1.40926 55.9437 1.27574 57.0962 1.48019L81.6382 5.82326C82.5985 5.9936 83.5008 6.39281 84.2652 6.98546C85.0296 7.5781 85.6324 8.34586 86.0202 9.22062L96.5418 32.9491M47.5706 53.6627C48.1955 55.0721 49.3682 56.1814 50.8305 56.7464C52.2929 57.3114 53.9252 57.2859 55.3683 56.6755L93.457 40.565C94.9001 39.9546 96.0359 38.8093 96.6144 37.381C97.1929 35.9528 97.1668 34.3586 96.5418 32.9491M47.5706 53.6627L60.6327 33.9379M96.5418 32.9491L72.8755 28.7595M60.6327 33.9379L36.9664 29.7482M60.6327 33.9379L64.6297 34.6454C65.7822 34.8499 66.9709 34.7164 68.0458 34.2617C69.1207 33.8071 70.0337 33.0516 70.6695 32.0908L72.8755 28.7595M72.8755 28.7595L85.9377 9.03462"
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              stroke={4294967295}
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth={2.5}
-            />
-            <RNSVGPath
-              d="M2.14354 66.9231L7.24924 51.5077C7.26244 51.4678 7.27633 51.4282 7.29091 51.3889C7.48406 50.8677 7.79709 50.3962 8.20657 50.0109C8.64694 49.5965 9.18523 49.2947 9.77367 49.1322L24.8138 44.9864C25.52 44.7914 26.2696 44.8051 26.9679 45.0257C27.6663 45.2463 28.282 45.664 28.7375 46.2261L38.4421 58.1896C38.8216 58.6579 39.0769 59.2105 39.1854 59.7982C39.2862 60.3448 39.2572 60.9061 39.1012 61.439C39.0895 61.4792 39.077 61.5192 39.0638 61.5591L33.9581 76.9745C33.6548 77.8902 32.9915 78.6506 32.1141 79.0887C31.2368 79.5267 30.2172 79.6064 29.2796 79.3102L4.535 71.4924C3.59747 71.1962 2.81882 70.5484 2.37033 69.6915C1.92185 68.8346 1.84027 67.8388 2.14354 66.9231Z"
-              fill={4282942424}
-              propList={
-                Array [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M2.14354 66.9231L7.24924 51.5077C7.43736 50.9394 7.76619 50.4253 8.20657 50.0109C8.64694 49.5965 9.18523 49.2947 9.77367 49.1322L24.8138 44.9864C25.52 44.7914 26.2696 44.8051 26.9679 45.0257C27.6663 45.2463 28.282 45.664 28.7375 46.2261L38.4421 58.1896C38.8216 58.6579 39.0769 59.2105 39.1854 59.7982C39.2938 60.386 39.2521 60.9909 39.0638 61.5591L33.9581 76.9745M2.14354 66.9231C1.84027 67.8388 1.92185 68.8346 2.37033 69.6915C2.81882 70.5484 3.59747 71.1962 4.535 71.4924L29.2796 79.3102C30.2172 79.6064 31.2368 79.5267 32.1141 79.0887C32.9915 78.6506 33.6548 77.8902 33.9581 76.9745M2.14354 66.9231L16.6468 62.9242M33.9581 76.9745L24.6005 65.4371M16.6468 62.9242L7.28926 51.3869M16.6468 62.9242L18.2272 64.8728C18.6828 65.4348 19.2985 65.8525 19.9969 66.0732C20.6952 66.2938 21.4448 66.3075 22.151 66.1125L24.6005 65.4371M24.6005 65.4371L39.1038 61.4383"
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              stroke={4294967295}
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth={2.5}
-            />
-            <RNSVGPath
-              d="M91.4096 74.6696L90.5997 62.2197C90.5976 62.1875 90.5961 62.1553 90.5951 62.1231C90.5824 61.6963 90.6693 61.2702 90.8498 60.8777C91.0438 60.4556 91.3401 60.0855 91.7123 59.8001L101.227 52.5103C101.674 52.1678 102.211 51.9613 102.772 51.9171C103.333 51.8728 103.892 51.9926 104.379 52.2615L114.739 57.9821C115.145 58.2062 115.486 58.526 115.733 58.9133C115.962 59.2734 116.103 59.6815 116.146 60.1059C116.149 60.1379 116.152 60.1701 116.154 60.2023L116.964 72.6522C117.012 73.3917 116.759 74.1245 116.26 74.6895C115.762 75.2544 115.059 75.6052 114.306 75.6647L94.4304 77.2338C93.6773 77.2932 92.936 77.0565 92.3695 76.5756C91.803 76.0947 91.4577 75.4091 91.4096 74.6696Z"
-              fill={4282942424}
-              propList={
-                Array [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M91.4096 74.6696L90.5997 62.2197C90.5698 61.7608 90.6557 61.2998 90.8498 60.8777C91.0438 60.4556 91.3401 60.0855 91.7123 59.8001L101.227 52.5103C101.674 52.1678 102.211 51.9613 102.772 51.9171C103.333 51.8728 103.892 51.9926 104.379 52.2615L114.739 57.9821C115.145 58.2062 115.486 58.526 115.733 58.9133C115.979 59.3006 116.124 59.7433 116.154 60.2023L116.964 72.6522M91.4096 74.6696C91.4577 75.4091 91.803 76.0947 92.3695 76.5756C92.936 77.0565 93.6773 77.2932 94.4304 77.2338L114.306 75.6647C115.059 75.6052 115.762 75.2544 116.26 74.6895C116.759 74.1245 117.012 73.3917 116.964 72.6522M91.4096 74.6696L100.584 67.6393M116.964 72.6522L106.973 67.135M100.584 67.6393L90.5934 62.1221M100.584 67.6393L102.272 68.5711C102.758 68.84 103.317 68.9599 103.878 68.9156C104.439 68.8713 104.977 68.6649 105.423 68.3223L106.973 67.135M106.973 67.135L116.148 60.1047"
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              stroke={4294967295}
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth={2.5}
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#6E757C",
-                "fontSize": 18,
-              },
-            ]
-          }
-        >
-          Memory Lane
-        </Text>
+            Memory Lane
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "color": "#282828",
+                  "fontSize": 28,
+                },
+              ]
+            }
+          >
+            1 Letter
+          </Text>
+        </TouchableOpacity>
         <Text
           style={
             Array [
               Object {
                 "fontFamily": "Poppins-Bold",
+                "fontSize": 20,
               },
               Object {
-                "color": "#282828",
-                "fontSize": 28,
+                "color": "#6D6D6D",
+                "paddingTop": 12,
               },
             ]
           }
         >
-          1 Letter
+          Letter Tracking
         </Text>
-      </TouchableOpacity>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-              "fontSize": 20,
-            },
-            Object {
-              "color": "#6D6D6D",
-              "paddingTop": 12,
-            },
-          ]
-        }
-      >
-        Letter Tracking
-      </Text>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 6,
-              "marginVertical": 6,
-              "padding": 15,
-              "width": "100%",
-            },
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 4,
-                "width": 0,
-              },
-              "shadowOpacity": 0.2,
-              "shadowRadius": 2.62,
-            },
-            undefined,
-          ]
-        }
-        testID="letterStatusCard"
-      >
-        <View
+        <TouchableOpacity
+          activeOpacity={0.2}
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "backgroundColor": "white",
+                "borderRadius": 6,
+                "marginVertical": 6,
+                "padding": 15,
+                "width": "100%",
+              },
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 4,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.2,
+                "shadowRadius": 2.62,
+              },
+              undefined,
+            ]
           }
+          testID="letterStatusCard"
         >
           <View
             style={
-              Array [
-                Object {
-                  "borderRadius": 3,
-                  "height": "100%",
-                  "marginRight": 15,
-                  "width": 6,
-                },
-                Object {
-                  "backgroundColor": "#09863D",
-                },
-              ]
-            }
-          />
-          <View
-            style={
               Object {
-                "flex": 1,
+                "flexDirection": "row",
               }
             }
           >
             <View
               style={
+                Array [
+                  Object {
+                    "borderRadius": 3,
+                    "height": "100%",
+                    "marginRight": 15,
+                    "width": 6,
+                  },
+                  Object {
+                    "backgroundColor": "#09863D",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                  "marginBottom": 10,
+                  "flex": 1,
                 }
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Bold",
-                    },
-                    Object {
-                      "color": "#282828",
-                      "fontSize": 20,
-                    },
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "marginBottom": 10,
+                  }
                 }
               >
-                Out for Delivery
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontFamily": "Poppins-Bold",
+                      },
+                      Object {
+                        "color": "#282828",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "flex": 1,
+                      },
+                    ]
+                  }
+                >
+                  Out for Delivery
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#6E757C",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  Invalid date
+                </Text>
+              </View>
               <Text
                 style={
                   Object {
@@ -740,22 +782,12 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                05/11/2020
+                Hi Emily! How are you doing? I'm trying out this...
               </Text>
             </View>
-            <Text
-              style={
-                Object {
-                  "color": "#6E757C",
-                  "fontSize": 16,
-                }
-              }
-            >
-              Hi Emily! How are you doing? I'm trying out this...
-            </Text>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   </View>
 </View>

@@ -2,12 +2,29 @@ import React from 'react';
 import { IssuesScreen } from '@views';
 import { DeliveryReportTypes } from 'types';
 import { render, fireEvent, toJSON } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+
+const mockStore = configureStore([]);
 
 const setup = () => {
   const navigation = { navigate: jest.fn() };
+  const store = mockStore({
+    notif: {
+      currentNotif: null,
+    },
+  });
+
+  const StoreProvider = ({ children }: { children: JSX.Element }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
+
   return {
     navigation,
-    ...render(<IssuesScreen navigation={navigation} />),
+    store,
+    ...render(<IssuesScreen navigation={navigation} />, {
+      wrapper: StoreProvider,
+    }),
   };
 };
 

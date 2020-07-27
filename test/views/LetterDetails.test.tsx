@@ -10,12 +10,11 @@ const mockStore = configureStore([]);
 const setup = (letterOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const letter = {
-    type: LetterTypes.PostCards,
+    type: LetterTypes.Postcard,
     status: LetterStatus.Mailed,
     isDraft: true,
     recipientId: 8,
-    message: "I'm trying out this new service called Ameelio...",
-    photoPath: '',
+    content: "I'm trying out this new service called Ameelio...",
     letterId: 1,
     expectedDeliveryDate: '2019-06-30',
     dateCreated: '06/26/2019',
@@ -24,7 +23,7 @@ const setup = (letterOverrides = {}) => {
         id: 1,
         name: LetterStatus.Mailed,
         location: '20002',
-        date: '2019-07-12T15:51:41.000Z',
+        date: '2019-07-12',
       },
     ],
     ...letterOverrides,
@@ -62,7 +61,7 @@ describe('Letter Details Screen', () => {
 
   it('should display created date', () => {
     const { getByText } = setup();
-    expect(getByText('06/26/2019')).toBeDefined();
+    expect(getByText('Jun 26, 2019')).toBeDefined();
   });
 
   it('should display letter content', () => {
@@ -74,11 +73,11 @@ describe('Letter Details Screen', () => {
 
   it('should load values for letters from the redux store', () => {
     const { getByText } = setup({
-      type: LetterTypes.PostCards,
+      type: LetterTypes.Postcard,
       status: LetterStatus.InTransit,
       isDraft: true,
       recipientId: 8,
-      message: 'Redux Letter 1',
+      content: 'Redux Letter 1',
       letterId: 2,
       expectedDeliveryDate: '2019-06-30',
     });

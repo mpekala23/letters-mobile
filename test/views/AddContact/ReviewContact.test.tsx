@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ReviewContactScreen } from '@views';
-import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { render, toJSON, fireEvent, act } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { addContact } from '@api';
+import { sleep } from '@utils';
 
 const mockStore = configureStore([]);
 
@@ -14,7 +15,6 @@ jest.mock('@api', () => ({
 const setup = (contactOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const contact = {
-    state: 'Minnesota',
     firstName: 'First',
     lastName: 'Last',
     inmateNumber: '6',
@@ -24,7 +24,7 @@ const setup = (contactOverrides = {}) => {
       city: 'City',
       name: 'Facility Name',
       postal: '23232',
-      state: 'MN',
+      state: 'Minnesota',
       type: 'State Prison',
     },
     ...contactOverrides,
@@ -35,6 +35,9 @@ const setup = (contactOverrides = {}) => {
   };
   const store = mockStore({
     contact: initialState,
+    letter: {
+      existing: {},
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -65,7 +68,7 @@ describe('Review Contact Screen', () => {
 
   it('should have add contact button be enabled only when all fields are valid', () => {
     const { getByPlaceholderText, getByText } = setup();
-    const nextButton = getByText('Next');
+    const nextButton = getByText('Add Contact');
     expect(nextButton.parentNode.props.style[1]).toEqual({});
     fireEvent.changeText(getByPlaceholderText('State'), '');
     expect(nextButton.parentNode.props.style[1].backgroundColor).toBeDefined();
@@ -105,9 +108,13 @@ describe('Review Contact Screen', () => {
     expect(getByPlaceholderText('Last Name').props.value).toBe('Last test');
   });
 
-  it('should make an api call when add contact button is pressed', () => {
+  it('should make an api call when add contact button is pressed', async () => {
+    jest.useRealTimers();
     const { getByText } = setup();
-    fireEvent.press(getByText('Next'));
+    await act(async () => {
+      fireEvent.press(getByText('Add Contact'));
+      await sleep(10);
+    });
     expect(addContact).toHaveBeenCalledTimes(1);
   });
 });

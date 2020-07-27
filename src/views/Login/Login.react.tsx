@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -8,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -55,7 +55,7 @@ class LoginScreen extends React.Component<Props, State> {
 
   devSkip = async (): Promise<void> => {
     if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org');
-    if (this.passwordRef.current) this.passwordRef.current.set('password');
+    if (this.passwordRef.current) this.passwordRef.current.set('ThisGood1');
     setTimeout(() => {
       this.onLogin();
     }, 10);
@@ -70,17 +70,27 @@ class LoginScreen extends React.Component<Props, State> {
           this.passwordRef.current && this.passwordRef.current.state.value,
         remember: this.state.remember,
       };
+      if (cred.email.length <= 0 || cred.password.length <= 0) {
+        popupAlert({
+          title: i18n.t('LoginScreen.emailAndPasswordRequired'),
+          buttons: [
+            {
+              text: i18n.t('Alert.okay'),
+            },
+          ],
+        });
+        return;
+      }
       try {
         await login(cred);
       } catch (err) {
-        if (err.message === 'Incorrect credentials') {
-          popupAlert({
-            title: i18n.t('LoginScreen.incorrectUsernameOrPassword'),
-            buttons: [
-              {
-                text: i18n.t('Alert.okay'),
-              },
-            ],
+        if (err.message === 'Invalid Email') {
+          dropdownError({
+            message: i18n.t('LoginScreen.incorrectEmail'),
+          });
+        } else if (err.message === 'Invalid Password') {
+          dropdownError({
+            message: i18n.t('LoginScreen.incorrectPassword'),
           });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.timedOut') });
@@ -119,7 +129,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
                   {i18n.t('LoginScreen.welcomeBack')}
                 </Text>
-                <Text style={[Typography.FONT_REGULAR, Styles.welcomeBackText]}>
+                <Text style={[Typography.FONT_REGULAR, Styles.subtitle]}>
                   {i18n.t('LoginScreen.logInWithEmailAndPassword')}
                 </Text>
                 <Input
@@ -164,13 +174,14 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                 />
                 <Button
-                  containerStyle={Styles.loginButton}
+                  containerStyle={Styles.button}
                   textStyle={Typography.FONT_BOLD}
                   buttonText={i18n.t('LoginScreen.login')}
+                  blocking
                   onPress={this.onLogin}
                 />
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ paddingTop: 11, fontSize: 16 }}>
+                  <Text style={{ paddingTop: 16, fontSize: 16 }}>
                     {i18n.t('LoginScreen.forgotYourPassword')}
                   </Text>
                   <Button
@@ -178,7 +189,9 @@ class LoginScreen extends React.Component<Props, State> {
                     containerStyle={Styles.forgotContainer}
                     buttonText={i18n.t('LoginScreen.resetIt')}
                     onPress={() => {
-                      /* TO-DO: Navigate to Reset Password screen */
+                      Linking.openURL(
+                        'https://letters.ameelio.org/password/reset'
+                      );
                       Keyboard.dismiss();
                     }}
                   />
@@ -212,7 +225,9 @@ class LoginScreen extends React.Component<Props, State> {
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
                 </View>
-                <Button onPress={this.devSkip} buttonText="Dev Skip" />
+                {null && (
+                  <Button onPress={this.devSkip} buttonText="Dev Skip" />
+                )}
                 <View style={{ width: '100%', height: 100 }} />
               </View>
             </ScrollView>

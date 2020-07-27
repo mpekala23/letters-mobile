@@ -62,7 +62,7 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
       return defaultCTAButton(
-        () => props.navigation.navigate('Home'),
+        () => props.navigation.navigate('ContactSelector'),
         i18n.t('IssuesDetailScreen.returnHome'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
@@ -88,7 +88,7 @@ function mapIssueToDetailsSecondaryCTA(
   switch (type) {
     case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
-        () => props.navigation.navigate('Home'),
+        () => props.navigation.navigate('ContactSelector'),
         i18n.t('IssuesDetailScreen.IllWait'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse

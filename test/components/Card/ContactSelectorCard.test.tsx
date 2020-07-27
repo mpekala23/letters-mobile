@@ -10,8 +10,7 @@ const setup = (propOverrides = {}) => {
       {
         isDraft: true,
         recipientId: 8,
-        message: 'Text',
-        photoPath: '',
+        content: 'Text',
       },
     ],
     onPress: jest.fn(),

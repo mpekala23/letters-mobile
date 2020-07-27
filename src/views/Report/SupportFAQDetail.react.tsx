@@ -74,9 +74,10 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
         i18n.t('SupportFAQDetailScreen.updateAddress')
       );
     case SupportFAQTypes.WrongReturnAddress:
-      return defaultCTAButton(() => {
-        /* TO-DO: Navigate to update user profile screen */
-      }, i18n.t('SupportFAQDetailScreen.updateProfile'));
+      return defaultCTAButton(
+        () => props.navigation.navigate('UpdateProfile'),
+        i18n.t('SupportFAQDetailScreen.updateProfile')
+      );
     case SupportFAQTypes.TrackingNumber:
       return null;
     default:

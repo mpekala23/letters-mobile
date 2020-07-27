@@ -2,7 +2,7 @@
 // probably want a specific type for state abbrevs
 export interface Facility {
   name: string;
-  type: 'Federal Prison' | 'State Prison';
+  type: PrisonTypes;
   address: string;
   city: string;
   state: string;
@@ -15,15 +15,23 @@ export enum ProfilePicTypes {
   SingleContact = 'SingleContact',
 }
 
-export type NullableFacility = Facility | null;
-
 export enum Storage {
   RememberToken = 'Ameelio-Token',
 }
 
 export enum PrisonTypes {
-  State = 'StatePrison',
-  Federal = 'FederalPrison',
+  State = 'State',
+  Federal = 'Federal',
+}
+
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
 }
 
 export enum LetterStatus {
@@ -37,18 +45,8 @@ export enum LetterStatus {
 }
 
 export enum LetterTypes {
-  PostCards = 'postCards',
-  Letters = 'letters',
-}
-
-export enum SupportFAQTypes {
-  DeleteLetter = 'DeleteLetter',
-  NotArrived = 'NotArrived',
-  WrongReturnAddress = 'WrongReturnAddress',
-  WrongMailingAddress = 'WrongMailingAddress',
-  TrackingNumber = 'TrackingNumber',
-  TrackingError = 'TrackingError',
-  TalkToAmeelio = 'TalkToAmeelio',
+  Postcard = 'postcard',
+  Letter = 'letter',
 }
 
 export enum DeliveryReportTypes {
@@ -64,9 +62,8 @@ export interface Letter {
   status: LetterStatus;
   isDraft: boolean;
   recipientId: number;
-  recipientName: string;
-  message: string;
-  photoPath?: string;
+  content: string;
+  photo?: Photo;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
   expectedDeliveryDate?: string;
   dateCreated?: string;
@@ -75,13 +72,27 @@ export interface Letter {
 
 export interface LetterTrackingEvent {
   id: number;
-  name: LetterStatus;
-  location: string;
-  date: string;
+  name: string;
+  location: ZipcodeInfo;
+  date: Date;
 }
 
 export type TopbarRouteAction = {
   enabled: boolean;
   text: string;
-  action: () => void;
+  action: () => void | Promise<void>;
+  blocking?: boolean;
 };
+
+export interface ZipcodeInfo {
+  zip: string;
+  city: string;
+  state: string;
+}
+
+export interface Photo {
+  type?: 'image' | string;
+  width?: number;
+  height?: number;
+  uri: string;
+}

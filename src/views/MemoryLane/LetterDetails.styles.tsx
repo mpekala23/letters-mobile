@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
-import { AMEELIO_PINK } from '@styles/Colors';
 
 export default StyleSheet.create({
   trueBackground: {
@@ -27,10 +26,11 @@ export default StyleSheet.create({
     paddingBottom: 36,
   },
   memoryLanePicture: {
-    height: 250,
+    height: 275,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
+    aspectRatio: 1,
   },
 });

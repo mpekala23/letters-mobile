@@ -1,4 +1,4 @@
-import { Facility } from 'types';
+import { Facility, Photo } from 'types';
 
 export const SET_ADDING = 'contact/set_adding';
 export const SET_ACTIVE = 'contact/set_active';
@@ -7,13 +7,14 @@ export const CLEAR_CONTACTS = 'contact/clear_contacts';
 
 export interface Contact {
   id: number;
-  state: string;
   firstName: string;
   lastName: string;
   inmateNumber: string;
   relationship: string;
   facility: Facility | null;
-  credit: number;
+  dorm?: string;
+  unit?: string;
+  photo?: Photo;
 }
 
 export interface ContactState {

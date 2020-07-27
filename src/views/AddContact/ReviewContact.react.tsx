@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   View,
   ScrollView,
@@ -13,7 +12,7 @@ import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload } from '@components';
-import { STATES_DROPDOWN, Validation } from '@utils';
+import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
 import {
@@ -21,7 +20,7 @@ import {
   ContactActionTypes,
   ContactState,
 } from '@store/Contact/ContactTypes';
-import { Facility } from 'types';
+import { Facility, Photo } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding } from '@store/Contact/ContactActions';
@@ -29,6 +28,8 @@ import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import Notifs from '@notifications';
+import { NotifTypes } from '@store/Notif/NotifTypes';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -36,14 +37,16 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
   'ReviewContact'
 >;
 
+export interface State {
+  valid: boolean;
+  image: Photo | null;
+}
+
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
+  hasSentLetter: boolean;
   setAdding: (contact: Contact) => void;
-}
-
-export interface State {
-  valid: boolean;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -69,6 +72,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
+      image: null,
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -97,7 +101,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
-      this.stateRef.current.set(this.props.contactState.adding.state);
+      this.stateRef.current.set(this.props.contactState.adding.facility.state);
       this.firstName.current.set(this.props.contactState.adding.firstName);
       this.lastName.current.set(this.props.contactState.adding.lastName);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
@@ -126,30 +130,29 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         type: this.props.contactState.adding.facility.type,
         address: this.facilityAddress.current.state.value,
         city: this.props.contactState.adding.facility.city,
-        state: this.props.contactState.adding.facility.state,
+        state: this.stateRef.current.state.value,
         postal: this.postal.current.state.value,
       };
-      // TO-DO: Replace random contactId for mocking purposes with real Ids
-      const randomContactId = Math.floor(Math.random() * 1000);
-      const contact = {
-        id: randomContactId,
-        state: this.stateRef.current.state.value,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
-        inmate_number: this.props.contactState.adding.inmateNumber,
+      const contact: Contact = {
+        id: -1,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
-        credit: 4,
         facility,
+        photo: this.state.image ? this.state.image : undefined,
+        unit: this.unit.current?.state.value,
+        dorm: this.dorm.current?.state.value,
       };
       try {
         const { existing } = store.getState().contact;
         // Check if contact being added already exists
         for (let ix = 0; ix < existing.length; ix += 1) {
           if (
-            existing[ix].firstName === contact.first_name &&
-            existing[ix].lastName === contact.last_name &&
-            existing[ix].inmateNumber === contact.inmate_number &&
-            existing[ix].state === contact.state &&
+            contact.facility &&
+            existing[ix].firstName === contact.firstName &&
+            existing[ix].lastName === contact.lastName &&
+            existing[ix].inmateNumber === contact.inmateNumber &&
             existing[ix].relationship === contact.relationship &&
             existing[ix].facility?.name === contact.facility.name &&
             existing[ix].facility?.address === contact.facility.address &&
@@ -162,6 +165,23 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           }
         }
         await addContact(contact);
+        Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
+        if (!this.props.hasSentLetter) {
+          Notifs.scheduleNotificationInHours(
+            {
+              title: `${i18n.t('Notifs.readyToSend')} ${contact.firstName}?`,
+              body: `${i18n.t('Notifs.clickHereToBegin')}`,
+              data: {
+                type: NotifTypes.NoFirstLetter,
+                screen: 'SingleContact',
+                data: {
+                  contactId: contact.id,
+                },
+              },
+            },
+            hoursTill8Tomorrow() + 24
+          );
+        }
         this.props.navigation.navigate('ContactSelector');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
@@ -217,8 +237,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           enabled
         >
           <View
@@ -248,6 +269,8 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       type={PicUploadTypes.Profile}
                       width={136}
                       height={136}
+                      onSuccess={(image: Photo) => this.setState({ image })}
+                      onDelete={() => this.setState({ image: null })}
                     />
                   </View>
                   <Text
@@ -324,16 +347,17 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
+          <View style={CommonStyles.bottomButtonContainer}>
+            <Button
+              blocking
+              onPress={this.doAddContact}
+              buttonText={i18n.t('ReviewContactScreen.addContact')}
+              enabled={this.state.valid}
+              containerStyle={CommonStyles.bottomButton}
+              showNextIcon
+            />
+          </View>
         </KeyboardAvoidingView>
-        <View style={CommonStyles.bottomButtonContainer}>
-          <Button
-            onPress={this.doAddContact}
-            buttonText={i18n.t('ContactInfoScreen.next')}
-            enabled={this.state.valid}
-            containerStyle={CommonStyles.bottomButton}
-            showNextIcon
-          />
-        </View>
       </TouchableOpacity>
     );
   }
@@ -341,6 +365,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
+  hasSentLetter: state.letter.existing !== {},
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

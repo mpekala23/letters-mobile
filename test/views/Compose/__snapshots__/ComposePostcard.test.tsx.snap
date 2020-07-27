@@ -83,7 +83,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             >
               To
               : 
-              First
+              First Name
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -100,6 +100,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   },
                   Object {},
                   Object {
+                    "height": 35,
                     "width": 130,
                   },
                   Object {},
@@ -118,22 +119,26 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Medium",
-                    },
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                      "fontWeight": "700",
-                      "padding": 6,
-                    },
-                    Object {},
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "color": "white",
+                    "fontFamily": "Poppins-Bold",
+                    "fontSize": 14,
+                    "opacity": 0,
+                    "position": "absolute",
+                  }
+                }
+              >
+                Collapse
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "white",
+                    "fontFamily": "Poppins-Bold",
+                    "fontSize": 14,
+                    "opacity": 1,
+                    "position": "absolute",
+                  }
                 }
               >
                 Need Ideas?
@@ -157,7 +162,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="valid"
+            testID="invalid"
           />
           <View
             testID="unfocused"
@@ -191,6 +196,9 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Object {
                   "flex": 1,
                   "fontSize": 18,
+                  "paddingBottom": 208,
+                  "paddingTop": 8,
+                  "textAlignVertical": "top",
                 },
                 Object {
                   "fontFamily": "Poppins-Regular",
@@ -212,6 +220,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             <ScrollView
               keyboardShouldPersistTaps="always"
               nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
                   "flex": 1,
@@ -223,8 +232,16 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           <View
             style={
               Object {
+                "bottom": 0,
                 "height": 200,
-                "opacity": 1,
+                "position": "absolute",
+                "right": 520,
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+                "width": 200,
               }
             }
           >
@@ -234,14 +251,17 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 Array [
                   Object {
                     "height": 200,
-                    "marginHorizontal": 8,
-                    "width": 180,
+                    "width": 200,
                   },
                   Object {
                     "alignItems": "center",
                     "borderRadius": 4,
                     "justifyContent": "center",
                     "overflow": "hidden",
+                  },
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
                   },
                 ]
               }
@@ -252,11 +272,11 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               >
                 <RNSVGSvgView
                   align="xMidYMid"
-                  bbHeight={185}
-                  bbWidth={164}
+                  bbHeight={200}
+                  bbWidth={200}
                   fill="none"
                   focusable={false}
-                  height={185}
+                  height={200}
                   meetOrSlice={0}
                   minX={0}
                   minY={0}
@@ -268,17 +288,17 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       },
                       Object {
                         "flex": 0,
-                        "height": 185,
-                        "width": 164,
+                        "height": 200,
+                        "width": 200,
                       },
                     ]
                   }
-                  vbHeight={185}
-                  vbWidth={164}
-                  width={164}
-                  xml="<svg width=\\"164\\" height=\\"185\\" viewBox=\\"0 0 164 185\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
-<rect x=\\"1.5\\" y=\\"1.5\\" width=\\"161\\" height=\\"182\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
-<path d=\\"M81.5 75V110M99 92.5H64\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+                  vbHeight={200}
+                  vbWidth={200}
+                  width={200}
+                  xml="<svg width=\\"200\\" height=\\"200\\" viewBox=\\"0 0 200 200\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<rect x=\\"2\\" y=\\"2\\" width=\\"196\\" height=\\"196\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
+<path d=\\"M98 75V120 M75 98H120\\" stroke=\\"#CCCCCC\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 "
                   xmlns="http://www.w3.org/2000/svg"
@@ -292,7 +312,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                     }
                   >
                     <RNSVGRect
-                      height={182}
+                      height={196}
                       propList={
                         Array [
                           "stroke",
@@ -302,12 +322,12 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       rx={6.5}
                       stroke={4291611852}
                       strokeWidth={3}
-                      width={161}
-                      x={1.5}
-                      y={1.5}
+                      width={196}
+                      x={2}
+                      y={2}
                     />
                     <RNSVGPath
-                      d="M81.5 75V110M99 92.5H64"
+                      d="M98 75V120 M75 98H120"
                       propList={
                         Array [
                           "stroke",
@@ -319,7 +339,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                       stroke={4291611852}
                       strokeLinecap={1}
                       strokeLinejoin={1}
-                      strokeWidth={3}
+                      strokeWidth={4}
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -332,6 +352,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             Object {
               "bottom": 0,
               "opacity": 0,
+              "paddingVertical": 6,
               "position": "absolute",
               "width": 750,
             }
@@ -341,13 +362,13 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             activeOpacity={1}
             style={
               Object {
+                "alignItems": "center",
                 "backgroundColor": "white",
                 "borderTopColor": "#9A9A9A",
                 "borderTopWidth": 0.3,
                 "flexDirection": "row",
                 "height": 50,
                 "justifyContent": "space-between",
-                "marginBottom": 14,
                 "width": "100%",
               }
             }
@@ -358,6 +379,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
@@ -390,6 +412,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
@@ -475,6 +498,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "column",
+                    "height": "100%",
                     "justifyContent": "center",
                     "maxWidth": 120,
                   },
@@ -484,74 +508,61 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 ]
               }
             >
-              <Text
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                class="feather feather-check"
+                fill="none"
+                focusable={false}
+                height={24}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                stroke="gray"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 style={
                   Array [
                     Object {
-                      "fontFamily": "Poppins-Regular",
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
                     },
                     Object {
-                      "color": "#6D6D6D",
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
                     },
                   ]
                 }
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
+                xml="<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"gray\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" class=\\"feather feather-check\\"><polyline points=\\"20 6 9 17 4 12\\"></polyline></svg>"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  class="feather feather-check"
-                  fill="none"
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  stroke="gray"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
+                      "fill",
+                      "stroke",
+                      "strokeWidth",
+                      "strokeLinecap",
+                      "strokeLinejoin",
                     ]
                   }
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                  xml="<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"gray\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" class=\\"feather feather-check\\"><polyline points=\\"20 6 9 17 4 12\\"></polyline></svg>"
-                  xmlns="http://www.w3.org/2000/svg"
+                  stroke={4286611584}
+                  strokeLinecap={1}
+                  strokeLinejoin={1}
+                  strokeWidth={2}
                 >
-                  <RNSVGGroup
-                    fill={null}
-                    propList={
-                      Array [
-                        "fill",
-                        "stroke",
-                        "strokeWidth",
-                        "strokeLinecap",
-                        "strokeLinejoin",
-                      ]
-                    }
-                    stroke={4286611584}
-                    strokeLinecap={1}
-                    strokeLinejoin={1}
-                    strokeWidth={2}
-                  >
-                    <RNSVGPath
-                      d="M20 6 9 17 4 12"
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </Text>
+                  <RNSVGPath
+                    d="M20 6 9 17 4 12"
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </TouchableOpacity>
           </TouchableOpacity>
         </View>

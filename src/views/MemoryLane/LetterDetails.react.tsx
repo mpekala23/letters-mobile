@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Letter, LetterTypes, LetterStatus } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
+import moment from 'moment';
 import Styles from './LetterDetails.styles';
 
 type LetterDetailsScreenNavigationProp = StackNavigationProp<
@@ -19,22 +20,21 @@ interface Props {
 
 const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const { letter } = props;
-  const photos = letter.photoPath ? (
+  const letterDate = moment(letter.dateCreated).format('MMM DD, YYYY');
+  const photos = letter.photo?.uri ? (
     <Image
       style={Styles.memoryLanePicture}
-      source={{
-        uri: letter.photoPath,
-      }}
+      source={letter.photo}
       testID="memoryLaneImage"
     />
   ) : null;
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.letterDate}>
-        <Text style={Styles.baseText}>{letter.dateCreated}</Text>
+        <Text style={Styles.baseText}>{letterDate}</Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={Styles.letterText}>{letter.message}</Text>
+        <Text style={Styles.letterText}>{letter.content}</Text>
         {photos}
       </ScrollView>
     </View>
@@ -45,13 +45,12 @@ const mapStateToProps = (state: AppState) => ({
   letter: state.letter.active
     ? state.letter.active
     : {
-        type: LetterTypes.PostCards,
+        type: LetterTypes.Postcard,
         status: LetterStatus.Draft,
         isDraft: true,
         recipientId: -1,
         recipientName: '',
-        message: '',
-        photoPath: '',
+        content: '',
         dateCreated: '',
         trackingEvents: [],
       },

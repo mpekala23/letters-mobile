@@ -17,6 +17,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           "backgroundColor": "white",
           "flex": 1,
           "flexDirection": "column",
+          "justifyContent": "space-between",
           "padding": 16,
         },
         Object {
@@ -30,7 +31,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
         Object {
           "alignItems": "center",
           "flex": 1,
-          "justifyContent": "center",
+          "justifyContent": "space-around",
         }
       }
     >
@@ -120,173 +121,217 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#f6993f",
-            "borderColor": "white",
-            "borderRadius": 65,
-            "borderWidth": 6,
-            "height": 130,
-            "justifyContent": "center",
-            "overflow": "hidden",
-            "width": 130,
-          }
-        }
-        testID="profilePicture"
+      <View
+        pointerEvents="auto"
       >
-        <Image
-          accessibilityLabel="Profile Picture"
-          source={1}
+        <TouchableOpacity
+          activeOpacity={0.2}
           style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#F4F4F4",
+              "borderColor": "white",
+              "borderRadius": 65,
+              "borderWidth": 6,
               "height": 130,
+              "justifyContent": "center",
+              "overflow": "hidden",
               "width": 130,
             }
           }
-        />
-      </TouchableOpacity>
-      <Text
+          testID="profilePicture"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+                Object {
+                  "color": "white",
+                  "fontSize": 36,
+                  "fontWeight": "500",
+                },
+              ]
+            }
+          >
+            FL
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
         style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-            },
-            Object {
-              "fontSize": 23,
-              "marginVertical": 12,
-              "textAlign": "center",
-            },
-          ]
+          Object {
+            "flex": 0,
+            "marginBottom": 95,
+          }
         }
-      >
-        Your letter is on the way
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Regular",
-            },
-            Object {
-              "marginBottom": 175,
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
-        Your letter is estimated to arrive on
-        .
-         
-        Thanks again!
-      </Text>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FF7171",
-              "borderRadius": 16,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-              "paddingHorizontal": 14,
-            },
-            Object {},
-            Object {
-              "width": "100%",
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
       >
         <Text
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Bold",
               },
               Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "fontSize": 23,
+                "textAlign": "center",
               },
-              Object {},
-              Object {},
-              Object {},
             ]
           }
         >
-          Share on Facebook
+          Your letter is on the way!
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "borderColor": "#FF7171",
-              "borderRadius": 16,
-              "borderWidth": 2,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginVertical": 5,
-            },
-            Object {},
-            Object {
-              "width": "100%",
-            },
-            Object {},
-            Object {
-              "elevation": 4,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 5,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-            },
-          ]
-        }
-        testID="clickable"
-      >
         <Text
           style={
             Array [
               Object {
-                "fontFamily": "Poppins-Medium",
+                "fontFamily": "Poppins-Regular",
               },
               Object {
-                "color": "#FF7171",
-                "fontSize": 20,
-                "fontWeight": "700",
-                "padding": 6,
+                "color": "#6D6D6D",
+                "fontSize": 16,
+                "marginTop": 6,
+                "textAlign": "center",
               },
-              Object {},
-              Object {},
-              Object {},
             ]
           }
         >
-          Done
+          We estimate that your letter will arrive on
+           
+          <Text
+            style={
+              Object {
+                "fontFamily": "Poppins-Bold",
+              }
+            }
+          >
+            Jul 12
+          </Text>
+          . 
+          Thank you for trusting Ameelio to connect you with your loved one.
         </Text>
-      </TouchableOpacity>
+      </View>
+      <View
+        style={
+          Object {
+            "justifyContent": "flex-end",
+            "width": "100%",
+          }
+        }
+      >
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FF7171",
+                "borderRadius": 16,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+                "paddingHorizontal": 14,
+              },
+              Object {},
+              Object {
+                "width": "100%",
+              },
+              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
+            ]
+          }
+          testID="clickable"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {},
+                Object {},
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+          >
+            Share on Facebook
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "#FF7171",
+                "borderRadius": 16,
+                "borderWidth": 2,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginVertical": 5,
+              },
+              Object {},
+              Object {
+                "width": "100%",
+              },
+              Object {},
+              Object {
+                "elevation": 4,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.22,
+              },
+            ]
+          }
+          testID="clickable"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Medium",
+                },
+                Object {
+                  "color": "#FF7171",
+                  "fontSize": 20,
+                  "fontWeight": "700",
+                  "padding": 6,
+                },
+                Object {},
+                Object {},
+                Object {},
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+          >
+            Done
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   </View>
 </View>

@@ -1,5 +1,6 @@
 // MAIN SCHEME
 export const AMEELIO_BLACK = '#282828';
+export const AMEELIO_LIGHT_GRAY = '#F4F4F4';
 export const AMEELIO_GRAY = '#6E757C';
 export const AMEELIO_WHITE = '#f8fafc';
 export const AMEELIO_BLUE = '#448AF3';

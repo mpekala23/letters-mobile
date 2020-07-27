@@ -43,7 +43,7 @@ describe('Issues Detail screen', () => {
       issue: DeliveryReportTypes.received,
     });
     fireEvent.press(getByText('Return home'));
-    expect(navigation.navigate).toHaveBeenCalledWith('Home');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
   });
 
   it('should navigate to Home screen when issue UNSURE button #1 is pressed', async () => {
@@ -51,7 +51,7 @@ describe('Issues Detail screen', () => {
       issue: DeliveryReportTypes.unsure,
     });
     fireEvent.press(getByText('Return home'));
-    expect(navigation.navigate).toHaveBeenCalledWith('Home');
+    expect(navigation.navigate).toHaveBeenCalledWith('ContactSelector');
   });
 
   it('should navigate to IssuesDetailSecondary screen when issue NotYetReceived button #1 is pressed', async () => {
