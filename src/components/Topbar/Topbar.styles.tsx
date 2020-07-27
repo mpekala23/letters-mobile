@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const barHeight = 70;
+export const barHeight = 80;
 
 export default StyleSheet.create({
   barContainer: {
@@ -9,7 +9,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     height: barHeight,
     paddingHorizontal: 10,
-    paddingBottom: 5,
+    paddingTop: 10,
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: {
@@ -28,5 +28,6 @@ export default StyleSheet.create({
     height: barHeight,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 10,
   },
 });

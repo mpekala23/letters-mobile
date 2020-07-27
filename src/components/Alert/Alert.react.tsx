@@ -1,8 +1,15 @@
 import React, { createRef } from 'react';
-import { Text, View, ViewStyle, TextStyle } from 'react-native';
-import { Typography } from '@styles';
+import {
+  Text,
+  View,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacity,
+} from 'react-native';
+import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
-import Styles from './Alert.styles';
+import Styles, { GRAY_BACK } from './Alert.styles';
+import { setStatusBackground } from '../Statusbar/Statusbar.react';
 
 interface AlertButton {
   text?: string;
@@ -33,7 +40,10 @@ class Alert extends React.Component<Record<string, unknown>, State> {
   render(): JSX.Element {
     if (!this.state.current) return <View />;
     return (
-      <View style={Styles.trueBackground}>
+      <TouchableOpacity
+        style={Styles.trueBackground}
+        onPress={() => this.setState({ current: null })}
+      >
         <View style={Styles.alertBackground}>
           <Text
             style={[
@@ -43,15 +53,23 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           >
             {this.state.current.title}
           </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              { fontSize: 16, textAlign: 'center' },
-            ]}
-          >
-            {this.state.current.message}
-          </Text>
-          <View style={{ height: 40 }} />
+          {this.state.current.message && (
+            <>
+              <Text
+                style={[
+                  Typography.FONT_REGULAR,
+                  {
+                    fontSize: 16,
+                    textAlign: 'center',
+                    color: Colors.GRAY_DARK,
+                  },
+                ]}
+              >
+                {this.state.current.message}
+              </Text>
+              <View style={{ height: 40 }} />
+            </>
+          )}
           {this.state.current.buttons &&
             this.state.current.buttons.map((button) => {
               return (
@@ -62,6 +80,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                   onPress={() => {
                     if (button.onPress) button.onPress();
                     this.setState({ current: null });
+                    setStatusBackground('white');
                   }}
                   textStyle={button.textStyle}
                   containerStyle={
@@ -73,7 +92,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
               );
             })}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -82,6 +101,7 @@ const alertRef = createRef<Alert>();
 const AlertInstance = (): JSX.Element => <Alert ref={alertRef} key="Alert" />;
 
 export function popupAlert(pop: AlertInfo): void {
+  setStatusBackground(GRAY_BACK);
   if (alertRef.current)
     alertRef.current.setState({
       current: {

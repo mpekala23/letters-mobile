@@ -2,6 +2,7 @@ import React, { createRef } from 'react';
 import { Text, View, Animated, TouchableOpacity } from 'react-native';
 
 import { Typography } from '@styles';
+import ComposePostcardScreen from '@views/Compose/ComposePostcard.react';
 import Styles from './Dropdown.styles';
 
 const DROPDOWN_HEIGHT = 100;
@@ -124,10 +125,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
       }).start(() => {
         // when the animation finishes
         this.setState({ animating: false });
-        const shouldPersist = (): boolean => {
-          return this.state.notifQ[0].persist;
-        };
-        if (!shouldPersist)
+        if (!this.state.notifQ[0].persist)
           setTimeout(() => {
             this.endNotif(currentId);
           }, this.state.notifQ[0].duration);

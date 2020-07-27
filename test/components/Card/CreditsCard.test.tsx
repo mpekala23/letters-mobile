@@ -4,7 +4,7 @@ import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
 const setup = (propOverrides = {}) => {
   const props = {
-    credits: 4,
+    credits: 3,
     onPress: jest.fn(),
     ...propOverrides,
   };
@@ -21,19 +21,31 @@ describe('Credits Card component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should fire onPress() on Add More press', () => {
-    const { props, getByText } = setup();
-    fireEvent.press(getByText('Add more'));
+  it('should fire onPress() on Send More press', () => {
+    const { props, getByText } = setup({ credits: 0 });
+    fireEvent.press(getByText('Send more'));
     expect(props.onPress).toHaveBeenCalledTimes(1);
   });
 
-  it('should display correct number of credits', () => {
+  it('should display correct number of letters left', () => {
     const { getByText } = setup();
-    expect(getByText('4 Credits left')).toBeDefined();
+    expect(getByText('3 letters left this week')).toBeDefined();
   });
 
-  it('should display reset daily message', () => {
+  it('should display no letters left message when there are 0 credits left', () => {
+    const { getByText } = setup({ credits: 0 });
+    expect(getByText('You used all your letters for today')).toBeDefined();
+  });
+
+  it('should display reset weekly message when there is at least 1 credit left', () => {
     const { getByText } = setup();
-    expect(getByText('Credits reset daily')).toBeDefined();
+    expect(
+      getByText('Your letters reset weekly, on Monday at 4:00AM EST.')
+    ).toBeDefined();
+  });
+
+  it('should display Come Back on Monday message when there are 0 credits left', () => {
+    const { getByText } = setup({ credits: 0 });
+    expect(getByText('Come back on Monday for more.')).toBeDefined();
   });
 });

@@ -1,4 +1,4 @@
-import { LetterTypes, Letter, LetterStatus } from 'types';
+import { LetterTypes, Letter, LetterStatus, Photo } from 'types';
 import {
   SET_COMPOSING,
   SET_ACTIVE,
@@ -6,8 +6,8 @@ import {
   SET_STATUS,
   SET_DRAFT,
   SET_RECIPIENT_ID,
-  SET_MESSAGE,
-  SET_PHOTO_PATH,
+  SET_CONTENT,
+  SET_PHOTO,
   SET_LETTER_ID,
   CLEAR_COMPOSING,
   SET_EXISTING,
@@ -57,17 +57,17 @@ export function setRecipientId(contactId: number): LetterActionTypes {
   };
 }
 
-export function setMessage(message: string): LetterActionTypes {
+export function setContent(content: string): LetterActionTypes {
   return {
-    type: SET_MESSAGE,
-    payload: message,
+    type: SET_CONTENT,
+    payload: content,
   };
 }
 
-export function setPhotoPath(path: string): LetterActionTypes {
+export function setPhoto(photo: Photo | undefined): LetterActionTypes {
   return {
-    type: SET_PHOTO_PATH,
-    payload: path,
+    type: SET_PHOTO,
+    payload: photo,
   };
 }
 

@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Letters Mobile",
+    "slug": "letters-mobile",
+    "privacy": "public",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/BlueBird.png",
+    "description": "This is the first version of Ameelio's Letters Mobile platform. You can test the app by installing the Expo app on your phone and scanning the QR code to the right. While testing, please open https://www.notion.so/a2c7a191b0f64f628f02988dbfc368f7?v=2273fcc8329b4cdca0b6baee5ab9295d and create a new document by clicking on the dropdown arrow of the 'New' button and selecting the 'Help Us Beta Test!' template, titling it your name.",
+    "notification": {
+      "icon": "./src/assets/BlueBird.png",
+      "color": "#448AF3"
+    }
+  }
+}

@@ -10,6 +10,7 @@ import ProfilePic from '../ProfilePic/ProfilePic.react';
 interface Props {
   firstName: string;
   lastName: string;
+  imageUri?: string;
   letters?: Letter[];
   onPress: () => void;
   style?: ViewStyle;
@@ -27,7 +28,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <ProfilePic
             firstName={props.firstName}
             lastName={props.lastName}
-            imageUri="ExamplePic"
+            imageUri={props.imageUri}
             type={ProfilePicTypes.Contact}
           />
         </View>

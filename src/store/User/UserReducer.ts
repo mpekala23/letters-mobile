@@ -11,19 +11,21 @@ const initialState: UserState = {
     isLoadingToken: true,
     isLoggedIn: false,
     apiToken: '',
+    rememberToken: '',
   },
   user: {
-    id: '',
+    id: -1,
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     address1: '',
     address2: '',
-    country: '',
     postal: '',
     city: '',
     state: '',
+    credit: 0,
+    joined: new Date(Date.now()),
   },
 };
 
@@ -38,9 +40,10 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
-          apiToken: 'create token here',
+          apiToken: action.payload.token,
+          rememberToken: action.payload.remember,
         },
-        user: action.payload,
+        user: action.payload.user,
       };
     case LOGOUT_USER:
       return {
@@ -48,19 +51,21 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: false,
           apiToken: '',
+          rememberToken: '',
         },
         user: {
-          id: '',
+          id: -1,
           firstName: '',
           lastName: '',
           email: '',
           phone: '',
           address1: '',
           address2: '',
-          country: '',
           postal: '',
           city: '',
           state: '',
+          credit: 0,
+          joined: new Date(Date.now()),
         },
       };
     case SET_USER:

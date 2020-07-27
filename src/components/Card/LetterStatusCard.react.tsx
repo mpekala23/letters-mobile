@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { LetterStatus } from 'types';
 import { Colors, Typography } from '@styles';
+import moment from 'moment';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -56,7 +57,9 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
             >
               {props.status}
             </Text>
-            <Text style={CardStyles.date}>{props.date}</Text>
+            <Text style={CardStyles.date}>
+              {moment(new Date(props.date)).format('MMM DD, YYYY')}
+            </Text>
           </View>
           <Text style={CardStyles.letterStatusData}>{props.description}</Text>
         </View>

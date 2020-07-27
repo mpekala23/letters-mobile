@@ -22,15 +22,17 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
     8: [
       {
         letterId: 1,
-        type: LetterTypes.PostCards,
-        status: LetterStatus.Printed,
+        type: LetterTypes.Postcard,
+        status: LetterStatus.Delivered,
         isDraft: true,
         recipientId: 8,
-        message: "I'm trying out this new service called Ameelio...",
-        photoPath:
-          'https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png',
-        ...letterOverrides,
+        content: "I'm trying out this new service called Ameelio...",
+        photo: {
+          uri:
+            'https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png',
+        },
       },
+      ...letterOverrides,
     ],
   };
 
@@ -38,13 +40,11 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
     active: contact,
   };
 
-  const initialLetters = {
-    existing: letters,
-  };
-
   const store = mockStore({
     contact: initialContact,
-    letter: initialLetters,
+    letter: {
+      existing: letters,
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -58,7 +58,7 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
       <MemoryLaneScreen
         navigation={navigation}
         contact={initialContact}
-        letters={initialLetters}
+        existingLetters={letters}
       />,
       {
         wrapper: StoreProvider,
@@ -69,17 +69,19 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
 
 describe('Memory Lane Screen', () => {
   it('should match snapshot', () => {
-    const { container } = setup(<MemoryLaneScreen />);
+    const { container } = setup();
     const tree = toJSON(container);
     expect(tree).toMatchSnapshot();
   });
 
   it('should load values for letters from the redux store', () => {
-    const { getByText } = setup({
-      letterId: 2,
-      recipientId: 8,
-      message: 'Redux Letter 1',
-    });
+    const { getByText } = setup([
+      {
+        letterId: 2,
+        recipientId: 8,
+        content: 'Redux Letter 1',
+      },
+    ]);
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');
   });
 

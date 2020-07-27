@@ -1,10 +1,11 @@
 import React, { createRef } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { ProfilePicTypes, TopbarRouteAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
+import Loading from '@assets/loading.gif';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
@@ -18,10 +19,12 @@ interface State {
   shown: boolean;
   title: string;
   profile: boolean;
+  blocked: boolean;
   profileOverride?: {
     enabled: boolean;
     text: string;
-    action: () => void;
+    action: () => void | Promise<void>;
+    blocking?: boolean;
   };
 }
 
@@ -32,6 +35,7 @@ class Topbar extends React.Component<Props, State> {
       shown: false,
       title: '',
       profile: true,
+      blocked: false,
     };
   }
 
@@ -42,34 +46,52 @@ class Topbar extends React.Component<Props, State> {
         <ProfilePic
           firstName={this.props.userState.user.firstName}
           lastName={this.props.userState.user.lastName}
-          imageUri={this.props.userState.user.imageUri}
+          imageUri={this.props.userState.user.photo?.uri}
           type={ProfilePicTypes.Topbar}
-          navigation={this.props.navigation}
         />
       );
     } else if (this.state.profileOverride) {
       topRight = (
         <TouchableOpacity
-          activeOpacity={this.state.profileOverride?.enabled ? 0.7 : 1.0}
-          onPress={() => {
-            if (this.state.profileOverride?.enabled) {
+          activeOpacity={
+            this.state.profileOverride?.enabled && !this.state.blocked
+              ? 0.7
+              : 1.0
+          }
+          onPress={async () => {
+            if (this.state.profileOverride?.blocking) {
+              if (this.state.profileOverride?.enabled && !this.state.blocked) {
+                this.setState({ blocked: true });
+                await this.state.profileOverride.action();
+                this.setState({ blocked: false });
+              }
+            } else if (this.state.profileOverride?.enabled) {
               this.state.profileOverride.action();
             }
           }}
         >
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                color: this.state.profileOverride.enabled
-                  ? Colors.PINK_DARKER
-                  : Colors.GRAY_MEDIUM,
-                fontSize: 16,
-              },
-            ]}
-          >
-            {this.state.profileOverride.text}
-          </Text>
+          {this.state.blocked ? (
+            <Image
+              source={Loading}
+              style={{ width: 25, height: 25, right: 10 }}
+              testID="loading"
+            />
+          ) : (
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  color: this.state.profileOverride.enabled
+                    ? Colors.PINK_DARKER
+                    : Colors.GRAY_MEDIUM,
+                  fontSize: 16,
+                },
+              ]}
+              testID="topRightText"
+            >
+              {this.state.profileOverride.text}
+            </Text>
+          )}
         </TouchableOpacity>
       );
     } else {
@@ -91,10 +113,17 @@ class Topbar extends React.Component<Props, State> {
             <Icon svg={BackButton} />
           </TouchableOpacity>
         )}
-        <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
+        <Text
+          style={[
+            Typography.FONT_MEDIUM,
+            { fontSize: 16, color: Colors.GRAY_DARK },
+          ]}
+        >
           {this.state.title}
         </Text>
-        <View style={{ position: 'absolute', right: 19 }}>{topRight}</View>
+        <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
+          {topRight}
+        </View>
       </View>
     );
   }

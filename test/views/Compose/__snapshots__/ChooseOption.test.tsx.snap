@@ -40,7 +40,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       style={
         Array [
           Object {
-            "fontFamily": "Poppins-Medium",
+            "fontFamily": "Poppins-Regular",
           },
           Object {
             "color": "#6D6D6D",
@@ -50,7 +50,18 @@ exports[`ChooseOption screen should match snapshot 1`] = `
         ]
       }
     >
-      Credits reset daily
+      P.S. Your loved ones will be able to respond to you via the return address:
+       
+      Somewhere
+       Apt A
+      , 
+      Springfield
+      ,
+       
+      IL
+       
+      90210
+      .
     </Text>
     <TouchableOpacity
       activeOpacity={0.2}

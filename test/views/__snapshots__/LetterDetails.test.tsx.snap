@@ -37,7 +37,7 @@ exports[`Letter Details Screen should match snapshot 1`] = `
           }
         }
       >
-        06/26/2019
+        Jun 26, 2019
       </Text>
     </View>
     <ScrollView

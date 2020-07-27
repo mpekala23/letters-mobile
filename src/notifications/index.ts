@@ -10,7 +10,7 @@ import store from '@store';
 import { addNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
 import { NavigationContainerRef } from '@react-navigation/native';
 import {
-  NotifType,
+  NotifTypes,
   Notif,
   NativeNotif,
   FutureNotif,
@@ -18,6 +18,10 @@ import {
 import { AppState } from '@store/types';
 import { loginWithToken } from '@api';
 import i18n from '@i18n';
+import { Contact } from '@store/Contact/ContactTypes';
+import { setActive as setActiveContact } from '@store/Contact/ContactActions';
+import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
+import { Letter } from 'types';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -111,7 +115,7 @@ class NotifsBase {
     // in order to make it so that a notification which was just acted upon is properly purged
     // from future notifications, a one second offset on the current time is needed
     const ONE_SECOND = 1000;
-    const currentTime = new Date().getTime() + ONE_SECOND;
+    const currentTime = new Date(Date.now()).getTime() + ONE_SECOND;
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];
     for (let ix = 0; ix < futureNotifs.length; ix += 1) {
@@ -124,22 +128,77 @@ class NotifsBase {
 
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
+    if (notification.origin === 'received') return;
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();
+    if (!state.user.authInfo.isLoggedIn) {
+      try {
+        await loginWithToken();
+      } catch (err) {
+        navigate('Login');
+        return;
+      }
+    }
+    let contact: Contact | null = null;
+    let letter: Letter | null = null;
     switch (notif.type) {
-      case NotifType.FirstLetter:
-        if (!state.user.authInfo.isLoggedIn) {
-          try {
-            await loginWithToken();
-          } catch (err) {
-            navigate('Login');
-            return;
+      case NotifTypes.FirstLetter:
+        navigate(notif.screen || 'FirstLetter');
+        break;
+      case NotifTypes.OnItsWay:
+      case NotifTypes.OutForDelivery:
+        if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
+        for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
+          if (notif.data.contactId === state.contact.existing[ix].id) {
+            contact = state.contact.existing[ix];
           }
         }
-        navigate('FirstLetter');
+        if (!contact) break;
+        store.dispatch(setActiveContact(contact));
+        for (
+          let jx = 0;
+          jx < state.letter.existing[contact.id].length;
+          jx += 1
+        ) {
+          if (
+            notif.data.letterId ===
+            state.letter.existing[contact.id][jx].letterId
+          ) {
+            letter = state.letter.existing[contact.id][jx];
+          }
+        }
+        if (!letter) {
+          navigate('SingleContact');
+          break;
+        }
+        store.dispatch(setActiveLetter(letter));
+        navigate(notif.screen || 'LetterTracking');
+        break;
+      case NotifTypes.HasReceived:
+        navigate(notif.screen || 'Issues');
+        break;
+      case NotifTypes.ReturnedToSender:
+        navigate(notif.screen || 'LetterTracking');
+        break;
+      case NotifTypes.NoFirstContact:
+        navigate(notif.screen || 'ContactSelector');
+        break;
+      case NotifTypes.NoFirstLetter:
+        if (notif.data && notif.data.contactId) {
+          for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
+            if (notif.data.contactId === state.contact.existing[ix].id) {
+              contact = state.contact.existing[ix];
+            }
+          }
+          if (contact) store.dispatch(setActiveContact(contact));
+        } else {
+          break;
+        }
+        navigate(notif.screen || 'SingleContact');
         break;
       default:
+        break;
     }
   }
 
@@ -147,7 +206,7 @@ class NotifsBase {
     nativeNotif: NativeNotif,
     hours: number
   ) => {
-    const time = new Date().getTime() + 1000 * 60 * 60 * hours;
+    const time = new Date(Date.now()).getTime() + 1000 * 60 * 60 * hours;
     const id = await Notifications.scheduleLocalNotificationAsync(nativeNotif, {
       time,
     });
@@ -166,7 +225,7 @@ class NotifsBase {
     nativeNotif: NativeNotif,
     days: number
   ) => {
-    const time = new Date().getTime() + 1000 * 60 * 60 * 24 * days;
+    const time = new Date(Date.now()).getTime() + 1000 * 60 * 60 * 24 * days;
     const id = await Notifications.scheduleLocalNotificationAsync(nativeNotif, {
       time,
     });
@@ -194,7 +253,7 @@ class NotifsBase {
   };
 
   // cancels the most recently scheduled notification of a certain type
-  cancelSingleNotificationByType = async (type: NotifType) => {
+  cancelSingleNotificationByType = async (type: NotifTypes) => {
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];
     let hasRemoved = false;
@@ -215,7 +274,7 @@ class NotifsBase {
     return result;
   };
 
-  cancelAllNotificationsByType = async (type: NotifType) => {
+  cancelAllNotificationsByType = async (type: NotifTypes) => {
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];
     const removingIds = [];

@@ -109,8 +109,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  creditsAddMoreText: {
-    fontSize: 16,
+  creditsSendMoreText: {
+    flex: 1,
+    fontSize: 18,
     color: Colors.PINK_DARKER,
   },
 });

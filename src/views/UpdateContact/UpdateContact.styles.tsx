@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   profileCard: {
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 32,
+    paddingTop: 20,
   },
   profileCardHeader: {
     backgroundColor: '#FC7272',
@@ -21,5 +22,17 @@ export default StyleSheet.create({
     borderRadius: 15,
     width: '100%',
     height: 50,
+  },
+  deleteButton: {
+    backgroundColor: Colors.BLUE_DARKEST,
+  },
+  roundPicUpload: {
+    borderWidth: 10,
+    borderColor: 'white',
+    borderRadius: 65,
+  },
+  baseText: {
+    fontSize: 14,
+    paddingBottom: 4,
   },
 });

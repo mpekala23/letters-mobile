@@ -5,7 +5,7 @@ import { fireEvent, render, toJSON } from '@testing-library/react-native';
 const setup = (propOverrides = {}) => {
   const props = {
     name: 'Name',
-    type: 'StatePrison',
+    type: 'State',
     address: 'Address',
     onPress: jest.fn(),
     ...propOverrides,

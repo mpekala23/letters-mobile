@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, createRef } from 'react';
 import {
   Animated,
   View,
@@ -6,22 +6,22 @@ import {
   Keyboard,
   Platform,
   KeyboardAvoidingView,
-  Text,
+  EmitterSubscription,
 } from 'react-native';
-import { ComposeHeader, Input, Icon } from '@components';
+import { ComposeHeader, Input, ComposeTools, PicUpload } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setMessage, setDraft } from '@store/Letter/LetterActions';
+import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
-import { WINDOW_WIDTH } from '@utils';
-import { Typography, Colors } from '@styles';
-import { Letter } from 'types';
+import { Letter, Photo } from 'types';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import CheckIcon from '@assets/views/Compose/Check';
+import { popupAlert } from '@components/Alert/Alert.react';
+import { WINDOW_WIDTH } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -32,30 +32,52 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
-  contact: Contact;
-  setMessage: (message: string) => void;
+  recipientName: string;
+  setContent: (content: string) => void;
   setDraft: (value: boolean) => void;
+  setPhoto: (photo: Photo | undefined) => void;
 }
 
 interface State {
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
+  photoWidth: number;
+  photoHeight: number;
+  open: boolean;
+  valid: boolean;
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
+  private wordRef = createRef<Input>();
+
+  private picRef = createRef<PicUpload>();
+
   private unsubscribeFocus: () => void;
 
   private unsubscribeBlur: () => void;
+
+  private unsubscribeKeyboardOpen: EmitterSubscription;
+
+  private unsubscribeKeyboardClose: EmitterSubscription;
 
   constructor(props: Props) {
     super(props);
     this.state = {
       keyboardOpacity: new Animated.Value(0),
       wordsLeft: 300,
+      photoWidth: 200,
+      photoHeight: 200,
+      open: false,
+      valid: true,
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
+    this.registerPhoto = this.registerPhoto.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
+    this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
+    this.onKeyboardClose = this.onKeyboardClose.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
@@ -64,25 +86,130 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       'blur',
       this.onNavigationBlur
     );
+    this.unsubscribeKeyboardOpen = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      this.onKeyboardOpen
+    );
+    this.unsubscribeKeyboardClose = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      this.onKeyboardClose
+    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
     this.unsubscribeBlur();
+    this.unsubscribeKeyboardOpen.remove();
+    this.unsubscribeKeyboardClose.remove();
   }
 
   onNavigationFocus() {
+    const { photo } = this.props.composing;
+    if (this.wordRef.current)
+      this.wordRef.current.set(this.props.composing.content);
+    if (this.picRef.current && photo && photo.width && photo.height) {
+      this.picRef.current.setState({
+        image: photo,
+      });
+      if (photo.width < photo.height) {
+        this.setState({
+          photoWidth: (photo.width / photo.height) * 200,
+          photoHeight: 200,
+        });
+      } else {
+        this.setState({
+          photoWidth: 200,
+          photoHeight: (photo.height / photo.width) * 200,
+        });
+      }
+    } else {
+      this.setState({
+        photoWidth: 200,
+        photoHeight: 200,
+      });
+    }
     this.props.setDraft(true);
     setProfileOverride({
-      enabled: true,
+      enabled: this.state.valid,
       text: i18n.t('Compose.next'),
-      action: () => this.props.navigation.navigate('LetterPreview'),
+      action: this.onNextPress,
     });
+  }
+
+  onNextPress(): void {
+    Keyboard.dismiss();
+    if (this.props.composing.content.length <= 0) {
+      popupAlert({
+        title: i18n.t('Compose.letterMustHaveContent'),
+        buttons: [
+          {
+            text: i18n.t('Alert.okay'),
+          },
+        ],
+      });
+    } else {
+      this.props.navigation.navigate('LetterPreview');
+    }
   }
 
   onNavigationBlur = () => {
     setProfileOverride(undefined);
   };
+
+  onKeyboardOpen() {
+    Animated.timing(this.state.keyboardOpacity, {
+      toValue: 1,
+      duration: Platform.OS === 'ios' ? 220 : 220,
+      useNativeDriver: false,
+    }).start();
+    this.setState({ open: true });
+  }
+
+  onKeyboardClose() {
+    Animated.timing(this.state.keyboardOpacity, {
+      toValue: 0,
+      duration: Platform.OS === 'ios' ? 220 : 220,
+      useNativeDriver: false,
+    }).start();
+    this.setState({ open: false });
+  }
+
+  setValid(val: boolean) {
+    this.setState({ valid: val });
+    setProfileOverride({
+      enabled: val,
+      text: i18n.t('Compose.next'),
+      action: this.onNextPress,
+    });
+  }
+
+  registerPhoto(photo: Photo): void {
+    this.props.setPhoto(photo);
+    if (photo && photo.width && photo.height) {
+      if (photo.width < photo.height) {
+        this.setState({
+          photoWidth: (photo.width / photo.height) * 200,
+          photoHeight: 200,
+        });
+      } else {
+        this.setState({
+          photoWidth: 200,
+          photoHeight: (photo.height / photo.width) * 200,
+        });
+      }
+    } else {
+      this.setState({
+        photoWidth: 200,
+        photoHeight: 200,
+      });
+    }
+    Keyboard.dismiss();
+  }
+
+  deletePhoto(): void {
+    this.props.setPhoto(undefined);
+    this.setState({ photoWidth: 200, photoHeight: 200 });
+  }
 
   updateWordsLeft(value: string): void {
     let s = value;
@@ -95,11 +222,12 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       numWords = 0;
     }
     this.setState({ wordsLeft: 300 - numWords });
+    this.setValid(300 - numWords >= 0);
   }
 
   changeText(value: string): void {
     this.updateWordsLeft(value);
-    this.props.setMessage(value);
+    this.props.setContent(value);
   }
 
   render(): JSX.Element {
@@ -118,7 +246,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
           }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 100}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
           pointerEvents="box-none"
         >
           <View
@@ -130,74 +258,77 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               },
             ]}
           >
-            <ComposeHeader recipientName={this.props.contact.firstName} />
+            <ComposeHeader recipientName={this.props.recipientName} />
             <Input
+              ref={this.wordRef}
               parentStyle={{ flex: 1 }}
               inputStyle={{
                 fontSize: 18,
                 flex: 1,
+                textAlignVertical: 'top',
+                paddingTop: 8,
+                paddingBottom: this.state.open ? 8 : this.state.photoHeight + 8,
               }}
               onChangeText={this.changeText}
-              onFocus={() => {
-                Animated.timing(this.state.keyboardOpacity, {
-                  toValue: 1,
-                  duration: 50,
-                  useNativeDriver: false,
-                }).start();
-              }}
-              onBlur={() => {
-                Animated.timing(this.state.keyboardOpacity, {
-                  toValue: 0,
-                  duration: 50,
-                  useNativeDriver: false,
-                }).start();
-              }}
               placeholder={i18n.t('Compose.placeholder')}
               numLines={100}
               testId="input"
-            />
-            <Animated.View
-              style={{
-                opacity: this.state.keyboardOpacity,
-                position: 'absolute',
-                bottom: 0,
-                width: WINDOW_WIDTH,
-              }}
             >
-              <TouchableOpacity
-                activeOpacity={1.0}
-                style={Styles.keyboardButtonContainer}
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  bottom: this.state.keyboardOpacity.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, -this.state.photoHeight / 4],
+                  }),
+                  right: this.state.keyboardOpacity.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [
+                      WINDOW_WIDTH - 30 - this.state.photoWidth,
+                      10 - this.state.photoWidth / 4,
+                    ],
+                  }),
+                  width: this.state.photoWidth,
+                  height: this.state.photoHeight,
+                  transform: [
+                    {
+                      scale: this.state.keyboardOpacity.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [1, 0.5],
+                      }),
+                    },
+                  ],
+                }}
               >
-                <View style={[Styles.keyboardButtonItem, { flex: 1 }]}>
-                  <Text
-                    style={[
-                      Typography.FONT_REGULAR,
-                      {
-                        color:
-                          this.state.wordsLeft >= 0
-                            ? Colors.GRAY_DARK
-                            : Colors.AMEELIO_RED,
-                      },
-                    ]}
-                  >
-                    {this.state.wordsLeft} left
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={[Styles.keyboardButtonItem, { flex: 1 }]}
-                  onPress={Keyboard.dismiss}
-                >
-                  <Text
-                    style={[
-                      Typography.FONT_REGULAR,
-                      { color: Colors.AMEELIO_BLUE },
-                    ]}
-                  >
-                    <Icon svg={CheckIcon} />
-                  </Text>
-                </TouchableOpacity>
-              </TouchableOpacity>
-            </Animated.View>
+                <PicUpload
+                  ref={this.picRef}
+                  onSuccess={this.registerPhoto}
+                  onDelete={this.deletePhoto}
+                  type={PicUploadTypes.Media}
+                  width={this.state.photoWidth}
+                  height={this.state.photoHeight}
+                  allowsEditing={false}
+                  shapeBackground={{ left: 10, bottom: 10 }}
+                  segmentOnPressLog={() => {
+                    Segment.trackWithProperties(
+                      'Compose - Click on Add Image',
+                      { Option: 'Letter' }
+                    );
+                  }}
+                  segmentSuccessLog={() => {
+                    Segment.trackWithProperties('Compose - Add Image Success', {
+                      Option: 'Letter',
+                    });
+                  }}
+                  segmentErrorLogEvent="Compose - Add Image Error"
+                />
+              </Animated.View>
+            </Input>
+            <ComposeTools
+              keyboardOpacity={this.state.keyboardOpacity}
+              picRef={this.picRef}
+              numLeft={this.state.wordsLeft}
+            />
           </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>
@@ -207,11 +338,12 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
-  contact: state.contact.active,
+  recipientName: state.contact.active.firstName,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
-    setMessage: (message: string) => dispatch(setMessage(message)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
   };
 };

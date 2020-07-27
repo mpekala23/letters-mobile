@@ -1,6 +1,11 @@
 import React from 'react';
-import { Topbar } from '@components';
-import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import Topbar, {
+  topbarRef,
+  setProfile,
+  setProfileOverride,
+} from '@components/Topbar/Topbar.react';
+import { render, toJSON, fireEvent, act } from '@testing-library/react-native';
+import { sleep } from '@utils';
 
 const setup = (authOverrides = {}, userOverrides = {}, navOverrides = {}) => {
   const authInfo = {
@@ -16,7 +21,6 @@ const setup = (authOverrides = {}, userOverrides = {}, navOverrides = {}) => {
     email: 'team@ameelio.org',
     phone: '4324324432',
     address1: 'Somewhere',
-    country: 'USA',
     postal: '12345',
     city: 'New Haven',
     state: 'CT',
@@ -30,7 +34,11 @@ const setup = (authOverrides = {}, userOverrides = {}, navOverrides = {}) => {
 
   return {
     ...render(
-      <Topbar userState={{ user, authInfo }} navigation={navigation} />
+      <Topbar
+        userState={{ user, authInfo }}
+        navigation={navigation}
+        ref={topbarRef}
+      />
     ),
     user,
     authInfo,
@@ -55,7 +63,7 @@ describe('Topbar component', () => {
       {
         isLoggedIn: true,
       },
-      { imageUri: 'placeholder' }
+      { photo: { uri: 'placeholder' } }
     );
     expect(getByLabelText('Profile Picture')).toBeDefined();
   });
@@ -71,5 +79,57 @@ describe('Topbar component', () => {
     const { queryByTestId } = setup({}, {}, { canGoBack: () => false });
     const backButton = queryByTestId('backButton');
     expect(backButton).toBeNull();
+  });
+
+  it('should implement profileOverride enabled buttons', () => {
+    const { getByText } = setup();
+    const dummy = jest.fn();
+    act(() => {
+      setProfile(false);
+      setProfileOverride({
+        enabled: true,
+        text: 'press me',
+        action: dummy,
+      });
+    });
+    expect(getByText('press me')).toBeDefined();
+    fireEvent.press(getByText('press me'));
+    expect(dummy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should implement profileOverride disabled buttons', () => {
+    const { getByText } = setup();
+    const dummy = jest.fn();
+    act(() => {
+      setProfile(false);
+      setProfileOverride({
+        enabled: false,
+        text: 'press me',
+        action: dummy,
+      });
+    });
+    expect(getByText('press me')).toBeDefined();
+    fireEvent.press(getByText('press me'));
+    expect(dummy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should implement profileOverride blocking buttons', async () => {
+    jest.useRealTimers();
+    const { getByText, getByTestId } = setup();
+    act(() => {
+      setProfile(false);
+      setProfileOverride({
+        enabled: true,
+        text: 'press me',
+        action: async () => {
+          await sleep(100);
+        },
+        blocking: true,
+      });
+    });
+    expect(getByText('press me')).toBeDefined();
+    fireEvent.press(getByText('press me'));
+    expect(getByTestId('loading')).toBeDefined();
+    await sleep(100);
   });
 });

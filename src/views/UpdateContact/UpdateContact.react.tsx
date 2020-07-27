@@ -8,20 +8,23 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, ProfilePic } from '@components';
+import { Button, Input, PicUpload } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
-import { ProfilePicTypes, Facility } from 'types';
-import { Colors, Typography } from '@styles';
+import { Facility, Photo } from 'types';
+import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
 import i18n from '@i18n';
 import { LinearGradient } from 'expo-linear-gradient';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Validation } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -35,7 +38,7 @@ export interface Props {
 }
 
 export interface State {
-  valid: boolean;
+  image: Photo | null;
 }
 
 class UpdateContactScreenBase extends React.Component<Props, State> {
@@ -57,13 +60,15 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: props.contact.photo ? props.contact.photo : null,
+    };
 
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
     this.updateValid = this.updateValid.bind(this);
     this.setValid = this.setValid.bind(this);
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
-    this.didUpdateAtLeastOneField = this.didUpdateAtLeastOneField.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
 
@@ -93,6 +98,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       enabled: true,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
+      blocking: true,
     });
   }
 
@@ -105,12 +111,14 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
+      blocking: true,
     });
   }
 
   doDeleteContact = async () => {
     try {
-      await deleteContact(this.props.contact);
+      await deleteContact(this.props.contact.id);
+      Segment.track('Edit Contact - Delete Contact');
       this.props.navigation.navigate('ContactSelector');
     } catch (err) {
       dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -133,18 +141,21 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         state: this.props.contact.facility.state,
         postal: this.props.contact.facility.postal,
       };
-      const contact = {
+      const contact: Contact = {
         id: this.props.contact.id,
-        state: this.props.contact.state,
-        first_name: this.firstName.current.state.value,
-        last_name: this.lastName.current.state.value,
-        inmate_number: this.props.contact.inmateNumber,
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.props.contact.inmateNumber,
         relationship: this.props.contact.relationship,
         facility,
+        dorm: this.dorm.current?.state.value,
+        unit: this.unit.current?.state.value,
+        photo: this.state.image ? this.state.image : undefined,
       };
       try {
         await updateContact(contact);
-        this.props.navigation.navigate('ContactSelector');
+        Segment.track('Edit Contact - Click on Save');
+        this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
       }
@@ -157,12 +168,20 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
+      this.unit.current &&
+      this.dorm.current &&
       this.props.contact.facility
     ) {
       this.firstName.current.set(this.props.contact.firstName);
       this.lastName.current.set(this.props.contact.lastName);
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
+      this.dorm.current.set(
+        this.props.contact.dorm ? this.props.contact.dorm : ''
+      );
+      this.unit.current.set(
+        this.props.contact.unit ? this.props.contact.unit : ''
+      );
     }
   }
 
@@ -178,180 +197,180 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid &&
-        this.didUpdateAtLeastOneField();
+        this.facilityAddress.current.state.valid;
       this.setValid(result);
     }
   }
 
-  didUpdateAtLeastOneField() {
-    if (
-      this.firstName.current &&
-      this.lastName.current &&
-      this.facilityName.current &&
-      this.facilityAddress.current &&
-      this.props.contact.facility
-    ) {
-      return (
-        this.firstName.current.state.value !== this.props.contact.firstName ||
-        this.lastName.current.state.value !== this.props.contact.lastName ||
-        this.facilityName.current.state.value !==
-          this.props.contact.facility.name ||
-        this.facilityAddress.current.state.value !==
-          this.props.contact.facility.address
-      );
-    }
-    return false;
-  }
-
   render() {
-    const { contact } = this.props;
     return (
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: 'white', padding: 16 }}
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+        }}
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
-        />
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled
-          style={{ width: '100%' }}
-        >
-          <View style={Styles.profileCard}>
-            <LinearGradient
-              colors={['#ADD3FF', '#FFC9C9']}
-              style={Styles.profileCardHeader}
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 0 }}
-            />
-            <ProfilePic
-              firstName={contact.firstName}
-              lastName={contact.lastName}
-              imageUri="ExamplePic"
-              type={ProfilePicTypes.SingleContact}
-            />
-          </View>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.firstName')}
-          </Text>
-          <Input
-            ref={this.firstName}
-            placeholder={i18n.t('UpdateContactScreen.firstName')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.lastName}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.lastName')}
-          </Text>
-          <Input
-            ref={this.lastName}
-            placeholder={i18n.t('UpdateContactScreen.lastName')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.facilityName}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.addressLine1')}
-          </Text>
-          <Input
-            ref={this.facilityName}
-            placeholder={i18n.t('UpdateContactScreen.addressLine1')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-            nextInput={this.facilityAddress}
-          />
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {i18n.t('UpdateContactScreen.addressLine2')}
-          </Text>
-          <Input
-            ref={this.facilityAddress}
-            placeholder={i18n.t('UpdateContactScreen.addressLine2')}
-            required
-            onValid={this.updateValid}
-            onInvalid={() => this.setValid(false)}
-          />
-
-          <Input
-            ref={this.unit}
-            placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
-          />
-          <Input
-            ref={this.dorm}
-            placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
-          />
-        </ScrollView>
-        <Button
-          buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
-          containerStyle={{ backgroundColor: Colors.BLUE_DARKEST }}
-          onPress={() => {
-            popupAlert({
-              title: i18n.t('UpdateContactScreen.areYouSure'),
-              message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
-                contact.firstName
-              } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
-              buttons: [
-                {
-                  text: i18n.t('UpdateContactScreen.deleteContact'),
-                  onPress: this.doDeleteContact,
-                  containerStyle: {
-                    width: '100%',
-                    backgroundColor: Colors.BLUE_DARKEST,
-                  },
-                },
-                {
-                  text: i18n.t('UpdateContactScreen.dontDelete'),
-                  reverse: true,
-                  textStyle: { color: Colors.BLUE_DARKEST },
-                  containerStyle: {
-                    width: '100%',
-                    borderColor: Colors.BLUE_DARKEST,
-                  },
-                },
-              ],
-            });
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingHorizontal: 16,
           }}
-        />
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
+          enabled
+        >
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            scrollEnabled
+            style={{ width: '100%' }}
+            contentContainerStyle={{ paddingVertical: 16 }}
+          >
+            <View style={Styles.profileCard}>
+              <LinearGradient
+                colors={['#ADD3FF', '#FFC9C9']}
+                style={Styles.profileCardHeader}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
+              />
+              <PicUpload
+                shapeBackground={{
+                  borderWidth: 6,
+                  borderColor: 'white',
+                }}
+                width={130}
+                height={130}
+                type={PicUploadTypes.Profile}
+                initial={this.props.contact.photo}
+                onSuccess={(image: Photo) => {
+                  this.setState({ image });
+                }}
+                onDelete={() => {
+                  this.setState({ image: null });
+                }}
+                segmentOnPressLog={() => {
+                  Segment.track('Edit Contact - Click on Upload Image');
+                }}
+                segmentSuccessLog={() => {
+                  Segment.track('Edit Contact - Upload Image Success');
+                }}
+                segmentErrorLogEvent="Edit Contact - Upload Image Error"
+              />
+            </View>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.firstName')}
+            </Text>
+            <Input
+              ref={this.firstName}
+              placeholder={i18n.t('UpdateContactScreen.firstName')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.lastName}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.lastName')}
+            </Text>
+            <Input
+              ref={this.lastName}
+              placeholder={i18n.t('UpdateContactScreen.lastName')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.facilityName}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.addressLine1')}
+            </Text>
+            <Input
+              ref={this.facilityName}
+              placeholder={i18n.t('UpdateContactScreen.addressLine1')}
+              required
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+              nextInput={this.facilityAddress}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.addressLine2')}
+            </Text>
+            <Input
+              ref={this.facilityAddress}
+              placeholder={i18n.t('UpdateContactScreen.addressLine2')}
+              required
+              validate={Validation.Address}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
+            />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                Styles.baseText,
+                { color: Colors.GRAY_DARK },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.optionalUnit')}
+            </Text>
+            <Input
+              ref={this.unit}
+              placeholder={i18n.t('UpdateContactScreen.optionalUnit')}
+            />
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                Styles.baseText,
+                { color: Colors.GRAY_DARK },
+              ]}
+            >
+              {i18n.t('UpdateContactScreen.optionalDorm')}
+            </Text>
+            <Input
+              ref={this.dorm}
+              placeholder={i18n.t('UpdateContactScreen.optionalDorm')}
+            />
+            <Button
+              buttonText={i18n.t('UpdateContactScreen.deleteProfile')}
+              containerStyle={Styles.deleteButton}
+              onPress={() => {
+                popupAlert({
+                  title: i18n.t('UpdateContactScreen.areYouSure'),
+                  message: `${i18n.t('UpdateContactScreen.deleteWarning1')} ${
+                    this.props.contact.firstName
+                  } ${i18n.t('UpdateContactScreen.deleteWarning2')}.`,
+                  buttons: [
+                    {
+                      text: i18n.t('UpdateContactScreen.deleteContact'),
+                      onPress: this.doDeleteContact,
+                      containerStyle: {
+                        width: '100%',
+                        backgroundColor: Colors.BLUE_DARKEST,
+                      },
+                    },
+                    {
+                      text: i18n.t('UpdateContactScreen.dontDelete'),
+                      reverse: true,
+                      textStyle: { color: Colors.BLUE_DARKEST },
+                      containerStyle: {
+                        width: '100%',
+                        borderColor: Colors.BLUE_DARKEST,
+                      },
+                    },
+                  ],
+                });
+              }}
+            />
+          </ScrollView>
+        </KeyboardAvoidingView>
       </TouchableOpacity>
     );
   }

@@ -88,7 +88,7 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
           ]
         }
       >
-        Date
+        Jul 12, 2019
       </Text>
     </View>
   </TouchableOpacity>

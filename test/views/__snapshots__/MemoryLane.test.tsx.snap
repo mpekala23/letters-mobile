@@ -112,7 +112,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
               ]
             }
           >
-            
+            Invalid date
           </Text>
         </View>
       </TouchableOpacity>
