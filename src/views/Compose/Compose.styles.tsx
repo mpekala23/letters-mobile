@@ -12,4 +12,8 @@ export default StyleSheet.create({
     marginTop: 10,
     marginBottom: 4,
   },
+  postcardBackground: {
+    flexDirection: 'row',
+    height: 'auto',
+  },
 });
