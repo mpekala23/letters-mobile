@@ -67,7 +67,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
             <Text
               style={[
                 Typography.FONT_BOLD,
-                { fontSize: 20, textAlign: 'center', marginBottom: 10 },
+                { fontSize: 20, textAlign: 'center', marginBottom: 18 },
               ]}
             >
               {this.state.current.title}
