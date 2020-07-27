@@ -254,7 +254,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               Styles.screenBackground,
               {
                 flex: 1,
-                paddingBottom: 50,
               },
             ]}
           >
