@@ -16,7 +16,7 @@ import { addLetter } from '@store/Letter/LetterActions';
 import i18n from '@i18n';
 
 const { MOCK_API_IP } = process.env;
-export const API_URL = `http://${MOCK_API_IP}:9000/api/`;
+export const API_URL = `http://10.0.1.170:9000/api/`;
 
 export interface UserResponse {
   type: string;

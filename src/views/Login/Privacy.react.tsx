@@ -2,26 +2,27 @@ import React from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
 import { AuthStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
+import Styles from './Privacy.styles';
 
 type PrivacyScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
   'Privacy'
 >;
 
-export interface Props {
+interface Props {
   navigation: PrivacyScreenNavigationProp;
 }
-const PrivacyScreen: React.FC<Props> = () => {
+const PrivacyScreen: React.FC<Props> = (props: Props) => {
   return (
-    <ScrollView style={{ flex: 1, padding: 16 }}>
-      <Text style={[Typography.FONT_BOLD, { textAlign: 'center' }]}>
+    <ScrollView style={Styles.scrollViewStyle}>
+      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         Ameelio Privacy Policy
       </Text>
-      <Text style={[Typography.FONT_BOLD, { textAlign: 'center' }]}>
+      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         Effective Date: March 23, 2020
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 1. <Text style={Typography.FONT_BOLD}>Introduction. </Text>
         <Text>
           Ameelio, Inc.’s (“Ameelio”, “Company”, “we”, “our”, and “us”) mission
@@ -32,7 +33,7 @@ const PrivacyScreen: React.FC<Props> = () => {
           Forum, and other related services (the “Services”).
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.verticalPadding}>
         This privacy policy (the “Policy”) applies to our privacy practices for
         the handling of data submitted in connection with your use of our
         Services. This Policy describes the types of information we collect, how
@@ -40,11 +41,11 @@ const PrivacyScreen: React.FC<Props> = () => {
         This Policy also describes measures we take to protect the security of
         your personal information.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 2.{' '}
         <Text style={Typography.FONT_BOLD}>Information Collected. </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text style={Typography.FONT_BOLD}>Information You Provide Us. </Text>
         <Text>
@@ -56,7 +57,7 @@ const PrivacyScreen: React.FC<Props> = () => {
           completion survey or other communications with Ameelio.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text style={Typography.FONT_BOLD}>
           Information We Automatically Collect.{' '}
@@ -73,7 +74,7 @@ const PrivacyScreen: React.FC<Props> = () => {
           information about the pages you visit and the features you use.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text style={Typography.FONT_BOLD}>
           Information Provided by Third Parties.{' '}
@@ -88,24 +89,30 @@ const PrivacyScreen: React.FC<Props> = () => {
           availability.
         </Text>
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 4.{' '}
         <Text style={Typography.FONT_BOLD}>Information We Disclose. </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} Ameelio may disclose aggregated or de-identified information
         about our users without restriction. We may collect, use, and share this
         information for research purposes including, but not limited to,
         research on recidivism rates.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Information you provide may also be shared with third parties in order
         to carry out our services. For example, if you type and submit a letter,
         we will work with our third party provider to print and send the letter.
-        For more information about our services, please see the Terms of Service
-        here.
+        For more information about our services, please see the Terms of Service{' '}
+        <Text
+          style={{ color: Colors.AMEELIO_BLUE }}
+          onPress={() => props.navigation.navigate('Terms')}
+        >
+          here
+        </Text>
+        .
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Please note that if you submit any of your personally identifiable
         information to a portion of Ameelio’s Services that is accessible by
         other users, including in an online forum, the public and other users
@@ -113,16 +120,23 @@ const PrivacyScreen: React.FC<Props> = () => {
         submissions you are comfortable sharing with third parties or the
         general public.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         In order to provide our Services, we also may coordinate with and
         disclose information to state and federal prisons. We reserve the right
         to access, read, preserve, and disclose any information we believe is
         necessary to comply with lawful requests or enforce or apply our Terms
-        of Service here and other agreements. We also reserve the right to
-        access or disclose any information to protect the rights, property, or
-        safety of Ameelio, our employees, our Users, or others.
+        of Service{' '}
+        <Text
+          style={{ color: Colors.AMEELIO_BLUE }}
+          onPress={() => props.navigation.navigate('Terms')}
+        >
+          here
+        </Text>{' '}
+        and other agreements. We also reserve the right to access or disclose
+        any information to protect the rights, property, or safety of Ameelio,
+        our employees, our Users, or others.
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 5. <Text style={Typography.FONT_BOLD}>Data Security. </Text>
         <Text>
           We take care to implement reasonable measures designed to protect your
@@ -132,7 +146,7 @@ const PrivacyScreen: React.FC<Props> = () => {
           confidential.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         We endeavor to protect the privacy of your account and other personal
         information we hold in our records. However, no transmission of
         information via the internet is completely secure, and we cannot
@@ -142,7 +156,7 @@ const PrivacyScreen: React.FC<Props> = () => {
         information relating to you is intercepted or used by an unintended
         recipient.
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 6.{' '}
         <Text style={Typography.FONT_BOLD}>
           Modification and Retention of Information.{' '}
@@ -156,24 +170,30 @@ const PrivacyScreen: React.FC<Props> = () => {
           whichever is longer.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Information that has been de-identified or is not personal information
         may be retained indefinitely and used for research or other purposes.
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 7. <Text style={Typography.FONT_BOLD}>Age of Users. </Text>
         <Text>
           If you are younger than 13, you may not use, access, or provide any
           content using our Services. If your age is 13 or older but under the
           age of 18, you may use our Services only under the supervision of a
-          parent or legal guardian who agrees to be bound by the Terms of
-          Service [LINK] and this Privacy Policy. If you are a parent or legal
-          guardian agreeing to the Terms of Service of this Policy for the
-          benefit of a child who is 13 or older but under the age of 18, you are
-          fully responsible for the child’s use of the Services.
+          parent or legal guardian who agrees to be bound by the{' '}
+          <Text
+            style={{ color: Colors.AMEELIO_BLUE }}
+            onPress={() => props.navigation.navigate('Terms')}
+          >
+            Terms of Service
+          </Text>{' '}
+          and this Privacy Policy. If you are a parent or legal guardian
+          agreeing to the Terms of Service of this Policy for the benefit of a
+          child who is 13 or older but under the age of 18, you are fully
+          responsible for the child’s use of the Services.
         </Text>
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 8.{' '}
         <Text style={Typography.FONT_BOLD}>California Privacy Rights. </Text>
         <Text>
@@ -182,14 +202,14 @@ const PrivacyScreen: React.FC<Props> = () => {
           more about your California privacy rights, visit the California
           Attorney General website{' '}
           <Text
-            style={{ color: 'blue' }}
+            style={{ color: Colors.AMEELIO_BLUE }}
             onPress={() => Linking.openURL('oag.ca.gov/privacy/privacy-laws')}
           >
             here{' '}
           </Text>
           . Please contact us at{' '}
           <Text
-            style={{ color: 'blue' }}
+            style={{ color: Colors.AMEELIO_BLUE }}
             onPress={() => Linking.openURL('mailto:team@ameelio.org')}
           >
             team@ameelio.org{' '}
@@ -197,7 +217,7 @@ const PrivacyScreen: React.FC<Props> = () => {
           for more information.
         </Text>
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 9.{' '}
         <Text style={Typography.FONT_BOLD}>Changes to the Policy. </Text>
         <Text>
@@ -208,14 +228,14 @@ const PrivacyScreen: React.FC<Props> = () => {
           beginning of the Policy.
         </Text>
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         {'\t'} 10.{' '}
         <Text style={Typography.FONT_BOLD}>Contact Information. </Text>
         <Text>
           For any questions about this Policy or our privacy practices, contact
           us at:{' '}
           <Text
-            style={{ color: 'blue' }}
+            style={{ color: Colors.AMEELIO_BLUE }}
             onPress={() => Linking.openURL('mailto:team@ameelio.org')}
           >
             team@ameelio.org{' '}

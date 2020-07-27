@@ -2,27 +2,28 @@ import React from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
 import { AuthStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
+import Styles from './Privacy.styles';
 
 type TermsScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
   'Terms'
 >;
 
-export interface Props {
+interface Props {
   navigation: TermsScreenNavigationProp;
 }
 
 const TermsScreen: React.FC<Props> = (props: Props) => {
   return (
-    <ScrollView style={{ flex: 1, padding: 16 }}>
-      <Text style={[Typography.FONT_BOLD, { textAlign: 'center' }]}>
+    <ScrollView style={Styles.scrollViewStyle}>
+      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         Ameelio Terms of Service
       </Text>
-      <Text style={[Typography.FONT_BOLD, { textAlign: 'center' }]}>
+      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
         Effective Date: March 23, 2020
       </Text>
-      <Text style={{ paddingVertical: 12 }}>
+      <Text style={Styles.verticalPadding}>
         Ameelio, Inc. (“<Text style={Typography.FONT_BOLD}>Ameelio</Text>”, “
         <Text style={Typography.FONT_BOLD}>Company</Text>”, “
         <Text style={Typography.FONT_BOLD}>we</Text>”, “
@@ -36,7 +37,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         institutions, the institutions of the criminal justice system, and
         criminal justice policies to understand the impact of incarceration.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 1. <Text style={Typography.FONT_BOLD}>Introduction. </Text>
         <Text>
           To assist you in using our Services, and to ensure a clear
@@ -51,7 +52,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           <Text style={Typography.FONT_BOLD}>Content</Text>”).
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Our Terms and Privacy Policy apply to all “
         <Text style={Typography.FONT_BOLD}>Free World Users</Text>,” “
         <Text style={Typography.FONT_BOLD}>Incarcerated Persons</Text>,” and any
@@ -62,32 +63,32 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         “your” includes anyone who uses the Services Ameelio offers. Unless
         otherwise indicated, all provisions of these Terms apply to all Users.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Please read this document carefully before you access, use, or
         participate in our services. By using or accessing our Services, you
         agree to be bound by the Terms. If you do not wish to be bound by the
         Terms, please do not access or use our Services.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         PLEASE NOTE THAT, EXCEPT AS PROVIDED BELOW, THESE TERMS REQUIRE DISPUTE
         RESOLUTION THROUGH USE OF AN ARBITRATION SERVICE. YOU AGREE THAT ALL
         DISPUTES ARISING FROM, RELATED TO, OR IN CONNECTION WITH YOUR USE OF THE
         SERVICE WILL BE RESOLVED IN ACCORDANCE WITH THE ARBITRATION AND
         GOVERNING LAW PROVISIONS SET FORTH BELOW.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         THESE SERVICES ARE NOT INTENDED TO BE USED FOR LEGAL SERVICES OR A
         SUBSTITUTE FOR LEGAL SERVICES. AS A USER, YOU AGREE THAT ALL CALLS,
         DATA, AND SUBMISSIONS ARE RECORDED AND CONTROLLED BY AMEELIO. ANY USE OF
         OR RELIANCE ON THE SERVICES IS AT YOUR OWN RISK.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         WHEN YOU USE AMEELIO’S SERVICES, YOU ACKNOWLEDGE AND AGREE CONNECT
         SESSIONS ON AMEELIO WILL BE RECORDED AND MAY BE MONITORED. YOU AGREE AND
         YOU WAIVE ANY AND ALL CLAIMS AGAINST AMEELIO ARISING FROM THE RECORDING
         OF CONNECT SESSIONS.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 2.{' '}
         <Text style={Typography.FONT_BOLD}>Changes to the Terms. </Text>
         <Text>
@@ -103,12 +104,12 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           effective, you accept and agree to be bound by all modified Terms.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 3. <Text style={Typography.FONT_BOLD}>Privacy Policy. </Text>
         <Text>
           Ameelio takes the privacy of its users seriously. Our{' '}
           <Text
-            style={{ color: 'blue' }}
+            style={{ color: Colors.AMEELIO_BLUE }}
             onPress={() => props.navigation.navigate('Privacy')}
           >
             Privacy Policy{' '}
@@ -117,25 +118,39 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           through these Services. Please review that policy carefully.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 4. <Text style={Typography.FONT_BOLD}>Eligibility. </Text>
         <Text>
           In compliance with the Children’s Online Privacy Protection Act
           (COPPA), we do not collect information from any person under 13 years
           of age without consent from a parent or legal guardian. Please refer
-          to our Privacy Policy here. If you are under the age of 18, you may
-          use the Services only under supervision of a parent or legal guardian
-          who agrees to be bound by the Terms. If you are a parent or legal
-          guardian agreeing to these terms, you are fully responsible for that
-          user’s use of Ameelio. Additional information about the use of
-          information can be found in the Privacy Policy here.
+          to our Privacy Policy{' '}
+          <Text
+            style={{ color: Colors.AMEELIO_BLUE }}
+            onPress={() => props.navigation.navigate('Privacy')}
+          >
+            here
+          </Text>
+          . If you are under the age of 18, you may use the Services only under
+          supervision of a parent or legal guardian who agrees to be bound by
+          the Terms. If you are a parent or legal guardian agreeing to these
+          terms, you are fully responsible for that user’s use of Ameelio.
+          Additional information about the use of information can be found in
+          the Privacy Policy{' '}
+          <Text
+            style={{ color: Colors.AMEELIO_BLUE }}
+            onPress={() => props.navigation.navigate('Privacy')}
+          >
+            here
+          </Text>
+          .
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 5.{' '}
         <Text style={Typography.FONT_BOLD}>Explanation of Services. </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} Ameelio aims to improve the lives of those impacted by
         incarceration and reduce recidivism. Ameelio researches and studies
         prisons and prison systems and institutions, the criminal justice
@@ -144,20 +159,20 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         platforms, with the goal of enabling Incarcerated Persons to communicate
         with the outside world.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         By using the Services, you grant Ameelio a non-exclusive, perpetual,
         world-wide, royalty-free license to use your User Content to perform the
         Services and conduct research.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         We currently provide Services for free. Please be aware that if using a
         cell phone, normal rates and fees, such as data charges, will still
         apply.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} <Text style={Typography.FONT_BOLD}>Letters</Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} Free World Users can also use another function called “
         <Text style={Typography.FONT_BOLD}>Letters</Text>” to be able to send
         physical mail to Incarcerated Persons. To use Letters, a Free World User
@@ -168,10 +183,10 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         printed and sent by mail to the Incarcerated Person. Please see the
         Acceptable Use section below for permitted uses of the Letters.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} <Text style={Typography.FONT_BOLD}>Connect Session</Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} One service Ameelio provides is video and chat calls between Free
         World Users and Incarcerated Persons called “
         <Text style={Typography.FONT_BOLD}>Connect Sessions</Text>.” If you are
@@ -181,7 +196,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         administrators (“<Text style={Typography.FONT_BOLD}>Administrator</Text>
         ”) to schedule a video call with the Incarcerated Person.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} If you are an Incarcerated Person, you will be registered by the
         Administrator. The Administrator will be able to schedule a Connect
         Session on your behalf with a Free World User. Please contact an
@@ -189,15 +204,15 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         Please see the Acceptable Use section below for permitted uses of the
         Connect Session.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} <Text style={Typography.FONT_BOLD}>Additional Services</Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} Ameelio is developing additional services to further our goal of
         improving the lives of those impacted by incarceration. As services are
         implemented, this Terms of Service will be updated.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 6. <Text style={Typography.FONT_BOLD}>Acceptable Use. </Text>
         <Text>
           You may only use Ameelio for lawful activity. It is your
@@ -210,7 +225,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           property ownership or right to use all Content you provide.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         The Ameelio website, and any Services offered by Ameelio, are the sole
         property of Ameelio and are protected by U.S. copyright. Except for the
         limited rights expressly granted to you in the Terms, Ameelio reserves
@@ -222,12 +237,12 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         photos, images, illustrations, and so forth are protected by copyright
         and other intellectual property laws.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Further, you acknowledge that the Ameelio Services, including all
         associated intellectual property rights, are the exclusive property of
         Ameelio and its licensors.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         When using Letters, you grant us permission to work with third parties
         to print and send submitted messages on your behalf. You are responsible
         for providing the correct mailing address and keeping these contacts up
@@ -237,7 +252,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         prison to which you are mailing may. Ameelio is not responsible for mail
         that was not delivered or mail that is rejected by prisons.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 7.{' '}
         <Text style={Typography.FONT_BOLD}>
           Notices of Copyright Infringement.{' '}
@@ -250,7 +265,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           accounts of any repeat alleged infringers.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         If you believe any Content on this website infringes your copyright, you
         may request removal of these materials. To request removal of any
         Content and claim a copyright violation, you must:
@@ -300,14 +315,14 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           notice is accurate.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text>
           {'\u2022'} Include a statement that under penalty of perjury you are
           authorized to act on behalf of the copyright owner.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Submit this written notification to our Copyright Agent:
       </Text>
       <Text>
@@ -322,10 +337,10 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
       <Text>
         {'\t'} <Text>{'\u2022'} 203-680-0318</Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} <Text>{'\u2022'} team@ameelio.org</Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 8. <Text style={Typography.FONT_BOLD}>User Accounts. </Text>
         <Text>
           Free World Users must register with Ameelio in order to use certain
@@ -334,7 +349,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           set up with a valid email address and a password that you create.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         When you register an account with Ameelio, you agree to provide true
         information and promptly update any information with any changes to
         maintain accurate and complete information. You may not transfer your
@@ -343,7 +358,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         terminate your access to the Services and refuse any and all use of the
         Services.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 9. <Text style={Typography.FONT_BOLD}>Termination. </Text>
         <Text>
           You agree that Ameelio may immediately and without notice terminate
@@ -359,7 +374,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           information.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         If we intend to deactivate a Free World User account, we will try to
         provide advance notice to you so you are able to retrieve any important
         information you have stored in your account. We may not provide advance
@@ -367,11 +382,11 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         someone’s safety or security, impractical, or otherwise harmful to the
         rights of other Users.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         If you are a Free World User and would like us to terminate your
         account, please contact us at{' '}
         <Text
-          style={{ color: 'blue' }}
+          style={{ color: Colors.AMEELIO_BLUE }}
           onPress={() => Linking.openURL('mailto:team@ameelio.org')}
         >
           team@ameelio.org{' '}
@@ -380,17 +395,17 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
         reasonable time period. Please note that any information or
         conversations had using the Services will not be removed.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         If you are an Incarcerated Person and would like to terminate your
         account, please contact your Administrator. The Administrator will then
         work with us to deactivate your account.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         If your Ameelio account is closed (whether by you or us), your right to
         use the Ameelio Services stops immediately. Please note than any
         information or conversations had using Ameelio will not be removed.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 10. <Text style={Typography.FONT_BOLD}>Warranties. </Text>
         <Text>YOU UNDERSTAND AND AGREE THAT:</Text>
       </Text>
@@ -446,7 +461,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           FOR ADVICE TAILORED TO YOUR SPECIFIC SITUATION.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text>
           {' '}
@@ -454,7 +469,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           WARRANTIES, YOU MAY HAVE ADDITIONAL RIGHTS UNDER YOUR LOCAL LAWS.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 11.{' '}
         <Text style={Typography.FONT_BOLD}>Limitation of Liability. </Text>
         <Text>
@@ -530,7 +545,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           TO STOP USING OUR WEBSITE AND THOSE SERVICES.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
         <Text>
           {' '}
@@ -540,7 +555,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           TO STOP USING OUR WEBSITE AND THOSE SERVICES.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         <Text>
           {' '}
           IN NO EVENT SHALL AMEELIO BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY
@@ -550,7 +565,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           REASONABLE CONTROL.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         <Text>
           {' '}
           Some states do not allow the exclusion or limitation of liability for
@@ -558,7 +573,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           be limited to the maximum extent permitted by law.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 12. <Text style={Typography.FONT_BOLD}>Indemnification. </Text>
         <Text>
           To the fullest extent allowed by applicable law, you agree to
@@ -573,7 +588,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           Services.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 13.{' '}
         <Text style={Typography.FONT_BOLD}>No Privileged Conversations. </Text>
         <Text>
@@ -586,7 +601,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           against Ameelio arising from the recording of Connect Sessions.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 14. <Text style={Typography.FONT_BOLD}>Assignment. </Text>
         <Text>
           You may not assign or transfer these Terms, by operation of law or
@@ -595,7 +610,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           transfer these Terms, at is sole discretion, without restriction.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 15. <Text style={Typography.FONT_BOLD}>No Waiver. </Text>
         <Text>
           The failure of Ameelio to enforce any provision or right in these
@@ -603,7 +618,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           provision or right.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 16. <Text style={Typography.FONT_BOLD}>Severability. </Text>
         <Text>
           If for any reason a court of competent jurisdiction or arbitrator
@@ -612,7 +627,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           other provisions of these Terms will remain in full force and effect.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 17. <Text style={Typography.FONT_BOLD}>Arbitration. </Text>
         <Text>
           Given the high cost of legal disputes, both you and Ameelio agree that
@@ -621,23 +636,23 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           arbitration.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Prior to arbitration, either party asserting a dispute shall first try
         in good faith to resolve it by providing written notice describing the
         facts and circumstances, including any relevant documentation.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         Any controversy or claim arising out of or relating to these Terms, or
         the breach of these Terms, shall be settled by arbitration administered
         by the American Arbitration Association in accordance with its
         Commercial Arbitration Rules. Judgment on the award rendered by the
         arbitrator(s) may be entered in any court having jurisdiction.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         YOU UNDERSTAND AND AGREE THAT BY ENTERING INTO THESE TERMS, YOU AND
         AMEELIO ARE EACH WAIVING THE RIGHT TO TRIAL BY JURY.
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 18. <Text style={Typography.FONT_BOLD}>Governing Law. </Text>
         <Text>
           These Terms (and any further rules, policies, or guidelines
@@ -649,7 +664,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           venue of such courts.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 19. <Text style={Typography.FONT_BOLD}>Entire Agreement. </Text>
         <Text>
           These Terms constitute the entire agreement between you and Ameelio
@@ -657,13 +672,13 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           and understandings.
         </Text>
       </Text>
-      <Text style={{ paddingBottom: 12 }}>
+      <Text style={Styles.bottomPadding}>
         {'\t'} 20. <Text style={Typography.FONT_BOLD}>Contact Us. </Text>
-        <Text style={{ paddingBottom: 12 }}>
+        <Text style={Styles.bottomPadding}>
           If you have any questions about the Terms of Service, please do not
           hesitate to contact us at{' '}
           <Text
-            style={{ color: 'blue' }}
+            style={{ color: Colors.AMEELIO_BLUE }}
             onPress={() => Linking.openURL('mailto:team@ameelio.org')}
           >
             team@ameelio.org{' '}
