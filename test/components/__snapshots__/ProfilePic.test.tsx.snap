@@ -12,6 +12,11 @@ exports[`ProfilePic component should match snapshot 1`] = `
 >
   <View
     pointerEvents="auto"
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
   >
     <TouchableOpacity
       activeOpacity={0.2}
