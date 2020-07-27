@@ -307,7 +307,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Begin"
           component={BeginScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            gestureEnabled: false,
+          }}
         />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
