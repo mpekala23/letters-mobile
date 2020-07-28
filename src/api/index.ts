@@ -1,3 +1,5 @@
+import { getZipcode } from './Common';
+
 import {
   addContact,
   updateContact,
@@ -20,6 +22,7 @@ import {
 } from './User';
 
 export {
+  getZipcode,
   addContact,
   updateContact,
   deleteContact,

@@ -33,6 +33,8 @@ import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import moment from 'moment';
+import { haversine } from '@utils';
+import { getZipcode } from '@api/Common';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -42,6 +44,7 @@ type SingleContactScreenNavigationProp = StackNavigationProp<
 
 interface State {
   refreshing: boolean;
+  lettersTraveled: number;
 }
 
 interface Props {
@@ -61,11 +64,30 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       refreshing: false,
+      lettersTraveled: 0,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
+    await this.updateLettersTraveled();
+  }
+
+  async updateLettersTraveled() {
+    try {
+      if (this.props.activeContact.facility) {
+        const loc1 = await getZipcode(
+          this.props.activeContact.facility?.postal
+        );
+        const loc2 = await getZipcode(this.props.userState.user.postal);
+        this.setState({
+          lettersTraveled:
+            haversine(loc1, loc2) * this.props.existingLetters.length,
+        });
+      }
+    } catch (err) {
+      this.setState({ lettersTraveled: 0 });
+    }
   }
 
   render() {
@@ -118,6 +140,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getLetters();
             await getContact(this.props.activeContact.id);
             await getUser();
+            await this.updateLettersTraveled();
           } catch (err) {
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
@@ -187,7 +210,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               ]}
             >
               <Emoji name="airplane" />{' '}
-              {i18n.t('SingleContactScreen.lettersTraveled')}:
+              {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
+              {this.state.lettersTraveled} miles
             </Text>
             <Button
               onPress={() => {

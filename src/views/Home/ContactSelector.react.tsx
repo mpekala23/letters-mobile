@@ -20,7 +20,7 @@ import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
+import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './ContactSelector.styles';
@@ -40,6 +40,7 @@ interface Props {
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
+  userPostal: string;
   handleNotif: () => void;
 }
 
@@ -88,6 +89,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           this.props.setActiveContact(item);
           this.props.navigation.navigate('SingleContact');
         }}
+        userPostal={this.props.userPostal}
+        contactPostal={item.facility?.postal}
         key={item.inmateNumber}
       />
     );
@@ -163,13 +166,12 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    existingContacts: state.contact.existing,
-    existingLetters: state.letter.existing,
-    currentNotif: state.notif.currentNotif,
-  };
-};
+const mapStateToProps = (state: AppState) => ({
+  existingContacts: state.contact.existing,
+  existingLetters: state.letter.existing,
+  currentNotif: state.notif.currentNotif,
+  userPostal: state.user.user.postal,
+});
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
 ) => {
