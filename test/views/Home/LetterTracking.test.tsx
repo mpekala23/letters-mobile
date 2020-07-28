@@ -7,6 +7,10 @@ import { LetterTypes, LetterStatus } from 'types';
 
 const mockStore = configureStore([]);
 
+jest.mock('date-fns', () => ({
+  format: () => 'Jun 30',
+}));
+
 const setup = (letterOverrides = {}) => {
   const navigation = { navigate: jest.fn(), addListener: jest.fn() };
   const letter = {
