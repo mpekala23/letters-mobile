@@ -93,7 +93,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               }
               if (
                 !processedForDelivery ||
-                differenceInDays(processedForDeliveryDate, new Date()) <= 3
+                differenceInDays(processedForDeliveryDate, new Date()) <= 5
               ) {
                 return (
                   <LetterStatusCard
