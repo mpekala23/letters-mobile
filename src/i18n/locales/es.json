@@ -136,7 +136,7 @@
     "emailAndPasswordRequired": "Email and password are required"
   },
   "MemoryLaneCountCard": {
-    "noLettersYet": "No cartas todavía",
+    "noLettersYet": "No cartas",
     "oneLetter": "1 Carta",
     "letters": "Cartas"
   },
@@ -182,7 +182,7 @@
     "login": "Acceder"
   },
   "ReviewContactScreen": {
-    "reviewContact": "Review Contact",
+    "reviewContact": "Revisar Contacto",
     "clickToUploadContactImage": "Haga click para subir el imagen del contacto",
     "optionalUnit": "Unidad (opcional, solo si necesario)",
     "optionalDorm": "Dormitorio (opcional, solo si necesario)",
@@ -200,8 +200,11 @@
   "UpdateContactScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "addressLine1": "Dirección Línea 1",
-    "addressLine2": "Dirección Línea 2",
+    "facilityName": "Facility Name",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "Facility City",
+    "facilityState": "Facility State",
+    "facilityPostal": "Facility Postal",
     "optionalUnit": "Unidad (opcional, solo si necesario)",
     "optionalDorm": "Dormitorio (opcional, solo si necesario)",
     "save": "Guardar",
@@ -257,24 +260,24 @@
     "federal": "Prisión Federal"
   },
   "Prompts": {
-    "prompt1": "How are things going with your life? Any milestones lately?",
-    "prompt2": "What was the best part of your day today?",
-    "prompt3": "Have you watched any interesting movies or TV shows lately?",
-    "prompt4": "Describe a dream trip you would like to take with your loved one in the future",
-    "prompt5": "Recall a fond memory with your loved one and describe it to him/her",
-    "prompt6": "Send a picture from an exciting day that you spent together and talk about it",
-    "prompt7": "Write about what you love most about your loved one",
-    "prompt8": "Include an uplifting poem and talk about how it makes you feel",
-    "prompt9": "Talk about a news article that you read recently and what you learned from it",
-    "prompt10": "Talk about a movie or TV show that made you laugh recently",
-    "prompt11": "Write the first verse of a song and challenge your loved one to write the next verse",
-    "prompt12": "Send your loved one an excerpt from a book and have them guess the book's ending",
-    "prompt13": "Choose a color to describe your mood and explain why you picked that color to your loved one",
-    "prompt14": "Send your loved one a picture of you from when you were younger and ask them to guess how old you are there",
-    "prompt15": "Write about a bible verse (or a verse from any other religious text) that you recently read and what it means to you",
-    "prompt16": "Write about something you did/saw today that reminded you of your loved one",
-    "prompt17": "Ask your loved one 10 questions, answer them yourself, and have him/her answer them",
-    "prompt18": "Send your loved one a playlist of all of the songs you are listening to right now"
+    "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",
+    "prompt2": "Cuál fue la mejor parte de tu día hoy?",
+    "prompt3": "Viste algunas películas o series de televisión interesantes últimamente?",
+    "prompt4": "Describe un viaje de ensueño que le gustaría llevar con su ser querido en el futuro.",
+    "prompt5": "Rebusca un encuentro en tu memoria con su ser querido y descríbelo",
+    "prompt6": "Envía una foto de un día emocionante que pasaron juntos y habla de ello",
+    "prompt7": "Escribe lo que más te gusta de tu ser querido",
+    "prompt8": "Incluya un poema y hable sobre lo que le hacer sentir",
+    "prompt9": "Hable sobre un artículo de noticias que leíste recientemente y lo que aprendiste de él",
+    "prompt10": "Hable sobre una película o programa de televisión que le haya hecho reir.",
+    "prompt11": "Escribe la primera línea de una canción y desafía a tu ser querido a escribir la siguiente",
+    "prompt12": "Envía a tu ser querido un pasaje de un cuento y pregúntale si puede adivinar el final",
+    "prompt13": "Elige un color para describir tu humor y explica tu razón a tu ser querido",
+    "prompt14": "Envía a tu ser querido una foto tuya desde cuando eras más joven y pídele que adivine la edad que tenías",
+    "prompt15": "Escribe sobre un versículo bíblico (o otro texto religioso) que leíste recientemente y lo que significa para ti",
+    "prompt16": "Escriba sobre algo que hiciste/viste hoy que te recordó a tu ser querido",
+    "prompt17": "Hazle 10 preguntas a tu ser querido, respóndelas tú mismo, y pídele que las conteste",
+    "prompt18": "Envía a tu ser querido un playlist de todas las canciones que estás escuchando ahora mismo"
   },
   "LetterTypes": {
     "postCardsTitle": "Tarjetas postales",
@@ -313,7 +316,8 @@
     "continueWritingAnd": "Continue writing and send that letter to your loved one",
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new letter",
-    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter."
+    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
+    "notEnoughCredits": "Not enough credits"
   },
   "Notifs": {
     "your": "Tu",
@@ -329,5 +333,30 @@
     "clickHereToBegin": "Haga click aquí para empezar.",
     "readyToSend": "Listo para enviar tu primera carta a",
     "readyToSendAnother": "Listo para enviar otra carta a"
+  },
+  "Screens": {
+    "login": "Acceder",
+    "termsOfService": "los Términos del servicio",
+    "privacyPolicy": "Política de Privacidad",
+    "register": "Regístrate",
+    "addManually": "Agregar",
+    "compose": "Redactar",
+    "contactInfo": "Contactos",
+    "contacts": "Contactos",
+    "explainProblem": "Explicar Problema",
+    "firstLetter": "Primera Carta",
+    "home": "Inicio",
+    "issues": "Problemas",
+    "letterDetails": "Detalles de Carta",
+    "lastStep": "Última Paso",
+    "tracking": "Rastreo",
+    "memoryLane": "Carril de Memoria",
+    "postcardPreview": "Vista previa de la postal",
+    "letterPreview": "Vista previa de la carta",
+    "spreadTheWord": "Correr la voz",
+    "reviewContact": "Revisar contacto",
+    "thanks": "Gracias",
+    "updateContact": "Actualizar Contacto",
+    "updateProfile": "Actualizar Perfil"
   }
 }

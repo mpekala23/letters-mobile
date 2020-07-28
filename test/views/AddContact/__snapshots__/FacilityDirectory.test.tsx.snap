@@ -317,7 +317,9 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
                     "padding": 6,
                   },
                   Object {},
-                  Object {},
+                  Object {
+                    "textAlign": "center",
+                  },
                   Object {},
                   Object {
                     "opacity": 1,

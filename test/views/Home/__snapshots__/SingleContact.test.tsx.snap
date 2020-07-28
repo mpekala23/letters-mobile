@@ -270,7 +270,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           last heard from you
           :
            
-          Jul 27
+          Jul 28
         </Text>
         <Text
           style={

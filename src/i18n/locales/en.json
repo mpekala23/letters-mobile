@@ -333,5 +333,30 @@
     "clickHereToBegin": "Click here to begin.",
     "readyToSend": "Ready to send your first letter to",
     "readyToSendAnother": "Ready to send another letter to"
+  },
+  "Screens": {
+    "login": "Login",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "register": "Register",
+    "addManually": "Add Manually",
+    "compose": "Compose",
+    "contactInfo": "Contact Info",
+    "contacts": "Contacts",
+    "explainProblem": "Explain Problem",
+    "firstLetter": "First Letter",
+    "home": "Home",
+    "issues": "Issues",
+    "letterDetails": "Letter Details",
+    "lastStep": "Last Step",
+    "tracking": "Tracking",
+    "memoryLane": "Memory Lane",
+    "postcardPreview": "Postcard Preview",
+    "letterPreview": "Letter Preview",
+    "spreadTheWord": "Spread the Word",
+    "reviewContact": "Review Contact",
+    "thanks": "Thanks",
+    "updateContact": "Update Contact",
+    "updateProfile": "Update Profile"
   }
 }
