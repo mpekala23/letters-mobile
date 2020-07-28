@@ -100,7 +100,7 @@ class ComposeHeader extends React.Component<Props, State> {
               { marginTop: 8, paddingRight: 16, color: Colors.GRAY_MEDIUM },
             ]}
           >
-            autosaved
+            {i18n.t('Compose.autosaved')}
           </Text>
           {this.state.open || this.state.animating ? (
             <TouchableOpacity
