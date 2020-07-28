@@ -35,8 +35,7 @@ import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
-import moment from 'moment';
-import { differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -218,7 +217,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {moment(letters[0].dateCreated).format('MMM DD')}
+              {letters.length > 0 &&
+                letters[0].dateCreated &&
+                format(letters[0].dateCreated, 'MMM dd')}
             </Text>
             <Text
               style={[
