@@ -124,8 +124,6 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       contact.facility = facility;
       this.props.setAdding(contact);
       this.props.navigation.navigate('ReviewContact');
-    } else {
-      this.props.navigation.navigate('FacilityDirectory');
     }
     Keyboard.dismiss();
   }
