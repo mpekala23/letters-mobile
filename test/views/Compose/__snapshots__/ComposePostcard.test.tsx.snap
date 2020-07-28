@@ -84,6 +84,22 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               : 
               First Name
             </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "Poppins-Medium-Italic",
+                  },
+                  Object {
+                    "color": "#9A9A9A",
+                    "marginTop": 8,
+                    "paddingRight": 16,
+                  },
+                ]
+              }
+            >
+              autosaved
+            </Text>
             <TouchableOpacity
               activeOpacity={0.7}
               style={

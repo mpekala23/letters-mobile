@@ -219,7 +219,6 @@ export function sleep(ms: number, error = false): Promise<void> {
 }
 
 export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
-  return 6;
   if (!loc1.lat || !loc1.long || !loc2.lat || !loc2.long) return 0;
   const R = 6371e3;
   const φ1 = (loc1.lat * Math.PI) / 180;
