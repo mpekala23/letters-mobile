@@ -5,6 +5,11 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from 'types';
 
+jest.mock('moment', () => () => ({
+  format: () => 'Jul 12',
+  diff: () => 1,
+}));
+
 const mockStore = configureStore([]);
 
 const setup = (letterOverrides = {}) => {
