@@ -3,7 +3,7 @@ import { LetterTracker } from '@components';
 import { render, toJSON } from '@testing-library/react-native';
 import { LetterStatus } from 'types';
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
 }));
 
@@ -15,7 +15,7 @@ const setup = (propOverrides = {}) => {
       location: {
         city: 'City',
       },
-      date: '2019-07-12T15:51:41.000Z',
+      date: new Date('2019-07-12T15:51:41.000Z'),
       ...propOverrides,
     },
   };

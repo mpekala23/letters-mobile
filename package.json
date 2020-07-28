@@ -24,9 +24,11 @@
     "babel-plugin-inline-dotenv": "^1.5.0",
     "bufferutil": "^4.0.1",
     "connect-api-mocker": "^1.9.0",
+    "date-fns": "^2.15.0",
     "email-validator": "^2.0.4",
     "events": "^3.1.0",
     "expo": "^37.0.7",
+    "expo-analytics-segment": "~8.1.0",
     "expo-constants": "^9.0.0",
     "expo-file-system": "~8.1.0",
     "expo-font": "~8.1.0",
@@ -68,8 +70,7 @@
     "redux-mock-store": "^1.5.4",
     "redux-persist": "^6.0.0",
     "url": "^0.11.0",
-    "utf-8-validate": "^5.0.2",
-    "expo-analytics-segment": "~8.1.0"
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

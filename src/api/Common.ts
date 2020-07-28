@@ -12,7 +12,7 @@ export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
-  status?: 'OK' | 'ERROR';
+  status?: 'OK' | 'ERROR' | 'succeeded';
   message?: string;
   data: Record<string, unknown> | Record<string, unknown>[] | unknown;
 }
@@ -171,8 +171,10 @@ export async function uploadPushToken(token: string): Promise<void> {
     url.resolve(API_URL, `exponent/devices/subscribe`),
     {
       method: 'POST',
-      expo_token: token,
+      body: JSON.stringify({
+        expo_token: token,
+      }),
     }
   );
-  if (body.status !== 'OK') throw body;
+  if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
 }

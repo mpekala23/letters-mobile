@@ -12,6 +12,7 @@ import {
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
+import { addDays, differenceInDays } from 'date-fns';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -62,6 +63,7 @@ async function cleanTrackingEvent(
 async function cleanLetter(letter: RawLetter): Promise<Letter> {
   const { type } = letter;
   let status: LetterStatus;
+  let expectedDeliveryDate = addDays(new Date(letter.created_at), 6);
   const trackingEvents = !letter.tracking_events
     ? []
     : await Promise.all(
@@ -72,7 +74,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
   } else {
     let inTransit = false;
     let processedForDelivery = false;
-    let processedForDeliveryDate = new Date(Date.now());
+    let processedForDeliveryDate = new Date();
     for (let ix = 0; ix < trackingEvents.length; ix += 1) {
       inTransit = inTransit || trackingEvents[ix].name === 'In Transit';
       processedForDelivery =
@@ -87,9 +89,8 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
     } else if (!processedForDelivery) {
       status = LetterStatus.Mailed;
     } else {
-      const now = new Date(Date.now());
-      const timeDiff = now.getTime() - processedForDeliveryDate.getTime();
-      const dayDiff = timeDiff / (1000 * 3600 * 24);
+      expectedDeliveryDate = addDays(processedForDeliveryDate, 3);
+      const dayDiff = differenceInDays(processedForDeliveryDate, new Date());
       if (dayDiff <= 5) {
         status = LetterStatus.OutForDelivery;
       } else {
@@ -105,8 +106,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
     uri: letter.images.length !== 0 ? letter.images[0].img_src : '',
   };
   const letterId = letter.id;
-  const expectedDeliveryDate = letter.created_at;
-  const dateCreated = letter.created_at;
+  const dateCreated = new Date(letter.created_at);
   return {
     type,
     status,
@@ -178,10 +178,10 @@ export async function createLetter(letter: Letter): Promise<Letter> {
     content: createdLetter.content,
     is_draft: createdLetter.isDraft,
     type: createdLetter.type,
+    size: createdLetter.type === LetterTypes.Postcard ? '4x6' : undefined,
     ...imageExtension,
     ...letterExtension,
   };
-
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
     body: JSON.stringify(reqBody),
@@ -189,7 +189,7 @@ export async function createLetter(letter: Letter): Promise<Letter> {
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as RawLetter;
   createdLetter.letterId = data.id;
-  createdLetter.dateCreated = data.created_at;
+  createdLetter.dateCreated = new Date(data.created_at);
   store.dispatch(addLetter(createdLetter));
   user.credit -= 1;
   store.dispatch(setUser(user));

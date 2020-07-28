@@ -21,7 +21,7 @@ import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
-import { threeBusinessDaysFromNow, hoursTill8Tomorrow } from '@utils';
+import { hoursTill8Tomorrow } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
@@ -106,7 +106,7 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
         onPress={async () => {
           try {
             props.setDraft(false);
-            const { letterId } = await createLetter(props.composing);
+            await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
             props.setContent('');
@@ -115,70 +115,6 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
               Option: 'Letter',
             });
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.your')} letter ${i18n.t(
-                  'Notifs.to'
-                )} ${props.activeContact.firstName} ${i18n.t(
-                  'Notifs.isOnItsWay'
-                )}`,
-                body: `${i18n.t('Notifs.expectedDelivery')}: ${new Date(
-                  Date.now() + 1000
-                ).toDateString()}`,
-                data: {
-                  type: NotifTypes.OnItsWay,
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              1 / 60 / 10
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.yourLetterIsOut')} `,
-                body: `${i18n.t(
-                  'Notifs.expectedDelivery'
-                )}: ${threeBusinessDaysFromNow()}`,
-                data: {
-                  type: NotifTypes.OutForDelivery,
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              2 / 60 / 10
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.hasYourLovedOne')}`,
-                body: `${i18n.t('Notifs.letUsKnow')}`,
-                data: {
-                  type: NotifTypes.HasReceived,
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              3 / 60 / 10
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.returnedToSender')}`,
-                body: `${i18n.t('Notifs.getInTouch')}`,
-                data: {
-                  type: NotifTypes.ReturnedToSender,
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              4 / 60 / 10
-            );
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
             Notifs.scheduleNotificationInDays(
               {

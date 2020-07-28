@@ -18,7 +18,10 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
+import {
+  setActive as setActiveLetter,
+  setComposing,
+} from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
@@ -48,6 +51,7 @@ interface Props {
   existingLetters: Letter[];
   userState: UserState;
   setActiveLetter: (letter: Letter) => void;
+  setComposing: (letter: Letter) => void;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
   handleNotif: () => void;
@@ -74,7 +78,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             return (
               <LetterStatusCard
                 status={letter.status}
-                date={letter.dateCreated ? letter.dateCreated : ''}
+                date={letter.dateCreated}
                 description={letter.content}
                 onPress={() => {
                   this.props.setActiveLetter(letter);
@@ -225,13 +229,12 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes | NotifActionTypes>
-) => {
-  return {
-    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
-    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
-    handleNotif: () => dispatch(handleNotif()),
-  };
-};
+) => ({
+  setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
+  setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
+  setComposing: (letter: Letter) => dispatch(setComposing(letter)),
+  handleNotif: () => dispatch(handleNotif()),
+});
 const SingleContactScreen = connect(
   mapStateToProps,
   mapDispatchToProps

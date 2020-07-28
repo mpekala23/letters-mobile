@@ -21,7 +21,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import moment from 'moment';
+import { format } from 'date-fns';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateProfile.styles';
@@ -200,9 +200,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   render() {
     const { user } = this.props.userState;
-    const joinedDate = moment(this.props.userState.user.joined).format(
-      'MMM DD, YYYY'
-    );
+    const joinedDate = format(this.props.userState.user.joined, 'MMM dd, yyyy');
     return (
       <TouchableOpacity
         style={{

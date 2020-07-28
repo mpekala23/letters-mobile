@@ -188,7 +188,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
               }
               testID="dateFormatted"
             >
-              Jun 30
+              Jul 12, 2019
             </Text>
             <Text
               style={
@@ -204,7 +204,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
                 ]
               }
             >
-              Jun 30
+              11:51 AM
             </Text>
           </View>
         </View>
