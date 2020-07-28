@@ -94,6 +94,14 @@ class ComposeHeader extends React.Component<Props, State> {
           >
             {i18n.t('Compose.to')}: {this.props.recipientName}
           </Text>
+          <Text
+            style={[
+              Typography.FONT_MEDIUM_ITALIC,
+              { marginTop: 8, paddingRight: 16, color: Colors.GRAY_MEDIUM },
+            ]}
+          >
+            autosaved
+          </Text>
           {this.state.open || this.state.animating ? (
             <TouchableOpacity
               onPress={() => {
