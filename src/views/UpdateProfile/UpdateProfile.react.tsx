@@ -352,7 +352,10 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
             />
             <Button
               buttonText={i18n.t('UpdateProfileScreen.logOut')}
-              onPress={async () => logout()}
+              onPress={() => {
+                Segment.track('Logout');
+                logout();
+              }}
               containerStyle={Styles.logOutButton}
             />
           </ScrollView>
