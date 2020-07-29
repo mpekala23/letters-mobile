@@ -301,7 +301,8 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           :
            
           0
-           miles
+           
+          miles
         </Text>
         <TouchableOpacity
           activeOpacity={0.7}

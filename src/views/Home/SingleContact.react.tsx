@@ -239,7 +239,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {letters.length > 0 &&
+              {letters &&
+                letters.length > 0 &&
                 letters[0].dateCreated &&
                 format(letters[0].dateCreated, 'MMM dd')}
             </Text>
@@ -252,7 +253,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               <Emoji name="airplane" />{' '}
               {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
-              {this.state.lettersTraveled} {i18n.t('miles')}
+              {this.state.lettersTraveled}{' '}
+              {i18n.t('ContactSelectorScreen.miles')}
             </Text>
             <Button
               onPress={() => {

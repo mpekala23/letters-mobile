@@ -99,7 +99,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                 ]
               }
             >
-              autosaved
+              Autosaved
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}

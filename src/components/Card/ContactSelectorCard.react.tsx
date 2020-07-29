@@ -76,7 +76,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           >
             <Emoji name="airplane" />{' '}
             {i18n.t('SingleContactScreen.lettersTraveled')}: {lettersTravelled}{' '}
-            {i18n.t('miles')}
+            {i18n.t('ContactSelectorScreen.miles')}
           </Text>
         </View>
       </View>
