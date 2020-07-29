@@ -23,7 +23,7 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    dateCreated: '06/29/20',
+    dateCreated: new Date(),
     trackingEvents: [],
   },
   active: {
@@ -32,7 +32,7 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    dateCreated: '06/29/20',
+    dateCreated: new Date(),
     trackingEvents: [],
   },
   existing: {},
@@ -91,7 +91,7 @@ export default function LetterReducer(
         if (matchIx < existingLetters.length) {
           existingLetters.splice(matchIx, 1, action.payload);
         } else {
-          existingLetters.push(action.payload);
+          existingLetters.unshift(action.payload);
         }
         currentState.existing[action.payload.recipientId] = existingLetters;
       } else {

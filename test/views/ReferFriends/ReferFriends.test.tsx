@@ -11,12 +11,13 @@ jest.mock('@api', () => ({
   facebookShare: jest.fn(),
 }));
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
+  addDays: () => new Date(),
 }));
 
 const setup = (contactOverrides = []) => {
-  const navigation = { navigate: jest.fn() };
+  const navigation = { reset: jest.fn() };
   const contact = {
     firstName: 'First',
     lastName: 'Last',
@@ -62,7 +63,10 @@ describe('ReferFriends screen', () => {
     const { navigation, getByText } = setup();
     const doneButton = getByText('Done');
     fireEvent.press(doneButton);
-    expect(navigation.navigate).toHaveBeenCalledWith('SingleContact');
+    expect(navigation.reset).toHaveBeenCalledWith({
+      index: 0,
+      routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+    });
   });
 
   it('should make api call on share press', async () => {

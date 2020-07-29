@@ -11,6 +11,15 @@ export default StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 14,
   },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.22,
+    elevation: 4,
+  },
   buttonBackgroundReverse: {
     flexDirection: 'row',
     justifyContent: 'center',

@@ -5,12 +5,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Letter, LetterStatus } from 'types';
+import { Letter, LetterStatus, Photo } from 'types';
 import { Colors, Typography } from '@styles';
 import {
   setDraft,
   setStatus,
   clearComposing,
+  setPhoto,
+  setContent,
 } from '@store/Letter/LetterActions';
 import { createLetter } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -20,7 +22,8 @@ import Stamp from '@assets/views/Compose/Stamp';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
-import { threeBusinessDaysFromNow, hoursTill8Tomorrow } from '@utils';
+import { hoursTill8Tomorrow } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type PostcardPreviewScreenNavigationProp = StackNavigationProp<
@@ -35,6 +38,8 @@ interface Props {
   setDraft: (value: boolean) => void;
   setStatus: (status: LetterStatus) => void;
   clearComposing: () => void;
+  setContent: (content: string) => void;
+  setPhoto: (photo: Photo | undefined) => void;
 }
 
 const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
@@ -79,7 +84,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
             fontSize: 16,
             color: Colors.GRAY_MEDIUM,
             textAlign: 'center',
-            margin: 10,
           },
         ]}
       >
@@ -87,76 +91,19 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
       </Text>
       <Button
         buttonText={i18n.t('Compose.sendPostcard')}
+        blocking
         onPress={async () => {
           try {
             props.setDraft(false);
-            const { letterId } = await createLetter(props.composing);
+            await createLetter(props.composing);
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
+            props.setContent('');
+            props.setPhoto(undefined);
+            Segment.trackWithProperties('Compose - Click on Send', {
+              Option: 'Photo',
+            });
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.your')} letter ${i18n.t(
-                  'Notifs.to'
-                )} ${props.activeContact.firstName} ${i18n.t(
-                  'Notifs.isOnItsWay'
-                )}`,
-                body: `${i18n.t('Notifs.expectedDelivery')}: ${new Date(
-                  Date.now() + 1000
-                ).toDateString()}`,
-                data: {
-                  type: NotifTypes.OnItsWay,
-                  screen: 'LetterTracking',
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              1 / 60
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.yourLetterIsOut')} `,
-                body: `${i18n.t(
-                  'Notifs.expectedDelivery'
-                )}: ${threeBusinessDaysFromNow()}`,
-                data: {
-                  type: NotifTypes.OutForDelivery,
-                  screen: 'LetterTracking',
-                  data: {
-                    contactId: props.activeContact.id,
-                    letterId: letterId || -1,
-                  },
-                },
-              },
-              2 / 60
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.hasYourLovedOne')}`,
-                body: `${i18n.t('Notifs.letUsKnow')}`,
-                data: {
-                  type: NotifTypes.HasReceived,
-                  screen: 'Issues',
-                },
-              },
-              3 / 60
-            );
-            Notifs.scheduleNotificationInHours(
-              {
-                title: `${i18n.t('Notifs.returnedToSender')}`,
-                body: `${i18n.t('Notifs.getInTouch')}`,
-                data: {
-                  type: NotifTypes.ReturnedToSender,
-                  screen: 'LetterTracking',
-                  data: {
-                    contactId: props.activeContact.id,
-                  },
-                },
-              },
-              4 / 60
-            );
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
             Notifs.scheduleNotificationInDays(
               {
@@ -168,7 +115,6 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
                 body: `${i18n.t('Notifs.clickHereToBegin')}`,
                 data: {
                   type: NotifTypes.Drought,
-                  screen: 'SingleContact',
                   data: {
                     contactId: props.activeContact.id,
                   },
@@ -176,9 +122,16 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
               },
               hoursTill8Tomorrow() / 24 + 14
             );
-            props.navigation.navigate('ReferFriends');
+            props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'ReferFriends' }],
+            });
           } catch (err) {
             props.setDraft(true);
+            Segment.trackWithProperties('Review - Send Letter Failure', {
+              Option: 'Photo',
+              'Error Type': err,
+            });
             if (err.message === 'Unable to upload image.') {
               dropdownError({
                 message: i18n.t('Error.unableToUploadLetterPhoto'),
@@ -204,6 +157,8 @@ const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
     clearComposing: () => dispatch(clearComposing()),
     setDraft: (value: boolean) => dispatch(setDraft(value)),
     setStatus: (status: LetterStatus) => dispatch(setStatus(status)),
+    setContent: (content: string) => dispatch(setContent(content)),
+    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
   };
 };
 const PostcardPreviewScreen = connect(

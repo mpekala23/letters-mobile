@@ -183,7 +183,7 @@ exports[`First Letter screen should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#FF7171",
-              "borderRadius": 16,
+              "borderRadius": 8,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -215,13 +215,16 @@ exports[`First Letter screen should match snapshot 1`] = `
               },
               Object {
                 "color": "white",
-                "fontSize": 20,
+                "fontSize": 18,
                 "fontWeight": "700",
                 "padding": 6,
               },
               Object {},
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >
@@ -236,7 +239,7 @@ exports[`First Letter screen should match snapshot 1`] = `
               "alignItems": "center",
               "backgroundColor": "white",
               "borderColor": "#FF7171",
-              "borderRadius": 16,
+              "borderRadius": 8,
               "borderWidth": 2,
               "flexDirection": "row",
               "justifyContent": "center",
@@ -268,13 +271,16 @@ exports[`First Letter screen should match snapshot 1`] = `
               },
               Object {
                 "color": "#FF7171",
-                "fontSize": 20,
+                "fontSize": 18,
                 "fontWeight": "700",
                 "padding": 6,
               },
               Object {},
               Object {},
               Object {},
+              Object {
+                "opacity": 1,
+              },
             ]
           }
         >

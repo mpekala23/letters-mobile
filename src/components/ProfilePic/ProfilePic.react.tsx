@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
 import { navigate } from '@notifications';
@@ -14,6 +14,7 @@ export interface Props {
   lastName: string;
   imageUri?: string;
   type: ProfilePicTypes;
+  disabled?: boolean;
 }
 
 function mapProfileTypeToStyle(type: ProfilePicTypes) {
@@ -75,11 +76,17 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
 
   return (
     <View
-      pointerEvents={props.type === ProfilePicTypes.Contact ? 'none' : 'auto'}
+      pointerEvents={
+        props.type === ProfilePicTypes.Contact || props.disabled
+          ? 'none'
+          : 'auto'
+      }
+      style={mapProfileTypeToStyle(props.type).background}
     >
       <TouchableOpacity
         style={mapProfileTypeToStyle(props.type).background}
         onPress={async () => {
+          if (props.disabled) return;
           if (props.type === ProfilePicTypes.SingleContact)
             navigate('UpdateContact');
           else if (props.type === ProfilePicTypes.Topbar)

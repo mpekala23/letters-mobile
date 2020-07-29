@@ -2,6 +2,10 @@ import React from 'react';
 import { ContactSelectorCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
+jest.mock('date-fns', () => ({
+  format: () => 'Jul 12',
+}));
+
 const setup = (propOverrides = {}) => {
   const props = {
     firstName: 'Jane',
@@ -11,6 +15,7 @@ const setup = (propOverrides = {}) => {
         isDraft: true,
         recipientId: 8,
         content: 'Text',
+        dateCreated: 'Jul 12',
       },
     ],
     onPress: jest.fn(),

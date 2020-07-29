@@ -22,6 +22,7 @@ import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -39,6 +40,7 @@ interface Props {
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
+  userPostal: string;
   handleNotif: () => void;
 }
 
@@ -58,11 +60,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'ContactSelector'
-    )
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   componentWillUnmount() {
@@ -91,6 +89,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           this.props.setActiveContact(item);
           this.props.navigation.navigate('SingleContact');
         }}
+        userPostal={this.props.userPostal}
+        contactPostal={item.facility?.postal}
         key={item.inmateNumber}
       />
     );
@@ -142,7 +142,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
             try {
               await getContacts();
               await getUser();
-            } catch (e) {
+            } catch (err) {
               dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
             }
             this.setState({ refreshing: false });
@@ -155,6 +155,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
             this.props.navigation.navigate('ContactInfo', {
               addFromSelector: true,
             });
+            Segment.track('Contact Selector - Click on Add Contact');
           }}
           testID="addContact"
         >
@@ -165,13 +166,12 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    existingContacts: state.contact.existing,
-    existingLetters: state.letter.existing,
-    currentNotif: state.notif.currentNotif,
-  };
-};
+const mapStateToProps = (state: AppState) => ({
+  existingContacts: state.contact.existing,
+  existingLetters: state.letter.existing,
+  currentNotif: state.notif.currentNotif,
+  userPostal: state.user.user.postal,
+});
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
 ) => {

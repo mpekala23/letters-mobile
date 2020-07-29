@@ -21,8 +21,9 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import moment from 'moment';
+import { format } from 'date-fns';
 import { STATES_DROPDOWN, Validation } from '@utils';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -96,6 +97,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: true,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 
@@ -108,6 +110,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
+      blocking: true,
     });
   }
 
@@ -139,6 +142,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       };
       try {
         await updateProfile(user);
+        Segment.track('Edit Profile - Click on Save');
         this.props.navigation.pop();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
@@ -196,9 +200,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   render() {
     const { user } = this.props.userState;
-    const joinedDate = moment(this.props.userState.user.joined).format(
-      'MMM DD, YYYY'
-    );
+    const joinedDate = format(this.props.userState.user.joined, 'MMM dd, yyyy');
     return (
       <TouchableOpacity
         style={{
@@ -230,6 +232,13 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 initial={this.props.userState.user.photo}
                 onSuccess={(image: Photo) => this.setState({ image })}
                 onDelete={() => this.setState({ image: null })}
+                segmentOnPressLog={() => {
+                  Segment.track('Edit Profile - Click on Upload Image');
+                }}
+                segmentSuccessLog={() => {
+                  Segment.track('Edit Profile - Upload Image Success');
+                }}
+                segmentErrorLogEvent="Edit Profile - Upload Image Error"
               />
               <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
                 {user.firstName}
@@ -287,6 +296,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
               required
+              validate={Validation.Address}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.address2}
@@ -298,6 +308,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               ref={this.address2}
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
+              validate={Validation.Address}
               onValid={this.updateValid}
               nextInput={this.city}
             />
@@ -309,6 +320,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               parentStyle={Styles.parentStyle}
               placeholder={i18n.t('UpdateProfileScreen.city')}
               required
+              validate={Validation.City}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
               nextInput={this.phyState}
@@ -334,12 +346,16 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               ref={this.postal}
               placeholder={i18n.t('UpdateProfileScreen.zipcode')}
               required
+              validate={Validation.Postal}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
             <Button
               buttonText={i18n.t('UpdateProfileScreen.logOut')}
-              onPress={async () => logout()}
+              onPress={() => {
+                Segment.track('Logout');
+                logout();
+              }}
               containerStyle={Styles.logOutButton}
             />
           </ScrollView>

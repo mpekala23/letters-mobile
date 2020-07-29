@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { Input } from '@components';
 import { Validation } from '@utils';
-import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { render, toJSON, fireEvent, act } from '@testing-library/react-native';
 import { View } from 'react-native';
 
 const setup = (propOverrides = {}) => {
@@ -130,9 +130,9 @@ describe('Input component', () => {
     fireEvent.blur(textInput);
     expect(props.onValid).toHaveBeenCalledTimes(1);
     textInput.props.onChangeText('NoNumber');
-    expect(props.onInvalid).toHaveBeenCalledTimes(2);
+    expect(props.onInvalid).toHaveBeenCalledTimes(1);
     textInput.props.onChangeText('nouppercase3');
-    expect(props.onInvalid).toHaveBeenCalledTimes(2);
+    expect(props.onInvalid).toHaveBeenCalledTimes(1);
     textInput.props.onChangeText('Short1');
     expect(props.onInvalid).toHaveBeenCalledTimes(2);
     textInput.props.onChangeText('AbcDef66');
@@ -223,5 +223,30 @@ describe('Input component', () => {
     fireEvent.changeText(input, 'value');
     fireEvent.submitEditing(input);
     expect(dummyFocus).toHaveBeenCalledTimes(1);
+  });
+
+  it('should implement must match', () => {
+    const { props, getByPlaceholderText } = setup({ mustMatch: 'match' });
+    const input = getByPlaceholderText('placeholder');
+    expect(props.onValid).toHaveBeenCalledTimes(1);
+    fireEvent.changeText(input, 'not match');
+    expect(props.onInvalid).toHaveBeenCalledTimes(1);
+    fireEvent.changeText(input, 'match');
+    expect(props.onValid).toHaveBeenCalledTimes(2);
+  });
+
+  it('should implement invalid label', () => {
+    const { props, getByPlaceholderText, getByText } = setup({
+      required: true,
+      validate: Validation.State,
+      invalidFeedback: 'wrong',
+    });
+    const input = getByPlaceholderText('placeholder');
+    act(() => {
+      fireEvent.focus(input);
+      fireEvent.changeText(input, 'not a state');
+      fireEvent.blur(input);
+    });
+    expect(getByText('wrong')).toBeDefined();
   });
 });

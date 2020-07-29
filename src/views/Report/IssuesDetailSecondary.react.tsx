@@ -1,11 +1,14 @@
 import React from 'react';
-import { Text, View, TextStyle, ViewStyle } from 'react-native';
+import { Linking, Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
-import { DeliveryReportTypes } from 'types';
+import { DeliveryReportTypes, Facility } from 'types';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { Contact } from '@store/Contact/ContactTypes';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailSecondaryScreenNavigationProp = StackNavigationProp<
@@ -15,28 +18,39 @@ type IssuesDetailSecondaryScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: IssuesDetailSecondaryScreenNavigationProp;
+  contact: Contact;
   route: {
     params: { issue: DeliveryReportTypes };
   };
 }
 
-function mapIssueToDetailsTitle(type: DeliveryReportTypes) {
+function mapIssueToDetailsTitle(
+  facility: Facility | null,
+  type: DeliveryReportTypes
+) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
       return i18n.t('IssuesDetailScreen.weWillCheckInTwoDays');
     case DeliveryReportTypes.haveNotReceived:
-      return i18n.t('IssuesDetailScreen.wantToCheckWithFacility');
+      if (facility && facility.phone)
+        return i18n.t('IssuesDetailScreen.wantToCheckWithFacility');
+      return i18n.t('IssuesDetailScreen.talkToSomeoneAtAmeelio');
     default:
       return '';
   }
 }
 
-function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
+function mapIssueToDetailsDescription(
+  facility: Facility | null,
+  type: DeliveryReportTypes
+) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
       return i18n.t('IssuesDetailScreen.yourLetterIsOnItsWay');
     case DeliveryReportTypes.haveNotReceived:
-      return i18n.t('IssuesDetailScreen.waitCoupleDays');
+      if (facility && facility.phone)
+        return i18n.t('IssuesDetailScreen.waitCoupleDays');
+      return i18n.t('IssuesDetailScreen.tryMessagingUsOnFacebook');
     default:
       return '';
   }
@@ -62,7 +76,12 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.haveNotAsked:
       return defaultCTAButton(
-        () => props.navigation.navigate('Home'),
+        () => {
+          props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }],
+          });
+        },
         i18n.t('IssuesDetailScreen.returnHome'),
         ReportStyles.buttonText,
         ReportStyles.buttonReverse
@@ -70,9 +89,15 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
     case DeliveryReportTypes.haveNotReceived:
       return defaultCTAButton(
         () => {
-          /* TO-DO: Navigate to call facility phone number */
+          if (props.contact.facility && props.contact.facility.phone) {
+            Linking.openURL(`tel:${props.contact.facility.phone}`);
+          } else {
+            Linking.openURL('https://m.me/teamameelio');
+          }
         },
-        i18n.t('IssuesDetailScreen.callFacility'),
+        props.contact.facility && props.contact.facility.phone
+          ? i18n.t('IssuesDetailScreen.callFacility')
+          : i18n.t('IssuesDetailScreen.talkToSomeone'),
         ReportStyles.buttonTextReverse,
         ReportStyles.button
       );
@@ -87,28 +112,36 @@ function mapIssueToDetailsSecondaryCTA(
 ) {
   switch (type) {
     case DeliveryReportTypes.haveNotReceived:
-      return defaultCTAButton(
-        () => props.navigation.navigate('Home'),
-        i18n.t('IssuesDetailScreen.IllWait'),
-        ReportStyles.buttonText,
-        ReportStyles.buttonReverse
-      );
+      if (props.contact.facility && props.contact.facility.phone) {
+        return defaultCTAButton(
+          () => {
+            props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'ContactSelector' }],
+            });
+          },
+          i18n.t('IssuesDetailScreen.IllWait'),
+          ReportStyles.buttonText,
+          ReportStyles.buttonReverse
+        );
+      }
+      return null;
     default:
       return null;
   }
 }
 
-const IssuesDetailSecondaryScreen: React.FC<Props> = (props: Props) => {
+const IssuesDetailSecondaryScreenBase: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
     <View style={ReportStyles.background}>
       <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
-        {mapIssueToDetailsTitle(issue)}
+        {mapIssueToDetailsTitle(props.contact.facility, issue)}
       </Text>
       <Text
         style={[Typography.BASE_TEXT, { textAlign: 'center', padding: 16 }]}
       >
-        {mapIssueToDetailsDescription(issue)}
+        {mapIssueToDetailsDescription(props.contact.facility, issue)}
       </Text>
       <View style={{ width: '100%' }} testID="callToActionButton">
         {mapIssueToDetailsPrimaryCTA(props, issue)}
@@ -117,5 +150,12 @@ const IssuesDetailSecondaryScreen: React.FC<Props> = (props: Props) => {
     </View>
   );
 };
+
+const mapStateToProps = (state: AppState) => ({
+  contact: state.contact.active,
+});
+const IssuesDetailSecondaryScreen = connect(mapStateToProps)(
+  IssuesDetailSecondaryScreenBase
+);
 
 export default IssuesDetailSecondaryScreen;

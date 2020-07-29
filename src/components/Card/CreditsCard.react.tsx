@@ -13,8 +13,8 @@ interface Props {
 const CreditsCard: React.FC<Props> = (props: Props) => {
   const creditsRemaining =
     props.credits === 1
-      ? i18n.t('CreditsCard.credit')
-      : i18n.t('CreditsCard.credits');
+      ? i18n.t('CreditsCard.letter')
+      : i18n.t('CreditsCard.letters');
   return (
     <View
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
@@ -30,16 +30,24 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
                 { flex: 1 },
               ]}
             >
-              {props.credits} {creditsRemaining} {i18n.t('CreditsCard.left')}
+              {props.credits === 0
+                ? i18n.t('CreditsCard.youUsedAllYourLetters')
+                : `${props.credits} ${creditsRemaining} ${i18n.t(
+                    'CreditsCard.leftThisWeek'
+                  )}`}
             </Text>
-            <TouchableOpacity onPress={props.onPress}>
-              <Text style={CardStyles.creditsAddMoreText}>
-                {i18n.t('CreditsCard.addMore')}
-              </Text>
-            </TouchableOpacity>
+            {props.credits === 0 ? (
+              <TouchableOpacity onPress={props.onPress}>
+                <Text style={CardStyles.creditsSendMoreText}>
+                  {i18n.t('CreditsCard.sendMore')}
+                </Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
           <Text style={CardStyles.creditsResetMessage}>
-            {i18n.t('CreditsCard.creditsResetDaily')}
+            {props.credits === 0
+              ? i18n.t('CreditsCard.comeBackOnMondayForMore')
+              : i18n.t('CreditsCard.creditsResetDaily')}
           </Text>
         </View>
       </View>

@@ -37,9 +37,10 @@ export interface Props {
   nextInput?: RefObject<Input> | boolean;
   height: number;
   numLines: number;
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   testId?: string;
-  invalidFeedbackLabel?: string;
+  invalidFeedback?: string;
+  mustMatch?: string;
 }
 
 export interface State {
@@ -73,6 +74,7 @@ class Input extends React.Component<Props, State> {
     nextInput: false,
     height: INPUT_HEIGHT,
     numLines: 1,
+    required: false,
   };
 
   constructor(props: Props) {
@@ -136,17 +138,23 @@ class Input extends React.Component<Props, State> {
 
   doValidate = (): void => {
     const { value } = this.state;
-    const { required, validate, onValid, onInvalid } = this.props;
+    const { required, validate, onValid, onInvalid, mustMatch } = this.props;
     let result = true;
-    if (value && value.length) {
+    if (value || validate || required) {
       if (validate) {
         result = validateFormat(validate, value);
       }
-      if (required && value.length === 0) {
+      if (required && !/\S/.test(value)) {
         result = false;
       }
     } else {
       result = false;
+    }
+    if (mustMatch) {
+      result = result && mustMatch === value;
+    }
+    if (!required && value === '') {
+      result = true;
     }
     if (result === this.state.valid) {
       return;
@@ -275,7 +283,7 @@ class Input extends React.Component<Props, State> {
       numLines,
       required,
       options,
-      invalidFeedbackLabel,
+      invalidFeedback,
     } = this.props;
 
     let calcInputStyle;
@@ -389,22 +397,22 @@ class Input extends React.Component<Props, State> {
           </Animated.View>
           {this.props.children}
         </Animated.View>
-        {!this.state.valid && this.state.value.length > 0 && (
-          <View
-            style={[
-              {
-                position: 'absolute',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
-                // top: '20',
-              },
-              { opacity: enabled ? 1.0 : 0.7 },
-            ]}
-          >
-            <Text>{invalidFeedbackLabel}</Text>
-          </View>
-        )}
+        {invalidFeedback &&
+          !this.state.valid &&
+          this.state.dirty &&
+          !this.state.focused && (
+            <View
+              style={[
+                {
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
+                { opacity: enabled ? 1.0 : 0.7 },
+              ]}
+            >
+              <Text>{invalidFeedback}</Text>
+            </View>
+          )}
       </View>
     );
   }

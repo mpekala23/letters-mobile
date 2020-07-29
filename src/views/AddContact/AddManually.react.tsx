@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -15,7 +15,16 @@ import { Validation, STATES_DROPDOWN } from '@utils';
 import { Facility, PrisonTypes } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
+import { connect } from 'react-redux';
+import { AppState } from '@store/types';
+import { setAdding } from '@store/Contact/ContactActions';
+import {
+  ContactState,
+  Contact,
+  ContactActionTypes,
+} from '@store/Contact/ContactTypes';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -30,6 +39,8 @@ export interface Props {
       phyState: string;
     };
   };
+  contactState: ContactState;
+  setAdding: (contact: Contact) => void;
 }
 
 export interface State {
@@ -37,7 +48,7 @@ export interface State {
   valid: boolean;
 }
 
-class AddManuallyScreen extends React.Component<Props, State> {
+class AddManuallyScreenBase extends React.Component<Props, State> {
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
@@ -47,6 +58,8 @@ class AddManuallyScreen extends React.Component<Props, State> {
   private facilityState = createRef<Input>();
 
   private facilityPostal = createRef<Input>();
+
+  private facilityPhone = createRef<Input>();
 
   private unsubscribeFocus: () => void;
 
@@ -77,7 +90,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
     this.unsubscribeBlur();
   }
 
-  onNavigationBlur = () => {
+  onNavigationBlur = (): void => {
     setProfileOverride(undefined);
   };
 
@@ -91,12 +104,16 @@ class AddManuallyScreen extends React.Component<Props, State> {
   }
 
   onAddFacility(): void {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'manual',
+    });
     if (
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityPostal.current &&
-      this.facilityState.current
+      this.facilityState.current &&
+      this.facilityPhone.current
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
@@ -105,14 +122,14 @@ class AddManuallyScreen extends React.Component<Props, State> {
         city: this.facilityCity.current.state.value,
         state: this.facilityState.current.state.value,
         postal: this.facilityPostal.current.state.value,
+        phone: this.facilityPhone.current.state.value,
       };
-      this.props.navigation.navigate('FacilityDirectory', {
-        newFacility: facility,
-        phyState: this.facilityState.current.state.value,
-      });
-    } else {
-      this.props.navigation.navigate('FacilityDirectory');
+      const contact = this.props.contactState.adding;
+      contact.facility = facility;
+      this.props.setAdding(contact);
+      this.props.navigation.navigate('ReviewContact');
     }
+    Keyboard.dismiss();
   }
 
   setValid(val: boolean): void {
@@ -130,19 +147,34 @@ class AddManuallyScreen extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityState.current &&
-      this.facilityPostal.current
+      this.facilityPostal.current &&
+      this.facilityPhone.current
     ) {
       const result =
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
         this.facilityState.current.state.valid &&
-        this.facilityPostal.current.state.valid;
+        this.facilityPostal.current.state.valid &&
+        this.facilityPhone.current.state.valid;
       this.setValid(result);
     }
   }
 
   loadValuesFromStore(): void {
+    const addingFacility = this.props.contactState.adding.facility;
+    if (addingFacility) {
+      if (this.facilityName.current)
+        this.facilityName.current.set(addingFacility.name);
+      if (this.facilityAddress.current)
+        this.facilityAddress.current.set(addingFacility.address);
+      if (this.facilityCity.current)
+        this.facilityCity.current.set(addingFacility.city);
+      if (this.facilityPostal.current)
+        this.facilityPostal.current.set(addingFacility.postal);
+      if (this.facilityPhone.current)
+        this.facilityPhone.current.set(addingFacility.phone);
+    }
     if (this.facilityState.current)
       this.facilityState.current.set(this.props.route.params.phyState);
   }
@@ -202,6 +234,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
                   required
+                  validate={Validation.Address}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -217,6 +250,7 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityCity')}
                   required
+                  validate={Validation.City}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}
@@ -258,6 +292,21 @@ class AddManuallyScreen extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
+                  nextInput={this.facilityPhone}
+                />
+                <Input
+                  ref={this.facilityPhone}
+                  parentStyle={CommonStyles.fullWidth}
+                  placeholder={i18n.t('AddManuallyScreen.facilityPhone')}
+                  validate={Validation.Phone}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setValid(false)}
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
                 />
               </View>
             </ScrollView>
@@ -267,5 +316,18 @@ class AddManuallyScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
+const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+  return {
+    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+  };
+};
+const AddManuallyScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddManuallyScreenBase);
 
 export default AddManuallyScreen;

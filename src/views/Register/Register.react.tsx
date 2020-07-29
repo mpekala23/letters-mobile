@@ -30,6 +30,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Photo } from 'types';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -131,6 +132,7 @@ class RegisterScreen extends React.Component<Props, State> {
   };
 
   doRegister = async (): Promise<void> => {
+    Segment.track("Signup - Clicks 'Create Account'");
     if (
       this.firstName.current &&
       this.lastName.current &&
@@ -163,19 +165,22 @@ class RegisterScreen extends React.Component<Props, State> {
       };
       try {
         await register(data);
+        Segment.track('Signup - Account Created');
         Notifs.scheduleNotificationInHours(
           {
             title: `${i18n.t('Notifs.youreOneTapAway')}`,
             body: `${i18n.t('Notifs.clickHereToBegin')}`,
             data: {
               type: NotifTypes.NoFirstContact,
-              screen: 'ContactSelector',
             },
           },
           hoursTill8Tomorrow()
         );
       } catch (err) {
         if (err.data && err.data.email) {
+          Segment.trackWithProperties('Signup - Account Creation Error', {
+            'Error Type': 'invalid email',
+          });
           popupAlert({
             title: i18n.t('RegisterScreen.emailAlreadyInUse'),
             buttons: [
@@ -270,6 +275,7 @@ class RegisterScreen extends React.Component<Props, State> {
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t('RegisterScreen.addressLine1')}
             required
+            validate={Validation.Address}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.address2}
@@ -277,6 +283,7 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.address2}
             parentStyle={Styles.fullWidth}
+            validate={Validation.Address}
             placeholder={i18n.t('RegisterScreen.addressLine2')}
             nextInput={this.city}
           />
@@ -285,6 +292,7 @@ class RegisterScreen extends React.Component<Props, State> {
             parentStyle={Styles.fullWidth}
             placeholder={i18n.t('RegisterScreen.city')}
             required
+            validate={Validation.City}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
             nextInput={this.phyState}
@@ -329,7 +337,7 @@ class RegisterScreen extends React.Component<Props, State> {
             secure
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            invalidFeedbackLabel={i18n.t('RegisterScreen.passwordInvalid')}
+            invalidFeedback={i18n.t('RegisterScreen.passwordInvalid')}
           />
           <Input
             ref={this.passwordConfirmation}
@@ -337,7 +345,8 @@ class RegisterScreen extends React.Component<Props, State> {
             placeholder={i18n.t('RegisterScreen.confirmPassword')}
             required
             secure
-            // TO-DO: Add validation pending hint message
+            mustMatch={this.password.current?.state.value}
+            invalidFeedback={i18n.t('RegisterScreen.passwordsMustMatch')}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />
@@ -372,6 +381,7 @@ class RegisterScreen extends React.Component<Props, State> {
             containerStyle={[Styles.fullWidth, Styles.registerButton]}
             buttonText={i18n.t('RegisterScreen.register')}
             enabled={this.state.valid}
+            blocking
             onPress={this.doRegister}
           />
         </ScrollView>

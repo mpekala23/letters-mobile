@@ -2,14 +2,14 @@ import React from 'react';
 import { LetterStatusCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
 }));
 
 const setup = (propOverrides = {}) => {
   const props = {
     status: 'Status',
-    date: '2019-07-12',
+    date: new Date('2019-07-12'),
     description: 'Description',
     color: 'green',
     onPress: jest.fn(),

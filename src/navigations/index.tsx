@@ -44,7 +44,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { NullableFacility, SupportFAQTypes, DeliveryReportTypes } from 'types';
+import { SupportFAQTypes, DeliveryReportTypes } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -52,6 +52,9 @@ import Topbar, {
   setShown,
 } from '@components/Topbar/Topbar.react';
 import { NavigationContainer } from '@react-navigation/native';
+import { Platform } from 'react-native';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+import i18n from '@i18n';
 
 export { navigationRef, navigate };
 
@@ -72,7 +75,7 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   ExplainProblem: undefined;
-  FacilityDirectory: { newFacility?: NullableFacility; phyState: string };
+  FacilityDirectory: { phyState: string };
   FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
@@ -104,33 +107,33 @@ interface RouteDetails {
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Begin: { title: '', profile: false, shown: false },
   Splash: { title: 'Splash', profile: false },
-  Login: { title: 'Login', profile: false },
-  Terms: { title: 'Terms of Service', profile: false },
-  Privacy: { title: 'Privacy Policy', profile: false },
-  Register: { title: 'Register', profile: false },
-  AddManually: { title: 'Add Manually', profile: false },
-  ChooseOption: { title: 'Compose', profile: false },
-  ComposeLetter: { title: 'Compose', profile: false },
-  ComposePostcard: { title: 'Compose', profile: false },
-  ContactInfo: { title: 'Contact Info', profile: false },
-  ContactSelector: { title: 'Contacts', profile: true },
-  ExplainProblem: { title: 'Explain Problem', profile: false },
+  Login: { title: i18n.t('Screens.login'), profile: false },
+  Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
+  Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
+  Register: { title: i18n.t('Screens.register'), profile: false },
+  AddManually: { title: i18n.t('Screens.addManually'), profile: false },
+  ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
+  ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
+  ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
+  ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
+  ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
+  ExplainProblem: { title: i18n.t('Screens.explainProblem'), profile: false },
   FacilityDirectory: { title: '', profile: false },
-  FirstLetter: { title: 'First Letter', profile: false },
-  Home: { title: 'Home', profile: true },
-  Issues: { title: 'Issues', profile: false },
-  LetterDetails: { title: 'Letter Details', profile: true },
-  LetterPreview: { title: 'Last Step', profile: false },
-  LetterTracking: { title: 'Tracking', profile: true },
-  MemoryLane: { title: 'Memory Lane', profile: true },
-  PostcardPreview: { title: 'Postcard Preview', profile: false },
-  ReferFriends: { title: 'Spread the Word', profile: false },
-  ReviewContact: { title: 'Review Contact', profile: false },
+  FirstLetter: { title: i18n.t('Screens.firstLetter'), profile: false },
+  Home: { title: i18n.t('Screens.home'), profile: true },
+  Issues: { title: i18n.t('Screens.issues'), profile: false },
+  LetterDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
+  LetterPreview: { title: i18n.t('Screens.lastStep'), profile: false },
+  LetterTracking: { title: i18n.t('Screens.tracking'), profile: true },
+  MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  PostcardPreview: { title: i18n.t('Screens.postcardPreview'), profile: false },
+  ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
+  ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
   Setup: { title: '', profile: false },
-  SingleContact: { title: 'Home', profile: true },
-  Thanks: { title: 'Thanks', profile: false },
-  UpdateContact: { title: 'Update Contact', profile: false },
-  UpdateProfile: { title: 'Update Profile', profile: false },
+  SingleContact: { title: i18n.t('Screens.home'), profile: true },
+  Thanks: { title: i18n.t('Screens.thanks'), profile: false },
+  UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
+  UpdateProfile: { title: i18n.t('Screens.updateProfile'), profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -149,6 +152,57 @@ const fadeTransition = (
   return {
     cardStyle: {
       opacity: data.current.progress,
+    },
+  };
+};
+
+const leftRightTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateX: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_WIDTH, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const topBottomTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const bottomTopTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
     },
   };
 };
@@ -178,169 +232,73 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Setup"
           component={SetupScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name="ChooseOption"
-          component={ChooseOptionScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="ComposeLetter"
-          component={ComposeLetterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
+        <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
           name="ComposePostcard"
           component={ComposePostcardScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name="LetterPreview"
-          component={LetterPreviewScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="LetterPreview" component={LetterPreviewScreen} />
         <Stack.Screen
           name="PostcardPreview"
           component={PostcardPreviewScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
           options={{
-            cardStyleInterpolator: fadeTransition,
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : bottomTopTransition,
           }}
         />
         <Stack.Screen
           name="FacilityDirectory"
           component={FacilityDirectoryScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
         />
-        <Stack.Screen
-          name="AddManually"
-          component={AddManuallyScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ReferFriends"
-          component={ReferFriendsScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ReviewContact"
-          component={ReviewContactScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="ExplainProblem"
-          component={ExplainProblemScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="FirstLetter"
-          component={FirstLetterScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="Issues"
-          component={IssuesScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="IssuesDetail"
-          component={IssuesDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="AddManually" component={AddManuallyScreen} />
+        <Stack.Screen name="ReferFriends" component={ReferFriendsScreen} />
+        <Stack.Screen name="ReviewContact" component={ReviewContactScreen} />
+        <Stack.Screen name="ExplainProblem" component={ExplainProblemScreen} />
+        <Stack.Screen name="FirstLetter" component={FirstLetterScreen} />
+        <Stack.Screen name="Issues" component={IssuesScreen} />
+        <Stack.Screen name="IssuesDetail" component={IssuesDetailScreen} />
         <Stack.Screen
           name="IssuesDetailSecondary"
           component={IssuesDetailSecondaryScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name="Thanks"
-          component={ThanksScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
+        <Stack.Screen name="Thanks" component={ThanksScreen} />
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="SingleContact"
-          component={SingleContactScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="LetterTracking"
-          component={LetterTrackingScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="MemoryLane"
-          component={MemoryLaneScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="LetterDetails"
-          component={LetterDetailsScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-          }}
-        />
-        <Stack.Screen
-          name="SupportFAQ"
-          component={SupportFAQScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
+        <Stack.Screen name="SingleContact" component={SingleContactScreen} />
+        <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
+        <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
+        <Stack.Screen name="LetterDetails" component={LetterDetailsScreen} />
+        <Stack.Screen name="SupportFAQ" component={SupportFAQScreen} />
         <Stack.Screen
           name="SupportFAQDetail"
           component={SupportFAQDetailScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
           name="UpdateContact"
           component={UpdateContactScreen}
           options={{
-            cardStyleInterpolator: fadeTransition,
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
         <Stack.Screen
           name="UpdateProfile"
           component={UpdateProfileScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator:
+              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
+          }}
         />
       </>
     );
@@ -350,28 +308,15 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name="Begin"
           component={BeginScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
+          options={{
+            cardStyleInterpolator: fadeTransition,
+            gestureEnabled: false,
+          }}
         />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Terms"
-          component={TermsScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Privacy"
-          component={PrivacyScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Terms" component={TermsScreen} />
+        <Stack.Screen name="Privacy" component={PrivacyScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </>
     );
   }
@@ -397,7 +342,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       }}
     >
       {topbar}
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator:
+            Platform.OS === 'ios' ? fadeTransition : leftRightTransition,
+        }}
+      >
         {screens}
       </Stack.Navigator>
     </NavigationContainer>

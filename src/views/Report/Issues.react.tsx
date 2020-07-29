@@ -10,6 +10,7 @@ import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { AppState } from '@store/types';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import { connect } from 'react-redux';
+import * as Segment from 'expo-analytics-segment';
 import ReportStyles from './Report.styles';
 
 type IssueScreenNavigationProp = StackNavigationProp<
@@ -25,8 +26,7 @@ interface Props {
 
 class IssuesScreenBase extends React.Component<Props> {
   componentDidMount(): void {
-    if (this.props.currentNotif && this.props.currentNotif.screen === 'Issues')
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render(): JSX.Element {
@@ -56,6 +56,7 @@ class IssuesScreenBase extends React.Component<Props> {
             this.props.navigation.navigate('IssuesDetail', {
               issue: DeliveryReportTypes.received,
             });
+            Segment.track('Delivery Reporting - Success');
           }}
           containerStyle={ReportStyles.buttonReverse}
           textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
@@ -66,6 +67,7 @@ class IssuesScreenBase extends React.Component<Props> {
             this.props.navigation.navigate('IssuesDetail', {
               issue: DeliveryReportTypes.unsure,
             });
+            Segment.track('Delivery Reporting - Unknown');
           }}
           containerStyle={ReportStyles.buttonReverse}
           textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
@@ -76,6 +78,7 @@ class IssuesScreenBase extends React.Component<Props> {
             this.props.navigation.navigate('IssuesDetail', {
               issue: DeliveryReportTypes.notYetReceived,
             });
+            Segment.track('Delivery Reporting - Failure');
           }}
           containerStyle={ReportStyles.buttonReverse}
           textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}

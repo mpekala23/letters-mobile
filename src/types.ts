@@ -7,6 +7,7 @@ export interface Facility {
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
 export enum ProfilePicTypes {
@@ -14,8 +15,6 @@ export enum ProfilePicTypes {
   Contact = 'Contact',
   SingleContact = 'SingleContact',
 }
-
-export type NullableFacility = Facility | null;
 
 export enum Storage {
   RememberToken = 'Ameelio-Token',
@@ -67,8 +66,8 @@ export interface Letter {
   content: string;
   photo?: Photo;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
-  expectedDeliveryDate?: string;
-  dateCreated?: string;
+  expectedDeliveryDate?: Date;
+  dateCreated?: Date;
   trackingEvents?: LetterTrackingEvent[];
 }
 
@@ -82,13 +81,16 @@ export interface LetterTrackingEvent {
 export type TopbarRouteAction = {
   enabled: boolean;
   text: string;
-  action: () => void;
+  action: () => void | Promise<void>;
+  blocking?: boolean;
 };
 
 export interface ZipcodeInfo {
   zip: string;
   city: string;
   state: string;
+  lat?: number;
+  long?: number;
 }
 
 export interface Photo {

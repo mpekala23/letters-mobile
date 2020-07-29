@@ -74,26 +74,8 @@ exports[`Credits Card component should match snapshot 1`] = `
               ]
             }
           >
-            4
-             
-            Credits
-             
-            left
+            3 letters left this week
           </Text>
-          <TouchableOpacity
-            activeOpacity={0.2}
-          >
-            <Text
-              style={
-                Object {
-                  "color": "#FF7171",
-                  "fontSize": 16,
-                }
-              }
-            >
-              Add more
-            </Text>
-          </TouchableOpacity>
         </View>
         <Text
           style={
@@ -103,7 +85,7 @@ exports[`Credits Card component should match snapshot 1`] = `
             }
           }
         >
-          Credits reset daily
+          Your letters reset weekly, on Monday at 4:00AM EST.
         </Text>
       </View>
     </View>

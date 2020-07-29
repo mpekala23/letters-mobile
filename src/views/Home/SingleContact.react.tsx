@@ -18,19 +18,25 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
+import {
+  setActive as setActiveLetter,
+  setComposing,
+} from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact, getUser } from '@api';
+import { getLetters, getContact, getUser, getZipcode } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
+import { haversine } from '@utils';
+import { format, differenceInDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -40,6 +46,7 @@ type SingleContactScreenNavigationProp = StackNavigationProp<
 
 interface State {
   refreshing: boolean;
+  lettersTraveled: number;
 }
 
 interface Props {
@@ -48,9 +55,11 @@ interface Props {
   existingLetters: Letter[];
   userState: UserState;
   setActiveLetter: (letter: Letter) => void;
+  setComposing: (letter: Letter) => void;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
   handleNotif: () => void;
+  composing: Letter;
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -58,36 +67,91 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       refreshing: false,
+      lettersTraveled: 0,
     };
   }
 
-  componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'SingleContact'
-    )
-      this.props.handleNotif();
+  async componentDidMount() {
+    if (this.props.currentNotif) this.props.handleNotif();
+    await this.updateLettersTraveled();
+  }
+
+  async updateLettersTraveled() {
+    try {
+      if (this.props.activeContact.facility) {
+        const loc1 = await getZipcode(
+          this.props.activeContact.facility?.postal
+        );
+        const loc2 = await getZipcode(this.props.userState.user.postal);
+        this.setState({
+          lettersTraveled:
+            haversine(loc1, loc2) * this.props.existingLetters.length,
+        });
+      }
+    } catch (err) {
+      this.setState({ lettersTraveled: 0 });
+    }
   }
 
   render() {
     const contact = this.props.activeContact;
     const letters = this.props.existingLetters;
-
     const letterCards =
       letters && letters.length > 0
         ? letters.map((letter: Letter) => {
-            return (
-              <LetterStatusCard
-                status={letter.status}
-                date={letter.dateCreated ? letter.dateCreated : ''}
-                description={letter.content}
-                onPress={() => {
-                  this.props.setActiveLetter(letter);
-                  this.props.navigation.navigate('LetterTracking');
-                }}
-                key={letter.letterId}
-              />
-            );
+            if (letter.trackingEvents) {
+              let processedForDelivery = false;
+              let processedForDeliveryDate = new Date();
+              for (let ix = 0; ix < letter.trackingEvents.length; ix += 1) {
+                processedForDelivery =
+                  processedForDelivery ||
+                  letter.trackingEvents[ix].name === 'Processed for Delivery';
+                if (
+                  letter.trackingEvents[ix].name === 'Processed for Delivery'
+                ) {
+                  processedForDeliveryDate = letter.trackingEvents[ix].date;
+                }
+              }
+              if (
+                !processedForDelivery ||
+                differenceInDays(processedForDeliveryDate, new Date()) <= 5
+              ) {
+                return (
+                  <LetterStatusCard
+                    status={letter.status}
+                    date={letter.dateCreated}
+                    description={letter.content}
+                    onPress={() => {
+                      Segment.track('Contact View - Click on Letter Tracking');
+                      this.props.setActiveLetter(letter);
+                      this.props.navigation.navigate('LetterTracking');
+                    }}
+                    key={letter.letterId}
+                  />
+                );
+              }
+              return null;
+            }
+            if (
+              differenceInDays(
+                letter.dateCreated ? letter.dateCreated : new Date(),
+                new Date()
+              ) <= 11
+            )
+              return (
+                <LetterStatusCard
+                  status={letter.status}
+                  date={letter.dateCreated}
+                  description={letter.content}
+                  onPress={() => {
+                    Segment.track('Contact View - Click on Letter Tracking');
+                    this.props.setActiveLetter(letter);
+                    this.props.navigation.navigate('LetterTracking');
+                  }}
+                  key={letter.letterId}
+                />
+              );
+            return null;
           })
         : null;
 
@@ -115,6 +179,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getLetters();
             await getContact(this.props.activeContact.id);
             await getUser();
+            await this.updateLettersTraveled();
           } catch (err) {
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
@@ -138,6 +203,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               <TouchableOpacity
                 onPress={() => {
+                  Segment.track('Contact View - Click on Edit Contact');
                   this.props.navigation.navigate('UpdateContact');
                 }}
                 style={{
@@ -170,24 +236,43 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               {contact.firstName} {contact.lastName}
             </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-              <Emoji name="love_letter" />{' '}
-              {i18n.t('SingleContactScreen.received')}:{' '}
-              {letters ? letters.length : 0}
-            </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+            <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
-              {i18n.t('SingleContactScreen.lastHeardFromYou')}:
+              {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
+              {letters && letters.length > 0 && letters[0].dateCreated
+                ? format(letters[0].dateCreated, 'MMM dd')
+                : 'N/A'}
             </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                Styles.profileCardInfo,
+                { paddingBottom: 8 },
+              ]}
+            >
               <Emoji name="airplane" />{' '}
-              {i18n.t('SingleContactScreen.lettersTraveled')}:
+              {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
+              {this.state.lettersTraveled}{' '}
+              {i18n.t('ContactSelectorScreen.miles')}
             </Text>
             <Button
-              onPress={() => this.props.navigation.navigate('ChooseOption')}
+              onPress={() => {
+                this.props.navigation.navigate('ChooseOption');
+                Segment.trackWithProperties(
+                  'Contact View - Click on Send Letter',
+                  {
+                    Type:
+                      this.props.composing.content !== '' ||
+                      this.props.composing.photo
+                        ? 'draft'
+                        : 'blank',
+                  }
+                );
+              }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
               textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
               containerStyle={Styles.sendLetterButton}
+              enabled={this.props.userState.user.credit > 0}
             />
           </View>
           <View style={Styles.actionItems}>
@@ -226,16 +311,16 @@ const mapStateToProps = (state: AppState) => ({
   existingLetters: state.letter.existing[state.contact.active.id],
   userState: state.user,
   currentNotif: state.notif.currentNotif,
+  composing: state.letter.composing,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes | NotifActionTypes>
-) => {
-  return {
-    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
-    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
-    handleNotif: () => dispatch(handleNotif()),
-  };
-};
+) => ({
+  setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
+  setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
+  setComposing: (letter: Letter) => dispatch(setComposing(letter)),
+  handleNotif: () => dispatch(handleNotif()),
+});
 const SingleContactScreen = connect(
   mapStateToProps,
   mapDispatchToProps

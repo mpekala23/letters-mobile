@@ -139,83 +139,92 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
           </RNSVGSvgView>
         </View>
         <View
-          pointerEvents="auto"
           style={
             Object {
-              "backgroundColor": "#F2F2F2",
-              "borderRadius": 8,
-              "height": 50,
-              "marginBottom": 10,
-              "marginTop": 4,
-              "overflow": "hidden",
+              "flexDirection": "column",
               "width": "100%",
             }
           }
-          testID="parent"
         >
           <View
-            testID="invalid"
-          />
-          <View
-            testID="unfocused"
-          />
-          <TextInput
-            allowFontScaling={true}
-            multiline={false}
-            numberOfLines={1}
-            placeholder="Search Facility"
-            rejectResponderTermination={true}
-            secureTextEntry={false}
-            style={
-              Array [
-                Object {
-                  "borderColor": "rgba(0,0,0,0)",
-                  "borderRadius": 8,
-                  "borderWidth": 2,
-                  "color": "black",
-                  "fontSize": 16,
-                  "paddingHorizontal": 10,
-                  "textAlignVertical": "center",
-                  "width": "100%",
-                },
-                Object {
-                  "color": "#282828",
-                },
-                Object {},
-                Object {
-                  "height": 50,
-                },
-                Object {
-                  "borderRadius": 20,
-                },
-                Object {
-                  "fontFamily": "Poppins-Regular",
-                },
-              ]
-            }
-            underlineColorAndroid="transparent"
-            value=""
-          />
-          <View
+            pointerEvents="auto"
             style={
               Object {
-                "height": 0,
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 8,
+                "height": 50,
+                "marginBottom": 10,
+                "marginTop": 4,
+                "overflow": "hidden",
                 "width": "100%",
-                "zIndex": 5,
               }
             }
+            testID="parent"
           >
-            <ScrollView
-              keyboardShouldPersistTaps="always"
-              nestedScrollEnabled={true}
-              scrollEnabled={true}
+            <View
+              testID="valid"
+            />
+            <View
+              testID="unfocused"
+            />
+            <TextInput
+              allowFontScaling={true}
+              multiline={false}
+              numberOfLines={1}
+              placeholder="Search Facility"
+              rejectResponderTermination={true}
+              secureTextEntry={false}
+              style={
+                Array [
+                  Object {
+                    "borderColor": "rgba(0,0,0,0)",
+                    "borderRadius": 8,
+                    "borderWidth": 2,
+                    "color": "black",
+                    "fontSize": 16,
+                    "paddingHorizontal": 10,
+                    "textAlignVertical": "center",
+                    "width": "100%",
+                  },
+                  Object {
+                    "color": "#282828",
+                  },
+                  Object {},
+                  Object {
+                    "height": 50,
+                  },
+                  Object {
+                    "borderRadius": 20,
+                  },
+                  Object {
+                    "fontFamily": "Poppins-Regular",
+                  },
+                ]
+              }
+              underlineColorAndroid="transparent"
+              value=""
+            />
+            <View
               style={
                 Object {
-                  "flex": 1,
+                  "height": 0,
                   "width": "100%",
+                  "zIndex": 5,
                 }
               }
-            />
+            >
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                nestedScrollEnabled={true}
+                scrollEnabled={true}
+                style={
+                  Object {
+                    "flex": 1,
+                    "width": "100%",
+                  }
+                }
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -280,7 +289,7 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#FF7171",
-                  "borderRadius": 16,
+                  "borderRadius": 8,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "marginVertical": 5,
@@ -312,13 +321,18 @@ exports[`Facility Directory Screen should match snapshot 1`] = `
                   },
                   Object {
                     "color": "white",
-                    "fontSize": 20,
+                    "fontSize": 18,
                     "fontWeight": "700",
                     "padding": 6,
                   },
                   Object {},
+                  Object {
+                    "textAlign": "center",
+                  },
                   Object {},
-                  Object {},
+                  Object {
+                    "opacity": 1,
+                  },
                 ]
               }
             >

@@ -1,19 +1,19 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle, Image } from 'react-native';
-import moment from 'moment';
 import Default from '@assets/views/Onboarding/DefaultMemoryPreview.png';
+import { format } from 'date-fns';
 import CardStyles from './Card.styles';
 
 interface Props {
   text: string;
-  date: string;
+  date?: Date;
   imageUri: string;
   onPress: () => void;
   style?: ViewStyle;
 }
 
 const MemoryLaneCard: React.FC<Props> = (props: Props) => {
-  const letterDate = moment(props.date).format('MMM DD, YYYY');
+  const letterDate = props.date ? format(props.date, 'MMM dd, yyyy') : '';
   return (
     <TouchableOpacity
       style={[

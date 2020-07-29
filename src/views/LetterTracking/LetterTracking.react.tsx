@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { Button, LetterTracker, GrayBar } from '@components';
@@ -7,10 +7,12 @@ import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
-import moment from 'moment';
+import { format, addDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
+
 import Styles from './LetterTracking.styles';
 
 type LetterTrackingScreenNavigationProp = StackNavigationProp<
@@ -40,11 +42,7 @@ function mapStatusToTrackerBarHeight(type?: string) {
 
 class LetterTrackingScreenBase extends React.Component<Props> {
   componentDidMount() {
-    if (
-      this.props.currentNotif &&
-      this.props.currentNotif.screen === 'LetterTracking'
-    )
-      this.props.handleNotif();
+    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
@@ -52,8 +50,11 @@ class LetterTrackingScreenBase extends React.Component<Props> {
       this.props.navigation.navigate('SingleContact');
       return <View />;
     }
-    const deliveryDate = moment(this.props.letter.expectedDeliveryDate).format(
-      'MMM DD'
+    const deliveryDate = format(
+      this.props.letter.expectedDeliveryDate
+        ? this.props.letter.expectedDeliveryDate
+        : addDays(new Date(), 6),
+      'MMM dd'
     );
     const chronologicalEvents = this.props.letter.trackingEvents
       ?.slice()
@@ -104,6 +105,7 @@ class LetterTrackingScreenBase extends React.Component<Props> {
           reverse
           onPress={() => {
             this.props.navigation.navigate('SupportFAQ');
+            Segment.track('In-App Reporting - Click on I Need Help');
           }}
           buttonText={i18n.t('LetterTrackingScreen.needHelp')}
           textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
@@ -114,6 +116,25 @@ class LetterTrackingScreenBase extends React.Component<Props> {
         </Text>
         <ScrollView keyboardShouldPersistTaps="handled">
           <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
+          {this.props.letter.photo?.uri ? (
+            <Image
+              style={[
+                Styles.trackingPhoto,
+                {
+                  height: 275,
+                  width:
+                    this.props.letter.photo.width &&
+                    this.props.letter.photo.height
+                      ? (this.props.letter.photo.width /
+                          this.props.letter.photo.height) *
+                        275
+                      : 275,
+                },
+              ]}
+              source={this.props.letter.photo}
+              testID="memoryLaneImage"
+            />
+          ) : null}
         </ScrollView>
       </View>
     );

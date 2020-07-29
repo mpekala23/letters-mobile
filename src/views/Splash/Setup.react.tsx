@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { getContacts, getLetters } from '@api';
+import { getContacts, getLetters, uploadPushToken } from '@api';
 import { Icon } from '@components';
 import AmeelioBirdPink from '@assets/AmeelioBirdPink';
 import Notifs from '@notifications';
@@ -26,9 +26,11 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
   // runs only on the first render
   useEffect(() => {
     async function doSetup() {
+      if (!store.getState().user.authInfo.isLoggedIn) return;
       try {
         await Notifs.setup();
         store.dispatch(handleNotif());
+        await uploadPushToken(Notifs.getToken());
       } catch (err) {
         dropdownError({ message: i18n.t('Permission.notifs') });
       }
@@ -37,12 +39,10 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       } catch (err) {
         dropdownError({ message: i18n.t('Error.loadingUser') });
       }
-      if (store.getState().user.authInfo.isLoggedIn) {
-        if (store.getState().contact.existing.length === 0) {
-          props.navigation.replace('ContactInfo', {});
-        } else {
-          props.navigation.replace('ContactSelector');
-        }
+      if (store.getState().contact.existing.length === 0) {
+        props.navigation.replace('ContactInfo', {});
+      } else {
+        props.navigation.replace('ContactSelector');
       }
     }
     doSetup();

@@ -5,15 +5,17 @@ import {
   View,
   Image,
   Linking,
+  Keyboard,
 } from 'react-native';
 import i18n from '@i18n';
 import { pickImage, takeImage } from '@utils';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Photo } from 'types';
-import Camera from '@assets/views/PicUpload/Camera';
-import Placeholder from '@assets/views/PicUpload/Placeholder';
-import Delete from '@assets/views/PicUpload/Delete';
+import Camera from '@assets/components/PicUpload/Camera';
+import Placeholder from '@assets/components/PicUpload/Placeholder';
+import Delete from '@assets/components/PicUpload/Delete';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { Colors } from '@styles';
+import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 
@@ -33,6 +35,9 @@ export interface Props {
   aspect: [number, number];
   allowsEditing: boolean;
   initial: Photo;
+  segmentOnPressLog?: () => void;
+  segmentSuccessLog?: () => void;
+  segmentErrorLogEvent?: string;
 }
 
 export interface State {
@@ -80,16 +85,26 @@ class PicUpload extends React.Component<Props, State> {
                   width: result.width,
                   height: result.height,
                 };
+
                 this.setState(
                   {
                     image,
                   },
                   () => {
-                    if (this.props.onSuccess) this.props.onSuccess(image);
+                    if (this.props.onSuccess) {
+                      this.props.onSuccess(image);
+                      if (this.props.segmentSuccessLog)
+                        this.props.segmentSuccessLog();
+                    }
                   }
                 );
               }
             } catch (err) {
+              if (this.props.segmentErrorLogEvent)
+                Segment.trackWithProperties(this.props.segmentErrorLogEvent, {
+                  'Error Type': err,
+                  'Photo Option': 'Take Photo',
+                });
               popupAlert({
                 title: i18n.t('Permission.photos'),
                 buttons: [
@@ -119,19 +134,34 @@ class PicUpload extends React.Component<Props, State> {
                 const image = {
                   uri: result.uri,
                   type: 'image',
-                  width: result.width,
-                  height: result.height,
+                  width:
+                    this.props.type === PicUploadTypes.Profile
+                      ? Math.min(result.width, result.height)
+                      : result.width,
+                  height:
+                    this.props.type === PicUploadTypes.Profile
+                      ? Math.min(result.width, result.height)
+                      : result.height,
                 };
                 this.setState(
                   {
                     image,
                   },
                   () => {
-                    if (this.props.onSuccess) this.props.onSuccess(image);
+                    if (this.props.onSuccess) {
+                      this.props.onSuccess(image);
+                      if (this.props.segmentSuccessLog)
+                        this.props.segmentSuccessLog();
+                    }
                   }
                 );
               }
             } catch (err) {
+              if (this.props.segmentErrorLogEvent)
+                Segment.trackWithProperties(this.props.segmentErrorLogEvent, {
+                  'Error Type': err,
+                  'Photo Option': 'Upload Existing Photo',
+                });
               popupAlert({
                 title: i18n.t('Permission.photos'),
                 buttons: [
@@ -190,44 +220,56 @@ class PicUpload extends React.Component<Props, State> {
     }
 
     return (
-      <TouchableOpacity
-        style={[
-          {
-            width:
-              image && image.width && image.height
-                ? (image.width / image.height) * this.props.height
-                : this.props.width,
-            height: this.props.height,
-          },
+      <View
+        style={
           this.props.type === PicUploadTypes.Profile
-            ? Styles.profileBackground
-            : Styles.mediaBackground,
-          this.props.shapeBackground,
-        ]}
-        onPress={this.selectImage}
-        testID="clickable"
+            ? { backgroundColor: Colors.GRAY_LIGHTER, borderRadius: 100 }
+            : {}
+        }
       >
-        {innerCircle}
-        {image && image.uri.slice(-4) !== '.svg' && (
-          <TouchableOpacity
-            style={[
-              {
-                position: 'absolute',
-                width: 40,
-                height: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
-              this.props.type === PicUploadTypes.Profile
-                ? Styles.profileDelete
-                : Styles.mediaDelete,
-            ]}
-            onPress={this.deleteImage}
-          >
-            <Icon svg={Delete} />
-          </TouchableOpacity>
-        )}
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            {
+              width:
+                image && image.width && image.height
+                  ? (image.width / image.height) * this.props.height
+                  : this.props.width,
+              height: this.props.height,
+            },
+            this.props.type === PicUploadTypes.Profile
+              ? Styles.profileBackground
+              : Styles.mediaBackground,
+            this.props.shapeBackground,
+          ]}
+          onPress={() => {
+            Keyboard.dismiss();
+            this.selectImage();
+            if (this.props.segmentOnPressLog) this.props.segmentOnPressLog();
+          }}
+          testID="clickable"
+        >
+          {innerCircle}
+          {image && image.uri.slice(-4) !== '.svg' && (
+            <TouchableOpacity
+              style={[
+                {
+                  position: 'absolute',
+                  width: 40,
+                  height: 40,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
+                this.props.type === PicUploadTypes.Profile
+                  ? Styles.profileDelete
+                  : Styles.mediaDelete,
+              ]}
+              onPress={this.deleteImage}
+            >
+              <Icon svg={Delete} />
+            </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+      </View>
     );
   }
 }
