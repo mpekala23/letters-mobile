@@ -6,6 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   Animated,
+  Platform,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
@@ -60,7 +61,10 @@ class Alert extends React.Component<Record<string, unknown>, State> {
       >
         <TouchableOpacity
           style={Styles.trueBackground}
-          onPress={() => this.setCurrent(null)}
+          onPress={() => {
+            this.setCurrent(null);
+            setStatusBackground('white');
+          }}
           activeOpacity={1.0}
         >
           <View style={Styles.alertBackground}>
@@ -121,13 +125,16 @@ const alertRef = createRef<Alert>();
 const AlertInstance = (): JSX.Element => <Alert ref={alertRef} key="Alert" />;
 
 export function popupAlert(pop: AlertInfo): void {
-  setStatusBackground(GRAY_BACK);
-  if (alertRef.current)
+  setStatusBackground(Platform.OS === 'ios' ? GRAY_BACK : 'rgb(145,145,145)');
+  if (alertRef.current) {
     alertRef.current.setCurrent({
       title: pop.title,
       message: pop.message,
       buttons: pop.buttons,
     });
+  } else {
+    setStatusBackground('white');
+  }
 }
 
 export default AlertInstance;

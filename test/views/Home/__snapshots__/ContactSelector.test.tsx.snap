@@ -270,7 +270,10 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                 </Text>
                  
                 letters traveled
-                :
+                : 
+                0
+                 
+                miles
               </Text>
             </View>
           </View>

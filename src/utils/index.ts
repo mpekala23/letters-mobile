@@ -4,6 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
+import { ZipcodeInfo } from 'types';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -215,4 +216,19 @@ export function sleep(ms: number, error = false): Promise<void> {
       else resolve();
     }, ms)
   );
+}
+
+export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
+  if (!loc1.lat || !loc1.long || !loc2.lat || !loc2.long) return 0;
+  const R = 6371e3;
+  const φ1 = (loc1.lat * Math.PI) / 180;
+  const φ2 = (loc2.lat * Math.PI) / 180;
+  const Δφ = ((loc2.lat - loc1.lat) * Math.PI) / 180;
+  const Δλ = ((loc2.long - loc1.long) * Math.PI) / 180;
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+  return d * 0.000621371;
 }

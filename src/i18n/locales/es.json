@@ -67,6 +67,7 @@
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Sus seres queridos",
+    "miles": "millas",
     "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo."
   },
   "CreditsCard": {
@@ -319,7 +320,8 @@
     "continueWriting": "Continúe escribiendo",
     "startNewLetter": "Empezar nueva carta",
     "draftContactDeleted": "Empezar nueva carta.",
-    "notEnoughCredits": "No hay suficientes créditos"
+    "notEnoughCredits": "No hay suficientes créditos",
+    "autosaved": "Autoguardado"
   },
   "Notifs": {
     "your": "Tu",

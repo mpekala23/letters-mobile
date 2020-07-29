@@ -3,7 +3,11 @@
     "name": "Letters Mobile",
     "slug": "letters-mobile",
     "privacy": "public",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/BlueBird.png",
@@ -11,6 +15,12 @@
     "notification": {
       "icon": "./src/assets/BlueBird.png",
       "color": "#448AF3"
+    },
+    "android": {
+      "package": "com.ameelio.letters"
+    },
+    "ios": {
+      "bundleIdentifier": "com.ameelio.letters"
     }
   }
 }

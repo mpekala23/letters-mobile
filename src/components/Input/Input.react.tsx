@@ -37,7 +37,7 @@ export interface Props {
   nextInput?: RefObject<Input> | boolean;
   height: number;
   numLines: number;
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   testId?: string;
   allowsEmoji: boolean;
   mustMatch?: string;
