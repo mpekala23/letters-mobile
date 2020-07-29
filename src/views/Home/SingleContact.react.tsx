@@ -18,23 +18,25 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
+import {
+  setActive as setActiveLetter,
+  setComposing,
+} from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact, getUser } from '@api';
+import { getLetters, getContact, getUser, getZipcode } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
-import moment from 'moment';
 import { haversine } from '@utils';
-import { getZipcode } from '@api/Common';
+import { format, differenceInDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -53,6 +55,7 @@ interface Props {
   existingLetters: Letter[];
   userState: UserState;
   setActiveLetter: (letter: Letter) => void;
+  setComposing: (letter: Letter) => void;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
   handleNotif: () => void;
@@ -96,13 +99,49 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     const letterCards =
       letters && letters.length > 0
         ? letters.map((letter: Letter) => {
-            // TO-DO: Change to 5 days after marked as 'Processed for Delivery'
-            // For now, calculating 11 as 6 days approx. for delivery + 5 days thereafter
-            if (moment().diff(letter.dateCreated, 'days') <= 11)
+            if (letter.trackingEvents) {
+              let processedForDelivery = false;
+              let processedForDeliveryDate = new Date();
+              for (let ix = 0; ix < letter.trackingEvents.length; ix += 1) {
+                processedForDelivery =
+                  processedForDelivery ||
+                  letter.trackingEvents[ix].name === 'Processed for Delivery';
+                if (
+                  letter.trackingEvents[ix].name === 'Processed for Delivery'
+                ) {
+                  processedForDeliveryDate = letter.trackingEvents[ix].date;
+                }
+              }
+              if (
+                !processedForDelivery ||
+                differenceInDays(processedForDeliveryDate, new Date()) <= 5
+              ) {
+                return (
+                  <LetterStatusCard
+                    status={letter.status}
+                    date={letter.dateCreated}
+                    description={letter.content}
+                    onPress={() => {
+                      Segment.track('Contact View - Click on Letter Tracking');
+                      this.props.setActiveLetter(letter);
+                      this.props.navigation.navigate('LetterTracking');
+                    }}
+                    key={letter.letterId}
+                  />
+                );
+              }
+              return null;
+            }
+            if (
+              differenceInDays(
+                letter.dateCreated ? letter.dateCreated : new Date(),
+                new Date()
+              ) <= 11
+            )
               return (
                 <LetterStatusCard
                   status={letter.status}
-                  date={letter.dateCreated ? letter.dateCreated : ''}
+                  date={letter.dateCreated}
                   description={letter.content}
                   onPress={() => {
                     Segment.track('Contact View - Click on Letter Tracking');
@@ -200,7 +239,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {moment(letters[0].dateCreated).format('MMM DD')}
+              {letters.length > 0 &&
+                letters[0].dateCreated &&
+                format(letters[0].dateCreated, 'MMM dd')}
             </Text>
             <Text
               style={[
@@ -273,13 +314,12 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes | NotifActionTypes>
-) => {
-  return {
-    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
-    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
-    handleNotif: () => dispatch(handleNotif()),
-  };
-};
+) => ({
+  setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
+  setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
+  setComposing: (letter: Letter) => dispatch(setComposing(letter)),
+  handleNotif: () => dispatch(handleNotif()),
+});
 const SingleContactScreen = connect(
   mapStateToProps,
   mapDispatchToProps

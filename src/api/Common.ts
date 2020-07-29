@@ -12,7 +12,7 @@ export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
-  status?: 'OK' | 'ERROR';
+  status?: 'OK' | 'ERROR' | 'succeeded';
   message?: string;
   data: Record<string, unknown> | Record<string, unknown>[] | unknown;
 }
@@ -164,4 +164,17 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
   };
+}
+
+export async function uploadPushToken(token: string): Promise<void> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `exponent/devices/subscribe`),
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        expo_token: token,
+      }),
+    }
+  );
+  if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
 }
