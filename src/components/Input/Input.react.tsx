@@ -39,6 +39,7 @@ export interface Props {
   numLines: number;
   children?: JSX.Element;
   testId?: string;
+  invalidFeedbackLabel?: string;
 }
 
 export interface State {
@@ -274,6 +275,7 @@ class Input extends React.Component<Props, State> {
       numLines,
       required,
       options,
+      invalidFeedbackLabel,
     } = this.props;
 
     let calcInputStyle;
@@ -290,45 +292,104 @@ class Input extends React.Component<Props, State> {
     }
 
     return (
-      <Animated.View
-        style={[
-          Styles.parentStyle,
-          this.props.options.length > 0 ? { marginBottom: 0 } : {},
-          parentStyle,
-          options.length > 0
-            ? { height: this.state.currentHeight }
-            : { height: this.props.height },
-        ]}
-        testID="parent"
-        pointerEvents={enabled ? 'auto' : 'none'}
-      >
-        {this.state.valid ? <View testID="valid" /> : <View testID="invalid" />}
-        {this.state.focused ? (
-          <View testID="focused" />
-        ) : (
-          <View testID="unfocused" />
-        )}
-        <TextInput
-          ref={this.inputRef}
-          secureTextEntry={secure && !this.state.shown}
-          placeholder={placeholder}
-          onChangeText={this.set}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          onSubmitEditing={this.onSubmitEditing}
-          multiline={numLines > 1}
-          numberOfLines={numLines}
+      <View style={{ width: '100%', flexDirection: 'column' }}>
+        <Animated.View
           style={[
-            Styles.baseInputStyle,
-            calcInputStyle,
-            validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
-            { height: this.props.height },
-            inputStyle,
-            Typography.FONT_REGULAR,
+            Styles.parentStyle,
+            this.props.options.length > 0 ? { marginBottom: 0 } : {},
+            parentStyle,
+            options.length > 0
+              ? { height: this.state.currentHeight }
+              : { height: this.props.height },
           ]}
-          value={this.state.value}
-        />
-        {validate === Validation.CreditCard && (
+          testID="parent"
+          pointerEvents={enabled ? 'auto' : 'none'}
+        >
+          {this.state.valid ? (
+            <View testID="valid" />
+          ) : (
+            <View testID="invalid" />
+          )}
+          {this.state.focused ? (
+            <View testID="focused" />
+          ) : (
+            <View testID="unfocused" />
+          )}
+
+          <TextInput
+            ref={this.inputRef}
+            secureTextEntry={secure && !this.state.shown}
+            placeholder={placeholder}
+            onChangeText={this.set}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onSubmitEditing={this.onSubmitEditing}
+            multiline={numLines > 1}
+            numberOfLines={numLines}
+            style={[
+              Styles.baseInputStyle,
+              calcInputStyle,
+              validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
+              { height: this.props.height },
+              inputStyle,
+              Typography.FONT_REGULAR,
+            ]}
+            value={this.state.value}
+          />
+          {validate === Validation.CreditCard && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '100%',
+                  left: 20,
+                },
+                { opacity: enabled ? 1.0 : 0.7 },
+              ]}
+            >
+              <Icon svg={CreditCard} />
+            </View>
+          )}
+          {secure && this.state.focused && (
+            <View style={Styles.secureButtonsContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.set('');
+                }}
+              >
+                <Icon svg={ClearPassword} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState(({ shown }) => {
+                    return {
+                      shown: !shown,
+                    };
+                  });
+                }}
+              >
+                <Icon svg={TogglePassword} />
+              </TouchableOpacity>
+            </View>
+          )}
+          <Animated.View
+            style={[
+              Styles.optionBackground,
+              {
+                height: Math.min(
+                  DROP_HEIGHT - this.props.height,
+                  this.state.results.length * OPTION_HEIGHT
+                ),
+              },
+            ]}
+          >
+            {this.renderOptions()}
+          </Animated.View>
+          {this.props.children}
+        </Animated.View>
+        {!this.state.valid && this.state.value.length > 0 && (
           <View
             style={[
               {
@@ -336,51 +397,15 @@ class Input extends React.Component<Props, State> {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100%',
-                left: 20,
+                // top: '20',
               },
               { opacity: enabled ? 1.0 : 0.7 },
             ]}
           >
-            <Icon svg={CreditCard} />
+            <Text>{invalidFeedbackLabel}</Text>
           </View>
         )}
-        {secure && this.state.focused && (
-          <View style={Styles.secureButtonsContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                this.set('');
-              }}
-            >
-              <Icon svg={ClearPassword} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState(({ shown }) => {
-                  return {
-                    shown: !shown,
-                  };
-                });
-              }}
-            >
-              <Icon svg={TogglePassword} />
-            </TouchableOpacity>
-          </View>
-        )}
-        <Animated.View
-          style={[
-            Styles.optionBackground,
-            {
-              height: Math.min(
-                DROP_HEIGHT - this.props.height,
-                this.state.results.length * OPTION_HEIGHT
-              ),
-            },
-          ]}
-        >
-          {this.renderOptions()}
-        </Animated.View>
-        {this.props.children}
-      </Animated.View>
+      </View>
     );
   }
 }

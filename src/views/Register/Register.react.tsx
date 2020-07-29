@@ -5,12 +5,13 @@ import {
   Text,
   View,
   Platform,
+  TouchableNativeFeedbackBase,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -29,7 +30,6 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Photo } from 'types';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Styles from './Register.style';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -45,6 +45,7 @@ export interface State {
   valid: boolean;
   remember: boolean;
   image: Photo | null;
+  validPassword: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -78,6 +79,7 @@ class RegisterScreen extends React.Component<Props, State> {
       valid: false,
       remember: false,
       image: null,
+      validPassword: true,
     };
   }
 
@@ -325,19 +327,10 @@ class RegisterScreen extends React.Component<Props, State> {
             placeholder={i18n.t('RegisterScreen.password')}
             required
             secure
-            // TO-DO: Add validation pending hint message
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            invalidFeedbackLabel={i18n.t('RegisterScreen.passwordInvalid')}
           />
-          {this.password.current &&
-            !this.password.current.state.valid &&
-            this.password.current.state.dirty && (
-              <Text
-                style={[Typography.FONT_REGULAR, { color: Colors.AMEELIO_RED }]}
-              >
-                The password must be at least 8 characters
-              </Text>
-            )}
           <Input
             ref={this.passwordConfirmation}
             parentStyle={Styles.fullWidth}

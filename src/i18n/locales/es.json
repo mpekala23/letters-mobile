@@ -175,7 +175,8 @@
     "emailAlreadyInUse": "Email already in use.",
     "confirmPassword": "Confirm Password",
     "referer": "How did you hear about Ameelio?",
-    "login": "Log In"
+    "login": "Log In",
+    "passwordInvalid": "The password must be at least 8 characters."
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
