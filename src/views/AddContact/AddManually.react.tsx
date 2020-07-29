@@ -147,14 +147,16 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityState.current &&
-      this.facilityPostal.current
+      this.facilityPostal.current &&
+      this.facilityPhone.current
     ) {
       const result =
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
         this.facilityState.current.state.valid &&
-        this.facilityPostal.current.state.valid;
+        this.facilityPostal.current.state.valid &&
+        this.facilityPhone.current.state.valid;
       this.setValid(result);
     }
   }
@@ -296,6 +298,9 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
                   ref={this.facilityPhone}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('AddManuallyScreen.facilityPhone')}
+                  validate={Validation.Phone}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setValid(false)}
                   onFocus={() => {
                     this.setState({ inputting: true });
                   }}

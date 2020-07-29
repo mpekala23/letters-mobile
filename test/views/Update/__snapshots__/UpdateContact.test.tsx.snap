@@ -883,7 +883,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="invalid"
+            testID="valid"
           />
           <View
             testID="unfocused"
@@ -907,9 +907,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                   "textAlignVertical": "center",
                   "width": "100%",
                 },
-                Object {
-                  "color": "#282828",
-                },
+                Object {},
                 Object {},
                 Object {
                   "height": 50,
@@ -921,6 +919,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               ]
             }
             underlineColorAndroid="transparent"
+            value=""
           />
           <View
             style={
@@ -977,7 +976,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="invalid"
+            testID="valid"
           />
           <View
             testID="unfocused"
@@ -1072,7 +1071,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="invalid"
+            testID="valid"
           />
           <View
             testID="unfocused"

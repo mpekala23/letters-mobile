@@ -152,7 +152,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         city: this.facilityCity.current.state.value,
         state: this.facilityState.current.state.value,
         postal: this.facilityPostal.current.state.value,
-        phone: this.props.contact.facility.phone,
+        phone: this.facilityPhone.current.state.value,
       };
       const contact: Contact = {
         id: this.props.contact.id,
@@ -196,7 +196,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityCity.current.set(this.props.contact.facility.city);
       this.facilityState.current.set(this.props.contact.facility.state);
       this.facilityPostal.current.set(this.props.contact.facility.postal);
-      this.facilityPhone.current.set(this.props.contact.facility.phone);
+      this.facilityPhone.current.set(
+        this.props.contact.facility.phone
+          ? this.props.contact.facility.phone
+          : ''
+      );
       this.dorm.current.set(
         this.props.contact.dorm ? this.props.contact.dorm : ''
       );
@@ -212,13 +216,15 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
+      this.facilityPhone.current &&
       this.props.contact.facility
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid;
+        this.facilityAddress.current.state.valid &&
+        this.facilityPhone.current.state.valid;
       this.setValid(result);
     }
   }
@@ -379,6 +385,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             <Input
               ref={this.facilityPhone}
               placeholder={i18n.t('UpdateContactScreen.facilityPhone')}
+              validate={Validation.Phone}
+              onValid={this.updateValid}
+              onInvalid={() => this.setValid(false)}
             />
             <Text
               style={[
