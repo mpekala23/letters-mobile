@@ -154,6 +154,9 @@ class Input extends React.Component<Props, State> {
     if (mustMatch) {
       result = result && mustMatch === value;
     }
+    if (!required && value === '') {
+      result = true;
+    }
     if (result === this.state.valid) {
       return;
     }

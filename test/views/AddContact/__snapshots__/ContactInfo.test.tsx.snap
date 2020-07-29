@@ -223,7 +223,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="invalid"
+                testID="valid"
               />
               <View
                 testID="unfocused"

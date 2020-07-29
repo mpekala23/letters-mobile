@@ -4,7 +4,7 @@ import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
 import { ProfilePicTypes, Letter } from 'types';
-import moment from 'moment';
+import { format } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { haversine } from '@utils';
 import CardStyles from './Card.styles';
@@ -64,9 +64,11 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
             <Emoji name="calendar" />{' '}
             {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-            {props.letters
-              ? moment(props.letters[0].dateCreated).format('MMM DD')
-              : ''}
+            {props.letters &&
+            props.letters.length > 0 &&
+            props.letters[0].dateCreated
+              ? format(props.letters[0].dateCreated, 'MMM dd')
+              : 'N/A'}
           </Text>
           <Text
             style={[

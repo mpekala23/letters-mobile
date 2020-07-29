@@ -229,6 +229,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         </Text>
         <Button
           buttonText={i18n.t('FacilityDirectoryScreen.addManually')}
+          textStyle={{ textAlign: 'center' }}
           containerStyle={Styles.addManuallyButton}
           onPress={() => {
             Segment.track('Add Contact - Click on Manual Facility Add');

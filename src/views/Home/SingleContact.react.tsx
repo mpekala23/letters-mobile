@@ -239,10 +239,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {letters &&
-                letters.length > 0 &&
-                letters[0].dateCreated &&
-                format(letters[0].dateCreated, 'MMM dd')}
+              {letters && letters.length > 0 && letters[0].dateCreated
+                ? format(letters[0].dateCreated, 'MMM dd')
+                : 'N/A'}
             </Text>
             <Text
               style={[

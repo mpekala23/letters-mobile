@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from 'types';
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
-  diff: () => 1,
+  differenceInDays: () => 1,
 }));
 
 const mockStore = configureStore([]);
