@@ -45,6 +45,11 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
     contact: initialContactState,
     letter: initialLetterState,
     notif: { currentNotif: null },
+    user: {
+      user: {
+        postal: '55419',
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {

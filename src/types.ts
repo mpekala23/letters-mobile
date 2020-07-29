@@ -88,6 +88,8 @@ export interface ZipcodeInfo {
   zip: string;
   city: string;
   state: string;
+  lat?: number;
+  long?: number;
 }
 
 export interface Photo {

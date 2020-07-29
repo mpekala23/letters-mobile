@@ -66,6 +66,7 @@
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Sus seres queridos",
+    "miles": "millas",
     "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo."
   },
   "CreditsCard": {
@@ -310,7 +311,8 @@
     "continueWritingAnd": "Continue writing and send that letter to your loved one",
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new letter",
-    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter."
+    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
+    "autosaved": "Autoguardado"
   },
   "Notifs": {
     "your": "Tu",
