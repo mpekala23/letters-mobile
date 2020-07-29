@@ -7,11 +7,12 @@ import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
-import moment from 'moment';
+import { format, addDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
+
 import Styles from './LetterTracking.styles';
 
 type LetterTrackingScreenNavigationProp = StackNavigationProp<
@@ -49,8 +50,11 @@ class LetterTrackingScreenBase extends React.Component<Props> {
       this.props.navigation.navigate('SingleContact');
       return <View />;
     }
-    const deliveryDate = moment(this.props.letter.expectedDeliveryDate).format(
-      'MMM DD'
+    const deliveryDate = format(
+      this.props.letter.expectedDeliveryDate
+        ? this.props.letter.expectedDeliveryDate
+        : addDays(new Date(), 6),
+      'MMM dd'
     );
     const chronologicalEvents = this.props.letter.trackingEvents
       ?.slice()

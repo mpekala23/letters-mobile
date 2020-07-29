@@ -20,7 +20,7 @@ import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { getContacts, getUser } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
+import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './ContactSelector.styles';

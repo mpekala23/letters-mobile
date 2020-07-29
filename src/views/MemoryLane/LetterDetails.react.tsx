@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Letter, LetterTypes, LetterStatus } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import moment from 'moment';
+import { format } from 'date-fns';
 import Styles from './LetterDetails.styles';
 
 type LetterDetailsScreenNavigationProp = StackNavigationProp<
@@ -20,7 +20,10 @@ interface Props {
 
 const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const { letter } = props;
-  const letterDate = moment(letter.dateCreated).format('MMM DD, YYYY');
+  const letterDate = format(
+    letter.dateCreated ? letter.dateCreated : new Date(),
+    'MMM dd, yyyy'
+  );
   const photos = letter.photo?.uri ? (
     <Image
       style={Styles.memoryLanePicture}
@@ -51,7 +54,6 @@ const mapStateToProps = (state: AppState) => ({
         recipientId: -1,
         recipientName: '',
         content: '',
-        dateCreated: '',
         trackingEvents: [],
       },
 });
