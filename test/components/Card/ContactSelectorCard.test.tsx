@@ -2,7 +2,7 @@ import React from 'react';
 import { ContactSelectorCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
 }));
 
