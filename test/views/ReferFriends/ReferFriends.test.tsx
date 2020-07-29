@@ -11,8 +11,9 @@ jest.mock('@api', () => ({
   facebookShare: jest.fn(),
 }));
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
+  addDays: () => new Date(),
 }));
 
 const setup = (contactOverrides = []) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { LetterTrackingEvent, LetterStatus } from 'types';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 export interface Props {
   trackingEvent: LetterTrackingEvent;
@@ -25,8 +25,8 @@ function mapStatustoTrackerColor(type: string) {
 
 const LetterTracker: React.FC<Props> = (props: Props) => {
   const { name, location, date } = props.trackingEvent;
-  const dateFormatted = moment(date).format('MMM DD, YYYY');
-  const timeFormatted = moment(date).format('HH:mm a');
+  const dateFormatted = format(date, 'MMM dd, yyyy');
+  const timeFormatted = format(date, 'HH:mm a');
 
   return (
     <View>

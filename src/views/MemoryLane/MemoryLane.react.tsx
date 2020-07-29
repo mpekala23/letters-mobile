@@ -34,7 +34,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
           <MemoryLaneCard
             key={letter.letterId}
             text={letter.content}
-            date={letter.dateCreated ? letter.dateCreated : ''}
+            date={letter.dateCreated}
             imageUri={letter.photo ? letter.photo.uri : ''}
             onPress={() => {
               props.setActiveLetter(letter);

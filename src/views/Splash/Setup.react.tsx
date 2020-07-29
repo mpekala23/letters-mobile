@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { getContacts, getLetters } from '@api';
+import { getContacts, getLetters, uploadPushToken } from '@api';
 import { Icon } from '@components';
 import AmeelioBirdPink from '@assets/AmeelioBirdPink';
 import Notifs from '@notifications';
@@ -30,6 +30,7 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       try {
         await Notifs.setup();
         store.dispatch(handleNotif());
+        await uploadPushToken(Notifs.getToken());
       } catch (err) {
         dropdownError({ message: i18n.t('Permission.notifs') });
       }
