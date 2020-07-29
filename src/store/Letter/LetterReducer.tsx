@@ -23,7 +23,7 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    dateCreated: '06/29/20',
+    dateCreated: new Date(),
     trackingEvents: [],
   },
   active: {
@@ -32,7 +32,7 @@ const initialState: LetterState = {
     isDraft: true,
     recipientId: -1,
     content: '',
-    dateCreated: '06/29/20',
+    dateCreated: new Date(),
     trackingEvents: [],
   },
   existing: {},

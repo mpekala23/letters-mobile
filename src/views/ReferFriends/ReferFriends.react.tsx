@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import Icon from '@components/Icon/Icon.react';
 import Airplane from '@assets/views/ReferFriends/Airplane';
-import moment from 'moment';
+import { format, addDays } from 'date-fns';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -38,6 +38,7 @@ const onShare = async () => {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
+  const sixDaysFromNow = addDays(new Date(), 6);
   return (
     <KeyboardAvoidingView
       style={Styles.trueBackground}
@@ -74,9 +75,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
             {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}{' '}
             <Text style={Typography.FONT_BOLD}>
-              {moment(new Date(Date.now() + 1000 * 60 * 60 * 24 * 6)).format(
-                'MMM DD, YYYY'
-              )}
+              {format(sixDaysFromNow, 'MMM dd, yyyy')}
             </Text>
             . {i18n.t('ReferFriendsScreen.thanksAgain')}
           </Text>

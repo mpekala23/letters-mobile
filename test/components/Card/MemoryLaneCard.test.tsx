@@ -5,7 +5,7 @@ import { fireEvent, render, toJSON } from '@testing-library/react-native';
 const setup = (propOverrides = {}) => {
   const props = {
     text: 'Text',
-    date: '2019-07-12',
+    date: new Date('2019-07-12T15:51:41.000Z'),
     imageUri: 'test',
     color: 'green',
     onPress: jest.fn(),

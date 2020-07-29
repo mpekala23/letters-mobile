@@ -22,6 +22,7 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
 import { Letter } from 'types';
+import { addBusinessDays } from 'date-fns';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -144,6 +145,7 @@ class NotifsBase {
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();
+    const { futureNotifs } = state.notif;
     if (!state.user.authInfo.isLoggedIn) {
       try {
         await loginWithToken();
@@ -178,6 +180,28 @@ class NotifsBase {
         navigate('FirstLetter');
         break;
       case NotifTypes.OnItsWay:
+        if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
+        contact = getContact(notif.data.contactId);
+        if (!contact) break;
+        store.dispatch(setActiveContact(contact));
+        letter = getLetter(contact.id, notif.data.letterId);
+        if (!letter) {
+          resetNavigation({
+            index: 0,
+            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          });
+          break;
+        }
+        store.dispatch(setActiveLetter(letter));
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'LetterTracking' },
+          ],
+        });
+        break;
       case NotifTypes.OutForDelivery:
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
@@ -192,6 +216,20 @@ class NotifsBase {
           break;
         }
         store.dispatch(setActiveLetter(letter));
+        this.scheduleNotification(
+          {
+            title: `${i18n.t('Notifs.hasYourLovedOne')}`,
+            body: `${i18n.t('Notifs.letUsKnow')}`,
+            data: {
+              type: NotifTypes.HasReceived,
+              data: {
+                contactId: contact.id,
+                letterId: letter.letterId,
+              },
+            },
+          },
+          addBusinessDays(new Date(), 3)
+        );
         resetNavigation({
           index: 0,
           routes: [
@@ -227,6 +265,16 @@ class NotifsBase {
         break;
       case NotifTypes.ReturnedToSender:
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
+        for (let ix = 0; ix < futureNotifs.length; ix += 1) {
+          if (
+            futureNotifs[ix].nativeNotif.data.type === NotifTypes.HasReceived &&
+            futureNotifs[ix].nativeNotif.data.data?.letterId ===
+              notif.data.letterId
+          ) {
+            // eslint-disable-next-line no-await-in-loop
+            await this.cancelNotificationById(futureNotifs[ix].id);
+          }
+        }
         contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
@@ -261,10 +309,10 @@ class NotifsBase {
               contact = state.contact.existing[ix];
             }
           }
-          if (contact) store.dispatch(setActiveContact(contact));
         } else {
           break;
         }
+        if (contact) store.dispatch(setActiveContact(contact));
         resetNavigation({
           index: 0,
           routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
@@ -312,7 +360,21 @@ class NotifsBase {
     store.dispatch(setFutureNotifs(futureNotifs));
   };
 
-  cancelNotificationById = async (id: string) => {
+  scheduleNotification = async (nativeNotif: NativeNotif, time: Date) => {
+    const id = await Notifications.scheduleLocalNotificationAsync(nativeNotif, {
+      time,
+    });
+    const { futureNotifs } = store.getState().notif;
+    const adding: FutureNotif = {
+      id,
+      time: time.getTime(),
+      nativeNotif,
+    };
+    futureNotifs.push(adding);
+    store.dispatch(setFutureNotifs(futureNotifs));
+  };
+
+  cancelNotificationById = async (id: ReactText) => {
     const result = await Notifications.cancelScheduledNotificationAsync(id);
     const { futureNotifs } = store.getState().notif;
     const newFuture = [];

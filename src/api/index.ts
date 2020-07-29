@@ -1,3 +1,5 @@
+import { uploadPushToken, getZipcode } from './Common';
+
 import {
   addContact,
   updateContact,
@@ -20,6 +22,8 @@ import {
 } from './User';
 
 export {
+  uploadPushToken,
+  getZipcode,
   addContact,
   updateContact,
   deleteContact,

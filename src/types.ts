@@ -65,8 +65,8 @@ export interface Letter {
   content: string;
   photo?: Photo;
   letterId?: number; // TODO: Once we have more info on this field and lob, use this more
-  expectedDeliveryDate?: string;
-  dateCreated?: string;
+  expectedDeliveryDate?: Date;
+  dateCreated?: Date;
   trackingEvents?: LetterTrackingEvent[];
 }
 

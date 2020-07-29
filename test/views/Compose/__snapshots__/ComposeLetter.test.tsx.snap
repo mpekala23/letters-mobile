@@ -46,6 +46,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
             },
             Object {
               "flex": 1,
+              "paddingBottom": undefined,
             },
           ]
         }
