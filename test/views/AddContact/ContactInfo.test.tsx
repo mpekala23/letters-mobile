@@ -107,7 +107,6 @@ describe('Contact Info Screen', () => {
     expect(getAllByText('Iowa')).toBeDefined();
     const stateInput = getByPlaceholderText('State');
     fireEvent.changeText(stateInput, 'Not a valid state');
-    // expect(getAllByText('Iowa')).toBeDefined();
     fireEvent.changeText(stateInput, 'Kansas');
     expect(queryAllByText('Iowa').length).toBeFalsy();
     expect(getAllByText('Kansas')).toBeDefined();
