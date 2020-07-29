@@ -236,7 +236,7 @@ describe('Input component', () => {
   });
 
   it('should implement invalid label', () => {
-    const { props, getByPlaceholderText, getByText } = setup({
+    const { getByPlaceholderText, getByText } = setup({
       required: true,
       validate: Validation.State,
       invalidFeedback: 'wrong',

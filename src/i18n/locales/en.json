@@ -185,7 +185,7 @@
     "referer": "How did you hear about Ameelio?",
     "login": "Log In",
     "passwordInvalid": "The password must be at least 8 characters.",
-    "passwordsMustMatch": "Your passwords must match"
+    "passwordsMustMatch": "Your passwords must match."
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
