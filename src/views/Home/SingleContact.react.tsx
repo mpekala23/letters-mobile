@@ -211,7 +211,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               <Emoji name="airplane" />{' '}
               {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
-              {this.state.lettersTraveled} miles
+              {this.state.lettersTraveled} {i18n.t('miles')}
             </Text>
             <Button
               onPress={() => {
