@@ -136,6 +136,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         city: this.props.contactState.adding.facility.city,
         state: this.stateRef.current.state.value,
         postal: this.postal.current.state.value,
+        phone: this.props.contactState.adding.facility.phone,
       };
       const contact: Contact = {
         id: -1,

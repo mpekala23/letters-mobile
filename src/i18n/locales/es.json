@@ -28,7 +28,8 @@
     "facilityAddress": "Dirección del presidio",
     "facilityCity": "Ciudad del presidio",
     "facilityState": "Estado del presidio",
-    "facilityPostal": "C.P. del presidio"
+    "facilityPostal": "C.P. del presidio",
+    "facilityPhone": "Facility Phone (optional)"
   },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados",
@@ -208,6 +209,7 @@
     "facilityCity": "Ciudad del Presidio",
     "facilityState": "Estado del Presidio",
     "facilityPostal": "C.P. del Presidio",
+    "facilityPhone": "Facility Phone (optional)",
     "optionalUnit": "Unidad (opcional, solo si necesario)",
     "optionalDorm": "Dormitorio (opcional, solo si necesario)",
     "save": "Guardar",

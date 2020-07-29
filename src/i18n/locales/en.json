@@ -28,7 +28,8 @@
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
-    "facilityPostal": "Facility Postal"
+    "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)"
   },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Connect with your incarcerated loved ones",
@@ -208,6 +209,7 @@
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
     "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",

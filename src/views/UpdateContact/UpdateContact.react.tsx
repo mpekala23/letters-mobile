@@ -56,6 +56,8 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private facilityPostal = createRef<Input>();
 
+  private facilityPhone = createRef<Input>();
+
   private unit = createRef<Input>();
 
   private dorm = createRef<Input>();
@@ -140,6 +142,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityCity.current &&
       this.facilityState.current &&
       this.facilityPostal.current &&
+      this.facilityPhone.current &&
       this.props.contact.facility
     ) {
       const facility: Facility = {
@@ -149,6 +152,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         city: this.facilityCity.current.state.value,
         state: this.facilityState.current.state.value,
         postal: this.facilityPostal.current.state.value,
+        phone: this.props.contact.facility.phone,
       };
       const contact: Contact = {
         id: this.props.contact.id,
@@ -180,6 +184,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityCity.current &&
       this.facilityState.current &&
       this.facilityPostal.current &&
+      this.facilityPhone.current &&
       this.unit.current &&
       this.dorm.current &&
       this.props.contact.facility
@@ -191,6 +196,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityCity.current.set(this.props.contact.facility.city);
       this.facilityState.current.set(this.props.contact.facility.state);
       this.facilityPostal.current.set(this.props.contact.facility.postal);
+      this.facilityPhone.current.set(this.props.contact.facility.phone);
       this.dorm.current.set(
         this.props.contact.dorm ? this.props.contact.dorm : ''
       );
@@ -350,7 +356,13 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                Styles.baseText,
+                { paddingTop: 12 },
+              ]}
+            >
               {i18n.t('UpdateContactScreen.facilityPostal')}
             </Text>
             <Input
@@ -360,6 +372,13 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               validate={Validation.Postal}
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
+            />
+            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+              {i18n.t('UpdateContactScreen.facilityPhone')}
+            </Text>
+            <Input
+              ref={this.facilityPhone}
+              placeholder={i18n.t('UpdateContactScreen.facilityPhone')}
             />
             <Text
               style={[
