@@ -22,6 +22,7 @@ import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Login.styles';
 
 type LoginScreenNavigationProp = StackNavigationProp<
@@ -88,9 +89,15 @@ class LoginScreen extends React.Component<Props, State> {
           dropdownError({
             message: i18n.t('LoginScreen.incorrectEmail'),
           });
+          Segment.trackWithProperties('Login Error', {
+            'Error Type': 'invalid email',
+          });
         } else if (err.message === 'Invalid Password') {
           dropdownError({
             message: i18n.t('LoginScreen.incorrectPassword'),
+          });
+          Segment.trackWithProperties('Login Error', {
+            'Error Type': 'invalid password',
           });
         } else if (err.message === 'timeout') {
           dropdownError({ message: i18n.t('Error.timedOut') });
@@ -189,6 +196,7 @@ class LoginScreen extends React.Component<Props, State> {
                     containerStyle={Styles.forgotContainer}
                     buttonText={i18n.t('LoginScreen.resetIt')}
                     onPress={() => {
+                      Segment.track('Clicks on Forgot Password');
                       Linking.openURL(
                         'https://letters.ameelio.org/password/reset'
                       );

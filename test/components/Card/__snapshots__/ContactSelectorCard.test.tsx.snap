@@ -176,7 +176,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
           last heard from you
           :
            
-          Jul 28
+          Jul 12
         </Text>
         <Text
           style={

@@ -31,6 +31,7 @@ import { UserState } from '@store/User/UserTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -111,6 +112,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   };
 
   onNextPress() {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'info',
+    });
     if (
       this.stateRef.current &&
       this.firstName.current &&
@@ -206,7 +210,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         <Button
           link
           containerStyle={{ marginBottom: 20, alignSelf: 'flex-start' }}
-          onPress={() => Linking.openURL(inmateDatabaseLink)}
+          onPress={() => {
+            Segment.trackWithProperties('Add Contact - Click on State Search', {
+              State: this.state.stateToSearch,
+            });
+            Linking.openURL(inmateDatabaseLink);
+          }}
         >
           <Text style={{ color: Colors.PINK_DARKER }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
@@ -268,6 +277,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     alignSelf: 'flex-start',
                   }}
                   onPress={() => {
+                    Segment.track('Add Contact - Click on Federal Search');
                     Linking.openURL(
                       'https://www.bop.gov/mobile/find_inmate/byname.jsp'
                     );

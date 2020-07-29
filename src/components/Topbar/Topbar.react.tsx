@@ -6,6 +6,7 @@ import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
 import Loading from '@assets/loading.gif';
+import * as Segment from 'expo-analytics-segment';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
@@ -107,7 +108,32 @@ class Topbar extends React.Component<Props, State> {
         {this.props.navigation && this.props.navigation.canGoBack() && (
           <TouchableOpacity
             style={Styles.backContainer}
-            onPress={this.props.navigation.goBack}
+            onPress={() => {
+              if (this.props.navigation) {
+                const route = this.props.navigation.getCurrentRoute()?.name;
+                if (
+                  route === 'ContactInfo' ||
+                  route === 'FacilityDirectory' ||
+                  route === 'AddManually' ||
+                  route === 'ReviewContact'
+                ) {
+                  let logName = '';
+                  if (route === 'ContactInfo') {
+                    logName = 'info';
+                  } else if (route === 'FacilityDirectory') {
+                    logName = 'facility';
+                  } else if (route === 'AddManually') {
+                    logName = 'manual';
+                  } else {
+                    logName = 'review';
+                  }
+                  Segment.trackWithProperties('Add Contact - Click on Back', {
+                    page: logName,
+                  });
+                }
+                this.props.navigation.goBack();
+              }
+            }}
             testID="backButton"
           >
             <Icon svg={BackButton} />

@@ -31,6 +31,7 @@ import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
 import moment from 'moment';
 import Styles from './SingleContact.styles';
 
@@ -52,6 +53,7 @@ interface Props {
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
   handleNotif: () => void;
+  composing: Letter;
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -81,6 +83,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   date={letter.dateCreated ? letter.dateCreated : ''}
                   description={letter.content}
                   onPress={() => {
+                    Segment.track('Contact View - Click on Letter Tracking');
                     this.props.setActiveLetter(letter);
                     this.props.navigation.navigate('LetterTracking');
                   }}
@@ -138,6 +141,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               <TouchableOpacity
                 onPress={() => {
+                  Segment.track('Contact View - Click on Edit Contact');
                   this.props.navigation.navigate('UpdateContact');
                 }}
                 style={{
@@ -186,7 +190,19 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               {i18n.t('SingleContactScreen.lettersTraveled')}:
             </Text>
             <Button
-              onPress={() => this.props.navigation.navigate('ChooseOption')}
+              onPress={() => {
+                this.props.navigation.navigate('ChooseOption');
+                Segment.trackWithProperties(
+                  'Contact View - Click on Send Letter',
+                  {
+                    Type:
+                      this.props.composing.content !== '' ||
+                      this.props.composing.photo
+                        ? 'draft'
+                        : 'blank',
+                  }
+                );
+              }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
               textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
               containerStyle={Styles.sendLetterButton}
@@ -229,6 +245,7 @@ const mapStateToProps = (state: AppState) => ({
   existingLetters: state.letter.existing[state.contact.active.id],
   userState: state.user,
   currentNotif: state.notif.currentNotif,
+  composing: state.letter.composing,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<LetterActionTypes | ContactActionTypes | NotifActionTypes>

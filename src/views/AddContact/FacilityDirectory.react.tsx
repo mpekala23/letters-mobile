@@ -28,6 +28,7 @@ import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -104,6 +105,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       enabled: this.state.selected !== null,
       text: i18n.t('ContactInfoScreen.next'),
       action: () => {
+        Segment.trackWithProperties('Add Contact - Click on Next', {
+          page: 'facility',
+        });
         const contact = this.props.contactState.adding;
         contact.facility = this.state.selected;
         this.props.setAdding(contact);
@@ -117,6 +121,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       enabled: val,
       text: i18n.t('ContactInfoScreen.next'),
       action: () => {
+        Segment.trackWithProperties('Add Contact - Click on Next', {
+          page: 'facility',
+        });
         const contact = this.props.contactState.adding;
         contact.facility = this.state.selected;
         this.props.setAdding(contact);
@@ -178,6 +185,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             this.setState({ selected: null });
             this.setValid(false);
           } else {
+            Segment.track('Add Contact - Select Facility');
             this.setState({ selected: item });
             this.setValid(true);
           }
@@ -224,6 +232,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           textStyle={{ textAlign: 'center' }}
           containerStyle={Styles.addManuallyButton}
           onPress={() => {
+            Segment.track('Add Contact - Click on Manual Facility Add');
             this.setState({ selected: null });
             this.props.navigation.navigate('AddManually', {
               phyState: this.state.phyState,

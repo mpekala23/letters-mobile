@@ -255,9 +255,6 @@
     "updateProfile": "Editar perfil",
     "reachOutToSupport": "Contactar al soporte"
   },
-  "TermsScreen": {
-    "ameelioTermsOfService": "Ameelio Términos del servicio"
-  },
   "PrisonTypes": {
     "state": "Prisión Estatal",
     "federal": "Prisión Federal"
