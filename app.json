@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Letters Mobile",
-    "slug": "letters-mobile",
+    "name": "Ameelio",
+    "slug": "Ameelio",
     "privacy": "public",
     "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
@@ -12,6 +12,9 @@
     "notification": {
       "icon": "./src/assets/BlueBird.png",
       "color": "#448AF3"
+    },
+    "android": {
+      "package": "com.ameelio.ameelio"
     }
   }
 }
