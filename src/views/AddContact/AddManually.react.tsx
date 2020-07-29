@@ -59,6 +59,8 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
 
   private facilityPostal = createRef<Input>();
 
+  private facilityPhone = createRef<Input>();
+
   private unsubscribeFocus: () => void;
 
   private unsubscribeBlur: () => void;
@@ -110,7 +112,8 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityPostal.current &&
-      this.facilityState.current
+      this.facilityState.current &&
+      this.facilityPhone.current
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
@@ -119,6 +122,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         city: this.facilityCity.current.state.value,
         state: this.facilityState.current.state.value,
         postal: this.facilityPostal.current.state.value,
+        phone: this.facilityPhone.current.state.value,
       };
       const contact = this.props.contactState.adding;
       contact.facility = facility;
@@ -143,14 +147,16 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityState.current &&
-      this.facilityPostal.current
+      this.facilityPostal.current &&
+      this.facilityPhone.current
     ) {
       const result =
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
         this.facilityState.current.state.valid &&
-        this.facilityPostal.current.state.valid;
+        this.facilityPostal.current.state.valid &&
+        this.facilityPhone.current.state.valid;
       this.setValid(result);
     }
   }
@@ -166,6 +172,8 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         this.facilityCity.current.set(addingFacility.city);
       if (this.facilityPostal.current)
         this.facilityPostal.current.set(addingFacility.postal);
+      if (this.facilityPhone.current)
+        this.facilityPhone.current.set(addingFacility.phone);
     }
     if (this.facilityState.current)
       this.facilityState.current.set(this.props.route.params.phyState);
@@ -284,6 +292,21 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
+                  nextInput={this.facilityPhone}
+                />
+                <Input
+                  ref={this.facilityPhone}
+                  parentStyle={CommonStyles.fullWidth}
+                  placeholder={i18n.t('AddManuallyScreen.facilityPhone')}
+                  validate={Validation.Phone}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setValid(false)}
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
                 />
               </View>
             </ScrollView>

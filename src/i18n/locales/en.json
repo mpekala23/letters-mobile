@@ -28,7 +28,8 @@
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
-    "facilityPostal": "Facility Postal"
+    "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)"
   },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Connect with your incarcerated loved ones",
@@ -66,6 +67,7 @@
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Your loved ones",
+    "miles": "miles",
     "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below."
   },
   "CreditsCard": {
@@ -109,7 +111,10 @@
     "wantToCheckWithFacility": "Want to check with the facility?",
     "waitCoupleDays": "Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.",
     "callFacility": "Call facility",
-    "IllWait": "I'll wait"
+    "IllWait": "I'll wait",
+    "talkToSomeone": "Talk to someone",
+    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio",
+    "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
   "LetterTrackingScreen": {
     "letterTracking": "Letter tracking",
@@ -205,6 +210,7 @@
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
     "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
@@ -314,7 +320,8 @@
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new letter",
     "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
-    "notEnoughCredits": "Not enough credits"
+    "notEnoughCredits": "Not enough credits",
+    "autosaved": "Autosaved"
   },
   "Notifs": {
     "your": "Your",
@@ -330,5 +337,30 @@
     "clickHereToBegin": "Click here to begin.",
     "readyToSend": "Ready to send your first letter to",
     "readyToSendAnother": "Ready to send another letter to"
+  },
+  "Screens": {
+    "login": "Login",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "register": "Register",
+    "addManually": "Add Manually",
+    "compose": "Compose",
+    "contactInfo": "Contact Info",
+    "contacts": "Contacts",
+    "explainProblem": "Explain Problem",
+    "firstLetter": "First Letter",
+    "home": "Home",
+    "issues": "Issues",
+    "letterDetails": "Letter Details",
+    "lastStep": "Last Step",
+    "tracking": "Tracking",
+    "memoryLane": "Memory Lane",
+    "postcardPreview": "Postcard Preview",
+    "letterPreview": "Letter Preview",
+    "spreadTheWord": "Spread the Word",
+    "reviewContact": "Review Contact",
+    "thanks": "Thanks",
+    "updateContact": "Update Contact",
+    "updateProfile": "Update Profile"
   }
 }

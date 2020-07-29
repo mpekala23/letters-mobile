@@ -7,6 +7,7 @@ export interface Facility {
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
 export enum ProfilePicTypes {
@@ -88,6 +89,8 @@ export interface ZipcodeInfo {
   zip: string;
   city: string;
   state: string;
+  lat?: number;
+  long?: number;
 }
 
 export interface Photo {

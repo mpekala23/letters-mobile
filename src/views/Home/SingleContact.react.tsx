@@ -28,13 +28,14 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact, getUser } from '@api';
+import { getLetters, getContact, getUser, getZipcode } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
+import { haversine } from '@utils';
 import { format, differenceInDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
@@ -45,6 +46,7 @@ type SingleContactScreenNavigationProp = StackNavigationProp<
 
 interface State {
   refreshing: boolean;
+  lettersTraveled: number;
 }
 
 interface Props {
@@ -65,11 +67,30 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       refreshing: false,
+      lettersTraveled: 0,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
+    await this.updateLettersTraveled();
+  }
+
+  async updateLettersTraveled() {
+    try {
+      if (this.props.activeContact.facility) {
+        const loc1 = await getZipcode(
+          this.props.activeContact.facility?.postal
+        );
+        const loc2 = await getZipcode(this.props.userState.user.postal);
+        this.setState({
+          lettersTraveled:
+            haversine(loc1, loc2) * this.props.existingLetters.length,
+        });
+      }
+    } catch (err) {
+      this.setState({ lettersTraveled: 0 });
+    }
   }
 
   render() {
@@ -158,6 +179,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getLetters();
             await getContact(this.props.activeContact.id);
             await getUser();
+            await this.updateLettersTraveled();
           } catch (err) {
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
@@ -217,9 +239,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {letters.length > 0 &&
-                letters[0].dateCreated &&
-                format(letters[0].dateCreated, 'MMM dd')}
+              {letters && letters.length > 0 && letters[0].dateCreated
+                ? format(letters[0].dateCreated, 'MMM dd')
+                : 'N/A'}
             </Text>
             <Text
               style={[
@@ -229,7 +251,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               ]}
             >
               <Emoji name="airplane" />{' '}
-              {i18n.t('SingleContactScreen.lettersTraveled')}:
+              {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
+              {this.state.lettersTraveled}{' '}
+              {i18n.t('ContactSelectorScreen.miles')}
             </Text>
             <Button
               onPress={() => {

@@ -44,6 +44,22 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         : 
         Team A
       </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "Poppins-Medium-Italic",
+            },
+            Object {
+              "color": "#9A9A9A",
+              "marginTop": 8,
+              "paddingRight": 16,
+            },
+          ]
+        }
+      >
+        Autosaved
+      </Text>
       <TouchableOpacity
         activeOpacity={0.7}
         style={

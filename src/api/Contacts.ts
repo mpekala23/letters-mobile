@@ -27,6 +27,7 @@ interface RawContact {
   facility_address: string;
   facility_city: string;
   facility_postal: string;
+  facility_phone: string;
   dorm: string;
   unit: string;
   s3_img_url?: string;
@@ -58,6 +59,7 @@ function cleanContact(data: RawContact): Contact {
       city: data.facility_city,
       state: ABBREV_TO_STATE[data.facility_state],
       postal: data.facility_postal,
+      phone: data.facility_phone,
     },
     ...dormExtension,
     ...unitExtension,
@@ -119,6 +121,7 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
       facility_city: contactData.facility.city,
       facility_state: STATE_TO_ABBREV[contactData.facility.state],
       facility_postal: contactData.facility.postal,
+      facility_phone: contactData.facility.phone,
       ...dormExtension,
       ...unitExtension,
       ...photoExtension,

@@ -15,6 +15,9 @@
     },
     "android": {
       "package": "com.ameelio.ameelio"
+    },
+    "ios": {
+      "bundleIdentifier": "com.ameelio.ameelio"
     }
   }
 }

@@ -54,6 +54,7 @@ import Topbar, {
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+import i18n from '@i18n';
 
 export { navigationRef, navigate };
 
@@ -106,33 +107,33 @@ interface RouteDetails {
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Begin: { title: '', profile: false, shown: false },
   Splash: { title: 'Splash', profile: false },
-  Login: { title: 'Login', profile: false },
-  Terms: { title: 'Terms of Service', profile: false },
-  Privacy: { title: 'Privacy Policy', profile: false },
-  Register: { title: 'Register', profile: false },
-  AddManually: { title: 'Add Manually', profile: false },
-  ChooseOption: { title: 'Compose', profile: false },
-  ComposeLetter: { title: 'Compose', profile: false },
-  ComposePostcard: { title: 'Compose', profile: false },
-  ContactInfo: { title: 'Contact Info', profile: false },
-  ContactSelector: { title: 'Contacts', profile: true },
-  ExplainProblem: { title: 'Explain Problem', profile: false },
+  Login: { title: i18n.t('Screens.login'), profile: false },
+  Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
+  Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
+  Register: { title: i18n.t('Screens.register'), profile: false },
+  AddManually: { title: i18n.t('Screens.addManually'), profile: false },
+  ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
+  ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
+  ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
+  ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
+  ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
+  ExplainProblem: { title: i18n.t('Screens.explainProblem'), profile: false },
   FacilityDirectory: { title: '', profile: false },
-  FirstLetter: { title: 'First Letter', profile: false },
-  Home: { title: 'Home', profile: true },
-  Issues: { title: 'Issues', profile: false },
-  LetterDetails: { title: 'Letter Details', profile: true },
-  LetterPreview: { title: 'Last Step', profile: false },
-  LetterTracking: { title: 'Tracking', profile: true },
-  MemoryLane: { title: 'Memory Lane', profile: true },
-  PostcardPreview: { title: 'Postcard Preview', profile: false },
-  ReferFriends: { title: 'Spread the Word', profile: false },
-  ReviewContact: { title: 'Review Contact', profile: false },
+  FirstLetter: { title: i18n.t('Screens.firstLetter'), profile: false },
+  Home: { title: i18n.t('Screens.home'), profile: true },
+  Issues: { title: i18n.t('Screens.issues'), profile: false },
+  LetterDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
+  LetterPreview: { title: i18n.t('Screens.lastStep'), profile: false },
+  LetterTracking: { title: i18n.t('Screens.tracking'), profile: true },
+  MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  PostcardPreview: { title: i18n.t('Screens.postcardPreview'), profile: false },
+  ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
+  ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
   Setup: { title: '', profile: false },
-  SingleContact: { title: 'Home', profile: true },
-  Thanks: { title: 'Thanks', profile: false },
-  UpdateContact: { title: 'Update Contact', profile: false },
-  UpdateProfile: { title: 'Update Profile', profile: false },
+  SingleContact: { title: i18n.t('Screens.home'), profile: true },
+  Thanks: { title: i18n.t('Screens.thanks'), profile: false },
+  UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
+  UpdateProfile: { title: i18n.t('Screens.updateProfile'), profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
