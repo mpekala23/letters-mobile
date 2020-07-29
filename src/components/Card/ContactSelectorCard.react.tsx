@@ -45,7 +45,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
             {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
             {props.letters
               ? moment(props.letters[0].dateCreated).format('MMM DD')
-              : ''}
+              : 'N/A'}
           </Text>
           <Text
             style={[
