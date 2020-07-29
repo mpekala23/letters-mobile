@@ -7,6 +7,7 @@ export interface Facility {
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
 export enum ProfilePicTypes {

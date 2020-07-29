@@ -13,6 +13,7 @@ interface RawFacility {
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
 function cleanFacility(facility: RawFacility): Facility {
@@ -23,6 +24,7 @@ function cleanFacility(facility: RawFacility): Facility {
     city: facility.city,
     state: ABBREV_TO_STATE[facility.state],
     postal: facility.postal,
+    phone: facility.phone,
   };
 }
 
