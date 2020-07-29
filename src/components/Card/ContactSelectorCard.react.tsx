@@ -64,7 +64,9 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
             <Emoji name="calendar" />{' '}
             {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-            {props.letters
+            {props.letters &&
+            props.letters.length > 0 &&
+            props.letters[0].dateCreated
               ? format(props.letters[0].dateCreated, 'MMM dd')
               : 'N/A'}
           </Text>

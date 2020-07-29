@@ -15,6 +15,7 @@ const setup = (propOverrides = {}) => {
         isDraft: true,
         recipientId: 8,
         content: 'Text',
+        dateCreated: 'Jul 12',
       },
     ],
     onPress: jest.fn(),
