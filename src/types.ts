@@ -21,9 +21,10 @@ export enum Storage {
 }
 
 export enum PrisonTypes {
-  State = 'State',
-  Federal = 'Federal',
-  County = 'County',
+  State = 'State Prison',
+  Federal = 'Federal Prison',
+  County = 'County Jail',
+  Immigration = 'ICE Immigration Detention Center',
 }
 
 export enum SupportFAQTypes {

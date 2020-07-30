@@ -262,7 +262,8 @@
   "PrisonTypes": {
     "state": "Prisión Estatal",
     "federal": "Prisión Federal",
-    "county": "Carcel del Condado"
+    "county": "Carcel del Condado",
+    "immigration": "Centro de Detención"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",
