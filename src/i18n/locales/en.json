@@ -283,10 +283,10 @@
     "prompt18": "Send your loved one a playlist of all of the songs you are listening to right now"
   },
   "LetterTypes": {
-    "postCardsTitle": "Post cards",
-    "postCardsDesc": "1 photo, 300 characters",
+    "postCardsTitle": "Photos",
+    "postCardsDesc": "Glossy photos and short caption",
     "lettersTitle": "Letters",
-    "lettersDesc": "300 words"
+    "lettersDesc": "2000 words"
   },
   "Alert": {
     "weNeedProfilePermission": "We need your permission to upload a profile photo",
