@@ -406,6 +406,7 @@ class Input extends React.Component<Props, State> {
                 {
                   justifyContent: 'center',
                   alignItems: 'center',
+                  marginBottom: 8,
                 },
                 { opacity: enabled ? 1.0 : 0.7 },
               ]}

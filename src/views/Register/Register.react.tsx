@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Platform,
-  TouchableNativeFeedbackBase,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
