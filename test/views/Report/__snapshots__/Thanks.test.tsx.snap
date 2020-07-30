@@ -215,7 +215,7 @@ exports[`Thanks screen should match snapshot 1`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FF7171",
-            "borderRadius": 16,
+            "borderRadius": 8,
             "flexDirection": "row",
             "justifyContent": "center",
             "marginVertical": 5,
@@ -248,7 +248,7 @@ exports[`Thanks screen should match snapshot 1`] = `
             },
             Object {
               "color": "white",
-              "fontSize": 20,
+              "fontSize": 18,
               "fontWeight": "700",
               "padding": 6,
             },

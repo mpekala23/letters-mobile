@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -328,12 +328,13 @@ class RegisterScreen extends React.Component<Props, State> {
           <Input
             ref={this.password}
             parentStyle={Styles.fullWidth}
+            validate={Validation.Password}
             placeholder={i18n.t('RegisterScreen.password')}
             required
             secure
-            // TO-DO: Add validation pending hint message
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
+            invalidFeedback={i18n.t('RegisterScreen.passwordInvalid')}
           />
           <Input
             ref={this.passwordConfirmation}
@@ -342,7 +343,7 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             secure
             mustMatch={this.password.current?.state.value}
-            // TO-DO: Add validation pending hint message
+            invalidFeedback={i18n.t('RegisterScreen.passwordsMustMatch')}
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
           />

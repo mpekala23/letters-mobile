@@ -67,7 +67,7 @@ exports[`ComposeHeader component should match snapshot 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#FF7171",
-              "borderRadius": 16,
+              "borderRadius": 8,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,

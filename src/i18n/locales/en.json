@@ -32,8 +32,7 @@
     "facilityPhone": "Facility Phone (optional)"
   },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones",
-    "forFree": "for free",
+    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones, for free.",
     "signUp": "Sign up",
     "logIn": "Log in"
   },
@@ -184,7 +183,9 @@
     "emailAlreadyInUse": "Email already in use.",
     "confirmPassword": "Confirm Password",
     "referer": "How did you hear about Ameelio?",
-    "login": "Log In"
+    "login": "Log In",
+    "passwordInvalid": "The password must be at least 8 characters.",
+    "passwordsMustMatch": "Your passwords must match."
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
