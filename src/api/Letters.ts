@@ -12,8 +12,7 @@ import {
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addBusinessDays } from '@utils';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, addBusinessDays } from 'date-fns';
 import {
   getZipcode,
   fetchAuthenticated,
