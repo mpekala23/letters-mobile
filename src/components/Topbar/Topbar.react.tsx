@@ -8,7 +8,7 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import Loading from '@assets/loading.gif';
 import * as Segment from 'expo-analytics-segment';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles from './Topbar.styles';
+import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
 
 interface Props {
@@ -102,7 +102,11 @@ class Topbar extends React.Component<Props, State> {
       <View
         style={[
           Styles.barContainer,
-          { display: this.state.shown ? 'flex' : 'none' },
+          {
+            height: this.state.shown ? barHeight : 0,
+            shadowColor: this.state.shown ? '#000' : '#fff',
+            elevation: this.state.shown ? 5 : 0,
+          },
         ]}
       >
         {this.props.navigation && this.props.navigation.canGoBack() && (

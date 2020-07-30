@@ -29,11 +29,10 @@
     "facilityCity": "Ciudad del presidio",
     "facilityState": "Estado del presidio",
     "facilityPostal": "C.P. del presidio",
-    "facilityPhone": "Facility Phone (optional)"
+    "facilityPhone": "Número de teléfono del presidio (opcional)"
   },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados",
-    "forFree": "gratis",
+    "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados gratis.",
     "signUp": "Registrarte",
     "logIn": "Acceder"
   },
@@ -112,9 +111,9 @@
     "waitCoupleDays": "A veces las cartas se retrasarán en el presidio. Haga click a continuación para llamar el presidio, o espere un par de días más.",
     "callFacility": "Llama al presidio",
     "IllWait": "Voy a esperar",
-    "talkToSomeone": "Talk to someone",
-    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio",
-    "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
+    "talkToSomeone": "Habla con alguien",
+    "talkToSomeoneAtAmeelio": "Habla con alguien en Ameelio",
+    "tryMessagingUsOnFacebook": "Envíenos un mensaje en Facebook. Estamos aqui para responder tus preguntas. Te daré una respuesta lo antes posible."
   },
   "LetterTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
@@ -184,7 +183,9 @@
     "emailAlreadyInUse": "Correo electrónico ya en uso.",
     "confirmPassword": "Confirma Contraseña",
     "referer": "¿Cómo supiste de Ameelio?",
-    "login": "Acceder"
+    "login": "Acceder",
+    "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -260,7 +261,8 @@
   },
   "PrisonTypes": {
     "state": "Prisión Estatal",
-    "federal": "Prisión Federal"
+    "federal": "Prisión Federal",
+    "county": "Carcel del Condado"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",
@@ -283,10 +285,10 @@
     "prompt18": "Envía a tu ser querido un playlist de todas las canciones que estás escuchando ahora mismo"
   },
   "LetterTypes": {
-    "postCardsTitle": "Tarjetas postales",
-    "postCardsDesc": "1 foto, 300 caracteres",
+    "postCardsTitle": "Fotos",
+    "postCardsDesc": "Impresa en papel fotográfico con un pie de foto",
     "lettersTitle": "Cartas",
-    "lettersDesc": "300 palabras"
+    "lettersDesc": "2000 palabras y una foto en una hoja de papel"
   },
   "Alert": {
     "weNeedProfilePermission": "Necesitamos tu permiso para subir una foto de perfil",

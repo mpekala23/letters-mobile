@@ -67,7 +67,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       keyboardOpacity: new Animated.Value(0),
-      wordsLeft: 300,
+      wordsLeft: 2000,
       photoWidth: 200,
       photoHeight: 200,
       open: false,
@@ -229,8 +229,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     if (split[0] === '') {
       numWords = 0;
     }
-    this.setState({ wordsLeft: 300 - numWords });
-    this.setValid(300 - numWords >= 0);
+    this.setState({ wordsLeft: 2000 - numWords });
+    this.setValid(2000 - numWords >= 0);
   }
 
   changeText(value: string): void {

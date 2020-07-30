@@ -2,11 +2,11 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import i18n from '@i18n';
 import { Icon, Button } from '@components';
-import AmeelioBirdBlue from '@assets/AmeelioBirdBlueSmall';
+import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import People from '@assets/views/Onboarding/People.png';
+import LovedOnes from '@assets/views/Onboarding/LovedOnes';
 import Styles from './Begin.styles';
 
 type BeginScreenNavigationProp = StackNavigationProp<
@@ -22,23 +22,13 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
   return (
     <View accessible={false} style={Styles.trueBackground}>
       <View accessible accessibilityLabel="Ameelio Logo" style={Styles.header}>
-        <Icon svg={AmeelioBirdBlue} />
-        <Text style={[Typography.FONT_BOLD, Styles.ameelioLogo]}>Ameelio</Text>
+        <Icon svg={LogoSmallGrey} />
       </View>
       <Text style={[Typography.FONT_BOLD, Styles.titleText, { marginTop: 40 }]}>
-        {i18n.t('BeginScreen.connectWithYourLovedOnes')},
-      </Text>
-      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
-        {i18n.t('BeginScreen.forFree')}.
+        {i18n.t('BeginScreen.connectWithYourLovedOnes')}
       </Text>
       <View style={{ paddingBottom: 80, paddingTop: 18 }}>
-        <Image
-          source={People}
-          width={191}
-          height={276.6}
-          resizeMode="cover"
-          style={{ width: 191, height: 276.6 }}
-        />
+        <Icon svg={LovedOnes} />
       </View>
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button
