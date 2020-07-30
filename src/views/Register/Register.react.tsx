@@ -45,7 +45,6 @@ export interface State {
   valid: boolean;
   remember: boolean;
   image: Photo | null;
-  validPassword: boolean;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -79,7 +78,6 @@ class RegisterScreen extends React.Component<Props, State> {
       valid: false,
       remember: false,
       image: null,
-      validPassword: true,
     };
   }
 
