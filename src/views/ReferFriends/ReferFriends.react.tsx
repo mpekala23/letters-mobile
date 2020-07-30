@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import Icon from '@components/Icon/Icon.react';
 import Airplane from '@assets/views/ReferFriends/Airplane';
-import { format, addDays } from 'date-fns';
+import { format, addBusinessDays } from 'date-fns';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -38,7 +38,7 @@ const onShare = async () => {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
-  const sixDaysFromNow = addDays(new Date(), 6);
+  const sixDaysFromNow = addBusinessDays(new Date(), 6);
   return (
     <KeyboardAvoidingView
       style={Styles.trueBackground}

@@ -61,9 +61,9 @@ describe('ChooseOption screen', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should dispatch a setType action when Post cards button is pressed', () => {
+  it('should dispatch a setType action when Photos button is pressed', () => {
     const { store, getByText } = setup();
-    fireEvent.press(getByText('Post cards'));
+    fireEvent.press(getByText('Photos'));
     const actions = store.getActions();
     expect(actions.length).toBe(2);
     expect(actions[0].type).toBe('letter/set_type');
@@ -85,9 +85,9 @@ describe('ChooseOption screen', () => {
     expect(popupAlert).toHaveBeenCalled();
   });
 
-  it('should show an alert after pressing Post cards when draft exists with content', () => {
+  it('should show an alert after pressing Photos when draft exists with content', () => {
     const { getByText } = setup({ content: 'non-empty' });
-    fireEvent.press(getByText('Post cards'));
+    fireEvent.press(getByText('Photos'));
     expect(popupAlert).toHaveBeenCalled();
   });
 
@@ -97,9 +97,9 @@ describe('ChooseOption screen', () => {
     expect(popupAlert).toHaveBeenCalled();
   });
 
-  it('should show an alert after pressing Post cards when draft exists with photo', () => {
+  it('should show an alert after pressing Photos when draft exists with photo', () => {
     const { getByText } = setup({ photo: { uri: 'dummy' } });
-    fireEvent.press(getByText('Post cards'));
+    fireEvent.press(getByText('Photos'));
     expect(popupAlert).toHaveBeenCalled();
   });
 });

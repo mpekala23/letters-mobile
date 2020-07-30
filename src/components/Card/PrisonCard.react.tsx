@@ -13,6 +13,18 @@ interface Props {
 }
 
 const PrisonCard: React.FC<Props> = (props: Props) => {
+  const getFacilityTypeLabel = (): string => {
+    switch (props.type) {
+      case PrisonTypes.State:
+        return i18n.t('PrisonTypes.state');
+      case PrisonTypes.Federal:
+        return i18n.t('PrisonTypes.federal');
+      case PrisonTypes.County:
+        return i18n.t('PrisonTypes.county');
+      default:
+        return '';
+    }
+  };
   return (
     <TouchableOpacity
       style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
@@ -20,9 +32,7 @@ const PrisonCard: React.FC<Props> = (props: Props) => {
     >
       <Text style={CardStyles.cardTitle}>{props.name}</Text>
       <Text style={[CardStyles.cardData, { marginVertical: 6 }]}>
-        {props.type === PrisonTypes.State
-          ? i18n.t('PrisonTypes.state')
-          : i18n.t('PrisonTypes.federal')}
+        {getFacilityTypeLabel()}
       </Text>
       <Text style={CardStyles.cardData}>{props.address}</Text>
     </TouchableOpacity>

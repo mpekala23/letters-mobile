@@ -24,17 +24,17 @@ describe('Letter Option Card component', () => {
 
   it('should fire onPress() on a press', () => {
     const { props, getByText } = setup();
-    fireEvent.press(getByText('Post cards'));
+    fireEvent.press(getByText('Photos'));
     expect(props.onPress).toHaveBeenCalledTimes(1);
   });
 
   it('should display title', () => {
     const { getByText } = setup();
-    expect(getByText('Post cards')).toBeDefined();
+    expect(getByText('Photos')).toBeDefined();
   });
 
   it('should display description', () => {
     const { getByText } = setup();
-    expect(getByText('1 photo, 300 characters')).toBeDefined();
+    expect(getByText('Glossy photo & short caption')).toBeDefined();
   });
 });

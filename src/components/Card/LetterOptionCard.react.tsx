@@ -34,7 +34,7 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
           ? i18n.t('LetterTypes.postCardsTitle')
           : i18n.t('LetterTypes.lettersTitle')}
       </Text>
-      <Text style={CardStyles.cardData}>
+      <Text style={[CardStyles.cardData, { maxWidth: '60%' }]}>
         {props.type === LetterTypes.Postcard
           ? i18n.t('LetterTypes.postCardsDesc')
           : i18n.t('LetterTypes.lettersDesc')}
