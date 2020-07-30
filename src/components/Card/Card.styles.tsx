@@ -20,7 +20,7 @@ export default StyleSheet.create({
     marginVertical: 6,
   },
   cardTitle: {
-    fontSize: 28,
+    fontSize: 24,
     color: Colors.AMEELIO_BLACK,
   },
   cardData: {
@@ -76,7 +76,7 @@ export default StyleSheet.create({
   letterOptionsBackground: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 90,
+    height: 110,
   },
   deliveryAndDateContainer: {
     flexDirection: 'row',

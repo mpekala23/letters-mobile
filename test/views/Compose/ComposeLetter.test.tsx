@@ -65,7 +65,7 @@ describe('ComposeLetter screen', () => {
     const { getByPlaceholderText, getByText } = setup();
     const input = getByPlaceholderText(i18n.t('Compose.placeholder'));
     fireEvent.changeText(input, 'two words');
-    expect(getByText('298 left')).toBeDefined();
+    expect(getByText('1998 left')).toBeDefined();
   });
 
   it('should display the first name', () => {

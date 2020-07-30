@@ -23,6 +23,7 @@ export enum Storage {
 export enum PrisonTypes {
   State = 'State',
   Federal = 'Federal',
+  County = 'County',
 }
 
 export enum SupportFAQTypes {

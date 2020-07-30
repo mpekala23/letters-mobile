@@ -464,7 +464,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
               Object {
                 "flexDirection": "column",
-                "height": 90,
+                "height": 110,
                 "justifyContent": "space-between",
               },
               Object {
@@ -650,7 +650,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 },
                 Object {
                   "color": "#282828",
-                  "fontSize": 28,
+                  "fontSize": 24,
                 },
               ]
             }

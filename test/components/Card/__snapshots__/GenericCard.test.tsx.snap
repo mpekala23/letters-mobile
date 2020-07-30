@@ -22,7 +22,7 @@ exports[`Generic Card component should match snapshot 1`] = `
         },
         Object {
           "flexDirection": "column",
-          "height": 90,
+          "height": 110,
           "justifyContent": "space-between",
         },
         Object {

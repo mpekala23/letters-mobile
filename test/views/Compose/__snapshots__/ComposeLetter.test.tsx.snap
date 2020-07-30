@@ -444,7 +444,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                   ]
                 }
               >
-                300
+                2000
                  left
               </Text>
             </View>
