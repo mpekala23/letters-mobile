@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
-import { format, addDays } from 'date-fns';
+import { format } from 'date-fns';
+import { addBusinessDays } from '@utils';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
@@ -53,7 +54,7 @@ class LetterTrackingScreenBase extends React.Component<Props> {
     const deliveryDate = format(
       this.props.letter.expectedDeliveryDate
         ? this.props.letter.expectedDeliveryDate
-        : addDays(new Date(), 6),
+        : addBusinessDays(new Date(), 6),
       'MMM dd'
     );
     const chronologicalEvents = this.props.letter.trackingEvents

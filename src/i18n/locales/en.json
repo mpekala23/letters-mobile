@@ -284,9 +284,9 @@
   },
   "LetterTypes": {
     "postCardsTitle": "Photos",
-    "postCardsDesc": "Glossy photo and short caption",
+    "postCardsDesc": "Glossy photo & short caption",
     "lettersTitle": "Letters",
-    "lettersDesc": "2000 words and a photo on letter paper"
+    "lettersDesc": "2,000 words & photo on regular paper"
   },
   "Alert": {
     "weNeedProfilePermission": "We need your permission to upload a profile photo",

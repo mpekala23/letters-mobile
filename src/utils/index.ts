@@ -232,3 +232,15 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
   const d = R * c;
   return d * 0.000621371;
 }
+
+export function addBusinessDays(date: Date, n: number): Date {
+  const d = new Date(date.getTime());
+  const day = d.getDay();
+  d.setDate(
+    d.getDate() +
+      n +
+      (day === 6 ? 2 : +!day) +
+      Math.floor((n - 1 + (day % 6 || 1)) / 5) * 2
+  );
+  return d;
+}

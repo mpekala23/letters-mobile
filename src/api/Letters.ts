@@ -12,7 +12,8 @@ import {
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addDays, differenceInDays } from 'date-fns';
+import { addBusinessDays } from '@utils';
+import { differenceInDays } from 'date-fns';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -63,7 +64,7 @@ async function cleanTrackingEvent(
 async function cleanLetter(letter: RawLetter): Promise<Letter> {
   const { type } = letter;
   let status: LetterStatus;
-  let expectedDeliveryDate = addDays(new Date(letter.created_at), 6);
+  let expectedDeliveryDate = addBusinessDays(new Date(letter.created_at), 6);
   const trackingEvents = !letter.tracking_events
     ? []
     : await Promise.all(
@@ -89,7 +90,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
     } else if (!processedForDelivery) {
       status = LetterStatus.Mailed;
     } else {
-      expectedDeliveryDate = addDays(processedForDeliveryDate, 3);
+      expectedDeliveryDate = addBusinessDays(processedForDeliveryDate, 3);
       const dayDiff = differenceInDays(processedForDeliveryDate, new Date());
       if (dayDiff <= 5) {
         status = LetterStatus.OutForDelivery;
