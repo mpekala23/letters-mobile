@@ -36,7 +36,7 @@ import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import { haversine } from '@utils';
-import { format, differenceInDays } from 'date-fns';
+import { format, differenceInBusinessDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -114,7 +114,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               }
               if (
                 !processedForDelivery ||
-                differenceInDays(processedForDeliveryDate, new Date()) <= 5
+                differenceInBusinessDays(
+                  processedForDeliveryDate,
+                  new Date()
+                ) <= 5
               ) {
                 return (
                   <LetterStatusCard
@@ -133,7 +136,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               return null;
             }
             if (
-              differenceInDays(
+              differenceInBusinessDays(
                 letter.dateCreated ? letter.dateCreated : new Date(),
                 new Date()
               ) <= 11

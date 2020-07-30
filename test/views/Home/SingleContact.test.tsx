@@ -7,7 +7,7 @@ import { LetterTypes, LetterStatus } from 'types';
 
 jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
-  differenceInDays: () => 1,
+  differenceInBusinessDays: () => 1,
 }));
 
 const mockStore = configureStore([]);
