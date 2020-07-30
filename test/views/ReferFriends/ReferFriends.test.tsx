@@ -13,7 +13,7 @@ jest.mock('@api', () => ({
 
 jest.mock('date-fns', () => ({
   format: () => 'Jul 12',
-  addBusinessDays: () => [2],
+  addBusinessDays: () => 3,
 }));
 
 const setup = (contactOverrides = []) => {
