@@ -261,7 +261,8 @@
   },
   "PrisonTypes": {
     "state": "Prisión Estatal",
-    "federal": "Prisión Federal"
+    "federal": "Prisión Federal",
+    "county": "Carcel del Condado"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",
@@ -284,10 +285,10 @@
     "prompt18": "Envía a tu ser querido un playlist de todas las canciones que estás escuchando ahora mismo"
   },
   "LetterTypes": {
-    "postCardsTitle": "Tarjetas postales",
-    "postCardsDesc": "1 foto, 300 caracteres",
+    "postCardsTitle": "Fotos",
+    "postCardsDesc": "Impresa en papel fotográfico con un pie de foto",
     "lettersTitle": "Cartas",
-    "lettersDesc": "300 palabras"
+    "lettersDesc": "2000 palabras y una foto en una hoja de papel"
   },
   "Alert": {
     "weNeedProfilePermission": "Necesitamos tu permiso para subir una foto de perfil",
