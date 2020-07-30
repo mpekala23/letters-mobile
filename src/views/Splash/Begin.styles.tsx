@@ -11,9 +11,7 @@ export default StyleSheet.create({
     padding: 24,
   },
   header: {
-    flexDirection: 'row',
-    position: 'absolute',
-    top: 40,
+    alignSelf: 'flex-start',
   },
   ameelioLogo: {
     fontSize: 26,
@@ -22,9 +20,9 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_BLUE,
   },
   titleText: {
-    width: '80%',
+    width: '100%',
     fontSize: 20,
-    textAlign: 'center',
+    alignSelf: 'flex-start',
   },
   baseText: {
     fontSize: 18,
