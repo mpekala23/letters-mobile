@@ -284,9 +284,9 @@
   },
   "LetterTypes": {
     "postCardsTitle": "Photos",
-    "postCardsDesc": "Glossy photos and short caption",
+    "postCardsDesc": "Glossy photo and short caption",
     "lettersTitle": "Letters",
-    "lettersDesc": "2000 words"
+    "lettersDesc": "2000 words and a photo on letter paper"
   },
   "Alert": {
     "weNeedProfilePermission": "We need your permission to upload a profile photo",
@@ -304,14 +304,14 @@
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
     "send": "Send Letter",
-    "sendPostcard": "Send Postcard",
+    "sendPostcard": "Send Photo",
     "preview": "Letter Preview",
     "next": "Next",
     "to": "To",
     "collapse": "Collapse",
     "needIdeas": "Need Ideas?",
     "letterMustHaveContent": "Your letter can't be empty.",
-    "postcardMustHaveContent": "Your postcard can't be empty",
+    "postcardMustHaveContent": "Your photo can't be empty",
     "uploadAnImage": "Upload an Image",
     "takePhoto": "Take photo",
     "uploadExistingPhoto": "Upload existing photo",
@@ -355,7 +355,7 @@
     "lastStep": "Last Step",
     "tracking": "Tracking",
     "memoryLane": "Memory Lane",
-    "postcardPreview": "Postcard Preview",
+    "postcardPreview": "Photo Preview",
     "letterPreview": "Letter Preview",
     "spreadTheWord": "Spread the Word",
     "reviewContact": "Review Contact",
