@@ -29,7 +29,7 @@
     "facilityCity": "Ciudad del presidio",
     "facilityState": "Estado del presidio",
     "facilityPostal": "C.P. del presidio",
-    "facilityPhone": "Facility Phone (optional)"
+    "facilityPhone": "Número de teléfono del presidio (opcional)"
   },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados gratis.",
@@ -111,9 +111,9 @@
     "waitCoupleDays": "A veces las cartas se retrasarán en el presidio. Haga click a continuación para llamar el presidio, o espere un par de días más.",
     "callFacility": "Llama al presidio",
     "IllWait": "Voy a esperar",
-    "talkToSomeone": "Talk to someone",
-    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio",
-    "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
+    "talkToSomeone": "Habla con alguien",
+    "talkToSomeoneAtAmeelio": "Habla con alguien en Ameelio",
+    "tryMessagingUsOnFacebook": "Envíenos un mensaje en Facebook. Estamos aqui para responder tus preguntas. Te daré una respuesta lo antes posible."
   },
   "LetterTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
@@ -184,8 +184,8 @@
     "confirmPassword": "Confirma Contraseña",
     "referer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
-    "passwordInvalid": "The password must be at least 8 characters.",
-    "passwordsMustMatch": "Your passwords must match."
+    "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
