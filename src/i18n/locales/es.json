@@ -260,7 +260,8 @@
   },
   "PrisonTypes": {
     "state": "Prisión Estatal",
-    "federal": "Prisión Federal"
+    "federal": "Prisión Federal",
+    "county": "Carcel del Condado"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",
