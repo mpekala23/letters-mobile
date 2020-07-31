@@ -382,32 +382,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                         }
                       }
                     >
-                      American Samoa
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
                       Arizona
                     </Text>
                   </TouchableOpacity>
@@ -591,32 +565,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       }
                     >
                       Georgia
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Guam
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -1370,32 +1318,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                         }
                       }
                     >
-                      Puerto Rico
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
                       Rhode Island
                     </Text>
                   </TouchableOpacity>
@@ -1553,32 +1475,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                       }
                     >
                       Virginia
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Virgin Islands
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity

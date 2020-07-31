@@ -10,6 +10,7 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
+import Constants from 'expo-constants';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -40,8 +41,9 @@ export default class App extends React.Component<null, State> {
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();
-    const androidWriteKey = 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD';
-    const iosWriteKey = 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy';
+    const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys(
+      Constants.manifest.releaseChannel
+    );
     Segment.initialize({ androidWriteKey, iosWriteKey });
     Segment.track('App Open');
     try {
@@ -53,6 +55,21 @@ export default class App extends React.Component<null, State> {
 
   componentWillUnmount(): void {
     Segment.track('App Closed');
+  }
+
+  static getSegmentWriteKeys(
+    releaseChannel: Array<string> | undefined
+  ): Record<string, string> {
+    if (releaseChannel && releaseChannel.indexOf('prod') !== -1)
+      return {
+        androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
+        iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',
+      };
+    // On development or staging channels
+    return {
+      androidWriteKey: 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD',
+      iosWriteKey: 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy',
+    };
   }
 
   async loadFontsAsync(): Promise<void> {
