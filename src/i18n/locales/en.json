@@ -262,7 +262,8 @@
   "PrisonTypes": {
     "state": "State Prison",
     "federal": "Federal Prison",
-    "county": "County Jail"
+    "county": "County Jail",
+    "immigration": "ICE Detention Center"
   },
   "Prompts": {
     "prompt1": "How are things going with your life? Any milestones lately?",

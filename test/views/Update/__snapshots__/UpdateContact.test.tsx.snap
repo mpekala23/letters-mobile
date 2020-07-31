@@ -207,87 +207,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           First name
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="First name"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="First"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="First name"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="First"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -306,87 +297,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Last name
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Last name"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="Last"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Last name"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="Last"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -405,87 +387,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility Name
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility Name"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="Facility Name"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility Name"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="Facility Name"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -504,87 +477,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility Address
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility Address"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="Address"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility Address"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="Address"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -603,87 +567,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility City
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility City"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="City"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility City"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="City"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -702,116 +657,107 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility State
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 0,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="invalid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility State"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
             style={
-              Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 0,
-                "overflow": "hidden",
-                "width": "100%",
-              }
-            }
-            testID="parent"
-          >
-            <View
-              testID="invalid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility State"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="MN"
-            />
-            <View
-              style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
                 Object {
                   "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="MN"
+          />
+          <View
+            style={
+              Object {
+                "height": 50,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
+              style={
+                Object {
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
             >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
+              <TouchableOpacity
+                activeOpacity={0.2}
                 style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "#6D6D6D",
+                      "height": 50,
+                      "justifyContent": "center",
+                      "paddingHorizontal": 10,
+                      "width": "100%",
+                    },
+                    Object {
+                      "borderBottomWidth": 0,
+                    },
+                  ]
                 }
               >
-                <TouchableOpacity
-                  activeOpacity={0.2}
+                <Text
                   style={
-                    Array [
-                      Object {
-                        "borderBottomWidth": 1,
-                        "borderColor": "#6D6D6D",
-                        "height": 50,
-                        "justifyContent": "center",
-                        "paddingHorizontal": 10,
-                        "width": "100%",
-                      },
-                      Object {
-                        "borderBottomWidth": 0,
-                      },
-                    ]
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    }
                   }
                 >
-                  <Text
-                    style={
-                      Object {
-                        "fontFamily": "Poppins-Regular",
-                      }
-                    }
-                  >
-                    Minnesota
-                  </Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
+                  Minnesota
+                </Text>
+              </TouchableOpacity>
+            </ScrollView>
           </View>
         </View>
         <Text
@@ -833,87 +779,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility Postal
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility Postal"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value="23232"
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility Postal"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value="23232"
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -932,87 +869,78 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Facility Phone (optional)
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility Phone (optional)"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Facility Phone (optional)"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {},
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -1034,89 +962,80 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Unit (optional, only if needed)
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Unit (optional, only if needed)"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {
+                  "color": "#282828",
+                },
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Unit (optional, only if needed)"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {
-                    "color": "#282828",
-                  },
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <Text
@@ -1138,89 +1057,80 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           Dorm (optional, only if needed)
         </Text>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Dorm (optional, only if needed)"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {
+                  "color": "#282828",
+                },
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
           >
-            <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={false}
-              numberOfLines={1}
-              placeholder="Dorm (optional, only if needed)"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {
-                    "color": "#282828",
-                  },
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {},
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-            <View
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={
                 Object {
-                  "height": 0,
+                  "flex": 1,
                   "width": "100%",
-                  "zIndex": 5,
                 }
               }
-            >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
-                style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
         </View>
         <TouchableOpacity

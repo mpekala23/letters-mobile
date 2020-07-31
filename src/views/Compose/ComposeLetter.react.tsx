@@ -37,8 +37,6 @@ interface State {
   photoHeight: number;
   open: boolean;
   valid: boolean;
-  saving: boolean;
-  savingOpacity: Animated.Value;
 }
 
 interface Props {
@@ -72,8 +70,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       photoHeight: 200,
       open: false,
       valid: true,
-      saving: false,
-      savingOpacity: new Animated.Value(0),
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
@@ -189,29 +185,26 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   registerPhoto(photo: Photo): void {
-    this.setState({ saving: true }, () => {
-      this.props.setPhoto(photo);
-      if (photo && photo.width && photo.height) {
-        if (photo.width < photo.height) {
-          this.setState({
-            photoWidth: (photo.width / photo.height) * 200,
-            photoHeight: 200,
-          });
-        } else {
-          this.setState({
-            photoWidth: 200,
-            photoHeight: (photo.height / photo.width) * 200,
-          });
-        }
+    this.props.setPhoto(photo);
+    if (photo && photo.width && photo.height) {
+      if (photo.width < photo.height) {
+        this.setState({
+          photoWidth: (photo.width / photo.height) * 200,
+          photoHeight: 200,
+        });
       } else {
         this.setState({
           photoWidth: 200,
-          photoHeight: 200,
+          photoHeight: (photo.height / photo.width) * 200,
         });
       }
-      Keyboard.dismiss();
-      this.setState({ saving: false });
-    });
+    } else {
+      this.setState({
+        photoWidth: 200,
+        photoHeight: 200,
+      });
+    }
+    Keyboard.dismiss();
   }
 
   deletePhoto(): void {
@@ -234,23 +227,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   changeText(value: string): void {
-    this.setState({ saving: true }, () => {
-      Animated.timing(this.state.savingOpacity, {
-        toValue: 1.0,
-        duration: 0,
-        useNativeDriver: true,
-      }).start(() => {
-        this.updateWordsLeft(value);
-        this.props.setContent(value);
-        this.setState({ saving: false }, () => {
-          Animated.timing(this.state.savingOpacity, {
-            toValue: 0.0,
-            duration: 300,
-            useNativeDriver: true,
-          }).start();
-        });
-      });
-    });
+    this.updateWordsLeft(value);
+    this.props.setContent(value);
   }
 
   render(): JSX.Element {
@@ -297,16 +275,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               numLines={100}
               testId="input"
             >
-              <Animated.View
-                style={{
-                  position: 'absolute',
-                  top: 10,
-                  right: 10,
-                  opacity: this.state.savingOpacity,
-                }}
-              >
-                <Text>{this.state.saving ? 'saving' : 'saved'}</Text>
-              </Animated.View>
               <Animated.View
                 style={{
                   position: 'absolute',

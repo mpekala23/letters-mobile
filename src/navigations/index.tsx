@@ -305,14 +305,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
-        <Stack.Screen
-          name="Begin"
-          component={BeginScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-            gestureEnabled: false,
-          }}
-        />
+        <Stack.Screen name="Begin" component={BeginScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
