@@ -7,8 +7,8 @@ import { Photo, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE } from '@utils';
 
-export const GENERAL_URL = 'https://letters-api-staging.ameelio.org/';
-export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
+export const GENERAL_URL = 'https://api.ameelio.org/';
+export const API_URL = 'https://api.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
