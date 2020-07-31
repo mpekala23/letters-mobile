@@ -8,7 +8,7 @@ import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawFacility {
   name: string;
-  federal: number;
+  type: string;
   address: string;
   city: string;
   state: string;
@@ -19,7 +19,7 @@ interface RawFacility {
 function cleanFacility(facility: RawFacility): Facility {
   return {
     name: facility.name,
-    type: facility.federal ? PrisonTypes.Federal : PrisonTypes.State,
+    type: facility.type as PrisonTypes,
     address: facility.address,
     city: facility.city,
     state: ABBREV_TO_STATE[facility.state],
