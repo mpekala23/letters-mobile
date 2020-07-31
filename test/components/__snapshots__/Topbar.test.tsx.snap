@@ -32,7 +32,9 @@ exports[`Topbar component should match snapshot 1`] = `
           "zIndex": 10,
         },
         Object {
-          "display": "none",
+          "elevation": 0,
+          "height": 0,
+          "shadowColor": "#fff",
         },
       ]
     }
