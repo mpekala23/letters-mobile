@@ -300,7 +300,7 @@ class Input extends React.Component<Props, State> {
     }
 
     return (
-      <View style={{ width: '100%', flexDirection: 'column' }}>
+      <>
         <Animated.View
           style={[
             Styles.parentStyle,
@@ -414,7 +414,7 @@ class Input extends React.Component<Props, State> {
               <Text>{invalidFeedback}</Text>
             </View>
           )}
-      </View>
+      </>
     );
   }
 }

@@ -163,216 +163,207 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           </View>
         </View>
         <View
+          pointerEvents="auto"
           style={
             Object {
-              "flexDirection": "column",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "flex": 1,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
               "width": "100%",
             }
           }
+          testID="parent"
         >
           <View
-            pointerEvents="auto"
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={true}
+            numberOfLines={100}
+            placeholder="Tell your loved one about something you did / saw today that reminded you of them!"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {
+                  "color": "#282828",
+                },
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {
+                  "flex": 1,
+                  "fontSize": 18,
+                  "paddingBottom": 208,
+                  "paddingTop": 8,
+                  "textAlignVertical": "top",
+                },
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
             style={
               Object {
-                "backgroundColor": "#F2F2F2",
-                "borderRadius": 8,
-                "flex": 1,
-                "height": 50,
-                "marginBottom": 10,
-                "overflow": "hidden",
+                "height": 0,
                 "width": "100%",
+                "zIndex": 5,
               }
             }
-            testID="parent"
+          >
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
+              style={
+                Object {
+                  "flex": 1,
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "bottom": 0,
+                "height": 200,
+                "position": "absolute",
+                "right": 520,
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+                "width": 200,
+              }
+            }
           >
             <View
-              testID="valid"
-            />
-            <View
-              testID="unfocused"
-            />
-            <TextInput
-              allowFontScaling={true}
-              multiline={true}
-              numberOfLines={100}
-              placeholder="Tell your loved one about something you did / saw today that reminded you of them!"
-              rejectResponderTermination={true}
-              secureTextEntry={false}
-              style={
-                Array [
-                  Object {
-                    "borderColor": "rgba(0,0,0,0)",
-                    "borderRadius": 8,
-                    "borderWidth": 2,
-                    "color": "black",
-                    "fontSize": 16,
-                    "paddingHorizontal": 10,
-                    "textAlignVertical": "center",
-                    "width": "100%",
-                  },
-                  Object {
-                    "color": "#282828",
-                  },
-                  Object {},
-                  Object {
-                    "height": 50,
-                  },
-                  Object {
-                    "flex": 1,
-                    "fontSize": 18,
-                    "paddingBottom": 208,
-                    "paddingTop": 8,
-                    "textAlignVertical": "top",
-                  },
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                ]
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
-            <View
-              style={
-                Object {
-                  "height": 0,
-                  "width": "100%",
-                  "zIndex": 5,
-                }
-              }
+              style={Object {}}
             >
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                nestedScrollEnabled={true}
-                scrollEnabled={true}
+              <TouchableOpacity
+                activeOpacity={0.2}
                 style={
-                  Object {
-                    "flex": 1,
-                    "width": "100%",
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "bottom": 0,
-                  "height": 200,
-                  "position": "absolute",
-                  "right": 520,
-                  "transform": Array [
+                  Array [
                     Object {
-                      "scale": 1,
+                      "height": 200,
+                      "width": 200,
                     },
-                  ],
-                  "width": 200,
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 4,
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                    },
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                    },
+                  ]
                 }
-              }
-            >
-              <View
-                style={Object {}}
+                testID="clickable"
               >
-                <TouchableOpacity
-                  activeOpacity={0.2}
-                  style={
-                    Array [
-                      Object {
-                        "height": 200,
-                        "width": 200,
-                      },
-                      Object {
-                        "alignItems": "center",
-                        "borderRadius": 4,
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                      },
-                    ]
-                  }
-                  testID="clickable"
+                <View
+                  testID="media placeholder"
                 >
-                  <View
-                    testID="media placeholder"
-                  >
-                    <RNSVGSvgView
-                      align="xMidYMid"
-                      bbHeight={200}
-                      bbWidth={200}
-                      fill="none"
-                      focusable={false}
-                      height={200}
-                      meetOrSlice={0}
-                      minX={0}
-                      minY={0}
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "transparent",
-                            "borderWidth": 0,
-                          },
-                          Object {
-                            "flex": 0,
-                            "height": 200,
-                            "width": 200,
-                          },
-                        ]
-                      }
-                      vbHeight={200}
-                      vbWidth={200}
-                      width={200}
-                      xml="<svg width=\\"200\\" height=\\"200\\" viewBox=\\"0 0 200 200\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+                  <RNSVGSvgView
+                    align="xMidYMid"
+                    bbHeight={200}
+                    bbWidth={200}
+                    fill="none"
+                    focusable={false}
+                    height={200}
+                    meetOrSlice={0}
+                    minX={0}
+                    minY={0}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderWidth": 0,
+                        },
+                        Object {
+                          "flex": 0,
+                          "height": 200,
+                          "width": 200,
+                        },
+                      ]
+                    }
+                    vbHeight={200}
+                    vbWidth={200}
+                    width={200}
+                    xml="<svg width=\\"200\\" height=\\"200\\" viewBox=\\"0 0 200 200\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <rect x=\\"2\\" y=\\"2\\" width=\\"196\\" height=\\"196\\" rx=\\"6.5\\" stroke=\\"#CCCCCC\\" stroke-width=\\"3\\"/>
 <path d=\\"M98 75V120 M75 98H120\\" stroke=\\"#CCCCCC\\" stroke-width=\\"4\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 "
-                      xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <RNSVGGroup
+                      fill={null}
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     >
-                      <RNSVGGroup
-                        fill={null}
+                      <RNSVGRect
+                        height={196}
                         propList={
                           Array [
-                            "fill",
+                            "stroke",
+                            "strokeWidth",
                           ]
                         }
-                      >
-                        <RNSVGRect
-                          height={196}
-                          propList={
-                            Array [
-                              "stroke",
-                              "strokeWidth",
-                            ]
-                          }
-                          rx={6.5}
-                          stroke={4291611852}
-                          strokeWidth={3}
-                          width={196}
-                          x={2}
-                          y={2}
-                        />
-                        <RNSVGPath
-                          d="M98 75V120 M75 98H120"
-                          propList={
-                            Array [
-                              "stroke",
-                              "strokeWidth",
-                              "strokeLinecap",
-                              "strokeLinejoin",
-                            ]
-                          }
-                          stroke={4291611852}
-                          strokeLinecap={1}
-                          strokeLinejoin={1}
-                          strokeWidth={4}
-                        />
-                      </RNSVGGroup>
-                    </RNSVGSvgView>
-                  </View>
-                </TouchableOpacity>
-              </View>
+                        rx={6.5}
+                        stroke={4291611852}
+                        strokeWidth={3}
+                        width={196}
+                        x={2}
+                        y={2}
+                      />
+                      <RNSVGPath
+                        d="M98 75V120 M75 98H120"
+                        propList={
+                          Array [
+                            "stroke",
+                            "strokeWidth",
+                            "strokeLinecap",
+                            "strokeLinejoin",
+                          ]
+                        }
+                        stroke={4291611852}
+                        strokeLinecap={1}
+                        strokeLinejoin={1}
+                        strokeWidth={4}
+                      />
+                    </RNSVGGroup>
+                  </RNSVGSvgView>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
