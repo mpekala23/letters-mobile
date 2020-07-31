@@ -18,7 +18,7 @@ export default StyleSheet.create({
       height: 5,
     },
     shadowOpacity: 0.22,
-    elevation: 4,
+    elevation: 2,
   },
   buttonBackgroundReverse: {
     flexDirection: 'row',
