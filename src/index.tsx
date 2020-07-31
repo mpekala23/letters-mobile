@@ -62,8 +62,8 @@ export default class App extends React.Component<null, State> {
   ): Record<string, string> {
     if (releaseChannel && releaseChannel.indexOf('prod') !== -1)
       return {
-        androidWriteKey: '',
-        iosWriteKey: '',
+        androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
+        iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',
       };
     // On development or staging channels
     return {
