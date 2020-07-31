@@ -6,9 +6,17 @@ import { logoutUser, loginUser } from '@store/User/UserActions';
 import { Photo, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE } from '@utils';
+import Constants from 'expo-constants';
 
-export const GENERAL_URL = 'https://api.ameelio.org/';
-export const API_URL = 'https://api.ameelio.org/api/';
+export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
+export const GENERAL_URL =
+  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+    ? 'https://api.ameelio.org/'
+    : 'https://letters-api-staging.ameelio.org/';
+export const API_URL =
+  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+    ? 'https://api.ameelio.org/api/'
+    : 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
