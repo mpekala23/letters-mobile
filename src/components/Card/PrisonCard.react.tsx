@@ -21,6 +21,8 @@ const PrisonCard: React.FC<Props> = (props: Props) => {
         return i18n.t('PrisonTypes.federal');
       case PrisonTypes.County:
         return i18n.t('PrisonTypes.county');
+      case PrisonTypes.Immigration:
+        return i18n.t('PrisonTypes.immigration');
       default:
         return '';
     }
