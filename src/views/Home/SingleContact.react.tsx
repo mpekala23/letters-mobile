@@ -283,7 +283,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               credits={this.props.userState.user.credit}
               onPress={() => {
                 Linking.openURL(
-                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20day&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20daily%20letter%20limit%3F"
+                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20weekly&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20weekly%20letter%20limit%3F"
                 );
               }}
             />

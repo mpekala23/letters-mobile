@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text, View, Platform } from 'react-native';
 import { Button, ProfilePic } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -11,6 +11,8 @@ import { Contact } from '@store/Contact/ContactTypes';
 import { ProfilePicTypes } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
+import LottieView from 'lottie-react-native';
+import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Airplane from '@assets/views/ReferFriends/Airplane';
 import { format, addBusinessDays } from 'date-fns';
@@ -49,38 +51,57 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
         style={{
           flex: 1,
           alignItems: 'center',
+          flexDirection: 'column',
           justifyContent: 'space-around',
         }}
       >
-        <Icon
-          svg={Airplane}
-          style={{ position: 'absolute', top: -5, zIndex: 999 }}
-        />
-        <ProfilePic
-          firstName={contact.firstName}
-          lastName={contact.lastName}
-          imageUri={contact.photo?.uri}
-          type={ProfilePicTypes.SingleContact}
-          disabled
-        />
-        <View style={{ flex: 0, marginBottom: 95 }}>
+        {Platform.OS === 'ios' ? (
+          <LottieView
+            source={DeliveryMan}
+            style={{ maxHeight: 150 }}
+            loop
+            autoPlay
+          />
+        ) : (
+          <View>
+            <Icon
+              svg={Airplane}
+              style={{ position: 'absolute', top: -5, zIndex: 999 }}
+            />
+            <ProfilePic
+              firstName={contact.firstName}
+              lastName={contact.lastName}
+              imageUri={contact.photo?.uri}
+              type={ProfilePicTypes.SingleContact}
+              disabled
+            />
+          </View>
+        )}
+
+        <View
+          style={{
+            flex: 0,
+            flexDirection: 'column',
+            marginTop: Platform.OS === 'ios' ? 150 : 16,
+          }}
+        >
           <Text
             style={[
               Typography.FONT_BOLD,
-              { fontSize: 23, textAlign: 'center' },
+              { fontSize: 20, textAlign: 'center' },
             ]}
           >
             {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWay')}
           </Text>
           <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
-            {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}{' '}
+            {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}:{' '}
             <Text style={Typography.FONT_BOLD}>
-              {format(sixDaysFromNow, 'MMM dd, yyyy')}
+              {format(sixDaysFromNow, 'MMM dd')}
             </Text>
-            . {i18n.t('ReferFriendsScreen.thanksAgain')}
+            .{'\n\n'} {i18n.t('ReferFriendsScreen.thanksAgain')}
           </Text>
         </View>
-        <View style={{ justifyContent: 'flex-end', width: '100%' }}>
+        <View style={{ marginTop: 16, width: '100%' }}>
           <Button
             buttonText={i18n.t('ReferFriendsScreen.shareOnFacebook')}
             onPress={() => onShare()}

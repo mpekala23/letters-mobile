@@ -85,7 +85,7 @@ exports[`Credits Card component should match snapshot 1`] = `
             }
           }
         >
-          Your letters reset weekly, on Monday at 4:00AM EST.
+          Your letters reset weekly.
         </Text>
       </View>
     </View>
