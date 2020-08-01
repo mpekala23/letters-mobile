@@ -227,33 +227,6 @@ exports[`Contact Selector Screen should match snapshot 1`] = `
                     },
                     Object {
                       "color": "#6D6D6D",
-                    },
-                  ]
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "#000",
-                    }
-                  }
-                >
-                  📆
-                </Text>
-                 
-                last heard from you
-                :
-                 
-                N/A
-              </Text>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "fontFamily": "Poppins-Regular",
-                    },
-                    Object {
-                      "color": "#6D6D6D",
                       "paddingBottom": 4,
                     },
                   ]
