@@ -1,6 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, View, Platform } from 'react-native';
-import { Button, ProfilePic } from '@components';
+import { Button } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
