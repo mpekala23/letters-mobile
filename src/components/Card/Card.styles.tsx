@@ -71,7 +71,7 @@ export default StyleSheet.create({
   memoryLaneText: {
     fontSize: 18,
     fontWeight: '500',
-    height: 65,
+    overflow: 'hidden',
   },
   letterOptionsBackground: {
     flexDirection: 'column',

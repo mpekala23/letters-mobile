@@ -32,7 +32,14 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
         />
       )}
       <View style={CardStyles.memoryLaneTextBackground}>
-        <Text style={CardStyles.memoryLaneText}>{props.text}</Text>
+        <Text
+          style={[
+            CardStyles.memoryLaneText,
+            { height: props.imageUri ? 65 : 150 },
+          ]}
+        >
+          {props.text}
+        </Text>
       </View>
       <View style={CardStyles.memoryLaneTextBackground}>
         <Text style={[CardStyles.date, { marginTop: 6 }]}>{letterDate}</Text>
