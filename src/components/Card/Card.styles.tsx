@@ -59,7 +59,7 @@ export default StyleSheet.create({
     height: 210,
   },
   memoryLaneTextBackground: {
-    padding: 8,
+    paddingHorizontal: 8,
   },
   memoryLanePicture: {
     height: '50%',

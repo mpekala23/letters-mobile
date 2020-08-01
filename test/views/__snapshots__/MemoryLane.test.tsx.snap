@@ -57,6 +57,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
               "shadowRadius": 2.62,
             },
             Object {
+              "justifyContent": "space-between",
               "marginLeft": 6,
               "width": "45%",
             },
@@ -84,7 +85,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
         <View
           style={
             Object {
-              "padding": 8,
+              "paddingHorizontal": 8,
             }
           }
         >
@@ -99,6 +100,14 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
           >
             I'm trying out this new service called Ameelio...
           </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 8,
+            }
+          }
+        >
           <Text
             style={
               Array [

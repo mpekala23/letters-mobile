@@ -60,7 +60,7 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
     <View
       style={
         Object {
-          "padding": 8,
+          "paddingHorizontal": 8,
         }
       }
     >
@@ -75,6 +75,14 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
       >
         Text
       </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingHorizontal": 8,
+        }
+      }
+    >
       <Text
         style={
           Array [

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle, Image } from 'react-native';
-import Default from '@assets/views/Onboarding/DefaultMemoryPreview.png';
 import { format } from 'date-fns';
 import CardStyles from './Card.styles';
 
@@ -25,19 +24,17 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
       testID="memoryLaneCard"
     >
-      <Image
-        style={CardStyles.memoryLanePicture}
-        source={
-          props.imageUri
-            ? {
-                uri: props.imageUri,
-              }
-            : Default
-        }
-        testID="memoryLaneImage"
-      />
+      {props.imageUri.length > 0 && (
+        <Image
+          style={CardStyles.memoryLanePicture}
+          source={{ uri: props.imageUri }}
+          testID="memoryLaneImage"
+        />
+      )}
       <View style={CardStyles.memoryLaneTextBackground}>
         <Text style={CardStyles.memoryLaneText}>{props.text}</Text>
+      </View>
+      <View style={CardStyles.memoryLaneTextBackground}>
         <Text style={[CardStyles.date, { marginTop: 6 }]}>{letterDate}</Text>
       </View>
     </TouchableOpacity>
