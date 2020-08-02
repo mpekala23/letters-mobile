@@ -23,7 +23,7 @@ import {
 import { Facility, Photo } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setAdding } from '@store/Contact/ContactActions';
+import { setAdding, setActive } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
@@ -48,6 +48,7 @@ export interface Props {
   contactState: ContactState;
   hasSentLetter: boolean;
   setAdding: (contact: Contact) => void;
+  setActiveContact: (contact: Contact) => void;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -169,7 +170,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             throw Error('Contact already exists');
           }
         }
-        await addContact(contact);
+        const newContact = await addContact(contact);
         Segment.track('Add Contact - Success');
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
@@ -187,7 +188,8 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             hoursTill8Tomorrow() + 24
           );
         }
-        this.props.navigation.navigate('ContactSelector');
+        this.props.setActiveContact(newContact);
+        this.props.navigation.navigate('SingleContact');
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
           Segment.trackWithProperties('Add Contact - Error', {
@@ -392,6 +394,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
+    setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
     setAdding: (contact: Contact) => dispatch(setAdding(contact)),
   };
 };
