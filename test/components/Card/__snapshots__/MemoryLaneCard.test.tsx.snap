@@ -66,11 +66,16 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
     >
       <Text
         style={
-          Object {
-            "fontSize": 18,
-            "fontWeight": "500",
-            "height": 65,
-          }
+          Array [
+            Object {
+              "fontSize": 18,
+              "fontWeight": "500",
+              "overflow": "hidden",
+            },
+            Object {
+              "height": 65,
+            },
+          ]
         }
       >
         Text

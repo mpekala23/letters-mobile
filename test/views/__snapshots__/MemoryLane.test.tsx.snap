@@ -91,11 +91,16 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
         >
           <Text
             style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "500",
-                "height": 65,
-              }
+              Array [
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "500",
+                  "overflow": "hidden",
+                },
+                Object {
+                  "height": 65,
+                },
+              ]
             }
           >
             I'm trying out this new service called Ameelio...
