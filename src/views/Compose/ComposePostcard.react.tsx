@@ -35,6 +35,7 @@ interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
   recipientName: string;
+  existingLetters: Record<number, Letter[]>;
   setContent: (content: string) => void;
   setPhoto: (photo: Photo | undefined) => void;
   setDraft: (value: boolean) => void;
@@ -106,9 +107,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationFocus() {
-    const { photo } = this.props.composing;
-    if (this.wordRef.current)
-      this.wordRef.current.set(this.props.composing.content);
+    const { photo, content } = this.props.composing;
+    if (this.wordRef.current) {
+      if (Object.keys(this.props.existingLetters).length === 0 && !content) {
+        this.wordRef.current.set(
+          `Hey ${this.props.recipientName}, ${i18n.t(
+            'Compose.firstLetterGhostText'
+          )}`
+        );
+      } else {
+        this.wordRef.current.set(content);
+      }
+    }
     if (this.picRef.current && photo && photo.width && photo.height) {
       this.picRef.current.setState({
         image: photo,
@@ -331,6 +341,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
   recipientName: state.contact.active.firstName,
+  existingLetters: state.letter.existing,
 });
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
