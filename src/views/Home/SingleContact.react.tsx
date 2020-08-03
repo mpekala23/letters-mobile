@@ -28,7 +28,13 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact, getUser, getZipcode } from '@api';
+import {
+  getLetters,
+  getContact,
+  getUser,
+  getZipcode,
+  getTrackingEvents,
+} from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
@@ -124,9 +130,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     status={letter.status}
                     date={letter.dateCreated}
                     description={letter.content}
-                    onPress={() => {
+                    onPress={async () => {
                       Segment.track('Contact View - Click on Letter Tracking');
-                      this.props.setActiveLetter(letter);
+                      // this.props.setActiveLetter(letter);
+                      // Conditional Logic: If lob_status is `Returned to Sender`
+                      // Then, render Contact Support, else render Letter Tracking
+                      await getTrackingEvents(letter.letterId);
                       this.props.navigation.navigate('LetterTracking');
                     }}
                     key={letter.letterId}
@@ -146,9 +155,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   status={letter.status}
                   date={letter.dateCreated}
                   description={letter.content}
-                  onPress={() => {
+                  onPress={async () => {
                     Segment.track('Contact View - Click on Letter Tracking');
-                    this.props.setActiveLetter(letter);
+                    // this.props.setActiveLetter(letter);
+                    await getTrackingEvents(letter.letterId);
                     this.props.navigation.navigate('LetterTracking');
                   }}
                   key={letter.letterId}

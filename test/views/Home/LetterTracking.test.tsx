@@ -40,6 +40,12 @@ const setup = (letterOverrides = {}) => {
 
   const store = mockStore({
     letter: initialLetterState,
+    contact: {
+      active: {
+        firstName: 'First Name',
+        id: 6,
+      },
+    },
     notif: { currentNotif: null },
   });
 

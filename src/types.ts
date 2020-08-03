@@ -43,6 +43,7 @@ export enum LetterStatus {
   Mailed = 'Mailed',
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
+  ProcessedForDelivery = 'Processed for Delivery',
   OutForDelivery = 'Out for Delivery',
   Delivered = 'Delivered',
 }
@@ -76,7 +77,7 @@ export interface Letter {
 export interface LetterTrackingEvent {
   id: number;
   name: string;
-  location: ZipcodeInfo;
+  location?: ZipcodeInfo;
   date: Date;
 }
 

@@ -30,6 +30,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="memoryLaneCountCard"
     >
       <Icon
         svg={LettersFilledIcon}

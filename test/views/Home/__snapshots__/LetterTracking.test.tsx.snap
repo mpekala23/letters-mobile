@@ -10,7 +10,8 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     }
   }
 >
-  <View
+  <ScrollView
+    keyboardShouldPersistTaps="handled"
     style={
       Object {
         "backgroundColor": "white",
@@ -292,19 +293,22 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     >
       Letter content
     </Text>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text
-        style={
-          Object {
-            "fontSize": 15,
-          }
+    <Text
+      style={
+        Object {
+          "fontSize": 15,
         }
-      >
-        I'm trying out this new service called Ameelio...
-      </Text>
-    </ScrollView>
-  </View>
+      }
+    >
+      I'm trying out this new service called Ameelio...
+    </Text>
+    <View
+      style={
+        Object {
+          "height": 40,
+        }
+      }
+    />
+  </ScrollView>
 </View>
 `;

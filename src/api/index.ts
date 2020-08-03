@@ -10,7 +10,12 @@ import {
 
 import { getFacility, getFacilities } from './Facilities';
 
-import { createLetter, facebookShare, getLetters } from './Letters';
+import {
+  createLetter,
+  facebookShare,
+  getLetters,
+  getTrackingEvents,
+} from './Letters';
 
 import {
   register,
@@ -34,6 +39,7 @@ export {
   createLetter,
   facebookShare,
   getLetters,
+  getTrackingEvents,
   register,
   login,
   loginWithToken,

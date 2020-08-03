@@ -7,10 +7,12 @@ import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
-import { format, addBusinessDays } from 'date-fns';
+import { format, addBusinessDays, differenceInBusinessDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import { Contact } from '@store/Contact/ContactTypes';
+
 import * as Segment from 'expo-analytics-segment';
 
 import Styles from './LetterTracking.styles';
@@ -23,6 +25,7 @@ type LetterTrackingScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: LetterTrackingScreenNavigationProp;
   letter: Letter | null;
+  contact: Contact;
   currentNotif: Notif | null;
   handleNotif: () => void;
 }
@@ -30,11 +33,11 @@ interface Props {
 function mapStatusToTrackerBarHeight(type?: string) {
   switch (type) {
     case LetterStatus.InTransit:
-      return 70;
-    case LetterStatus.InLocalArea:
-      return 120;
-    case LetterStatus.OutForDelivery:
-      return 200;
+      return '30%';
+    case LetterStatus.ProcessedForDelivery:
+      return '65%';
+    case LetterStatus.Delivered:
+      return '75%';
     default:
       return 0;
   }
@@ -56,9 +59,34 @@ class LetterTrackingScreenBase extends React.Component<Props> {
         : addBusinessDays(new Date(), 6),
       'MMM dd'
     );
-    const chronologicalEvents = this.props.letter.trackingEvents
-      ?.slice()
-      .reverse();
+    const chronologicalEvents = this.props.letter.trackingEvents;
+    if (chronologicalEvents) {
+      for (let ix = 0; ix < chronologicalEvents.length; ix += 1) {
+        // Append 'Delivered' to list of tracking events if processed + 3 days
+        if (
+          chronologicalEvents[ix].name === LetterStatus.ProcessedForDelivery &&
+          differenceInBusinessDays(new Date(), chronologicalEvents[ix].date) > 3
+        ) {
+          const trackingEvent: LetterTrackingEvent = {
+            id: -1,
+            name: LetterStatus.Delivered,
+            location: {
+              city: this.props.contact.facility
+                ? this.props.contact.facility.city
+                : '',
+              state: this.props.contact.facility
+                ? this.props.contact.facility.state
+                : '',
+              zip: this.props.contact.facility
+                ? this.props.contact.facility.postal
+                : '',
+            },
+            date: addBusinessDays(new Date(chronologicalEvents[ix].date), 3),
+          };
+          chronologicalEvents.push(trackingEvent);
+        }
+      }
+    }
     const letterTracker = chronologicalEvents?.map(
       (trackingEvent: LetterTrackingEvent) => {
         return (
@@ -67,7 +95,10 @@ class LetterTrackingScreenBase extends React.Component<Props> {
       }
     );
     return (
-      <View style={Styles.trueBackground}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        style={Styles.trueBackground}
+      >
         <View style={{ paddingBottom: 12 }}>
           <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
             {i18n.t('LetterTrackingScreen.letterTracking')}
@@ -91,7 +122,9 @@ class LetterTrackingScreenBase extends React.Component<Props> {
               height: mapStatusToTrackerBarHeight(
                 this.props.letter.trackingEvents &&
                   this.props.letter.trackingEvents.length > 0
-                  ? this.props.letter.trackingEvents[0].name
+                  ? this.props.letter.trackingEvents[
+                      this.props.letter.trackingEvents.length - 1
+                    ].name
                   : undefined
               ),
               width: 7,
@@ -114,34 +147,34 @@ class LetterTrackingScreenBase extends React.Component<Props> {
         <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterContent')}
         </Text>
-        <ScrollView keyboardShouldPersistTaps="handled">
-          <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
-          {this.props.letter.photo?.uri ? (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    this.props.letter.photo.width &&
-                    this.props.letter.photo.height
-                      ? (this.props.letter.photo.width /
-                          this.props.letter.photo.height) *
-                        275
-                      : 275,
-                },
-              ]}
-              source={this.props.letter.photo}
-              testID="memoryLaneImage"
-            />
-          ) : null}
-        </ScrollView>
-      </View>
+        <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
+        {this.props.letter.photo?.uri ? (
+          <Image
+            style={[
+              Styles.trackingPhoto,
+              {
+                height: 275,
+                width:
+                  this.props.letter.photo.width &&
+                  this.props.letter.photo.height
+                    ? (this.props.letter.photo.width /
+                        this.props.letter.photo.height) *
+                      275
+                    : 275,
+              },
+            ]}
+            source={this.props.letter.photo}
+            testID="memoryLaneImage"
+          />
+        ) : null}
+        <View style={{ height: 40 }} />
+      </ScrollView>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
+  contact: state.contact.active,
   letter: state.letter.active,
   currentNotif: state.notif.currentNotif,
 });

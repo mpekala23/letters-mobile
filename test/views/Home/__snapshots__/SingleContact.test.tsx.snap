@@ -482,6 +482,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
             ]
           }
+          testID="memoryLaneCountCard"
         >
           <RNSVGSvgView
             align="xMidYMid"
