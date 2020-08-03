@@ -50,7 +50,7 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       toValue: 100,
       duration: 1000,
       useNativeDriver: true,
-      delay: 400,
+      delay: 600,
     }).start();
   }, []);
 
@@ -75,7 +75,6 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
         backgroundColor: 'white',
       }}
     >
-      {/* <Animated.Image accessible accessibilityLabel="Ameelio Logo"> */}
       <Animated.Image
         accessible
         accessibilityLabel="Ameelio Logo"

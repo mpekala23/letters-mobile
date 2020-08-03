@@ -43,6 +43,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
               "width": "100%",
             },
             Object {
+              "borderRadius": 6,
               "height": 210,
               "padding": 0,
             },
@@ -119,6 +120,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
                 Object {
                   "color": "#6E757C",
                   "fontSize": 16,
+                  "marginBottom": 8,
                 },
                 Object {
                   "marginTop": 6,

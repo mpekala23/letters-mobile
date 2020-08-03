@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Memory Lane Card component should match snapshot 1`] = `
+exports[`MemoryLanePhotoCard component should match snapshot 1`] = `
 <View
   collapsable={true}
   pointerEvents="box-none"
@@ -39,72 +39,77 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
         undefined,
       ]
     }
-    testID="memoryLaneCard"
+    testID="memoryLanePostcardCard"
   >
-    <Image
-      source={
-        Object {
-          "uri": "test",
-        }
-      }
+    <View
+      accessibilityIgnoresInvertColors={true}
       style={
         Object {
-          "borderTopLeftRadius": 6,
-          "borderTopRightRadius": 6,
-          "height": "50%",
+          "borderRadius": 6,
+          "height": "100%",
           "resizeMode": "cover",
           "width": "100%",
         }
       }
-      testID="memoryLaneImage"
-    />
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 8,
-        }
-      }
     >
-      <Text
+      <Image
+        source={
+          Object {
+            "uri": "test",
+          }
+        }
         style={
           Array [
             Object {
-              "fontSize": 18,
-              "fontWeight": "500",
-              "overflow": "hidden",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
             },
             Object {
-              "height": 65,
+              "height": "100%",
+              "width": "100%",
+            },
+            Object {
+              "borderRadius": 6,
+            },
+          ]
+        }
+        testID="memoryLanePostcardImage"
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "paddingHorizontal": 8,
+            },
+            Object {
+              "backgroundColor": "rgba(0,0,0, 0.30)",
+              "borderRadius": 6,
+              "flex": 1,
             },
           ]
         }
       >
-        Text
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 8,
-        }
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#6E757C",
-              "fontSize": 16,
-              "marginBottom": 8,
-            },
-            Object {
-              "marginTop": 6,
-            },
-          ]
-        }
-      >
-        July 12
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 16,
+                "marginBottom": 8,
+                "marginTop": "auto",
+              },
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+            ]
+          }
+        >
+          July 12
+        </Text>
+      </View>
     </View>
   </TouchableOpacity>
 </View>

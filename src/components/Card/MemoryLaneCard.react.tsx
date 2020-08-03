@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MemoryLaneCard: React.FC<Props> = (props: Props) => {
-  const letterDate = props.date ? format(props.date, 'MMM dd, yyyy') : '';
+  const letterDate = props.date ? format(props.date, 'MMMM d') : '';
   return (
     <TouchableOpacity
       style={[

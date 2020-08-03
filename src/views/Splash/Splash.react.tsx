@@ -17,7 +17,7 @@ const SplashScreen: React.FC = () => {
       toValue: 100,
       duration: 1000,
       useNativeDriver: true,
-      delay: 400,
+      delay: 800,
     }).start();
   });
 

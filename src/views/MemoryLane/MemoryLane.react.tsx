@@ -2,8 +2,9 @@ import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Letter } from 'types';
+import { Letter, LetterTypes } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
+import MemoryLanePostcardCard from '@components/Card/MemoryLanePostcardCard.react';
 import { connect } from 'react-redux';
 import { Contact } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
@@ -30,10 +31,26 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
   const memoryCards =
     letters && letters.length > 0 ? (
       letters.map((letter: Letter) => {
-        return (
+        return letter.type === LetterTypes.Letter ? (
           <MemoryLaneCard
             key={letter.letterId}
             text={letter.content}
+            date={letter.dateCreated}
+            imageUri={letter.photo ? letter.photo.uri : ''}
+            onPress={() => {
+              props.setActiveLetter(letter);
+              Segment.track('Memory Lane - Click on Memory Card');
+              props.navigation.navigate('LetterDetails');
+            }}
+            style={{
+              width: '45%',
+              marginLeft: 6,
+              justifyContent: 'space-between',
+            }}
+          />
+        ) : (
+          <MemoryLanePostcardCard
+            key={letter.letterId}
             date={letter.dateCreated}
             imageUri={letter.photo ? letter.photo.uri : ''}
             onPress={() => {

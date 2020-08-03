@@ -1,10 +1,9 @@
 import React from 'react';
-import { MemoryLaneCard } from '@components';
+import { MemoryLanePostcardCard } from '@components';
 import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
 const setup = (propOverrides = {}) => {
   const props = {
-    text: 'Text',
     date: new Date('2019-07-12T15:51:41.000Z'),
     imageUri: 'test',
     color: 'green',
@@ -12,12 +11,12 @@ const setup = (propOverrides = {}) => {
     ...propOverrides,
   };
   return {
-    ...render(<MemoryLaneCard {...props} />),
+    ...render(<MemoryLanePostcardCard {...props} />),
     props,
   };
 };
 
-describe('Memory Lane Card component', () => {
+describe('MemoryLanePhotoCard component', () => {
   it('should match snapshot', () => {
     const { container } = setup();
     const tree = toJSON(container);
@@ -25,14 +24,9 @@ describe('Memory Lane Card component', () => {
   });
 
   it('should fire onPress() on a press', () => {
-    const { props, getByText } = setup();
-    fireEvent.press(getByText('Text'));
+    const { props, getByTestId } = setup();
+    fireEvent.press(getByTestId('memoryLanePostcardImage'));
     expect(props.onPress).toHaveBeenCalledTimes(1);
-  });
-
-  it('should display text', () => {
-    const { getByText } = setup();
-    expect(getByText('Text')).toBeDefined();
   });
 
   it('should display date', () => {
@@ -42,6 +36,8 @@ describe('Memory Lane Card component', () => {
 
   it('should display memory lane image', () => {
     const { getByTestId } = setup();
-    expect(getByTestId('memoryLaneImage').props.source.uri).toBe('test');
+    expect(getByTestId('memoryLanePostcardImage').props.source.uri).toBe(
+      'test'
+    );
   });
 });
