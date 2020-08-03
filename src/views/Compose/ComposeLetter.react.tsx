@@ -111,9 +111,9 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     if (this.wordRef.current) {
       if (Object.keys(this.props.existingLetters).length === 0 && !content) {
         this.wordRef.current.set(
-          `Hey ${this.props.recipientName}, ${i18n.t(
-            'Compose.firstLetterGhostText'
-          )}`
+          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+            this.props.recipientName
+          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
         );
       } else {
         this.wordRef.current.set(content);

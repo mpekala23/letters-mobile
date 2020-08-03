@@ -326,7 +326,8 @@
     "draftContactDeleted": "Empezar nueva carta.",
     "notEnoughCredits": "No hay suficientes créditos",
     "autosaved": "Autoguardado",
-    "firstLetterGhostText": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona."
+    "firstLetterGhostTextSalutation": "Hola",
+    "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona."
   },
   "Notifs": {
     "your": "Tu",

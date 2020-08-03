@@ -326,7 +326,8 @@
     "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
     "notEnoughCredits": "Not enough credits",
     "autosaved": "Autosaved",
-    "firstLetterGhostText": "hope you're good. I am trying out this new service to see if it works."
+    "firstLetterGhostTextSalutation": "Hey",
+    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works."
   },
   "Notifs": {
     "your": "Your",
