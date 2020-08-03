@@ -132,9 +132,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     description={letter.content}
                     onPress={async () => {
                       Segment.track('Contact View - Click on Letter Tracking');
-                      // this.props.setActiveLetter(letter);
-                      // Conditional Logic: If lob_status is `Returned to Sender`
-                      // Then, render Contact Support, else render Letter Tracking
                       await getTrackingEvents(letter.letterId);
                       this.props.navigation.navigate('LetterTracking');
                     }}
@@ -157,7 +154,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   description={letter.content}
                   onPress={async () => {
                     Segment.track('Contact View - Click on Letter Tracking');
-                    // this.props.setActiveLetter(letter);
                     await getTrackingEvents(letter.letterId);
                     this.props.navigation.navigate('LetterTracking');
                   }}
