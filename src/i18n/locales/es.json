@@ -119,7 +119,10 @@
     "letterTracking": "Rastreo de cartas",
     "estimatedArrival": "Se estima que su carta llegará",
     "needHelp": "Necesito ayuda",
-    "letterContent": "Contenido de la carta"
+    "letterContent": "Contenido de la carta",
+    "contactSupport": "Contact Support",
+    "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
+    "possibleReason": "Possible reason: Wrong mailing address"
   },
   "LoginScreen": {
     "welcomeBack": "Bienvenido de regreso",

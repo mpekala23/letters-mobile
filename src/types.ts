@@ -44,8 +44,8 @@ export enum LetterStatus {
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
   ProcessedForDelivery = 'Processed for Delivery',
-  OutForDelivery = 'Out for Delivery',
   Delivered = 'Delivered',
+  ReturnedToSender = 'Returned to Sender',
 }
 
 export enum LetterTypes {

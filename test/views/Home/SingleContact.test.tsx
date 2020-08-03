@@ -30,7 +30,7 @@ const setup = (letterOverrides = {}) => {
     6: [
       {
         type: LetterTypes.Postcard,
-        status: LetterStatus.OutForDelivery,
+        status: LetterStatus.ProcessedForDelivery,
         isDraft: false,
         recipientId: 6,
         content: "Hi Emily! How are you doing? I'm trying out this...",
@@ -91,14 +91,14 @@ describe('Single Contact Screen', () => {
       6: [
         {
           type: LetterTypes.Postcard,
-          status: LetterStatus.OutForDelivery,
+          status: LetterStatus.ProcessedForDelivery,
           isDraft: false,
           recipientId: 8,
           content: 'Redux Letter 1',
         },
         {
           type: LetterTypes.Postcard,
-          status: LetterStatus.OutForDelivery,
+          status: LetterStatus.ProcessedForDelivery,
           isDraft: false,
           recipientId: 8,
           content: 'Redux Letter 2',

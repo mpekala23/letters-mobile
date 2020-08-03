@@ -119,7 +119,11 @@
     "letterTracking": "Letter tracking",
     "estimatedArrival": "Your letter is estimated to arrive on",
     "needHelp": "I need help",
-    "letterContent": "Letter content"
+    "letterContent": "Letter content",
+    "contactSupport": "Contact Support",
+    "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
+    "possibleReason": "Possible reason: Wrong mailing address"
+
   },
   "LoginScreen": {
     "welcomeBack": "Welcome back",

@@ -1,8 +1,8 @@
 import React, { Dispatch } from 'react';
-import { Text, ScrollView, View, Image } from 'react-native';
+import { Linking, Text, ScrollView, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { Button, LetterTracker, GrayBar } from '@components';
+import { Button, LetterTracker, GrayBar, Icon } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -12,6 +12,7 @@ import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import { Contact } from '@store/Contact/ContactTypes';
+import ReturnedToSender from '@assets/views/LetterTracking/ReturnedToSender';
 
 import * as Segment from 'expo-analytics-segment';
 
@@ -60,6 +61,7 @@ class LetterTrackingScreenBase extends React.Component<Props> {
       'MMM dd'
     );
     const chronologicalEvents = this.props.letter.trackingEvents;
+    let returnedToSender = false;
     if (chronologicalEvents) {
       for (let ix = 0; ix < chronologicalEvents.length; ix += 1) {
         // Append 'Delivered' to list of tracking events if processed + 3 days
@@ -85,20 +87,48 @@ class LetterTrackingScreenBase extends React.Component<Props> {
           };
           chronologicalEvents.push(trackingEvent);
         }
+        if (chronologicalEvents[ix].name === LetterStatus.ReturnedToSender) {
+          returnedToSender = true;
+        }
       }
     }
-    const letterTracker = chronologicalEvents?.map(
-      (trackingEvent: LetterTrackingEvent) => {
+    const letterTracker =
+      !returnedToSender &&
+      chronologicalEvents?.map((trackingEvent: LetterTrackingEvent) => {
         return (
           <LetterTracker trackingEvent={trackingEvent} key={trackingEvent.id} />
         );
-      }
-    );
-    return (
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={Styles.trueBackground}
-      >
+      });
+
+    const body = returnedToSender ? (
+      <View style={{ alignItems: 'center', paddingTop: 24 }}>
+        <Text
+          style={[
+            Typography.FONT_BOLD,
+            Styles.headerText,
+            { textAlign: 'center' },
+          ]}
+        >
+          {i18n.t('LetterTrackingScreen.yourLetterWasReturnedToSender')}
+        </Text>
+        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
+          {i18n.t('LetterTrackingScreen.possibleReason')}
+        </Text>
+        <Icon svg={ReturnedToSender} style={{ paddingTop: 240 }} />
+        <Button
+          reverse
+          onPress={() => {
+            Linking.openURL('https://m.me/teamameelio');
+            Segment.track('In-App Reporting - Click on Contact Support');
+          }}
+          buttonText={i18n.t('LetterTrackingScreen.contactSupport')}
+          textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+          containerStyle={Styles.needHelpButton}
+        />
+        <GrayBar />
+      </View>
+    ) : (
+      <View>
         <View style={{ paddingBottom: 12 }}>
           <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
             {i18n.t('LetterTrackingScreen.letterTracking')}
@@ -144,6 +174,14 @@ class LetterTrackingScreenBase extends React.Component<Props> {
           textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
           containerStyle={Styles.needHelpButton}
         />
+      </View>
+    );
+    return (
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        style={Styles.trueBackground}
+      >
+        {body}
         <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterContent')}
         </Text>
