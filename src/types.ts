@@ -46,6 +46,7 @@ export enum LetterStatus {
   ProcessedForDelivery = 'Processed for Delivery',
   Delivered = 'Delivered',
   ReturnedToSender = 'Returned to Sender',
+  Rerouted = 'Re-Routed',
 }
 
 export enum LetterTypes {

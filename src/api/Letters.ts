@@ -151,17 +151,22 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   return existingLetters;
 }
 
-export async function getTrackingEvents(
-  id: number | undefined
-): Promise<Letter> {
+export async function getSingleLetter(id: number | undefined): Promise<Letter> {
   const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
     method: 'GET',
   });
   const data = body.data as RawLetter;
   if (body.status !== 'OK' || !data) throw body;
   const cleanedLetter = await cleanLetter(data);
-  store.dispatch(setActive(cleanedLetter));
   return cleanedLetter;
+}
+
+export async function getTrackingEvents(
+  id: number | undefined
+): Promise<Letter> {
+  const letter = await getSingleLetter(id);
+  store.dispatch(setActive(letter));
+  return letter;
 }
 
 export async function mapTrackingEventsToLetterStatus(

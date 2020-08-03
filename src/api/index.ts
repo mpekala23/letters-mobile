@@ -14,6 +14,7 @@ import {
   createLetter,
   facebookShare,
   getLetters,
+  getSingleLetter,
   getTrackingEvents,
 } from './Letters';
 
@@ -39,6 +40,7 @@ export {
   createLetter,
   facebookShare,
   getLetters,
+  getSingleLetter,
   getTrackingEvents,
   register,
   login,
