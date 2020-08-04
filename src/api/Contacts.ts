@@ -110,6 +110,7 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
+
   const body = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
     method: 'POST',
     body: JSON.stringify({

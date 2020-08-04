@@ -61,7 +61,9 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
               {props.date ? format(props.date, 'MMM dd, yyyy') : ''}
             </Text>
           </View>
-          <Text style={CardStyles.letterStatusData}>{props.description}</Text>
+          <Text numberOfLines={1} style={CardStyles.letterStatusData}>
+            {props.description}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -147,6 +147,13 @@ const LetterPreviewScreenBase: React.FC<Props> = (props: Props) => {
               dropdownError({
                 message: i18n.t('Error.unableToUploadLetterPhoto'),
               });
+            } else if (
+              err.data.content ===
+              'The content may not be greater than 16000 characters.'
+            ) {
+              dropdownError({
+                message: i18n.t('Error.letterTooLong'),
+              });
             } else {
               dropdownError({
                 message: i18n.t('Error.requestIncomplete'),

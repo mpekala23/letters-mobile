@@ -10,13 +10,15 @@ import Constants from 'expo-constants';
 
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 export const GENERAL_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+  true || (RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod'))
     ? 'https://api.ameelio.org/'
     : 'https://letters-api-staging.ameelio.org/';
 export const API_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+  true || (RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1)
     ? 'https://api.ameelio.org/api/'
     : 'https://letters-api-staging.ameelio.org/api/';
+
+console.log(API_URL);
 
 export interface ApiResponse {
   date: number;
@@ -33,7 +35,7 @@ export interface UserResponse {
 export function fetchTimeout(
   fetchUrl: string,
   options: Record<string, unknown>,
-  timeout = 3000
+  timeout = 15000
 ): Promise<Response> {
   return Promise.race([
     fetch(fetchUrl, options),
@@ -46,7 +48,7 @@ export function fetchTimeout(
 export async function fetchAuthenticated(
   fetchUrl: string,
   options: Record<string, unknown> = {},
-  timeout = 3000
+  timeout = 15000
 ): Promise<ApiResponse> {
   const requestOptions = {
     ...options,

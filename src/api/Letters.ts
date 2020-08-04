@@ -12,7 +12,11 @@ import {
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { differenceInDays, addBusinessDays } from 'date-fns';
+import {
+  differenceInDays,
+  addBusinessDays,
+  differenceInBusinessDays,
+} from 'date-fns';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -45,6 +49,8 @@ interface RawLetter {
   delivered: boolean;
   images: RawImage[];
   type: LetterTypes;
+  lob_status: string;
+  last_lob_status_update: string;
   tracking_events?: RawTrackingEvent[];
 }
 
@@ -57,6 +63,67 @@ async function cleanTrackingEvent(
     name: event.name,
     location,
     date: new Date(event.date),
+  };
+}
+
+function cleanLobStatus(status: string, date: Date): LetterStatus {
+  if (!status) return LetterStatus.Created;
+  const event = status.split('.')[1];
+  if (event === 'in_transit') return LetterStatus.InTransit;
+  if (event === 'processed_for_delivery') {
+    if (!date) return LetterStatus.Delivered;
+    if (differenceInBusinessDays(date, new Date()) <= 3)
+      return LetterStatus.OutForDelivery;
+    return LetterStatus.Delivered;
+  }
+  if (event === 'in_local_area') return LetterStatus.InLocalArea;
+  if (event === 'mailed') return LetterStatus.Mailed;
+  return LetterStatus.Created;
+}
+
+// cleans a letter returned as part of an array for all a user's letters
+async function cleanMassLetter(letter: RawLetter): Promise<Letter> {
+  if (!letter.lob_status || !letter.last_lob_status_update) {
+    return getSingleLetter(letter.id);
+  }
+  const { type, content } = letter;
+  const recipientId = letter.contact_id;
+  const photo =
+    letter.images.length > 0
+      ? {
+          type: 'image/jpeg',
+          uri: letter.images[0].img_src,
+        }
+      : undefined;
+  const letterId = letter.id;
+  const dateCreated = new Date(letter.created_at);
+  const lastLobUpdate = new Date(letter.last_lob_status_update);
+  const lobStatus = letter.lob_status;
+  let status: LetterStatus;
+  let isDraft: boolean;
+  if (!letter.sent) {
+    status = LetterStatus.Draft;
+    isDraft = true;
+  } else {
+    status = cleanLobStatus(letter.lob_status, lastLobUpdate);
+    isDraft = false;
+  }
+  let expectedDeliveryDate = addBusinessDays(new Date(letter.created_at), 6);
+  if (status === LetterStatus.OutForDelivery) {
+    expectedDeliveryDate = addBusinessDays(lastLobUpdate, 3);
+  }
+  return {
+    type,
+    status,
+    isDraft,
+    recipientId,
+    content,
+    photo,
+    letterId,
+    expectedDeliveryDate,
+    dateCreated,
+    lobStatus,
+    lastLobUpdate,
   };
 }
 
@@ -107,6 +174,8 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
   };
   const letterId = letter.id;
   const dateCreated = new Date(letter.created_at);
+  const lastLobUpdate = new Date(letter.last_lob_status_update);
+  const lobStatus = cleanLobStatus(letter.lob_status, lastLobUpdate);
   return {
     type,
     status,
@@ -117,6 +186,8 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
     letterId,
     expectedDeliveryDate,
     dateCreated,
+    lobStatus,
+    lastLobUpdate,
     trackingEvents,
   };
 }
@@ -131,6 +202,19 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   );
   const data = body.data as { current_page: number; data: RawLetter[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
+
+  /*
+  const newExisting: Record<number, Letter> = {};
+  for (let ix = 0; ix < data.data.length; ix += 1) {
+    const raw = data.data[ix];
+    const clean = await cleanMassLetter(raw);
+    if (clean.letterId in newExisting) {
+      existingLetters[clean.recipientId].push(clean);
+    } else {
+      existingLetters[clean.recipientId] = [clean];
+    }
+  } */
+
   const existingLetters: Record<number, Letter[]> = {};
   for (let ix = 0; ix < data.data.length; ix += 1) {
     const rawLetter = data.data[ix];
@@ -140,6 +224,7 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
       existingLetters[rawLetter.contact_id] = [await cleanLetter(rawLetter)];
     }
   }
+
   store.dispatch(setExistingLetters(existingLetters));
   return existingLetters;
 }
