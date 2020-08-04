@@ -1,9 +1,19 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, ViewStyle, Image } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import { format } from 'date-fns';
+import { LetterTypes } from 'types';
+import { Typography } from '@styles';
 import CardStyles from './Card.styles';
 
 interface Props {
+  type: LetterTypes;
   text: string;
   date?: Date;
   imageUri: string;
@@ -13,6 +23,8 @@ interface Props {
 
 const MemoryLaneCard: React.FC<Props> = (props: Props) => {
   const letterDate = props.date ? format(props.date, 'MMMM d') : '';
+  const hasImage = props.imageUri.length > 0;
+
   return (
     <TouchableOpacity
       style={[
@@ -24,26 +36,53 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
       testID="memoryLaneCard"
     >
-      {props.imageUri.length > 0 && (
-        <Image
-          style={CardStyles.memoryLanePicture}
+      {props.type === LetterTypes.Postcard ? (
+        <ImageBackground
+          style={CardStyles.memoryLanePostcardPicture}
           source={{ uri: props.imageUri }}
-          testID="memoryLaneImage"
-        />
-      )}
-      <View style={CardStyles.memoryLaneTextBackground}>
-        <Text
-          style={[
-            CardStyles.memoryLaneText,
-            { height: props.imageUri ? 65 : 150 },
-          ]}
+          imageStyle={{ borderRadius: 6 }}
+          testID="memoryLanePostcardImage"
         >
-          {props.text}
-        </Text>
-      </View>
-      <View style={CardStyles.memoryLaneTextBackground}>
-        <Text style={[CardStyles.date, { marginTop: 6 }]}>{letterDate}</Text>
-      </View>
+          <View
+            style={[
+              CardStyles.memoryLaneTextBackground,
+              CardStyles.memoryLanePostcardBackground,
+            ]}
+          >
+            <Text
+              style={[CardStyles.memoryLanePostcardDate, Typography.FONT_BOLD]}
+            >
+              {letterDate}
+            </Text>
+          </View>
+        </ImageBackground>
+      ) : (
+        <View>
+          {hasImage && (
+            <Image
+              style={CardStyles.memoryLanePicture}
+              source={{ uri: props.imageUri }}
+              testID="memoryLaneImage"
+            />
+          )}
+          <View style={CardStyles.memoryLaneTextBackground}>
+            <Text
+              style={[
+                CardStyles.memoryLaneText,
+                { height: props.imageUri ? 65 : 170 },
+              ]}
+              numberOfLines={props.imageUri ? 2 : 6}
+            >
+              {props.text}
+            </Text>
+          </View>
+          <View style={CardStyles.memoryLaneTextBackground}>
+            <Text style={[CardStyles.date, { marginTop: 6 }]}>
+              {letterDate}
+            </Text>
+          </View>
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

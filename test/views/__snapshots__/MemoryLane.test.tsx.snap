@@ -58,7 +58,6 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
               "shadowRadius": 2.62,
             },
             Object {
-              "justifyContent": "space-between",
               "marginLeft": 6,
               "width": "45%",
             },
@@ -66,70 +65,72 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
         }
         testID="memoryLaneCard"
       >
-        <Image
-          source={
-            Object {
-              "uri": "https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png",
+        <View>
+          <Image
+            source={
+              Object {
+                "uri": "https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png",
+              }
             }
-          }
-          style={
-            Object {
-              "borderTopLeftRadius": 6,
-              "borderTopRightRadius": 6,
-              "height": "50%",
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-          testID="memoryLaneImage"
-        />
-        <View
-          style={
-            Object {
-              "paddingHorizontal": 8,
-            }
-          }
-        >
-          <Text
             style={
-              Array [
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "500",
-                  "overflow": "hidden",
-                },
-                Object {
-                  "height": 65,
-                },
-              ]
+              Object {
+                "borderTopLeftRadius": 6,
+                "borderTopRightRadius": 6,
+                "height": "50%",
+                "resizeMode": "cover",
+                "width": "100%",
+              }
+            }
+            testID="memoryLaneImage"
+          />
+          <View
+            style={
+              Object {
+                "paddingHorizontal": 8,
+              }
             }
           >
-            I'm trying out this new service called Ameelio...
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "paddingHorizontal": 8,
-            }
-          }
-        >
-          <Text
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontSize": 18,
+                    "fontWeight": "500",
+                    "overflow": "hidden",
+                  },
+                  Object {
+                    "height": 65,
+                  },
+                ]
+              }
+            >
+              I'm trying out this new service called Ameelio...
+            </Text>
+          </View>
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#6E757C",
-                  "fontSize": 16,
-                  "marginBottom": 8,
-                },
-                Object {
-                  "marginTop": 6,
-                },
-              ]
+              Object {
+                "paddingHorizontal": 8,
+              }
             }
           >
-            
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#6E757C",
+                    "fontSize": 16,
+                    "marginBottom": 8,
+                  },
+                  Object {
+                    "marginTop": 6,
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     </View>

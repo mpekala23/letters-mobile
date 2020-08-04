@@ -13,7 +13,6 @@ import LetterOptionCard from './Card/LetterOptionCard.react';
 import LetterStatusCard from './Card/LetterStatusCard.react';
 import LetterTracker from './LetterTracker/LetterTracker.react';
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
-import MemoryLanePostcardCard from './Card/MemoryLanePostcardCard.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
@@ -37,7 +36,6 @@ export {
   LetterStatusCard,
   LetterTracker,
   MemoryLaneCard,
-  MemoryLanePostcardCard,
   PicUpload,
   PrisonCard,
   ProfilePic,

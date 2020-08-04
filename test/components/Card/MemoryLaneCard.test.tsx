@@ -4,6 +4,7 @@ import { fireEvent, render, toJSON } from '@testing-library/react-native';
 
 const setup = (propOverrides = {}) => {
   const props = {
+    type: 'letter',
     text: 'Text',
     date: new Date('2019-07-12T15:51:41.000Z'),
     imageUri: 'test',
