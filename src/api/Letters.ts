@@ -147,7 +147,6 @@ export async function getSingleLetter(id: number | undefined): Promise<Letter> {
   });
   const data = body.data as RawLetter;
   if (body.status !== 'OK' || !data) throw body;
-  // console.log("DATA", data)
   const cleanedLetter = await cleanLetter(data);
   return cleanedLetter;
 }
@@ -170,7 +169,6 @@ async function cleanMassLetter(letter: RawLetter): Promise<Letter> {
   const dateCreated = new Date(letter.created_at);
   const lastLobUpdate = new Date(letter.last_lob_status_update);
   const lobStatus = letter.lob_status;
-  // console.log(lobStatus);
   let status: LetterStatus;
   let isDraft: boolean;
   if (!letter.sent) {
@@ -217,7 +215,6 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
         const letters = newExisting[clean.recipientId];
         let ix = 0;
         for (ix = 0; ix < letters.length; ix += 1) {
-          console.log('id:', letters[ix].status);
           const searchDate = letters[ix].dateCreated;
           if (clean.dateCreated && searchDate && clean.dateCreated > searchDate)
             break;
