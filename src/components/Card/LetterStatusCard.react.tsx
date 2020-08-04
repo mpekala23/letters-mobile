@@ -27,8 +27,12 @@ function mapStatusToColorStyle(type: LetterStatus) {
       return { backgroundColor: Colors.GREEN_DARKER };
     case LetterStatus.ProcessedForDelivery:
       return { backgroundColor: Colors.GREEN_DARKEST };
+    case LetterStatus.Delivered:
+      return { backgroundColor: Colors.BLUE_DARK };
+    case LetterStatus.ReturnedToSender:
+      return { backgroundColor: Colors.BLUE_LIGHTEST };
     default:
-      return { backgroundColor: '' };
+      return { backgroundColor: Colors.BLUE_DARK };
   }
 }
 

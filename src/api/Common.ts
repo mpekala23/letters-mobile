@@ -18,8 +18,6 @@ export const API_URL =
     ? 'https://api.ameelio.org/api/'
     : 'https://letters-api-staging.ameelio.org/api/';
 
-console.log(API_URL);
-
 export interface ApiResponse {
   date: number;
   status?: 'OK' | 'ERROR' | 'succeeded';

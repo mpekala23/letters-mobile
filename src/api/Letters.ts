@@ -47,7 +47,6 @@ interface RawLetter {
   contact_id: number;
   content: string;
   sent: boolean;
-  delivered: boolean;
   images: RawImage[];
   type: LetterTypes;
   lob_status: string;
@@ -74,17 +73,89 @@ function cleanLobStatus(status: string, date: Date): LetterStatus {
   const event = status.split('.')[1];
   if (event === 'in_transit') return LetterStatus.InTransit;
   if (event === 'processed_for_delivery') {
-    if (!date) return LetterStatus.Delivered;
-    if (differenceInBusinessDays(date, new Date()) <= 3)
-      return LetterStatus.OutForDelivery;
+    if (!date) return LetterStatus.ProcessedForDelivery;
+    if (Math.abs(differenceInBusinessDays(date, new Date())) <= 3)
+      return LetterStatus.ProcessedForDelivery;
     return LetterStatus.Delivered;
   }
   if (event === 'in_local_area') return LetterStatus.InLocalArea;
   if (event === 'mailed') return LetterStatus.Mailed;
+  if (event === 'returned_to_sender') return LetterStatus.ReturnedToSender;
   return LetterStatus.Created;
 }
 
-// cleans a letter returned as part of an array for all a user's letters
+export function mapTrackingEventsToLetterStatus(
+  events: LetterTrackingEvent[]
+): LetterStatus {
+  if (events.length <= 0) return LetterStatus.Created;
+  const lastIdx = events.length - 1;
+  let letterStatus = events[lastIdx].name as LetterStatus;
+  if (
+    events[lastIdx].name === LetterStatus.ProcessedForDelivery &&
+    differenceInBusinessDays(new Date(), events[lastIdx].date) > 3
+  ) {
+    letterStatus = LetterStatus.Delivered;
+  }
+  return letterStatus;
+}
+
+// cleans a letter returned from getSingleLetter
+async function cleanLetter(letter: RawLetter): Promise<Letter> {
+  const { type, content } = letter;
+  const recipientId = letter.contact_id;
+  const photo =
+    letter.images.length > 0
+      ? {
+          type: 'image/jpeg',
+          uri: letter.images[0].img_src,
+        }
+      : undefined;
+  const letterId = letter.id;
+  const dateCreated = new Date(letter.created_at);
+  const isDraft = !letter.sent;
+  let status: LetterStatus;
+  let expectedDeliveryDate = addBusinessDays(new Date(letter.created_at), 6);
+  const trackingEvents = !letter.tracking_events
+    ? []
+    : await Promise.all(
+        letter.tracking_events.map((rawEvent) => cleanTrackingEvent(rawEvent))
+      );
+  if (!letter.sent) {
+    status = LetterStatus.Draft;
+  } else {
+    status = mapTrackingEventsToLetterStatus(trackingEvents);
+    if (status === LetterStatus.ProcessedForDelivery) {
+      expectedDeliveryDate = addBusinessDays(
+        trackingEvents[trackingEvents.length - 1].date,
+        3
+      );
+    }
+  }
+  return {
+    type,
+    status,
+    isDraft,
+    recipientId,
+    content,
+    photo,
+    letterId,
+    expectedDeliveryDate,
+    dateCreated,
+    trackingEvents,
+  };
+}
+
+export async function getSingleLetter(id: number | undefined): Promise<Letter> {
+  const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
+    method: 'GET',
+  });
+  const data = body.data as RawLetter;
+  if (body.status !== 'OK' || !data) throw body;
+  const cleanedLetter = await cleanLetter(data);
+  return cleanedLetter;
+}
+
+// cleans a letter returned from getLetters and defaults to getSingleLetter if necessary
 async function cleanMassLetter(letter: RawLetter): Promise<Letter> {
   if (!letter.lob_status || !letter.last_lob_status_update) {
     return getSingleLetter(letter.id);
@@ -112,7 +183,7 @@ async function cleanMassLetter(letter: RawLetter): Promise<Letter> {
     isDraft = false;
   }
   let expectedDeliveryDate = addBusinessDays(new Date(letter.created_at), 6);
-  if (status === LetterStatus.OutForDelivery) {
+  if (status === LetterStatus.ProcessedForDelivery) {
     expectedDeliveryDate = addBusinessDays(lastLobUpdate, 3);
   }
   return {
@@ -130,71 +201,6 @@ async function cleanMassLetter(letter: RawLetter): Promise<Letter> {
   };
 }
 
-async function cleanLetter(letter: RawLetter): Promise<Letter> {
-  const { type } = letter;
-  let status: LetterStatus;
-  let expectedDeliveryDate = addBusinessDays(new Date(letter.created_at), 6);
-  const trackingEvents = !letter.tracking_events
-    ? []
-    : await Promise.all(
-        letter.tracking_events.map((rawEvent) => cleanTrackingEvent(rawEvent))
-      );
-  if (!letter.sent) {
-    status = LetterStatus.Draft;
-  } else {
-    let inTransit = false;
-    let processedForDelivery = false;
-    let processedForDeliveryDate = new Date();
-    for (let ix = 0; ix < trackingEvents.length; ix += 1) {
-      inTransit = inTransit || trackingEvents[ix].name === 'In Transit';
-      processedForDelivery =
-        processedForDelivery ||
-        trackingEvents[ix].name === 'Processed for Delivery';
-      if (trackingEvents[ix].name === 'Processed for Delivery') {
-        processedForDeliveryDate = trackingEvents[ix].date;
-      }
-    }
-    if (!inTransit) {
-      status = LetterStatus.Created;
-    } else if (!processedForDelivery) {
-      status = LetterStatus.Mailed;
-    } else {
-      expectedDeliveryDate = addBusinessDays(processedForDeliveryDate, 3);
-      const dayDiff = differenceInDays(processedForDeliveryDate, new Date());
-      if (dayDiff <= 5) {
-        status = LetterStatus.ProcessedForDelivery;
-      } else {
-        status = LetterStatus.Delivered;
-      }
-    }
-  }
-  const isDraft = !letter.sent;
-  const recipientId: number = letter.contact_id;
-  const { content } = letter;
-  const photo = {
-    type: 'image/jpeg',
-    uri: letter.images.length !== 0 ? letter.images[0].img_src : '',
-  };
-  const letterId = letter.id;
-  const dateCreated = new Date(letter.created_at);
-  const lastLobUpdate = new Date(letter.last_lob_status_update);
-  const lobStatus = cleanLobStatus(letter.lob_status, lastLobUpdate);
-  return {
-    type,
-    status,
-    isDraft,
-    recipientId,
-    content,
-    photo,
-    letterId,
-    expectedDeliveryDate,
-    dateCreated,
-    lobStatus,
-    lastLobUpdate,
-    trackingEvents,
-  };
-}
-
 export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   const params = new URLSearchParams({ page: page.toString() });
   const body = await fetchAuthenticated(
@@ -205,41 +211,27 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   );
   const data = body.data as { current_page: number; data: RawLetter[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
-
-  /*
-  const newExisting: Record<number, Letter> = {};
-  for (let ix = 0; ix < data.data.length; ix += 1) {
-    const raw = data.data[ix];
-    const clean = await cleanMassLetter(raw);
-    if (clean.letterId in newExisting) {
-      existingLetters[clean.recipientId].push(clean);
-    } else {
-      existingLetters[clean.recipientId] = [clean];
-    }
-  } */
-
-  const existingLetters: Record<number, Letter[]> = {};
-  for (let ix = 0; ix < data.data.length; ix += 1) {
-    const rawLetter = data.data[ix];
-    if (rawLetter.contact_id in existingLetters) {
-      existingLetters[rawLetter.contact_id].push(await cleanLetter(rawLetter));
-    } else {
-      existingLetters[rawLetter.contact_id] = [await cleanLetter(rawLetter)];
-    }
-  }
-
-  store.dispatch(setExistingLetters(existingLetters));
-  return existingLetters;
-}
-
-export async function getSingleLetter(id: number | undefined): Promise<Letter> {
-  const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
-    method: 'GET',
-  });
-  const data = body.data as RawLetter;
-  if (body.status !== 'OK' || !data) throw body;
-  const cleanedLetter = await cleanLetter(data);
-  return cleanedLetter;
+  const newExisting: Record<number, Letter[]> = {};
+  await Promise.all(
+    data.data.map(async (raw) => {
+      const clean = await cleanMassLetter(raw);
+      if (clean.recipientId in newExisting) {
+        const letters = newExisting[clean.recipientId];
+        let ix = 0;
+        for (ix = 0; ix < letters.length; ix += 1) {
+          const searchDate = letters[ix].dateCreated;
+          if (clean.dateCreated && searchDate && clean.dateCreated > searchDate)
+            break;
+        }
+        letters.splice(ix, 0, clean);
+        newExisting[clean.recipientId] = letters;
+      } else {
+        newExisting[clean.recipientId] = [clean];
+      }
+    })
+  );
+  store.dispatch(setExistingLetters(newExisting));
+  return newExisting;
 }
 
 export async function getTrackingEvents(
@@ -248,20 +240,6 @@ export async function getTrackingEvents(
   const letter = await getSingleLetter(id);
   store.dispatch(setActive(letter));
   return letter;
-}
-
-export async function mapTrackingEventsToLetterStatus(
-  events: LetterTrackingEvent[]
-): Promise<LetterStatus> {
-  const lastIdx = events.length - 1;
-  let letterStatus = events[lastIdx].name as LetterStatus;
-  if (
-    events[lastIdx].name === LetterStatus.ProcessedForDelivery &&
-    differenceInBusinessDays(new Date(), events[lastIdx].date) > 3
-  ) {
-    letterStatus = LetterStatus.Delivered;
-  }
-  return letterStatus;
 }
 
 export async function createLetter(letter: Letter): Promise<Letter> {
