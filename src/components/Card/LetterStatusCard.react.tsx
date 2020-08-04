@@ -15,20 +15,22 @@ interface Props {
 
 function mapStatusToColorStyle(type: LetterStatus) {
   switch (type) {
-    case LetterStatus.Draft:
-      return { backgroundColor: Colors.GREEN_LIGHTEST };
     case LetterStatus.Created:
-      return { backgroundColor: Colors.GREEN_LIGHTER };
+      return { backgroundColor: Colors.GREEN_LIGHTEST };
     case LetterStatus.Mailed:
-      return { backgroundColor: Colors.GREEN_LIGHT };
+      return { backgroundColor: Colors.GREEN_LIGHTER };
     case LetterStatus.InTransit:
-      return { backgroundColor: Colors.GREEN_DARK };
+      return { backgroundColor: Colors.GREEN_LIGHT };
     case LetterStatus.InLocalArea:
-      return { backgroundColor: Colors.GREEN_DARKER };
+      return { backgroundColor: Colors.GREEN_DARK };
     case LetterStatus.ProcessedForDelivery:
+      return { backgroundColor: Colors.GREEN_DARKER };
+    case LetterStatus.Delivered:
       return { backgroundColor: Colors.GREEN_DARKEST };
+    case LetterStatus.ReturnedToSender:
+      return { backgroundColor: Colors.AMEELIO_RED };
     default:
-      return { backgroundColor: '' };
+      return { backgroundColor: Colors.GREEN_LIGHTEST };
   }
 }
 
@@ -61,7 +63,9 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
               {props.date ? format(props.date, 'MMM dd, yyyy') : ''}
             </Text>
           </View>
-          <Text style={CardStyles.letterStatusData}>{props.description}</Text>
+          <Text numberOfLines={1} style={CardStyles.letterStatusData}>
+            {props.description}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

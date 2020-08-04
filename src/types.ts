@@ -69,9 +69,11 @@ export interface Letter {
   recipientId: number;
   content: string;
   photo?: Photo;
-  letterId?: number; // TODO: Once we have more info on this field and lob, use this more
+  letterId?: number;
   expectedDeliveryDate?: Date;
   dateCreated?: Date;
+  lobStatus?: string;
+  lastLobUpdate?: Date;
   trackingEvents?: LetterTrackingEvent[];
 }
 
