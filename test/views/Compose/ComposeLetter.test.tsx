@@ -22,6 +22,7 @@ const setup = () => {
         content: '',
         letterId: -1,
       },
+      existing: {},
     },
     contact: {
       active: {
