@@ -149,8 +149,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   onNextPress(): void {
+    const { photo } = this.props.composing;
     Keyboard.dismiss();
-    if (this.props.composing.content.length <= 0) {
+    if (!photo) {
       popupAlert({
         title: i18n.t('Compose.postcardMustHaveContent'),
         buttons: [

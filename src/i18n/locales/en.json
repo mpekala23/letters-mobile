@@ -315,7 +315,7 @@
     "collapse": "Collapse",
     "needIdeas": "Need Ideas?",
     "letterMustHaveContent": "Your letter can't be empty.",
-    "postcardMustHaveContent": "Your photo can't be empty",
+    "postcardMustHaveContent": "Your have to select a photo.",
     "uploadAnImage": "Upload an Image",
     "takePhoto": "Take photo",
     "uploadExistingPhoto": "Upload existing photo",
