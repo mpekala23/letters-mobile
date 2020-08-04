@@ -101,7 +101,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
             },
             Object {},
             Object {
-              "elevation": 4,
+              "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
                 "height": 5,

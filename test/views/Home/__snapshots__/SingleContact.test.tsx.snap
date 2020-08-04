@@ -325,7 +325,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
               Object {},
               Object {
-                "elevation": 4,
+                "elevation": 2,
                 "shadowColor": "#000",
                 "shadowOffset": Object {
                   "height": 5,
@@ -712,7 +712,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "borderRadius": 3,
+                    "borderRadius": 8,
                     "height": "100%",
                     "marginRight": 15,
                     "width": 6,
@@ -770,6 +770,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 </Text>
               </View>
               <Text
+                numberOfLines={1}
                 style={
                   Object {
                     "color": "#6E757C",
