@@ -421,6 +421,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
             ]
           }
+          testID="memoryLaneCountCard"
         >
           <RNSVGSvgView
             align="xMidYMid"
@@ -694,7 +695,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                  Out for Delivery
+                  Processed for Delivery
                 </Text>
                 <Text
                   style={

@@ -21,7 +21,7 @@ function mapStatusToProgressStyle(type: LetterStatus) {
       return { width: '40%' };
     case LetterStatus.InTransit:
       return { width: '60%' };
-    case LetterStatus.OutForDelivery:
+    case LetterStatus.ProcessedForDelivery:
       return { width: '80%' };
     case LetterStatus.Delivered:
       return { width: '100%' };
