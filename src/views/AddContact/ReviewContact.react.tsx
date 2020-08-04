@@ -191,7 +191,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.setActiveContact(newContact);
         this.props.navigation.reset({
           index: 0,
-          routes: [{ name: 'SingleContact' }],
+          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
         });
       } catch (err) {
         if (err.message === 'Invalid inmate number') {

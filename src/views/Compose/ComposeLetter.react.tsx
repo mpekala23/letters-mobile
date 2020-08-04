@@ -43,7 +43,7 @@ interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
   recipientName: string;
-  existingLetters: Record<number, Letter[]>;
+  hasSentLetters: boolean;
   setContent: (content: string) => void;
   setDraft: (value: boolean) => void;
   setPhoto: (photo: Photo | undefined) => void;
@@ -109,7 +109,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     const { photo, content } = this.props.composing;
 
     if (this.wordRef.current) {
-      if (Object.keys(this.props.existingLetters).length === 0 && !content) {
+      if (!this.props.hasSentLetters && !content) {
         this.wordRef.current.set(
           `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
             this.props.recipientName
@@ -351,7 +351,9 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
   recipientName: state.contact.active.firstName,
-  existingLetters: state.letter.existing,
+  hasSentLetters: Object.values(state.letter.existing).some(
+    (letters) => letters.length > 0
+  ),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
