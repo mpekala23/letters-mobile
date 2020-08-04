@@ -14,9 +14,9 @@ function mapStatustoTrackerColor(type: string) {
       return Colors.GREEN_LIGHTER;
     case LetterStatus.InTransit:
       return Colors.GREEN_LIGHT;
-    case LetterStatus.InLocalArea:
+    case LetterStatus.ProcessedForDelivery:
       return Colors.GREEN_DARK;
-    case LetterStatus.OutForDelivery:
+    case LetterStatus.Delivered:
       return Colors.GREEN_DARKER;
     default:
       return '';
@@ -25,85 +25,94 @@ function mapStatustoTrackerColor(type: string) {
 
 const LetterTracker: React.FC<Props> = (props: Props) => {
   const { name, location, date } = props.trackingEvent;
-  const dateFormatted = format(date, 'MMM dd, yyyy');
-  const timeFormatted = format(date, 'HH:mm a');
+  const dateFormatted = date ? format(date, 'MMM dd, yyyy') : '';
+  const timeFormatted =
+    name !== LetterStatus.Delivered ? format(date, 'h:mm a') : '';
 
-  return (
-    <View>
-      <View style={{ flexDirection: 'row', paddingBottom: 16 }}>
-        <View
-          style={{
-            borderRadius: 50,
-            backgroundColor: mapStatustoTrackerColor(name),
-            height: 28,
-            width: 28,
-            marginLeft: 4,
-            marginRight: 24,
-          }}
-          testID="trackerCircle"
-        />
-        <View style={{ flexDirection: 'column' }}>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                color: Colors.AMEELIO_BLACK,
-                fontSize: 16,
-                paddingBottom: 6,
-              },
-            ]}
+  if (
+    name === LetterStatus.Mailed ||
+    name === LetterStatus.InTransit ||
+    name === LetterStatus.ProcessedForDelivery ||
+    name === LetterStatus.Delivered
+  ) {
+    return (
+      <View>
+        <View style={{ flexDirection: 'row', paddingBottom: 16 }}>
+          <View
+            style={{
+              borderRadius: 50,
+              backgroundColor: mapStatustoTrackerColor(name),
+              height: 28,
+              width: 28,
+              marginLeft: 4,
+              marginRight: 24,
+            }}
+            testID="trackerCircle"
+          />
+          <View style={{ flexDirection: 'column' }}>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  color: Colors.AMEELIO_BLACK,
+                  fontSize: 16,
+                  paddingBottom: 6,
+                },
+              ]}
+            >
+              {name}
+            </Text>
+            <Text
+              style={[
+                Typography.FONT_BOLD,
+                {
+                  color: Colors.GRAY_DARKER,
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {location ? location.city : ''}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              marginLeft: 'auto',
+              alignItems: 'flex-end',
+            }}
           >
-            {name}
-          </Text>
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                color: Colors.GRAY_DARKER,
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {location.city}
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'column',
-            marginLeft: 'auto',
-            alignItems: 'flex-end',
-          }}
-        >
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              {
-                color: Colors.GRAY_DARKER,
-                fontSize: 14,
-                paddingBottom: 8,
-              },
-            ]}
-            testID="dateFormatted"
-          >
-            {dateFormatted}
-          </Text>
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              {
-                color: Colors.GRAY_DARKER,
-                fontSize: 14,
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {timeFormatted}
-          </Text>
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  color: Colors.GRAY_DARKER,
+                  fontSize: 14,
+                  paddingBottom: 8,
+                },
+              ]}
+              testID="dateFormatted"
+            >
+              {dateFormatted}
+            </Text>
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  color: Colors.GRAY_DARKER,
+                  fontSize: 14,
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {timeFormatted}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
+  return null;
 };
 
 export default LetterTracker;
