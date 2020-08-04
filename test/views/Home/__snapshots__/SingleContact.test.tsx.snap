@@ -244,67 +244,6 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           First Name
            
         </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Regular",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 14,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            📆
-          </Text>
-           
-          last heard from you
-          :
-           
-          N/A
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Regular",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 14,
-              },
-              Object {
-                "paddingBottom": 8,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            ✈️
-          </Text>
-           
-          letters traveled
-          :
-           
-          0
-           
-          miles
-        </Text>
         <TouchableOpacity
           activeOpacity={0.7}
           style={
@@ -446,7 +385,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Your letters reset weekly, on Monday at 4:00AM EST.
+                Your letters reset weekly.
               </Text>
             </View>
           </View>
@@ -763,6 +702,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                     Object {
                       "color": "#6E757C",
                       "fontSize": 16,
+                      "marginBottom": 8,
                     }
                   }
                 >

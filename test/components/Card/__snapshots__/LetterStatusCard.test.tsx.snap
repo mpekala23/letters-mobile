@@ -98,6 +98,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
               Object {
                 "color": "#6E757C",
                 "fontSize": 16,
+                "marginBottom": 8,
               }
             }
           >

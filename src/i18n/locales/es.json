@@ -75,8 +75,8 @@
     "leftThisWeek": "te quedan esta semana",
     "sendMore": "Enviar más",
     "youUsedAllYourLetters": "Usaste todas tus cartas para la semana",
-    "creditsResetDaily": "Sus cartas se restablecen semanalmente, el lunes a las 4:00AM EST.",
-    "comeBackOnMondayForMore": "Vuelve el lunes para más."
+    "creditsResetDaily": "Sus cartas se restablecen semanalmente.",
+    "comeBackOnMondayForMore": "Sus cartas se restablecen semanalmente, el lunes a las 4:00AM EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Directorio del presidio",
@@ -161,9 +161,10 @@
     "other": "Otro"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWay": "¡Tu carta está en camino!",
+    "yourLetterIsOnTheWayPrefix": "¡Tu carta para ",
+    "yourLetterIsOnTheWaySuffix": " está en camino!",
     "weEstimateYourLetterToArriveOn": "Se estima que su carta llegará",
-    "thanksAgain": "Gracias por confiar en Ameelio para conectarte con tu ser querido.",
+    "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestras cartas. ¡Gracias por confiar en nosotros!",
     "shareOnFacebook": "Compartir en Facebook",
     "done": "Hecho"
   },
@@ -327,7 +328,9 @@
     "startNewLetter": "Empezar nueva carta",
     "draftContactDeleted": "Empezar nueva carta.",
     "notEnoughCredits": "No hay suficientes créditos",
-    "autosaved": "Autoguardado"
+    "autosaved": "Autoguardado",
+    "firstLetterGhostTextSalutation": "Hola",
+    "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona."
   },
   "Notifs": {
     "your": "Tu",
