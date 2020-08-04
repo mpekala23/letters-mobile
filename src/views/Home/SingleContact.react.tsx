@@ -16,7 +16,6 @@ import { ProfilePicTypes, Letter, LetterStatus } from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
-import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
 import {
   setActive as setActiveLetter,
@@ -42,7 +41,7 @@ import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import { haversine } from '@utils';
-import { format, differenceInBusinessDays } from 'date-fns';
+import { differenceInBusinessDays } from 'date-fns';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -52,7 +51,6 @@ type SingleContactScreenNavigationProp = StackNavigationProp<
 
 interface State {
   refreshing: boolean;
-  lettersTraveled: number;
 }
 
 interface Props {
@@ -73,30 +71,11 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       refreshing: false,
-      lettersTraveled: 0,
     };
   }
 
   async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
-    await this.updateLettersTraveled();
-  }
-
-  async updateLettersTraveled() {
-    try {
-      if (this.props.activeContact.facility) {
-        const loc1 = await getZipcode(
-          this.props.activeContact.facility?.postal
-        );
-        const loc2 = await getZipcode(this.props.userState.user.postal);
-        this.setState({
-          lettersTraveled:
-            haversine(loc1, loc2) * this.props.existingLetters.length,
-        });
-      }
-    } catch (err) {
-      this.setState({ lettersTraveled: 0 });
-    }
   }
 
   render() {
@@ -190,7 +169,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getLetters();
             await getContact(this.props.activeContact.id);
             await getUser();
-            await this.updateLettersTraveled();
           } catch (err) {
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
@@ -247,25 +225,23 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               {contact.firstName} {contact.lastName}
             </Text>
-            <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
-              <Emoji name="calendar" />{' '}
-              {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {letters && letters.length > 0 && letters[0].dateCreated
-                ? format(letters[0].dateCreated, 'MMM dd')
-                : 'N/A'}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                Styles.profileCardInfo,
-                { paddingBottom: 8 },
-              ]}
-            >
-              <Emoji name="airplane" />{' '}
-              {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
-              {this.state.lettersTraveled}{' '}
-              {i18n.t('ContactSelectorScreen.miles')}
-            </Text>
+            {contact.facility && (
+              <View style={{ alignItems: 'center' }}>
+                <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+                  {contact.facility.name}
+                </Text>
+
+                <Text
+                  style={[
+                    Typography.FONT_REGULAR,
+                    Styles.profileCardInfo,
+                    { paddingBottom: 8 },
+                  ]}
+                >
+                  {contact.facility.address}
+                </Text>
+              </View>
+            )}
             <Button
               onPress={() => {
                 this.props.navigation.navigate('ChooseOption');
@@ -291,7 +267,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               credits={this.props.userState.user.credit}
               onPress={() => {
                 Linking.openURL(
-                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20day&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20daily%20letter%20limit%3F"
+                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20weekly&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20weekly%20letter%20limit%3F"
                 );
               }}
             />

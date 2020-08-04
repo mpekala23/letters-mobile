@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Animated } from 'react-native';
 import { getContacts, getLetters, uploadPushToken } from '@api';
-import { Icon } from '@components';
-import AmeelioBirdPink from '@assets/AmeelioBirdPink';
 import Notifs from '@notifications';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
@@ -10,6 +8,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import store from '@store';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import PinkLogoIcon from '@assets/views/Setup/PinkLogoIcon.png';
 
 type SetupScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -23,6 +22,7 @@ interface Props {
 
 // screen that is hit after authentication, to setup notifs and do things like load user contacts and letters
 const SetupScreen: React.FC<Props> = (props: Props) => {
+  const [loadingProgress] = useState<Animated.Value>(new Animated.Value(0));
   // runs only on the first render
   useEffect(() => {
     async function doSetup() {
@@ -46,7 +46,24 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
       }
     }
     doSetup();
+    Animated.timing(loadingProgress, {
+      toValue: 100,
+      duration: 1000,
+      useNativeDriver: true,
+      delay: 600,
+    }).start();
   }, []);
+
+  const imageScale = {
+    transform: [
+      {
+        scale: loadingProgress.interpolate({
+          inputRange: [0, 15, 100],
+          outputRange: [0.1, 0.06, 16],
+        }),
+      },
+    ],
+  };
 
   return (
     <View
@@ -58,9 +75,12 @@ const SetupScreen: React.FC<Props> = (props: Props) => {
         backgroundColor: 'white',
       }}
     >
-      <View accessible accessibilityLabel="Ameelio Logo">
-        <Icon svg={AmeelioBirdPink} style={{ padding: 80 }} />
-      </View>
+      <Animated.Image
+        accessible
+        accessibilityLabel="Ameelio Logo"
+        source={PinkLogoIcon}
+        style={[imageScale]}
+      />
     </View>
   );
 };

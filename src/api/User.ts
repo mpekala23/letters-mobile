@@ -241,7 +241,7 @@ export async function updateProfile(data: User): Promise<User> {
         city: data.city,
         state: STATE_TO_ABBREV[data.state],
         postal: data.postal,
-        country: 'United States of America',
+        country: 'US',
         s3_img_url: newPhoto?.uri,
       }),
     }
