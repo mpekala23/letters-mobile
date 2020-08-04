@@ -120,9 +120,9 @@
     "estimatedArrival": "Se estima que su carta llegará",
     "needHelp": "Necesito ayuda",
     "letterContent": "Contenido de la carta",
-    "contactSupport": "Contact Support",
-    "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
-    "possibleReason": "Possible reason: Wrong mailing address"
+    "contactSupport": "Necesito ayuda",
+    "yourLetterWasReturnedToSender": "Tu carta fue devuelta al remitente.",
+    "possibleReason": "Posible motivo: dirección de correo incorrecta"
   },
   "LoginScreen": {
     "welcomeBack": "Bienvenido de regreso",
