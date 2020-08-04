@@ -25,7 +25,7 @@ function mapStatusToColorStyle(type: LetterStatus) {
       return { backgroundColor: Colors.GREEN_DARK };
     case LetterStatus.InLocalArea:
       return { backgroundColor: Colors.GREEN_DARKER };
-    case LetterStatus.OutForDelivery:
+    case LetterStatus.ProcessedForDelivery:
       return { backgroundColor: Colors.GREEN_DARKEST };
     default:
       return { backgroundColor: '' };

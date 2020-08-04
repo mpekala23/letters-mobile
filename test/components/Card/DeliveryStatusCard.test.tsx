@@ -68,7 +68,7 @@ describe('Delivery Status Card component', () => {
 
   it('should display progress bar 4 / 5', () => {
     const { getByTestId } = setup({
-      status: LetterStatus.OutForDelivery,
+      status: LetterStatus.ProcessedForDelivery,
     });
     expect(getByTestId('progressBar').props.style[1].width).toBe('80%');
   });

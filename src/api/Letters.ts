@@ -8,11 +8,16 @@ import { Letter, LetterTrackingEvent, LetterTypes, LetterStatus } from 'types';
 import {
   addLetter,
   setExisting as setExistingLetters,
+  setActive,
 } from '@store/Letter/LetterActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { differenceInDays, addBusinessDays } from 'date-fns';
+import {
+  differenceInDays,
+  addBusinessDays,
+  differenceInBusinessDays,
+} from 'date-fns';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -24,7 +29,7 @@ import {
 interface RawTrackingEvent {
   id: number;
   name: string;
-  date: string;
+  date_modified: string;
   location: string;
 }
 
@@ -51,12 +56,14 @@ interface RawLetter {
 async function cleanTrackingEvent(
   event: RawTrackingEvent
 ): Promise<LetterTrackingEvent> {
-  const location = await getZipcode(event.location);
+  const location = event.location
+    ? await getZipcode(event.location)
+    : undefined;
   return {
     id: event.id,
     name: event.name,
     location,
-    date: new Date(event.date),
+    date: new Date(event.date_modified),
   };
 }
 
@@ -92,7 +99,7 @@ async function cleanLetter(letter: RawLetter): Promise<Letter> {
       expectedDeliveryDate = addBusinessDays(processedForDeliveryDate, 3);
       const dayDiff = differenceInDays(processedForDeliveryDate, new Date());
       if (dayDiff <= 5) {
-        status = LetterStatus.OutForDelivery;
+        status = LetterStatus.ProcessedForDelivery;
       } else {
         status = LetterStatus.Delivered;
       }
@@ -142,6 +149,38 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   }
   store.dispatch(setExistingLetters(existingLetters));
   return existingLetters;
+}
+
+export async function getSingleLetter(id: number | undefined): Promise<Letter> {
+  const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
+    method: 'GET',
+  });
+  const data = body.data as RawLetter;
+  if (body.status !== 'OK' || !data) throw body;
+  const cleanedLetter = await cleanLetter(data);
+  return cleanedLetter;
+}
+
+export async function getTrackingEvents(
+  id: number | undefined
+): Promise<Letter> {
+  const letter = await getSingleLetter(id);
+  store.dispatch(setActive(letter));
+  return letter;
+}
+
+export async function mapTrackingEventsToLetterStatus(
+  events: LetterTrackingEvent[]
+): Promise<LetterStatus> {
+  const lastIdx = events.length - 1;
+  let letterStatus = events[lastIdx].name as LetterStatus;
+  if (
+    events[lastIdx].name === LetterStatus.ProcessedForDelivery &&
+    differenceInBusinessDays(new Date(), events[lastIdx].date) > 3
+  ) {
+    letterStatus = LetterStatus.Delivered;
+  }
+  return letterStatus;
 }
 
 export async function createLetter(letter: Letter): Promise<Letter> {

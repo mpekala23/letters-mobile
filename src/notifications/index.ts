@@ -202,7 +202,7 @@ class NotifsBase {
           ],
         });
         break;
-      case NotifTypes.OutForDelivery:
+      case NotifTypes.ProcessedForDelivery:
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
         if (!contact) break;
