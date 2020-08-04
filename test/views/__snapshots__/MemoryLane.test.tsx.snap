@@ -91,6 +91,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
             }
           >
             <Text
+              numberOfLines={2}
               style={
                 Array [
                   Object {
