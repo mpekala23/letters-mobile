@@ -34,7 +34,7 @@ interface Props {
 function mapStatusToTrackerBarHeight(type?: string) {
   switch (type) {
     case LetterStatus.InTransit:
-      return '30%';
+      return '45%';
     case LetterStatus.ProcessedForDelivery:
       return '65%';
     case LetterStatus.Delivered:

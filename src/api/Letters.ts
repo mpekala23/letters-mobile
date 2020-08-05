@@ -210,19 +210,27 @@ export async function getLetters(page = 1): Promise<Record<number, Letter[]>> {
   const newExisting: Record<number, Letter[]> = {};
   await Promise.all(
     data.data.map(async (raw) => {
-      const clean = await cleanMassLetter(raw);
-      if (clean.recipientId in newExisting) {
-        const letters = newExisting[clean.recipientId];
-        let ix = 0;
-        for (ix = 0; ix < letters.length; ix += 1) {
-          const searchDate = letters[ix].dateCreated;
-          if (clean.dateCreated && searchDate && clean.dateCreated > searchDate)
-            break;
+      try {
+        const clean = await cleanMassLetter(raw);
+        if (clean.recipientId in newExisting) {
+          const letters = newExisting[clean.recipientId];
+          let ix = 0;
+          for (ix = 0; ix < letters.length; ix += 1) {
+            const searchDate = letters[ix].dateCreated;
+            if (
+              clean.dateCreated &&
+              searchDate &&
+              clean.dateCreated > searchDate
+            )
+              break;
+          }
+          letters.splice(ix, 0, clean);
+          newExisting[clean.recipientId] = letters;
+        } else {
+          newExisting[clean.recipientId] = [clean];
         }
-        letters.splice(ix, 0, clean);
-        newExisting[clean.recipientId] = letters;
-      } else {
-        newExisting[clean.recipientId] = [clean];
+      } catch (e) {
+        throw Error(e.message);
       }
     })
   );
