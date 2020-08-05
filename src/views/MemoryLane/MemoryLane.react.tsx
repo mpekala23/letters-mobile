@@ -32,6 +32,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
       letters.map((letter: Letter) => {
         return (
           <MemoryLaneCard
+            type={letter.type}
             key={letter.letterId}
             text={letter.content}
             date={letter.dateCreated}

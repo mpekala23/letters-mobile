@@ -53,13 +53,15 @@ export default StyleSheet.create({
   date: {
     fontSize: 16,
     color: Colors.AMEELIO_GRAY,
+    marginBottom: 8,
   },
   memoryLaneBackground: {
     padding: 0,
     height: 210,
+    borderRadius: 6,
   },
   memoryLaneTextBackground: {
-    padding: 8,
+    paddingHorizontal: 8,
   },
   memoryLanePicture: {
     height: '50%',
@@ -71,7 +73,24 @@ export default StyleSheet.create({
   memoryLaneText: {
     fontSize: 18,
     fontWeight: '500',
-    height: 65,
+    overflow: 'hidden',
+  },
+  memoryLanePostcardBackground: {
+    backgroundColor: 'rgba(0,0,0, 0.30)',
+    flex: 1,
+    borderRadius: 6,
+  },
+  memoryLanePostcardPicture: {
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    borderRadius: 6,
+  },
+  memoryLanePostcardDate: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 'auto',
+    marginBottom: 8,
   },
   letterOptionsBackground: {
     flexDirection: 'column',

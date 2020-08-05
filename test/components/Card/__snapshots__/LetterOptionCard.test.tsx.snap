@@ -174,7 +174,7 @@ exports[`Letter Option Card component should match snapshot 1`] = `
             "fontSize": 18,
           },
           Object {
-            "maxWidth": "60%",
+            "maxWidth": "65%",
           },
         ]
       }

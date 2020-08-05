@@ -43,6 +43,7 @@ interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Letter;
   recipientName: string;
+  hasSentLetters: boolean;
   setContent: (content: string) => void;
   setDraft: (value: boolean) => void;
   setPhoto: (photo: Photo | undefined) => void;
@@ -105,9 +106,19 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationFocus() {
-    const { photo } = this.props.composing;
-    if (this.wordRef.current)
-      this.wordRef.current.set(this.props.composing.content);
+    const { photo, content } = this.props.composing;
+
+    if (this.wordRef.current) {
+      if (!this.props.hasSentLetters && !content) {
+        this.wordRef.current.set(
+          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+            this.props.recipientName
+          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
+        );
+      } else {
+        this.wordRef.current.set(content);
+      }
+    }
     if (this.picRef.current && photo && photo.width && photo.height) {
       this.picRef.current.setState({
         image: photo,
@@ -340,7 +351,11 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.letter.composing,
   recipientName: state.contact.active.firstName,
+  hasSentLetters: Object.values(state.letter.existing).some(
+    (letters) => letters.length > 0
+  ),
 });
+
 const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
   return {
     setContent: (content: string) => dispatch(setContent(content)),

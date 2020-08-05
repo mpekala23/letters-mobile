@@ -22,7 +22,7 @@ const setup = (letterOverrides = [], contactOverrides = []) => {
     8: [
       {
         letterId: 1,
-        type: LetterTypes.Postcard,
+        type: LetterTypes.Letter,
         status: LetterStatus.Delivered,
         isDraft: true,
         recipientId: 8,
@@ -80,6 +80,7 @@ describe('Memory Lane Screen', () => {
         letterId: 2,
         recipientId: 8,
         content: 'Redux Letter 1',
+        type: LetterTypes.Letter,
       },
     ]);
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');

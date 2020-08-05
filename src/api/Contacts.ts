@@ -92,7 +92,7 @@ export async function getContact(id: number): Promise<Contact> {
   return cleanContact(body.data as RawContact);
 }
 
-export async function addContact(contactData: Contact): Promise<Contact[]> {
+export async function addContact(contactData: Contact): Promise<Contact> {
   if (!contactData.facility) throw Error('No facility');
   const dormExtension = contactData.dorm
     ? { facility_dorm: contactData.dorm }
@@ -144,7 +144,7 @@ export async function addContact(contactData: Contact): Promise<Contact[]> {
       facility: null,
     })
   );
-  return existing;
+  return newContact;
 }
 
 export async function updateContact(data: Contact): Promise<Contact[]> {
