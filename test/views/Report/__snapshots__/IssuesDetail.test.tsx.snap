@@ -35,8 +35,17 @@ exports[`Issues Detail screen should match snapshot 1`] = `
         ]
       }
     >
-      What's up?
+      Can you tell us more about what happened?
     </Text>
+    <View
+      style={
+        Object {
+          "marginTop": 32,
+        }
+      }
+    >
+      <View />
+    </View>
     <Text
       style={
         Array [
