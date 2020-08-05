@@ -58,8 +58,8 @@ class IssuesScreenBase extends React.Component<Props> {
             });
             Segment.track('Delivery Reporting - Success');
           }}
-          containerStyle={ReportStyles.buttonReverse}
-          textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
+          containerStyle={ReportStyles.buttonReverseBlack}
+          textStyle={[Typography.FONT_MEDIUM, { color: 'black' }]}
         />
         <Button
           buttonText={i18n.t('IssuesScreen.notSureYet')}
@@ -69,8 +69,8 @@ class IssuesScreenBase extends React.Component<Props> {
             });
             Segment.track('Delivery Reporting - Unknown');
           }}
-          containerStyle={ReportStyles.buttonReverse}
-          textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
+          containerStyle={ReportStyles.buttonReverseBlack}
+          textStyle={[Typography.FONT_MEDIUM, { color: 'black' }]}
         />
         <Button
           buttonText={i18n.t('IssuesScreen.notYetReceived')}
@@ -80,8 +80,8 @@ class IssuesScreenBase extends React.Component<Props> {
             });
             Segment.track('Delivery Reporting - Failure');
           }}
-          containerStyle={ReportStyles.buttonReverse}
-          textStyle={[Typography.FONT_MEDIUM, ReportStyles.buttonText]}
+          containerStyle={ReportStyles.buttonReverseBlack}
+          textStyle={[Typography.FONT_MEDIUM, { color: 'black' }]}
         />
       </View>
     );

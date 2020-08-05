@@ -56,6 +56,15 @@ exports[`Issues Detail Secondary screen should match snapshot 1`] = `
     <View
       style={
         Object {
+          "marginVertical": 32,
+        }
+      }
+    >
+      <View />
+    </View>
+    <View
+      style={
+        Object {
           "width": "100%",
         }
       }
