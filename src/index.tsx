@@ -40,7 +40,7 @@ export default class App extends React.Component<null, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    this.loadFontsAsync();
+    await this.loadFontsAsync();
     const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys(
       Constants.manifest.releaseChannel
     );
