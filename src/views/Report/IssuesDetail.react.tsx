@@ -1,13 +1,14 @@
 import React from 'react';
 import { Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
-import { Button } from '@components';
+import { Button, Icon } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes } from 'types';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import LetterWithHeart from '@assets/views/Issues/LetterWithHeart';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailScreenNavigationProp = StackNavigationProp<
@@ -138,6 +139,15 @@ function mapIssueToDetailsSecondaryCTA(
   }
 }
 
+const mapIssueToVisual = (type: DeliveryReportTypes): JSX.Element => {
+  switch (type) {
+    case DeliveryReportTypes.received:
+      return <Icon svg={LetterWithHeart} />;
+    default:
+      return <View />;
+  }
+};
+
 const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
@@ -145,6 +155,7 @@ const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
       <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
         {mapIssueToDetailsTitle(issue)}
       </Text>
+      <View style={{ marginTop: 32 }}>{mapIssueToVisual(issue)}</View>
       <Text
         style={[Typography.BASE_TEXT, { textAlign: 'center', padding: 16 }]}
       >

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Linking, Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
-import { Button } from '@components';
+import { Button, Icon } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
@@ -9,6 +9,7 @@ import { DeliveryReportTypes, Facility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
+import LetterBox from '@assets/views/Issues/LetterBox';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailSecondaryScreenNavigationProp = StackNavigationProp<
@@ -33,7 +34,9 @@ function mapIssueToDetailsTitle(
       return i18n.t('IssuesDetailScreen.weWillCheckInTwoDays');
     case DeliveryReportTypes.haveNotReceived:
       if (facility && facility.phone)
-        return i18n.t('IssuesDetailScreen.wantToCheckWithFacility');
+        return `${i18n.t('IssuesDetailScreen.wantToCheckWithFacility')} ${
+          facility.name
+        }?`;
       return i18n.t('IssuesDetailScreen.talkToSomeoneAtAmeelio');
     default:
       return '';
@@ -55,6 +58,15 @@ function mapIssueToDetailsDescription(
       return '';
   }
 }
+
+const mapIssueToVisual = (type: DeliveryReportTypes): JSX.Element => {
+  switch (type) {
+    case DeliveryReportTypes.haveNotAsked:
+      return <Icon svg={LetterBox} />;
+    default:
+      return <View />;
+  }
+};
 
 function defaultCTAButton(
   onPress: () => void,
@@ -143,6 +155,7 @@ const IssuesDetailSecondaryScreenBase: React.FC<Props> = (props: Props) => {
       >
         {mapIssueToDetailsDescription(props.contact.facility, issue)}
       </Text>
+      <View style={{ marginVertical: 32 }}>{mapIssueToVisual(issue)}</View>
       <View style={{ width: '100%' }} testID="callToActionButton">
         {mapIssueToDetailsPrimaryCTA(props, issue)}
         {mapIssueToDetailsSecondaryCTA(props, issue)}
