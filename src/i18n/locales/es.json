@@ -17,7 +17,8 @@
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
     "unableToUploadContactPicture": "No se puede subir la nueva imagen de contacto. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
-    "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo."
+    "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
+    "letterTooLong": "Su carta no puede exceder los 16,000 caracteres."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica",

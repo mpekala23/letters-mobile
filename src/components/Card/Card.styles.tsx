@@ -41,7 +41,7 @@ export default StyleSheet.create({
   letterStatusBar: {
     width: 6,
     height: '100%',
-    borderRadius: 3,
+    borderRadius: 8,
     marginRight: 15,
   },
   statusAndDateContainer: {

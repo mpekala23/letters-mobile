@@ -33,7 +33,7 @@ export interface UserResponse {
 export function fetchTimeout(
   fetchUrl: string,
   options: Record<string, unknown>,
-  timeout = 3000
+  timeout = 15000
 ): Promise<Response> {
   return Promise.race([
     fetch(fetchUrl, options),
@@ -46,7 +46,7 @@ export function fetchTimeout(
 export async function fetchAuthenticated(
   fetchUrl: string,
   options: Record<string, unknown> = {},
-  timeout = 3000
+  timeout = 15000
 ): Promise<ApiResponse> {
   const requestOptions = {
     ...options,

@@ -12,7 +12,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
-import { ProfilePicTypes, Letter } from 'types';
+import { ProfilePicTypes, Letter, LetterStatus } from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
@@ -98,11 +98,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 }
               }
               if (
-                !processedForDelivery ||
-                differenceInBusinessDays(
-                  processedForDeliveryDate,
-                  new Date()
-                ) <= 5
+                letter.status !== LetterStatus.Draft &&
+                (!processedForDelivery ||
+                  differenceInBusinessDays(
+                    processedForDeliveryDate,
+                    new Date()
+                  ) <= 5)
               ) {
                 return (
                   <LetterStatusCard
@@ -121,6 +122,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               return null;
             }
             if (
+              letter.status !== LetterStatus.Draft &&
               differenceInBusinessDays(
                 letter.dateCreated ? letter.dateCreated : new Date(),
                 new Date()
