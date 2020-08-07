@@ -7,7 +7,12 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
 import { Storage } from 'types';
-import { loginUser, logoutUser, setUser } from '@store/User/UserActions';
+import {
+  loginUser,
+  logoutUser,
+  setUser,
+  authenticateUser,
+} from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
@@ -18,6 +23,8 @@ import {
   API_URL,
   fetchAuthenticated,
 } from './Common';
+import { getContacts } from './Contacts';
+import { getLetters } from './Letters';
 
 interface RawUser {
   id: number;
@@ -68,7 +75,21 @@ export async function deleteToken(): Promise<void> {
   return deleteItemAsync(Storage.RememberToken);
 }
 
+export async function uploadPushToken(token: string): Promise<void> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `exponent/devices/subscribe`),
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        expo_token: token,
+      }),
+    }
+  );
+  if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
+}
+
 export async function loginWithToken(): Promise<User> {
+  console.log(store.getState().letter);
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
@@ -89,7 +110,9 @@ export async function loginWithToken(): Promise<User> {
     const userData = cleanUser(body.data as RawUser);
     Segment.identify(userData.id.toString());
     Segment.track('Login Success');
-    store.dispatch(loginUser(userData, body.data.token, body.data.remember));
+    store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
+    await Promise.all([getContacts(), getLetters()]);
+    store.dispatch(loginUser(userData));
     return userData;
   } catch (err) {
     store.dispatch(logoutUser());
@@ -110,9 +133,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     }),
   });
   const body = await response.json();
-  if (body.status !== 'OK') {
-    throw body;
-  }
+  if (body.status !== 'OK') throw body;
   if (cred.remember) {
     try {
       await saveToken(body.data.remember);
@@ -125,7 +146,15 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   const userData = cleanUser(body.data as RawUser);
   Segment.identify(userData.id.toString());
   Segment.track('Login Success');
-  store.dispatch(loginUser(userData, body.data.token, body.data.remember));
+  store.dispatch(
+    authenticateUser(userData, body.data.token, body.data.remember)
+  );
+  try {
+    await Promise.all([getContacts(), getLetters()]);
+  } catch (err) {
+    dropdownError({ message: i18n.t('Error.loadingUser') });
+  }
+  store.dispatch(loginUser(userData));
   return userData;
 }
 
@@ -181,16 +210,14 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       });
     }
   }
+
   const userData = cleanUser(body.data as RawUser);
   userData.photo = newPhoto;
-  Segment.identify(userData.id.toString());
   store.dispatch(
-    loginUser(
-      userData,
-      body.data.token,
-      body.data.remember ? body.data.remember : ''
-    )
+    authenticateUser(userData, body.data.token, body.data.remember)
   );
+  Segment.identify(userData.id.toString());
+  store.dispatch(loginUser(userData));
   return userData;
 }
 

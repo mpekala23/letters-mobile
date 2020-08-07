@@ -4,20 +4,31 @@ import {
   LOGOUT_USER,
   SET_USER,
   UserActionTypes,
+  AUTHENTICATE_USER,
 } from './UserTypes';
 
-/** Logs in a user, either by loaded token or successful auth. */
-export function loginUser(
+/** Authenticates a user */
+export function authenticateUser(
   user: User,
   token: string,
   remember: string
 ): UserActionTypes {
   return {
-    type: LOGIN_USER,
+    type: AUTHENTICATE_USER,
     payload: {
       user,
       token,
       remember,
+    },
+  };
+}
+
+/** Logs in a user, meaning they are authenitcated and loaded */
+export function loginUser(user: User): UserActionTypes {
+  return {
+    type: LOGIN_USER,
+    payload: {
+      user,
     },
   };
 }

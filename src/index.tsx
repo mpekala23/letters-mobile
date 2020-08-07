@@ -40,10 +40,12 @@ export default class App extends React.Component<null, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    await this.loadFontsAsync();
-    const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys(
+    this.loadFontsAsync();
+    const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys([
       Constants.manifest.releaseChannel
-    );
+        ? Constants.manifest.releaseChannel
+        : '',
+    ]);
     Segment.initialize({ androidWriteKey, iosWriteKey });
     Segment.track('App Open');
     try {

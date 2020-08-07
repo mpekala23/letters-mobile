@@ -106,7 +106,7 @@ interface RouteDetails {
 
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Begin: { title: '', profile: false, shown: false },
-  Splash: { title: 'Splash', profile: false },
+  Splash: { title: '', profile: false, shown: false },
   Login: { title: i18n.t('Screens.login'), profile: false },
   Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
@@ -218,7 +218,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
 
   // Determine which views should be accessible
   let screens;
-  if (props.authInfo.isLoadingToken) {
+  if (
+    props.authInfo.isLoadingToken ||
+    (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
+  ) {
     screens = (
       <Stack.Screen
         name="Splash"
@@ -226,15 +229,24 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         options={{ cardStyleInterpolator: fadeTransition }}
       />
     );
-  } else if (props.authInfo.isLoggedIn) {
+  } else if (!props.authInfo.isLoggedIn) {
+    screens = (
+      <>
+        <Stack.Screen name="Begin" component={BeginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Terms" component={TermsScreen} />
+        <Stack.Screen name="Privacy" component={PrivacyScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </>
+    );
+  } else {
     screens = (
       <>
         <Stack.Screen
-          name="Setup"
-          component={SetupScreen}
+          name="ContactSelector"
+          component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
         <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
@@ -270,11 +282,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={IssuesDetailSecondaryScreen}
         />
         <Stack.Screen name="Thanks" component={ThanksScreen} />
-        <Stack.Screen
-          name="ContactSelector"
-          component={ContactSelectorScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
         <Stack.Screen name="SingleContact" component={SingleContactScreen} />
         <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
         <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
@@ -300,16 +307,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
-      </>
-    );
-  } else {
-    screens = (
-      <>
-        <Stack.Screen name="Begin" component={BeginScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Terms" component={TermsScreen} />
-        <Stack.Screen name="Privacy" component={PrivacyScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
       </>
     );
   }
