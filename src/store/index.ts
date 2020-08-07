@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import { AppState } from './types';
 import ContactReducer from './Contact/ContactReducer';
 import LetterReducer from './Letter/LetterReducer';
@@ -10,6 +10,8 @@ import UserReducer from './User/UserReducer';
 const config = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['user'],
+  whitelist: ['contact', 'notif', 'letter'],
 };
 
 const combinedReducers = combineReducers<AppState>({

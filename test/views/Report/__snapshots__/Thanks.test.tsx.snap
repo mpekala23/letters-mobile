@@ -208,7 +208,7 @@ exports[`Thanks screen should match snapshot 1`] = `
         </RNSVGGroup>
       </RNSVGSvgView>
     </View>
-    <TouchableOpacity
+    <
       activeOpacity={0.7}
       style={
         Array [
@@ -263,7 +263,7 @@ exports[`Thanks screen should match snapshot 1`] = `
       >
         Return home
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

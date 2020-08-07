@@ -10,7 +10,7 @@ exports[`Login screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     accessible={false}
     activeOpacity={1}
     style={
@@ -249,14 +249,13 @@ exports[`Login screen should match snapshot 1`] = `
                 />
               </View>
             </View>
-            <TouchableOpacity
+            <
               accessibilityRole="checkbox"
               accessibilityState={
                 Object {
                   "checked": false,
                 }
               }
-              activeOpacity={0.2}
               checkedIcon={
                 <Icon
                   svg="<svg width=\\"20\\" height=\\"20\\" viewBox=\\"0 0 20 20\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -407,8 +406,8 @@ exports[`Login screen should match snapshot 1`] = `
                   Remember Me
                 </Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </>
+            <
               activeOpacity={0.7}
               style={
                 Array [
@@ -467,7 +466,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 Log in
               </Text>
-            </TouchableOpacity>
+            </>
             <View
               style={
                 Object {
@@ -485,8 +484,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 Forgot Your Password?
               </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Object {
                     "backgroundColor": "white",
@@ -513,7 +511,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Reset it
                 </Text>
-              </TouchableOpacity>
+              </>
             </View>
             <View
               accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
@@ -544,8 +542,7 @@ exports[`Login screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={Object {}}
                 testID="clickable"
               >
@@ -565,7 +562,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Terms of Service
                 </Text>
-              </TouchableOpacity>
+              </>
               <Text
                 accessible={false}
                 style={
@@ -576,8 +573,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                  and 
               </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={Object {}}
                 testID="clickable"
               >
@@ -597,7 +593,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Privacy Policy
                 </Text>
-              </TouchableOpacity>
+              </>
               <Text
                 style={
                   Object {
@@ -620,6 +616,6 @@ exports[`Login screen should match snapshot 1`] = `
         </ScrollView>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

@@ -212,7 +212,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
           </View>
         </View>
       </View>
-      <TouchableOpacity
+      <
         activeOpacity={0.7}
         style={
           Array [
@@ -277,7 +277,7 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
         >
           I need help
         </Text>
-      </TouchableOpacity>
+      </>
     </View>
     <Text
       style={

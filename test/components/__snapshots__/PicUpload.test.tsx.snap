@@ -13,8 +13,7 @@ exports[`PicUpload component should match snapshot 1`] = `
   <View
     style={Object {}}
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Array [
           Object {
@@ -109,7 +108,7 @@ exports[`PicUpload component should match snapshot 1`] = `
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

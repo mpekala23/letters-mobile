@@ -31,8 +31,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
         }
       }
     >
-      <TouchableOpacity
-        activeOpacity={0.2}
+      <
         style={
           Array [
             Object {
@@ -133,7 +132,7 @@ exports[`Memory Lane Screen should match snapshot 1`] = `
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </>
     </View>
   </ScrollView>
 </View>

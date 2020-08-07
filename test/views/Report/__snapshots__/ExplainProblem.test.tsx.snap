@@ -10,7 +10,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -81,7 +81,7 @@ exports[`Explain Problem screen should match snapshot 1`] = `
           underlineColorAndroid="transparent"
         />
       </View>
-      <TouchableOpacity
+      <
         activeOpacity={0.7}
         style={
           Array [
@@ -136,8 +136,8 @@ exports[`Explain Problem screen should match snapshot 1`] = `
         >
           Report the problem
         </Text>
-      </TouchableOpacity>
+      </>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

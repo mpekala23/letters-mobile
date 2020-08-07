@@ -10,7 +10,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -96,8 +96,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               }
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Array [
                   Object {
@@ -188,7 +187,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                   </RNSVGGroup>
                 </RNSVGSvgView>
               </View>
-            </TouchableOpacity>
+            </>
           </View>
         </View>
         <Text
@@ -729,8 +728,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Array [
                     Object {
@@ -756,7 +754,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 >
                   Minnesota
                 </Text>
-              </TouchableOpacity>
+              </>
             </ScrollView>
           </View>
         </View>
@@ -1133,7 +1131,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             />
           </View>
         </View>
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
@@ -1187,9 +1185,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           >
             Delete Profile
           </Text>
-        </TouchableOpacity>
+        </>
       </ScrollView>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

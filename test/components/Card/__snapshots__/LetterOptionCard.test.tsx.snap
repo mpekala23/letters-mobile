@@ -10,8 +10,7 @@ exports[`Letter Option Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -181,6 +180,6 @@ exports[`Letter Option Card component should match snapshot 1`] = `
     >
       Glossy photo & short caption
     </Text>
-  </TouchableOpacity>
+  </>
 </View>
 `;

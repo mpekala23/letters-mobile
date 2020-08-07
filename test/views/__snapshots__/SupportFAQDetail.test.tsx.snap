@@ -60,7 +60,7 @@ exports[`Support FAQ Detail screen should match snapshot 1`] = `
       }
       testID="callToActionButton"
     >
-      <TouchableOpacity
+      <
         activeOpacity={0.7}
         style={
           Array [
@@ -119,7 +119,7 @@ exports[`Support FAQ Detail screen should match snapshot 1`] = `
         >
           Reach out to support
         </Text>
-      </TouchableOpacity>
+      </>
     </View>
   </View>
 </View>

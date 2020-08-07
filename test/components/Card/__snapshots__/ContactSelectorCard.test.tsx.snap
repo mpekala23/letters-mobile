@@ -10,8 +10,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -69,8 +68,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
             }
           }
         >
-          <TouchableOpacity
-            activeOpacity={0.2}
+          <
             style={
               Object {
                 "alignItems": "center",
@@ -100,7 +98,7 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
             >
               JD
             </Text>
-          </TouchableOpacity>
+          </>
         </View>
       </View>
       <View
@@ -209,6 +207,6 @@ exports[`Contact Selector Card component should match snapshot 1`] = `
         </Text>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;
