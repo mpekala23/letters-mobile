@@ -89,7 +89,6 @@ export async function uploadPushToken(token: string): Promise<void> {
 }
 
 export async function loginWithToken(): Promise<User> {
-  console.log(store.getState().letter);
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {

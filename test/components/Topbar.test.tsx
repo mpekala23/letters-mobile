@@ -29,7 +29,7 @@ const setup = (authOverrides = {}, userOverrides = {}, navOverrides = {}) => {
   const navigation = {
     canGoBack: () => true,
     goBack: jest.fn(),
-    getCurrentRoute: () => undefined,
+    getCurrentRoute: () => '',
     ...navOverrides,
   };
 
