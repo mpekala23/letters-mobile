@@ -1072,7 +1072,7 @@ exports[`Begin screen should match snapshot 1`] = `
         }
       }
     >
-      <TouchableOpacity
+      <
         activeOpacity={0.7}
         style={
           Array [
@@ -1133,8 +1133,8 @@ exports[`Begin screen should match snapshot 1`] = `
         >
           Sign up
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </>
+      <
         activeOpacity={0.7}
         style={
           Array [
@@ -1191,7 +1191,7 @@ exports[`Begin screen should match snapshot 1`] = `
         >
           Log in
         </Text>
-      </TouchableOpacity>
+      </>
     </View>
   </View>
 </View>

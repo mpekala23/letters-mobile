@@ -10,8 +10,7 @@ exports[`Delivery Status Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -104,6 +103,6 @@ exports[`Delivery Status Card component should match snapshot 1`] = `
         testID="progressBar"
       />
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

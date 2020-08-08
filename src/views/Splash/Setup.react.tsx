@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Animated } from 'react-native';
 import { getContacts, getLetters, uploadPushToken } from '@api';
 import Notifs from '@notifications';
@@ -9,6 +9,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import store from '@store';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import PinkLogoIcon from '@assets/views/Setup/PinkLogoIcon.png';
+import { AppState } from '@store/types';
+import { connect } from 'react-redux';
 
 type SetupScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -17,72 +19,83 @@ type SetupScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: SetupScreenNavigationProp;
-  isLoggedIn: boolean;
+  numContacts: number;
+}
+
+interface State {
+  loadingProgress: Animated.Value;
 }
 
 // screen that is hit after authentication, to setup notifs and do things like load user contacts and letters
-const SetupScreen: React.FC<Props> = (props: Props) => {
-  const [loadingProgress] = useState<Animated.Value>(new Animated.Value(0));
-  // runs only on the first render
-  useEffect(() => {
-    async function doSetup() {
-      if (!store.getState().user.authInfo.isLoggedIn) return;
-      try {
-        await Notifs.setup();
-        store.dispatch(handleNotif());
-        await uploadPushToken(Notifs.getToken());
-      } catch (err) {
-        dropdownError({ message: i18n.t('Permission.notifs') });
-      }
-      try {
-        await Promise.all([getContacts(), getLetters()]);
-      } catch (err) {
-        dropdownError({ message: i18n.t('Error.loadingUser') });
-      }
-      if (store.getState().contact.existing.length === 0) {
-        props.navigation.replace('ContactInfo', {});
-      } else {
-        props.navigation.replace('ContactSelector');
-      }
-    }
-    doSetup();
-    Animated.timing(loadingProgress, {
+class SetupScreenBase extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      loadingProgress: new Animated.Value(0),
+    };
+  }
+
+  async componentDidMount(): Promise<void> {
+    Animated.timing(this.state.loadingProgress, {
       toValue: 100,
       duration: 1000,
       useNativeDriver: true,
       delay: 600,
     }).start();
-  }, []);
+    try {
+      await Notifs.setup();
+      store.dispatch(handleNotif());
+      await uploadPushToken(Notifs.getToken());
+    } catch (err) {
+      dropdownError({ message: i18n.t('Permission.notifs') });
+    }
+    try {
+      await Promise.all([getContacts(), getLetters()]);
+    } catch (err) {
+      dropdownError({ message: i18n.t('Error.loadingUser') });
+    }
+    if (this.props.numContacts === 0) {
+      this.props.navigation.replace('ContactInfo', {});
+    } else {
+      this.props.navigation.replace('ContactSelector');
+    }
+  }
 
-  const imageScale = {
-    transform: [
-      {
-        scale: loadingProgress.interpolate({
-          inputRange: [0, 15, 100],
-          outputRange: [0.1, 0.06, 16],
-        }),
-      },
-    ],
-  };
+  render(): JSX.Element {
+    const imageScale = {
+      transform: [
+        {
+          scale: this.state.loadingProgress.interpolate({
+            inputRange: [0, 15, 100],
+            outputRange: [0.1, 0.06, 16],
+          }),
+        },
+      ],
+    };
 
-  return (
-    <View
-      accessible={false}
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}
-    >
-      <Animated.Image
-        accessible
-        accessibilityLabel="Ameelio Logo"
-        source={PinkLogoIcon}
-        style={[imageScale]}
-      />
-    </View>
-  );
-};
+    return (
+      <View
+        accessible={false}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}
+      >
+        <Animated.Image
+          accessible
+          accessibilityLabel="Ameelio Logo"
+          source={PinkLogoIcon}
+          style={[imageScale]}
+        />
+      </View>
+    );
+  }
+}
 
-export default SetupScreen;
+const mapStateToProps = (state: AppState) => ({
+  numContacts: state.contact.existing.length,
+});
+
+export default connect(mapStateToProps)(SetupScreenBase);
