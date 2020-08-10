@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "38.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./src/assets/icons/icon.png",
     "description": "Ameelio's letter platform allows individuals to send free letters to their incarcerated loved ones. ",
@@ -19,7 +19,8 @@
         "foregroundImage": "./src/assets/icons/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"]
+      "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"],
+      "versionCode": 2
     },
     "ios": {
       "bundleIdentifier": "com.ameelio.ameelio"
