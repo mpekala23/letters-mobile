@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "38.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./src/assets/icons/icon.png",
     "description": "Ameelio's letter platform allows individuals to send free letters to their incarcerated loved ones. ",
