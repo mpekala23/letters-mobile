@@ -24,6 +24,7 @@ import { NotifTypes } from '@store/Notif/NotifTypes';
 import { Contact } from '@store/Contact/ContactTypes';
 import { hoursTill8Tomorrow } from '@utils';
 import * as Segment from 'expo-analytics-segment';
+import { deleteDraft } from '@api/User';
 import Styles from './Compose.styles';
 
 type PostcardPreviewScreenNavigationProp = StackNavigationProp<
@@ -122,6 +123,7 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
               },
               hoursTill8Tomorrow() / 24 + 14
             );
+            deleteDraft();
             props.navigation.reset({
               index: 0,
               routes: [{ name: 'ReferFriends' }],

@@ -186,7 +186,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
           <TextInput
             allowFontScaling={true}
             multiline={true}
-            numberOfLines={100}
+            numberOfLines={1000}
             placeholder="Tell your loved one about something you did / saw today that reminded you of them!"
             rejectResponderTermination={true}
             secureTextEntry={false}

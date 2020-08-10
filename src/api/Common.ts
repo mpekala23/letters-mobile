@@ -2,7 +2,11 @@
 import { User } from '@store/User/UserTypes';
 import store from '@store';
 import url from 'url';
-import { logoutUser, loginUser } from '@store/User/UserActions';
+import {
+  logoutUser,
+  loginUser,
+  authenticateUser,
+} from '@store/User/UserActions';
 import { Photo, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE } from '@utils';
@@ -98,8 +102,9 @@ export async function fetchAuthenticated(
       joined: tokenBody.data.created_at,
     };
     store.dispatch(
-      loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
+      authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)
     );
+    store.dispatch(loginUser(userData));
     // successfully logged in using the remember token, retry the original api call
     const retryOptions = {
       ...options,

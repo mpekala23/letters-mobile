@@ -14,7 +14,7 @@
       "color": "#ffffff"
     },
     "android": {
-      "package": "com.ameelio.letters",
+      "package": "com.ameelio.letters_mobile",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/icon.png",
         "backgroundColor": "#ffffff"
