@@ -6,6 +6,7 @@ import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
+import GridCompose from './Compose/GridCompose.react';
 import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
@@ -38,6 +39,7 @@ export {
   ContactInfoScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
+  GridCompose,
   HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,

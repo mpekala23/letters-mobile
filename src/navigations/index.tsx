@@ -14,6 +14,7 @@ import {
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
+  GridCompose,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -71,7 +72,7 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
-  Home: undefined;
+  GridCompose: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
@@ -112,7 +113,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
-  Home: { title: i18n.t('Screens.home'), profile: true },
+  GridCompose: { title: i18n.t('Screens.compose'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   LetterDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
   LetterPreview: { title: i18n.t('Screens.lastStep'), profile: false },
@@ -234,6 +235,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
+        <Stack.Screen name="GridCompose" component={GridCompose} />
         <Stack.Screen
           name="ContactSelector"
           component={ContactSelectorScreen}
