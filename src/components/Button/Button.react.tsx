@@ -10,7 +10,7 @@ import {
 import { Typography } from '@styles';
 import Next from '@assets/components/Button/Next';
 import { SvgXml } from 'react-native-svg';
-import Loading from '@assets/loading.gif';
+import Loading from '@assets/common/loading.gif';
 import Styles from './Button.styles';
 
 export interface Props {
