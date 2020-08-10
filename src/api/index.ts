@@ -26,6 +26,9 @@ import {
   updateProfile,
   getUser,
   uploadPushToken,
+  saveDraft,
+  deleteDraft,
+  loadDraft,
 } from './User';
 
 export {
@@ -49,4 +52,7 @@ export {
   logout,
   updateProfile,
   getUser,
+  saveDraft,
+  deleteDraft,
+  loadDraft,
 };

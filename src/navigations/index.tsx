@@ -13,10 +13,7 @@ import {
   ComposeLetterScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
-  ExplainProblemScreen,
-  FirstLetterScreen,
   FacilityDirectoryScreen,
-  HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -30,7 +27,6 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   ReviewContactScreen,
-  SetupScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
@@ -74,9 +70,7 @@ export type AppStackParamList = {
   ComposePostcard: undefined;
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
-  ExplainProblem: undefined;
   FacilityDirectory: { phyState: string };
-  FirstLetter: undefined;
   Home: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
@@ -117,9 +111,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
-  ExplainProblem: { title: i18n.t('Screens.explainProblem'), profile: false },
   FacilityDirectory: { title: '', profile: false },
-  FirstLetter: { title: i18n.t('Screens.firstLetter'), profile: false },
   Home: { title: i18n.t('Screens.home'), profile: true },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   LetterDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
@@ -273,8 +265,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="AddManually" component={AddManuallyScreen} />
         <Stack.Screen name="ReferFriends" component={ReferFriendsScreen} />
         <Stack.Screen name="ReviewContact" component={ReviewContactScreen} />
-        <Stack.Screen name="ExplainProblem" component={ExplainProblemScreen} />
-        <Stack.Screen name="FirstLetter" component={FirstLetterScreen} />
         <Stack.Screen name="Issues" component={IssuesScreen} />
         <Stack.Screen name="IssuesDetail" component={IssuesDetailScreen} />
         <Stack.Screen

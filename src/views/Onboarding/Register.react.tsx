@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, PicUpload } from '@components';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { Typography, Colors } from '@styles';
+import { Typography } from '@styles';
 import { register } from '@api';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';

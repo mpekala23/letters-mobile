@@ -304,6 +304,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                           "backgroundColor": "transparent",
                           "borderWidth": 0,
                         },
+                        Object {},
                         Object {
                           "flex": 0,
                           "height": 200,
@@ -461,6 +462,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                       "backgroundColor": "transparent",
                       "borderWidth": 0,
                     },
+                    Object {},
                     Object {
                       "flex": 0,
                       "height": 24,
@@ -546,6 +548,7 @@ exports[`ComposeLetter screen should match snapshot 1`] = `
                       "backgroundColor": "transparent",
                       "borderWidth": 0,
                     },
+                    Object {},
                     Object {
                       "flex": 0,
                       "height": 24,

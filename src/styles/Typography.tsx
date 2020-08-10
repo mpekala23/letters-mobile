@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, View, TextStyle } from 'react-native';
 
-import * as Colors from './Colors';
-
 // FONT FAMILY
 export const FONT_FAMILY_LIGHT = 'Poppins-Light';
 export const FONT_FAMILY_LIGHT_ITALIC = 'Poppins-Light-Italic';

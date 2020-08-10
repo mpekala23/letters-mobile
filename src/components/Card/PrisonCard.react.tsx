@@ -41,4 +41,8 @@ const PrisonCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+PrisonCard.defaultProps = {
+  style: {},
+};
+
 export default PrisonCard;

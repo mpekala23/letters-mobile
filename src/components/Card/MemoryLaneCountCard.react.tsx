@@ -60,4 +60,8 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
   );
 };
 
+MemoryLaneCardCount.defaultProps = {
+  style: {},
+};
+
 export default MemoryLaneCardCount;

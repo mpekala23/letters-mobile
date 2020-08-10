@@ -7,7 +7,6 @@ import {
   Platform,
   KeyboardAvoidingView,
   EmitterSubscription,
-  Text,
 } from 'react-native';
 import { ComposeHeader, Input, ComposeTools, PicUpload } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -23,7 +22,7 @@ import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { WINDOW_WIDTH } from '@utils';
 import * as Segment from 'expo-analytics-segment';
-import { saveDraft } from '@api/User';
+import { saveDraft } from '@api';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<

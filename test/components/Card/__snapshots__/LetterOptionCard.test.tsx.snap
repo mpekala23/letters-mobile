@@ -35,7 +35,7 @@ exports[`Letter Option Card component should match snapshot 1`] = `
           "shadowOpacity": 0.2,
           "shadowRadius": 2.62,
         },
-        undefined,
+        Object {},
       ]
     }
   >

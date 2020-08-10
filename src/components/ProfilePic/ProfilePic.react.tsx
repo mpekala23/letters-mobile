@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
-import { Typography, Colors } from '@styles';
+import { Typography } from '@styles';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
 import { navigate } from '@notifications';

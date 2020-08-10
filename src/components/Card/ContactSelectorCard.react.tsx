@@ -88,4 +88,12 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+ContactSelectorCard.defaultProps = {
+  imageUri: '',
+  letters: [],
+  style: {},
+  userPostal: '',
+  contactPostal: '',
+};
+
 export default ContactSelectorCard;

@@ -176,9 +176,6 @@ class NotifsBase {
       return null;
     };
     switch (notif.type) {
-      case NotifTypes.FirstLetter:
-        navigate('FirstLetter');
-        break;
       case NotifTypes.OnItsWay:
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);

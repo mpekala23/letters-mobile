@@ -7,7 +7,6 @@ export const SET_PAST_NOTIFS = 'notification/set_past_notifs';
 export const SET_FUTURE_NOTIFS = 'notification/set_future_notifs';
 
 export enum NotifTypes {
-  FirstLetter = 'FirstLetter',
   OnItsWay = 'OnItsWay',
   ProcessedForDelivery = 'ProcessedForDelivery',
   HasReceived = 'HasReceived',

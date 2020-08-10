@@ -54,4 +54,8 @@ const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+DeliveryStatusCard.defaultProps = {
+  style: {},
+};
+
 export default DeliveryStatusCard;

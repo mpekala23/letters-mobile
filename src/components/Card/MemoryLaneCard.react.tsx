@@ -87,4 +87,9 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+MemoryLaneCard.defaultProps = {
+  date: new Date(),
+  style: {},
+};
+
 export default MemoryLaneCard;

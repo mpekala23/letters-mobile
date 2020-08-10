@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { FacilityDirectoryScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
-import { SET_ADDING } from '@store/Contact/ContactTypes';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { getFacilities } from '@api';
 
 jest.mock('@api', () => ({
   getFacilities: jest.fn().mockReturnValue([

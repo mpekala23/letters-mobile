@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';

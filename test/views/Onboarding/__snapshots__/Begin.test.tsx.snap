@@ -48,6 +48,7 @@ exports[`Begin screen should match snapshot 1`] = `
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
+            Object {},
             Object {
               "flex": 0,
               "height": 26,
@@ -215,6 +216,7 @@ exports[`Begin screen should match snapshot 1`] = `
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
+            Object {},
             Object {
               "flex": 0,
               "height": 335,

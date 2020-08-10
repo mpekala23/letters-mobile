@@ -146,7 +146,12 @@ function mapIssueToDetailsSecondaryCTA(
 const IssuesDetailSecondaryScreenBase: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
-    <View style={ReportStyles.background}>
+    <View
+      style={[
+        ReportStyles.background,
+        { backgroundColor: props.navigation ? undefined : '' },
+      ]}
+    >
       <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
         {mapIssueToDetailsTitle(props.contact.facility, issue)}
       </Text>
