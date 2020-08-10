@@ -1,7 +1,7 @@
 import React from 'react';
 import { SupportFAQScreen } from '@views';
 import { render, fireEvent, toJSON } from '@testing-library/react-native';
-import { SupportFAQTypes } from '../../src/types';
+import { SupportFAQTypes } from '../../../src/types';
 
 const setup = () => {
   const navigation = { navigate: jest.fn(), reset: jest.fn() };

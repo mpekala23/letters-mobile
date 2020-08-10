@@ -3,7 +3,7 @@ import { LetterDetailsScreen } from '@views';
 import { render, toJSON } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { LetterTypes, LetterStatus } from '../../src/types';
+import { LetterTypes, LetterStatus } from '../../../src/types';
 
 const mockStore = configureStore([]);
 
