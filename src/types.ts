@@ -18,6 +18,9 @@ export enum ProfilePicTypes {
 
 export enum Storage {
   RememberToken = 'Ameelio-Token',
+  DraftType = 'Ameelio-DraftType',
+  DraftContent = 'Ameelio-DraftContent',
+  DraftRecipientId = 'Ameelio-DraftRecipientId',
 }
 
 export enum PrisonTypes {
