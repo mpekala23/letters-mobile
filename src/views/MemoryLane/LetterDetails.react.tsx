@@ -32,7 +32,12 @@ const LetterDetailsScreenBase: React.FC<Props> = (props: Props) => {
     />
   ) : null;
   return (
-    <View style={Styles.trueBackground}>
+    <View
+      style={[
+        Styles.trueBackground,
+        { backgroundColor: props.navigation ? undefined : '' },
+      ]}
+    >
       <View style={Styles.letterDate}>
         <Text style={Styles.baseText}>{letterDate}</Text>
       </View>

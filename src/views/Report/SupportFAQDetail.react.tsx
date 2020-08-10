@@ -104,7 +104,12 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
 const SupportFAQDetailScreen: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
-    <View style={Styles.trueBackground}>
+    <View
+      style={[
+        Styles.trueBackground,
+        { backgroundColor: props.navigation ? undefined : '' },
+      ]}
+    >
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
         {i18n.t('SupportFAQDetailScreen.talkToSomeoneAtAmeelio')}
       </Text>

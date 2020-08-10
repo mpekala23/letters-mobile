@@ -124,7 +124,6 @@
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
     "possibleReason": "Possible reason: Wrong mailing address"
-
   },
   "LoginScreen": {
     "welcomeBack": "Welcome back",
@@ -358,8 +357,6 @@
     "compose": "Compose",
     "contactInfo": "Contact Info",
     "contacts": "Contacts",
-    "explainProblem": "Explain Problem",
-    "firstLetter": "First Letter",
     "home": "Home",
     "issues": "Issues",
     "letterDetails": "Letter Details",

@@ -43,4 +43,8 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+LetterOptionCard.defaultProps = {
+  style: {},
+};
+
 export default LetterOptionCard;

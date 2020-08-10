@@ -182,6 +182,8 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
         ...unitExtension,
         s3_img_url: newPhoto?.uri,
         relationship: data.relationship,
+        color: false,
+        double_sided: false,
       }),
     }
   );

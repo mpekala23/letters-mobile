@@ -55,4 +55,8 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+CreditsCard.defaultProps = {
+  style: {},
+};
+
 export default CreditsCard;

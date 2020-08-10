@@ -148,6 +148,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                               "backgroundColor": "transparent",
                               "borderWidth": 0,
                             },
+                            Object {},
                             Object {
                               "flex": 0,
                               "height": 130,

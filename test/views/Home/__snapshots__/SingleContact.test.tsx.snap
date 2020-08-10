@@ -328,7 +328,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "shadowOpacity": 0.2,
                 "shadowRadius": 2.62,
               },
-              undefined,
+              Object {},
             ]
           }
           testID="creditsCard"
@@ -631,7 +631,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "shadowOpacity": 0.2,
                 "shadowRadius": 2.62,
               },
-              undefined,
+              Object {},
             ]
           }
           testID="letterStatusCard"
@@ -702,7 +702,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  
+                  Jul 12
                 </Text>
               </View>
               <Text

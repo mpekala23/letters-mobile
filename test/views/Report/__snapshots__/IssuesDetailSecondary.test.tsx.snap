@@ -12,13 +12,18 @@ exports[`Issues Detail Secondary screen should match snapshot 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
-        "flex": 1,
-        "paddingHorizontal": 16,
-        "paddingTop": 40,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "flex": 1,
+          "paddingHorizontal": 16,
+          "paddingTop": 40,
+        },
+        Object {
+          "backgroundColor": undefined,
+        },
+      ]
     }
   >
     <Text

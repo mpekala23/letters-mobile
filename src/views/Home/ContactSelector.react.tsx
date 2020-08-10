@@ -24,7 +24,6 @@ import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Notifs from '@notifications';
-import { sleep } from '@utils';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<

@@ -72,4 +72,9 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+LetterStatusCard.defaultProps = {
+  date: new Date(),
+  style: {},
+};
+
 export default LetterStatusCard;

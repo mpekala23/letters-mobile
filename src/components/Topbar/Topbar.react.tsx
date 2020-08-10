@@ -5,7 +5,7 @@ import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
-import Loading from '@assets/loading.gif';
+import Loading from '@assets/common/loading.gif';
 import * as Segment from 'expo-analytics-segment';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles, { barHeight } from './Topbar.styles';

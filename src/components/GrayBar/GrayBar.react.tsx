@@ -12,4 +12,8 @@ const GrayBar: React.FC<Props> = (props: Props) => {
   );
 };
 
+GrayBar.defaultProps = {
+  vertical: false,
+};
+
 export default GrayBar;
