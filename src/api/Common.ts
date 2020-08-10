@@ -2,7 +2,11 @@
 import { User } from '@store/User/UserTypes';
 import store from '@store';
 import url from 'url';
-import { logoutUser, loginUser } from '@store/User/UserActions';
+import {
+  logoutUser,
+  loginUser,
+  authenticateUser,
+} from '@store/User/UserActions';
 import { Photo, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE } from '@utils';
@@ -98,8 +102,9 @@ export async function fetchAuthenticated(
       joined: tokenBody.data.created_at,
     };
     store.dispatch(
-      loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
+      authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)
     );
+    store.dispatch(loginUser(userData));
     // successfully logged in using the remember token, retry the original api call
     const retryOptions = {
       ...options,
@@ -172,17 +177,4 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
   };
-}
-
-export async function uploadPushToken(token: string): Promise<void> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `exponent/devices/subscribe`),
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        expo_token: token,
-      }),
-    }
-  );
-  if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
 }

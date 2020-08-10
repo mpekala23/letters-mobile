@@ -4,6 +4,7 @@ import i18n from '@i18n';
 import * as Localization from 'expo-localization';
 import { Colors } from '@styles';
 import WhiteBirdIcon from '@assets/views/Setup/WhiteBirdIcon.png';
+import { WINDOW_HEIGHT } from '@utils';
 
 const SplashScreen: React.FC = () => {
   const [loadingProgress] = useState<Animated.Value>(new Animated.Value(0));
@@ -15,9 +16,9 @@ const SplashScreen: React.FC = () => {
 
     Animated.timing(loadingProgress, {
       toValue: 100,
-      duration: 1000,
+      duration: 2000,
       useNativeDriver: true,
-      delay: 800,
+      delay: 1200,
     }).start();
   });
 

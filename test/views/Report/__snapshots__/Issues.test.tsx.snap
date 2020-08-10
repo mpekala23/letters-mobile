@@ -60,7 +60,7 @@ exports[`Issues screen should match snapshot 1`] = `
     >
       We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!
     </Text>
-    <TouchableOpacity
+    <
       activeOpacity={0.7}
       style={
         Array [
@@ -126,8 +126,8 @@ exports[`Issues screen should match snapshot 1`] = `
       >
         Yep, they received it!
       </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
+    </>
+    <
       activeOpacity={0.7}
       style={
         Array [
@@ -193,8 +193,8 @@ exports[`Issues screen should match snapshot 1`] = `
       >
         I'm not sure yet...
       </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
+    </>
+    <
       activeOpacity={0.7}
       style={
         Array [
@@ -260,7 +260,7 @@ exports[`Issues screen should match snapshot 1`] = `
       >
         They haven't received it
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

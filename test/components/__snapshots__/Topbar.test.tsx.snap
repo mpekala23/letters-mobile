@@ -39,8 +39,7 @@ exports[`Topbar component should match snapshot 1`] = `
       ]
     }
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Object {
           "alignItems": "center",
@@ -111,7 +110,7 @@ exports[`Topbar component should match snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
-    </TouchableOpacity>
+    </>
     <Text
       style={
         Array [

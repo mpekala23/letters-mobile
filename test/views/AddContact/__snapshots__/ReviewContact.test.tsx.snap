@@ -10,7 +10,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -111,8 +111,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  <
                     style={
                       Array [
                         Object {
@@ -200,7 +199,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                         </RNSVGGroup>
                       </RNSVGSvgView>
                     </View>
-                  </TouchableOpacity>
+                  </>
                 </View>
               </View>
               <Text
@@ -292,8 +291,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  <
                     style={
                       Array [
                         Object {
@@ -319,7 +317,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
                     >
                       Minnesota
                     </Text>
-                  </TouchableOpacity>
+                  </>
                 </ScrollView>
               </View>
             </View>
@@ -865,7 +863,7 @@ exports[`Review Contact Screen should match snapshot 1`] = `
           }
         }
       >
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
@@ -981,9 +979,9 @@ exports[`Review Contact Screen should match snapshot 1`] = `
               </RNSVGGroup>
             </RNSVGSvgView>
           </View>
-        </TouchableOpacity>
+        </>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

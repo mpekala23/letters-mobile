@@ -10,7 +10,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -64,8 +64,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
               }
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Array [
                   Object {
@@ -156,7 +155,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                   </RNSVGGroup>
                 </RNSVGSvgView>
               </View>
-            </TouchableOpacity>
+            </>
           </View>
           <Text
             style={
@@ -818,8 +817,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Array [
                     Object {
@@ -845,7 +843,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 >
                   Connecticut
                 </Text>
-              </TouchableOpacity>
+              </>
             </ScrollView>
           </View>
         </View>
@@ -939,7 +937,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             />
           </View>
         </View>
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
@@ -997,9 +995,9 @@ exports[`Update Profile Screen should match snapshot 1`] = `
           >
             Log out
           </Text>
-        </TouchableOpacity>
+        </>
       </ScrollView>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

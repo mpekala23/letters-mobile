@@ -10,6 +10,8 @@ import UserReducer from './User/UserReducer';
 const config = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['user'],
+  whitelist: ['contact', 'notif', 'letter'],
 };
 
 const combinedReducers = combineReducers<AppState>({

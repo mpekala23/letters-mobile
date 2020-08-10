@@ -10,8 +10,7 @@ exports[`Letter Status Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -118,6 +117,6 @@ exports[`Letter Status Card component should match snapshot 1`] = `
         </Text>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

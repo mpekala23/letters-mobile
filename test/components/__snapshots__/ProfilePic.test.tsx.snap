@@ -18,8 +18,7 @@ exports[`ProfilePic component should match snapshot 1`] = `
       }
     }
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Object {
           "flex": 1,
@@ -43,7 +42,7 @@ exports[`ProfilePic component should match snapshot 1`] = `
       >
         TA
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

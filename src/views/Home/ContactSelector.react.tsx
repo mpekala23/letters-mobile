@@ -18,11 +18,13 @@ import i18n from '@i18n';
 import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser } from '@api';
+import { getContacts, getUser, uploadPushToken } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
+import Notifs from '@notifications';
+import { sleep } from '@utils';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -42,6 +44,7 @@ interface Props {
   currentNotif: Notif | null;
   userPostal: string;
   handleNotif: () => void;
+  userId: number;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -52,6 +55,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     this.state = {
       refreshing: false,
     };
+    this.doRefresh = this.doRefresh.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
@@ -59,8 +63,15 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     );
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
+    try {
+      await Notifs.setup();
+      this.props.handleNotif();
+      await uploadPushToken(Notifs.getToken());
+    } catch (err) {
+      dropdownError({ message: i18n.t('Permission.notifs') });
+    }
   }
 
   componentWillUnmount() {
@@ -68,6 +79,14 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 
   async onNavigationFocus() {
+    if (this.props.existingContacts.length <= 0) {
+      this.props.navigation.replace('ContactInfo', {});
+    }
+    await this.doRefresh();
+  }
+
+  async doRefresh() {
+    if (this.props.userId === -1) return;
     this.setState({ refreshing: true });
     try {
       await getContacts();
@@ -137,16 +156,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           keyExtractor={(item) => item.inmateNumber.toString()}
           showsVerticalScrollIndicator={false}
-          onRefresh={async () => {
-            this.setState({ refreshing: true });
-            try {
-              await getContacts();
-              await getUser();
-            } catch (err) {
-              dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
-            }
-            this.setState({ refreshing: false });
-          }}
+          onRefresh={this.doRefresh}
           refreshing={this.state.refreshing}
         />
         <TouchableOpacity
@@ -171,6 +181,7 @@ const mapStateToProps = (state: AppState) => ({
   existingLetters: state.letter.existing,
   currentNotif: state.notif.currentNotif,
   userPostal: state.user.user.postal,
+  userId: state.user.user.id,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes>

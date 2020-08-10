@@ -63,8 +63,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       90210
       .
     </Text>
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Array [
           Object {
@@ -234,9 +233,8 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       >
         Glossy photo & short caption
       </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.2}
+    </>
+    <
       style={
         Array [
           Object {
@@ -406,7 +404,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       >
         2,000 words & photo on regular paper
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

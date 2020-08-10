@@ -145,7 +145,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           }
         }
       >
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
@@ -199,8 +199,8 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Share on Facebook
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </>
+        <
           activeOpacity={0.7}
           style={
             Array [
@@ -255,7 +255,7 @@ exports[`ReferFriends screen should match snapshot 1`] = `
           >
             Done
           </Text>
-        </TouchableOpacity>
+        </>
       </View>
     </View>
   </View>

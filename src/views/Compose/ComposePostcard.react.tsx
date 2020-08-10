@@ -24,6 +24,7 @@ import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { WINDOW_WIDTH } from '@utils';
 import * as Segment from 'expo-analytics-segment';
+import { saveDraft } from '@api/User';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -204,6 +205,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   changeText(value: string): void {
     this.updateCharsLeft(value);
     this.props.setContent(value);
+    saveDraft(this.props.composing);
   }
 
   registerPhoto(photo: Photo): void {
@@ -275,7 +277,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               }}
               onChangeText={this.changeText}
               placeholder={i18n.t('Compose.placeholder')}
-              numLines={100}
+              numLines={1000}
             >
               <Animated.View
                 style={{

@@ -12,7 +12,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
-import { ProfilePicTypes, Letter, LetterStatus } from 'types';
+import { ProfilePicTypes, Letter, LetterStatus, LetterTypes } from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
@@ -20,6 +20,8 @@ import i18n from '@i18n';
 import {
   setActive as setActiveLetter,
   setComposing,
+  setRecipientId,
+  setType,
 } from '@store/Letter/LetterActions';
 import { LetterActionTypes } from '@store/Letter/LetterTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
@@ -27,21 +29,16 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  getLetters,
-  getContact,
-  getUser,
-  getZipcode,
-  getTrackingEvents,
-} from '@api';
+import { getLetters, getContact, getUser, getTrackingEvents } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
-import { haversine } from '@utils';
 import { differenceInBusinessDays } from 'date-fns';
+import { popupAlert } from '@components/Alert/Alert.react';
+import { deleteDraft } from '@api/User';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -57,6 +54,7 @@ interface Props {
   navigation: SingleContactScreenNavigationProp;
   activeContact: Contact;
   existingLetters: Letter[];
+  existingContacts: Contact[];
   userState: UserState;
   setActiveLetter: (letter: Letter) => void;
   setComposing: (letter: Letter) => void;
@@ -64,6 +62,8 @@ interface Props {
   currentNotif: Notif | null;
   handleNotif: () => void;
   composing: Letter;
+  setRecipientId: (id: number) => void;
+  setType: (type: LetterTypes) => void;
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -243,8 +243,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               </View>
             )}
             <Button
-              onPress={() => {
-                this.props.navigation.navigate('ChooseOption');
+              onPress={async () => {
                 Segment.trackWithProperties(
                   'Contact View - Click on Send Letter',
                   {
@@ -255,6 +254,83 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                         : 'blank',
                   }
                 );
+                if (
+                  this.props.composing.content !== '' ||
+                  this.props.composing.photo
+                ) {
+                  popupAlert({
+                    title: i18n.t('Compose.letterInProgress'),
+                    message: i18n.t('Compose.continueWritingAnd'),
+                    buttons: [
+                      {
+                        text: i18n.t('Compose.continueWriting'),
+                        onPress: async () => {
+                          let draftContact: Contact | undefined;
+                          for (
+                            let ix = 0;
+                            ix < this.props.existingContacts.length;
+                            ix += 1
+                          ) {
+                            if (
+                              this.props.existingContacts[ix].id ===
+                              this.props.composing.recipientId
+                            ) {
+                              draftContact = this.props.existingContacts[ix];
+                              break;
+                            }
+                          }
+                          if (draftContact) {
+                            this.props.setRecipientId(draftContact.id);
+                            this.props.setActiveContact(draftContact);
+                            this.props.setType(this.props.composing.type);
+                            if (
+                              this.props.composing.type === LetterTypes.Letter
+                            ) {
+                              this.props.navigation.navigate('ComposeLetter');
+                            } else {
+                              this.props.navigation.navigate('ComposePostcard');
+                            }
+                          } else {
+                            dropdownError({
+                              message: i18n.t('Compose.draftContactDeleted'),
+                            });
+                            await deleteDraft();
+                            this.props.navigation.navigate('ChooseOption');
+                          }
+                        },
+                      },
+                      {
+                        text: i18n.t('Compose.startNewLetter'),
+                        reverse: true,
+                        onPress: async () => {
+                          await deleteDraft();
+                          this.props.setComposing({
+                            type: LetterTypes.Postcard,
+                            status: LetterStatus.Draft,
+                            isDraft: true,
+                            recipientId: this.props.activeContact.id,
+                            content: '',
+                            dateCreated: new Date(),
+                            trackingEvents: [],
+                          });
+                          this.props.navigation.navigate('ChooseOption');
+                        },
+                      },
+                    ],
+                  });
+                } else {
+                  await deleteDraft();
+                  this.props.setComposing({
+                    type: LetterTypes.Postcard,
+                    status: LetterStatus.Draft,
+                    isDraft: true,
+                    recipientId: this.props.activeContact.id,
+                    content: '',
+                    dateCreated: new Date(),
+                    trackingEvents: [],
+                  });
+                  this.props.navigation.navigate('ChooseOption');
+                }
               }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
               textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
@@ -296,6 +372,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
   existingLetters: state.letter.existing[state.contact.active.id],
+  existingContacts: state.contact.existing,
   userState: state.user,
   currentNotif: state.notif.currentNotif,
   composing: state.letter.composing,
@@ -307,6 +384,8 @@ const mapDispatchToProps = (
   setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
   setComposing: (letter: Letter) => dispatch(setComposing(letter)),
   handleNotif: () => dispatch(handleNotif()),
+  setRecipientId: (id: number) => dispatch(setRecipientId(id)),
+  setType: (type: LetterTypes) => dispatch(setType(type)),
 });
 const SingleContactScreen = connect(
   mapStateToProps,

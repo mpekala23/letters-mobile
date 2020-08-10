@@ -1,4 +1,4 @@
-import { uploadPushToken, getZipcode } from './Common';
+import { getZipcode } from './Common';
 
 import {
   addContact,
@@ -25,6 +25,7 @@ import {
   logout,
   updateProfile,
   getUser,
+  uploadPushToken,
 } from './User';
 
 export {

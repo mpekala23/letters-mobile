@@ -10,7 +10,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     accessible={false}
     activeOpacity={1}
     style={
@@ -101,7 +101,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             >
               Autosaved
             </Text>
-            <TouchableOpacity
+            <
               activeOpacity={0.7}
               style={
                 Array [
@@ -159,7 +159,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
               >
                 Need Ideas?
               </Text>
-            </TouchableOpacity>
+            </>
           </View>
         </View>
         <View
@@ -186,7 +186,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
           <TextInput
             allowFontScaling={true}
             multiline={true}
-            numberOfLines={100}
+            numberOfLines={1000}
             placeholder="Tell your loved one about something you did / saw today that reminded you of them!"
             rejectResponderTermination={true}
             secureTextEntry={false}
@@ -264,8 +264,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             <View
               style={Object {}}
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Array [
                     Object {
@@ -363,7 +362,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                     </RNSVGGroup>
                   </RNSVGSvgView>
                 </View>
-              </TouchableOpacity>
+              </>
             </View>
           </View>
         </View>
@@ -378,7 +377,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
             }
           }
         >
-          <TouchableOpacity
+          <
             activeOpacity={1}
             style={
               Object {
@@ -425,8 +424,7 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                  left
               </Text>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Array [
                   Object {
@@ -510,9 +508,8 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.2}
+            </>
+            <
               style={
                 Array [
                   Object {
@@ -583,11 +580,11 @@ exports[`ComposePostcard screen should match snapshot 1`] = `
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
-            </TouchableOpacity>
-          </TouchableOpacity>
+            </>
+          </>
         </View>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;
