@@ -108,3 +108,8 @@ export interface Photo {
   height?: number;
   uri: string;
 }
+
+export interface PostcardDesign {
+  image: Photo;
+  author?: string;
+}
