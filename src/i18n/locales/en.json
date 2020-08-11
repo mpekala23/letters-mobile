@@ -175,7 +175,6 @@
     "alreadyHaveAnAccount": "Already have an account?",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "cellphoneNumber": "Cell Phone Number",
     "addressLine1": "Address Line 1",
     "addressLine2": "Address Line 2",
     "country": "Country",
@@ -230,7 +229,6 @@
   "UpdateProfileScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "cellPhone": "Cell phone",
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
     "zipcode": "Zip Code",

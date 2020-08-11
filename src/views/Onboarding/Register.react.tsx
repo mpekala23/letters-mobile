@@ -52,8 +52,6 @@ class RegisterScreen extends React.Component<Props, State> {
 
   private lastName = createRef<Input>();
 
-  private phone = createRef<Input>();
-
   private address1 = createRef<Input>();
 
   private address2 = createRef<Input>();
@@ -84,7 +82,6 @@ class RegisterScreen extends React.Component<Props, State> {
   devSkip = (): void => {
     if (this.firstName.current) this.firstName.current.set('Team');
     if (this.lastName.current) this.lastName.current.set('Ameelio');
-    if (this.phone.current) this.phone.current.set('4324324432');
     if (this.address1.current) this.address1.current.set('Somewhere');
     if (this.postal.current) this.postal.current.set('12345');
     if (this.city.current) this.city.current.set('New Haven');
@@ -101,7 +98,6 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.phone.current &&
       this.address1.current &&
       this.postal.current &&
       this.city.current &&
@@ -114,7 +110,6 @@ class RegisterScreen extends React.Component<Props, State> {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.phone.current.state.valid &&
         this.address1.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
@@ -133,7 +128,6 @@ class RegisterScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.phone.current &&
       this.address1.current &&
       this.address2.current &&
       this.postal.current &&
@@ -147,7 +141,6 @@ class RegisterScreen extends React.Component<Props, State> {
       const data: UserRegisterInfo = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
-        phone: this.phone.current.state.value,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
         postal: this.postal.current.state.value,
@@ -253,20 +246,8 @@ class RegisterScreen extends React.Component<Props, State> {
             required
             onValid={this.updateValid}
             onInvalid={() => this.setState({ valid: false })}
-            nextInput={this.phone}
+            nextInput={this.address1}
           />
-          <View style={{ flexDirection: 'row' }}>
-            <Input
-              ref={this.phone}
-              parentStyle={Styles.fullWidth}
-              placeholder={i18n.t('RegisterScreen.cellphoneNumber')}
-              required
-              validate={Validation.Phone}
-              onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
-              nextInput={this.address1}
-            />
-          </View>
           <Input
             ref={this.address1}
             parentStyle={Styles.fullWidth}

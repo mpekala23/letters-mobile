@@ -175,7 +175,6 @@
     "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "cellphoneNumber": "Número de teléfono celular",
     "addressLine1": "Dirección Línea 1",
     "addressLine2": "Dirección Línea 2",
     "country": "País",
@@ -230,7 +229,6 @@
   "UpdateProfileScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "cellPhone": "Número de télefono celular",
     "addressLine1": "Dirección línea 1",
     "addressLine2": "Dirección línea 2",
     "zipcode": "Código Postas",

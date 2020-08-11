@@ -92,7 +92,6 @@ export async function fetchAuthenticated(
       firstName: tokenBody.data.first_name,
       lastName: tokenBody.data.last_name,
       email: tokenBody.data.email,
-      phone: tokenBody.data.phone,
       address1: tokenBody.data.addr_line_1,
       address2: tokenBody.data.addr_line_2 || '',
       postal: tokenBody.data.postal,

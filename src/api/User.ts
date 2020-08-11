@@ -53,7 +53,6 @@ function cleanUser(user: RawUser): User {
     firstName: user.first_name,
     lastName: user.last_name,
     email: user.email,
-    phone: user.phone,
     address1: user.addr_line_1,
     address2: user.addr_line_2,
     postal: user.postal,
@@ -68,12 +67,12 @@ function cleanUser(user: RawUser): User {
   };
 }
 
-export async function saveToken(token: string): Promise<void> {
-  return setItemAsync(Storage.RememberToken, token);
-}
-
 export async function deleteToken(): Promise<void> {
   return deleteItemAsync(Storage.RememberToken);
+}
+
+export async function saveToken(token: string): Promise<void> {
+  return setItemAsync(Storage.RememberToken, token);
 }
 
 export async function deleteDraft(): Promise<void> {
@@ -243,7 +242,6 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       state: STATE_TO_ABBREV[data.state],
       referer: data.referer,
       postal: data.postal,
-      phone: data.phone,
       ...photoExtension,
     }),
   });
@@ -311,7 +309,6 @@ export async function updateProfile(data: User): Promise<User> {
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,
-        phone: data.phone,
         addr_line_1: data.address1,
         addr_line_2: data.address2,
         city: data.city,
