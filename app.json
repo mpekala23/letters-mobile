@@ -23,7 +23,11 @@
       "versionCode": 2
     },
     "ios": {
-      "bundleIdentifier": "com.ameelio.ameelio"
+      "bundleIdentifier": "com.ameelio.ameelio",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Ameelio uses the camera to allow users to take photos and attach them to the letters they send to their loved ones. Ameelio also accesses the camera to allow users to take photos for their profile, and the profiles of their loved ones in the app.",
+        "NSPhotoLibraryUsageDescription": "Ameelio accesses the photo library to allow users to attach saved photos to the letters they send to their loved ones. Ameelio also accesses the photo library to allow users to upload photos for their profile, and the profiles of their loved ones in the app."
+      }
     }
   }
 }
