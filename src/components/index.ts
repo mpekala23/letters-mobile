@@ -6,6 +6,7 @@ import ComposeHeader from './ComposeHeader/ComposeHeader.react';
 import ComposeTools from './ComposeTools/ComposeTools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import Dropdown from './Dropdown/Dropdown.react';
+import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
 import GrayBar from './GrayBar/GrayBar.react';
 import Input from './Input/Input.react';
@@ -29,6 +30,7 @@ export {
   ComposeTools,
   DeliveryStatusCard,
   Dropdown,
+  EditablePostcard,
   GenericCard,
   GrayBar,
   Input,

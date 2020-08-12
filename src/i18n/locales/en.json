@@ -331,7 +331,8 @@
     "notEnoughCredits": "Not enough credits",
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
-    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works."
+    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
+    "tapToAddMessage": "Tap here to add a message."
   },
   "Notifs": {
     "your": "Your",

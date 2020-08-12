@@ -87,6 +87,10 @@ export interface LetterTrackingEvent {
   date: Date;
 }
 
+export type TopbarBackAction = {
+  action: () => void | Promise<void>;
+};
+
 export type TopbarRouteAction = {
   enabled: boolean;
   text: string;

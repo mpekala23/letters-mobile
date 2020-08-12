@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { ProfilePicTypes, TopbarRouteAction } from 'types';
+import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
@@ -21,6 +21,7 @@ interface State {
   title: string;
   profile: boolean;
   blocked: boolean;
+  backOverride?: TopbarBackAction;
   profileOverride?: {
     enabled: boolean;
     text: string;
@@ -38,6 +39,58 @@ class Topbar extends React.Component<Props, State> {
       profile: true,
       blocked: false,
     };
+    this.renderBackButton = this.renderBackButton.bind(this);
+  }
+
+  renderBackButton(): JSX.Element | null {
+    if (this.state.backOverride) {
+      return (
+        <TouchableOpacity
+          style={Styles.backContainer}
+          onPress={this.state.backOverride.action}
+          testID="backButton"
+        >
+          <Icon svg={BackButton} />
+        </TouchableOpacity>
+      );
+    }
+    if (this.props.navigation && this.props.navigation.canGoBack()) {
+      return (
+        <TouchableOpacity
+          style={Styles.backContainer}
+          onPress={() => {
+            if (this.props.navigation) {
+              const route = this.props.navigation.getCurrentRoute()?.name;
+              if (
+                route === 'ContactInfo' ||
+                route === 'FacilityDirectory' ||
+                route === 'AddManually' ||
+                route === 'ReviewContact'
+              ) {
+                let logName = '';
+                if (route === 'ContactInfo') {
+                  logName = 'info';
+                } else if (route === 'FacilityDirectory') {
+                  logName = 'facility';
+                } else if (route === 'AddManually') {
+                  logName = 'manual';
+                } else {
+                  logName = 'review';
+                }
+                Segment.trackWithProperties('Add Contact - Click on Back', {
+                  page: logName,
+                });
+              }
+              this.props.navigation.goBack();
+            }
+          }}
+          testID="backButton"
+        >
+          <Icon svg={BackButton} />
+        </TouchableOpacity>
+      );
+    }
+    return null;
   }
 
   render(): JSX.Element {
@@ -109,40 +162,7 @@ class Topbar extends React.Component<Props, State> {
           },
         ]}
       >
-        {this.props.navigation && this.props.navigation.canGoBack() && (
-          <TouchableOpacity
-            style={Styles.backContainer}
-            onPress={() => {
-              if (this.props.navigation) {
-                const route = this.props.navigation.getCurrentRoute()?.name;
-                if (
-                  route === 'ContactInfo' ||
-                  route === 'FacilityDirectory' ||
-                  route === 'AddManually' ||
-                  route === 'ReviewContact'
-                ) {
-                  let logName = '';
-                  if (route === 'ContactInfo') {
-                    logName = 'info';
-                  } else if (route === 'FacilityDirectory') {
-                    logName = 'facility';
-                  } else if (route === 'AddManually') {
-                    logName = 'manual';
-                  } else {
-                    logName = 'review';
-                  }
-                  Segment.trackWithProperties('Add Contact - Click on Back', {
-                    page: logName,
-                  });
-                }
-                this.props.navigation.goBack();
-              }
-            }}
-            testID="backButton"
-          >
-            <Icon svg={BackButton} />
-          </TouchableOpacity>
-        )}
+        {this.renderBackButton()}
         <Text
           style={[
             Typography.FONT_MEDIUM,
@@ -178,6 +198,12 @@ export const setProfileOverride = (
 ): void => {
   if (topbarRef.current)
     topbarRef.current.setState({ profileOverride: override });
+};
+
+export const setBackOverride = (
+  backOverride: TopbarBackAction | undefined
+): void => {
+  if (topbarRef.current) topbarRef.current.setState({ backOverride });
 };
 
 export default Topbar;

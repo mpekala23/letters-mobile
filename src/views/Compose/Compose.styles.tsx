@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WINDOW_WIDTH } from '@utils';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
 export default StyleSheet.create({
   screenBackground: {
@@ -20,14 +20,16 @@ export default StyleSheet.create({
   gridTrueBackground: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: 'white',
   },
   gridPreviewBackground: {
-    flex: 2,
+    width: '100%',
+    height: ((WINDOW_HEIGHT - 80) * 2) / 5,
     padding: 12,
   },
   gridOptionsBackground: {
-    width: WINDOW_WIDTH,
-    height: WINDOW_WIDTH,
+    width: '100%',
+    height: ((WINDOW_HEIGHT - 80) * 3) / 5,
     backgroundColor: '#323334',
   },
   subcategorySelectorBackground: {
