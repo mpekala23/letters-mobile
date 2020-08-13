@@ -359,7 +359,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
-  exisitingMail: state.mail.existing[state.contact.active.id],
+  existingMail: state.mail.existing[state.contact.active.id],
   existingContacts: state.contact.existing,
   userState: state.user,
   currentNotif: state.notif.currentNotif,

@@ -1,20 +1,23 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { PostcardDesign } from 'types';
+import { Draft, MailTypes } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
+import { Contact } from '@store/Contact/ContactTypes';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 
 interface Props {
-  design?: PostcardDesign | undefined;
-  content?: string;
+  front: boolean;
+  composing: Draft;
+  recipient: Contact;
 }
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
+  if (props.composing.type !== MailTypes.Postcard) return null;
   return (
     <View style={Styles.background}>
-      {props.design ? (
+      {props.front ? (
         <View
           style={{
             width: '100%',
@@ -23,7 +26,7 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             opacity: 1,
           }}
         >
-          <Image style={{ flex: 1 }} source={props.design.image} />
+          <Image style={{ flex: 1 }} source={props.composing.design.image} />
         </View>
       ) : (
         <View
@@ -38,9 +41,24 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             Styles.writingBackground,
           ]}
         >
-          <View style={{ flex: 1, height: '105%' }}>
-            <Text style={[Typography.FONT_REGULAR, { flex: 1, fontSize: 14 }]}>
-              {props.content}
+          <View
+            style={{
+              flex: 1,
+              height: '105%',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  fontSize: 14,
+                  paddingHorizontal: 10,
+                  alignItems: 'center',
+                },
+              ]}
+            >
+              {props.composing.content}
             </Text>
           </View>
           <View style={Styles.writingDivider} />
@@ -53,16 +71,19 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             />
             <View>
               <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                Mark Pekala
+                {props.recipient.firstName} {props.recipient.lastName},{' '}
+                {props.recipient.inmateNumber}
               </Text>
               <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                Mark's House
+                {props.recipient.facility?.name}
               </Text>
               <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                210 W Diamond Lake Road
+                {props.recipient.facility?.address}
               </Text>
               <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                Minneapolis, MN 55419
+                {props.recipient.facility?.city},{' '}
+                {props.recipient.facility?.state}{' '}
+                {props.recipient.facility?.postal}
               </Text>
             </View>
           </View>
@@ -70,11 +91,6 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
       )}
     </View>
   );
-};
-
-StaticPostcard.defaultProps = {
-  design: undefined,
-  content: '',
 };
 
 export default StaticPostcard;

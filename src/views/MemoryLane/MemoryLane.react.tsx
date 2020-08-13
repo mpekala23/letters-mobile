@@ -84,7 +84,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
-    existingLetters: state.mail.existing,
+    existingMail: state.mail.existing,
   };
 };
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {

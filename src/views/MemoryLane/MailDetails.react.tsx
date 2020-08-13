@@ -6,7 +6,7 @@ import { Mail, MailTypes, MailStatus } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { format } from 'date-fns';
-import Styles from './MailDetails';
+import Styles from './MailDetails.styles';
 
 type MailDetailsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -60,18 +60,18 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
   );
 };
 
+const blankMail: Mail = {
+  id: -1,
+  type: MailTypes.Letter,
+  recipientId: -1,
+  status: MailStatus.Created,
+  dateCreated: new Date(),
+  expectedDelivery: new Date(),
+  content: '',
+};
+
 const mapStateToProps = (state: AppState) => ({
-  letter: state.mail.active
-    ? state.mail.active
-    : {
-        type: MailTypes.Postcard,
-        status: MailStatus.Draft,
-        isDraft: true,
-        recipientId: -1,
-        recipientName: '',
-        content: '',
-        trackingEvents: [],
-      },
+  mail: state.mail.active ? state.mail.active : blankMail,
 });
 
 const MailDetailsScreen = connect(mapStateToProps)(MailDetailsScreenBase);

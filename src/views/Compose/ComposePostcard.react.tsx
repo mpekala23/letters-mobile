@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign } from 'types';
+import { PostcardDesign, Draft } from 'types';
 import { Typography } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 import {
@@ -22,6 +22,12 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
+import { AppState } from '@store/types';
+import { MailActionTypes } from '@store/Mail/MailTypes';
+import { setContent, setDesign } from '@store/Mail/MailActions';
+import { connect } from 'react-redux';
+import { saveDraft } from '@api';
+import { Contact } from '@store/Contact/ContactTypes';
 import Styles from './Compose.styles';
 
 const EXAMPLE_DATA: Record<string, PostcardDesign[]> = {
@@ -108,6 +114,11 @@ export interface Props {
   navigation: ComposePostcardScreenNavigationProp;
   data: Record<string, PostcardDesign[]>;
   initialSubcategory: string;
+  composing: Draft;
+  hasSentMail: boolean;
+  recipient: Contact;
+  setContent: (content: string) => void;
+  setDesign: (design: PostcardDesign) => void;
 }
 
 interface State {
@@ -117,11 +128,10 @@ interface State {
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
   charsLeft: number;
-  open: boolean;
   valid: boolean;
 }
 
-export default class ComposePostcard extends React.Component<Props, State> {
+class ComposePostcardScreenBase extends React.Component<Props, State> {
   static defaultProps = {
     data: EXAMPLE_DATA,
     initialSubcategory: 'Prison Art',
@@ -146,7 +156,6 @@ export default class ComposePostcard extends React.Component<Props, State> {
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
       charsLeft: 300,
-      open: false,
       valid: true,
     };
 
@@ -184,6 +193,7 @@ export default class ComposePostcard extends React.Component<Props, State> {
       text: 'Next',
       action: this.beginWriting,
     });
+    this.changeDesign(this.state.design);
   }
 
   componentWillUnmount(): void {
@@ -192,6 +202,20 @@ export default class ComposePostcard extends React.Component<Props, State> {
   }
 
   onNavigationFocus = (): void => {
+    const { content } = this.props.composing;
+
+    if (this.editableRef.current) {
+      if (!this.props.hasSentMail && !content) {
+        this.editableRef.current.set(
+          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+            this.props.recipient.firstName
+          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
+        );
+      } else {
+        this.editableRef.current.set(content);
+      }
+    }
+
     if (!this.state.writing) {
       setProfileOverride({
         enabled: true,
@@ -223,7 +247,6 @@ export default class ComposePostcard extends React.Component<Props, State> {
       duration: 200,
       useNativeDriver: false,
     }).start();
-    this.setState({ open: true });
   }
 
   onKeyboardClose(): void {
@@ -232,7 +255,6 @@ export default class ComposePostcard extends React.Component<Props, State> {
       duration: 200,
       useNativeDriver: false,
     }).start();
-    this.setState({ open: false });
   }
 
   setValid(val: boolean): void {
@@ -253,8 +275,13 @@ export default class ComposePostcard extends React.Component<Props, State> {
 
   changeText(value: string): void {
     this.updateCharsLeft(value);
-    // this.props.setContent(value);
-    // saveDraft(this.props.composing);
+    this.props.setContent(value);
+    saveDraft(this.props.composing);
+  }
+
+  changeDesign(design: PostcardDesign): void {
+    this.props.setDesign(design);
+    this.setState({ design });
   }
 
   beginWriting(): void {
@@ -330,7 +357,7 @@ export default class ComposePostcard extends React.Component<Props, State> {
     return (
       <TouchableOpacity
         style={{ width: (WINDOW_WIDTH - 32) / 3, margin: 4 }}
-        onPress={() => this.setState({ design })}
+        onPress={() => this.changeDesign(design)}
       >
         <Image
           style={{ aspectRatio: 1, overflow: 'hidden' }}
@@ -379,6 +406,7 @@ export default class ComposePostcard extends React.Component<Props, State> {
           >
             <EditablePostcard
               ref={this.editableRef}
+              recipient={this.props.recipient}
               design={this.state.design}
               flip={this.state.flip}
               onChangeText={this.changeText}
@@ -418,3 +446,23 @@ export default class ComposePostcard extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  composing: state.mail.composing,
+  hasSentLetters: Object.values(state.mail.existing).some(
+    (mail) => mail.length > 0
+  ),
+  recipient: state.contact.active,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  setContent: (content: string) => dispatch(setContent(content)),
+  setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+});
+
+const ComposePostcardScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComposePostcardScreenBase);
+
+export default ComposePostcardScreen;
