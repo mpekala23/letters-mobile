@@ -2,7 +2,7 @@ import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   View,
-  Image,
+  Image as ImageComponent,
   FlatList,
   TouchableOpacity,
   Animated,
@@ -12,9 +12,9 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign, Draft } from 'types';
+import { PostcardDesign, Draft, Image } from 'types';
 import { Typography } from '@styles';
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage } from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -28,6 +28,9 @@ import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { saveDraft } from '@api';
 import { Contact } from '@store/Contact/ContactTypes';
+import * as MediaLibrary from 'expo-media-library';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
 
 const EXAMPLE_DATA: Record<string, PostcardDesign[]> = {
@@ -112,7 +115,11 @@ type ComposePostcardScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ComposePostcardScreenNavigationProp;
-  data: Record<string, PostcardDesign[]>;
+  route: {
+    params: {
+      category: string;
+    };
+  };
   initialSubcategory: string;
   composing: Draft;
   hasSentMail: boolean;
@@ -122,6 +129,7 @@ export interface Props {
 }
 
 interface State {
+  data: Record<string, PostcardDesign[]>;
   subcategory: string;
   design: PostcardDesign;
   writing: boolean;
@@ -129,11 +137,11 @@ interface State {
   keyboardOpacity: Animated.Value;
   charsLeft: number;
   valid: boolean;
+  mediaGranted: boolean;
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
   static defaultProps = {
-    data: EXAMPLE_DATA,
     initialSubcategory: 'Prison Art',
   };
 
@@ -150,13 +158,17 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      data: {},
       subcategory: props.initialSubcategory,
-      design: props.data[props.initialSubcategory][0],
+      design: {
+        image: { uri: '' },
+      },
       writing: false,
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
       charsLeft: 300,
       valid: true,
+      mediaGranted: true,
     };
 
     this.beginWriting = this.beginWriting.bind(this);
@@ -187,7 +199,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     );
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     setProfileOverride({
       enabled: true,
       text: 'Next',
@@ -201,7 +213,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.unsubscribeKeyboardClose.remove();
   }
 
-  onNavigationFocus = (): void => {
+  onNavigationFocus = async (): Promise<void> => {
     const { content } = this.props.composing;
 
     if (this.editableRef.current) {
@@ -233,6 +245,17 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         text: i18n.t('Compose.done'),
         action: this.doneWriting,
       });
+    }
+
+    if (this.props.route.params.category === 'personal') {
+      let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
+      if (finalStatus !== 'granted') {
+        finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
+      }
+      this.setState({ mediaGranted: finalStatus === 'granted' });
+      if (finalStatus === 'granted') {
+        await this.loadData();
+      }
     }
   };
 
@@ -268,6 +291,29 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
   }
 
+  async loadData(): Promise<void> {
+    if (this.props.route.params.category === 'personal') {
+      const assets = await MediaLibrary.getAssetsAsync();
+      const library = assets.assets.map((value) => {
+        const image: Image = {
+          uri: value.uri,
+          width: value.width,
+          height: value.height,
+        };
+        const design: PostcardDesign = {
+          image,
+          custom: true,
+        };
+        return design;
+      });
+      const data = {
+        Library: library,
+        'Take Photo': [],
+      };
+      this.setState({ data, subcategory: 'Library' });
+    }
+  }
+
   updateCharsLeft(value: string): void {
     this.setState({ charsLeft: 300 - value.length });
     this.setValid(300 - value.length >= 0);
@@ -285,6 +331,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   beginWriting(): void {
+    if (this.state.design.image.uri === '') {
+      popupAlert({
+        title: i18n.t('Alert.noDesignSelected'),
+        message: i18n.t('Alert.selectADesign'),
+        buttons: [{ text: i18n.t('Alert.okay') }],
+      });
+      return;
+    }
     setProfileOverride({
       enabled: true,
       text: i18n.t('Compose.done'),
@@ -329,7 +383,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   renderSubcategorySelector(): JSX.Element {
-    const subcategories = Object.keys(this.props.data);
+    const subcategories = Object.keys(this.state.data);
     return (
       <View style={Styles.subcategorySelectorBackground}>
         {subcategories.map((subcategory) => (
@@ -341,7 +395,23 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   subcategory === this.state.subcategory ? 'white' : '#505050',
               },
             ]}
-            onPress={() => this.setState({ subcategory })}
+            onPress={async () => {
+              if (subcategory === 'Take Photo') {
+                try {
+                  const image = await takeImage({
+                    aspect: [6, 4],
+                    allowsEditing: true,
+                  });
+                  if (image) {
+                    this.changeDesign({ image, custom: true });
+                  }
+                } catch (err) {
+                  dropdownError({ message: i18n.t('Permission.camera') });
+                }
+              } else {
+                this.setState({ subcategory });
+              }
+            }}
             key={subcategory}
           >
             <Text style={[Typography.FONT_MEDIUM, Styles.subcategoryText]}>
@@ -356,11 +426,15 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   renderItem(design: PostcardDesign): JSX.Element {
     return (
       <TouchableOpacity
-        style={{ width: (WINDOW_WIDTH - 32) / 3, margin: 4 }}
+        style={{
+          width: (WINDOW_WIDTH - 32) / 3,
+          height: (WINDOW_WIDTH - 32) / 3,
+          margin: 4,
+        }}
         onPress={() => this.changeDesign(design)}
       >
-        <Image
-          style={{ aspectRatio: 1, overflow: 'hidden' }}
+        <ImageComponent
+          style={{ flex: 1, aspectRatio: 1, overflow: 'hidden' }}
           source={design.image}
         />
       </TouchableOpacity>
@@ -426,7 +500,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           >
             {this.renderSubcategorySelector()}
             <FlatList
-              data={EXAMPLE_DATA[this.state.subcategory]}
+              data={this.state.data[this.state.subcategory]}
               renderItem={({ item }) => this.renderItem(item)}
               keyExtractor={(item: PostcardDesign, index: number) => {
                 return item.image.uri + index.toString();
@@ -434,6 +508,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               numColumns={3}
               contentContainerStyle={Styles.gridBackground}
             />
+            {this.props.route.params.category === 'personal' &&
+              !this.state.mediaGranted && (
+                <Text style={Typography.FONT_REGULAR}>
+                  {i18n.t('Permission.photos')}
+                </Text>
+              )}
           </Animated.View>
           <View style={{ position: 'absolute', bottom: -8 }}>
             <ComposeTools

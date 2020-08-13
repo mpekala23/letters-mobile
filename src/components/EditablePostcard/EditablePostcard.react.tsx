@@ -3,7 +3,7 @@ import { View, Animated, Image, Text } from 'react-native';
 import { PostcardDesign } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import { Contact } from '@store/Contact/ContactTypes';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -69,7 +69,26 @@ class EditablePostcard extends React.Component<Props> {
               : 1,
           }}
         >
-          <Image style={{ flex: 1 }} source={this.props.design.image} />
+          {this.props.design.image.uri !== '' ? (
+            <Image
+              style={{ width: '100%', height: '100%' }}
+              source={this.props.design.image}
+            />
+          ) : (
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: Colors.GRAY_LIGHT,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={[Typography.FONT_REGULAR, { color: 'black' }]}>
+                {i18n.t('Compose.noDesignSelected')}
+              </Text>
+            </View>
+          )}
         </Animated.View>
         <Animated.View
           style={[

@@ -26,7 +26,10 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             opacity: 1,
           }}
         >
-          <Image style={{ flex: 1 }} source={props.composing.design.image} />
+          <Image
+            style={{ width: '100%', height: '100%' }}
+            source={props.composing.design.image}
+          />
         </View>
       ) : (
         <View

@@ -284,7 +284,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             ) {
                               this.props.navigation.navigate('ComposeLetter');
                             } else {
-                              this.props.navigation.navigate('ComposePostcard');
+                              this.props.navigation.navigate(
+                                'ComposePostcard',
+                                { category: 'personal' }
+                              );
                             }
                           } else {
                             dropdownError({

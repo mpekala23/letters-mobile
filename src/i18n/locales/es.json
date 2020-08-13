@@ -21,8 +21,9 @@
     "letterTooLong": "Su carta no puede exceder los 16,000 caracteres."
   },
   "Permission": {
-    "photos": "No se pudo acceder la librería fotográfica",
-    "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración."
+    "photos": "No se pudo acceder la librería fotográfica.",
+    "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración.",
+    "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
   "AddManuallyScreen": {
     "facilityName": "Nombre del presidio",
@@ -304,7 +305,9 @@
     "maybeLater": "Quizás más tarde",
     "emulatorDetected": "Emulador detectado",
     "mustUsePhysical": "Tienes que usar un dispositivo físico para recibir notificaciones push",
-    "okay": "Okay"
+    "okay": "Okay",
+    "noDesignSelected": "No design selected",
+    "selectADesign": "Select a design to continue."
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",
@@ -333,7 +336,8 @@
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
     "tapToAddMessage": "Tap to add a message.",
-    "done": "Done"
+    "done": "Done",
+    "noDesignSelected": "No design selected. Tap below to get started."
   },
   "Notifs": {
     "happy": "Feliz",

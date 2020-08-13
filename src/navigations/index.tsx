@@ -66,7 +66,7 @@ export type AppStackParamList = {
   AddManually: { phyState: string };
   ChooseOption: undefined;
   ComposeLetter: undefined;
-  ComposePostcard: undefined;
+  ComposePostcard: { category: string };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
