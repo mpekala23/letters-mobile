@@ -96,14 +96,21 @@ const PostcardPreviewScreenBase: React.FC<Props> = (props: Props) => {
         onPress={async () => {
           try {
             props.setDraft(false);
+            Segment.trackWithProperties('Review - Click on Send', {
+              Option: 'Photo',
+            });
             await createLetter(props.composing);
+            Segment.trackWithProperties('Review - Send Letter Success', {
+              Option: 'Photo',
+              facility: props.activeContact.facility?.name,
+              facilityState: props.activeContact.facility?.state,
+              facilityCity: props.activeContact.facility?.city,
+              relationship: props.activeContact.relationship,
+            });
             props.setStatus(LetterStatus.Created);
             props.clearComposing();
             props.setContent('');
             props.setPhoto(undefined);
-            Segment.trackWithProperties('Compose - Click on Send', {
-              Option: 'Photo',
-            });
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
             Notifs.scheduleNotificationInDays(
