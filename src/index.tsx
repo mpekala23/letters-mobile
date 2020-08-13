@@ -62,6 +62,11 @@ export default class App extends React.Component<null, State> {
   static getSegmentWriteKeys(
     releaseChannel: Array<string> | undefined
   ): Record<string, string> {
+    return {
+      androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
+      iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',
+    };
+    /* potentially broken release channel solution 
     if (releaseChannel && releaseChannel.indexOf('prod') !== -1)
       return {
         androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
@@ -71,7 +76,7 @@ export default class App extends React.Component<null, State> {
     return {
       androidWriteKey: 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD',
       iosWriteKey: 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy',
-    };
+    }; */
   }
 
   async loadFontsAsync(): Promise<void> {
