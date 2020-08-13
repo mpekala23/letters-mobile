@@ -11,12 +11,12 @@ import {
 import { getFacility, getFacilities } from './Facilities';
 
 import {
-  createLetter,
+  createMail,
   facebookShare,
-  getLetters,
-  getSingleLetter,
+  getMail,
+  getSingleMail,
   getTrackingEvents,
-} from './Letters';
+} from './Mail';
 
 import {
   register,
@@ -41,10 +41,10 @@ export {
   getContacts,
   getFacility,
   getFacilities,
-  createLetter,
+  createMail,
   facebookShare,
-  getLetters,
-  getSingleLetter,
+  getMail,
+  getSingleMail,
   getTrackingEvents,
   register,
   login,

@@ -1,4 +1,4 @@
-import { Photo } from 'types';
+import { Image } from 'types';
 
 export const AUTHENTICATE_USER = 'user/authenticate_user';
 export const LOGIN_USER = 'user/login_user';
@@ -21,7 +21,7 @@ export interface UserRegisterInfo {
   referer: string;
   imageUri?: string;
   remember?: boolean;
-  photo?: Photo;
+  photo?: Image;
 }
 
 export interface UserLoginInfo {
@@ -41,7 +41,7 @@ export interface User {
   postal: string;
   city: string;
   state: string;
-  photo?: Photo;
+  photo?: Image;
   credit: number;
   joined: Date;
 }

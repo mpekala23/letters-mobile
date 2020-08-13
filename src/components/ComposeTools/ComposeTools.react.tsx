@@ -68,4 +68,8 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
   );
 };
 
+ComposeTools.defaultProps = {
+  picRef: undefined,
+};
+
 export default ComposeTools;

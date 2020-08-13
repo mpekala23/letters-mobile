@@ -17,6 +17,7 @@ import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
+import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import Icon from './Icon/Icon.react';
 import Topbar from './Topbar/Topbar.react';
@@ -41,6 +42,7 @@ export {
   PicUpload,
   PrisonCard,
   ProfilePic,
+  StaticPostcard,
   Statusbar,
   Icon,
   Topbar,

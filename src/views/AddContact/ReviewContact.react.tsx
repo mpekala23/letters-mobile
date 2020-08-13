@@ -20,7 +20,7 @@ import {
   ContactActionTypes,
   ContactState,
 } from '@store/Contact/ContactTypes';
-import { Facility, Photo } from 'types';
+import { Facility, Image } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding, setActive } from '@store/Contact/ContactActions';
@@ -40,7 +40,7 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 
 export interface State {
   valid: boolean;
-  image: Photo | null;
+  image: Image | null;
 }
 
 export interface Props {
@@ -288,7 +288,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       type={PicUploadTypes.Profile}
                       width={136}
                       height={136}
-                      onSuccess={(image: Photo) => {
+                      onSuccess={(image: Image) => {
                         this.setState({ image });
                       }}
                       onDelete={() => this.setState({ image: null })}
@@ -393,7 +393,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
-  hasSentLetter: state.letter.existing !== {},
+  hasSentLetter: state.mail.existing !== {},
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

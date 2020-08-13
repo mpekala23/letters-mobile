@@ -3,34 +3,32 @@ import { Text, View } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { LetterTypes } from 'types';
+import { MailTypes, Draft } from 'types';
 import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setType, setRecipientId } from '@store/Letter/LetterActions';
-import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { setComposing } from '@store/Mail/MailActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
 import { STATE_TO_ABBREV } from '@utils';
 import i18n from '@i18n';
-import { ContactActionTypes } from '@store/Contact/ContactTypes';
-import { UserState } from '@store/User/UserTypes';
+import { User } from '@store/User/UserTypes';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'Home'
+  'ChooseOption'
 >;
 
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
-  userState: UserState;
+  user: User;
   recipientId: number;
-  setType: (type: LetterTypes) => void;
-  setRecipientId: (id: number) => void;
+  setComposing: (draft: Draft) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
-  const { user } = props.userState;
+  const { user } = props;
   return (
     <View style={Styles.screenBackground}>
       <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
@@ -47,24 +45,33 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
         {STATE_TO_ABBREV[user.state]} {user.postal}.
       </Text>
       <LetterOptionCard
-        type={LetterTypes.Postcard}
+        type={MailTypes.Postcard}
         onPress={() => {
           Segment.trackWithProperties('Compose - Click on Compose Option', {
             Option: 'Photo',
           });
-          props.setType(LetterTypes.Postcard);
-          props.setRecipientId(props.recipientId);
+          props.setComposing({
+            type: MailTypes.Postcard,
+            recipientId: props.recipientId,
+            content: '',
+            design: {
+              image: { uri: '' },
+            },
+          });
           props.navigation.navigate('ComposePostcard');
         }}
       />
       <LetterOptionCard
-        type={LetterTypes.Letter}
+        type={MailTypes.Letter}
         onPress={() => {
           Segment.trackWithProperties('Compose - Click on Compose Option', {
             Option: 'Letter',
           });
-          props.setType(LetterTypes.Letter);
-          props.setRecipientId(props.recipientId);
+          props.setComposing({
+            type: MailTypes.Letter,
+            recipientId: props.recipientId,
+            content: '',
+          });
           props.navigation.navigate('ComposeLetter');
         }}
       />
@@ -73,15 +80,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
+  user: state.user.user,
   recipientId: state.contact.active.id,
 });
-const mapDispatchToProps = (
-  dispatch: Dispatch<LetterActionTypes | ContactActionTypes>
-) => {
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
-    setType: (type: LetterTypes) => dispatch(setType(type)),
-    setRecipientId: (id: number) => dispatch(setRecipientId(id)),
+    setComposing: (draft: Draft) => dispatch(setComposing(draft)),
   };
 };
 const ChooseOptionScreen = connect(

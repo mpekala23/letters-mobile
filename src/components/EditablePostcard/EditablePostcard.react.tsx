@@ -3,21 +3,28 @@ import { View, Animated, Image, Text } from 'react-native';
 import { PostcardDesign } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
+import { Typography } from '@styles';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';
 
 interface Props {
   design: PostcardDesign;
-  flip: Animated.Value;
+  flip?: Animated.Value;
   onChangeText: (text: string) => void;
+  active?: boolean;
 }
 
 class EditablePostcard extends React.Component<Props> {
+  static defaultProps = {
+    active: true,
+  };
+
   private inputRef = createRef<Input>();
 
-  focus() {
-    if (this.inputRef.current) this.inputRef.current.forceFocus();
+  focus(): void {
+    if (this.props.active && this.inputRef.current)
+      this.inputRef.current.forceFocus();
   }
 
   render(): JSX.Element {
@@ -26,14 +33,17 @@ class EditablePostcard extends React.Component<Props> {
         style={[
           Styles.background,
           {
-            transform: [
-              {
-                rotateY: this.props.flip.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 3.14159265],
-                }),
-              },
-            ],
+            transform:
+              this.props.active && this.props.flip
+                ? [
+                    {
+                      rotateY: this.props.flip.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, 3.14159265],
+                      }),
+                    },
+                  ]
+                : undefined,
           },
         ]}
       >
@@ -42,10 +52,13 @@ class EditablePostcard extends React.Component<Props> {
             width: '100%',
             height: '100%',
             position: 'absolute',
-            opacity: this.props.flip.interpolate({
-              inputRange: [0, 0.4999, 0.5, 1],
-              outputRange: [1, 1, 0, 0],
-            }),
+            opacity:
+              this.props.active && this.props.flip
+                ? this.props.flip.interpolate({
+                    inputRange: [0, 0.4999, 0.5, 1],
+                    outputRange: [1, 1, 0, 0],
+                  })
+                : 1,
           }}
         >
           <Image style={{ flex: 1 }} source={this.props.design.image} />
@@ -57,10 +70,13 @@ class EditablePostcard extends React.Component<Props> {
               height: '100%',
               position: 'absolute',
               backgroundColor: 'rgba(0,0,0,0.05)',
-              opacity: this.props.flip.interpolate({
-                inputRange: [0, 0.4999, 0.5, 1],
-                outputRange: [0, 0, 1, 1],
-              }),
+              opacity:
+                this.props.active && this.props.flip
+                  ? this.props.flip.interpolate({
+                      inputRange: [0, 0.4999, 0.5, 1],
+                      outputRange: [0, 0, 1, 1],
+                    })
+                  : 0,
               transform: [{ rotateY: 3.1415926 }],
             },
             Styles.writingBackground,
@@ -70,7 +86,7 @@ class EditablePostcard extends React.Component<Props> {
             <Input
               numLines={1000}
               parentStyle={{ flex: 1 }}
-              inputStyle={{ flex: 1 }}
+              inputStyle={{ flex: 1, fontSize: 14 }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
               onChangeText={this.props.onChangeText}
               ref={this.inputRef}
@@ -85,10 +101,18 @@ class EditablePostcard extends React.Component<Props> {
               svg={Stamp}
             />
             <View>
-              <Text>Mark Pekala</Text>
-              <Text>Mark's House</Text>
-              <Text>210 W Diamond Lake Road</Text>
-              <Text>Minneapolis, MN 55419</Text>
+              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
+                Mark Pekala
+              </Text>
+              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
+                Mark's House
+              </Text>
+              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
+                210 W Diamond Lake Road
+              </Text>
+              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
+                Minneapolis, MN 55419
+              </Text>
             </View>
           </View>
         </Animated.View>

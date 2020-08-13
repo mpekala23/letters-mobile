@@ -332,7 +332,8 @@
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
-    "tapToAddMessage": "Tap here to add a message."
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done"
   },
   "Notifs": {
     "your": "Tu",
@@ -371,6 +372,7 @@
     "reviewContact": "Revisar contacto",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
-    "updateProfile": "Actualizar Perfil"
+    "updateProfile": "Actualizar Perfil",
+    "reviewPostcard": "Review"
   }
 }

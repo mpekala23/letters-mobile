@@ -2,9 +2,6 @@ import React, { createRef } from 'react';
 import { View, StatusBar, Platform } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '@utils';
 
-/**
-A component to go at the top of the screen behind native status bar on different devices.
-*/
 class Statusbar extends React.Component<
   Record<string, unknown>,
   { backgroundColor: string }

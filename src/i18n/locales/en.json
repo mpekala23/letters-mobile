@@ -332,7 +332,8 @@
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
     "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
-    "tapToAddMessage": "Tap here to add a message."
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done"
   },
   "Notifs": {
     "your": "Your",
@@ -370,6 +371,7 @@
     "reviewContact": "Review Contact",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
-    "updateProfile": "Update Profile"
+    "updateProfile": "Update Profile",
+    "reviewPostcard": "Review"
   }
 }

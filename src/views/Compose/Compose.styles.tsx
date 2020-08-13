@@ -23,7 +23,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   gridPreviewBackground: {
-    width: '100%',
+    width: WINDOW_WIDTH,
     height: ((WINDOW_HEIGHT - 80) * 2) / 5,
     padding: 12,
   },
@@ -53,6 +53,7 @@ export default StyleSheet.create({
   gridBackground: {
     paddingVertical: 4,
     paddingHorizontal: 4,
+    paddingBottom: 26,
   },
   gridDesignBackground: {},
 });

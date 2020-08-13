@@ -26,7 +26,7 @@ import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import Icon from '@components/Icon/Icon.react';
 import i18n from '@i18n';
 import { popupAlert } from '@components/Alert/Alert.react';
-import { Photo } from 'types';
+import { Image } from 'types';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import * as Segment from 'expo-analytics-segment';
@@ -44,7 +44,7 @@ export interface Props {
 export interface State {
   valid: boolean;
   remember: boolean;
-  image: Photo | null;
+  image: Image | null;
 }
 
 class RegisterScreen extends React.Component<Props, State> {
@@ -222,7 +222,7 @@ class RegisterScreen extends React.Component<Props, State> {
               width={130}
               height={130}
               type={PicUploadTypes.Profile}
-              onSuccess={(image: Photo) => this.setState({ image })}
+              onSuccess={(image: Image) => this.setState({ image })}
               onDelete={() => this.setState({ image: null })}
             />
             <Text style={[Typography.FONT_REGULAR_ITALIC, { marginTop: 5 }]}>

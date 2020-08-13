@@ -15,7 +15,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { UserState, User } from '@store/User/UserTypes';
-import { Photo } from 'types';
+import { Image } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
@@ -37,7 +37,7 @@ export interface Props {
 }
 
 export interface State {
-  image: Photo | null;
+  image: Image | null;
 }
 
 class UpdateProfileScreenBase extends React.Component<Props, State> {
@@ -230,7 +230,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 height={130}
                 type={PicUploadTypes.Profile}
                 initial={this.props.userState.user.photo}
-                onSuccess={(image: Photo) => this.setState({ image })}
+                onSuccess={(image: Image) => this.setState({ image })}
                 onDelete={() => this.setState({ image: null })}
                 segmentOnPressLog={() => {
                   Segment.track('Edit Profile - Click on Upload Image');

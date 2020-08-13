@@ -7,7 +7,7 @@ import {
   loginUser,
   authenticateUser,
 } from '@store/User/UserActions';
-import { Photo, ZipcodeInfo } from 'types';
+import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE } from '@utils';
 import Constants from 'expo-constants';
@@ -122,9 +122,9 @@ export async function fetchAuthenticated(
 }
 
 export async function uploadImage(
-  image: Photo,
+  image: Image,
   type: 'avatar' | 'letter'
-): Promise<Photo> {
+): Promise<Image> {
   const data = new FormData();
 
   const photo = {
@@ -155,7 +155,6 @@ export async function uploadImage(
 
   return {
     uri: body.data as string,
-    type: 'image/jpeg',
   };
 }
 

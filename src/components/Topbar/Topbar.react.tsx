@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
@@ -152,7 +152,7 @@ class Topbar extends React.Component<Props, State> {
       topRight = <View testID="blank" />;
     }
     return (
-      <View
+      <TouchableOpacity
         style={[
           Styles.barContainer,
           {
@@ -161,6 +161,8 @@ class Topbar extends React.Component<Props, State> {
             elevation: this.state.shown ? 5 : 0,
           },
         ]}
+        activeOpacity={1.0}
+        onPress={Keyboard.dismiss}
       >
         {this.renderBackButton()}
         <Text
@@ -174,7 +176,7 @@ class Topbar extends React.Component<Props, State> {
         <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
           {topRight}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

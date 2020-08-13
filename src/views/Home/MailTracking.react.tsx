@@ -6,7 +6,7 @@ import { Button, LetterTracker, GrayBar, Icon } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
-import { LetterTrackingEvent, LetterStatus, Letter } from 'types';
+import { TrackingEvent, MailStatus, Mail, MailTypes } from 'types';
 import { format, addBusinessDays, differenceInBusinessDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
@@ -16,16 +16,16 @@ import ReturnedToSender from '@assets/views/LetterTracking/ReturnedToSender';
 
 import * as Segment from 'expo-analytics-segment';
 
-import Styles from './LetterTracking.styles';
+import Styles from './MailTracking.styles';
 
-type LetterTrackingScreenNavigationProp = StackNavigationProp<
+type MailTrackingScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'LetterTracking'
+  'MailTracking'
 >;
 
 interface Props {
-  navigation: LetterTrackingScreenNavigationProp;
-  letter: Letter | null;
+  navigation: MailTrackingScreenNavigationProp;
+  mail: Mail | null;
   contact: Contact;
   currentNotif: Notif | null;
   handleNotif: () => void;
@@ -33,45 +33,45 @@ interface Props {
 
 function mapStatusToTrackerBarHeight(type?: string) {
   switch (type) {
-    case LetterStatus.InTransit:
+    case MailStatus.InTransit:
       return '45%';
-    case LetterStatus.ProcessedForDelivery:
+    case MailStatus.ProcessedForDelivery:
       return '65%';
-    case LetterStatus.Delivered:
+    case MailStatus.Delivered:
       return '75%';
     default:
       return 0;
   }
 }
 
-class LetterTrackingScreenBase extends React.Component<Props> {
+class MailTrackingScreenBase extends React.Component<Props> {
   componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
-    if (!this.props.letter) {
+    if (!this.props.mail) {
       this.props.navigation.navigate('SingleContact');
       return <View />;
     }
     const deliveryDate = format(
-      this.props.letter.expectedDeliveryDate
-        ? this.props.letter.expectedDeliveryDate
+      this.props.mail.expectedDelivery
+        ? this.props.mail.expectedDelivery
         : addBusinessDays(new Date(), 6),
       'MMM dd'
     );
-    const chronologicalEvents = this.props.letter.trackingEvents;
+    const chronologicalEvents = this.props.mail.trackingEvents;
     let returnedToSender = false;
     if (chronologicalEvents) {
       for (let ix = 0; ix < chronologicalEvents.length; ix += 1) {
         // Append 'Delivered' to list of tracking events if processed + 3 days
         if (
-          chronologicalEvents[ix].name === LetterStatus.ProcessedForDelivery &&
+          chronologicalEvents[ix].name === MailStatus.ProcessedForDelivery &&
           differenceInBusinessDays(new Date(), chronologicalEvents[ix].date) > 3
         ) {
-          const trackingEvent: LetterTrackingEvent = {
+          const trackingEvent: TrackingEvent = {
             id: -1,
-            name: LetterStatus.Delivered,
+            name: MailStatus.Delivered,
             location: {
               city: this.props.contact.facility
                 ? this.props.contact.facility.city
@@ -87,14 +87,14 @@ class LetterTrackingScreenBase extends React.Component<Props> {
           };
           chronologicalEvents.push(trackingEvent);
         }
-        if (chronologicalEvents[ix].name === LetterStatus.ReturnedToSender) {
+        if (chronologicalEvents[ix].name === MailStatus.ReturnedToSender) {
           returnedToSender = true;
         }
       }
     }
     const letterTracker =
       !returnedToSender &&
-      chronologicalEvents?.map((trackingEvent: LetterTrackingEvent) => {
+      chronologicalEvents?.map((trackingEvent: TrackingEvent) => {
         return (
           <LetterTracker trackingEvent={trackingEvent} key={trackingEvent.id} />
         );
@@ -150,10 +150,10 @@ class LetterTrackingScreenBase extends React.Component<Props> {
               marginTop: 40,
               marginLeft: 14,
               height: mapStatusToTrackerBarHeight(
-                this.props.letter.trackingEvents &&
-                  this.props.letter.trackingEvents.length > 0
-                  ? this.props.letter.trackingEvents[
-                      this.props.letter.trackingEvents.length - 1
+                this.props.mail.trackingEvents &&
+                  this.props.mail.trackingEvents.length > 0
+                  ? this.props.mail.trackingEvents[
+                      this.props.mail.trackingEvents.length - 1
                     ].name
                   : undefined
               ),
@@ -185,26 +185,45 @@ class LetterTrackingScreenBase extends React.Component<Props> {
         <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
           {i18n.t('LetterTrackingScreen.letterContent')}
         </Text>
-        <Text style={{ fontSize: 15 }}>{this.props.letter.content}</Text>
-        {this.props.letter.photo?.uri ? (
+        <Text style={{ fontSize: 15 }}>{this.props.mail.content}</Text>
+        {this.props.mail.type === MailTypes.Letter &&
+        this.props.mail.image?.uri ? (
           <Image
             style={[
               Styles.trackingPhoto,
               {
                 height: 275,
                 width:
-                  this.props.letter.photo.width &&
-                  this.props.letter.photo.height
-                    ? (this.props.letter.photo.width /
-                        this.props.letter.photo.height) *
+                  this.props.mail.image.width && this.props.mail.image.height
+                    ? (this.props.mail.image.width /
+                        this.props.mail.image.height) *
                       275
                     : 275,
               },
             ]}
-            source={this.props.letter.photo}
+            source={this.props.mail.image}
             testID="memoryLaneImage"
           />
         ) : null}
+        {this.props.mail.type === MailTypes.Postcard && (
+          <Image
+            style={[
+              Styles.trackingPhoto,
+              {
+                height: 275,
+                width:
+                  this.props.mail.design.image.width &&
+                  this.props.mail.design.image.height
+                    ? (this.props.mail.design.image.width /
+                        this.props.mail.design.image.height) *
+                      275
+                    : 275,
+              },
+            ]}
+            source={this.props.mail.design.image}
+            testID="memoryLaneImage"
+          />
+        )}
         <View style={{ height: 40 }} />
       </ScrollView>
     );
@@ -213,15 +232,15 @@ class LetterTrackingScreenBase extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
-  letter: state.letter.active,
+  mail: state.mail.active,
   currentNotif: state.notif.currentNotif,
 });
 const mapDispatchToProps = (dispatch: Dispatch<NotifActionTypes>) => ({
   handleNotif: () => dispatch(handleNotif()),
 });
-const LetterTrackingScreen = connect(
+const MailTrackingScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LetterTrackingScreenBase);
+)(MailTrackingScreenBase);
 
-export default LetterTrackingScreen;
+export default MailTrackingScreen;
