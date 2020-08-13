@@ -56,7 +56,7 @@ class IssuesScreenBase extends React.Component<Props> {
             this.props.navigation.navigate('IssuesDetail', {
               issue: DeliveryReportTypes.received,
             });
-            Segment.track('Delivery Reporting - Success');
+            Segment.track('Delivery Reporting - Received');
           }}
           containerStyle={ReportStyles.buttonReverseBlack}
           textStyle={[Typography.FONT_MEDIUM, { color: 'black' }]}
@@ -78,7 +78,7 @@ class IssuesScreenBase extends React.Component<Props> {
             this.props.navigation.navigate('IssuesDetail', {
               issue: DeliveryReportTypes.notYetReceived,
             });
-            Segment.track('Delivery Reporting - Failure');
+            Segment.track('Delivery Reporting - Not Received');
           }}
           containerStyle={ReportStyles.buttonReverseBlack}
           textStyle={[Typography.FONT_MEDIUM, { color: 'black' }]}

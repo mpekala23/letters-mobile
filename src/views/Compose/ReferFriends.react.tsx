@@ -15,6 +15,7 @@ import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format, addBusinessDays } from 'date-fns';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -31,6 +32,7 @@ const onShare = async () => {
   const ameelioUrl = 'letters.ameelio.org';
   const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
   try {
+    Segment.track('Review - Share on Facebook');
     await facebookShare(sharingUrl);
   } catch (err) {
     dropdownError({ message: i18n.t('Error.requestIncomplete') });
