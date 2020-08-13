@@ -18,7 +18,7 @@ import i18n from '@i18n';
 import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken } from '@api';
+import { getContacts, getUser, uploadPushToken, getZipcode } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';

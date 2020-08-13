@@ -14,11 +14,11 @@ import Constants from 'expo-constants';
 
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 export const GENERAL_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+  (RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1) || true
     ? 'https://api.ameelio.org/'
     : 'https://letters-api-staging.ameelio.org/';
 export const API_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
+  (RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1) || true
     ? 'https://api.ameelio.org/api/'
     : 'https://letters-api-staging.ameelio.org/api/';
 
@@ -170,10 +170,14 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     zip: string;
     city: string;
     state_id: string;
+    lat: string;
+    lng: string;
   };
   return {
     zip: data.zip,
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
+    lat: parseFloat(data.lat),
+    long: parseFloat(data.lng),
   };
 }

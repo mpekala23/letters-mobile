@@ -3,7 +3,7 @@ import {
   TouchableOpacity,
   ViewStyle,
   View,
-  ImageComponent,
+  Image as ImageComponent,
   Linking,
   Keyboard,
 } from 'react-native';

@@ -229,5 +229,5 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
     Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const d = R * c;
-  return d * 0.000621371;
+  return Math.round(d * 0.000621371);
 }
