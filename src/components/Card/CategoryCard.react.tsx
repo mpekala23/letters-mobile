@@ -8,12 +8,13 @@ import {
 } from 'react-native';
 import { Category } from 'types';
 import { Typography } from '@styles';
-import { navigate } from '@navigations';
+import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import CardStyles from './Card.styles';
 
 interface Props {
   category: Category;
   style?: ViewStyle;
+  navigate: (path: string, params?: Record<string, unknown>) => void;
 }
 
 const CategoryCard: React.FC<Props> = (props: Props) => {
@@ -27,15 +28,15 @@ const CategoryCard: React.FC<Props> = (props: Props) => {
       ]}
       onPress={() => {
         if (props.category.name === 'personal') {
-          navigate('ChooseOption');
+          props.navigate('ChooseOption');
           return;
         }
-        navigate('ComposePostcard', { category: props.category });
+        props.navigate('ComposePostcard', { category: props.category });
       }}
     >
-      <ImageComponent
+      <AsyncImage
         source={props.category.image}
-        style={{ width: '100%', height: 132 }}
+        viewStyle={{ width: '100%', height: 132 }}
       />
       <View style={{ flex: 1, padding: 8, justifyContent: 'center' }}>
         <Text style={[Typography.FONT_BOLD, CardStyles.categoryTitle]}>

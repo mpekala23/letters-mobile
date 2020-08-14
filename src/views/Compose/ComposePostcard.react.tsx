@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
 import { PostcardDesign, Draft, Image, Category } from 'types';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage } from '@utils';
 import {
   setBackOverride,
@@ -26,11 +26,13 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
-import { saveDraft, getCategories } from '@api';
+import { saveDraft, getCategories, getSubcategories } from '@api';
 import { Contact } from '@store/Contact/ContactTypes';
 import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -65,6 +67,7 @@ interface State {
   charsLeft: number;
   valid: boolean;
   mediaGranted: boolean;
+  renderMethod: 'grid' | 'bars';
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
@@ -96,11 +99,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       charsLeft: 300,
       valid: true,
       mediaGranted: true,
+      renderMethod: 'grid',
     };
 
     this.beginWriting = this.beginWriting.bind(this);
     this.doneWriting = this.doneWriting.bind(this);
     this.renderSubcategorySelector = this.renderSubcategorySelector.bind(this);
+    this.renderGridItem = this.renderGridItem.bind(this);
+    this.renderBarItem = this.renderBarItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.updateCharsLeft = this.updateCharsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
@@ -133,7 +139,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       action: this.beginWriting,
     });
     this.changeDesign(this.state.design);
-    const response = await getCategories();
   }
 
   componentWillUnmount(): void {
@@ -184,6 +189,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       if (finalStatus === 'granted') {
         await this.loadData();
       }
+    } else {
+      await this.loadData();
     }
   };
 
@@ -239,6 +246,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         'Take Photo': [],
       };
       this.setState({ data, subcategory: 'Library' });
+    } else {
+      const data = await getSubcategories(this.props.route.params.category);
+      this.setState({
+        data,
+        subcategory: Object.keys(data).length > 0 ? Object.keys(data)[0] : '',
+      });
     }
   }
 
@@ -342,8 +355,19 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             }}
             key={subcategory}
           >
-            <Text style={[Typography.FONT_MEDIUM, Styles.subcategoryText]}>
-              {subcategory}
+            <Text
+              style={[
+                Typography.FONT_MEDIUM,
+                Styles.subcategoryText,
+                {
+                  color:
+                    this.state.subcategory === subcategory
+                      ? 'white'
+                      : Colors.GRAY_MEDIUM,
+                },
+              ]}
+            >
+              {subcategory.slice(0, 1).toUpperCase() + subcategory.slice(1)}
             </Text>
           </TouchableOpacity>
         ))}
@@ -351,7 +375,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     );
   }
 
-  renderItem(design: PostcardDesign): JSX.Element {
+  renderGridItem(design: PostcardDesign): JSX.Element {
     return (
       <TouchableOpacity
         style={{
@@ -361,12 +385,48 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         }}
         onPress={() => this.changeDesign(design)}
       >
-        <ImageComponent
-          style={{ flex: 1, aspectRatio: 1, overflow: 'hidden' }}
+        <AsyncImage
           source={design.image}
+          imageStyle={{ flex: 1, aspectRatio: 1 }}
         />
       </TouchableOpacity>
     );
+  }
+
+  renderBarItem(design: PostcardDesign): JSX.Element {
+    const width = WINDOW_WIDTH - 24;
+    const height = width / 2.5;
+    return (
+      <TouchableOpacity
+        style={{
+          width,
+          height,
+          margin: 8,
+          borderRadius: 6,
+          overflow: 'hidden',
+        }}
+        onPress={() => this.changeDesign(design)}
+      >
+        <AsyncImage
+          source={design.image}
+          imageStyle={{
+            flex: 1,
+            aspectRatio: width / height,
+            overflow: 'hidden',
+          }}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  renderItem(design: PostcardDesign): JSX.Element {
+    if (this.state.renderMethod === 'grid') {
+      return this.renderGridItem(design);
+    }
+    if (this.state.renderMethod === 'bars') {
+      return this.renderBarItem(design);
+    }
+    return <View />;
   }
 
   render(): JSX.Element {
@@ -434,7 +494,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 keyExtractor={(item: PostcardDesign, index: number) => {
                   return item.image.uri + index.toString();
                 }}
-                numColumns={3}
+                numColumns={this.state.renderMethod === 'grid' ? 3 : undefined}
                 contentContainerStyle={Styles.gridBackground}
               />
             )}

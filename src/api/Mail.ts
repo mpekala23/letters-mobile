@@ -11,6 +11,7 @@ import {
   MailTypes,
   MailStatus,
   Category,
+  PostcardDesign,
 } from 'types';
 import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
@@ -362,7 +363,65 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   }
 }
 
-export async function getCategories(): Promise<Category> {
+interface RawCategory {
+  created_at: string;
+  id: 1;
+  img_src: string;
+  name: string;
+  updated_at: string;
+}
+
+function cleanCategory(raw: RawCategory): Category {
+  return {
+    id: raw.id,
+    name: raw.name,
+    image: { uri: raw.img_src },
+  };
+}
+
+export async function getCategories(): Promise<Category[]> {
   const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
-  console.log(body);
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as RawCategory[];
+  const categories: Category[] = data.map((raw: RawCategory) =>
+    cleanCategory(raw)
+  );
+  return categories;
+}
+
+interface RawDesign {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  front_img_src: string;
+  type: MailTypes;
+  back: null;
+  subcategory_id: number;
+}
+
+function cleanDesign(raw: RawDesign): PostcardDesign {
+  return {
+    image: { uri: raw.front_img_src },
+    name: raw.name,
+  };
+}
+
+export async function getSubcategories(
+  category: Category
+): Promise<Record<string, PostcardDesign[]>> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `designs/${category.id}`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as Record<string, RawDesign[]>;
+  const cleanData: Record<string, PostcardDesign[]> = {};
+  const subNames = Object.keys(data);
+  for (let ix = 0; ix < subNames.length; ix += 1) {
+    const subName = subNames[ix];
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw)
+    );
+  }
+  return cleanData;
 }

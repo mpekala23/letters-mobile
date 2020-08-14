@@ -3,13 +3,16 @@ import { Text, View } from 'react-native';
 import { CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { Draft } from 'types';
+import { Draft, Category } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
+import { getCategories } from '@api';
+import { PERSONAL_CATEGORY } from '@utils';
+import { FlatList } from 'react-native-gesture-handler';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -23,31 +26,74 @@ interface Props {
   setComposing: (draft: Draft) => void;
 }
 
-const EXAMPLE_CATEGORY = {
-  id: 1,
-  name: 'personal',
-  image: {
-    uri:
-      'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2020/05/26/142110_1344640.jpg.1500x1000_q95_crop-smart_upscale.jpg',
-  },
-};
+interface State {
+  categories: Category[];
+  refreshing: boolean;
+}
 
-const ChooseCategoryScreenBase: React.FC<Props> = (props: Props) => {
-  return (
-    <View style={Styles.screenBackground}>
-      <Text
-        style={[
-          Typography.FONT_BOLD,
-          Styles.headerText,
-          { fontSize: 18, paddingBottom: 8 },
-        ]}
-      >
-        {i18n.t('Compose.iWouldLikeToSend')}
-      </Text>
-      <CategoryCard category={EXAMPLE_CATEGORY} />
-    </View>
-  );
-};
+class ChooseCategoryScreenBase extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      categories: [],
+      refreshing: true,
+    };
+    this.renderCategory = this.renderCategory.bind(this);
+    this.refreshCategories = this.refreshCategories.bind(this);
+  }
+
+  async componentDidMount() {
+    await this.refreshCategories();
+  }
+
+  async refreshCategories() {
+    this.setState({ refreshing: true }, async () => {
+      const categories = await getCategories();
+      categories.unshift(PERSONAL_CATEGORY);
+      this.setState({
+        categories,
+        refreshing: false,
+      });
+    });
+  }
+
+  renderCategory(category: Category) {
+    return (
+      <CategoryCard
+        category={category}
+        navigate={
+          this.props.navigation.navigate as (
+            val: string,
+            params?: Record<string, unknown>
+          ) => void
+        }
+      />
+    );
+  }
+
+  render() {
+    return (
+      <View style={Styles.screenBackground}>
+        <Text
+          style={[
+            Typography.FONT_BOLD,
+            Styles.headerText,
+            { fontSize: 18, paddingBottom: 8 },
+          ]}
+        >
+          {i18n.t('Compose.iWouldLikeToSend')}
+        </Text>
+        <FlatList
+          data={this.state.categories}
+          renderItem={({ item }) => this.renderCategory(item)}
+          keyExtractor={(item: Category) => item.name}
+          refreshing={this.state.refreshing}
+          onRefresh={this.refreshCategories}
+        />
+      </View>
+    );
+  }
+}
 
 const mapStateToProps = (state: AppState) => ({
   recipientId: state.contact.active.id,
