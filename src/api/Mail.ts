@@ -4,7 +4,14 @@
 import store from '@store';
 import { Linking } from 'react-native';
 import url from 'url';
-import { Draft, Mail, TrackingEvent, MailTypes, MailStatus } from 'types';
+import {
+  Draft,
+  Mail,
+  TrackingEvent,
+  MailTypes,
+  MailStatus,
+  Category,
+} from 'types';
 import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
@@ -353,4 +360,9 @@ export async function facebookShare(shareUrl: string): Promise<void> {
   } else {
     throw Error('Share Url not supported');
   }
+}
+
+export async function getCategories(): Promise<Category> {
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
+  console.log(body);
 }

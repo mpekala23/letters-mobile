@@ -39,6 +39,12 @@ export enum MailStatus {
   Rerouted = 'Re-Routed',
 }
 
+export interface Category {
+  id: number;
+  name: string;
+  image: Image;
+}
+
 // Letters and Postcards (Draft)
 interface DraftInfo {
   type: MailTypes;

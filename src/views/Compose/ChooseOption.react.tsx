@@ -59,7 +59,11 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             },
           });
           props.navigation.navigate('ComposePostcard', {
-            category: 'personal',
+            category: {
+              name: 'personal',
+              id: -1,
+              image: { uri: '' },
+            },
           });
         }}
       />

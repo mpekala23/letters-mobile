@@ -133,4 +133,12 @@ export default StyleSheet.create({
     fontSize: 18,
     color: Colors.PINK_DARKER,
   },
+  categoryBackground: {
+    height: 184,
+    width: '100%',
+    padding: 0,
+  },
+  categoryTitle: {
+    fontSize: 18,
+  },
 });

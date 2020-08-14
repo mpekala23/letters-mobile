@@ -16,6 +16,7 @@ import {
   getMail,
   getSingleMail,
   getTrackingEvents,
+  getCategories,
 } from './Mail';
 
 import {
@@ -46,6 +47,7 @@ export {
   getMail,
   getSingleMail,
   getTrackingEvents,
+  getCategories,
   register,
   login,
   loginWithToken,

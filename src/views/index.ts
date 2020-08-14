@@ -1,5 +1,6 @@
 import AddManuallyScreen from './AddContact/AddManually.react';
 import BeginScreen from './Onboarding/Begin.react';
+import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
 import ComposeLetterScreen from './Compose/ComposeLetter.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
@@ -30,6 +31,7 @@ import UpdateProfileScreen from './Update/UpdateProfile.react';
 export {
   AddManuallyScreen,
   BeginScreen,
+  ChooseCategoryScreen,
   ChooseOptionScreen,
   ComposeLetterScreen,
   ComposePostcardScreen,

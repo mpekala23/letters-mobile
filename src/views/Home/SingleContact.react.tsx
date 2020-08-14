@@ -286,7 +286,13 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             } else {
                               this.props.navigation.navigate(
                                 'ComposePostcard',
-                                { category: 'personal' }
+                                {
+                                  category: {
+                                    id: -1,
+                                    image: { uri: '' },
+                                    name: 'personal',
+                                  },
+                                }
                               );
                             }
                           } else {
@@ -294,7 +300,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               message: i18n.t('Compose.draftContactDeleted'),
                             });
                             await deleteDraft();
-                            this.props.navigation.navigate('ChooseOption');
+                            this.props.navigation.navigate('ChooseCategory');
                           }
                         },
                       },
@@ -308,7 +314,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             recipientId: this.props.activeContact.id,
                             content: '',
                           });
-                          this.props.navigation.navigate('ChooseOption');
+                          this.props.navigation.navigate('ChooseCategory');
                         },
                       },
                     ],
@@ -320,7 +326,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     recipientId: this.props.activeContact.id,
                     content: '',
                   });
-                  this.props.navigation.navigate('ChooseOption');
+                  this.props.navigation.navigate('ChooseCategory');
                 }
               }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}

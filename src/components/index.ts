@@ -1,5 +1,6 @@
 import Alert from './Alert/Alert.react';
 import Button from './Button/Button.react';
+import CategoryCard from './Card/CategoryCard.react';
 import ContactSelectorCard from './Card/ContactSelectorCard.react';
 import CreditsCard from './Card/CreditsCard.react';
 import ComposeHeader from './ComposeHeader/ComposeHeader.react';
@@ -25,6 +26,7 @@ import Topbar from './Topbar/Topbar.react';
 export {
   Alert,
   Button,
+  CategoryCard,
   ContactSelectorCard,
   CreditsCard,
   ComposeHeader,

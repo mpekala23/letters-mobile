@@ -21,7 +21,7 @@
     "letterTooLong": "Su carta no puede exceder los 16,000 caracteres."
   },
   "Permission": {
-    "photos": "No se pudo acceder la librería fotográfica.",
+    "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
     "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración.",
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
@@ -337,7 +337,8 @@
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
     "tapToAddMessage": "Tap to add a message.",
     "done": "Done",
-    "noDesignSelected": "No design selected. Tap below to get started."
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:"
   },
   "Notifs": {
     "happy": "Feliz",

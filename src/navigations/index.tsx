@@ -8,6 +8,7 @@ import {
 import {
   AddManuallyScreen,
   BeginScreen,
+  ChooseCategoryScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
@@ -39,7 +40,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { SupportFAQTypes, DeliveryReportTypes } from 'types';
+import { SupportFAQTypes, DeliveryReportTypes, Category } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -64,9 +65,10 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: { phyState: string };
+  ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
-  ComposePostcard: { category: string };
+  ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
@@ -105,6 +107,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
   Register: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
+  ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
@@ -239,6 +242,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
+        <Stack.Screen name="ChooseCategory" component={ChooseCategoryScreen} />
         <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
         <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen

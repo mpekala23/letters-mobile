@@ -21,7 +21,7 @@
     "letterTooLong": "Your letter cannot exceed 16,000 characters."
   },
   "Permission": {
-    "photos": "Can't access photo library.",
+    "photos": "Can't access photo library. Ensure that this is enabled in settings.",
     "notifs": "Can't register notifications. Ensure that this is enabled in settings.",
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
@@ -337,7 +337,8 @@
     "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
     "tapToAddMessage": "Tap to add a message.",
     "done": "Done",
-    "noDesignSelected": "No design selected. Tap below to get started."
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:"
   },
   "Notifs": {
     "happy": "Happy",

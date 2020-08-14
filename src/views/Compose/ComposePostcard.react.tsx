@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign, Draft, Image } from 'types';
+import { PostcardDesign, Draft, Image, Category } from 'types';
 import { Typography } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage } from '@utils';
 import {
@@ -26,85 +26,12 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
-import { saveDraft } from '@api';
+import { saveDraft, getCategories } from '@api';
 import { Contact } from '@store/Contact/ContactTypes';
 import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
-
-const EXAMPLE_DATA: Record<string, PostcardDesign[]> = {
-  'Prison Art': [
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-    {
-      image: {
-        uri:
-          'https://i.pinimg.com/originals/cc/18/8c/cc188c604e58cffd36e1d183c7198d21.jpg',
-      },
-    },
-  ],
-  Scenery: [
-    {
-      image: {
-        uri:
-          'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2018/07/07/110709_1331528.jpg.1500x1000_q95_crop-smart_upscale.jpg',
-      },
-    },
-  ],
-};
 
 const FLIP_DURATION = 500;
 
@@ -117,7 +44,7 @@ export interface Props {
   navigation: ComposePostcardScreenNavigationProp;
   route: {
     params: {
-      category: string;
+      category: Category;
     };
   };
   initialSubcategory: string;
@@ -206,6 +133,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       action: this.beginWriting,
     });
     this.changeDesign(this.state.design);
+    const response = await getCategories();
   }
 
   componentWillUnmount(): void {
@@ -247,7 +175,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       });
     }
 
-    if (this.props.route.params.category === 'personal') {
+    if (this.props.route.params.category.name === 'personal') {
       let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
       if (finalStatus !== 'granted') {
         finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
@@ -292,7 +220,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   async loadData(): Promise<void> {
-    if (this.props.route.params.category === 'personal') {
+    if (this.props.route.params.category.name === 'personal') {
       const assets = await MediaLibrary.getAssetsAsync();
       const library = assets.assets.map((value) => {
         const image: Image = {
@@ -499,20 +427,40 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             ]}
           >
             {this.renderSubcategorySelector()}
-            <FlatList
-              data={this.state.data[this.state.subcategory]}
-              renderItem={({ item }) => this.renderItem(item)}
-              keyExtractor={(item: PostcardDesign, index: number) => {
-                return item.image.uri + index.toString();
-              }}
-              numColumns={3}
-              contentContainerStyle={Styles.gridBackground}
-            />
-            {this.props.route.params.category === 'personal' &&
+            {this.state.mediaGranted && (
+              <FlatList
+                data={this.state.data[this.state.subcategory]}
+                renderItem={({ item }) => this.renderItem(item)}
+                keyExtractor={(item: PostcardDesign, index: number) => {
+                  return item.image.uri + index.toString();
+                }}
+                numColumns={3}
+                contentContainerStyle={Styles.gridBackground}
+              />
+            )}
+            {this.props.route.params.category.name === 'personal' &&
               !this.state.mediaGranted && (
-                <Text style={Typography.FONT_REGULAR}>
-                  {i18n.t('Permission.photos')}
-                </Text>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      {
+                        fontSize: 18,
+                        paddingHorizontal: 10,
+                        color: 'white',
+                        textAlign: 'center',
+                      },
+                    ]}
+                  >
+                    {i18n.t('Permission.photos')}
+                  </Text>
+                </View>
               )}
           </Animated.View>
           <View style={{ position: 'absolute', bottom: -8 }}>
