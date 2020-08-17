@@ -1,31 +1,32 @@
-import { Facility, Image } from 'types';
+import { ContactDraft, Contact, ContactPersonal, ContactFacility } from 'types';
 
 export const SET_ADDING = 'contact/set_adding';
+export const SET_ADDING_PERSONAL = 'contact/set_adding_personal';
+export const SET_ADDING_FACILITY = 'contact/set_adding_facility';
 export const SET_ACTIVE = 'contact/set_active';
 export const SET_EXISTING = 'contact/set_existing';
+export const UPDATE_CONTACT = 'contact/update_contact';
 export const CLEAR_CONTACTS = 'contact/clear_contacts';
 
-export interface Contact {
-  id: number;
-  firstName: string;
-  lastName: string;
-  inmateNumber: string;
-  relationship: string;
-  facility: Facility | null;
-  dorm?: string;
-  unit?: string;
-  photo?: Image;
-}
-
 export interface ContactState {
-  adding: Contact;
+  adding: ContactDraft;
   active: Contact;
   existing: Contact[];
 }
 
 interface SetAddingAction {
   type: typeof SET_ADDING;
-  payload: Contact;
+  payload: ContactDraft;
+}
+
+interface SetAddingPersonalAction {
+  type: typeof SET_ADDING_PERSONAL;
+  payload: ContactPersonal;
+}
+
+interface SetAddingFacilityAction {
+  type: typeof SET_ADDING_FACILITY;
+  payload: ContactFacility;
 }
 
 interface SetActiveAction {
@@ -38,6 +39,11 @@ interface SetExistingAction {
   payload: Contact[];
 }
 
+interface UpdateContactAction {
+  type: typeof UPDATE_CONTACT;
+  payload: Contact;
+}
+
 interface ClearContactsAction {
   type: typeof CLEAR_CONTACTS;
   payload: null;
@@ -45,6 +51,9 @@ interface ClearContactsAction {
 
 export type ContactActionTypes =
   | SetAddingAction
+  | SetAddingPersonalAction
+  | SetAddingFacilityAction
   | SetActiveAction
   | SetExistingAction
+  | UpdateContactAction
   | ClearContactsAction;

@@ -10,9 +10,16 @@ import {
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
-import { ProfilePicTypes, Mail, MailStatus, MailTypes, Draft } from 'types';
+import {
+  ProfilePicTypes,
+  Mail,
+  MailStatus,
+  MailTypes,
+  Draft,
+  Contact,
+} from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
@@ -206,7 +213,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
-              imageUri={contact.photo?.uri}
+              imageUri={contact.image?.uri}
               type={ProfilePicTypes.SingleContact}
             />
             <Text

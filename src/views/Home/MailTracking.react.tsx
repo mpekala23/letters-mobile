@@ -6,12 +6,11 @@ import { Button, LetterTracker, GrayBar, Icon } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
-import { TrackingEvent, MailStatus, Mail, MailTypes } from 'types';
+import { TrackingEvent, MailStatus, Mail, MailTypes, Contact } from 'types';
 import { format, addBusinessDays, differenceInBusinessDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
-import { Contact } from '@store/Contact/ContactTypes';
 import ReturnedToSender from '@assets/views/LetterTracking/ReturnedToSender';
 
 import * as Segment from 'expo-analytics-segment';

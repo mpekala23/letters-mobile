@@ -12,17 +12,12 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Input, Icon } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
-import { Facility, PrisonTypes } from 'types';
+import { Facility, PrisonTypes, ContactFacility } from 'types';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
 import { connect } from 'react-redux';
-import { AppState } from '@store/types';
-import { setAdding } from '@store/Contact/ContactActions';
-import {
-  ContactState,
-  Contact,
-  ContactActionTypes,
-} from '@store/Contact/ContactTypes';
+import { setAddingFacility } from '@store/Contact/ContactActions';
+import { ContactState, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
@@ -40,7 +35,7 @@ export interface Props {
     };
   };
   contactState: ContactState;
-  setAdding: (contact: Contact) => void;
+  setAddingFacility: (contactFacility: ContactFacility) => void;
 }
 
 export interface State {
@@ -124,9 +119,8 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         postal: this.facilityPostal.current.state.value,
         phone: this.facilityPhone.current.state.value,
       };
-      const contact = this.props.contactState.adding;
-      contact.facility = facility;
-      this.props.setAdding(contact);
+      const contactFacility = { facility };
+      this.props.setAddingFacility(contactFacility);
       this.props.navigation.navigate('ReviewContact');
     }
     Keyboard.dismiss();
@@ -317,14 +311,14 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
-  contactState: state.contact,
-});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAddingFacility: (contactFacility: ContactFacility) =>
+      dispatch(setAddingFacility(contactFacility)),
   };
 };
+
 const AddManuallyScreen = connect(
   mapStateToProps,
   mapDispatchToProps

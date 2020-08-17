@@ -14,8 +14,7 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Contact } from '@store/Contact/ContactTypes';
-import { Facility, Image } from 'types';
+import { Facility, Image, Contact } from 'types';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
@@ -69,7 +68,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      image: props.contact.photo ? props.contact.photo : null,
+      image: props.contact.image ? props.contact.image : null,
     };
 
     this.loadValuesFromStore = this.loadValuesFromStore.bind(this);
@@ -163,7 +162,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         facility,
         dorm: this.dorm.current?.state.value,
         unit: this.unit.current?.state.value,
-        photo: this.state.image ? this.state.image : undefined,
+        image: this.state.image ? this.state.image : undefined,
       };
       try {
         await updateContact(contact);
@@ -271,7 +270,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 width={130}
                 height={130}
                 type={PicUploadTypes.Profile}
-                initial={this.props.contact.photo}
+                initial={this.props.contact.image}
                 onSuccess={(image: Image) => {
                   this.setState({ image });
                 }}

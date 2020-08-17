@@ -7,7 +7,6 @@ import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import LottieView from 'lottie-react-native';
@@ -16,6 +15,7 @@ import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format, addBusinessDays } from 'date-fns';
 import * as Segment from 'expo-analytics-segment';
+import { Contact } from 'types';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
