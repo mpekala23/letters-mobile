@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
 import LetterBox from '@assets/views/Issues/LetterBox';
+import * as Segment from 'expo-analytics-segment';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailSecondaryScreenNavigationProp = StackNavigationProp<
@@ -102,8 +103,22 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
       return defaultCTAButton(
         () => {
           if (props.contact.facility && props.contact.facility.phone) {
+            Segment.trackWithProperties('Delivery Reporting - Call Facility', {
+              facility: props.contact.facility?.name,
+              facilityState: props.contact.facility?.state,
+              facilityCity: props.contact.facility?.city,
+            });
             Linking.openURL(`tel:${props.contact.facility.phone}`);
           } else {
+            Segment.trackWithProperties(
+              'Delivery Reporting - Message Support',
+              {
+                facility: props.contact.facility?.name,
+                facilityState: props.contact.facility?.state,
+                facilityCity: props.contact.facility?.city,
+              }
+            );
+            Segment.track('Delivery Reporting - Call Facility');
             Linking.openURL('https://m.me/teamameelio');
           }
         },

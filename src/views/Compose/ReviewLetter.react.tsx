@@ -102,8 +102,12 @@ const ReviewLetterScreenBase: React.FC<Props> = (props: Props) => {
           try {
             await createMail(props.composing);
             props.clearComposing();
-            Segment.trackWithProperties('Compose - Click on Send', {
+            Segment.trackWithProperties('Review - Send Letter Success', {
               Option: 'Letter',
+              facility: props.activeContact.facility?.name,
+              facilityState: props.activeContact.facility?.state,
+              facilityCity: props.activeContact.facility?.city,
+              relationship: props.activeContact.relationship,
             });
             Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
             Notifs.cancelAllNotificationsByType(NotifTypes.Drought);

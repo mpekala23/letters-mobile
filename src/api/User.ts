@@ -170,7 +170,7 @@ export async function loginWithToken(): Promise<User> {
     const body = await response.json();
     if (body.status !== 'OK') throw Error('Invalid token');
     const userData = cleanUser(body.data as RawUser);
-    Segment.identify(userData.id.toString());
+    Segment.identify(userData.email);
     Segment.track('Login Success');
     store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
     await Promise.all([getContacts(), getMail()]);
@@ -207,7 +207,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     }
   }
   const userData = cleanUser(body.data as RawUser);
-  Segment.identify(userData.id.toString());
+  Segment.identify(userData.email);
   Segment.track('Login Success');
   store.dispatch(
     authenticateUser(userData, body.data.token, body.data.remember)
@@ -280,7 +280,16 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   store.dispatch(
     authenticateUser(userData, body.data.token, body.data.remember)
   );
-  Segment.identify(userData.id.toString());
+  Segment.identifyWithTraits(userData.email, {
+    name: `${userData.firstName} ${userData.lastName}`,
+    email: userData.email,
+    phone: userData.phone,
+    postal: userData.postal,
+    city: userData.city,
+    state: userData.state,
+    referrer: data.referer,
+  });
+
   store.dispatch(loginUser(userData));
   return userData;
 }

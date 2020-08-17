@@ -9,6 +9,7 @@ import { DeliveryReportTypes } from 'types';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import LetterWithHeart from '@assets/views/Issues/LetterWithHeart';
+import * as Segment from 'expo-analytics-segment';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailScreenNavigationProp = StackNavigationProp<
@@ -49,6 +50,7 @@ const onShare = async () => {
   const ameelioUrl = 'letters.ameelio.org';
   const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
   try {
+    Segment.track('Delivery Reporting - Share on Facebook');
     await facebookShare(sharingUrl);
   } catch (err) {
     dropdownError({ message: i18n.t('Error.requestIncomplete') });

@@ -171,7 +171,14 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           }
         }
         const newContact = await addContact(contact);
-        Segment.track('Add Contact - Success');
+        Segment.trackWithProperties('Add Contact - Success', {
+          relationship: contact.relationship,
+          facility: contact.facility?.name,
+          facilityCity: contact.facility?.city,
+          facilityState: contact.facility?.state,
+          facilityPostal: contact.facility?.postal,
+          facilityType: contact.facility?.type,
+        });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
           Notifs.scheduleNotificationInHours(
