@@ -32,7 +32,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       </View>
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button
-          onPress={() => props.navigation.navigate('Register')}
+          onPress={() => props.navigation.navigate('Register1')}
           buttonText={i18n.t('BeginScreen.signUp')}
           textStyle={[Typography.FONT_BOLD, Styles.baseText]}
           containerStyle={{ height: 47 }}

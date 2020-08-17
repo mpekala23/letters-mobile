@@ -191,7 +191,8 @@
     "referer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
-    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
+    "next": "Siguiente"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",

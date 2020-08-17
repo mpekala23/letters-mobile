@@ -17,6 +17,7 @@ import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import PrivacyScreen from './Login/Privacy.react';
 import ReferFriendsScreen from './Compose/ReferFriends.react';
 import RegisterScreen from './Onboarding/Register.react';
+import Register1Screen from './Onboarding/Register1.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
@@ -48,6 +49,7 @@ export {
   PrivacyScreen,
   ReferFriendsScreen,
   RegisterScreen,
+  Register1Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
