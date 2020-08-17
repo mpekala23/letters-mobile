@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { STATE_TO_ABBREV } from '@utils';
+import { STATE_TO_ABBREV, PERSONAL_CATEGORY } from '@utils';
 import i18n from '@i18n';
 import { User } from '@store/User/UserTypes';
 import * as Segment from 'expo-analytics-segment';
@@ -59,11 +59,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             },
           });
           props.navigation.navigate('ComposePostcard', {
-            category: {
-              name: 'personal',
-              id: -1,
-              image: { uri: '' },
-            },
+            category: PERSONAL_CATEGORY,
           });
         }}
       />

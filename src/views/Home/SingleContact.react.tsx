@@ -37,6 +37,7 @@ import * as Segment from 'expo-analytics-segment';
 import { differenceInBusinessDays } from 'date-fns';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { deleteDraft } from '@api/User';
+import { PERSONAL_CATEGORY } from '@utils';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -287,11 +288,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               this.props.navigation.navigate(
                                 'ComposePostcard',
                                 {
-                                  category: {
-                                    id: -1,
-                                    image: { uri: '' },
-                                    name: 'personal',
-                                  },
+                                  category: PERSONAL_CATEGORY,
                                 }
                               );
                             }

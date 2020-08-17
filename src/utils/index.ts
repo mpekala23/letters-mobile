@@ -4,7 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo } from 'types';
+import { ZipcodeInfo, Category } from 'types';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -232,11 +232,12 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
   return Math.round(d * 0.000621371);
 }
 
-export const PERSONAL_CATEGORY = {
+export const PERSONAL_CATEGORY: Category = {
   id: 1,
   name: 'personal',
   image: {
     uri:
       'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2020/05/26/142110_1344640.jpg.1500x1000_q95_crop-smart_upscale.jpg',
   },
+  blurb: 'Your own letters and photos',
 };

@@ -44,6 +44,7 @@ export interface Category {
   id: number;
   name: string;
   image: Image;
+  blurb: string;
 }
 
 // Letters and Postcards (Draft)

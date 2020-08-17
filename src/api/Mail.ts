@@ -196,6 +196,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
           image: {
             uri: mail.images[0].img_src,
           },
+          blurb: '',
         }
       : {
           image: {
@@ -376,6 +377,7 @@ function cleanCategory(raw: RawCategory): Category {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
+    blurb: '',
   };
 }
 
