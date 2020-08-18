@@ -338,7 +338,8 @@
     "tapToAddMessage": "Tap to add a message.",
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
-    "iWouldLikeToSend": "I would like to send something:"
+    "iWouldLikeToSend": "I would like to send something:",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
     "happy": "Happy",

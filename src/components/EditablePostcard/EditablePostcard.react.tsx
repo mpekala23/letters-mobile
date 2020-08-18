@@ -102,7 +102,7 @@ class EditablePostcard extends React.Component<Props> {
                     outputRange: [0, 0, 1, 1],
                   })
                 : 0,
-              transform: [{ rotateY: 3.1415926 }],
+              transform: [{ rotateY: 3.14159265 }],
             },
             Styles.writingBackground,
           ]}
