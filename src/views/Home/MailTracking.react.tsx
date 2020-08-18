@@ -60,38 +60,40 @@ class MailTrackingScreenBase extends React.Component<Props> {
         : addBusinessDays(new Date(), 6),
       'MMM dd'
     );
-    const chronologicalEvents = this.props.mail.trackingEvents;
+    const chronologicalEvents = this.props.mail.trackingEvents
+      ? this.props.mail.trackingEvents
+      : [];
     let returnedToSender = false;
-    if (chronologicalEvents) {
-      for (let ix = 0; ix < chronologicalEvents.length; ix += 1) {
-        // Append 'Delivered' to list of tracking events if processed + 3 days
-        if (
-          chronologicalEvents[ix].name === MailStatus.ProcessedForDelivery &&
-          differenceInBusinessDays(new Date(), chronologicalEvents[ix].date) > 3
-        ) {
-          const trackingEvent: TrackingEvent = {
-            id: -1,
-            name: MailStatus.Delivered,
-            location: {
-              city: this.props.contact.facility
-                ? this.props.contact.facility.city
-                : '',
-              state: this.props.contact.facility
-                ? this.props.contact.facility.state
-                : '',
-              zip: this.props.contact.facility
-                ? this.props.contact.facility.postal
-                : '',
-            },
-            date: addBusinessDays(new Date(chronologicalEvents[ix].date), 3),
-          };
-          chronologicalEvents.push(trackingEvent);
-        }
-        if (chronologicalEvents[ix].name === MailStatus.ReturnedToSender) {
-          returnedToSender = true;
-        }
-      }
+    const processedEvents = chronologicalEvents.filter(
+      (event: TrackingEvent) =>
+        event.name === MailStatus.ProcessedForDelivery &&
+        differenceInBusinessDays(new Date(), event.date) > 3
+    );
+    if (processedEvents.length > 0) {
+      // the mail has been processed for deliver for >= 3 days
+      const trackingEvent: TrackingEvent = {
+        id: -1,
+        name: MailStatus.Delivered,
+        location: {
+          city: this.props.contact.facility
+            ? this.props.contact.facility.city
+            : '',
+          state: this.props.contact.facility
+            ? this.props.contact.facility.state
+            : '',
+          zip: this.props.contact.facility
+            ? this.props.contact.facility.postal
+            : '',
+        },
+        date: addBusinessDays(new Date(processedEvents[0].date), 3),
+      };
+      chronologicalEvents.push(trackingEvent);
     }
+    const returnedEvents = chronologicalEvents.filter(
+      (event: TrackingEvent) => event.name === MailStatus.ReturnedToSender
+    );
+    returnedToSender = returnedEvents.length > 0;
+
     const letterTracker =
       !returnedToSender &&
       chronologicalEvents?.map((trackingEvent: TrackingEvent) => {

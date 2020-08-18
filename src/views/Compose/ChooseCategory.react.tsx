@@ -86,7 +86,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
         <FlatList
           data={this.state.categories}
           renderItem={({ item }) => this.renderCategory(item)}
-          keyExtractor={(item: Category) => item.name}
+          keyExtractor={(item: Category) => item.id.toString()}
           refreshing={this.state.refreshing}
           onRefresh={this.refreshCategories}
         />

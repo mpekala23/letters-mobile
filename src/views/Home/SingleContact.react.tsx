@@ -12,7 +12,14 @@ import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
-import { ProfilePicTypes, Mail, MailStatus, MailTypes, Draft } from 'types';
+import {
+  ProfilePicTypes,
+  Mail,
+  MailStatus,
+  MailTypes,
+  Draft,
+  TrackingEvent,
+} from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
@@ -84,13 +91,13 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             if (item.trackingEvents) {
               let processedForDelivery = false;
               let processedForDeliveryDate = new Date();
-              for (let ix = 0; ix < item.trackingEvents.length; ix += 1) {
-                processedForDelivery =
-                  processedForDelivery ||
-                  item.trackingEvents[ix].name === 'Processed for Delivery';
-                if (item.trackingEvents[ix].name === 'Processed for Delivery') {
-                  processedForDeliveryDate = item.trackingEvents[ix].date;
-                }
+              const processedEvent = item.trackingEvents.find(
+                (event: TrackingEvent) =>
+                  event.name === MailStatus.ProcessedForDelivery
+              );
+              processedForDelivery = !!processedEvent;
+              if (processedEvent) {
+                processedForDeliveryDate = processedEvent.date;
               }
               if (
                 item.status !== MailStatus.Draft &&

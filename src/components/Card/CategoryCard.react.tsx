@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-  Image as ImageComponent,
-  View,
-} from 'react-native';
+import { Text, TouchableOpacity, ViewStyle, View } from 'react-native';
 import { Category } from 'types';
 import { Typography } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
+import { capitalize } from '@utils';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -40,8 +35,7 @@ const CategoryCard: React.FC<Props> = (props: Props) => {
       />
       <View style={{ flex: 1, padding: 8, justifyContent: 'center' }}>
         <Text style={[Typography.FONT_BOLD, CardStyles.categoryTitle]}>
-          {props.category.name.slice(0, 1).toUpperCase() +
-            props.category.name.slice(1)}
+          {capitalize(props.category.name)}
         </Text>
       </View>
     </TouchableOpacity>

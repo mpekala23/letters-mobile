@@ -119,7 +119,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
         }
       : {
           image: {
-            uri: mail.images[0].img_src,
+            uri: '',
           },
         };
   const dateCreated = new Date(mail.created_at);
@@ -200,7 +200,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
         }
       : {
           image: {
-            uri: mail.images[0].img_src,
+            uri: '',
           },
         };
   const dateCreated = new Date(mail.created_at);

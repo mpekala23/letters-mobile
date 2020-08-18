@@ -61,8 +61,12 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
             try {
               await createMail(props.composing);
               props.clearComposing();
-              Segment.trackWithProperties('Compose - Click on Send', {
-                Option: 'Letter',
+              Segment.trackWithProperties('Review - Send Letter Success', {
+                Option: 'Photo',
+                facility: props.recipient.facility?.name,
+                facilityState: props.recipient.facility?.state,
+                facilityCity: props.recipient.facility?.city,
+                relationship: props.recipient.relationship,
               });
               Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
               Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
@@ -126,6 +130,9 @@ const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   clearComposing: () => dispatch(clearComposing()),
 });
 
-const ReviewPostcardScreen = connect(mapStateToProps)(ReviewPostcardScreenBase);
+const ReviewPostcardScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReviewPostcardScreenBase);
 
 export default ReviewPostcardScreen;

@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image as ImageComponent,
   View,
   ViewStyle,
   ImageStyle,
+  Animated,
 } from 'react-native';
 import { Image } from 'types';
 import Loading from '@assets/common/loading.gif';
 import Warning from '@assets/common/Warning.png';
 import { sleep } from '@utils';
-import Icon from '../Icon/Icon.react';
 
 interface Props {
   source: Image;
   viewStyle?: ViewStyle;
   imageStyle?: ImageStyle;
-  loadingSize: number;
+  loadingSize?: number;
   timeout?: number;
 }
 
@@ -24,79 +24,98 @@ interface State {
   timedOut: boolean;
 }
 
-export default class AsyncImage extends React.Component<Props, State> {
-  static defaultProps = {
-    viewStyle: { flex: 1 },
-    imageStyle: { flex: 1 },
-    loadingSize: 30,
-    timeout: 1000,
-  };
+const AsyncImage: React.FC<Props> = (props: Props) => {
+  const [loaded, setLoaded] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+  const [loadOpacity] = useState(new Animated.Value(0.3));
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      loaded: false,
-      timedOut: false,
+  useEffect(() => {
+    const doSetup = async () => {
+      await sleep(props.timeout || 1000);
+      if (!loaded) {
+        setTimedOut(true);
+      }
     };
-    this.onLoad = this.onLoad.bind(this);
-    this.testTimeout = this.testTimeout.bind(this);
-  }
+    doSetup();
+  }, []);
 
-  componentDidMount(): void {
-    this.testTimeout();
-  }
-
-  onLoad(): void {
-    if (this.props.source.uri && this.props.source.uri !== '')
-      this.setState({ loaded: true, timedOut: false });
-  }
-
-  async testTimeout(): Promise<void> {
-    await sleep(this.props.timeout || 1000);
-    if (!this.state.loaded) {
-      this.setState({ timedOut: true });
+  let asyncFeedback: JSX.Element = <View />;
+  if (!loaded) {
+    // the image is still loading / timed out
+    if (!timedOut) {
+      // still loading
+      asyncFeedback = (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(255,255,255,0.2)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ImageComponent
+            source={Loading}
+            style={{
+              width: props.loadingSize,
+              height: props.loadingSize,
+            }}
+          />
+        </View>
+      );
+    } else {
+      // timed out
+      asyncFeedback = (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(255,255,255,0.2)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ImageComponent
+            source={Warning}
+            style={{
+              width: (props.loadingSize ? props.loadingSize : 30) * 1.5,
+              height: (props.loadingSize ? props.loadingSize : 30) * 1.5,
+            }}
+          />
+        </View>
+      );
     }
   }
 
-  render(): JSX.Element {
-    return (
-      <View style={this.props.viewStyle}>
-        <ImageComponent
-          source={this.props.source}
-          style={this.props.imageStyle}
-          onLoad={this.onLoad}
-        />
-        {!this.state.loaded && (
-          <View
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {!this.state.timedOut ? (
-              <ImageComponent
-                source={Loading}
-                style={{
-                  width: this.props.loadingSize,
-                  height: this.props.loadingSize,
-                }}
-              />
-            ) : (
-              <ImageComponent
-                source={Warning}
-                style={{
-                  width: this.props.loadingSize * 1.5,
-                  height: this.props.loadingSize * 1.5,
-                }}
-              />
-            )}
-          </View>
-        )}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={props.viewStyle}>
+      <Animated.Image
+        source={props.source}
+        style={[props.imageStyle, { opacity: loadOpacity }]}
+        onLoad={() => {
+          if (props.source && props.source.uri && props.source.uri !== '') {
+            setLoaded(true);
+            setTimedOut(false);
+            Animated.timing(loadOpacity, {
+              toValue: 1,
+              duration: 300,
+              useNativeDriver: true,
+            }).start();
+          }
+        }}
+      />
+      {asyncFeedback}
+    </View>
+  );
+};
+
+AsyncImage.defaultProps = {
+  viewStyle: { flex: 1 },
+  imageStyle: { flex: 1 },
+  loadingSize: 30,
+  timeout: 1000,
+};
+
+export default AsyncImage;

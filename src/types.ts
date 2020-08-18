@@ -16,6 +16,7 @@ export interface PostcardDesign {
   name?: string;
   author?: string;
   custom?: boolean;
+  blurb?: string;
 }
 
 interface LetterSpecific {
