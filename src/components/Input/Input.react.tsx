@@ -29,6 +29,8 @@ export interface Props {
   onValid: () => void;
   onInvalid: () => void;
   onChangeText: (val: string) => void;
+  onSubmitEditing: () => void;
+  blurOnSubmit: boolean;
   secure?: boolean;
   required?: boolean;
   validate?: Validation;
@@ -68,6 +70,8 @@ class Input extends React.Component<Props, State> {
     onValid: (): null => null,
     onInvalid: (): null => null,
     onChangeText: (): null => null,
+    onSubmitEditing: (): null => null,
+    blurOnSubmit: true,
     secure: false,
     enabled: true,
     options: [],
@@ -134,6 +138,7 @@ class Input extends React.Component<Props, State> {
         this.props.nextInput.current.forceFocus();
     }
     this.setState({ focused: false });
+    this.props.onSubmitEditing();
   }
 
   doValidate = (): void => {
@@ -332,6 +337,7 @@ class Input extends React.Component<Props, State> {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSubmitEditing={this.onSubmitEditing}
+            blurOnSubmit={numLines < 2 && this.props.blurOnSubmit}
             multiline={numLines > 1}
             numberOfLines={numLines}
             style={[

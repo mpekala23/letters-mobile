@@ -14,6 +14,7 @@ import Icon from '../Icon/Icon.react';
 interface Props {
   userState: UserState;
   navigation: NavigationContainerRef | null;
+  currentRoute: string;
 }
 
 interface State {
@@ -57,8 +58,8 @@ class Topbar extends React.Component<Props, State> {
     if (
       this.props.navigation &&
       (this.props.navigation.canGoBack() ||
-        this.props.navigation.getCurrentRoute()?.name === 'Login' ||
-        this.props.navigation.getCurrentRoute()?.name === 'Register1')
+        this.props.currentRoute === 'Login' ||
+        this.props.currentRoute === 'Register1')
     ) {
       return (
         <TouchableOpacity

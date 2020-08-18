@@ -110,7 +110,7 @@ class Register2Screen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
               ]}
             >
-              Register account
+              {i18n.t('RegisterScreen.enterBasic')}
             </Text>
             <Input
               ref={this.email}
@@ -120,6 +120,7 @@ class Register2Screen extends React.Component<Props, State> {
               validate={Validation.Email}
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
+              blurOnSubmit={false}
               nextInput={this.password}
             />
             <Input
@@ -141,6 +142,7 @@ class Register2Screen extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
               invalidFeedback={i18n.t('RegisterScreen.passwordInvalid')}
+              blurOnSubmit={false}
               nextInput={this.passwordConfirmation}
             />
             <Input
@@ -164,6 +166,20 @@ class Register2Screen extends React.Component<Props, State> {
               }}
               onValid={this.updateValid}
               onInvalid={() => this.setState({ valid: false })}
+              blurOnSubmit={false}
+              onSubmitEditing={() => {
+                if (this.state.valid) {
+                  this.props.navigation.navigate('Register3', {
+                    ...this.props.route.params,
+                    email: this.email.current
+                      ? this.email.current.state.value
+                      : '',
+                    password: this.password.current
+                      ? this.password.current.state.value
+                      : '',
+                  });
+                }
+              }}
             />
             {this.state.password !== this.state.passwordConfirmation && (
               <Text
@@ -183,7 +199,17 @@ class Register2Screen extends React.Component<Props, State> {
               ]}
               buttonText={i18n.t('RegisterScreen.next')}
               enabled={this.state.valid}
-              onPress={() => this.props.navigation.navigate('Register3')}
+              onPress={() => {
+                this.props.navigation.navigate('Register3', {
+                  ...this.props.route.params,
+                  email: this.email.current
+                    ? this.email.current.state.value
+                    : '',
+                  password: this.password.current
+                    ? this.password.current.state.value
+                    : '',
+                });
+              }}
               showNextIcon
             />
           </ScrollView>

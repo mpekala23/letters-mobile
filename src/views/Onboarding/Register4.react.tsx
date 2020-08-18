@@ -5,6 +5,7 @@ import {
   Platform,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
@@ -13,53 +14,26 @@ import i18n from '@i18n';
 import { Typography } from '@styles';
 import Styles from './Register.style';
 
-type Register1ScreenNavigationProp = StackNavigationProp<
+type Register4ScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
-  'Register1'
+  'Register4'
 >;
 
 export interface Props {
-  navigation: Register1ScreenNavigationProp;
+  navigation: Register4ScreenNavigationProp;
 }
 
 export interface State {
-  valid: boolean;
+  image: Image | undefined;
 }
 
 class Register1Screen extends React.Component<Props, State> {
-  private firstName = createRef<Input>();
-
-  private lastName = createRef<Input>();
-
-  private unsubscribeFocus: () => void;
-
   constructor(props: Props) {
     super(props);
     this.state = {
-      valid: false,
+      image: undefined,
     };
-    this.onNavigationFocus = this.onNavigationFocus.bind(this);
-    this.unsubscribeFocus = this.props.navigation.addListener(
-      'focus',
-      this.onNavigationFocus
-    );
   }
-
-  componentWillUnmount(): void {
-    this.unsubscribeFocus();
-  }
-
-  onNavigationFocus(): void {
-    if (this.firstName.current) this.firstName.current.forceFocus();
-  }
-
-  updateValid = (): void => {
-    if (this.firstName.current && this.lastName.current) {
-      const result =
-        this.firstName.current.state.valid && this.lastName.current.state.valid;
-      this.setState({ valid: result });
-    }
-  };
 
   render(): JSX.Element {
     return (
@@ -86,10 +60,10 @@ class Register1Screen extends React.Component<Props, State> {
             <Text
               style={[
                 Typography.FONT_BOLD,
-                { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
+                { fontSize: 20, alignSelf: 'center', paddingBottom: 16 },
               ]}
             >
-              {i18n.t('RegisterScreen.registerAccount')}
+              {i18n.t('RegisterScreen.oneLastThing')}
             </Text>
             <Input
               ref={this.firstName}

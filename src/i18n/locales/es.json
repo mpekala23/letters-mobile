@@ -192,7 +192,8 @@
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
     "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -339,7 +340,10 @@
     "tapToAddMessage": "Tap to add a message.",
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
-    "iWouldLikeToSend": "I would like to send something:"
+    "iWouldLikeToSend": "I would like to send something:",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter."
   },
   "Notifs": {
     "happy": "Feliz",

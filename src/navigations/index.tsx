@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   createStackNavigator,
@@ -27,6 +27,7 @@ import {
   RegisterScreen,
   Register1Screen,
   Register2Screen,
+  Register3Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
@@ -65,6 +66,12 @@ export type AuthStackParamList = {
   Register: undefined;
   Register1: undefined;
   Register2: { firstName: string; lastName: string };
+  Register3: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  };
 };
 
 export type AppStackParamList = {
@@ -112,6 +119,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Register: { title: i18n.t('Screens.register'), profile: false },
   Register1: { title: i18n.t('Screens.register'), profile: false },
   Register2: { title: i18n.t('Screens.register'), profile: false },
+  Register3: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
@@ -209,10 +217,12 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
+  const [currentRoute, setCurrentRoute] = useState('Splash');
   const topbar = (
     <Topbar
       userState={props.userState}
       navigation={navigationRef.current}
+      currentRoute={currentRoute}
       ref={topbarRef}
     />
   );
@@ -240,6 +250,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Register1" component={Register1Screen} />
         <Stack.Screen name="Register2" component={Register2Screen} />
+        <Stack.Screen name="Register3" component={Register3Screen} />
       </>
     );
   } else {
@@ -313,6 +324,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name;
+        if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
           setProfile(mapRouteNameToDetails[name].profile);

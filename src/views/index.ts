@@ -19,6 +19,7 @@ import ReferFriendsScreen from './Compose/ReferFriends.react';
 import RegisterScreen from './Onboarding/Register.react';
 import Register1Screen from './Onboarding/Register1.react';
 import Register2Screen from './Onboarding/Register2.react';
+import Register3Screen from './Onboarding/Register3.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
@@ -52,6 +53,7 @@ export {
   RegisterScreen,
   Register1Screen,
   Register2Screen,
+  Register3Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
