@@ -12,7 +12,7 @@ import { AuthStackParamList } from '@navigations';
 import { Button, Input } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { Validation } from '@utils';
+import { Validation, STATES_DROPDOWN, sleep } from '@utils';
 import Styles from './Register.style';
 
 type Register3ScreenNavigationProp = StackNavigationProp<
@@ -26,8 +26,11 @@ export interface Props {
     params: {
       firstName: string;
       lastName: string;
+      referrer: string;
       email: string;
       password: string;
+      passwordConfirmation: string;
+      remember: boolean;
     };
   };
 }
@@ -48,6 +51,8 @@ class Register3Screen extends React.Component<Props, State> {
   private postal = createRef<Input>();
 
   private passwordConfirmation = createRef<Input>();
+
+  private scrollView = createRef<ScrollView>();
 
   private unsubscribeFocus: () => void;
 
@@ -106,10 +111,11 @@ class Register3Screen extends React.Component<Props, State> {
           enabled
         >
           <ScrollView
+            ref={this.scrollView}
             keyboardShouldPersistTaps="always"
             scrollEnabled
             style={{ width: '100%', flex: 1 }}
-            contentContainerStyle={{ paddingVertical: 24, flex: 1 }}
+            contentContainerStyle={{ paddingTop: 24, paddingBottom: 72 }}
           >
             <Text
               style={[
@@ -154,15 +160,26 @@ class Register3Screen extends React.Component<Props, State> {
               blurOnSubmit={false}
               nextInput={this.phyState}
             />
-            <View style={{ flexDirection: 'row', width: '100%' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
               <Input
                 ref={this.phyState}
                 placeholder={i18n.t('RegisterScreen.state')}
                 parentStyle={{ flex: 1, marginRight: 4 }}
                 required
                 validate={Validation.State}
+                options={STATES_DROPDOWN}
                 onValid={this.updateValid}
                 onInvalid={() => this.setState({ valid: false })}
+                onFocus={async () => {
+                  await sleep(400);
+                  if (this.scrollView.current)
+                    this.scrollView.current.scrollToEnd({ animated: true });
+                }}
                 blurOnSubmit={false}
                 nextInput={this.postal}
               />
@@ -199,12 +216,20 @@ class Register3Screen extends React.Component<Props, State> {
                 }}
               />
             </View>
+          </ScrollView>
+          <View
+            style={[
+              Styles.fullWidth,
+              {
+                position: 'absolute',
+                bottom: 0,
+                paddingBottom: 8,
+                backgroundColor: 'white',
+              },
+            ]}
+          >
             <Button
-              containerStyle={[
-                Styles.fullWidth,
-                Styles.registerButton,
-                { position: 'absolute', bottom: 8 },
-              ]}
+              containerStyle={[Styles.fullWidth, Styles.registerButton]}
               buttonText={i18n.t('RegisterScreen.next')}
               enabled={this.state.valid}
               onPress={() => {
@@ -227,7 +252,7 @@ class Register3Screen extends React.Component<Props, State> {
               }}
               showNextIcon
             />
-          </ScrollView>
+          </View>
         </KeyboardAvoidingView>
       </TouchableOpacity>
     );

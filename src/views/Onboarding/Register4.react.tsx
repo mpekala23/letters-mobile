@@ -1,17 +1,27 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
   Text,
   TouchableOpacity,
-  Image,
+  View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
-import { Button, Input } from '@components';
+import { Button, PicUpload } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
+import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
+import { Image } from 'types';
+import * as Segment from 'expo-analytics-segment';
+import { UserRegisterInfo } from '@store/User/UserTypes';
+import { register } from '@api';
+import Notifs from '@notifications';
+import { NotifTypes } from '@store/Notif/NotifTypes';
+import { hoursTill8Tomorrow } from '@utils';
+import { popupAlert } from '@components/Alert/Alert.react';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './Register.style';
 
 type Register4ScreenNavigationProp = StackNavigationProp<
@@ -21,19 +31,80 @@ type Register4ScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: Register4ScreenNavigationProp;
+  route: {
+    params: {
+      firstName: string;
+      lastName: string;
+      referrer: string;
+      email: string;
+      password: string;
+      passwordConfirmation: string;
+      remember: boolean;
+      address1: string;
+      address2: string;
+      city: string;
+      phyState: string;
+      postal: string;
+    };
+  };
 }
 
 export interface State {
   image: Image | undefined;
 }
 
-class Register1Screen extends React.Component<Props, State> {
+class Register4Screen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       image: undefined,
     };
   }
+
+  doRegister = async (): Promise<void> => {
+    Segment.track("Signup - Clicks 'Create Account'");
+    const data: UserRegisterInfo = {
+      ...this.props.route.params,
+      image: this.state.image,
+    };
+    try {
+      await register(data);
+      Segment.track('Signup - Account Created');
+      Notifs.scheduleNotificationInHours(
+        {
+          title: `${i18n.t('Notifs.youreOneTapAway')}`,
+          body: `${i18n.t('Notifs.clickHereToBegin')}`,
+          data: {
+            type: NotifTypes.NoFirstContact,
+          },
+        },
+        hoursTill8Tomorrow()
+      );
+    } catch (err) {
+      if (err.data && err.data.email) {
+        Segment.trackWithProperties('Signup - Account Creation Error', {
+          'Error Type': 'invalid email',
+        });
+        popupAlert({
+          title: i18n.t('RegisterScreen.emailAlreadyInUse'),
+          buttons: [
+            {
+              text: i18n.t('RegisterScreen.login'),
+              onPress: () => this.props.navigation.replace('Login'),
+            },
+            {
+              text: i18n.t('Alert.okay'),
+              reverse: true,
+            },
+          ],
+        });
+      } else if (err.message === 'timeout') {
+        dropdownError({ message: i18n.t('Error.requestTimedOut') });
+      } else {
+        dropdownError({ message: i18n.t('Error.requestIncomplete') });
+      }
+    }
+  };
 
   render(): JSX.Element {
     return (
@@ -65,66 +136,43 @@ class Register1Screen extends React.Component<Props, State> {
             >
               {i18n.t('RegisterScreen.oneLastThing')}
             </Text>
-            <Input
-              ref={this.firstName}
-              parentStyle={Styles.fullWidth}
-              placeholder={i18n.t('RegisterScreen.firstName')}
-              required
-              onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
-              blurOnSubmit={false}
-              nextInput={this.lastName}
-            />
-            <Input
-              ref={this.lastName}
-              parentStyle={Styles.fullWidth}
-              placeholder={i18n.t('RegisterScreen.lastName')}
-              required
-              onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
-              blurOnSubmit={false}
-              onSubmitEditing={() => {
-                if (this.state.valid) {
-                  this.props.navigation.navigate('Register2', {
-                    firstName: this.firstName.current
-                      ? this.firstName.current.state.value
-                      : '',
-                    lastName: this.lastName.current
-                      ? this.lastName.current.state.value
-                      : '',
-                  });
-                }
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingTop: 24,
+                transform: [{ scale: 1.25 }],
               }}
-            />
-            <Button
-              link
-              buttonText={i18n.t('RegisterScreen.alreadyHaveAnAccount')}
-              containerStyle={{ marginBottom: 20, alignSelf: 'center' }}
-              onPress={() => {
-                this.props.navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'Begin' }, { name: 'Login' }],
-                });
-              }}
-            />
+            >
+              <PicUpload
+                type={PicUploadTypes.Profile}
+                avatarPlaceholder
+                onSuccess={(image: Image) => this.setState({ image })}
+                onDelete={() => this.setState({ image: undefined })}
+              />
+            </View>
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  fontSize: 14,
+                  alignSelf: 'center',
+                  paddingBottom: 16,
+                  paddingTop: 32,
+                },
+              ]}
+            >
+              {i18n.t('RegisterScreen.clickToUploadProfileImage')}
+            </Text>
             <Button
               containerStyle={[
                 Styles.fullWidth,
                 Styles.registerButton,
                 { position: 'absolute', bottom: 8 },
               ]}
-              buttonText={i18n.t('RegisterScreen.next')}
-              enabled={this.state.valid}
-              onPress={() => {
-                this.props.navigation.navigate('Register2', {
-                  firstName: this.firstName.current
-                    ? this.firstName.current.state.value
-                    : '',
-                  lastName: this.lastName.current
-                    ? this.lastName.current.state.value
-                    : '',
-                });
-              }}
+              buttonText={i18n.t('RegisterScreen.register')}
+              blocking
+              onPress={this.doRegister}
               showNextIcon
             />
           </ScrollView>
@@ -134,4 +182,4 @@ class Register1Screen extends React.Component<Props, State> {
   }
 }
 
-export default Register1Screen;
+export default Register4Screen;

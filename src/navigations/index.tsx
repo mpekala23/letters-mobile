@@ -24,10 +24,10 @@ import {
   MailDetailsScreen,
   PrivacyScreen,
   ReferFriendsScreen,
-  RegisterScreen,
   Register1Screen,
   Register2Screen,
   Register3Screen,
+  Register4Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
@@ -63,14 +63,30 @@ export type AuthStackParamList = {
   Login: undefined;
   Terms: undefined;
   Privacy: undefined;
-  Register: undefined;
   Register1: undefined;
-  Register2: { firstName: string; lastName: string };
+  Register2: { firstName: string; lastName: string; referrer: string };
   Register3: {
     firstName: string;
     lastName: string;
+    referrer: string;
     email: string;
     password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+  };
+  Register4: {
+    firstName: string;
+    lastName: string;
+    referrer: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+    address1: string;
+    address2: string;
+    city: string;
+    phyState: string;
+    postal: string;
   };
 };
 
@@ -116,10 +132,10 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Login: { title: i18n.t('Screens.login'), profile: false },
   Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
-  Register: { title: i18n.t('Screens.register'), profile: false },
   Register1: { title: i18n.t('Screens.register'), profile: false },
   Register2: { title: i18n.t('Screens.register'), profile: false },
   Register3: { title: i18n.t('Screens.register'), profile: false },
+  Register4: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
@@ -247,10 +263,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Register1" component={Register1Screen} />
         <Stack.Screen name="Register2" component={Register2Screen} />
         <Stack.Screen name="Register3" component={Register3Screen} />
+        <Stack.Screen name="Register4" component={Register4Screen} />
       </>
     );
   } else {

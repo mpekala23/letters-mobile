@@ -8,10 +8,13 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
-import { Button, Input } from '@components';
+import { Button, Input, Icon } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { Validation } from '@utils';
+import CheckedIcon from '@assets/views/Onboarding/Checked';
+import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
+import { CheckBox } from 'react-native-elements';
 import Styles from './Register.style';
 
 type Register1ScreenNavigationProp = StackNavigationProp<
@@ -25,6 +28,7 @@ export interface Props {
     params: {
       firstName: string;
       lastName: string;
+      referrer: string;
     };
   };
 }
@@ -33,6 +37,7 @@ export interface State {
   valid: boolean;
   password: string;
   passwordConfirmation: string;
+  remember: boolean;
 }
 
 class Register2Screen extends React.Component<Props, State> {
@@ -50,6 +55,7 @@ class Register2Screen extends React.Component<Props, State> {
       valid: false,
       password: '',
       passwordConfirmation: '',
+      remember: true,
     };
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = this.props.navigation.addListener(
@@ -177,6 +183,10 @@ class Register2Screen extends React.Component<Props, State> {
                     password: this.password.current
                       ? this.password.current.state.value
                       : '',
+                    passwordConfirmation: this.passwordConfirmation.current
+                      ? this.passwordConfirmation.current.state.value
+                      : '',
+                    remember: this.state.remember,
                   });
                 }
               }}
@@ -191,6 +201,24 @@ class Register2Screen extends React.Component<Props, State> {
                 {i18n.t('RegisterScreen.passwordsMustMatch')}
               </Text>
             )}
+            <CheckBox
+              checkedIcon={<Icon svg={CheckedIcon} />}
+              uncheckedIcon={<Icon svg={UncheckedIcon} />}
+              center
+              title="Remember Me"
+              containerStyle={{
+                backgroundColor: 'white',
+                width: '50%',
+                borderWidth: 0,
+                alignSelf: 'center',
+              }}
+              checked={this.state.remember}
+              onPress={() => {
+                this.setState((prevState) => {
+                  return { ...prevState, remember: !prevState.remember };
+                });
+              }}
+            />
             <Button
               containerStyle={[
                 Styles.fullWidth,
@@ -208,6 +236,10 @@ class Register2Screen extends React.Component<Props, State> {
                   password: this.password.current
                     ? this.password.current.state.value
                     : '',
+                  passwordConfirmation: this.passwordConfirmation.current
+                    ? this.passwordConfirmation.current.state.value
+                    : '',
+                  remember: this.state.remember,
                 });
               }}
               showNextIcon

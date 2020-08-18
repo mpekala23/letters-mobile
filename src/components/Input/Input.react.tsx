@@ -11,6 +11,7 @@ import {
 import ClearPassword from '@assets/components/Input/ClearPassword';
 import TogglePassword from '@assets/components/Input/TogglePassword';
 import CreditCard from '@assets/components/Input/CreditCard';
+import DropdownTick from '@assets/components/Input/DropdownTick';
 import { validateFormat, Validation } from '@utils';
 import { Typography } from '@styles';
 import Styles, {
@@ -350,6 +351,22 @@ class Input extends React.Component<Props, State> {
             ]}
             value={this.state.value}
           />
+          {options && options.length > 0 && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  right: 20,
+                  top: 20,
+                },
+                { opacity: enabled ? 1.0 : 0.7 },
+              ]}
+            >
+              <Icon svg={DropdownTick} />
+            </View>
+          )}
           {validate === Validation.CreditCard && (
             <View
               style={[

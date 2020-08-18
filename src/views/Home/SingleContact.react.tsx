@@ -172,6 +172,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getContact(this.props.activeContact.id);
             await getUser();
           } catch (err) {
+            console.log(err);
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
           this.setState({ refreshing: false });

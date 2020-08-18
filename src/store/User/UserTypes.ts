@@ -12,16 +12,14 @@ export interface UserRegisterInfo {
   email: string;
   password: string;
   passwordConfirmation: string;
-  phone: string;
   address1: string;
   address2?: string;
   postal: string;
   city: string;
-  state: string;
-  referer: string;
-  imageUri?: string;
+  phyState: string;
+  referrer: string;
   remember?: boolean;
-  photo?: Image;
+  image?: Image;
 }
 
 export interface UserLoginInfo {

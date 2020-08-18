@@ -231,9 +231,9 @@ export async function logout(): Promise<void> {
 export async function register(data: UserRegisterInfo): Promise<User> {
   let photoExtension = {};
   let newPhoto;
-  if (data.photo) {
+  if (data.image) {
     try {
-      newPhoto = await uploadImage(data.photo, 'avatar');
+      newPhoto = await uploadImage(data.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
@@ -255,10 +255,10 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_2: data.address2,
       city: data.city,
       country: 'US',
-      state: STATE_TO_ABBREV[data.state],
-      referer: data.referer,
+      state: STATE_TO_ABBREV[data.phyState],
+      referer: data.referrer,
       postal: data.postal,
-      phone: data.phone,
+      phone: '1111111111',
       ...photoExtension,
     }),
   });
@@ -287,7 +287,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     postal: userData.postal,
     city: userData.city,
     state: userData.state,
-    referrer: data.referer,
+    referrer: data.referrer,
   });
 
   store.dispatch(loginUser(userData));

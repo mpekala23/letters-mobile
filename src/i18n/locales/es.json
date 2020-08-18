@@ -188,7 +188,7 @@
     "register": "Regístrate",
     "emailAlreadyInUse": "Correo electrónico ya en uso.",
     "confirmPassword": "Confirma Contraseña",
-    "referer": "¿Cómo supiste de Ameelio?",
+    "referrer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
     "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
