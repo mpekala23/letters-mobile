@@ -4,7 +4,6 @@ import {
   ScrollView,
   Platform,
   Text,
-  View,
   TouchableOpacity,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -32,11 +31,26 @@ class Register1Screen extends React.Component<Props, State> {
 
   private lastName = createRef<Input>();
 
+  private unsubscribeFocus: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       valid: false,
     };
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus(): void {
+    if (this.firstName.current) this.firstName.current.forceFocus();
   }
 
   updateValid = (): void => {
@@ -55,7 +69,6 @@ class Register1Screen extends React.Component<Props, State> {
           backgroundColor: 'white',
           paddingHorizontal: 16,
         }}
-        onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
         <KeyboardAvoidingView
@@ -65,7 +78,7 @@ class Register1Screen extends React.Component<Props, State> {
           enabled
         >
           <ScrollView
-            keyboardShouldPersistTaps="handled"
+            keyboardShouldPersistTaps="always"
             scrollEnabled
             style={{ width: '100%', flex: 1 }}
             contentContainerStyle={{ paddingVertical: 24, flex: 1 }}

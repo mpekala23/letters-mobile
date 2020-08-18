@@ -54,13 +54,24 @@ class Topbar extends React.Component<Props, State> {
         </TouchableOpacity>
       );
     }
-    if (this.props.navigation && this.props.navigation.canGoBack()) {
+    if (
+      this.props.navigation &&
+      (this.props.navigation.canGoBack() ||
+        this.props.navigation.getCurrentRoute()?.name === 'Login' ||
+        this.props.navigation.getCurrentRoute()?.name === 'Register1')
+    ) {
       return (
         <TouchableOpacity
           style={Styles.backContainer}
           onPress={() => {
             if (this.props.navigation) {
               const route = this.props.navigation.getCurrentRoute()?.name;
+              if (route === 'Login' || route === 'Register1') {
+                this.props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Begin' }],
+                });
+              }
               if (
                 route === 'ContactInfo' ||
                 route === 'FacilityDirectory' ||

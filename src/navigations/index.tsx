@@ -26,6 +26,7 @@ import {
   ReferFriendsScreen,
   RegisterScreen,
   Register1Screen,
+  Register2Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
@@ -63,6 +64,7 @@ export type AuthStackParamList = {
   Privacy: undefined;
   Register: undefined;
   Register1: undefined;
+  Register2: { firstName: string; lastName: string };
 };
 
 export type AppStackParamList = {
@@ -109,6 +111,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
   Register: { title: i18n.t('Screens.register'), profile: false },
   Register1: { title: i18n.t('Screens.register'), profile: false },
+  Register2: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
@@ -236,6 +239,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Register1" component={Register1Screen} />
+        <Stack.Screen name="Register2" component={Register2Screen} />
       </>
     );
   } else {

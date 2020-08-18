@@ -18,6 +18,7 @@ import PrivacyScreen from './Login/Privacy.react';
 import ReferFriendsScreen from './Compose/ReferFriends.react';
 import RegisterScreen from './Onboarding/Register.react';
 import Register1Screen from './Onboarding/Register1.react';
+import Register2Screen from './Onboarding/Register2.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
@@ -50,6 +51,7 @@ export {
   ReferFriendsScreen,
   RegisterScreen,
   Register1Screen,
+  Register2Screen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
