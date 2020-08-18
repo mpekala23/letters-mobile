@@ -8,12 +8,12 @@ import {
   ImageBackground,
 } from 'react-native';
 import { format } from 'date-fns';
-import { LetterTypes } from 'types';
+import { MailTypes } from 'types';
 import { Typography } from '@styles';
 import CardStyles from './Card.styles';
 
 interface Props {
-  type: LetterTypes;
+  type: MailTypes;
   text: string;
   date?: Date;
   imageUri: string;
@@ -36,7 +36,7 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
       testID="memoryLaneCard"
     >
-      {props.type === LetterTypes.Postcard ? (
+      {props.type === MailTypes.Postcard ? (
         <ImageBackground
           style={CardStyles.memoryLanePostcardPicture}
           source={{ uri: props.imageUri }}

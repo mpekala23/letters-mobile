@@ -6,7 +6,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, Letter, LetterTypes, LetterStatus } from 'types';
+import { Storage, MailTypes, Draft } from 'types';
 import {
   loginUser,
   logoutUser,
@@ -17,7 +17,7 @@ import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import * as Segment from 'expo-analytics-segment';
-import { setComposing } from '@store/Letter/LetterActions';
+import { setComposing } from '@store/Mail/MailActions';
 import {
   uploadImage,
   fetchTimeout,
@@ -25,7 +25,7 @@ import {
   fetchAuthenticated,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getLetters } from './Letters';
+import { getMail } from './Mail';
 
 interface RawUser {
   id: number;
@@ -60,7 +60,6 @@ function cleanUser(user: RawUser): User {
     city: user.city,
     state: ABBREV_TO_STATE[user.state] || user.state,
     photo: {
-      type: 'image/jpeg',
       uri: photoUri || '',
     },
     credit: user.credit,
@@ -82,44 +81,60 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftRecipientId);
 }
 
-export async function saveDraft(letter: Letter): Promise<void> {
+export async function saveDraft(draft: Draft): Promise<void> {
   await deleteDraft();
-  await setItemAsync(Storage.DraftType, letter.type);
-  await setItemAsync(Storage.DraftContent, letter.content);
-  await setItemAsync(Storage.DraftRecipientId, letter.recipientId.toString());
+  await setItemAsync(Storage.DraftType, draft.type);
+  await setItemAsync(Storage.DraftContent, draft.content);
+  await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
 }
 
-export async function loadDraft(): Promise<Letter> {
+export async function loadDraft(): Promise<Draft> {
   try {
     const draftType = await getItemAsync(Storage.DraftType);
     const draftContent = await getItemAsync(Storage.DraftContent);
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
     if (!draftType || !draftContent || !draftRecipientId)
       throw Error('No draft saved');
-    const letter = {
-      type: draftType as LetterTypes,
-      status: LetterStatus.Draft,
-      isDraft: true,
-      recipientId: parseInt(draftRecipientId, 10),
-      content: draftContent,
-      dateCreated: new Date(),
-      trackingEvents: [],
-    };
-    store.dispatch(setComposing(letter));
-    return letter;
-  } catch (err) {
+    if (draftType === MailTypes.Letter) {
+      const draft: Draft = {
+        type: MailTypes.Letter,
+        recipientId: parseInt(draftRecipientId, 10),
+        content: draftContent,
+      };
+      store.dispatch(setComposing(draft));
+      return draft;
+    }
+    if (draftType === MailTypes.Postcard) {
+      const draft: Draft = {
+        type: MailTypes.Postcard,
+        recipientId: parseInt(draftRecipientId, 10),
+        content: draftContent,
+        design: {
+          image: {
+            uri: '',
+          },
+        },
+      };
+      store.dispatch(setComposing(draft));
+      return draft;
+    }
     await deleteDraft();
-    const letter = {
-      type: LetterTypes.Postcard,
-      status: LetterStatus.Draft,
-      isDraft: true,
+    const draft: Draft = {
+      type: MailTypes.Letter,
       recipientId: -1,
       content: '',
-      dateCreated: new Date(),
-      trackingEvents: [],
     };
-    store.dispatch(setComposing(letter));
-    return letter;
+    store.dispatch(setComposing(draft));
+    return draft;
+  } catch (err) {
+    await deleteDraft();
+    const draft: Draft = {
+      type: MailTypes.Letter,
+      recipientId: -1,
+      content: '',
+    };
+    store.dispatch(setComposing(draft));
+    return draft;
   }
 }
 
@@ -158,7 +173,7 @@ export async function loginWithToken(): Promise<User> {
     Segment.identify(userData.email);
     Segment.track('Login Success');
     store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
-    await Promise.all([getContacts(), getLetters()]);
+    await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
     return userData;
@@ -198,7 +213,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     authenticateUser(userData, body.data.token, body.data.remember)
   );
   try {
-    await Promise.all([getContacts(), getLetters()]);
+    await Promise.all([getContacts(), getMail()]);
   } catch (err) {
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }

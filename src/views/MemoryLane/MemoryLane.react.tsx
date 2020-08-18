@@ -2,14 +2,14 @@ import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Letter } from 'types';
+import { Mail, MailTypes } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
 import { connect } from 'react-redux';
 import { Contact } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
+import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import i18n from '@i18n';
-import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { MailActionTypes } from '@store/Mail/MailTypes';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './MemoryLane.styles';
 
@@ -21,26 +21,31 @@ type MemoryLaneScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: MemoryLaneScreenNavigationProp;
   contact: Contact;
-  existingLetters: Record<number, Letter[]>;
-  setActiveLetter: (letter: Letter) => void;
+  existingMail: Record<number, Mail[]>;
+  setActiveMail: (mail: Mail) => void;
 }
 
 const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
-  const letters = props.existingLetters[props.contact.id];
+  const mail = props.existingMail[props.contact.id];
   const memoryCards =
-    letters && letters.length > 0 ? (
-      letters.map((letter: Letter) => {
+    mail && mail.length > 0 ? (
+      mail.map((item: Mail) => {
+        let imageUri = '';
+        if (item.type === MailTypes.Letter && item.image)
+          imageUri = item.image.uri;
+        else if (item.type === MailTypes.Postcard)
+          imageUri = item.design.image.uri;
         return (
           <MemoryLaneCard
-            type={letter.type}
-            key={letter.letterId}
-            text={letter.content}
-            date={letter.dateCreated}
-            imageUri={letter.photo ? letter.photo.uri : ''}
+            type={item.type}
+            key={item.id}
+            text={item.content}
+            date={item.dateCreated}
+            imageUri={imageUri}
             onPress={() => {
-              props.setActiveLetter(letter);
+              props.setActiveMail(item);
               Segment.track('Memory Lane - Click on Memory Card');
-              props.navigation.navigate('LetterDetails');
+              props.navigation.navigate('MailDetails');
             }}
             style={{ width: '45%', marginLeft: 6 }}
           />
@@ -65,7 +70,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
     >
       <View
         style={
-          letters && letters.length > 0
+          mail && mail.length > 0
             ? Styles.cardsBackground
             : Styles.textBackground
         }
@@ -79,12 +84,12 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
-    existingLetters: state.letter.existing,
+    existingMail: state.mail.existing,
   };
 };
-const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
-    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
+    setActiveMail: (mail: Mail) => dispatch(setActiveMail(mail)),
   };
 };
 

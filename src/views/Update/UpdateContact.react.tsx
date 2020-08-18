@@ -15,7 +15,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Contact } from '@store/Contact/ContactTypes';
-import { Facility, Photo } from 'types';
+import { Facility, Image } from 'types';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
@@ -38,7 +38,7 @@ export interface Props {
 }
 
 export interface State {
-  image: Photo | null;
+  image: Image | null;
 }
 
 class UpdateContactScreenBase extends React.Component<Props, State> {
@@ -272,7 +272,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 height={130}
                 type={PicUploadTypes.Profile}
                 initial={this.props.contact.photo}
-                onSuccess={(image: Photo) => {
+                onSuccess={(image: Image) => {
                   this.setState({ image });
                 }}
                 onDelete={() => {

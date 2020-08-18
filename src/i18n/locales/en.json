@@ -21,8 +21,9 @@
     "letterTooLong": "Your letter cannot exceed 16,000 characters."
   },
   "Permission": {
-    "photos": "Can't access photo library",
-    "notifs": "Can't register notifications. Ensure that this is enabled in settings."
+    "photos": "Can't access photo library. Ensure that this is enabled in settings.",
+    "notifs": "Can't register notifications. Ensure that this is enabled in settings.",
+    "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
   "AddManuallyScreen": {
     "facilityName": "Facility Name",
@@ -304,7 +305,9 @@
     "maybeLater": "Maybe later",
     "emulatorDetected": "Emulator detected",
     "mustUsePhysical": "You must use a physical device to receive push notifications",
-    "okay": "Okay"
+    "okay": "Okay",
+    "noDesignSelected": "No design selected",
+    "selectADesign": "Select a design to continue."
   },
   "Compose": {
     "chooseAnOption": "Choose an option",
@@ -331,9 +334,15 @@
     "notEnoughCredits": "Not enough credits",
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
-    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works."
+    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done",
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
+    "happy": "Happy",
     "your": "Your",
     "to": "to",
     "isOnItsWay": "is on its way!",
@@ -369,6 +378,7 @@
     "reviewContact": "Review Contact",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
-    "updateProfile": "Update Profile"
+    "updateProfile": "Update Profile",
+    "reviewPostcard": "Review"
   }
 }

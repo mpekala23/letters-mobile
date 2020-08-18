@@ -1,5 +1,89 @@
-// TODO: make this typing better
-// probably want a specific type for state abbrevs
+// Common
+export interface Image {
+  uri: string;
+  width?: number;
+  height?: number;
+}
+
+// Letters and Postcards (Commmon)
+export enum MailTypes {
+  Letter = 'letter',
+  Postcard = 'postcard',
+}
+
+export interface PostcardDesign {
+  image: Image;
+  name?: string;
+  author?: string;
+  custom?: boolean;
+  blurb?: string;
+}
+
+interface LetterSpecific {
+  type: MailTypes.Letter;
+  image?: Image;
+}
+
+interface PostcardSpecific {
+  type: MailTypes.Postcard;
+  design: PostcardDesign;
+}
+
+export enum MailStatus {
+  Draft = 'Draft',
+  Created = 'Created',
+  Mailed = 'Mailed',
+  InTransit = 'In Transit',
+  InLocalArea = 'In Local Area',
+  ProcessedForDelivery = 'Processed for Delivery',
+  Delivered = 'Delivered',
+  ReturnedToSender = 'Returned to Sender',
+  Rerouted = 'Re-Routed',
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  image: Image;
+  blurb: string;
+}
+
+// Letters and Postcards (Draft)
+interface DraftInfo {
+  type: MailTypes;
+  recipientId: number;
+  content: string;
+}
+
+export type DraftLetter = DraftInfo & LetterSpecific;
+
+export type DraftPostcard = DraftInfo & PostcardSpecific;
+
+export type Draft = DraftLetter | DraftPostcard;
+
+// Letters and Postcards (Mail)
+interface MailInfo extends DraftInfo {
+  id: number;
+  status: MailStatus;
+  dateCreated: Date;
+  expectedDelivery: Date;
+  trackingEvents?: TrackingEvent[];
+}
+
+export type MailLetter = MailInfo & LetterSpecific;
+
+export type MailPostcard = MailInfo & PostcardSpecific;
+
+export type Mail = MailLetter | MailPostcard;
+
+// Facilities
+export enum PrisonTypes {
+  State = 'State Prison',
+  Federal = 'Federal Prison',
+  County = 'County Jail',
+  Immigration = 'ICE Detention Center',
+}
+
 export interface Facility {
   name: string;
   type: PrisonTypes;
@@ -10,6 +94,41 @@ export interface Facility {
   phone: string;
 }
 
+// Tracking and Reporting
+export interface ZipcodeInfo {
+  zip: string;
+  city: string;
+  state: string;
+  lat?: number;
+  long?: number;
+}
+
+export enum SupportFAQTypes {
+  DeleteLetter = 'DeleteLetter',
+  NotArrived = 'NotArrived',
+  WrongReturnAddress = 'WrongReturnAddress',
+  WrongMailingAddress = 'WrongMailingAddress',
+  TrackingNumber = 'TrackingNumber',
+  TrackingError = 'TrackingError',
+  TalkToAmeelio = 'TalkToAmeelio',
+}
+
+export enum DeliveryReportTypes {
+  received = 'received',
+  unsure = 'unsure',
+  notYetReceived = 'notYetReceived',
+  haveNotAsked = 'haveNotAsked',
+  haveNotReceived = 'haveNotReceived',
+}
+
+export interface TrackingEvent {
+  id: number;
+  name: string;
+  location?: ZipcodeInfo;
+  date: Date;
+}
+
+// Miscelaneous
 export enum ProfilePicTypes {
   Topbar = 'Topbar',
   Contact = 'Contact',
@@ -23,69 +142,9 @@ export enum Storage {
   DraftRecipientId = 'Ameelio-DraftRecipientId',
 }
 
-export enum PrisonTypes {
-  State = 'State Prison',
-  Federal = 'Federal Prison',
-  County = 'County Jail',
-  Immigration = 'ICE Detention Center',
-}
-
-export enum SupportFAQTypes {
-  DeleteLetter = 'DeleteLetter',
-  NotArrived = 'NotArrived',
-  WrongReturnAddress = 'WrongReturnAddress',
-  WrongMailingAddress = 'WrongMailingAddress',
-  TrackingNumber = 'TrackingNumber',
-  TrackingError = 'TrackingError',
-  TalkToAmeelio = 'TalkToAmeelio',
-}
-
-export enum LetterStatus {
-  Draft = 'Draft',
-  Created = 'Created',
-  Mailed = 'Mailed',
-  InTransit = 'In Transit',
-  InLocalArea = 'In Local Area',
-  ProcessedForDelivery = 'Processed for Delivery',
-  Delivered = 'Delivered',
-  ReturnedToSender = 'Returned to Sender',
-  Rerouted = 'Re-Routed',
-}
-
-export enum LetterTypes {
-  Postcard = 'postcard',
-  Letter = 'letter',
-}
-
-export enum DeliveryReportTypes {
-  received = 'received',
-  unsure = 'unsure',
-  notYetReceived = 'notYetReceived',
-  haveNotAsked = 'haveNotAsked',
-  haveNotReceived = 'haveNotReceived',
-}
-
-export interface Letter {
-  type: LetterTypes;
-  status: LetterStatus;
-  isDraft: boolean;
-  recipientId: number;
-  content: string;
-  photo?: Photo;
-  letterId?: number;
-  expectedDeliveryDate?: Date;
-  dateCreated?: Date;
-  lobStatus?: string;
-  lastLobUpdate?: Date;
-  trackingEvents?: LetterTrackingEvent[];
-}
-
-export interface LetterTrackingEvent {
-  id: number;
-  name: string;
-  location?: ZipcodeInfo;
-  date: Date;
-}
+export type TopbarBackAction = {
+  action: () => void | Promise<void>;
+};
 
 export type TopbarRouteAction = {
   enabled: boolean;
@@ -93,18 +152,3 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
-
-export interface ZipcodeInfo {
-  zip: string;
-  city: string;
-  state: string;
-  lat?: number;
-  long?: number;
-}
-
-export interface Photo {
-  type?: 'image' | string;
-  width?: number;
-  height?: number;
-  uri: string;
-}

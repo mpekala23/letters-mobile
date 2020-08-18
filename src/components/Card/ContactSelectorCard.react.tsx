@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { ProfilePicTypes, Letter } from 'types';
+import { ProfilePicTypes, Mail } from 'types';
 import { format } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { haversine } from '@utils';
@@ -14,7 +14,7 @@ interface Props {
   firstName: string;
   lastName: string;
   imageUri?: string;
-  letters?: Letter[];
+  mail?: Mail[];
   onPress: () => void;
   style?: ViewStyle;
   userPostal?: string;
@@ -27,17 +27,17 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     const updateLettersTravelled = async (): Promise<void> => {
       try {
-        if (props.userPostal && props.contactPostal && props.letters) {
+        if (props.userPostal && props.contactPostal && props.mail) {
           const loc1 = await getZipcode(props.userPostal);
           const loc2 = await getZipcode(props.contactPostal);
-          setLettersTravelled(haversine(loc1, loc2) * props.letters.length);
+          setLettersTravelled(haversine(loc1, loc2) * props.mail.length);
         }
       } catch (err) {
         setLettersTravelled(0);
       }
     };
     updateLettersTravelled();
-  }, [props.letters, props.userPostal, props.contactPostal]);
+  }, [props.mail, props.userPostal, props.contactPostal]);
 
   return (
     <TouchableOpacity
@@ -59,19 +59,17 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
             <Emoji name="love_letter" />{' '}
             {i18n.t('SingleContactScreen.received')}:{' '}
-            {props.letters ? props.letters.length : 0}
+            {props.mail ? props.mail.length : 0}
           </Text>
-          {props.letters &&
-            props.letters.length > 0 &&
-            props.letters[0].dateCreated && (
-              <Text
-                style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}
-              >
-                <Emoji name="calendar" />{' '}
-                {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-                {format(props.letters[0].dateCreated, 'MMM dd')}
-              </Text>
-            )}
+          {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
+            <Text
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}
+            >
+              <Emoji name="calendar" />{' '}
+              {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
+              {format(props.mail[0].dateCreated, 'MMM dd')}
+            </Text>
+          )}
           <Text
             style={[
               Typography.FONT_REGULAR,
@@ -90,7 +88,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 
 ContactSelectorCard.defaultProps = {
   imageUri: '',
-  letters: [],
+  mail: [],
   style: {},
   userPostal: '',
   contactPostal: '',

@@ -73,6 +73,7 @@
     "redux-persist-expo-securestore": "^2.0.0",
     "url": "^0.11.0",
     "utf-8-validate": "^5.0.2",
+    "expo-media-library": "~8.2.1",
     "react-native-safe-area-context": "~3.0.7"
   },
   "devDependencies": {

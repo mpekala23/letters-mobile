@@ -13,12 +13,12 @@ import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { Letter } from 'types';
+import { Mail } from 'types';
 import i18n from '@i18n';
 import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken } from '@api';
+import { getContacts, getUser, uploadPushToken, getZipcode } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
@@ -37,7 +37,7 @@ interface State {
 
 interface Props {
   existingContacts: Contact[];
-  existingLetters: Record<number, Letter[]>;
+  existingMail: Record<number, Mail[]>;
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
@@ -102,7 +102,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         firstName={item.firstName}
         lastName={item.lastName}
         imageUri={item.photo?.uri}
-        letters={this.props.existingLetters[item.id]}
+        mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);
           this.props.navigation.navigate('SingleContact');
@@ -177,7 +177,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   existingContacts: state.contact.existing,
-  existingLetters: state.letter.existing,
+  existingMail: state.mail.existing,
   currentNotif: state.notif.currentNotif,
   userPostal: state.user.user.postal,
   userId: state.user.user.id,

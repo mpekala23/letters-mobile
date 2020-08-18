@@ -1,22 +1,22 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { LetterTrackingEvent, LetterStatus } from 'types';
+import { TrackingEvent, MailStatus } from 'types';
 import { format } from 'date-fns';
 
 export interface Props {
-  trackingEvent: LetterTrackingEvent;
+  trackingEvent: TrackingEvent;
 }
 
 function mapStatustoTrackerColor(type: string) {
   switch (type) {
-    case LetterStatus.Mailed:
+    case MailStatus.Mailed:
       return Colors.GREEN_LIGHTER;
-    case LetterStatus.InTransit:
+    case MailStatus.InTransit:
       return Colors.GREEN_LIGHT;
-    case LetterStatus.ProcessedForDelivery:
+    case MailStatus.ProcessedForDelivery:
       return Colors.GREEN_DARK;
-    case LetterStatus.Delivered:
+    case MailStatus.Delivered:
       return Colors.GREEN_DARKER;
     default:
       return '';
@@ -27,13 +27,13 @@ const LetterTracker: React.FC<Props> = (props: Props) => {
   const { name, location, date } = props.trackingEvent;
   const dateFormatted = date ? format(date, 'MMM dd, yyyy') : '';
   const timeFormatted =
-    name !== LetterStatus.Delivered ? format(date, 'h:mm a') : '';
+    name !== MailStatus.Delivered ? format(date, 'h:mm a') : '';
 
   if (
-    name === LetterStatus.Mailed ||
-    name === LetterStatus.InTransit ||
-    name === LetterStatus.ProcessedForDelivery ||
-    name === LetterStatus.Delivered
+    name === MailStatus.Mailed ||
+    name === MailStatus.InTransit ||
+    name === MailStatus.ProcessedForDelivery ||
+    name === MailStatus.Delivered
   ) {
     return (
       <View>

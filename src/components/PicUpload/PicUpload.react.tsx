@@ -3,13 +3,13 @@ import {
   TouchableOpacity,
   ViewStyle,
   View,
-  Image,
+  Image as ImageComponent,
   Linking,
   Keyboard,
 } from 'react-native';
 import i18n from '@i18n';
 import { pickImage, takeImage } from '@utils';
-import { Photo } from 'types';
+import { Image } from 'types';
 import Camera from '@assets/components/PicUpload/Camera';
 import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
@@ -30,18 +30,18 @@ export interface Props {
   children?: JSX.Element;
   width: number;
   height: number;
-  onSuccess?: (image: Photo) => void;
+  onSuccess?: (image: Image) => void;
   onDelete?: () => void;
   aspect: [number, number];
   allowsEditing: boolean;
-  initial: Photo;
+  initial: Image;
   segmentOnPressLog?: () => void;
   segmentSuccessLog?: () => void;
   segmentErrorLogEvent?: string;
 }
 
 export interface State {
-  image: Photo | null;
+  image: Image | null;
 }
 
 class PicUpload extends React.Component<Props, State> {
@@ -62,7 +62,7 @@ class PicUpload extends React.Component<Props, State> {
     };
   }
 
-  getImage = (): Photo | null => {
+  getImage = (): Image | null => {
     return this.state.image;
   };
 
@@ -193,7 +193,7 @@ class PicUpload extends React.Component<Props, State> {
     let innerCircle;
     if (image && image.uri.slice(-4) !== '.svg') {
       innerCircle = (
-        <Image
+        <ImageComponent
           source={{ uri: image.uri }}
           style={{
             width:

@@ -4,7 +4,8 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo } from 'types';
+import { ZipcodeInfo, Category } from 'types';
+import i18n from '@i18n';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -229,5 +230,19 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
     Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const d = R * c;
-  return d * 0.000621371;
+  return Math.round(d * 0.000621371);
+}
+
+export const PERSONAL_CATEGORY: Category = {
+  id: -6,
+  name: 'personal',
+  image: {
+    uri:
+      'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2020/05/26/142110_1344640.jpg.1500x1000_q95_crop-smart_upscale.jpg',
+  },
+  blurb: i18n.t('Compose.yourOwnLettersAndPhotos'),
+};
+
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

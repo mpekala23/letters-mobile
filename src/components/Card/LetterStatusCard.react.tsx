@@ -1,33 +1,33 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { LetterStatus } from 'types';
+import { MailStatus } from 'types';
 import { Colors, Typography } from '@styles';
 import { format } from 'date-fns';
 import CardStyles from './Card.styles';
 
 interface Props {
-  status: LetterStatus;
+  status: MailStatus;
   date?: Date;
   description: string;
   onPress: () => void;
   style?: ViewStyle;
 }
 
-function mapStatusToColorStyle(type: LetterStatus) {
+function mapStatusToColorStyle(type: MailStatus) {
   switch (type) {
-    case LetterStatus.Created:
+    case MailStatus.Created:
       return { backgroundColor: Colors.GREEN_LIGHTEST };
-    case LetterStatus.Mailed:
+    case MailStatus.Mailed:
       return { backgroundColor: Colors.GREEN_LIGHTER };
-    case LetterStatus.InTransit:
+    case MailStatus.InTransit:
       return { backgroundColor: Colors.GREEN_LIGHT };
-    case LetterStatus.InLocalArea:
+    case MailStatus.InLocalArea:
       return { backgroundColor: Colors.GREEN_DARK };
-    case LetterStatus.ProcessedForDelivery:
+    case MailStatus.ProcessedForDelivery:
       return { backgroundColor: Colors.GREEN_DARKER };
-    case LetterStatus.Delivered:
+    case MailStatus.Delivered:
       return { backgroundColor: Colors.GREEN_DARKEST };
-    case LetterStatus.ReturnedToSender:
+    case MailStatus.ReturnedToSender:
       return { backgroundColor: Colors.AMEELIO_RED };
     default:
       return { backgroundColor: Colors.GREEN_LIGHTEST };

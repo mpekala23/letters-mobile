@@ -20,8 +20,8 @@ import { loginWithToken } from '@api';
 import i18n from '@i18n';
 import { Contact } from '@store/Contact/ContactTypes';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
-import { Letter } from 'types';
+import { setActive as setActiveMail } from '@store/Mail/MailActions';
+import { Mail } from 'types';
 import { addBusinessDays } from 'date-fns';
 
 export const navigationRef = createRef<NavigationContainerRef>();
@@ -158,7 +158,7 @@ class NotifsBase {
       }
     }
     let contact: Contact | null = null;
-    let letter: Letter | null = null;
+    let mail: Mail | null = null;
     const getContact = (id: number): Contact | null => {
       for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
         if (id === state.contact.existing[ix].id) {
@@ -167,10 +167,10 @@ class NotifsBase {
       }
       return null;
     };
-    const getLetter = (contactId: number, letterId: number): Letter | null => {
-      for (let jx = 0; jx < state.letter.existing[contactId].length; jx += 1) {
-        if (letterId === state.letter.existing[contactId][jx].letterId) {
-          return state.letter.existing[contactId][jx];
+    const getMail = (contactId: number, id: number): Mail | null => {
+      for (let jx = 0; jx < state.mail.existing[contactId].length; jx += 1) {
+        if (id === state.mail.existing[contactId][jx].id) {
+          return state.mail.existing[contactId][jx];
         }
       }
       return null;
@@ -181,15 +181,15 @@ class NotifsBase {
         contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
-        letter = getLetter(contact.id, notif.data.letterId);
-        if (!letter) {
+        mail = getMail(contact.id, notif.data.letterId);
+        if (!mail) {
           resetNavigation({
             index: 0,
             routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
           });
           break;
         }
-        store.dispatch(setActiveLetter(letter));
+        store.dispatch(setActiveMail(mail));
         resetNavigation({
           index: 0,
           routes: [
@@ -204,15 +204,15 @@ class NotifsBase {
         contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
-        letter = getLetter(contact.id, notif.data.letterId);
-        if (!letter) {
+        mail = getMail(contact.id, notif.data.letterId);
+        if (!mail) {
           resetNavigation({
             index: 0,
             routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
           });
           break;
         }
-        store.dispatch(setActiveLetter(letter));
+        store.dispatch(setActiveMail(mail));
         this.scheduleNotification(
           {
             title: `${i18n.t('Notifs.hasYourLovedOne')}`,
@@ -221,7 +221,7 @@ class NotifsBase {
               type: NotifTypes.HasReceived,
               data: {
                 contactId: contact.id,
-                letterId: letter.letterId,
+                letterId: mail.id,
               },
             },
           },
@@ -241,15 +241,15 @@ class NotifsBase {
         contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
-        letter = getLetter(contact.id, notif.data.letterId);
-        if (!letter) {
+        mail = getMail(contact.id, notif.data.letterId);
+        if (!mail) {
           resetNavigation({
             index: 0,
             routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
           });
           break;
         }
-        store.dispatch(setActiveLetter(letter));
+        store.dispatch(setActiveMail(mail));
         resetNavigation({
           index: 0,
           routes: [
@@ -275,15 +275,15 @@ class NotifsBase {
         contact = getContact(notif.data.contactId);
         if (!contact) break;
         store.dispatch(setActiveContact(contact));
-        letter = getLetter(contact.id, notif.data.letterId);
-        if (!letter) {
+        mail = getMail(contact.id, notif.data.letterId);
+        if (!mail) {
           resetNavigation({
             index: 0,
             routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
           });
           break;
         }
-        store.dispatch(setActiveLetter(letter));
+        store.dispatch(setActiveMail(mail));
         resetNavigation({
           index: 0,
           routes: [

@@ -8,6 +8,7 @@ import {
 import {
   AddManuallyScreen,
   BeginScreen,
+  ChooseCategoryScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
@@ -17,22 +18,21 @@ import {
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
-  LetterPreviewScreen,
-  LetterTrackingScreen,
-  MemoryLaneScreen,
-  LetterDetailsScreen,
   LoginScreen,
-  PostcardPreviewScreen,
+  MailTrackingScreen,
+  MemoryLaneScreen,
+  MailDetailsScreen,
   PrivacyScreen,
   ReferFriendsScreen,
   RegisterScreen,
+  ReviewLetterScreen,
+  ReviewPostcardScreen,
   ReviewContactScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,
-  ThanksScreen,
   UpdateContactScreen,
   UpdateProfileScreen,
 } from '@views';
@@ -40,7 +40,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { SupportFAQTypes, DeliveryReportTypes } from 'types';
+import { SupportFAQTypes, DeliveryReportTypes, Category } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -65,29 +65,30 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AddManually: { phyState: string };
+  ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
-  ComposePostcard: undefined;
+  ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
-  Home: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
-  LetterDetails: undefined;
-  LetterTracking: undefined;
+  MailDetails: undefined;
+  MailTracking: undefined;
   MemoryLane: undefined;
   ReferFriends: undefined;
+  ReviewLetter: undefined;
+  ReviewPostcard: undefined;
   ReviewContact: undefined;
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
-  Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
   UpdateProfile: undefined;
 };
@@ -106,24 +107,26 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
   Register: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
+  ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
-  Home: { title: i18n.t('Screens.home'), profile: true },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
-  LetterDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
-  LetterPreview: { title: i18n.t('Screens.lastStep'), profile: false },
-  LetterTracking: { title: i18n.t('Screens.tracking'), profile: true },
+  MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
+  MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
   MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
-  PostcardPreview: { title: i18n.t('Screens.postcardPreview'), profile: false },
   ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
+  ReviewLetter: { title: i18n.t('Screens.lastStep'), profile: false },
+  ReviewPostcard: {
+    title: i18n.t('Screens.reviewPostcard'),
+    profile: false,
+  },
   ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home'), profile: true },
-  Thanks: { title: i18n.t('Screens.thanks'), profile: false },
   UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
   UpdateProfile: { title: i18n.t('Screens.updateProfile'), profile: false },
 };
@@ -239,17 +242,15 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
+        <Stack.Screen name="ChooseCategory" component={ChooseCategoryScreen} />
         <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
         <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
           name="ComposePostcard"
           component={ComposePostcardScreen}
         />
-        <Stack.Screen name="LetterPreview" component={LetterPreviewScreen} />
-        <Stack.Screen
-          name="PostcardPreview"
-          component={PostcardPreviewScreen}
-        />
+        <Stack.Screen name="ReviewLetter" component={ReviewLetterScreen} />
+        <Stack.Screen name="ReviewPostcard" component={ReviewPostcardScreen} />
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
@@ -271,11 +272,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           name="IssuesDetailSecondary"
           component={IssuesDetailSecondaryScreen}
         />
-        <Stack.Screen name="Thanks" component={ThanksScreen} />
         <Stack.Screen name="SingleContact" component={SingleContactScreen} />
-        <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
+        <Stack.Screen name="MailTracking" component={MailTrackingScreen} />
         <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
-        <Stack.Screen name="LetterDetails" component={LetterDetailsScreen} />
+        <Stack.Screen name="MailDetails" component={MailDetailsScreen} />
         <Stack.Screen name="SupportFAQ" component={SupportFAQScreen} />
         <Stack.Screen
           name="SupportFAQDetail"

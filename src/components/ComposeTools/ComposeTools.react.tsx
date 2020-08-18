@@ -11,7 +11,7 @@ import PicUpload from '../PicUpload/PicUpload.react';
 interface Props {
   keyboardOpacity: Animated.Value;
   numLeft: number;
-  picRef: RefObject<PicUpload>;
+  picRef?: RefObject<PicUpload>;
 }
 
 const ComposeTools: React.FC<Props> = (props: Props) => {
@@ -42,17 +42,21 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
             {props.numLeft} left
           </Text>
         </View>
-        <TouchableOpacity
-          style={[Styles.keyboardButtonItem, { flex: 1 }]}
-          onPress={async () => {
-            Keyboard.dismiss();
-            if (props.picRef.current) {
-              await props.picRef.current.selectImage();
-            }
-          }}
-        >
-          <Icon svg={ImageIcon} />
-        </TouchableOpacity>
+        {props.picRef ? (
+          <TouchableOpacity
+            style={[Styles.keyboardButtonItem, { flex: 1 }]}
+            onPress={async () => {
+              Keyboard.dismiss();
+              if (props.picRef && props.picRef.current) {
+                await props.picRef.current.selectImage();
+              }
+            }}
+          >
+            <Icon svg={ImageIcon} />
+          </TouchableOpacity>
+        ) : (
+          <View style={{ flex: 1 }} />
+        )}
         <TouchableOpacity
           style={[Styles.keyboardButtonItem, { flex: 1 }]}
           onPress={Keyboard.dismiss}
@@ -62,6 +66,10 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
       </TouchableOpacity>
     </Animated.View>
   );
+};
+
+ComposeTools.defaultProps = {
+  picRef: undefined,
 };
 
 export default ComposeTools;
