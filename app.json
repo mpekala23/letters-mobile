@@ -20,7 +20,8 @@
         "foregroundImage": "./src/assets/icons/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"]
+      "permissions": ["CAMERA", "AUDIO_RECORDING", "CAMERA_ROLL"],
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "buildNumber": "1.0.5",
