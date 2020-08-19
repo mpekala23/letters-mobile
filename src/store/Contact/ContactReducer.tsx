@@ -1,4 +1,4 @@
-import { PrisonTypes } from 'types';
+import { PrisonTypes, Contact } from 'types';
 import {
   ContactState,
   ContactActionTypes,
@@ -51,6 +51,7 @@ export default function ContactReducer(
   action: ContactActionTypes
 ): ContactState {
   const currentState = { ...state };
+  let ix = -1;
   switch (action.type) {
     case SET_ADDING:
       currentState.adding = action.payload;
@@ -68,10 +69,11 @@ export default function ContactReducer(
       currentState.existing = action.payload;
       return currentState;
     case UPDATE_CONTACT:
-      for (let ix = 0; ix < currentState.existing.length; ix += 1) {
-        if (currentState.existing[ix].id === action.payload.id) {
-          currentState.existing[ix] = action.payload;
-        }
+      ix = currentState.existing.findIndex(
+        (contact: Contact) => contact.id === action.payload.id
+      );
+      if (ix >= 0) {
+        currentState.existing[ix] = action.payload;
       }
       return currentState;
     case CLEAR_CONTACTS:

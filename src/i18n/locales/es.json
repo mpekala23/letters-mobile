@@ -343,7 +343,8 @@
     "iWouldLikeToSend": "I would like to send something:",
     "registerAccount": "Register Account",
     "enterBasic": "Enter Basic Information",
-    "weWillOnly": "We will only use your address information as the return address for the mailed letter."
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
     "happy": "Feliz",
