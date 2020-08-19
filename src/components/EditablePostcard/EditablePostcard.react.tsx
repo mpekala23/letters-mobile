@@ -1,10 +1,9 @@
 import React, { createRef } from 'react';
 import { View, Animated, Image, Text } from 'react-native';
-import { PostcardDesign } from 'types';
+import { PostcardDesign, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
-import { Contact } from '@store/Contact/ContactTypes';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';

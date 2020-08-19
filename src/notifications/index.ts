@@ -18,10 +18,9 @@ import {
 import { AppState } from '@store/types';
 import { loginWithToken } from '@api';
 import i18n from '@i18n';
-import { Contact } from '@store/Contact/ContactTypes';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
-import { Mail } from 'types';
+import { Mail, Contact } from 'types';
 import { addBusinessDays } from 'date-fns';
 
 export const navigationRef = createRef<NavigationContainerRef>();

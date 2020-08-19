@@ -2,7 +2,6 @@ import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   View,
-  Image as ImageComponent,
   FlatList,
   TouchableOpacity,
   Animated,
@@ -12,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign, Draft, Image, Category } from 'types';
+import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage } from '@utils';
 import {
@@ -26,12 +25,10 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
-import { saveDraft, getCategories, getSubcategories } from '@api';
-import { Contact } from '@store/Contact/ContactTypes';
+import { saveDraft, getSubcategories } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import Styles from './Compose.styles';
 

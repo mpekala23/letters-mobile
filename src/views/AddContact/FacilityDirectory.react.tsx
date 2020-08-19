@@ -12,15 +12,11 @@ import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon } from '@components';
-import { Facility } from 'types';
+import { Facility, ContactFacility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setAdding } from '@store/Contact/ContactActions';
-import {
-  ContactState,
-  Contact,
-  ContactActionTypes,
-} from '@store/Contact/ContactTypes';
+import { setAddingFacility } from '@store/Contact/ContactActions';
+import { ContactState, ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -42,7 +38,7 @@ export interface Props {
     params: { phyState: string };
   };
   contactState: ContactState;
-  setAdding: (contact: Contact) => void;
+  setAddingFacility: (contactFacility: ContactFacility) => void;
 }
 
 export interface State {
@@ -108,10 +104,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         Segment.trackWithProperties('Add Contact - Click on Next', {
           page: 'facility',
         });
-        const contact = this.props.contactState.adding;
-        contact.facility = this.state.selected;
-        this.props.setAdding(contact);
-        this.props.navigation.navigate('ReviewContact');
+        if (this.state.selected) {
+          this.props.setAddingFacility({ facility: this.state.selected });
+          this.props.navigation.navigate('ReviewContact');
+        }
       },
     });
   }
@@ -124,10 +120,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         Segment.trackWithProperties('Add Contact - Click on Next', {
           page: 'facility',
         });
-        const contact = this.props.contactState.adding;
-        contact.facility = this.state.selected;
-        this.props.setAdding(contact);
-        this.props.navigation.navigate('ReviewContact');
+        if (this.state.selected) {
+          this.props.setAddingFacility({ facility: this.state.selected });
+          this.props.navigation.navigate('ReviewContact');
+        }
       },
     });
   }
@@ -329,7 +325,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAddingFacility: (contactFacility: ContactFacility) =>
+      dispatch(setAddingFacility(contactFacility)),
   };
 };
 const FacilityDirectoryScreen = connect(

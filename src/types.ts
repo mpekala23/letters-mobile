@@ -94,6 +94,29 @@ export interface Facility {
   phone: string;
 }
 
+// Contacts
+export interface ContactPersonal {
+  firstName: string;
+  lastName: string;
+  inmateNumber: string;
+  relationship: string;
+  image?: Image;
+}
+
+export interface ContactFacility {
+  facility: Facility;
+  dorm?: string;
+  unit?: string;
+}
+
+interface ContactCreated {
+  id: number;
+}
+
+export interface ContactDraft extends ContactPersonal, ContactFacility {}
+
+export interface Contact extends ContactDraft, ContactCreated {}
+
 // Tracking and Reporting
 export interface ZipcodeInfo {
   zip: string;

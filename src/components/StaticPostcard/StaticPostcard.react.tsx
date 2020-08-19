@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { Draft, MailTypes } from 'types';
+import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
-import { Contact } from '@store/Contact/ContactTypes';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 

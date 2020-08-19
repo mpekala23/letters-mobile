@@ -15,12 +15,8 @@ import { Button, Input, PicUpload } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
-import {
-  Contact,
-  ContactActionTypes,
-  ContactState,
-} from '@store/Contact/ContactTypes';
-import { Facility, Image } from 'types';
+import { ContactActionTypes, ContactState } from '@store/Contact/ContactTypes';
+import { ContactDraft, Facility, Image, Contact } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding, setActive } from '@store/Contact/ContactActions';
@@ -47,7 +43,7 @@ export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
   hasSentLetter: boolean;
-  setAdding: (contact: Contact) => void;
+  setAdding: (contactDraft: ContactDraft) => void;
   setActiveContact: (contact: Contact) => void;
 }
 
@@ -127,8 +123,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.postal.current &&
       this.facilityName.current &&
-      this.facilityAddress.current &&
-      this.props.contactState.adding.facility
+      this.facilityAddress.current
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
@@ -139,14 +134,13 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         postal: this.postal.current.state.value,
         phone: this.props.contactState.adding.facility.phone,
       };
-      const contact: Contact = {
-        id: -1,
+      const contactDraft: ContactDraft = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
         facility,
-        photo: this.state.image ? this.state.image : undefined,
+        image: this.state.image ? this.state.image : undefined,
         unit: this.unit.current?.state.value,
         dorm: this.dorm.current?.state.value,
       };
@@ -155,40 +149,39 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         // Check if contact being added already exists
         for (let ix = 0; ix < existing.length; ix += 1) {
           if (
-            contact.facility &&
-            existing[ix].firstName === contact.firstName &&
-            existing[ix].lastName === contact.lastName &&
-            existing[ix].inmateNumber === contact.inmateNumber &&
-            existing[ix].relationship === contact.relationship &&
-            existing[ix].facility?.name === contact.facility.name &&
-            existing[ix].facility?.address === contact.facility.address &&
-            existing[ix].facility?.city === contact.facility.city &&
-            existing[ix].facility?.postal === contact.facility.postal &&
-            existing[ix].facility?.state === contact.facility.state &&
-            existing[ix].facility?.type === contact.facility.type
+            existing[ix].firstName === contactDraft.firstName &&
+            existing[ix].lastName === contactDraft.lastName &&
+            existing[ix].inmateNumber === contactDraft.inmateNumber &&
+            existing[ix].relationship === contactDraft.relationship &&
+            existing[ix].facility.name === contactDraft.facility.name &&
+            existing[ix].facility.address === contactDraft.facility.address &&
+            existing[ix].facility.city === contactDraft.facility.city &&
+            existing[ix].facility.postal === contactDraft.facility.postal &&
+            existing[ix].facility.state === contactDraft.facility.state &&
+            existing[ix].facility.type === contactDraft.facility.type
           ) {
             throw Error('Contact already exists');
           }
         }
-        const newContact = await addContact(contact);
+        const newContact = await addContact(contactDraft);
         Segment.trackWithProperties('Add Contact - Success', {
-          relationship: contact.relationship,
-          facility: contact.facility?.name,
-          facilityCity: contact.facility?.city,
-          facilityState: contact.facility?.state,
-          facilityPostal: contact.facility?.postal,
-          facilityType: contact.facility?.type,
+          relationship: newContact.relationship,
+          facility: newContact.facility.name,
+          facilityCity: newContact.facility.city,
+          facilityState: newContact.facility.state,
+          facilityPostal: newContact.facility.postal,
+          facilityType: newContact.facility.type,
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
           Notifs.scheduleNotificationInHours(
             {
-              title: `${i18n.t('Notifs.readyToSend')} ${contact.firstName}?`,
+              title: `${i18n.t('Notifs.readyToSend')} ${newContact.firstName}?`,
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
               data: {
                 type: NotifTypes.NoFirstLetter,
                 data: {
-                  contactId: contact.id,
+                  contactId: newContact.id,
                 },
               },
             },
@@ -405,7 +398,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAdding: (contactDraft: ContactDraft) =>
+      dispatch(setAdding(contactDraft)),
   };
 };
 const ReviewContactScreen = connect(

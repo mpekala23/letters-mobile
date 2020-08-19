@@ -21,17 +21,13 @@ import {
 } from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setAdding } from '@store/Contact/ContactActions';
-import {
-  ContactState,
-  Contact,
-  ContactActionTypes,
-} from '@store/Contact/ContactTypes';
-import { UserState } from '@store/User/UserTypes';
+import { setAddingPersonal } from '@store/Contact/ContactActions';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
+import { ContactPersonal, ContactDraft } from 'types';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -41,12 +37,11 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ContactInfoScreenNavigationProp;
-  userState: UserState;
-  contactState: ContactState;
+  contactDraft: ContactDraft;
   route: {
     params: { addFromSelector?: boolean; phyState?: string };
   };
-  setAdding: (contact: Contact) => void;
+  setAddingPersonal: (contactPersonal: ContactPersonal) => void;
 }
 
 export interface State {
@@ -122,15 +117,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.inmateNumber.current &&
       this.relationship.current
     ) {
-      const contact: Contact = {
-        id: -1,
+      const contactPersonal: ContactPersonal = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.inmateNumber.current.state.value,
         relationship: this.relationship.current.state.value,
-        facility: this.props.contactState.adding.facility,
       };
-      this.props.setAdding(contact);
+      this.props.setAddingPersonal(contactPersonal);
       this.props.navigation.setParams({
         phyState: this.stateRef.current.state.value,
       });
@@ -150,7 +143,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   loadValuesFromStore() {
-    const addingContact = this.props.contactState.adding;
+    const addingContact = this.props.contactDraft;
     if (this.props.route.params && this.props.route.params.addFromSelector) {
       if (this.stateRef.current)
         this.stateRef.current.setState({ dirty: false });
@@ -377,12 +370,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
-  contactState: state.contact,
+  contactDraft: state.contact.adding,
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAddingPersonal: (contactPersonal: ContactPersonal) =>
+      dispatch(setAddingPersonal(contactPersonal)),
   };
 };
 const ContactInfoScreen = connect(
