@@ -153,12 +153,12 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             existing[ix].lastName === contactDraft.lastName &&
             existing[ix].inmateNumber === contactDraft.inmateNumber &&
             existing[ix].relationship === contactDraft.relationship &&
-            existing[ix].facility?.name === contactDraft.facility.name &&
-            existing[ix].facility?.address === contactDraft.facility.address &&
-            existing[ix].facility?.city === contactDraft.facility.city &&
-            existing[ix].facility?.postal === contactDraft.facility.postal &&
-            existing[ix].facility?.state === contactDraft.facility.state &&
-            existing[ix].facility?.type === contactDraft.facility.type
+            existing[ix].facility.name === contactDraft.facility.name &&
+            existing[ix].facility.address === contactDraft.facility.address &&
+            existing[ix].facility.city === contactDraft.facility.city &&
+            existing[ix].facility.postal === contactDraft.facility.postal &&
+            existing[ix].facility.state === contactDraft.facility.state &&
+            existing[ix].facility.type === contactDraft.facility.type
           ) {
             throw Error('Contact already exists');
           }
