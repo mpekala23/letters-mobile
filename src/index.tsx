@@ -11,6 +11,7 @@ import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
 import Constants from 'expo-constants';
+import * as Sentry from 'sentry-expo';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -41,6 +42,12 @@ export default class App extends React.Component<null, State> {
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();
+    Sentry.init({
+      dsn:
+        'https://15e7f78b44064e1eb57afb5c8a239122@o434922.ingest.sentry.io/5392541',
+      release: process.env.APP_RELEASE || '1.0.11',
+    });
+
     const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys([
       Constants.manifest.releaseChannel
         ? Constants.manifest.releaseChannel
