@@ -36,7 +36,7 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
       testID="memoryLaneCard"
     >
-      {props.type === MailTypes.Postcard ? (
+      {props.type === MailTypes.Postcard && props.imageUri !== '' ? (
         <ImageBackground
           style={CardStyles.memoryLanePostcardPicture}
           source={{ uri: props.imageUri }}

@@ -55,7 +55,7 @@ class LoginScreen extends React.Component<Props, State> {
   }
 
   devSkip = async (): Promise<void> => {
-    if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org7');
+    if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org');
     if (this.passwordRef.current) this.passwordRef.current.set('ThisGood1');
     setTimeout(() => {
       this.onLogin();
@@ -233,7 +233,7 @@ class LoginScreen extends React.Component<Props, State> {
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>
                 </View>
-                {null && (
+                {true && (
                   <Button onPress={this.devSkip} buttonText="Dev Skip" />
                 )}
                 <View style={{ width: '100%', height: 100 }} />

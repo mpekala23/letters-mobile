@@ -107,6 +107,12 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
                 dropdownError({
                   message: i18n.t('Error.letterTooLong'),
                 });
+              } else if (
+                err.data.content === 'The content field is required.'
+              ) {
+                dropdownError({
+                  message: i18n.t('Compose.letterMustHaveContent'),
+                });
               } else {
                 dropdownError({
                   message: i18n.t('Error.requestIncomplete'),

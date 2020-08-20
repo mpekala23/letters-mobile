@@ -134,7 +134,7 @@ export function isValidCreditCard(card: string): boolean {
 }
 
 export function isValidInmateNumber(number: string): boolean {
-  return /^[0-9-]*$/.test(number);
+  return number.length > 0;
 }
 
 export function isValidAddress(address: string): boolean {

@@ -42,16 +42,19 @@ export default class App extends React.Component<null, State> {
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();
-    Sentry.init({
-      dsn:
-        'https://15e7f78b44064e1eb57afb5c8a239122@o434922.ingest.sentry.io/5392541',
-      release: process.env.APP_RELEASE || '1.0.11',
-    });
+    const releaseChannel = Constants.manifest.releaseChannel
+      ? Constants.manifest.releaseChannel
+      : '';
+    if (releaseChannel && releaseChannel.indexOf('prod') !== -1) {
+      Sentry.init({
+        dsn:
+          'https://15e7f78b44064e1eb57afb5c8a239122@o434922.ingest.sentry.io/5392541',
+        release: process.env.APP_RELEASE || '1.0.11',
+      });
+    }
 
     const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys([
-      Constants.manifest.releaseChannel
-        ? Constants.manifest.releaseChannel
-        : '',
+      releaseChannel,
     ]);
     Segment.initialize({ androidWriteKey, iosWriteKey });
     Segment.track('App Open');
