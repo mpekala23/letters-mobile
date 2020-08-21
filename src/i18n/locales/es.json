@@ -6,7 +6,7 @@
   },
   "Error": {
     "network": "Error de red",
-    "requestTimedOut": "Se ha agotado el tiempo de espera de la solicitud.",
+    "requestTimedOut": "Se ha agotado el tiempo de espera de la solicitud. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "requestIncomplete": "No se pudo completar esta acción.",
     "unsavedToken": "No se pueden guardar las credenciales de acceso para la próxima vez",
     "cantLogout": "No se puede cerrar la sesión del usuario",
@@ -18,7 +18,8 @@
     "unableToUploadContactPicture": "No se puede subir la nueva imagen de contacto. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
-    "letterTooLong": "Su carta no puede exceder los 16,000 caracteres."
+    "letterTooLong": "Su carta no puede exceder los 16,000 caracteres.",
+    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -117,7 +118,7 @@
     "talkToSomeoneAtAmeelio": "Habla con alguien en Ameelio",
     "tryMessagingUsOnFacebook": "Envíenos un mensaje en Facebook. Estamos aqui para responder tus preguntas. Te daré una respuesta lo antes posible."
   },
-  "LetterTrackingScreen": {
+  "MailTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
     "estimatedArrival": "Se estima que su carta llegará",
     "needHelp": "Necesito ayuda",

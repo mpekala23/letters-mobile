@@ -3,6 +3,7 @@ import { View, Image, Text } from 'react-native';
 import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
+import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -25,8 +26,8 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             opacity: 1,
           }}
         >
-          <Image
-            style={{ width: '100%', height: '100%' }}
+          <AsyncImage
+            viewStyle={{ width: '100%', height: '100%' }}
             source={props.composing.design.image}
           />
         </View>

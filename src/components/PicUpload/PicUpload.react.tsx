@@ -19,6 +19,7 @@ import { Colors } from '@styles';
 import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 export enum PicUploadTypes {
   Profile = 'Profile',
@@ -196,9 +197,9 @@ class PicUpload extends React.Component<Props, State> {
     let innerCircle;
     if (image && image.uri.slice(-4) !== '.svg') {
       innerCircle = (
-        <ImageComponent
+        <AsyncImage
           source={{ uri: image.uri }}
-          style={{
+          viewStyle={{
             width:
               image.width && image.height
                 ? (image.width / image.height) * this.props.height

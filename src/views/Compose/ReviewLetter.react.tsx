@@ -134,12 +134,18 @@ const ReviewLetterScreenBase: React.FC<Props> = (props: Props) => {
             });
           } catch (err) {
             Segment.trackWithProperties('Review - Send Letter Failure', {
-              Option: 'Letter',
+              Option: 'letter',
               'Error Type': err,
             });
-            if (err.message === 'Unable to upload image.') {
+            if (err.message === 'Image upload timeout') {
+              // timeout that occurred during image upload
               dropdownError({
-                message: i18n.t('Error.unableToUploadLetterPhoto'),
+                message: i18n.t('Error.uploadImageTimeout'),
+              });
+            } else if (err.message === 'timeout') {
+              // timout that occurred during the normal request
+              dropdownError({
+                message: i18n.t('Error.requestTimedOut'),
               });
             } else if (
               err.data.content ===
