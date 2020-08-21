@@ -117,7 +117,7 @@
     "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio",
     "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
-  "LetterTrackingScreen": {
+  "MailTrackingScreen": {
     "letterTracking": "Letter tracking",
     "estimatedArrival": "Your letter is estimated to arrive on",
     "needHelp": "I need help",

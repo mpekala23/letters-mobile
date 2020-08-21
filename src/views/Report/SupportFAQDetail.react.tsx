@@ -75,7 +75,7 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
             { name: 'UpdateContact' },
           ],
         });
@@ -87,7 +87,7 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
             { name: 'UpdateContact' },
           ],
         });
