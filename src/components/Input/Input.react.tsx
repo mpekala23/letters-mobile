@@ -41,6 +41,7 @@ export interface Props {
   testId?: string;
   invalidFeedback?: string;
   mustMatch?: string;
+  trimWhitespace: boolean;
 }
 
 export interface State {
@@ -75,6 +76,7 @@ class Input extends React.Component<Props, State> {
     height: INPUT_HEIGHT,
     numLines: 1,
     required: false,
+    trimWhitespace: true,
   };
 
   constructor(props: Props) {
@@ -117,6 +119,9 @@ class Input extends React.Component<Props, State> {
   }
 
   onBlur(): void {
+    if (this.props.trimWhitespace) {
+      this.set(this.state.value.trim());
+    }
     this.setState({ focused: false }, () => {
       if (this.props.validate || this.props.required) {
         this.doValidate();

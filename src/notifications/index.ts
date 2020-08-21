@@ -151,7 +151,7 @@ class NotifsBase {
       } catch (err) {
         resetNavigation({
           index: 0,
-          routes: [{ name: 'Login' }],
+          routes: [{ name: 'Begin' }, { name: 'Login' }],
         });
         return;
       }
@@ -194,7 +194,7 @@ class NotifsBase {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
           ],
         });
         break;
@@ -231,7 +231,7 @@ class NotifsBase {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
           ],
         });
         break;
@@ -254,7 +254,7 @@ class NotifsBase {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
             { name: 'Issues' },
           ],
         });
@@ -288,7 +288,7 @@ class NotifsBase {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
           ],
         });
         break;
