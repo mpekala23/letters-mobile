@@ -45,8 +45,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   private lastName = createRef<Input>();
 
-  private phone = createRef<Input>();
-
   private address1 = createRef<Input>();
 
   private address2 = createRef<Input>();
@@ -118,7 +116,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.phone.current &&
       this.address1.current &&
       this.address2.current &&
       this.postal.current &&
@@ -130,7 +127,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         email: this.props.userState.user.email,
-        phone: this.phone.current.state.value,
+        phone: this.props.userState.user.phone,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
         postal: this.postal.current.state.value,
@@ -154,7 +151,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.phone.current &&
       this.address1.current &&
       this.address2.current &&
       this.postal.current &&
@@ -163,7 +159,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     ) {
       this.firstName.current.set(this.props.userState.user.firstName);
       this.lastName.current.set(this.props.userState.user.lastName);
-      this.phone.current.set(this.props.userState.user.phone);
       this.address1.current.set(this.props.userState.user.address1);
       this.address2.current.set(
         this.props.userState.user.address2
@@ -180,7 +175,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.phone.current &&
       this.address1.current &&
       this.postal.current &&
       this.city.current &&
@@ -189,7 +183,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.phone.current.state.valid &&
         this.address1.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
@@ -274,20 +267,11 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               required
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
-              nextInput={this.phone}
+              nextInput={this.address1}
             />
             <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.cellPhone')}
             </Text>
-            <Input
-              ref={this.phone}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.cellPhone')}
-              required
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.address1}
-            />
             <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.addressLine1')}
             </Text>

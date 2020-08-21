@@ -15,21 +15,18 @@ import { Validation } from '@utils';
 import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import { CheckBox } from 'react-native-elements';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './Register.style';
 
-type Register1ScreenNavigationProp = StackNavigationProp<
+type RegisterCredsScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
-  'Register2'
+  'RegisterCreds'
 >;
 
 export interface Props {
-  navigation: Register1ScreenNavigationProp;
+  navigation: RegisterCredsScreenNavigationProp;
   route: {
-    params: {
-      firstName: string;
-      lastName: string;
-      referrer: string;
-    };
+    params: Record<string, unknown>;
   };
 }
 
@@ -40,7 +37,7 @@ export interface State {
   remember: boolean;
 }
 
-class Register2Screen extends React.Component<Props, State> {
+class RegisterCredsScreen extends React.Component<Props, State> {
   private email = createRef<Input>();
 
   private password = createRef<Input>();
@@ -48,6 +45,8 @@ class Register2Screen extends React.Component<Props, State> {
   private passwordConfirmation = createRef<Input>();
 
   private unsubscribeFocus: () => void;
+
+  private unsubscribeBlur: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -62,15 +61,37 @@ class Register2Screen extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
+    this.unsubscribeBlur = this.props.navigation.addListener(
+      'blur',
+      this.onNavigationBlur
+    );
   }
 
   componentWillUnmount(): void {
     this.unsubscribeFocus();
+    this.unsubscribeBlur();
   }
 
   onNavigationFocus(): void {
     if (this.email.current) this.email.current.forceFocus();
+    this.updateValid();
   }
+
+  onNavigationBlur = (): void => {
+    setProfileOverride(undefined);
+  };
+
+  goForward = (): void => {
+    this.props.navigation.navigate('RegisterPersonal', {
+      ...this.props.route.params,
+      email: this.email.current ? this.email.current.state.value : '',
+      password: this.password.current ? this.password.current.state.value : '',
+      passwordConfirmation: this.passwordConfirmation.current
+        ? this.passwordConfirmation.current.state.value
+        : '',
+      remember: this.state.remember,
+    });
+  };
 
   updateValid = (): void => {
     if (
@@ -85,6 +106,11 @@ class Register2Screen extends React.Component<Props, State> {
         this.password.current.state.value ===
           this.passwordConfirmation.current.state.value;
       this.setState({ valid: result });
+      setProfileOverride({
+        enabled: result,
+        text: i18n.t('RegisterScreen.next'),
+        action: this.goForward,
+      });
     }
   };
 
@@ -175,19 +201,7 @@ class Register2Screen extends React.Component<Props, State> {
               blurOnSubmit={false}
               onSubmitEditing={() => {
                 if (this.state.valid) {
-                  this.props.navigation.navigate('Register3', {
-                    ...this.props.route.params,
-                    email: this.email.current
-                      ? this.email.current.state.value
-                      : '',
-                    password: this.password.current
-                      ? this.password.current.state.value
-                      : '',
-                    passwordConfirmation: this.passwordConfirmation.current
-                      ? this.passwordConfirmation.current.state.value
-                      : '',
-                    remember: this.state.remember,
-                  });
+                  this.goForward();
                 }
               }}
             />
@@ -220,29 +234,19 @@ class Register2Screen extends React.Component<Props, State> {
               }}
             />
             <Button
-              containerStyle={[
-                Styles.fullWidth,
-                Styles.registerButton,
-                { position: 'absolute', bottom: 8 },
-              ]}
-              buttonText={i18n.t('RegisterScreen.next')}
-              enabled={this.state.valid}
+              link
+              buttonText={i18n.t('RegisterScreen.alreadyHaveAnAccount')}
+              containerStyle={{
+                marginBottom: 20,
+                marginTop: 16,
+                alignSelf: 'center',
+              }}
               onPress={() => {
-                this.props.navigation.navigate('Register3', {
-                  ...this.props.route.params,
-                  email: this.email.current
-                    ? this.email.current.state.value
-                    : '',
-                  password: this.password.current
-                    ? this.password.current.state.value
-                    : '',
-                  passwordConfirmation: this.passwordConfirmation.current
-                    ? this.passwordConfirmation.current.state.value
-                    : '',
-                  remember: this.state.remember,
+                this.props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Begin' }, { name: 'Login' }],
                 });
               }}
-              showNextIcon
             />
           </ScrollView>
         </KeyboardAvoidingView>
@@ -251,4 +255,4 @@ class Register2Screen extends React.Component<Props, State> {
   }
 }
 
-export default Register2Screen;
+export default RegisterCredsScreen;

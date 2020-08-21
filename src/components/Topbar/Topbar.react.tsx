@@ -1,15 +1,15 @@
 import React, { createRef } from 'react';
-import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
-import Loading from '@assets/common/loading.gif';
 import * as Segment from 'expo-analytics-segment';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
+import Button from '../Button/Button.react';
 
 interface Props {
   userState: UserState;
@@ -21,7 +21,6 @@ interface State {
   shown: boolean;
   title: string;
   profile: boolean;
-  blocked: boolean;
   backOverride?: TopbarBackAction;
   profileOverride?: {
     enabled: boolean;
@@ -38,7 +37,6 @@ class Topbar extends React.Component<Props, State> {
       shown: false,
       title: '',
       profile: true,
-      blocked: false,
     };
     this.renderBackButton = this.renderBackButton.bind(this);
   }
@@ -118,47 +116,13 @@ class Topbar extends React.Component<Props, State> {
       );
     } else if (this.state.profileOverride) {
       topRight = (
-        <TouchableOpacity
-          activeOpacity={
-            this.state.profileOverride?.enabled && !this.state.blocked
-              ? 0.7
-              : 1.0
-          }
-          onPress={async () => {
-            if (this.state.profileOverride?.blocking) {
-              if (this.state.profileOverride?.enabled && !this.state.blocked) {
-                this.setState({ blocked: true });
-                await this.state.profileOverride.action();
-                this.setState({ blocked: false });
-              }
-            } else if (this.state.profileOverride?.enabled) {
-              this.state.profileOverride.action();
-            }
-          }}
-        >
-          {this.state.blocked ? (
-            <Image
-              source={Loading}
-              style={{ width: 25, height: 25, right: 10 }}
-              testID="loading"
-            />
-          ) : (
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  color: this.state.profileOverride.enabled
-                    ? Colors.PINK_DARKER
-                    : Colors.GRAY_MEDIUM,
-                  fontSize: 16,
-                },
-              ]}
-              testID="topRightText"
-            >
-              {this.state.profileOverride.text}
-            </Text>
-          )}
-        </TouchableOpacity>
+        <Button
+          enabled={this.state.profileOverride.enabled}
+          blocking={this.state.profileOverride.blocking}
+          onPress={this.state.profileOverride.action}
+          buttonText={this.state.profileOverride.text}
+          containerStyle={{ borderRadius: 20 }}
+        />
       );
     } else {
       topRight = <View testID="blank" />;
