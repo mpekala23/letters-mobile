@@ -130,8 +130,7 @@ export async function uploadImage(
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),
     type: 'image/jpeg',
-    uri:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+    uri: Platform.OS === 'android' ? `file://${image.uri}` : image.uri,
   };
 
   data.append('file', photo);
@@ -148,7 +147,7 @@ export async function uploadImage(
         Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
       },
     },
-    20000
+    30000
   );
   const body: ApiResponse = await response.json();
   if (body.status !== 'OK') throw body;

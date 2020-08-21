@@ -310,7 +310,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     } catch (err) {
       const uploadError: ApiResponse = {
         status: 'ERROR',
-        message: 'Unable to upload image.',
+        message:
+          err.message === 'timeout' ? 'Image upload timeout' : err.message,
         date: Date.now(),
         data: {},
       };
@@ -325,7 +326,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     } catch (err) {
       const uploadError: ApiResponse = {
         status: 'ERROR',
-        message: 'Unable to upload image.',
+        message:
+          err.message === 'timeout' ? 'Image upload timeout' : err.message,
         date: Date.now(),
         data: {},
       };

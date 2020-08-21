@@ -18,7 +18,8 @@
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
     "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
     "unableToUploadLetterPhoto": "Unable to upload the attached image. Ensure you are connected to the internet and try again.",
-    "letterTooLong": "Your letter cannot exceed 16,000 characters."
+    "letterTooLong": "Your letter cannot exceed 16,000 characters.",
+    "uploadImageTimeout": "The request timed out while uploading the image. Ensure you are connected to the internet and try again."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
