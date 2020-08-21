@@ -9,18 +9,15 @@ import {
 } from '@store/User/UserActions';
 import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
-import { ABBREV_TO_STATE } from '@utils';
+import { ABBREV_TO_STATE, isProduction } from '@utils';
 import Constants from 'expo-constants';
 
-export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
-export const GENERAL_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
-    ? 'https://api.ameelio.org/'
-    : 'https://letters-api-staging.ameelio.org/';
-export const API_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
-    ? 'https://api.ameelio.org/api/'
-    : 'https://letters-api-staging.ameelio.org/api/';
+export const GENERAL_URL = isProduction()
+  ? 'https://api.ameelio.org/'
+  : 'https://letters-api-staging.ameelio.org/';
+export const API_URL = isProduction()
+  ? 'https://api.ameelio.org/api/'
+  : 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;

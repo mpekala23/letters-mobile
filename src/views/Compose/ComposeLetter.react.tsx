@@ -355,7 +355,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   recipientName: state.contact.active.firstName,
-  hasSentLetters: Object.values(state.mail.existing).some(
+  hasSentMail: Object.values(state.mail.existing).some(
     (mail) => mail.length > 0
   ),
 });
