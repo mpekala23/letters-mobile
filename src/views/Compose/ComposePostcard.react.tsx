@@ -249,8 +249,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       this.setState({ data, subcategory: 'Library' });
     } else {
       const data = await getSubcategories(this.props.route.params.category);
-      const subcategory =
-        Object.keys(data).length > 0 ? Object.keys(data)[0] : '';
+      const subcategory = Object.keys(data).length ? Object.keys(data)[0] : '';
       this.setState({
         data,
         subcategory,

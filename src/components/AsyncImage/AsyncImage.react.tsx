@@ -183,11 +183,7 @@ class AsyncImage extends React.Component<Props, State> {
             }}
             style={[this.props.imageStyle, { opacity: this.state.loadOpacity }]}
             onLoad={() => {
-              if (
-                this.props.source &&
-                this.props.source.uri &&
-                this.props.source.uri !== ''
-              ) {
+              if (this.props.source.uri && this.props.source.uri.length) {
                 this.setState({
                   loaded: true,
                   timedOut: false,

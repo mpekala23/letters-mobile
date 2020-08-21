@@ -12,6 +12,7 @@ import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
 import Constants from 'expo-constants';
 import * as Sentry from 'sentry-expo';
+import { isProduction } from '@utils';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -42,10 +43,7 @@ export default class App extends React.Component<null, State> {
 
   async componentDidMount(): Promise<void> {
     this.loadFontsAsync();
-    const releaseChannel = Constants.manifest.releaseChannel
-      ? Constants.manifest.releaseChannel
-      : '';
-    if (releaseChannel && releaseChannel.indexOf('prod') !== -1) {
+    if (isProduction()) {
       Sentry.init({
         dsn:
           'https://15e7f78b44064e1eb57afb5c8a239122@o434922.ingest.sentry.io/5392541',
@@ -53,9 +51,7 @@ export default class App extends React.Component<null, State> {
       });
     }
 
-    const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys([
-      releaseChannel,
-    ]);
+    const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys();
     Segment.initialize({ androidWriteKey, iosWriteKey });
     Segment.track('App Open');
     try {
@@ -69,10 +65,8 @@ export default class App extends React.Component<null, State> {
     Segment.track('App Closed');
   }
 
-  static getSegmentWriteKeys(
-    releaseChannel: Array<string> | undefined
-  ): Record<string, string> {
-    if (releaseChannel && releaseChannel.indexOf('prod') !== -1)
+  static getSegmentWriteKeys(): Record<string, string> {
+    if (isProduction())
       return {
         androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
         iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',

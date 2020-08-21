@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { ZipcodeInfo, Category } from 'types';
 import i18n from '@i18n';
+import Constants from 'expo-constants';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -245,4 +246,11 @@ export const PERSONAL_CATEGORY: Category = {
 
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
+
+export function isProduction(): boolean {
+  if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }

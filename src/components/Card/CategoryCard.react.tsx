@@ -25,9 +25,9 @@ const CategoryCard: React.FC<Props> = (props: Props) => {
         onPress={() => {
           if (props.category.name === 'personal') {
             props.navigate('ChooseOption');
-            return;
+          } else {
+            props.navigate('ComposePostcard', { category: props.category });
           }
-          props.navigate('ComposePostcard', { category: props.category });
         }}
       >
         <AsyncImage
