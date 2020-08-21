@@ -23,7 +23,7 @@
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
     "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración.",
-    "camera": "Can't take a photo. Ensure that this is enabled in settings."
+    "camera": "No puede tomar una foto. Asegúrese de que está habilitado en la configuración."
   },
   "AddManuallyScreen": {
     "facilityName": "Nombre del presidio",
@@ -217,7 +217,7 @@
     "facilityCity": "Ciudad del Presidio",
     "facilityState": "Estado del Presidio",
     "facilityPostal": "C.P. del Presidio",
-    "facilityPhone": "Facility Phone (optional)",
+    "facilityPhone": "Número de teléfono del Presidio (opcional)",
     "optionalUnit": "Unidad (opcional, solo si necesario)",
     "optionalDorm": "Dormitorio (opcional, solo si necesario)",
     "save": "Guardar",
@@ -306,8 +306,8 @@
     "emulatorDetected": "Emulador detectado",
     "mustUsePhysical": "Tienes que usar un dispositivo físico para recibir notificaciones push",
     "okay": "Okay",
-    "noDesignSelected": "No design selected",
-    "selectADesign": "Select a design to continue."
+    "noDesignSelected": "Ningún diseño seleccionado",
+    "selectADesign": "Seleccione una diseño para continuar."
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",
@@ -335,11 +335,11 @@
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
-    "tapToAddMessage": "Tap to add a message.",
-    "done": "Done",
-    "noDesignSelected": "No design selected. Tap below to get started.",
-    "iWouldLikeToSend": "I would like to send something:",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "tapToAddMessage": "Haz clic para añadir un mensaje.",
+    "done": "Listo",
+    "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
+    "iWouldLikeToSend": "Me gustaría enviar algo:",
+    "yourOwnLettersAndPhotos": "Sus propios cartas y fotos."
   },
   "Notifs": {
     "happy": "Feliz",
@@ -380,6 +380,6 @@
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
-    "reviewPostcard": "Review"
+    "reviewPostcard": "Revisar"
   }
 }
