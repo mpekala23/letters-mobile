@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "793895524941",
+    "firebase_url": "https://letters-mobile.firebaseio.com",
+    "project_id": "letters-mobile",
+    "storage_bucket": "letters-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793895524941:android:58bacbdd97c92d44f51a04",
+        "android_client_info": {
+          "package_name": "com.ameelio.letters_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793895524941-4n81p1ob3nrkj0drag082jteruva3r9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5eVsKlUjPxbsWLBGKw70ksZlfD4CGwvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793895524941-4n81p1ob3nrkj0drag082jteruva3r9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
