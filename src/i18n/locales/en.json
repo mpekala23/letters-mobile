@@ -119,7 +119,7 @@
   },
   "LetterTrackingScreen": {
     "letterTracking": "Letter tracking",
-    "estimatedArrival": "Your letter is estimated to arrive on",
+    "estimatedArrival": "Your letter is estimated to arrive on ",
     "needHelp": "I need help",
     "letterContent": "Letter content",
     "contactSupport": "Contact Support",
@@ -146,8 +146,8 @@
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
-    "oneLetter": "1 Letter",
-    "letters": "Letters"
+    "oneLetter": "1 Memory",
+    "letters": "Memories"
   },
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",

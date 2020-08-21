@@ -42,9 +42,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
           buttonText={i18n.t('BeginScreen.logIn')}
           reverse
           textStyle={
-            (Typography.FONT_BOLD,
-            Styles.baseText,
-            { color: Colors.PINK_DARKER })
+            (Typography.FONT_BOLD, Styles.baseText, { color: Colors.PINK_500 })
           }
           containerStyle={{ height: 47 }}
         />

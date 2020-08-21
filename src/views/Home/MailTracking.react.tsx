@@ -15,6 +15,7 @@ import ReturnedToSender from '@assets/views/LetterTracking/ReturnedToSender';
 
 import * as Segment from 'expo-analytics-segment';
 
+import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 import Styles from './MailTracking.styles';
 
 type MailTrackingScreenNavigationProp = StackNavigationProp<
@@ -131,18 +132,50 @@ class MailTrackingScreenBase extends React.Component<Props> {
     ) : (
       <View>
         <View style={{ paddingBottom: 12 }}>
-          <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-            {i18n.t('LetterTrackingScreen.letterTracking')}
-          </Text>
-          <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
-            {i18n.t('LetterTrackingScreen.estimatedArrival')}
-          </Text>
-          <Text
-            style={[Typography.FONT_BOLD, Styles.baseText]}
-            testID="deliveryDate"
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
           >
-            {deliveryDate}
-          </Text>
+            <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+              {i18n.t('LetterTrackingScreen.letterTracking')}
+            </Text>
+            <Button
+              reverse
+              onPress={() => {
+                this.props.navigation.navigate('SupportFAQ');
+                Segment.track('In-App Reporting - Click on I Need Help');
+              }}
+              buttonText={i18n.t('LetterTrackingScreen.needHelp')}
+              textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+              containerStyle={Styles.needHelpButton}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={Styles.uspsCircleBackground}>
+              <Text
+                style={[
+                  {
+                    color: Colors.AMEELIO_WHITE,
+                  },
+                  Typography.FONT_BOLD,
+                ]}
+              >
+                USPS
+              </Text>
+            </View>
+            <Text style={[Styles.baseText]}>
+              {i18n.t('LetterTrackingScreen.estimatedArrival')}
+            </Text>
+            <Text
+              style={[Typography.FONT_BOLD, Styles.baseText]}
+              testID="deliveryDate"
+            >
+              {deliveryDate}
+            </Text>
+          </View>
         </View>
         <GrayBar />
         <View style={{ paddingTop: 24 }}>
@@ -165,16 +198,6 @@ class MailTrackingScreenBase extends React.Component<Props> {
           />
           {letterTracker}
         </View>
-        <Button
-          reverse
-          onPress={() => {
-            this.props.navigation.navigate('SupportFAQ');
-            Segment.track('In-App Reporting - Click on I Need Help');
-          }}
-          buttonText={i18n.t('LetterTrackingScreen.needHelp')}
-          textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
-          containerStyle={Styles.needHelpButton}
-        />
       </View>
     );
     return (

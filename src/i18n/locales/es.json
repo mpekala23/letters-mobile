@@ -119,7 +119,7 @@
   },
   "LetterTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
-    "estimatedArrival": "Se estima que su carta llegará",
+    "estimatedArrival": "Se estima que su carta llegará ",
     "needHelp": "Necesito ayuda",
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",

@@ -8,11 +8,19 @@ export default StyleSheet.create({
     flexDirection: 'column',
     padding: 16,
   },
+  uspsCircleBackground: {
+    borderRadius: 40,
+    width: 43,
+    height: 43,
+    backgroundColor: Colors.AMEELIO_BLACK,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
   needHelpButton: {
-    width: '50%',
-    height: 50,
     alignSelf: 'center',
     marginBottom: 16,
+    paddingHorizontal: 8,
   },
   headerText: {
     color: Colors.AMEELIO_BLACK,

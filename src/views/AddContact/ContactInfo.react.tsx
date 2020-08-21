@@ -210,9 +210,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             Linking.openURL(inmateDatabaseLink);
           }}
         >
-          <Text style={{ color: Colors.PINK_DARKER }}>
+          <Text style={{ color: Colors.PINK_500 }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_DARKER }]}>
+            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}>
               {this.state.stateToSearch}
             </Text>{' '}
             {i18n.t('ContactInfoScreen.database')}.
@@ -276,13 +276,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     );
                   }}
                 >
-                  <Text style={{ color: Colors.PINK_DARKER }}>
+                  <Text style={{ color: Colors.PINK_500 }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
-                      style={[
-                        Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARKER },
-                      ]}
+                      style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}
                     </Text>{' '}

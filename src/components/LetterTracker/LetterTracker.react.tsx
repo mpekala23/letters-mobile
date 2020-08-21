@@ -11,13 +11,13 @@ export interface Props {
 function mapStatustoTrackerColor(type: string) {
   switch (type) {
     case MailStatus.Mailed:
-      return Colors.GREEN_LIGHTER;
+      return Colors.BLUE_200;
     case MailStatus.InTransit:
-      return Colors.GREEN_LIGHT;
+      return Colors.BLUE_300;
     case MailStatus.ProcessedForDelivery:
-      return Colors.GREEN_DARK;
+      return Colors.BLUE_400;
     case MailStatus.Delivered:
-      return Colors.GREEN_DARKER;
+      return Colors.BLUE_500;
     default:
       return '';
   }
