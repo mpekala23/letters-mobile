@@ -2,7 +2,7 @@
 export const AMEELIO_BLACK = '#282828';
 export const AMEELIO_LIGHT_GRAY = '#F4F4F4';
 export const AMEELIO_GRAY = '#6E757C';
-export const AMEELIO_WHITE = '#f8fafc';
+export const AMEELIO_WHITE = '#ffffff';
 export const AMEELIO_BLUE = '#448AF3';
 export const AMEELIO_LIGHT_BLUE = '#D0E5FD';
 export const AMEELIO_INDIGO = '#6574cd';
@@ -32,7 +32,7 @@ export const DROPDOWN_ERROR_TEXT = '#762B2B';
 export const GRAY_LIGHTER = '#FBFBFB';
 export const GRAY_LIGHT = '#F2F2F2';
 export const GRAY_MEDIUM = '#9A9A9A';
-export const GRAY_DARK = '#6D6D6D';
+export const GRAY_500 = '#6D6D6D';
 export const GRAY_DARKER = '#393939';
 
 export const PINK_100 = '#FFF5F5';

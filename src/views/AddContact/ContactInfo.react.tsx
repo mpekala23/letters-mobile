@@ -254,7 +254,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   style={[
                     Typography.FONT_MEDIUM,
                     {
-                      color: Colors.GRAY_DARK,
+                      color: Colors.GRAY_500,
                       marginTop: 8,
                       fontSize: 15,
                     },

@@ -118,10 +118,10 @@
     "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
   "LetterTrackingScreen": {
-    "letterTracking": "Letter tracking",
-    "estimatedArrival": "Your letter is estimated to arrive on ",
-    "needHelp": "I need help",
-    "letterContent": "Letter content",
+    "letterTracking": "Mail tracking",
+    "estimatedArrival": "Estimated delivery date",
+    "needHelp": "Help",
+    "letterContent": "Mail content",
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
     "possibleReason": "Possible reason: Wrong mailing address"

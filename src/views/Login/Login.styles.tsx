@@ -18,7 +18,7 @@ export default StyleSheet.create({
     fontSize: 14,
     paddingTop: 6,
     paddingBottom: 28,
-    color: Colors.GRAY_DARK,
+    color: Colors.GRAY_500,
   },
   button: {
     backgroundColor: Colors.PINK_500,

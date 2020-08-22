@@ -56,15 +56,13 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
         </View>
         <View style={[{ paddingLeft: 18 }]}>
           <Text style={[Typography.BASE_TITLE]}>{props.firstName}</Text>
-          <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
+          <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
             <Emoji name="love_letter" />{' '}
             {i18n.t('SingleContactScreen.received')}:{' '}
             {props.mail ? props.mail.length : 0}
           </Text>
           {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
-            <Text
-              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}
-            >
+            <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
               {format(props.mail[0].dateCreated, 'MMM dd')}
@@ -73,7 +71,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <Text
             style={[
               Typography.FONT_REGULAR,
-              { paddingBottom: 4, color: Colors.GRAY_DARK },
+              { paddingBottom: 4, color: Colors.GRAY_500 },
             ]}
           >
             <Emoji name="airplane" />{' '}

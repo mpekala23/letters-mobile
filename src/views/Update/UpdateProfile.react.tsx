@@ -246,7 +246,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               <Text
                 style={[
                   Typography.FONT_MEDIUM,
-                  { color: Colors.GRAY_DARK, paddingBottom: 6 },
+                  { color: Colors.GRAY_500, paddingBottom: 6 },
                 ]}
               >
                 {i18n.t('UpdateProfileScreen.joined')} {joinedDate}

@@ -28,6 +28,11 @@ function mapProfileTypeToStyle(type: ProfilePicTypes) {
         image: Styles.singleContactPic,
         background: Styles.singleContactBackground,
       };
+    case ProfilePicTypes.Avatar:
+      return {
+        image: Styles.avatarPic,
+        background: Styles.avatarBackground,
+      };
     default:
       return {
         image: { width: 100, height: 100, borderRadius: 100 / 2 },
@@ -62,8 +67,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
     let avatar = AvatarTopbar;
     if (props.type === ProfilePicTypes.SingleContact) avatar = Avatar;
     else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
+    else if (props.type === ProfilePicTypes.Avatar) avatar = Avatar;
     insideCircle =
-      props.imageUri.slice(props.imageUri.length - 4) === '.svg' ? (
+      '.svg' in props.imageUri.slice ? (
         <Icon svg={avatar} />
       ) : (
         <Image
