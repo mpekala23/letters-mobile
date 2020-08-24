@@ -30,6 +30,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
+import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
 
