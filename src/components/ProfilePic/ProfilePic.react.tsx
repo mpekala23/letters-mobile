@@ -8,6 +8,7 @@ import { navigate } from '@notifications';
 import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 export interface Props {
   firstName: string;
@@ -72,8 +73,10 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       '.svg' in props.imageUri.slice ? (
         <Icon svg={avatar} />
       ) : (
-        <Image
-          style={mapProfileTypeToStyle(props.type).image}
+        <AsyncImage
+          download
+          loadingSize={20}
+          viewStyle={mapProfileTypeToStyle(props.type).image}
           source={{ uri: props.imageUri }}
           accessibilityLabel="Profile Picture"
         />

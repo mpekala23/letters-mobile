@@ -18,8 +18,8 @@ import { format, addBusinessDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
-import ReturnedToSender from '@assets/views/LetterTracking/ReturnedToSender';
-import DeliveryTruck from '@assets/views/LetterTracking/DeliveryTruck';
+import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
+import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
 
 import * as Segment from 'expo-analytics-segment';
 
@@ -134,7 +134,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               </View>
               <View>
                 <Text style={[Styles.estimatedDeliveryLabel]}>
-                  {i18n.t('LetterTrackingScreen.estimatedArrival')}
+                  {i18n.t('MailTrackingScreen.estimatedArrival')}
                 </Text>
                 <Text
                   style={[Typography.FONT_BOLD, { fontSize: 16 }]}
@@ -258,10 +258,10 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             { textAlign: 'center' },
           ]}
         >
-          {i18n.t('LetterTrackingScreen.yourLetterWasReturnedToSender')}
+          {i18n.t('MailTrackingScreen.yourLetterWasReturnedToSender')}
         </Text>
-        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
-          {i18n.t('LetterTrackingScreen.possibleReason')}
+        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
+          {i18n.t('MailTrackingScreen.possibleReason')}
         </Text>
         <Icon svg={ReturnedToSender} style={{ paddingTop: 240 }} />
         <Button
@@ -270,7 +270,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             Linking.openURL('https://m.me/teamameelio');
             Segment.track('In-App Reporting - Click on Contact Support');
           }}
-          buttonText={i18n.t('LetterTrackingScreen.contactSupport')}
+          buttonText={i18n.t('MailTrackingScreen.contactSupport')}
           textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
           containerStyle={Styles.needHelpButton}
         />
@@ -287,7 +287,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             }}
           >
             <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-              {i18n.t('LetterTrackingScreen.letterTracking')}
+              {i18n.t('MailTrackingScreen.letterTracking')}
             </Text>
             <Button
               reverse
@@ -295,7 +295,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 this.props.navigation.navigate('SupportFAQ');
                 Segment.track('In-App Reporting - Click on I Need Help');
               }}
-              buttonText={i18n.t('LetterTrackingScreen.needHelp')}
+              buttonText={i18n.t('MailTrackingScreen.needHelp')}
               textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
               containerStyle={Styles.needHelpButton}
             />
@@ -314,7 +314,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         {body}
         <View style={[Styles.cardBackground, { marginTop: 16 }]}>
           <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
-            {i18n.t('LetterTrackingScreen.letterContent')}
+            {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>
           {mail.type === MailTypes.Letter && mail.image?.uri ? (

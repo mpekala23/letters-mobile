@@ -7,6 +7,7 @@ import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { ZipcodeInfo, Category, MailStatus } from 'types';
 import i18n from '@i18n';
 import { addBusinessDays } from 'date-fns';
+import Constants from 'expo-constants';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -135,7 +136,7 @@ export function isValidCreditCard(card: string): boolean {
 }
 
 export function isValidInmateNumber(number: string): boolean {
-  return /^[0-9-]*$/.test(number);
+  return number.length > 0;
 }
 
 export function isValidAddress(address: string): boolean {
@@ -253,4 +254,11 @@ export function estimateDelivery(date: Date, status?: MailStatus): Date {
     return addBusinessDays(date, 3);
   }
   return addBusinessDays(date, 6);
+}
+
+export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
+
+export function isProduction(): boolean {
+  if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }

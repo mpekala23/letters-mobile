@@ -13,7 +13,7 @@ import {
 import { EditablePostcard, ComposeTools } from '@components';
 import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage } from '@utils';
+import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -65,6 +65,7 @@ interface State {
   valid: boolean;
   mediaGranted: boolean;
   renderMethod: 'grid' | 'bars';
+  horizontal: boolean;
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
@@ -97,6 +98,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       valid: true,
       mediaGranted: true,
       renderMethod: 'grid',
+      horizontal: true,
     };
 
     this.beginWriting = this.beginWriting.bind(this);
@@ -178,16 +180,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
 
     if (this.props.route.params.category.name === 'personal') {
+      this.setState({ renderMethod: 'grid' });
       let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
       if (finalStatus !== 'granted') {
         finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
       }
       this.setState({ mediaGranted: finalStatus === 'granted' });
       if (finalStatus === 'granted') {
-        await this.loadData();
+        this.loadData();
       }
     } else {
-      await this.loadData();
+      this.setState({ renderMethod: 'bars' });
+      this.loadData();
     }
   };
 
@@ -245,9 +249,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       this.setState({ data, subcategory: 'Library' });
     } else {
       const data = await getSubcategories(this.props.route.params.category);
+      const subcategory = Object.keys(data).length ? Object.keys(data)[0] : '';
       this.setState({
         data,
-        subcategory: Object.keys(data).length > 0 ? Object.keys(data)[0] : '',
+        subcategory,
       });
     }
   }
@@ -266,9 +271,19 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   changeDesign(design: PostcardDesign): void {
     this.props.setDesign(design);
     this.setState({ design });
+    if (
+      design.image.width &&
+      design.image.height &&
+      design.image.height > design.image.width
+    ) {
+      this.setState({ horizontal: false });
+    } else {
+      this.setState({ horizontal: true });
+    }
   }
 
   beginWriting(): void {
+    this.setState({ horizontal: true });
     if (this.state.design.image.uri === '') {
       popupAlert({
         title: i18n.t('Alert.noDesignSelected'),
@@ -300,6 +315,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   backWriting(): void {
     Keyboard.dismiss();
     setBackOverride(undefined);
+    this.changeDesign(this.state.design);
     Animated.timing(this.state.flip, {
       useNativeDriver: false,
       toValue: 0,
@@ -364,7 +380,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 },
               ]}
             >
-              {subcategory.slice(0, 1).toUpperCase() + subcategory.slice(1)}
+              {capitalize(subcategory)}
             </Text>
           </TouchableOpacity>
         ))}
@@ -405,6 +421,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         onPress={() => this.changeDesign(design)}
       >
         <AsyncImage
+          download
           source={design.image}
           imageStyle={{
             flex: 1,
@@ -469,6 +486,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               design={this.state.design}
               flip={this.state.flip}
               onChangeText={this.changeText}
+              horizontal={this.state.horizontal}
               active
             />
           </Animated.View>
@@ -493,6 +511,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 }}
                 numColumns={this.state.renderMethod === 'grid' ? 3 : undefined}
                 contentContainerStyle={Styles.gridBackground}
+                key={this.state.renderMethod}
               />
             )}
             {this.props.route.params.category.name === 'personal' &&
@@ -534,7 +553,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
-  hasSentLetters: Object.values(state.mail.existing).some(
+  hasSentMail: Object.values(state.mail.existing).some(
     (mail) => mail.length > 0
   ),
   recipient: state.contact.active,
