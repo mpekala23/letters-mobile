@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Colors, Typography } from '@styles';
@@ -11,7 +10,7 @@ export interface Props {
   type: MailStatus;
 }
 
-const LetterTracker: React.FC<Props> = ({ trackingEvent, type }) => {
+function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
   const mapStatustoTrackerColor = (): string => {
     if (!trackingEvent) return Colors.AMEELIO_WHITE;
     switch (type) {
@@ -152,6 +151,6 @@ const LetterTracker: React.FC<Props> = ({ trackingEvent, type }) => {
       </View>
     </View>
   );
-};
+}
 
 export default LetterTracker;

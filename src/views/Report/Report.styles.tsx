@@ -40,7 +40,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   buttonText: { fontSize: 15, color: Colors.PINK_500 },
-  buttonTextReverse: { fontSize: 15, color: '#f8fafc' },
+  buttonTextReverse: { fontSize: 15, color: Colors.AMEELIO_WHITE },
   textAreaBox: {
     width: '100%',
     height: '50%',

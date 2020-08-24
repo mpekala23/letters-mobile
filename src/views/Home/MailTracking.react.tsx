@@ -14,7 +14,7 @@ import {
   Contact,
   ProfilePicTypes,
 } from 'types';
-import { format, addBusinessDays, differenceInBusinessDays } from 'date-fns';
+import { format, addBusinessDays } from 'date-fns';
 import i18n from '@i18n';
 import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
@@ -24,7 +24,6 @@ import DeliveryTruck from '@assets/views/LetterTracking/DeliveryTruck';
 import * as Segment from 'expo-analytics-segment';
 
 import { User } from '@store/User/UserTypes';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { WINDOW_WIDTH } from '@utils';
 import Styles from './MailTracking.styles';
 
@@ -76,7 +75,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         default:
           return 0;
       }
-      return 0;
     };
 
     const startAnimation = () => {
@@ -114,37 +112,39 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             <Text>Status: </Text>
             {mail.status}
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginVertical: 8,
-            }}
-          >
-            <View style={Styles.uspsCircleBackground}>
-              <Text
-                style={[
-                  {
-                    color: Colors.AMEELIO_WHITE,
-                  },
-                  Typography.FONT_BOLD,
-                ]}
-              >
-                USPS
-              </Text>
+          {mail.status !== MailStatus.Delivered && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 8,
+              }}
+            >
+              <View style={Styles.uspsCircleBackground}>
+                <Text
+                  style={[
+                    {
+                      color: Colors.AMEELIO_WHITE,
+                    },
+                    Typography.FONT_BOLD,
+                  ]}
+                >
+                  USPS
+                </Text>
+              </View>
+              <View>
+                <Text style={[Styles.estimatedDeliveryLabel]}>
+                  {i18n.t('LetterTrackingScreen.estimatedArrival')}
+                </Text>
+                <Text
+                  style={[Typography.FONT_BOLD, { fontSize: 16 }]}
+                  testID="deliveryDate"
+                >
+                  {deliveryDate}
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text style={[Styles.estimatedDeliveryLabel]}>
-                {i18n.t('LetterTrackingScreen.estimatedArrival')}
-              </Text>
-              <Text
-                style={[Typography.FONT_BOLD, { fontSize: 16 }]}
-                testID="deliveryDate"
-              >
-                {deliveryDate}
-              </Text>
-            </View>
-          </View>
+          )}
           <View style={[Styles.endpointsContainer]}>
             <View>
               <Text style={[Typography.FONT_BOLD, Styles.endpointCityLabel]}>

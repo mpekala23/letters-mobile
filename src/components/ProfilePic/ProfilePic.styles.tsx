@@ -46,7 +46,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   initials: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
     color: Colors.GRAY_500,
   },

@@ -38,7 +38,7 @@ exports[`Issues screen should match snapshot 1`] = `
         ]
       }
     >
-      Has your loved one received the leter?
+      Has your loved one received the letter?
     </Text>
     <Text
       style={

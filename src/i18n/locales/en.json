@@ -93,8 +93,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
-    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "hasYourLovedOneReceivedLetterPrefix": "Has ",
+    "hasYourLovedOneReceivedLetter": " received your letter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio.",
     "yepTheyReceivedIt": "Yep, they received it!",
     "notSureYet": "I'm not sure yet...",
     "notYetReceived": "They haven't received it"

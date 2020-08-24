@@ -4,7 +4,6 @@ import { Colors } from '@styles';
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,
-    backgroundColor: '#fafafa',
     flexDirection: 'column',
     padding: 16,
   },
