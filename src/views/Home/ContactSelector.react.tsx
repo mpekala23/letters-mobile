@@ -68,7 +68,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       await Notifs.setup();
       this.props.handleNotif();
       const token = Notifs.getToken();
-      console.log(token);
       await uploadPushToken(token);
     } catch (err) {
       dropdownError({ message: i18n.t('Permission.notifs') });
@@ -93,7 +92,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       await getContacts();
       await getUser();
     } catch (e) {
-      console.log(e);
       dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
     }
     this.setState({ refreshing: false });
