@@ -153,7 +153,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   onNextPress(): void {
     Keyboard.dismiss();
+    Segment.trackWithProperties('Compose - Click on Next', {
+      Option: 'Letter',
+    });
     if (this.props.composing.content.length <= 0) {
+      Segment.trackWithProperties('Compose - Click on Next Failure', {
+        Option: 'Letter',
+        Error: 'Letter must have content',
+      });
       popupAlert({
         title: i18n.t('Compose.letterMustHaveContent'),
         buttons: [

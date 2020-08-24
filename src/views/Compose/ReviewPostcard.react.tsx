@@ -61,7 +61,7 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
               await createMail(props.composing);
               props.clearComposing();
               Segment.trackWithProperties('Review - Send Letter Success', {
-                Option: 'Photo',
+                Option: 'Postcard',
                 facility: props.recipient.facility?.name,
                 facilityState: props.recipient.facility?.state,
                 facilityCity: props.recipient.facility?.city,
@@ -93,7 +93,7 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
               });
             } catch (err) {
               Segment.trackWithProperties('Review - Send Letter Failure', {
-                Option: 'photo',
+                Option: 'postcard',
                 'Error Type': err,
               });
               if (err.message === 'Image upload timeout') {
