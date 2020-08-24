@@ -70,7 +70,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
     else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
     else if (props.type === ProfilePicTypes.Avatar) avatar = Avatar;
     insideCircle =
-      '.svg' in props.imageUri.slice ? (
+      props.imageUri.indexOf('.svg') !== -1 ? (
         <Icon svg={avatar} />
       ) : (
         <AsyncImage
