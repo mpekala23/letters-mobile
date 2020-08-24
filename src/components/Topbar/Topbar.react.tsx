@@ -46,7 +46,10 @@ class Topbar extends React.Component<Props, State> {
       return (
         <TouchableOpacity
           style={Styles.backContainer}
-          onPress={this.state.backOverride.action}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (this.state.backOverride) this.state.backOverride.action();
+          }}
           testID="backButton"
         >
           <Icon svg={BackButton} />
@@ -63,6 +66,7 @@ class Topbar extends React.Component<Props, State> {
         <TouchableOpacity
           style={Styles.backContainer}
           onPress={() => {
+            Keyboard.dismiss();
             if (this.props.navigation) {
               const route = this.props.navigation.getCurrentRoute()?.name;
               if (route === 'Login' || route === 'Register1') {
@@ -119,7 +123,10 @@ class Topbar extends React.Component<Props, State> {
         <Button
           enabled={this.state.profileOverride.enabled}
           blocking={this.state.profileOverride.blocking}
-          onPress={this.state.profileOverride.action}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (this.state.profileOverride) this.state.profileOverride.action();
+          }}
           buttonText={this.state.profileOverride.text}
           containerStyle={{ borderRadius: 20 }}
         />

@@ -16,6 +16,7 @@ import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import { CheckBox } from 'react-native-elements';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 
 type RegisterCredsScreenNavigationProp = StackNavigationProp<
@@ -82,6 +83,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
   };
 
   goForward = (): void => {
+    Segment.trackWithProperties('Signup - Clicks on Next', { step: 'Account' });
     this.props.navigation.navigate('RegisterPersonal', {
       ...this.props.route.params,
       email: this.email.current ? this.email.current.state.value : '',
@@ -151,7 +153,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
               required
               validate={Validation.Email}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={this.updateValid}
               blurOnSubmit={false}
               nextInput={this.password}
             />
@@ -172,7 +174,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
                 }
               }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={this.updateValid}
               invalidFeedback={i18n.t('RegisterScreen.passwordInvalid')}
               blurOnSubmit={false}
               nextInput={this.passwordConfirmation}
@@ -197,7 +199,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
                 }
               }}
               onValid={this.updateValid}
-              onInvalid={() => this.setState({ valid: false })}
+              onInvalid={this.updateValid}
               blurOnSubmit={false}
               onSubmitEditing={() => {
                 if (this.state.valid) {

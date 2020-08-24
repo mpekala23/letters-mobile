@@ -22,6 +22,7 @@ import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { Mail, Contact } from 'types';
 import { addBusinessDays } from 'date-fns';
+import * as Segment from 'expo-analytics-segment';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -141,6 +142,7 @@ class NotifsBase {
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
     if (notification.origin === 'received') return;
+    Segment.trackWithProperties('App Open', { channel: 'Notification' });
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();
@@ -236,6 +238,9 @@ class NotifsBase {
         });
         break;
       case NotifTypes.HasReceived:
+        Segment.trackWithProperties('Notifications - Delivery Check-In ', {
+          channel: 'Push',
+        });
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
         if (!contact) break;
@@ -293,12 +298,20 @@ class NotifsBase {
         });
         break;
       case NotifTypes.NoFirstContact:
+        Segment.trackWithProperties(
+          'Notifications - Reminder to Add First Contact',
+          { channel: 'Push' }
+        );
         resetNavigation({
           index: 0,
           routes: [{ name: 'ContactSelector' }, { name: 'ContactInfo' }],
         });
         break;
       case NotifTypes.NoFirstLetter:
+        Segment.trackWithProperties(
+          'Notifications - Reminder to Send First Letter',
+          { channel: 'Push' }
+        );
         if (notif.data && notif.data.contactId) {
           for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
             if (notif.data.contactId === state.contact.existing[ix].id) {
@@ -312,6 +325,20 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+        });
+        break;
+      case NotifTypes.Drought:
+        Segment.trackWithProperties(
+          'Notifications - Reminder to Send Weekly Letter',
+          { channel: 'Push' }
+        );
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'ChooseOption' },
+          ],
         });
         break;
       default:

@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
-import { Button, Input, PicUpload } from '@components';
+import { Input, PicUpload } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { REFERERS, sleep } from '@utils';
+import { REFERERS, sleep, Validation } from '@utils';
 import { Image } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 
 type RegisterPersonalScreenNavigationProp = StackNavigationProp<
@@ -85,6 +86,9 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
   };
 
   goForward = (): void => {
+    Segment.trackWithProperties('Signup - Clicks on Next', {
+      step: 'Personal',
+    });
     this.props.navigation.navigate('RegisterAddress', {
       ...this.props.route.params,
       firstName: this.firstName.current
@@ -184,7 +188,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 placeholder={i18n.t('RegisterScreen.firstName')}
                 required
                 onValid={this.updateValid}
-                onInvalid={() => this.setState({ valid: false })}
+                onInvalid={this.updateValid}
                 blurOnSubmit={false}
                 nextInput={this.lastName}
               />
@@ -194,7 +198,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 placeholder={i18n.t('RegisterScreen.lastName')}
                 required
                 onValid={this.updateValid}
-                onInvalid={() => this.setState({ valid: false })}
+                onInvalid={this.updateValid}
                 blurOnSubmit={false}
                 nextInput={this.referrer}
               />
@@ -203,6 +207,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 parentStyle={Styles.fullWidth}
                 placeholder={i18n.t('RegisterScreen.referrer')}
                 required
+                validate={Validation.Referrer}
                 options={REFERERS}
                 onFocus={async () => {
                   await sleep(400);
@@ -210,7 +215,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                     this.scrollView.current.scrollToEnd({ animated: true });
                 }}
                 onValid={this.updateValid}
-                onInvalid={() => this.setState({ valid: false })}
+                onInvalid={this.updateValid}
                 blurOnSubmit={false}
                 onSubmitEditing={() => {
                   if (this.state.valid) {

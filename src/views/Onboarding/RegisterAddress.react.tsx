@@ -208,6 +208,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               required
               validate={Validation.Address}
               onValid={this.updateValid}
+              onInvalid={this.updateValid}
               blurOnSubmit={false}
               nextInput={this.address2}
             />
@@ -217,6 +218,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               placeholder={i18n.t('RegisterScreen.addressLine2')}
               validate={Validation.Address}
               onValid={this.updateValid}
+              onInvalid={this.updateValid}
               blurOnSubmit={false}
               nextInput={this.city}
             />
@@ -227,6 +229,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               required
               validate={Validation.City}
               onValid={this.updateValid}
+              onInvalid={this.updateValid}
               blurOnSubmit={false}
               nextInput={this.phyState}
             />
@@ -244,6 +247,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 validate={Validation.State}
                 options={STATES_DROPDOWN}
                 onValid={this.updateValid}
+                onInvalid={this.updateValid}
                 onFocus={async () => {
                   await sleep(400);
                   if (this.scrollView.current)
@@ -259,6 +263,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 required
                 validate={Validation.Postal}
                 onValid={this.updateValid}
+                onInvalid={this.updateValid}
                 blurOnSubmit={false}
               />
             </View>
