@@ -125,9 +125,10 @@ class Topbar extends React.Component<Props, State> {
         <Button
           enabled={this.state.profileOverride.enabled}
           blocking={this.state.profileOverride.blocking}
-          onPress={() => {
+          onPress={async () => {
             Keyboard.dismiss();
-            if (this.state.profileOverride) this.state.profileOverride.action();
+            if (this.state.profileOverride)
+              await this.state.profileOverride.action();
           }}
           buttonText={this.state.profileOverride.text}
           containerStyle={{ borderRadius: 20 }}

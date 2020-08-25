@@ -1,14 +1,8 @@
 import React, { createRef } from 'react';
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, Platform, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
-import { Button, Input, Icon } from '@components';
+import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { Validation } from '@utils';
@@ -112,6 +106,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
         enabled: result,
         text: i18n.t('RegisterScreen.next'),
         action: this.goForward,
+        blocking: true,
       });
     }
   };
@@ -126,11 +121,8 @@ class RegisterCredsScreen extends React.Component<Props, State> {
         }}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <ScrollView
             keyboardShouldPersistTaps="always"
@@ -251,7 +243,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
               }}
             />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

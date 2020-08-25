@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  KeyboardAvoidingView,
   ScrollView,
   Platform,
   Text,
@@ -9,7 +8,7 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
-import { Input } from '@components';
+import { Input, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { Validation, STATES_DROPDOWN, sleep, hoursTill8Tomorrow } from '@utils';
@@ -177,11 +176,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
         }}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <ScrollView
             ref={this.scrollView}
@@ -268,7 +264,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               />
             </View>
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

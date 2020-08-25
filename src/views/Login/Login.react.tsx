@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  KeyboardAvoidingView,
   Platform,
   ScrollView,
   Keyboard,
@@ -13,7 +12,7 @@ import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
-import { Button, Input } from '@components';
+import { Button, Input, KeyboardAvoider } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
@@ -116,10 +115,8 @@ class LoginScreen extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <View
             style={{
@@ -240,7 +237,7 @@ class LoginScreen extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

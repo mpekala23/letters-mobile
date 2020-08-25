@@ -2,13 +2,12 @@ import React, { createRef } from 'react';
 import {
   Text,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, PicUpload } from '@components';
+import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -127,7 +126,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         email: this.props.userState.user.email,
-        phone: this.props.userState.user.phone,
         address1: this.address1.current.state.value,
         address2: this.address2.current.state.value,
         postal: this.postal.current.state.value,
@@ -204,11 +202,8 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"
@@ -343,7 +338,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               containerStyle={Styles.logOutButton}
             />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

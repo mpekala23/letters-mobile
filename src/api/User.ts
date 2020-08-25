@@ -53,7 +53,6 @@ function cleanUser(user: RawUser): User {
     firstName: user.first_name,
     lastName: user.last_name,
     email: user.email,
-    phone: user.phone,
     address1: user.addr_line_1,
     address2: user.addr_line_2,
     postal: user.postal,
@@ -258,7 +257,6 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       state: STATE_TO_ABBREV[data.phyState],
       referer: data.referrer,
       postal: data.postal,
-      phone: '1111111111',
       ...photoExtension,
     }),
   });
@@ -283,7 +281,6 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   Segment.identifyWithTraits(userData.email, {
     name: `${userData.firstName} ${userData.lastName}`,
     email: userData.email,
-    phone: userData.phone,
     postal: userData.postal,
     city: userData.city,
     state: userData.state,
@@ -335,7 +332,6 @@ export async function updateProfile(data: User): Promise<User> {
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,
-        phone: data.phone,
         addr_line_1: data.address1,
         addr_line_2: data.address2,
         city: data.city,

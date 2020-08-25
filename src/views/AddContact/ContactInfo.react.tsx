@@ -1,7 +1,6 @@
 import React, { createRef, Dispatch } from 'react';
 import {
   Keyboard,
-  KeyboardAvoidingView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import { Button, Icon, Input } from '@components';
+import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -225,11 +224,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <View
             style={{
@@ -363,7 +359,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
