@@ -1,5 +1,12 @@
 import React, { createRef } from 'react';
-import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+  Animated,
+} from 'react-native';
 import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
@@ -18,6 +25,7 @@ interface Props {
 
 interface State {
   shown: boolean;
+  shownAnim: Animated.Value;
   title: string;
   profile: boolean;
   blocked: boolean;
@@ -35,6 +43,7 @@ class Topbar extends React.Component<Props, State> {
     super(props);
     this.state = {
       shown: false,
+      shownAnim: new Animated.Value(0),
       title: '',
       profile: true,
       blocked: false,
@@ -152,17 +161,22 @@ class Topbar extends React.Component<Props, State> {
       topRight = <View testID="blank" />;
     }
     return (
-      <TouchableOpacity
+      <Animated.View
         style={[
           Styles.barContainer,
           {
-            height: this.state.shown ? barHeight : 0,
+            opacity: this.state.shownAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1],
+            }),
+            height: this.state.shownAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, barHeight],
+            }),
             shadowColor: this.state.shown ? '#000' : '#fff',
             elevation: this.state.shown ? 5 : 0,
           },
         ]}
-        activeOpacity={1.0}
-        onPress={Keyboard.dismiss}
       >
         {this.renderBackButton()}
         <Text
@@ -176,7 +190,7 @@ class Topbar extends React.Component<Props, State> {
         <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
           {topRight}
         </View>
-      </TouchableOpacity>
+      </Animated.View>
     );
   }
 }
@@ -184,7 +198,15 @@ class Topbar extends React.Component<Props, State> {
 export const topbarRef = createRef<Topbar>();
 
 export const setShown = (val: boolean): void => {
-  if (topbarRef.current) topbarRef.current.setState({ shown: val });
+  if (topbarRef.current) {
+    Animated.timing(topbarRef.current.state.shownAnim, {
+      toValue: val ? 1 : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start(() => {
+      if (topbarRef.current) topbarRef.current.setState({ shown: val });
+    });
+  }
 };
 
 export const setTitle = (val: string): void => {
