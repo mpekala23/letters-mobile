@@ -151,7 +151,7 @@ class EditablePostcard extends React.Component<Props, State> {
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: Colors.GRAY_LIGHT,
+                backgroundColor: Colors.BLACK_200,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}

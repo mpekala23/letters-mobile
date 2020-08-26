@@ -207,7 +207,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           style={{
             width: '100%',
             height: 1,
-            backgroundColor: Colors.GRAY_LIGHT,
+            backgroundColor: Colors.BLACK_200,
             marginBottom: 8,
           }}
         />

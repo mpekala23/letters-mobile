@@ -118,7 +118,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
               marginLeft: 14,
               height: 40,
               width: 7,
-              backgroundColor: Colors.GRAY_LIGHT,
+              backgroundColor: Colors.BLACK_200,
             }}
           />
         )}

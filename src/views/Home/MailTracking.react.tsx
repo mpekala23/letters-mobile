@@ -187,7 +187,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 marginHorizontal: 8,
                 width: '75%',
                 height: 4,
-                backgroundColor: Colors.GRAY_LIGHT,
+                backgroundColor: Colors.BLACK_200,
               }}
             />
             <ProfilePic

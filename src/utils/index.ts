@@ -1,11 +1,12 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Share } from 'react-native';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, Category, MailStatus } from 'types';
+import { ZipcodeInfo, Category, Screen, MailStatus } from 'types';
 import i18n from '@i18n';
+import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
 import {
@@ -269,3 +270,51 @@ export function isProduction(): boolean {
   if (!RELEASE_CHANNEL) return false;
   return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }
+
+export const onNativeShare = async (
+  screen: Screen,
+  cta: string
+): Promise<void> => {
+  const PROPERTIES = { screen, cta };
+
+  Segment.trackWithProperties('Share - Click on Share Button', {
+    ...PROPERTIES,
+  });
+
+  try {
+    const result = await Share.share(
+      {
+        message: i18n.t('Sharing.message'),
+        title: i18n.t('Sharing.title'),
+      },
+      {
+        subject: i18n.t('Sharing.subjectLine'),
+        dialogTitle: i18n.t('Sharing.title'),
+      }
+    );
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        Segment.trackWithProperties('Share - Success', {
+          ...PROPERTIES,
+          activityType: result.activityType,
+          action: result.action,
+        });
+      } else {
+        Segment.trackWithProperties('Share - Success', {
+          ...PROPERTIES,
+          action: result.action,
+        });
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+      Segment.trackWithProperties('Share - Dismissed', {
+        ...PROPERTIES,
+      });
+    }
+  } catch (error) {
+    Segment.trackWithProperties('Share - Error', {
+      ...PROPERTIES,
+      error: error.message,
+    });
+  }
+};

@@ -107,7 +107,7 @@
     "whatsUp": "¿Qué pasó?",
     "weHopeYoullSendAnotherLetter": "¡Esperamos que envía otra carta pronto!",
     "yourLetterIsOnItsWay": "¡Tu carta está en camino a tu ser querido! Si tiene preguntas mientras tanto, comuníquese con nosotros en support@ameelio.org",
-    "shareOnFacebook": "Compartir en Facebook",
+    "share": "Compartir",
     "returnHome": "Vuelve al inicio",
     "IHaventAskedMyLovedOne": "¡No le pregunté mi ser querido!",
     "theyHaventReceivedLetter": "Aún no han recibido la carta",
@@ -169,7 +169,7 @@
     "yourLetterIsOnTheWaySuffix": " está en camino!",
     "weEstimateYourLetterToArriveOn": "Se estima que su carta llegará",
     "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestras cartas. ¡Gracias por confiar en nosotros!",
-    "shareOnFacebook": "Compartir en Facebook",
+    "share": "Compartir",
     "done": "Hecho"
   },
   "RegisterScreen": {
@@ -387,5 +387,10 @@
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Revisar"
+  },
+  "Sharing": {
+    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
+    "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
   }
 }

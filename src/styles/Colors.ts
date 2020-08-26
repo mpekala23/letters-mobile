@@ -30,7 +30,7 @@ export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
 export const DROPDOWN_ERROR_TEXT = '#762B2B';
 
 export const GRAY_LIGHTER = '#FBFBFB';
-export const GRAY_LIGHT = '#F2F2F2';
+export const BLACK_200 = '#F2F2F2';
 export const GRAY_MEDIUM = '#9A9A9A';
 export const GRAY_500 = '#6D6D6D';
 export const GRAY_DARKER = '#393939';

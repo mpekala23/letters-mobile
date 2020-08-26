@@ -176,3 +176,8 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export enum Screen {
+  ReferFriends = 'ReferFriends',
+  Delivery = 'DeliveryReporting',
+}

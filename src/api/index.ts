@@ -12,7 +12,6 @@ import { getFacility, getFacilities } from './Facilities';
 
 import {
   createMail,
-  facebookShare,
   getMail,
   getSingleMail,
   getTrackingEvents,
@@ -44,7 +43,6 @@ export {
   getFacility,
   getFacilities,
   createMail,
-  facebookShare,
   getMail,
   getSingleMail,
   getTrackingEvents,
