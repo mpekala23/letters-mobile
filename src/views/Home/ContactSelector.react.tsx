@@ -1,12 +1,6 @@
 import React, { Dispatch } from 'react';
-import {
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Platform,
-  FlatList,
-} from 'react-native';
-import { Icon } from '@components';
+import { Text, TouchableOpacity, Platform, FlatList } from 'react-native';
+import { Icon, KeyboardAvoider } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
@@ -68,7 +62,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       await Notifs.setup();
       this.props.handleNotif();
       const token = Notifs.getToken();
-      console.log(token);
       await uploadPushToken(token);
     } catch (err) {
       dropdownError({ message: i18n.t('Permission.notifs') });
@@ -93,7 +86,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       await getContacts();
       await getUser();
     } catch (e) {
-      console.log(e);
       dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
     }
     this.setState({ refreshing: false });
@@ -135,11 +127,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        style={Styles.trueBackground}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        enabled
-      >
+      <KeyboardAvoider style={Styles.trueBackground}>
         <Text
           style={[
             Typography.FONT_BOLD,
@@ -173,7 +161,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         >
           <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </KeyboardAvoider>
     );
   }
 }

@@ -2,13 +2,12 @@ import React, { createRef } from 'react';
 import {
   Text,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
   Platform,
   View,
 } from 'react-native';
-import { Button, Input, PicUpload } from '@components';
+import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -238,16 +237,12 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
+        <KeyboardAvoider
           style={{
-            flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
             paddingHorizontal: 16,
           }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"
@@ -446,7 +441,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               }}
             />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

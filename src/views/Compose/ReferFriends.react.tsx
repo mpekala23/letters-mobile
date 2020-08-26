@@ -1,6 +1,6 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, View, Platform } from 'react-native';
-import { Button } from '@components';
+import { Text, View, Platform } from 'react-native';
+import { Button, KeyboardAvoider } from '@components';
 import { facebookShare } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
@@ -44,11 +44,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
   const sixDaysFromNow = estimateDelivery(new Date());
   return (
-    <KeyboardAvoidingView
-      style={Styles.trueBackground}
-      behavior="padding"
-      enabled
-    >
+    <KeyboardAvoider style={Styles.trueBackground}>
       <View
         style={{
           flex: 1,
@@ -115,7 +111,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

@@ -190,10 +190,15 @@
     "register": "Register",
     "emailAlreadyInUse": "Email already in use.",
     "confirmPassword": "Confirm Password",
-    "referer": "How did you hear about Ameelio?",
+    "referrer": "How did you hear about Ameelio?",
     "login": "Log In",
     "passwordInvalid": "The password must be at least 8 characters.",
-    "passwordsMustMatch": "Your passwords must match."
+    "passwordsMustMatch": "Your passwords must match.",
+    "next": "Next",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
@@ -316,8 +321,7 @@
     "psYourLovedOneWillRespondTo": "P.S. Your loved ones will be able to respond to you via the return address:",
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
-    "send": "Send Letter",
-    "sendPostcard": "Send Photo",
+    "send": "Send",
     "preview": "Letter Preview",
     "next": "Next",
     "to": "To",

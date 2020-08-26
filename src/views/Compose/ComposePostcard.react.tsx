@@ -5,12 +5,11 @@ import {
   FlatList,
   TouchableOpacity,
   Animated,
-  KeyboardAvoidingView,
   Keyboard,
   EmitterSubscription,
   Platform,
 } from 'react-native';
-import { EditablePostcard, ComposeTools } from '@components';
+import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
 import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
@@ -30,6 +29,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -280,10 +280,17 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     } else {
       this.setState({ horizontal: true });
     }
+    Segment.trackWithProperties('Compose - Add Image Success', {
+      Option: 'Postcard',
+    });
   }
 
   beginWriting(): void {
     this.setState({ horizontal: true });
+    Segment.trackWithProperties('Compose - Click on Next', {
+      Option: 'Postcard',
+      Step: 'Image Selection',
+    });
     if (this.state.design.image.uri === '') {
       popupAlert({
         title: i18n.t('Alert.noDesignSelected'),
@@ -316,6 +323,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     Keyboard.dismiss();
     setBackOverride(undefined);
     this.changeDesign(this.state.design);
+    Segment.trackWithProperties('Compose - Click on Back', {
+      Option: 'Postcard',
+      Step: 'Caption',
+    });
     Animated.timing(this.state.flip, {
       useNativeDriver: false,
       toValue: 0,
@@ -333,6 +344,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   doneWriting(): void {
+    Segment.trackWithProperties('Compose - Click on Next', {
+      Option: 'Postcard',
+      Step: 'Caption',
+    });
     this.props.navigation.navigate('ReviewPostcard');
   }
 
@@ -450,12 +465,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         style={Styles.gridTrueBackground}
         onPress={Keyboard.dismiss}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <Animated.View
             style={[
               Styles.gridPreviewBackground,
@@ -545,7 +555,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               numLeft={this.state.charsLeft}
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

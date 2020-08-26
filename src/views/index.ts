@@ -16,7 +16,9 @@ import MailTrackingScreen from './Home/MailTracking.react';
 import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import PrivacyScreen from './Login/Privacy.react';
 import ReferFriendsScreen from './Compose/ReferFriends.react';
-import RegisterScreen from './Onboarding/Register.react';
+import RegisterCredsScreen from './Onboarding/RegisterCreds.react';
+import RegisterPersonalScreen from './Onboarding/RegisterPersonal.react';
+import RegisterAddressScreen from './Onboarding/RegisterAddress.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
@@ -47,7 +49,9 @@ export {
   MemoryLaneScreen,
   PrivacyScreen,
   ReferFriendsScreen,
-  RegisterScreen,
+  RegisterCredsScreen,
+  RegisterPersonalScreen,
+  RegisterAddressScreen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,

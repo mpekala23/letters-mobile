@@ -5,6 +5,7 @@ import { Prompts, getRandomPromptIx } from '@utils';
 import i18n from '@i18n';
 import Shuffle from '@assets/views/Compose/Shuffle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
@@ -106,6 +107,7 @@ class ComposeHeader extends React.Component<Props, State> {
             <TouchableOpacity
               onPress={() => {
                 this.setState((prevState) => {
+                  Segment.track('Compose - Click on Shuffle Ideas');
                   return {
                     ...prevState,
                     promptIx: (prevState.promptIx + 1) % Prompts.length,
@@ -120,8 +122,13 @@ class ComposeHeader extends React.Component<Props, State> {
           ) : null}
           <Button
             onPress={() => {
-              if (this.state.open) this.close();
-              else this.open();
+              if (this.state.open) {
+                Segment.track('Compose - Click on Collapse');
+                this.close();
+              } else {
+                Segment.track('Compose - Click on Need Ideas');
+                this.open();
+              }
             }}
             containerStyle={{ width: 130, height: 35 }}
           >
