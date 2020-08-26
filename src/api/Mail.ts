@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import { Linking } from 'react-native';
 import url from 'url';
 import {
   Draft,
@@ -355,15 +354,6 @@ export async function createMail(draft: Draft): Promise<Mail> {
   user.credit -= 1;
   store.dispatch(setUser(user));
   return createdMail;
-}
-
-export async function facebookShare(shareUrl: string): Promise<void> {
-  const supportedUrl = await Linking.canOpenURL(shareUrl);
-  if (supportedUrl) {
-    await Linking.openURL(shareUrl);
-  } else {
-    throw Error('Share Url not supported');
-  }
 }
 
 interface RawCategory {

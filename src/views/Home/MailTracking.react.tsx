@@ -159,7 +159,7 @@ class MailTrackingScreenBase extends React.Component<Props> {
                   : undefined
               ),
               width: 7,
-              backgroundColor: Colors.GRAY_LIGHT,
+              backgroundColor: Colors.BLACK_200,
               position: 'absolute',
             }}
           />

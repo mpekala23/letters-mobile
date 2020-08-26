@@ -106,7 +106,7 @@
     "whatsUp": "Can you tell us more about what happened?",
     "weHopeYoullSendAnotherLetter": "We hope you'll send another letter soon!",
     "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at support@ameelio.org",
-    "shareOnFacebook": "Share on Facebook",
+    "share": "Share",
     "returnHome": "Return home",
     "IHaventAskedMyLovedOne": "I haven't asked my loved one!",
     "theyHaventReceivedLetter": "They haven't received the letter yet",
@@ -168,7 +168,7 @@
     "yourLetterIsOnTheWaySuffix": " is on the way!",
     "weEstimateYourLetterToArriveOn": "Estimated delivery date",
     "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our letters. Thank you for trusting us!",
-    "shareOnFacebook": "Share on Facebook",
+    "share": "Share",
     "done": "Done"
   },
   "RegisterScreen": {
