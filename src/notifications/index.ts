@@ -21,7 +21,8 @@ import i18n from '@i18n';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { Mail, Contact } from 'types';
-import { addBusinessDays } from 'date-fns';
+import { addBusinessDays, format } from 'date-fns';
+import * as Segment from 'expo-analytics-segment';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -141,6 +142,7 @@ class NotifsBase {
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
     if (notification.origin === 'received') return;
+    Segment.trackWithProperties('App Open', { channel: 'Push' });
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();
@@ -176,6 +178,14 @@ class NotifsBase {
     };
     switch (notif.type) {
       case NotifTypes.OnItsWay:
+        Segment.trackWithProperties(
+          'Notifications - Click on Delivery Update',
+          {
+            hour: format(new Date(), 'hh'),
+            weekday: format(new Date(), 'dddd'),
+            type: 'In Transit',
+          }
+        );
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
         if (!contact) break;
@@ -199,6 +209,14 @@ class NotifsBase {
         });
         break;
       case NotifTypes.ProcessedForDelivery:
+        Segment.trackWithProperties(
+          'Notifications - Click on Delivery Update',
+          {
+            hour: format(new Date(), 'hh'),
+            weekday: format(new Date(), 'dddd'),
+            type: 'Out for Delivery',
+          }
+        );
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
         if (!contact) break;
@@ -236,6 +254,7 @@ class NotifsBase {
         });
         break;
       case NotifTypes.HasReceived:
+        Segment.track('Notifications - Delivery Check-In ');
         if (!notif.data || !notif.data.contactId || !notif.data.letterId) break;
         contact = getContact(notif.data.contactId);
         if (!contact) break;
@@ -293,12 +312,26 @@ class NotifsBase {
         });
         break;
       case NotifTypes.NoFirstContact:
+        Segment.trackWithProperties(
+          'Notifications - Click on Add First Contact',
+          {
+            hour: format(new Date(), 'hh'),
+            weekday: format(new Date(), 'dddd'),
+          }
+        );
         resetNavigation({
           index: 0,
           routes: [{ name: 'ContactSelector' }, { name: 'ContactInfo' }],
         });
         break;
       case NotifTypes.NoFirstLetter:
+        Segment.trackWithProperties(
+          'Notifications - Click on Send First Letter',
+          {
+            hour: format(new Date(), 'hh'),
+            weekday: format(new Date(), 'dddd'),
+          }
+        );
         if (notif.data && notif.data.contactId) {
           for (let ix = 0; ix < state.contact.existing.length; ix += 1) {
             if (notif.data.contactId === state.contact.existing[ix].id) {
@@ -312,6 +345,24 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+        });
+        break;
+      case NotifTypes.Drought:
+        Segment.trackWithProperties(
+          'Notifications - Click on Send Weekly Letter',
+          {
+            channel: 'Push',
+            hour: format(new Date(), 'hh'),
+            weekday: format(new Date(), 'dddd'),
+          }
+        );
+        resetNavigation({
+          index: 0,
+          routes: [
+            { name: 'ContactSelector' },
+            { name: 'SingleContact' },
+            { name: 'ChooseOption' },
+          ],
         });
         break;
       default:

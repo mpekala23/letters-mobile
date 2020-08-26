@@ -103,6 +103,7 @@ export enum Validation {
   InmateNumber = 'InmateNumber',
   Address = 'Address',
   City = 'City',
+  Referrer = 'Referrer',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -146,6 +147,10 @@ export function isValidCity(city: string): boolean {
   return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
 }
 
+export function isValidReferrer(referrer: string): boolean {
+  return REFERERS.indexOf(referrer) >= 0;
+}
+
 export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
@@ -166,6 +171,8 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidAddress(value);
     case Validation.City:
       return isValidCity(value);
+    case Validation.Referrer:
+      return isValidReferrer(value);
     default:
       return false;
   }

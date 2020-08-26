@@ -34,7 +34,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button
           onPress={() => {
-            props.navigation.navigate('Register');
+            props.navigation.navigate('RegisterCreds');
             Segment.track('Begin - Click on Sign Up');
           }}
           buttonText={i18n.t('BeginScreen.signUp')}

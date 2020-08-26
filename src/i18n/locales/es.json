@@ -189,10 +189,12 @@
     "register": "Regístrate",
     "emailAlreadyInUse": "Correo electrónico ya en uso.",
     "confirmPassword": "Confirma Contraseña",
-    "referer": "¿Cómo supiste de Ameelio?",
+    "referrer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
-    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
+    "next": "Siguiente",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -335,11 +337,14 @@
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
-    "tapToAddMessage": "Haz clic para añadir un mensaje.",
-    "done": "Listo",
-    "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
-    "iWouldLikeToSend": "Me gustaría enviar algo:",
-    "yourOwnLettersAndPhotos": "Sus propios cartas y fotos."
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done",
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
     "happy": "Feliz",

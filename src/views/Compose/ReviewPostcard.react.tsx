@@ -84,7 +84,7 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
                     },
                   },
                 },
-                hoursTill8Tomorrow() / 24 + 14
+                hoursTill8Tomorrow() / 24 + 7
               );
               deleteDraft();
               props.navigation.reset({
