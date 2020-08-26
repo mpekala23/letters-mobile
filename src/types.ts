@@ -35,7 +35,7 @@ export enum MailStatus {
   Mailed = 'Mailed',
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
-  ProcessedForDelivery = 'Processed for Delivery',
+  ProcessedForDelivery = 'Out for Delivery',
   Delivered = 'Delivered',
   ReturnedToSender = 'Returned to Sender',
   Rerouted = 'Re-Routed',
@@ -156,6 +156,7 @@ export enum ProfilePicTypes {
   Topbar = 'Topbar',
   Contact = 'Contact',
   SingleContact = 'SingleContact',
+  Avatar = 'Avatar',
 }
 
 export enum Storage {

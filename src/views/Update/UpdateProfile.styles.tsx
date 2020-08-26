@@ -7,8 +7,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   logOutButton: {
-    backgroundColor: Colors.BLUE_DARKEST,
-    borderRadius: 16,
+    backgroundColor: Colors.BLUE_500,
+    borderRadius: 8,
     width: '100%',
     height: 48,
     marginTop: 16,

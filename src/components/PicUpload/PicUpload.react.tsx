@@ -13,6 +13,7 @@ import { Image } from 'types';
 import Camera from '@assets/components/PicUpload/Camera';
 import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
+import Avatar from '@assets/components/ProfilePic/Avatar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Colors } from '@styles';
 import * as Segment from 'expo-analytics-segment';
@@ -39,6 +40,7 @@ export interface Props {
   segmentOnPressLog?: () => void;
   segmentSuccessLog?: () => void;
   segmentErrorLogEvent?: string;
+  avatarPlaceholder?: boolean;
 }
 
 export interface State {
@@ -54,6 +56,7 @@ class PicUpload extends React.Component<Props, State> {
     aspect: [3, 3],
     allowsEditing: true,
     initial: null,
+    avatarPlaceholder: false,
   };
 
   constructor(props: Props) {
@@ -211,7 +214,7 @@ class PicUpload extends React.Component<Props, State> {
       innerCircle =
         this.props.type === PicUploadTypes.Profile ? (
           <View testID="profile placeholder">
-            <Icon svg={Camera} />
+            <Icon svg={this.props.avatarPlaceholder ? Avatar : Camera} />
           </View>
         ) : (
           <View testID="media placeholder">

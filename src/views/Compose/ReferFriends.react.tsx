@@ -1,6 +1,6 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, View, Platform } from 'react-native';
-import { Button } from '@components';
+import { Text, View, Platform } from 'react-native';
+import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
@@ -11,9 +11,10 @@ import LottieView from 'lottie-react-native';
 import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
-import { format, addBusinessDays } from 'date-fns';
+import { format } from 'date-fns';
 import { Contact, Screen } from 'types';
-import { onNativeShare } from '@utils';
+import { onNativeShare, estimateDelivery } from '@utils';
+
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -28,13 +29,9 @@ export interface Props {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
-  const sixDaysFromNow = addBusinessDays(new Date(), 6);
+  const sixDaysFromNow = estimateDelivery(new Date());
   return (
-    <KeyboardAvoidingView
-      style={Styles.trueBackground}
-      behavior="padding"
-      enabled
-    >
+    <KeyboardAvoider style={Styles.trueBackground}>
       <View
         style={{
           flex: 1,
@@ -106,7 +103,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  KeyboardAvoidingView,
   View,
   ScrollView,
   TouchableOpacity,
@@ -10,7 +9,7 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Input, Icon } from '@components';
+import { Input, Icon, KeyboardAvoider } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
 import { Facility, PrisonTypes, ContactFacility } from 'types';
 import i18n from '@i18n';
@@ -180,12 +179,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <View
             style={{
               flex: 1,
@@ -305,7 +299,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

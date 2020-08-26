@@ -4,9 +4,10 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, Category, Screen } from 'types';
+import { ZipcodeInfo, Category, Screen, MailStatus } from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
+import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
 import {
   ABBREV_TO_STATE,
@@ -104,6 +105,7 @@ export enum Validation {
   InmateNumber = 'InmateNumber',
   Address = 'Address',
   City = 'City',
+  Referrer = 'Referrer',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -147,6 +149,10 @@ export function isValidCity(city: string): boolean {
   return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
 }
 
+export function isValidReferrer(referrer: string): boolean {
+  return REFERERS.indexOf(referrer) >= 0;
+}
+
 export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
@@ -167,6 +173,8 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidAddress(value);
     case Validation.City:
       return isValidCity(value);
+    case Validation.Referrer:
+      return isValidReferrer(value);
     default:
       return false;
   }
@@ -247,6 +255,13 @@ export const PERSONAL_CATEGORY: Category = {
 
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function estimateDelivery(date: Date, status?: MailStatus): Date {
+  if (status === MailStatus.ProcessedForDelivery) {
+    return addBusinessDays(date, 3);
+  }
+  return addBusinessDays(date, 6);
 }
 
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;

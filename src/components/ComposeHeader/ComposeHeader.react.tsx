@@ -171,7 +171,7 @@ class ComposeHeader extends React.Component<Props, State> {
             style={{
               height: 100,
               width: '100%',
-              backgroundColor: Colors.PINK_LIGHTEST,
+              backgroundColor: Colors.PINK_100,
               borderRadius: 8,
               opacity: this.state.progress,
             }}

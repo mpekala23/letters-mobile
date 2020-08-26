@@ -58,7 +58,6 @@ const Button: React.FC<Props> = (props: Props) => {
           enabled && !blocked ? {} : Styles.buttonBackgroundDisabled,
           containerStyle,
           enabled && !blocked ? {} : disabledContainerStyle,
-          Styles.shadow,
         ]}
         activeOpacity={enabled && !blocked ? 0.7 : 1.0}
         onPress={async () => {

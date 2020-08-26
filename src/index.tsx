@@ -10,7 +10,6 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
-import Constants from 'expo-constants';
 import * as Sentry from 'sentry-expo';
 import { isProduction } from '@utils';
 

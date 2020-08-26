@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   createStackNavigator,
@@ -24,7 +24,9 @@ import {
   MailDetailsScreen,
   PrivacyScreen,
   ReferFriendsScreen,
-  RegisterScreen,
+  RegisterCredsScreen,
+  RegisterPersonalScreen,
+  RegisterAddressScreen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
@@ -40,7 +42,7 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { SupportFAQTypes, DeliveryReportTypes, Category } from 'types';
+import { SupportFAQTypes, DeliveryReportTypes, Category, Image } from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -60,7 +62,23 @@ export type AuthStackParamList = {
   Login: undefined;
   Terms: undefined;
   Privacy: undefined;
-  Register: undefined;
+  RegisterCreds: undefined;
+  RegisterPersonal: {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+  };
+  RegisterAddress: {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+    firstName: string;
+    lastName: string;
+    referrer: string;
+    image: Image | undefined;
+  };
 };
 
 export type AppStackParamList = {
@@ -105,7 +123,9 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Login: { title: i18n.t('Screens.login'), profile: false },
   Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
-  Register: { title: i18n.t('Screens.register'), profile: false },
+  RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
+  RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
+  RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
   AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
@@ -203,10 +223,12 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
+  const [currentRoute, setCurrentRoute] = useState('Splash');
   const topbar = (
     <Topbar
       userState={props.userState}
       navigation={navigationRef.current}
+      currentRoute={currentRoute}
       ref={topbarRef}
     />
   );
@@ -231,7 +253,15 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="RegisterCreds" component={RegisterCredsScreen} />
+        <Stack.Screen
+          name="RegisterPersonal"
+          component={RegisterPersonalScreen}
+        />
+        <Stack.Screen
+          name="RegisterAddress"
+          component={RegisterAddressScreen}
+        />
       </>
     );
   } else {
@@ -305,6 +335,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name;
+        if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
           setProfile(mapRouteNameToDetails[name].profile);

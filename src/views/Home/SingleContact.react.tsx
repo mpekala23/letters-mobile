@@ -154,7 +154,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
           style={[
             Typography.BASE_TITLE,
             {
-              color: Colors.GRAY_DARK,
+              color: Colors.GRAY_500,
               paddingTop: 12,
             },
           ]}

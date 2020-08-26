@@ -1,7 +1,6 @@
 import React, { createRef, Dispatch } from 'react';
 import {
   Keyboard,
-  KeyboardAvoidingView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import { Button, Icon, Input } from '@components';
+import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -210,9 +209,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             Linking.openURL(inmateDatabaseLink);
           }}
         >
-          <Text style={{ color: Colors.PINK_DARKER }}>
+          <Text style={{ color: Colors.PINK_500 }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_DARKER }]}>
+            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}>
               {this.state.stateToSearch}
             </Text>{' '}
             {i18n.t('ContactInfoScreen.database')}.
@@ -225,11 +224,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <View
             style={{
@@ -254,7 +250,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   style={[
                     Typography.FONT_MEDIUM,
                     {
-                      color: Colors.GRAY_DARK,
+                      color: Colors.GRAY_500,
                       marginTop: 8,
                       fontSize: 15,
                     },
@@ -276,13 +272,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     );
                   }}
                 >
-                  <Text style={{ color: Colors.PINK_DARKER }}>
+                  <Text style={{ color: Colors.PINK_500 }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
-                      style={[
-                        Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARKER },
-                      ]}
+                      style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}
                     </Text>{' '}
@@ -363,7 +356,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
