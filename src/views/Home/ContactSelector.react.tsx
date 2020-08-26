@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
-import { Text, TouchableOpacity, Platform, FlatList } from 'react-native';
-import { Icon, KeyboardAvoider } from '@components';
+import { Text, Platform, FlatList } from 'react-native';
+import { Button, KeyboardAvoider } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
@@ -9,7 +9,6 @@ import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
 import { Mail, Contact } from 'types';
 import i18n from '@i18n';
-import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { getContacts, getUser, uploadPushToken } from '@api';
@@ -109,6 +108,23 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     );
   };
 
+  renderAddContactButton = () => {
+    return (
+      <Button
+        buttonText={i18n.t('ContactSelectorScreen.addContact')}
+        onPress={() => {
+          this.props.navigation.navigate('ContactInfo', {
+            addFromSelector: true,
+          });
+          Segment.track('Contact Selector - Click on Add Contact');
+        }}
+        reverse
+        containerStyle={Styles.buttonRounded}
+        textStyle={[Typography.FONT_BOLD]}
+      />
+    );
+  };
+
   static renderInitialMessage(): JSX.Element {
     return (
       <Text
@@ -144,23 +160,12 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           data={this.props.existingContacts}
           renderItem={this.renderItem}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
+          ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}
           showsVerticalScrollIndicator={false}
           onRefresh={this.doRefresh}
           refreshing={this.state.refreshing}
         />
-        <TouchableOpacity
-          style={Styles.addContactButton}
-          onPress={() => {
-            this.props.navigation.navigate('ContactInfo', {
-              addFromSelector: true,
-            });
-            Segment.track('Contact Selector - Click on Add Contact');
-          }}
-          testID="addContact"
-        >
-          <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
-        </TouchableOpacity>
       </KeyboardAvoider>
     );
   }
