@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   baseText: {
     textAlign: 'center',
-    color: Colors.GRAY_DARK,
+    color: Colors.GRAY_500,
     fontSize: 16,
     marginTop: 6,
   },

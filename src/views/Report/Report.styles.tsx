@@ -12,7 +12,7 @@ export default StyleSheet.create({
   question: { fontSize: 23, textAlign: 'center', width: '80%' },
   title: { fontSize: 20, textAlign: 'center', width: '80%' },
   description: {
-    color: Colors.GRAY_DARK,
+    color: Colors.GRAY_500,
     fontSize: 16,
     textAlign: 'center',
     width: '80%',
@@ -20,13 +20,13 @@ export default StyleSheet.create({
   button: {
     width: '100%',
     height: 44,
-    backgroundColor: Colors.PINK_DARKER,
+    backgroundColor: Colors.PINK_500,
     borderRadius: 8,
   },
   buttonReverse: {
     width: '100%',
     height: 44,
-    borderColor: Colors.PINK_DARKER,
+    borderColor: Colors.PINK_500,
     borderWidth: 2,
     borderRadius: 8,
     backgroundColor: 'white',
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'white',
   },
-  buttonText: { fontSize: 15, color: Colors.PINK_DARKER },
+  buttonText: { fontSize: 15, color: Colors.PINK_500 },
   buttonTextReverse: { fontSize: 15, color: Colors.AMEELIO_WHITE },
   textAreaBox: {
     width: '100%',

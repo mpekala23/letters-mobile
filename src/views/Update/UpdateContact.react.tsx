@@ -387,7 +387,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               style={[
                 Typography.FONT_BOLD,
                 Styles.baseText,
-                { color: Colors.GRAY_DARK },
+                { color: Colors.GRAY_500 },
               ]}
             >
               {i18n.t('UpdateContactScreen.optionalUnit')}
@@ -400,7 +400,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               style={[
                 Typography.FONT_BOLD,
                 Styles.baseText,
-                { color: Colors.GRAY_DARK },
+                { color: Colors.GRAY_500 },
               ]}
             >
               {i18n.t('UpdateContactScreen.optionalDorm')}
@@ -424,16 +424,16 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                       onPress: this.doDeleteContact,
                       containerStyle: {
                         width: '100%',
-                        backgroundColor: Colors.BLUE_DARKEST,
+                        backgroundColor: Colors.BLUE_500,
                       },
                     },
                     {
                       text: i18n.t('UpdateContactScreen.dontDelete'),
                       reverse: true,
-                      textStyle: { color: Colors.BLUE_DARKEST },
+                      textStyle: { color: Colors.BLUE_500 },
                       containerStyle: {
                         width: '100%',
-                        borderColor: Colors.BLUE_DARKEST,
+                        borderColor: Colors.BLUE_500,
                       },
                     },
                   ],

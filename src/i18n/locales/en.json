@@ -94,8 +94,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
-    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "hasYourLovedOneReceivedLetterPrefix": "Has ",
+    "hasYourLovedOneReceivedLetter": " received your letter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio.",
     "yepTheyReceivedIt": "Yep, they received it!",
     "notSureYet": "I'm not sure yet...",
     "notYetReceived": "They haven't received it"
@@ -119,10 +120,10 @@
     "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
   "MailTrackingScreen": {
-    "letterTracking": "Letter tracking",
-    "estimatedArrival": "Your letter is estimated to arrive on",
-    "needHelp": "I need help",
-    "letterContent": "Letter content",
+    "letterTracking": "Mail tracking",
+    "estimatedArrival": "Estimated delivery date",
+    "needHelp": "Help",
+    "letterContent": "Mail content",
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
     "possibleReason": "Possible reason: Wrong mailing address"
@@ -147,8 +148,8 @@
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
-    "oneLetter": "1 Letter",
-    "letters": "Letters"
+    "oneLetter": "1 Memory",
+    "letters": "Memories"
   },
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",

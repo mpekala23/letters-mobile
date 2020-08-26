@@ -14,6 +14,7 @@ import { ABBREV_TO_STATE, isProduction } from '@utils';
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
   : 'https://letters-api-staging.ameelio.org/';
+
 export const API_URL = isProduction()
   ? 'https://api.ameelio.org/api/'
   : 'https://letters-api-staging.ameelio.org/api/';

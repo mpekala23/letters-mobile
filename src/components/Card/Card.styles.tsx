@@ -131,7 +131,7 @@ export default StyleSheet.create({
   creditsSendMoreText: {
     flex: 1,
     fontSize: 18,
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
   },
   categoryBackground: {
     height: 184,

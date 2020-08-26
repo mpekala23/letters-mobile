@@ -18,10 +18,10 @@ export default StyleSheet.create({
     fontSize: 14,
     paddingTop: 6,
     paddingBottom: 28,
-    color: Colors.GRAY_DARK,
+    color: Colors.GRAY_500,
   },
   button: {
-    backgroundColor: Colors.PINK_DARKER,
+    backgroundColor: Colors.PINK_500,
     borderRadius: 15,
     width: '100%',
     height: 50,
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   forgotText: {
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
     fontSize: 16,
     fontWeight: '500',
   },

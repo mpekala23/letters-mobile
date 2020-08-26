@@ -18,6 +18,8 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInBusinessDays } from 'date-fns';
+import { estimateDelivery } from '@utils';
+
 import {
   getZipcode,
   fetchAuthenticated,
@@ -135,9 +137,9 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   } else {
     status = mapTrackingEventsToMailStatus(trackingEvents);
     if (status === MailStatus.ProcessedForDelivery) {
-      expectedDelivery = addBusinessDays(
+      expectedDelivery = estimateDelivery(
         trackingEvents[trackingEvents.length - 1].date,
-        3
+        status
       );
     }
   }
@@ -164,6 +166,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    trackingEvents,
   };
 }
 
@@ -211,10 +214,12 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   } else {
     status = cleanLobStatus(mail.lob_status, lastLobUpdate);
   }
-  let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
-  if (status === MailStatus.ProcessedForDelivery) {
-    expectedDelivery = addBusinessDays(lastLobUpdate, 3);
-  }
+  const expectedDelivery = estimateDelivery(
+    status === MailStatus.ProcessedForDelivery
+      ? lastLobUpdate
+      : new Date(mail.created_at),
+    status
+  );
   if (type === MailTypes.Letter) {
     return {
       type,

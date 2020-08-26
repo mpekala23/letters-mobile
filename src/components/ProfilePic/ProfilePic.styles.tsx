@@ -4,7 +4,7 @@ import { Colors } from '@styles';
 const userSize = 46;
 const contactSize = 80;
 const singleContactSize = 130;
-
+const avatarSize = 30;
 export default StyleSheet.create({
   contactBackground: {
     alignItems: 'center',
@@ -35,10 +35,20 @@ export default StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
   },
+  avatarBackground: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: avatarSize,
+    height: avatarSize,
+    borderRadius: userSize / 2,
+    overflow: 'hidden',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
+    resizeMode: 'contain',
+  },
   initials: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
-    color: Colors.GRAY_DARK,
+    color: Colors.GRAY_500,
   },
   initialsBig: {
     fontSize: 36,
@@ -56,5 +66,9 @@ export default StyleSheet.create({
   userPic: {
     width: userSize,
     height: userSize,
+  },
+  avatarPic: {
+    width: avatarSize,
+    height: avatarSize,
   },
 });

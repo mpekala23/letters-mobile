@@ -13,9 +13,10 @@ import LottieView from 'lottie-react-native';
 import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
-import { format, addBusinessDays } from 'date-fns';
+import { format } from 'date-fns';
 import * as Segment from 'expo-analytics-segment';
 import { Contact } from 'types';
+import { estimateDelivery } from '@utils';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -41,7 +42,7 @@ const onShare = async () => {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
-  const sixDaysFromNow = addBusinessDays(new Date(), 6);
+  const sixDaysFromNow = estimateDelivery(new Date());
   return (
     <KeyboardAvoider style={Styles.trueBackground}>
       <View

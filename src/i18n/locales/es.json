@@ -94,8 +94,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "¿Su ser querido ha recibido la carta?",
-    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio. Avísanos si hubo un problema con la entrega!",
+    "hasYourLovedOneReceivedLetterPrefix": "¿",
+    "hasYourLovedOneReceivedLetter": " ha recibido tu carta?",
+    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio.",
     "yepTheyReceivedIt": "¡Si, lo han recibido!",
     "notSureYet": "Todavía no estoy seguro...",
     "notYetReceived": "No lo han recibido"
@@ -120,7 +121,7 @@
   },
   "MailTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
-    "estimatedArrival": "Se estima que su carta llegará",
+    "estimatedArrival": "Se estima que su carta llegará ",
     "needHelp": "Necesito ayuda",
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
