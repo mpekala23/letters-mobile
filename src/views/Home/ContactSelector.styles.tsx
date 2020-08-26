@@ -30,11 +30,10 @@ export default StyleSheet.create({
     color: Colors.GRAY_DARKER,
     fontSize: 16,
   },
-  buttonRounded: {
-    width: '50%',
+  addContactButton: {
     alignSelf: 'center',
-    height: 50,
-    borderRadius: 18,
-    marginTop: 15,
+    marginTop: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
 });

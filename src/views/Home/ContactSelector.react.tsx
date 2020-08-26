@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Text, Platform, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -119,7 +119,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           Segment.track('Contact Selector - Click on Add Contact');
         }}
         reverse
-        containerStyle={Styles.buttonRounded}
+        containerStyle={Styles.addContactButton}
         textStyle={[Typography.FONT_BOLD]}
       />
     );
