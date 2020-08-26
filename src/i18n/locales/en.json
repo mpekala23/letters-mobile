@@ -380,5 +380,10 @@
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
     "reviewPostcard": "Review"
+  },
+  "Sharing": {
+    "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
+    "title": "Ameelio: Free Photos and Letters to Prison",
+    "subjectLine": "Send free letters and photos to prison!"
   }
 }

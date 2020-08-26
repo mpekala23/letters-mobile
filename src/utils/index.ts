@@ -260,12 +260,6 @@ export const onNativeShare = async (
   screen: Screen,
   cta: string
 ): Promise<void> => {
-  const MESSAGE =
-    "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org";
-
-  const TITLE = 'Ameelio: Free Photos and Letters to Prison';
-  const SUBJECT_LINE = 'Sending free letters and photos to prison!';
-
   const PROPERTIES = { screen, cta };
 
   Segment.trackWithProperties('Share - Click on Share Button', {
@@ -275,10 +269,13 @@ export const onNativeShare = async (
   try {
     const result = await Share.share(
       {
-        message: MESSAGE,
-        title: TITLE,
+        message: i18n.t('Sharing.message'),
+        title: i18n.t('Sharing.title'),
       },
-      { subject: SUBJECT_LINE, dialogTitle: TITLE }
+      {
+        subject: i18n.t('Sharing.subjectLine'),
+        dialogTitle: i18n.t('Sharing.title'),
+      }
     );
     if (result.action === Share.sharedAction) {
       if (result.activityType) {

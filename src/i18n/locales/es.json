@@ -381,5 +381,10 @@
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Revisar"
+  },
+  "Sharing": {
+    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
+    "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
   }
 }

@@ -178,5 +178,5 @@ export type TopbarRouteAction = {
 
 export enum Screen {
   ReferFriends = 'ReferFriends',
-  Delivery = 'DeliveryScreen',
+  Delivery = 'DeliveryReporting',
 }
