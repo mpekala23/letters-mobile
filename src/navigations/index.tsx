@@ -104,7 +104,7 @@ export type AppStackParamList = {
   MailDetails: undefined;
   MailTracking: undefined;
   MemoryLane: undefined;
-  ReferFriends: { mailType: MailTypes } | undefined;
+  ReferFriends: { mailType: MailTypes };
   ReviewLetter: undefined;
   ReviewPostcard: undefined;
   ReviewContact: undefined;

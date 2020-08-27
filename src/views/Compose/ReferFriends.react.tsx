@@ -13,7 +13,7 @@ import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format } from 'date-fns';
 import { Contact, Screen, MailTypes } from 'types';
-import { onNativeShare, estimateDelivery, capitalize } from '@utils';
+import { onNativeShare, estimateDelivery } from '@utils';
 
 import Styles from './ReferFriends.style';
 
