@@ -185,10 +185,12 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             this.setValid(true);
           }
         }}
-        key={item.name + item.address + item.postal}
+        key={
+          item.fullName ? item.fullName : item.name + item.address + item.postal
+        }
       >
         <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
-          {item.name}
+          {item.fullName ? item.fullName : item.name}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.itemInfo]}>
           {item.type}

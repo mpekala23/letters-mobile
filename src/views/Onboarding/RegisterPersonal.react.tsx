@@ -135,7 +135,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
             ref={this.scrollView}
             keyboardShouldPersistTaps="always"
             scrollEnabled
-            style={{ width: '100%', flex: 1 }}
+            style={{ width: '100%' }}
             contentContainerStyle={{
               paddingVertical: 24,
             }}
@@ -144,7 +144,11 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
               <Text
                 style={[
                   Typography.FONT_BOLD,
-                  { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
+                  {
+                    fontSize: 20,
+                    alignSelf: 'flex-start',
+                    paddingBottom: 16,
+                  },
                 ]}
               >
                 {i18n.t('RegisterScreen.registerAccount')}
@@ -205,8 +209,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 required
                 validate={Validation.Referrer}
                 options={REFERERS}
-                onFocus={async () => {
-                  await sleep(400);
+                onDropdownOpen={() => {
                   if (this.scrollView.current)
                     this.scrollView.current.scrollToEnd({ animated: true });
                 }}
@@ -218,6 +221,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                     this.goForward();
                   }
                 }}
+                strictDropdown
               />
             </TouchableOpacity>
           </ScrollView>

@@ -6,6 +6,8 @@ import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
 import * as Segment from 'expo-analytics-segment';
+import { LinearGradient } from 'expo-linear-gradient';
+import { WINDOW_WIDTH } from '@utils';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
@@ -159,7 +161,7 @@ class Topbar extends React.Component<Props, State> {
         <Text
           style={[
             Typography.FONT_MEDIUM,
-            { fontSize: 16, color: Colors.GRAY_500 },
+            { fontSize: 16, color: Colors.GRAY_500, paddingTop: 10 },
           ]}
         >
           {this.state.title}
@@ -167,6 +169,18 @@ class Topbar extends React.Component<Props, State> {
         <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
           {topRight}
         </View>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['rgba(0,0,0,0.2)', 'transparent']}
+          start={[0, 1.0]}
+          end={[0, 0]}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: WINDOW_WIDTH,
+            height: 4,
+          }}
+        />
       </Animated.View>
     );
   }

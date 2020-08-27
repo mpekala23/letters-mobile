@@ -86,6 +86,7 @@ export enum PrisonTypes {
 
 export interface Facility {
   name: string;
+  fullName?: string;
   type: PrisonTypes;
   address: string;
   city: string;

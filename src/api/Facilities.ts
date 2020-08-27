@@ -8,6 +8,7 @@ import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawFacility {
   name: string;
+  full_name: string;
   type: string;
   address: string;
   city: string;
@@ -19,6 +20,7 @@ interface RawFacility {
 function cleanFacility(facility: RawFacility): Facility {
   return {
     name: facility.name,
+    fullName: facility.full_name,
     type: facility.type as PrisonTypes,
     address: facility.address,
     city: facility.city,
