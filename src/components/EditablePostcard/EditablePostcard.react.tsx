@@ -102,7 +102,11 @@ class EditablePostcard extends React.Component<Props, State> {
           {this.props.design.image.uri !== '' ? (
             <AsyncImage
               viewStyle={{ width: '100%', height: '100%' }}
-              source={this.props.design.image}
+              source={
+                this.props.design.thumbnail
+                  ? this.props.design.thumbnail
+                  : this.props.design.image
+              }
             />
           ) : (
             <View

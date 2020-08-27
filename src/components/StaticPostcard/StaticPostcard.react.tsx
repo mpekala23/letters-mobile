@@ -28,7 +28,11 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
         >
           <AsyncImage
             viewStyle={{ width: '100%', height: '100%' }}
-            source={props.composing.design.image}
+            source={
+              props.composing.design.thumbnail
+                ? props.composing.design.thumbnail
+                : props.composing.design.image
+            }
           />
         </View>
       ) : (

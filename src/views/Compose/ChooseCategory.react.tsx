@@ -11,8 +11,8 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { getCategories } from '@api';
-import { PERSONAL_CATEGORY } from '@utils';
 import { FlatList } from 'react-native-gesture-handler';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -48,12 +48,15 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
   async refreshCategories() {
     this.setState({ refreshing: true }, async () => {
-      const categories = await getCategories();
-      categories.unshift(PERSONAL_CATEGORY);
-      this.setState({
-        categories,
-        refreshing: false,
-      });
+      try {
+        const categories = await getCategories();
+        this.setState({
+          categories,
+          refreshing: false,
+        });
+      } catch (err) {
+        dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+      }
     });
   }
 
@@ -73,7 +76,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
   render() {
     return (
-      <View style={Styles.screenBackground}>
+      <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         <Text
           style={[
             Typography.FONT_BOLD,
@@ -84,9 +87,25 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
           {i18n.t('Compose.iWouldLikeToSend')}
         </Text>
         <FlatList
-          data={this.state.categories}
+          data={this.state.categories.slice(1)}
+          ListHeaderComponent={
+            this.state.categories.length > 0 ? (
+              <CategoryCard
+                category={this.state.categories[0]}
+                navigate={
+                  this.props.navigation.navigate as (
+                    val: string,
+                    params?: Record<string, unknown>
+                  ) => void
+                }
+              />
+            ) : (
+              <View />
+            )
+          }
           renderItem={({ item }) => this.renderCategory(item)}
           keyExtractor={(item: Category) => item.id.toString()}
+          numColumns={2}
           refreshing={this.state.refreshing}
           onRefresh={this.refreshCategories}
         />

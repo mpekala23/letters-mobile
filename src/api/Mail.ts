@@ -372,6 +372,7 @@ interface RawCategory {
   img_src: string;
   name: string;
   updated_at: string;
+  blurb: string;
 }
 
 function cleanCategory(raw: RawCategory): Category {
@@ -379,7 +380,7 @@ function cleanCategory(raw: RawCategory): Category {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
-    blurb: '',
+    blurb: raw.blurb,
   };
 }
 
@@ -390,6 +391,11 @@ export async function getCategories(): Promise<Category[]> {
   const categories: Category[] = data.map((raw: RawCategory) =>
     cleanCategory(raw)
   );
+  const personalIx = categories.findIndex(
+    (cat: Category) => cat.name === 'personal'
+  );
+  const personalCategory = categories.splice(personalIx, 1);
+  categories.unshift(personalCategory[0]);
   return categories;
 }
 
@@ -399,6 +405,7 @@ interface RawDesign {
   updated_at: string;
   name: string;
   front_img_src: string;
+  thumbnail_src: string;
   type: MailTypes;
   back: null;
   subcategory_id: number;
@@ -407,6 +414,7 @@ interface RawDesign {
 function cleanDesign(raw: RawDesign): PostcardDesign {
   return {
     image: { uri: raw.front_img_src },
+    thumbnail: { uri: raw.thumbnail_src },
     name: raw.name,
   };
 }

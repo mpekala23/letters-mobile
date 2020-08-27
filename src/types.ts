@@ -13,6 +13,7 @@ export enum MailTypes {
 
 export interface PostcardDesign {
   image: Image;
+  thumbnail?: Image;
   name?: string;
   author?: string;
   custom?: boolean;

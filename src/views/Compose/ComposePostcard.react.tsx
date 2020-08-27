@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
+import { PostcardDesign, Draft, Category, Contact, Image } from 'types';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
 import {
@@ -218,13 +218,15 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   setValid(val: boolean): void {
-    this.setState({ valid: val });
-    if (this.state.writing) {
-      setProfileOverride({
-        enabled: val,
-        text: i18n.t('Compose.done'),
-        action: this.doneWriting,
-      });
+    if (val !== this.state.valid) {
+      this.setState({ valid: val });
+      if (this.state.writing) {
+        setProfileOverride({
+          enabled: val,
+          text: i18n.t('Compose.done'),
+          action: this.doneWriting,
+        });
+      }
     }
   }
 
@@ -249,12 +251,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       };
       this.setState({ data, subcategory: 'Library' });
     } else {
-      const data = await getSubcategories(this.props.route.params.category);
-      const subcategory = Object.keys(data).length ? Object.keys(data)[0] : '';
-      this.setState({
-        data,
-        subcategory,
-      });
+      try {
+        const data = await getSubcategories(this.props.route.params.category);
+        const subcategory = Object.keys(data).length
+          ? Object.keys(data)[0]
+          : '';
+        this.setState({
+          data,
+          subcategory,
+        });
+      } catch (err) {
+        dropdownError({ message: i18n.t('Error.cantLoadDesigns') });
+      }
     }
   }
 
@@ -345,6 +353,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   doneWriting(): void {
+    if (this.props.composing.content.length <= 0) {
+      dropdownError({ message: i18n.t('Compose.letterMustHaveContent') });
+      return;
+    }
     Segment.trackWithProperties('Compose - Click on Next', {
       Option: 'Postcard',
       Step: 'Caption',
@@ -415,7 +427,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         onPress={() => this.changeDesign(design)}
       >
         <AsyncImage
-          source={design.image}
+          source={design.thumbnail ? design.thumbnail : design.image}
           imageStyle={{ flex: 1, aspectRatio: 1 }}
         />
       </TouchableOpacity>
@@ -438,7 +450,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       >
         <AsyncImage
           download
-          source={design.image}
+          source={design.thumbnail ? design.thumbnail : design.image}
           imageStyle={{
             flex: 1,
             aspectRatio: width / height,
