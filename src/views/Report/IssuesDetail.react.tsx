@@ -5,11 +5,9 @@ import { Button, Icon } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
-import { DeliveryReportTypes } from 'types';
-import { facebookShare } from '@api';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { DeliveryReportTypes, Screen } from 'types';
 import LetterWithHeart from '@assets/views/Issues/LetterWithHeart';
-import * as Segment from 'expo-analytics-segment';
+import { onNativeShare } from '@utils';
 import ReportStyles from './Report.styles';
 
 type IssuesDetailScreenNavigationProp = StackNavigationProp<
@@ -46,17 +44,6 @@ function mapIssueToDetailsDescription(type: DeliveryReportTypes) {
   }
 }
 
-const onShare = async () => {
-  const ameelioUrl = 'letters.ameelio.org';
-  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
-  try {
-    Segment.track('Delivery Reporting - Share on Facebook');
-    await facebookShare(sharingUrl);
-  } catch (err) {
-    dropdownError({ message: i18n.t('Error.requestIncomplete') });
-  }
-};
-
 function defaultCTAButton(
   onPress: () => void,
   buttonText: string,
@@ -77,8 +64,9 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
   switch (type) {
     case DeliveryReportTypes.received:
       return defaultCTAButton(
-        onShare,
-        i18n.t('IssuesDetailScreen.shareOnFacebook'),
+        () =>
+          onNativeShare(Screen.Delivery, i18n.t('IssuesDetailScreen.share')),
+        i18n.t('IssuesDetailScreen.share'),
         ReportStyles.buttonTextReverse,
         ReportStyles.button
       );

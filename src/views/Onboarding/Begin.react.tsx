@@ -34,7 +34,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button
           onPress={() => {
-            props.navigation.navigate('Register');
+            props.navigation.navigate('RegisterCreds');
             Segment.track('Begin - Click on Sign Up');
           }}
           buttonText={i18n.t('BeginScreen.signUp')}
@@ -49,9 +49,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
           buttonText={i18n.t('BeginScreen.logIn')}
           reverse
           textStyle={
-            (Typography.FONT_BOLD,
-            Styles.baseText,
-            { color: Colors.PINK_DARKER })
+            (Typography.FONT_BOLD, Styles.baseText, { color: Colors.PINK_500 })
           }
           containerStyle={{ height: 47 }}
         />

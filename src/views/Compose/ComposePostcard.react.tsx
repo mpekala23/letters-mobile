@@ -5,13 +5,12 @@ import {
   FlatList,
   TouchableOpacity,
   Animated,
-  KeyboardAvoidingView,
   Keyboard,
   EmitterSubscription,
   Platform,
 } from 'react-native';
-import { EditablePostcard, ComposeTools } from '@components';
-import { PostcardDesign, Draft, Category, Contact, Image } from 'types';
+import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
+import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
 import {
@@ -478,12 +477,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         style={Styles.gridTrueBackground}
         onPress={Keyboard.dismiss}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <Animated.View
             style={[
               Styles.gridPreviewBackground,
@@ -573,7 +567,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               numLeft={this.state.charsLeft}
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

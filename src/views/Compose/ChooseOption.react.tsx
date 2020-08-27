@@ -37,7 +37,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
       <Text
         style={[
           Typography.FONT_REGULAR,
-          { fontSize: 14, color: Colors.GRAY_DARK, paddingBottom: 10 },
+          { fontSize: 14, color: Colors.GRAY_500, paddingBottom: 10 },
         ]}
       >
         {i18n.t('Compose.psYourLovedOneWillRespondTo')} {user.address1}

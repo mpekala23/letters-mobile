@@ -24,7 +24,7 @@ export default StyleSheet.create({
     height: 50,
   },
   deleteButton: {
-    backgroundColor: Colors.BLUE_DARKEST,
+    backgroundColor: Colors.BLUE_500,
   },
   roundPicUpload: {
     borderWidth: 10,

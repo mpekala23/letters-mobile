@@ -189,7 +189,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
                       },
                     },
                   },
-                  hoursTill8Tomorrow() / 24 + 14
+                  hoursTill8Tomorrow() / 24 + 7
                 );
                 deleteDraft();
                 this.props.navigation.reset({

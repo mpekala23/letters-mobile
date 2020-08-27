@@ -7,7 +7,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    backgroundColor: Colors.PINK_DARKER,
+    backgroundColor: Colors.PINK_500,
     marginVertical: 5,
     paddingHorizontal: 14,
   },
@@ -27,7 +27,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'white',
     borderWidth: 2,
-    borderColor: Colors.PINK_DARKER,
+    borderColor: Colors.PINK_500,
     marginVertical: 5,
   },
   buttonBackgroundDisabled: {
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    backgroundColor: Colors.PINK_DARK,
+    backgroundColor: Colors.PINK_400,
     marginVertical: 5,
   },
   buttonText: {
@@ -47,7 +47,7 @@ export default StyleSheet.create({
   buttonTextReverse: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
     padding: 6,
   },
   buttonTextDisabled: {
@@ -58,6 +58,6 @@ export default StyleSheet.create({
   },
   linkText: {
     fontSize: 16,
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
   },
 });

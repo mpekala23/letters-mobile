@@ -39,9 +39,7 @@ describe('Button component', () => {
     const { getByText } = setup({
       reverse: true,
     });
-    expect(getByText('press me').props.style[1].color).toEqual(
-      Colors.PINK_DARKER
-    );
+    expect(getByText('press me').props.style[1].color).toEqual(Colors.PINK_500);
   });
 
   it('should implement a disabled style', () => {

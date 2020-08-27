@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  KeyboardAvoidingView,
   View,
   ScrollView,
   Text,
@@ -11,7 +10,7 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, PicUpload } from '@components';
+import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
@@ -255,12 +254,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <View
             style={{
               flex: 1,
@@ -385,7 +379,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               showNextIcon
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

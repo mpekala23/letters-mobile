@@ -96,8 +96,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "¿Su ser querido ha recibido la carta?",
-    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio. Avísanos si hubo un problema con la entrega!",
+    "hasYourLovedOneReceivedLetterPrefix": "¿",
+    "hasYourLovedOneReceivedLetter": " ha recibido tu carta?",
+    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio.",
     "yepTheyReceivedIt": "¡Si, lo han recibido!",
     "notSureYet": "Todavía no estoy seguro...",
     "notYetReceived": "No lo han recibido"
@@ -108,7 +109,7 @@
     "whatsUp": "¿Qué pasó?",
     "weHopeYoullSendAnotherLetter": "¡Esperamos que envía otra carta pronto!",
     "yourLetterIsOnItsWay": "¡Tu carta está en camino a tu ser querido! Si tiene preguntas mientras tanto, comuníquese con nosotros en support@ameelio.org",
-    "shareOnFacebook": "Compartir en Facebook",
+    "share": "Compartir",
     "returnHome": "Vuelve al inicio",
     "IHaventAskedMyLovedOne": "¡No le pregunté mi ser querido!",
     "theyHaventReceivedLetter": "Aún no han recibido la carta",
@@ -122,7 +123,7 @@
   },
   "MailTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
-    "estimatedArrival": "Se estima que su carta llegará",
+    "estimatedArrival": "Se estima que su carta llegará ",
     "needHelp": "Necesito ayuda",
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
@@ -170,7 +171,7 @@
     "yourLetterIsOnTheWaySuffix": " está en camino!",
     "weEstimateYourLetterToArriveOn": "Se estima que su carta llegará",
     "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestras cartas. ¡Gracias por confiar en nosotros!",
-    "shareOnFacebook": "Compartir en Facebook",
+    "share": "Compartir",
     "done": "Hecho"
   },
   "RegisterScreen": {
@@ -191,10 +192,12 @@
     "register": "Regístrate",
     "emailAlreadyInUse": "Correo electrónico ya en uso.",
     "confirmPassword": "Confirma Contraseña",
-    "referer": "¿Cómo supiste de Ameelio?",
+    "referrer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
-    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
+    "next": "Siguiente",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -337,11 +340,14 @@
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
-    "tapToAddMessage": "Haz clic para añadir un mensaje.",
-    "done": "Listo",
-    "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
-    "iWouldLikeToSend": "Me gustaría enviar algo:",
-    "yourOwnLettersAndPhotos": "Sus propios cartas y fotos."
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done",
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
     "happy": "Feliz",
@@ -383,5 +389,10 @@
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Revisar"
+  },
+  "Sharing": {
+    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
+    "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
   }
 }

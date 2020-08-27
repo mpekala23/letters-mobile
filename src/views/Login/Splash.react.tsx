@@ -38,7 +38,7 @@ const SplashScreen: React.FC = () => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.PINK_DARK,
+        backgroundColor: Colors.PINK_400,
       }}
     >
       <View accessible accessibilityLabel="Ameelio Logo">

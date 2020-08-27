@@ -4,14 +4,13 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  KeyboardAvoidingView,
   Platform,
   RefreshControl,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, Icon } from '@components';
+import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import { Facility, ContactFacility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -208,7 +207,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           style={{
             width: '100%',
             height: 1,
-            backgroundColor: Colors.GRAY_LIGHT,
+            backgroundColor: Colors.BLACK_200,
             marginBottom: 8,
           }}
         />
@@ -270,12 +269,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <View style={Styles.topSection}>
             <View
               style={{
@@ -314,7 +308,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             {this.renderFooter()}
             <View style={{ width: '100%', height: 24 }} />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

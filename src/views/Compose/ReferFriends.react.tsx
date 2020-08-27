@@ -1,8 +1,6 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, View, Platform } from 'react-native';
-import { Button } from '@components';
-import { facebookShare } from '@api';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { Text, View, Platform } from 'react-native';
+import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
@@ -13,9 +11,10 @@ import LottieView from 'lottie-react-native';
 import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
-import { format, addBusinessDays } from 'date-fns';
-import * as Segment from 'expo-analytics-segment';
-import { Contact } from 'types';
+import { format } from 'date-fns';
+import { Contact, Screen } from 'types';
+import { onNativeShare, estimateDelivery } from '@utils';
+
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -28,26 +27,11 @@ export interface Props {
   contact: Contact;
 }
 
-const onShare = async () => {
-  const ameelioUrl = 'letters.ameelio.org';
-  const sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${ameelioUrl}`;
-  try {
-    Segment.track('Review - Share on Facebook');
-    await facebookShare(sharingUrl);
-  } catch (err) {
-    dropdownError({ message: i18n.t('Error.requestIncomplete') });
-  }
-};
-
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
-  const sixDaysFromNow = addBusinessDays(new Date(), 6);
+  const sixDaysFromNow = estimateDelivery(new Date());
   return (
-    <KeyboardAvoidingView
-      style={Styles.trueBackground}
-      behavior="padding"
-      enabled
-    >
+    <KeyboardAvoider style={Styles.trueBackground}>
       <View
         style={{
           flex: 1,
@@ -94,8 +78,13 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
         </View>
         <View style={{ marginTop: 16, width: '100%' }}>
           <Button
-            buttonText={i18n.t('ReferFriendsScreen.shareOnFacebook')}
-            onPress={() => onShare()}
+            buttonText={i18n.t('ReferFriendsScreen.share')}
+            onPress={() => {
+              onNativeShare(
+                Screen.ReferFriends,
+                i18n.t('ReferFriendsScreen.share')
+              );
+            }}
             containerStyle={{ width: '100%' }}
           />
           <Button
@@ -114,7 +103,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

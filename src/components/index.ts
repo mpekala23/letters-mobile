@@ -11,6 +11,7 @@ import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
 import GrayBar from './GrayBar/GrayBar.react';
 import Input from './Input/Input.react';
+import KeyboardAvoider from './KeyboardAvoider/KeyboardAvoider.react';
 import LetterOptionCard from './Card/LetterOptionCard.react';
 import LetterStatusCard from './Card/LetterStatusCard.react';
 import LetterTracker from './LetterTracker/LetterTracker.react';
@@ -37,6 +38,7 @@ export {
   GenericCard,
   GrayBar,
   Input,
+  KeyboardAvoider,
   LetterOptionCard,
   LetterStatusCard,
   LetterTracker,

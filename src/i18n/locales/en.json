@@ -96,8 +96,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
-    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "hasYourLovedOneReceivedLetterPrefix": "Has ",
+    "hasYourLovedOneReceivedLetter": " received your letter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio.",
     "yepTheyReceivedIt": "Yep, they received it!",
     "notSureYet": "I'm not sure yet...",
     "notYetReceived": "They haven't received it"
@@ -108,7 +109,7 @@
     "whatsUp": "Can you tell us more about what happened?",
     "weHopeYoullSendAnotherLetter": "We hope you'll send another letter soon!",
     "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at support@ameelio.org",
-    "shareOnFacebook": "Share on Facebook",
+    "share": "Share",
     "returnHome": "Return home",
     "IHaventAskedMyLovedOne": "I haven't asked my loved one!",
     "theyHaventReceivedLetter": "They haven't received the letter yet",
@@ -121,10 +122,10 @@
     "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
   "MailTrackingScreen": {
-    "letterTracking": "Letter tracking",
-    "estimatedArrival": "Your letter is estimated to arrive on",
-    "needHelp": "I need help",
-    "letterContent": "Letter content",
+    "letterTracking": "Mail tracking",
+    "estimatedArrival": "Estimated delivery date",
+    "needHelp": "Help",
+    "letterContent": "Mail content",
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
     "possibleReason": "Possible reason: Wrong mailing address"
@@ -149,8 +150,8 @@
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
-    "oneLetter": "1 Letter",
-    "letters": "Letters"
+    "oneLetter": "1 Memory",
+    "letters": "Memories"
   },
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
@@ -170,7 +171,7 @@
     "yourLetterIsOnTheWaySuffix": " is on the way!",
     "weEstimateYourLetterToArriveOn": "Estimated delivery date",
     "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our letters. Thank you for trusting us!",
-    "shareOnFacebook": "Share on Facebook",
+    "share": "Share",
     "done": "Done"
   },
   "RegisterScreen": {
@@ -191,10 +192,15 @@
     "register": "Register",
     "emailAlreadyInUse": "Email already in use.",
     "confirmPassword": "Confirm Password",
-    "referer": "How did you hear about Ameelio?",
+    "referrer": "How did you hear about Ameelio?",
     "login": "Log In",
     "passwordInvalid": "The password must be at least 8 characters.",
-    "passwordsMustMatch": "Your passwords must match."
+    "passwordsMustMatch": "Your passwords must match.",
+    "next": "Next",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
@@ -382,5 +388,10 @@
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
     "reviewPostcard": "Review"
+  },
+  "Sharing": {
+    "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
+    "title": "Ameelio: Free Photos and Letters to Prison",
+    "subjectLine": "Send free letters and photos to prison!"
   }
 }

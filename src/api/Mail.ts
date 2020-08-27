@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import { Linking } from 'react-native';
 import url from 'url';
 import {
   Draft,
@@ -18,6 +17,8 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInBusinessDays } from 'date-fns';
+import { estimateDelivery } from '@utils';
+
 import {
   getZipcode,
   fetchAuthenticated,
@@ -135,9 +136,9 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   } else {
     status = mapTrackingEventsToMailStatus(trackingEvents);
     if (status === MailStatus.ProcessedForDelivery) {
-      expectedDelivery = addBusinessDays(
+      expectedDelivery = estimateDelivery(
         trackingEvents[trackingEvents.length - 1].date,
-        3
+        status
       );
     }
   }
@@ -164,6 +165,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    trackingEvents,
   };
 }
 
@@ -211,10 +213,12 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   } else {
     status = cleanLobStatus(mail.lob_status, lastLobUpdate);
   }
-  let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
-  if (status === MailStatus.ProcessedForDelivery) {
-    expectedDelivery = addBusinessDays(lastLobUpdate, 3);
-  }
+  const expectedDelivery = estimateDelivery(
+    status === MailStatus.ProcessedForDelivery
+      ? lastLobUpdate
+      : new Date(mail.created_at),
+    status
+  );
   if (type === MailTypes.Letter) {
     return {
       type,
@@ -355,15 +359,6 @@ export async function createMail(draft: Draft): Promise<Mail> {
   user.credit -= 1;
   store.dispatch(setUser(user));
   return createdMail;
-}
-
-export async function facebookShare(shareUrl: string): Promise<void> {
-  const supportedUrl = await Linking.canOpenURL(shareUrl);
-  if (supportedUrl) {
-    await Linking.openURL(shareUrl);
-  } else {
-    throw Error('Share Url not supported');
-  }
 }
 
 interface RawCategory {

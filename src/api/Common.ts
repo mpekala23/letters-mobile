@@ -10,11 +10,11 @@ import {
 import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
-import Constants from 'expo-constants';
 
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
   : 'https://letters-api-staging.ameelio.org/';
+
 export const API_URL = isProduction()
   ? 'https://api.ameelio.org/api/'
   : 'https://letters-api-staging.ameelio.org/api/';
@@ -89,7 +89,6 @@ export async function fetchAuthenticated(
       firstName: tokenBody.data.first_name,
       lastName: tokenBody.data.last_name,
       email: tokenBody.data.email,
-      phone: tokenBody.data.phone,
       address1: tokenBody.data.addr_line_1,
       address2: tokenBody.data.addr_line_2 || '',
       postal: tokenBody.data.postal,
