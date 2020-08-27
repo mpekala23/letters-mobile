@@ -43,7 +43,7 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             viewStyle={{
               width: props.horizontal ? width : height,
               height: props.horizontal ? height : width,
-              transform: [{ rotateZ: '270deg' }],
+              transform: [{ rotateZ: props.horizontal ? '0deg' : '270deg' }],
             }}
             source={
               props.composing.design.thumbnail

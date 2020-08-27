@@ -304,10 +304,12 @@ export async function createMail(draft: Draft): Promise<Mail> {
   let imageExtension = {};
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      prepDraft.design.image = await uploadImage(
-        prepDraft.design.image,
-        'letter'
-      );
+      if (prepDraft.design.custom) {
+        prepDraft.design.image = await uploadImage(
+          prepDraft.design.image,
+          'letter'
+        );
+      }
       imageExtension = {
         s3_img_urls: [prepDraft.design.image.uri],
       };
