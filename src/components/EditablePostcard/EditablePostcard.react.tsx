@@ -68,8 +68,17 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
+    const designIsHorizontal = (): boolean => {
+      if (!this.props.design.image.width || !this.props.design.image.height) {
+        return true;
+      }
+      if (this.props.design.image.width > this.props.design.image.height) {
+        return true;
+      }
+      return false;
+    };
     let image: JSX.Element;
-    if (this.props.horizontal) {
+    if (designIsHorizontal()) {
       image = (
         <AsyncImage
           viewStyle={{

@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { TouchableOpacity, View, Keyboard } from 'react-native';
+import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
 import { StaticPostcard, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
@@ -17,6 +17,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { Typography, Colors } from '@styles';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
@@ -29,6 +30,11 @@ export interface Props {
   composing: Draft;
   recipient: Contact;
   clearComposing: () => void;
+  route: {
+    params: {
+      horizontal: boolean;
+    };
+  };
 }
 
 class ReviewPostcardScreenBase extends React.Component<Props> {
@@ -38,6 +44,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
+    this.doSend = this.doSend.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
@@ -117,13 +124,17 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           message: i18n.t('Error.requestTimedOut'),
         });
       } else if (
+        err.data &&
         err.data.content ===
-        'The content may not be greater than 16000 characters.'
+          'The content may not be greater than 16000 characters.'
       ) {
         dropdownError({
           message: i18n.t('Error.letterTooLong'),
         });
-      } else if (err.data.content === 'The content field is required.') {
+      } else if (
+        err.data &&
+        err.data.content === 'The content field is required.'
+      ) {
         dropdownError({
           message: i18n.t('Compose.letterMustHaveContent'),
         });
@@ -147,6 +158,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             front
             composing={this.props.composing}
             recipient={this.props.recipient}
+            horizontal={this.props.route.params.horizontal}
           />
         </View>
         <View style={Styles.gridPreviewBackground}>
@@ -157,82 +169,19 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           />
         </View>
         <View style={{ flex: 1 }} />
-        <View style={{ padding: 16 }}>
-          <Button
-            buttonText={i18n.t('Compose.send')}
-            blocking
-            onPress={async () => {
-              try {
-                await createMail(this.props.composing);
-                this.props.clearComposing();
-                Segment.trackWithProperties('Review - Send Letter Success', {
-                  Option: 'Postcard',
-                  facility: this.props.recipient.facility?.name,
-                  facilityState: this.props.recipient.facility?.state,
-                  facilityCity: this.props.recipient.facility?.city,
-                  relationship: this.props.recipient.relationship,
-                });
-                Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-                Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
-                Notifs.scheduleNotificationInDays(
-                  {
-                    title: `${i18n.t(
-                      'Notifs.happy'
-                    )} ${new Date().toDateString()}! ${i18n.t(
-                      'Notifs.readyToSendAnother'
-                    )} ${this.props.recipient.firstName}?`,
-                    body: `${i18n.t('Notifs.clickHereToBegin')}`,
-                    data: {
-                      type: NotifTypes.Drought,
-                      data: {
-                        contactId: this.props.recipient.id,
-                      },
-                    },
-                  },
-                  hoursTill8Tomorrow() / 24 + 7
-                );
-                deleteDraft();
-                this.props.navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'ReferFriends' }],
-                });
-              } catch (err) {
-                Segment.trackWithProperties('Review - Send Letter Failure', {
-                  Option: 'postcard',
-                  'Error Type': err,
-                });
-                if (err.message === 'Image upload timeout') {
-                  // timeout that occurred during image upload
-                  dropdownError({
-                    message: i18n.t('Error.uploadImageTimeout'),
-                  });
-                } else if (err.message === 'timeout') {
-                  // timout that occurred during the normal request
-                  dropdownError({
-                    message: i18n.t('Error.requestTimedOut'),
-                  });
-                } else if (
-                  err.data.content ===
-                  'The content may not be greater than 16000 characters.'
-                ) {
-                  dropdownError({
-                    message: i18n.t('Error.letterTooLong'),
-                  });
-                } else if (
-                  err.data.content === 'The content field is required.'
-                ) {
-                  dropdownError({
-                    message: i18n.t('Compose.letterMustHaveContent'),
-                  });
-                } else {
-                  dropdownError({
-                    message: i18n.t('Error.requestIncomplete'),
-                  });
-                }
-              }
-            }}
-          />
-        </View>
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            {
+              fontSize: 16,
+              color: Colors.GRAY_MEDIUM,
+              textAlign: 'center',
+              margin: 10,
+            },
+          ]}
+        >
+          {i18n.t('Compose.warningCantCancel')}
+        </Text>
       </TouchableOpacity>
     );
   }

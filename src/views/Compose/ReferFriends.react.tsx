@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, Platform } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import { Contact, Screen } from 'types';
 import { onNativeShare, estimateDelivery } from '@utils';
 
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -28,6 +29,9 @@ export interface Props {
 }
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
+  useEffect(() => {
+    setProfileOverride(undefined);
+  }, []);
   const { contact } = props;
   const sixDaysFromNow = estimateDelivery(new Date());
   return (

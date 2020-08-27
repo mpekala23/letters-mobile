@@ -360,7 +360,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       Option: 'Postcard',
       Step: 'Caption',
     });
-    this.props.navigation.navigate('ReviewPostcard');
+    const designIsHorizontal = (): boolean => {
+      if (!this.state.design.image.width || !this.state.design.image.height) {
+        return true;
+      }
+      if (this.state.design.image.width > this.state.design.image.height) {
+        return true;
+      }
+      return false;
+    };
+    this.props.navigation.navigate('ReviewPostcard', {
+      horizontal: designIsHorizontal(),
+    });
   }
 
   renderSubcategorySelector(): JSX.Element {
