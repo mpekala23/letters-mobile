@@ -39,6 +39,10 @@
     "signUp": "Sign up",
     "logIn": "Log in"
   },
+  "Common": {
+    "possessivePronoun": "Your",
+    "prepositionTo": "to"
+  },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
     "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
@@ -73,13 +77,13 @@
     "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below."
   },
   "CreditsCard": {
-    "letter": "letter",
-    "letters": "letters",
+    "letter": "credit",
+    "letters": "credits",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your letters for the week",
-    "creditsResetDaily": "Your letters reset weekly.",
-    "comeBackOnMondayForMore": "Your letters reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your credits for the week",
+    "creditsResetDaily": "Your credits reset weekly.",
+    "comeBackOnMondayForMore": "Your credits reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -165,10 +169,9 @@
     "other": "Other"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWayPrefix": "Your letter to ",
     "yourLetterIsOnTheWaySuffix": " is on the way!",
     "weEstimateYourLetterToArriveOn": "Estimated delivery date",
-    "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our letters. Thank you for trusting us!",
+    "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our mail. Thank you for trusting us!",
     "share": "Share",
     "done": "Done"
   },
@@ -213,7 +216,7 @@
     "received": "received",
     "lastHeardFromYou": "last heard from you",
     "lettersTraveled": "letters traveled",
-    "sendLetter": "Send letter",
+    "sendLetter": "Send",
     "letterTracking": "Letter Tracking"
   },
   "UpdateContactScreen": {
@@ -238,7 +241,6 @@
   "UpdateProfileScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "cellPhone": "Cell phone",
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
     "zipcode": "Zip Code",

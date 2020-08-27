@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Keyboard } from 'react-native';
 import { StaticPostcard, Button } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { Draft, Contact } from 'types';
+import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
@@ -89,7 +89,12 @@ const ReviewPostcardScreenBase: React.FC<Props> = (props: Props) => {
               deleteDraft();
               props.navigation.reset({
                 index: 0,
-                routes: [{ name: 'ReferFriends' }],
+                routes: [
+                  {
+                    name: 'ReferFriends',
+                    params: { mailType: MailTypes.Postcard },
+                  },
+                ],
               });
             } catch (err) {
               Segment.trackWithProperties('Review - Send Letter Failure', {

@@ -42,7 +42,13 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { SupportFAQTypes, DeliveryReportTypes, Category, Image } from 'types';
+import {
+  SupportFAQTypes,
+  DeliveryReportTypes,
+  Category,
+  Image,
+  MailTypes,
+} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -98,7 +104,7 @@ export type AppStackParamList = {
   MailDetails: undefined;
   MailTracking: undefined;
   MemoryLane: undefined;
-  ReferFriends: undefined;
+  ReferFriends: { mailType: MailTypes } | undefined;
   ReviewLetter: undefined;
   ReviewPostcard: undefined;
   ReviewContact: undefined;

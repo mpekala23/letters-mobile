@@ -31,7 +31,7 @@ interface PostcardSpecific {
 
 export enum MailStatus {
   Draft = 'Draft',
-  Created = 'Created',
+  Created = 'Created Order',
   Mailed = 'Mailed',
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
