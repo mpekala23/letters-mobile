@@ -24,7 +24,8 @@ import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
 import * as Segment from 'expo-analytics-segment';
 
 import { User } from '@store/User/UserTypes';
-import { WINDOW_WIDTH } from '@utils';
+import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
+import { differenceInBusinessDays } from 'date-fns/esm';
 import Styles from './MailTracking.styles';
 
 type MailTrackingScreenNavigationProp = StackNavigationProp<
@@ -226,6 +227,13 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         (e: TrackingEvent) => e.name === MailStatus.ProcessedForDelivery
       );
 
+      const deliveredTrack =
+        processedTrack &&
+        Math.abs(differenceInBusinessDays(processedTrack.date, new Date())) >=
+          ETA_PROCESSED_TO_DELIVERED
+          ? processedTrack
+          : undefined;
+
       return (
         <View style={[Styles.cardBackground]}>
           <LetterTracker
@@ -242,7 +250,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             type={MailStatus.ProcessedForDelivery}
           />
           <LetterTracker
-            trackingEvent={processedTrack}
+            trackingEvent={deliveredTrack}
             type={MailStatus.Delivered}
           />
         </View>

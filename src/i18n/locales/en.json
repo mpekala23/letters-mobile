@@ -39,6 +39,10 @@
     "signUp": "Sign up",
     "logIn": "Log in"
   },
+  "Common": {
+    "possessivePronoun": "Your",
+    "prepositionTo": "to"
+  },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
     "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
@@ -48,21 +52,17 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "inmateNumber": "Inmate Number",
-    "relationshipToInmate": "Relationship to Inmate",
+    "relationshipToInmate": "I am their..",
     "state": "State",
     "postal": "Postal",
-    "mother": "Mother",
-    "father": "Father",
-    "brother": "Brother",
-    "sister": "Sister",
+    "spouse": "Spouse/Significant Other",
+    "parent": "Parent",
+    "kid": "Son/Daughter",
     "sibling": "Sibling",
-    "daughter": "Daughter",
-    "son": "Son",
-    "grandmother": "Grandmother",
-    "grandfather": "Grandfather",
-    "grandaughter": "Grandaughter",
-    "grandson": "Grandson",
+    "grandparent": "Grandparent",
+    "family": "Extended Family",
     "friend": "Friend",
+    "mentor": "Mentor/Pen Pal",
     "other": "Other",
     "back": "Back",
     "next": "Next"
@@ -74,13 +74,13 @@
     "addContact": "Add contact"
   },
   "CreditsCard": {
-    "letter": "letter",
-    "letters": "letters",
+    "letter": "kite",
+    "letters": "kites",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your letters for the week",
-    "creditsResetDaily": "Your letters reset weekly.",
-    "comeBackOnMondayForMore": "Your letters reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your kites for the week",
+    "creditsResetDaily": "Your kites reset weekly.",
+    "comeBackOnMondayForMore": "Your kites reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -166,10 +166,9 @@
     "other": "Other"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWayPrefix": "Your letter to ",
     "yourLetterIsOnTheWaySuffix": " is on the way!",
     "weEstimateYourLetterToArriveOn": "Estimated delivery date",
-    "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our letters. Thank you for trusting us!",
+    "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our mail. Thank you for trusting us!",
     "share": "Share",
     "done": "Done"
   },
@@ -214,7 +213,7 @@
     "received": "received",
     "lastHeardFromYou": "last heard from you",
     "lettersTraveled": "letters traveled",
-    "sendLetter": "Send letter",
+    "sendLetter": "Send",
     "letterTracking": "Letter Tracking"
   },
   "UpdateContactScreen": {
@@ -239,7 +238,6 @@
   "UpdateProfileScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "cellPhone": "Cell phone",
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
     "zipcode": "Zip Code",
@@ -338,7 +336,7 @@
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new letter",
     "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
-    "notEnoughCredits": "Not enough credits",
+    "notEnoughCredits": "Not enough kites",
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
     "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",

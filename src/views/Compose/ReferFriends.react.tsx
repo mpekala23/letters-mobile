@@ -12,7 +12,7 @@ import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format } from 'date-fns';
-import { Contact, Screen } from 'types';
+import { Contact, Screen, MailTypes } from 'types';
 import { onNativeShare, estimateDelivery } from '@utils';
 
 import Styles from './ReferFriends.style';
@@ -25,11 +25,15 @@ type ReferFriendsScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ReferFriendsScreenNavigationProp;
   contact: Contact;
+  route: {
+    params: { mailType: MailTypes };
+  };
 }
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { contact } = props;
   const sixDaysFromNow = estimateDelivery(new Date());
+  const { mailType } = props.route.params;
   return (
     <KeyboardAvoider style={Styles.trueBackground}>
       <View
@@ -64,8 +68,8 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
               { fontSize: 20, textAlign: 'center' },
             ]}
           >
-            {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWayPrefix')}
-            {contact.firstName}
+            {i18n.t('Common.possessivePronoun')} {mailType}{' '}
+            {i18n.t('Common.prepositionTo')} {contact.firstName}
             {i18n.t('ReferFriendsScreen.yourLetterIsOnTheWaySuffix')}
           </Text>
           <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
