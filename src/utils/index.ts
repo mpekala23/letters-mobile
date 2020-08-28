@@ -259,8 +259,9 @@ export function estimateDelivery(date: Date, status?: MailStatus): Date {
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 
 export function isProduction(): boolean {
-  if (!RELEASE_CHANNEL) return false;
-  return RELEASE_CHANNEL.indexOf('prod') !== -1;
+  return true;
+  /* if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1; */
 }
 
 export const onNativeShare = async (
