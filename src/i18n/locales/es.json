@@ -70,7 +70,8 @@
   "ContactSelectorScreen": {
     "yourLovedOnes": "Sus seres queridos",
     "miles": "millas",
-    "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo."
+    "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo.",
+    "addContact": "Agregar contacto"
   },
   "CreditsCard": {
     "letter": "carta",
