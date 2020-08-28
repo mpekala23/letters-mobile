@@ -202,6 +202,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   setValid(val: boolean) {
+    if (val === this.state.valid) return;
     this.setState({ valid: val });
     setProfileOverride({
       enabled: val,

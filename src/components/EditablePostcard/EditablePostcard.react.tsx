@@ -1,4 +1,4 @@
-import React, { createRef, SyntheticEvent } from 'react';
+import React, { createRef } from 'react';
 import { View, Animated, Text } from 'react-native';
 import { PostcardDesign, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
@@ -68,8 +68,19 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
+    const designWidth = this.props.design.image.width;
+    const designHeight = this.props.design.image.height;
+    const designIsHorizontal = (): boolean => {
+      if (!designWidth || !designHeight) {
+        return true;
+      }
+      if (designWidth > designHeight) {
+        return true;
+      }
+      return false;
+    };
     let image: JSX.Element;
-    if (this.props.horizontal) {
+    if (designIsHorizontal()) {
       image = (
         <AsyncImage
           viewStyle={{

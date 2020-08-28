@@ -42,10 +42,10 @@ class AsyncImage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      loaded: false,
+      loaded: true,
       timedOut: false,
       imgURI: this.props.source.uri ? this.props.source.uri : undefined,
-      loadOpacity: new Animated.Value(0.3),
+      loadOpacity: new Animated.Value(1.0),
     };
   }
 
@@ -106,6 +106,10 @@ class AsyncImage extends React.Component<Props, State> {
         });
         return;
       }
+      this.setState({
+        loaded: false,
+        loadOpacity: new Animated.Value(0.3),
+      });
       // otherwise download to cache
       const imageObject = await FileSystem.downloadAsync(
         remoteURI,

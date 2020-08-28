@@ -245,16 +245,6 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
   return Math.round(d * 0.000621371);
 }
 
-export const PERSONAL_CATEGORY: Category = {
-  id: -6,
-  name: 'personal',
-  image: {
-    uri:
-      'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2020/05/26/142110_1344640.jpg.1500x1000_q95_crop-smart_upscale.jpg',
-  },
-  blurb: i18n.t('Compose.yourOwnLettersAndPhotos'),
-};
-
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

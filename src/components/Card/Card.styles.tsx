@@ -134,11 +134,15 @@ export default StyleSheet.create({
     color: Colors.PINK_500,
   },
   categoryBackground: {
-    height: 184,
+    height: 200,
     flex: 1,
     padding: 0,
   },
   categoryTitle: {
     fontSize: 18,
+  },
+  categoryBlurb: {
+    color: Colors.GRAY_DARKER,
+    fontSize: 12,
   },
 });

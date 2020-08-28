@@ -13,10 +13,13 @@ export enum MailTypes {
 
 export interface PostcardDesign {
   image: Image;
+  thumbnail?: Image;
+  id?: number;
+  categoryId?: number;
+  subcategoryName?: string;
   name?: string;
   author?: string;
   custom?: boolean;
-  blurb?: string;
 }
 
 interface LetterSpecific {
@@ -165,6 +168,9 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftCategoryId = 'Ameelio-DraftCategoryId',
+  DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
+  DraftDesignUri = 'Ameelio-DraftDesignUri',
 }
 
 export type TopbarBackAction = {

@@ -306,10 +306,12 @@ export async function createMail(draft: Draft): Promise<Mail> {
   let imageExtension = {};
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      prepDraft.design.image = await uploadImage(
-        prepDraft.design.image,
-        'letter'
-      );
+      if (prepDraft.design.custom) {
+        prepDraft.design.image = await uploadImage(
+          prepDraft.design.image,
+          'letter'
+        );
+      }
       imageExtension = {
         s3_img_urls: [prepDraft.design.image.uri],
       };
@@ -369,6 +371,7 @@ interface RawCategory {
   img_src: string;
   name: string;
   updated_at: string;
+  blurb: string;
 }
 
 function cleanCategory(raw: RawCategory): Category {
@@ -376,7 +379,7 @@ function cleanCategory(raw: RawCategory): Category {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
-    blurb: '',
+    blurb: raw.blurb,
   };
 }
 
@@ -387,6 +390,11 @@ export async function getCategories(): Promise<Category[]> {
   const categories: Category[] = data.map((raw: RawCategory) =>
     cleanCategory(raw)
   );
+  const personalIx = categories.findIndex(
+    (cat: Category) => cat.name === 'personal'
+  );
+  const personalCategory = categories.splice(personalIx, 1);
+  categories.unshift(personalCategory[0]);
   return categories;
 }
 
@@ -396,15 +404,24 @@ interface RawDesign {
   updated_at: string;
   name: string;
   front_img_src: string;
+  thumbnail_src: string;
   type: MailTypes;
   back: null;
   subcategory_id: number;
 }
 
-function cleanDesign(raw: RawDesign): PostcardDesign {
+function cleanDesign(
+  raw: RawDesign,
+  categoryId?: number,
+  subcategoryName?: string
+): PostcardDesign {
   return {
     image: { uri: raw.front_img_src },
+    thumbnail: { uri: raw.thumbnail_src },
     name: raw.name,
+    id: raw.id,
+    categoryId,
+    subcategoryName,
   };
 }
 
@@ -421,7 +438,26 @@ export async function getSubcategories(
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
     cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw)
+      cleanDesign(raw, category.id, subName)
+    );
+  }
+  return cleanData;
+}
+
+export async function getSubcategoriesById(
+  categoryId: number
+): Promise<Record<string, PostcardDesign[]>> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `designs/${categoryId}`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as Record<string, RawDesign[]>;
+  const cleanData: Record<string, PostcardDesign[]> = {};
+  const subNames = Object.keys(data);
+  for (let ix = 0; ix < subNames.length; ix += 1) {
+    const subName = subNames[ix];
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;
