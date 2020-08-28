@@ -10,9 +10,22 @@ import {
   Platform,
 } from 'react-native';
 import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
-import { PostcardDesign, Draft, Image, Category, Contact } from 'types';
+import {
+  PostcardDesign,
+  Draft,
+  Image,
+  Category,
+  Contact,
+  MailTypes,
+} from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
+import {
+  WINDOW_WIDTH,
+  WINDOW_HEIGHT,
+  takeImage,
+  capitalize,
+  sleep,
+} from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -137,7 +150,25 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       text: 'Next',
       action: this.beginWriting,
     });
-    this.changeDesign(this.state.design);
+    const { composing } = this.props;
+    if (
+      composing.type === MailTypes.Postcard &&
+      composing.design.image.uri.length
+    ) {
+      if (composing.design.subcategoryName) {
+        this.setState({
+          subcategory: composing.design.subcategoryName,
+        });
+      }
+      this.changeDesign(composing.design);
+      if (composing.content.length) {
+        this.setState({ design: composing.design }, () => {
+          this.beginWriting();
+        });
+      }
+    } else {
+      this.changeDesign(this.state.design);
+    }
   }
 
   componentWillUnmount(): void {

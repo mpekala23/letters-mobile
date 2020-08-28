@@ -78,31 +78,36 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftType);
   await deleteItemAsync(Storage.DraftContent);
   await deleteItemAsync(Storage.DraftRecipientId);
-  await deleteItemAsync(Storage.DraftDesignId);
+  await deleteItemAsync(Storage.DraftDesignUri);
   await deleteItemAsync(Storage.DraftCategoryId);
+  await deleteItemAsync(Storage.DraftSubcategoryName);
 }
 
 export async function saveDraft(draft: Draft): Promise<void> {
-  console.log('begin save draft', draft);
   await deleteDraft();
   await setItemAsync(Storage.DraftType, draft.type);
   await setItemAsync(Storage.DraftContent, draft.content);
   await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
   if (
     draft.type === MailTypes.Postcard &&
-    draft.design.id &&
-    draft.design.categoryId
+    draft.design.image.uri &&
+    draft.design.categoryId &&
+    draft.design.subcategoryName
   ) {
-    await setItemAsync(Storage.DraftDesignId, draft.design.id.toString());
+    await setItemAsync(Storage.DraftDesignUri, draft.design.image.uri);
     await setItemAsync(
       Storage.DraftCategoryId,
       draft.design.categoryId.toString()
     );
+    await setItemAsync(
+      Storage.DraftSubcategoryName,
+      draft.design.subcategoryName
+    );
   } else {
-    await deleteItemAsync(Storage.DraftDesignId);
+    await deleteItemAsync(Storage.DraftDesignUri);
     await deleteItemAsync(Storage.DraftCategoryId);
+    await deleteItemAsync(Storage.DraftSubcategoryName);
   }
-  console.log('successful save draft');
 }
 
 export async function loadDraft(): Promise<Draft> {
@@ -121,22 +126,19 @@ export async function loadDraft(): Promise<Draft> {
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
-      const draftDesignId = await getItemAsync(Storage.DraftDesignId);
+      const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
       const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
-      if (!draftDesignId || !draftCategoryId)
+      const draftSubcategoryName = await getItemAsync(
+        Storage.DraftSubcategoryName
+      );
+      if (!draftDesignUri || !draftCategoryId || !draftSubcategoryName)
         throw Error('Unable to load postcard design');
       const subcategories = await getSubcategoriesById(
         parseInt(draftCategoryId, 10)
       );
-      const keys: string[] = Object.keys(subcategories);
-      let findDesign: PostcardDesign | undefined;
-      for (let keyIx = 0; keyIx < keys.length; keyIx += 1) {
-        findDesign = subcategories[keys[keyIx]].find(
-          (testDesign: PostcardDesign) =>
-            testDesign.id && testDesign.id.toString() === draftDesignId
-        );
-      }
-      console.log(findDesign);
+      const findDesign = subcategories[draftSubcategoryName].find(
+        (testDesign: PostcardDesign) => testDesign.image.uri === draftDesignUri
+      );
       if (!findDesign) throw Error('Unable to load postcard design');
       const draft: Draft = {
         type: MailTypes.Postcard,
@@ -156,7 +158,6 @@ export async function loadDraft(): Promise<Draft> {
     store.dispatch(setComposing(draft));
     return draft;
   } catch (err) {
-    console.log(err);
     await deleteDraft();
     const draft: Draft = {
       type: MailTypes.Letter,

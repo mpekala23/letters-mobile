@@ -408,13 +408,18 @@ interface RawDesign {
   subcategory_id: number;
 }
 
-function cleanDesign(raw: RawDesign, categoryId?: number): PostcardDesign {
+function cleanDesign(
+  raw: RawDesign,
+  categoryId?: number,
+  subcategoryName?: string
+): PostcardDesign {
   return {
     image: { uri: raw.front_img_src },
     thumbnail: { uri: raw.thumbnail_src },
     name: raw.name,
     id: raw.id,
     categoryId,
+    subcategoryName,
   };
 }
 
@@ -431,7 +436,7 @@ export async function getSubcategories(
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
     cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, category.id)
+      cleanDesign(raw, category.id, subName)
     );
   }
   return cleanData;
@@ -450,7 +455,7 @@ export async function getSubcategoriesById(
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
     cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, categoryId)
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;

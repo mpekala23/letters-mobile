@@ -16,10 +16,10 @@ export interface PostcardDesign {
   thumbnail?: Image;
   id?: number;
   categoryId?: number;
+  subcategoryName?: string;
   name?: string;
   author?: string;
   custom?: boolean;
-  blurb?: string;
 }
 
 interface LetterSpecific {
@@ -168,7 +168,8 @@ export enum Storage {
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
   DraftCategoryId = 'Ameelio-DraftCategoryId',
-  DraftDesignId = 'Ameelio-DraftDesignId',
+  DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
+  DraftDesignUri = 'Ameelio-DraftDesignUri',
 }
 
 export type TopbarBackAction = {

@@ -35,7 +35,13 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getMail, getContact, getUser, getTrackingEvents } from '@api';
+import {
+  getMail,
+  getContact,
+  getUser,
+  getTrackingEvents,
+  getCategories,
+} from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
@@ -250,7 +256,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   'Contact View - Click on Send Letter',
                   {
                     Type:
-                      this.props.composing.content !== '' ||
+                      this.props.composing.content.length ||
                       (this.props.composing.type === MailTypes.Letter &&
                         this.props.composing.image) ||
                       this.props.composing.type === MailTypes.Postcard
@@ -259,10 +265,11 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   }
                 );
                 if (
-                  this.props.composing.content !== '' ||
+                  this.props.composing.content.length ||
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.image) ||
-                  this.props.composing.type === MailTypes.Postcard
+                  (this.props.composing.type === MailTypes.Postcard &&
+                    this.props.composing.design.image.uri.length)
                 ) {
                   popupAlert({
                     title: i18n.t('Compose.letterInProgress'),
@@ -271,36 +278,33 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                       {
                         text: i18n.t('Compose.continueWriting'),
                         onPress: async () => {
-                          let draftContact: Contact | undefined;
-                          for (
-                            let ix = 0;
-                            ix < this.props.existingContacts.length;
-                            ix += 1
-                          ) {
-                            if (
-                              this.props.existingContacts[ix].id ===
+                          const draftContact = this.props.existingContacts.find(
+                            (testContact) =>
+                              testContact.id ===
                               this.props.composing.recipientId
-                            ) {
-                              draftContact = this.props.existingContacts[ix];
-                              break;
-                            }
-                          }
+                          );
                           if (draftContact) {
                             this.props.setActiveContact(draftContact);
                             if (
                               this.props.composing.type === MailTypes.Letter
                             ) {
                               this.props.navigation.navigate('ComposeLetter');
-                            } else {
+                            } else if (
+                              this.props.composing.type === MailTypes.Postcard
+                            ) {
+                              const categories = await getCategories();
+                              const category = categories.find(
+                                (testCategory) =>
+                                  this.props.composing.type ===
+                                    MailTypes.Postcard &&
+                                  testCategory.id ===
+                                    this.props.composing.design.categoryId
+                              );
+                              if (!category) return;
                               this.props.navigation.navigate(
                                 'ComposePostcard',
                                 {
-                                  category: {
-                                    name: 'personal',
-                                    id: -1,
-                                    blurb: '',
-                                    image: { uri: '' },
-                                  },
+                                  category,
                                 }
                               );
                             }
