@@ -292,6 +292,23 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             } else if (
                               this.props.composing.type === MailTypes.Postcard
                             ) {
+                              if (
+                                this.props.composing.design.custom ||
+                                this.props.composing.design.subcategoryName ===
+                                  'Library'
+                              ) {
+                                this.props.navigation.navigate(
+                                  'ComposePostcard',
+                                  {
+                                    category: {
+                                      name: 'personal',
+                                      id: -1,
+                                      image: '',
+                                      blurb: '',
+                                    },
+                                  }
+                                );
+                              }
                               const categories = await getCategories();
                               const category = categories.find(
                                 (testCategory) =>
