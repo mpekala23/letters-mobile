@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "38.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.2.1",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./src/assets/icons/icon.png",
     "description": "Ameelio's letter platform allows individuals to send free letters to their incarcerated loved ones. ",
@@ -14,7 +14,7 @@
       "color": "#ffffff"
     },
     "android": {
-      "versionCode": 21,
+      "versionCode": 10,
       "package": "com.ameelio.letters_mobile",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/icon.png",
@@ -30,7 +30,7 @@
       ]
     },
     "ios": {
-      "buildNumber": "1.2.1",
+      "buildNumber": "1.1.0",
       "bundleIdentifier": "com.ameelio.ameelio",
       "infoPlist": {
         "NSCameraUsageDescription": "Ameelio uses the camera to allow users to take photos and attach them to the letters they send to their loved ones. Ameelio also accesses the camera to allow users to take photos for their profile, and the profiles of their loved ones in the app.",
