@@ -14,6 +14,8 @@ export enum MailTypes {
 export interface PostcardDesign {
   image: Image;
   thumbnail?: Image;
+  id?: number;
+  categoryId?: number;
   name?: string;
   author?: string;
   custom?: boolean;
@@ -165,6 +167,8 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftCategoryId = 'Ameelio-DraftCategoryId',
+  DraftDesignId = 'Ameelio-DraftDesignId',
 }
 
 export type TopbarBackAction = {

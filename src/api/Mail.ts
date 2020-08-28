@@ -408,11 +408,13 @@ interface RawDesign {
   subcategory_id: number;
 }
 
-function cleanDesign(raw: RawDesign): PostcardDesign {
+function cleanDesign(raw: RawDesign, categoryId?: number): PostcardDesign {
   return {
     image: { uri: raw.front_img_src },
     thumbnail: { uri: raw.thumbnail_src },
     name: raw.name,
+    id: raw.id,
+    categoryId,
   };
 }
 
@@ -429,7 +431,26 @@ export async function getSubcategories(
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
     cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw)
+      cleanDesign(raw, category.id)
+    );
+  }
+  return cleanData;
+}
+
+export async function getSubcategoriesById(
+  categoryId: number
+): Promise<Record<string, PostcardDesign[]>> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `designs/${categoryId}`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as Record<string, RawDesign[]>;
+  const cleanData: Record<string, PostcardDesign[]> = {};
+  const subNames = Object.keys(data);
+  for (let ix = 0; ix < subNames.length; ix += 1) {
+    const subName = subNames[ix];
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId)
     );
   }
   return cleanData;

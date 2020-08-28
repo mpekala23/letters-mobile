@@ -79,9 +79,9 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
       this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
         Option: 'Postcard',
-        facility: this.props.recipient.facility?.name,
-        facilityState: this.props.recipient.facility?.state,
-        facilityCity: this.props.recipient.facility?.city,
+        facility: this.props.recipient.facility.name,
+        facilityState: this.props.recipient.facility.state,
+        facilityCity: this.props.recipient.facility.city,
         relationship: this.props.recipient.relationship,
       });
       Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);

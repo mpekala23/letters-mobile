@@ -174,10 +174,8 @@ class ReviewLetterScreenBase extends React.Component<Props> {
                     width,
                     borderRadius: 10,
                     aspectRatio:
-                      this.props.composing.image.width &&
-                      this.props.composing.image.height
-                        ? this.props.composing.image.width /
-                          this.props.composing.image.height
+                      image && image.width && image.height
+                        ? image.width / image.height
                         : 1,
                   }}
                 />

@@ -6,7 +6,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, MailTypes, Draft } from 'types';
+import { Storage, MailTypes, Draft, PostcardDesign } from 'types';
 import {
   loginUser,
   logoutUser,
@@ -25,7 +25,7 @@ import {
   fetchAuthenticated,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail } from './Mail';
+import { getMail, getSubcategoriesById } from './Mail';
 
 interface RawUser {
   id: number;
@@ -78,13 +78,31 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftType);
   await deleteItemAsync(Storage.DraftContent);
   await deleteItemAsync(Storage.DraftRecipientId);
+  await deleteItemAsync(Storage.DraftDesignId);
+  await deleteItemAsync(Storage.DraftCategoryId);
 }
 
 export async function saveDraft(draft: Draft): Promise<void> {
+  console.log('begin save draft', draft);
   await deleteDraft();
   await setItemAsync(Storage.DraftType, draft.type);
   await setItemAsync(Storage.DraftContent, draft.content);
   await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
+  if (
+    draft.type === MailTypes.Postcard &&
+    draft.design.id &&
+    draft.design.categoryId
+  ) {
+    await setItemAsync(Storage.DraftDesignId, draft.design.id.toString());
+    await setItemAsync(
+      Storage.DraftCategoryId,
+      draft.design.categoryId.toString()
+    );
+  } else {
+    await deleteItemAsync(Storage.DraftDesignId);
+    await deleteItemAsync(Storage.DraftCategoryId);
+  }
+  console.log('successful save draft');
 }
 
 export async function loadDraft(): Promise<Draft> {
@@ -92,27 +110,39 @@ export async function loadDraft(): Promise<Draft> {
     const draftType = await getItemAsync(Storage.DraftType);
     const draftContent = await getItemAsync(Storage.DraftContent);
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
-    if (!draftType || !draftContent || !draftRecipientId)
-      throw Error('No draft saved');
+    if (!draftType || !draftRecipientId) throw Error('No draft saved');
     if (draftType === MailTypes.Letter) {
       const draft: Draft = {
         type: MailTypes.Letter,
         recipientId: parseInt(draftRecipientId, 10),
-        content: draftContent,
+        content: draftContent || '',
       };
       store.dispatch(setComposing(draft));
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
+      const draftDesignId = await getItemAsync(Storage.DraftDesignId);
+      const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
+      if (!draftDesignId || !draftCategoryId)
+        throw Error('Unable to load postcard design');
+      const subcategories = await getSubcategoriesById(
+        parseInt(draftCategoryId, 10)
+      );
+      const keys: string[] = Object.keys(subcategories);
+      let findDesign: PostcardDesign | undefined;
+      for (let keyIx = 0; keyIx < keys.length; keyIx += 1) {
+        findDesign = subcategories[keys[keyIx]].find(
+          (testDesign: PostcardDesign) =>
+            testDesign.id && testDesign.id.toString() === draftDesignId
+        );
+      }
+      console.log(findDesign);
+      if (!findDesign) throw Error('Unable to load postcard design');
       const draft: Draft = {
         type: MailTypes.Postcard,
         recipientId: parseInt(draftRecipientId, 10),
-        content: draftContent,
-        design: {
-          image: {
-            uri: '',
-          },
-        },
+        content: draftContent || '',
+        design: findDesign,
       };
       store.dispatch(setComposing(draft));
       return draft;
@@ -126,6 +156,7 @@ export async function loadDraft(): Promise<Draft> {
     store.dispatch(setComposing(draft));
     return draft;
   } catch (err) {
+    console.log(err);
     await deleteDraft();
     const draft: Draft = {
       type: MailTypes.Letter,

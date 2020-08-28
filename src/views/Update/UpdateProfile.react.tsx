@@ -265,9 +265,6 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               nextInput={this.address1}
             />
             <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.cellPhone')}
-            </Text>
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.addressLine1')}
             </Text>
             <Input

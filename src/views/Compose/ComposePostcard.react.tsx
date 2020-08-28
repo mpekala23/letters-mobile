@@ -277,6 +277,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   changeDesign(design: PostcardDesign): void {
+    saveDraft(this.props.composing);
     this.props.setDesign(design);
     this.setState({ design });
     if (
@@ -352,7 +353,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   doneWriting(): void {
-    if (this.props.composing.content.length <= 0) {
+    if (!this.props.composing.content.length) {
       dropdownError({ message: i18n.t('Compose.letterMustHaveContent') });
       return;
     }
@@ -361,10 +362,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       Step: 'Caption',
     });
     const designIsHorizontal = (): boolean => {
-      if (!this.state.design.image.width || !this.state.design.image.height) {
+      const designWidth = this.state.design.image.width;
+      const designHeight = this.state.design.image.height;
+      if (!designWidth || !designHeight) {
         return true;
       }
-      if (this.state.design.image.width > this.state.design.image.height) {
+      if (designWidth > designHeight) {
         return true;
       }
       return false;

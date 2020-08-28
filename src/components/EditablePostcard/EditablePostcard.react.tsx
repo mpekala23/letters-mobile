@@ -68,11 +68,13 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
+    const designWidth = this.props.design.image.width;
+    const designHeight = this.props.design.image.height;
     const designIsHorizontal = (): boolean => {
-      if (!this.props.design.image.width || !this.props.design.image.height) {
+      if (!designWidth || !designHeight) {
         return true;
       }
-      if (this.props.design.image.width > this.props.design.image.height) {
+      if (designWidth > designHeight) {
         return true;
       }
       return false;
