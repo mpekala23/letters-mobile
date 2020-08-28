@@ -40,7 +40,6 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: 14,
     color: 'black',
-    fontWeight: '500',
     textAlign: 'center',
     flex: 1,
     flexWrap: 'wrap',

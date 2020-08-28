@@ -8,6 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: 16,
+    paddingBottom: 0,
   },
   contactCard: {
     backgroundColor: 'white',
@@ -31,16 +32,9 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   addContactButton: {
-    marginBottom: 24,
-    marginRight: 12,
-    paddingLeft: 2,
-    alignItems: 'center',
-    backgroundColor: '#FC7272',
-    borderRadius: 50,
-    height: 65,
-    width: 65,
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
+    alignSelf: 'center',
+    marginVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
 });

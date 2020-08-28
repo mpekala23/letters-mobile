@@ -1,11 +1,14 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Share } from 'react-native';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, Category } from 'types';
+import { ZipcodeInfo, Category, Screen, MailStatus } from 'types';
 import i18n from '@i18n';
+import * as Segment from 'expo-analytics-segment';
+import { addBusinessDays } from 'date-fns';
+import Constants from 'expo-constants';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -23,6 +26,8 @@ export const STATUS_BAR_HEIGHT = 20;
 export const STATUS_BAR_WIDTH = 100;
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
+export const ETA_CREATED_TO_DELIVERED = 6;
+export const ETA_PROCESSED_TO_DELIVERED = 3;
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -102,6 +107,7 @@ export enum Validation {
   InmateNumber = 'InmateNumber',
   Address = 'Address',
   City = 'City',
+  Referrer = 'Referrer',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -134,7 +140,7 @@ export function isValidCreditCard(card: string): boolean {
 }
 
 export function isValidInmateNumber(number: string): boolean {
-  return /^[0-9-]*$/.test(number);
+  return number.length > 0;
 }
 
 export function isValidAddress(address: string): boolean {
@@ -143,6 +149,10 @@ export function isValidAddress(address: string): boolean {
 
 export function isValidCity(city: string): boolean {
   return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
+}
+
+export function isValidReferrer(referrer: string): boolean {
+  return REFERERS.indexOf(referrer) >= 0;
 }
 
 export function validateFormat(format: Validation, value: string): boolean {
@@ -165,6 +175,8 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidAddress(value);
     case Validation.City:
       return isValidCity(value);
+    case Validation.Referrer:
+      return isValidReferrer(value);
     default:
       return false;
   }
@@ -233,16 +245,69 @@ export function haversine(loc1: ZipcodeInfo, loc2: ZipcodeInfo): number {
   return Math.round(d * 0.000621371);
 }
 
-export const PERSONAL_CATEGORY: Category = {
-  id: -6,
-  name: 'personal',
-  image: {
-    uri:
-      'https://s3.amazonaws.com/thumbnails.thecrimson.com/photos/2020/05/26/142110_1344640.jpg.1500x1000_q95_crop-smart_upscale.jpg',
-  },
-  blurb: i18n.t('Compose.yourOwnLettersAndPhotos'),
-};
-
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function estimateDelivery(date: Date, status?: MailStatus): Date {
+  if (status === MailStatus.ProcessedForDelivery) {
+    return addBusinessDays(date, ETA_PROCESSED_TO_DELIVERED);
+  }
+  return addBusinessDays(date, ETA_CREATED_TO_DELIVERED);
+}
+
+export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
+
+export function isProduction(): boolean {
+  return true;
+  /* if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1; */
+}
+
+export const onNativeShare = async (
+  screen: Screen,
+  cta: string
+): Promise<void> => {
+  const PROPERTIES = { screen, cta };
+
+  Segment.trackWithProperties('Share - Click on Share Button', {
+    ...PROPERTIES,
+  });
+
+  try {
+    const result = await Share.share(
+      {
+        message: i18n.t('Sharing.message'),
+        title: i18n.t('Sharing.title'),
+      },
+      {
+        subject: i18n.t('Sharing.subjectLine'),
+        dialogTitle: i18n.t('Sharing.title'),
+      }
+    );
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        Segment.trackWithProperties('Share - Success', {
+          ...PROPERTIES,
+          activityType: result.activityType,
+          action: result.action,
+        });
+      } else {
+        Segment.trackWithProperties('Share - Success', {
+          ...PROPERTIES,
+          action: result.action,
+        });
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+      Segment.trackWithProperties('Share - Dismissed', {
+        ...PROPERTIES,
+      });
+    }
+  } catch (error) {
+    Segment.trackWithProperties('Share - Error', {
+      ...PROPERTIES,
+      error: error.message,
+    });
+  }
+};

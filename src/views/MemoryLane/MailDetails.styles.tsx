@@ -9,18 +9,16 @@ export default StyleSheet.create({
     padding: 16,
   },
   letterDate: {
-    borderColor: Colors.GRAY_LIGHT,
+    borderColor: Colors.BLACK_200,
     borderBottomWidth: 2,
     paddingBottom: 16,
   },
   baseText: {
     fontSize: 24,
-    fontWeight: '600',
   },
   letterText: {
     fontSize: 18,
     color: Colors.AMEELIO_BLACK,
-    fontWeight: '600',
     padding: 8,
     paddingTop: 16,
     paddingBottom: 36,

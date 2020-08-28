@@ -16,21 +16,21 @@ interface Props {
 function mapStatusToColorStyle(type: MailStatus) {
   switch (type) {
     case MailStatus.Created:
-      return { backgroundColor: Colors.GREEN_LIGHTEST };
+      return { backgroundColor: Colors.BLUE_100 };
     case MailStatus.Mailed:
-      return { backgroundColor: Colors.GREEN_LIGHTER };
+      return { backgroundColor: Colors.BLUE_200 };
     case MailStatus.InTransit:
-      return { backgroundColor: Colors.GREEN_LIGHT };
+      return { backgroundColor: Colors.BLUE_300 };
     case MailStatus.InLocalArea:
-      return { backgroundColor: Colors.GREEN_DARK };
+      return { backgroundColor: Colors.BLUE_400 };
     case MailStatus.ProcessedForDelivery:
-      return { backgroundColor: Colors.GREEN_DARKER };
+      return { backgroundColor: Colors.BLUE_500 };
     case MailStatus.Delivered:
-      return { backgroundColor: Colors.GREEN_DARKEST };
+      return { backgroundColor: Colors.BLUE_600 };
     case MailStatus.ReturnedToSender:
       return { backgroundColor: Colors.AMEELIO_RED };
     default:
-      return { backgroundColor: Colors.GREEN_LIGHTEST };
+      return { backgroundColor: Colors.BLUE_100 };
   }
 }
 
@@ -52,7 +52,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.statusAndDateContainer}>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 CardStyles.letterStatusTitle,
                 { flex: 1 },
               ]}

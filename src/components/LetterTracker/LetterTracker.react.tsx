@@ -3,116 +3,154 @@ import { View, Text } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { TrackingEvent, MailStatus } from 'types';
 import { format } from 'date-fns';
+import { estimateDelivery } from '@utils';
 
 export interface Props {
-  trackingEvent: TrackingEvent;
+  trackingEvent?: TrackingEvent;
+  type: MailStatus;
 }
 
-function mapStatustoTrackerColor(type: string) {
-  switch (type) {
-    case MailStatus.Mailed:
-      return Colors.GREEN_LIGHTER;
-    case MailStatus.InTransit:
-      return Colors.GREEN_LIGHT;
-    case MailStatus.ProcessedForDelivery:
-      return Colors.GREEN_DARK;
-    case MailStatus.Delivered:
-      return Colors.GREEN_DARKER;
-    default:
-      return '';
-  }
-}
+function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
+  const mapStatustoTrackerColor = (): string => {
+    if (!trackingEvent) return Colors.AMEELIO_WHITE;
+    switch (type) {
+      case MailStatus.Created:
+        return Colors.BLUE_100;
+      case MailStatus.Mailed:
+        return Colors.BLUE_200;
+      case MailStatus.InTransit:
+        return Colors.BLUE_300;
+      case MailStatus.ProcessedForDelivery:
+        return Colors.BLUE_400;
+      case MailStatus.Delivered:
+        return Colors.BLUE_500;
+      default:
+        return '';
+    }
+  };
 
-const LetterTracker: React.FC<Props> = (props: Props) => {
-  const { name, location, date } = props.trackingEvent;
-  const dateFormatted = date ? format(date, 'MMM dd, yyyy') : '';
-  const timeFormatted =
-    name !== MailStatus.Delivered ? format(date, 'h:mm a') : '';
+  const mapStatusToBorderColor = (): string => {
+    switch (type) {
+      case MailStatus.Created:
+        return Colors.BLUE_100;
+      case MailStatus.Mailed:
+        return Colors.BLUE_200;
+      case MailStatus.InTransit:
+        return Colors.BLUE_300;
+      case MailStatus.ProcessedForDelivery:
+        return Colors.BLUE_400;
+      case MailStatus.Delivered:
+        return Colors.BLUE_500;
+      default:
+        return '';
+    }
+  };
 
-  if (
-    name === MailStatus.Mailed ||
-    name === MailStatus.InTransit ||
-    name === MailStatus.ProcessedForDelivery ||
-    name === MailStatus.Delivered
-  ) {
-    return (
-      <View>
-        <View style={{ flexDirection: 'row', paddingBottom: 16 }}>
-          <View
-            style={{
-              borderRadius: 50,
-              backgroundColor: mapStatustoTrackerColor(name),
-              height: 28,
-              width: 28,
-              marginLeft: 4,
-              marginRight: 24,
-            }}
-            testID="trackerCircle"
-          />
-          <View style={{ flexDirection: 'column' }}>
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  color: Colors.AMEELIO_BLACK,
-                  fontSize: 16,
-                  paddingBottom: 6,
-                },
-              ]}
-            >
-              {name}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  color: Colors.GRAY_DARKER,
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              {location ? location.city : ''}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              marginLeft: 'auto',
-              alignItems: 'flex-end',
-            }}
-          >
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                {
-                  color: Colors.GRAY_DARKER,
-                  fontSize: 14,
-                  paddingBottom: 8,
-                },
-              ]}
-              testID="dateFormatted"
-            >
-              {dateFormatted}
-            </Text>
-            <Text
-              style={[
-                Typography.FONT_REGULAR,
-                {
-                  color: Colors.GRAY_DARKER,
-                  fontSize: 14,
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              {timeFormatted}
-            </Text>
-          </View>
-        </View>
+  const genDate = (): string => {
+    if (!trackingEvent) return '';
+    return type === MailStatus.Delivered
+      ? format(estimateDelivery(trackingEvent.date), 'MMM dd, yyyy')
+      : format(trackingEvent.date, 'MMM dd, yyyy');
+  };
+
+  const genTimestamp = (): string => {
+    return trackingEvent && type !== MailStatus.Delivered
+      ? format(trackingEvent.date, 'h:mm a')
+      : '';
+  };
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+      }}
+    >
+      <View
+        style={{
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+          marginRight: 16,
+          width: 112,
+        }}
+      >
+        <Text
+          style={[
+            Typography.FONT_SEMIBOLD,
+            {
+              fontSize: 16,
+              paddingBottom: 8,
+            },
+          ]}
+          testID="dateFormatted"
+        >
+          {genDate()}
+        </Text>
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            {
+              color: Colors.GRAY_DARKER,
+              fontSize: 16,
+            },
+          ]}
+        >
+          {genTimestamp()}
+        </Text>
       </View>
-    );
-  }
-  return null;
-};
+      <View>
+        <View
+          style={{
+            borderRadius: 50,
+            backgroundColor: mapStatustoTrackerColor(),
+            borderColor: mapStatusToBorderColor(),
+            borderWidth: 2,
+            height: 28,
+            width: 28,
+            marginLeft: 4,
+            marginRight: 24,
+          }}
+          testID="trackerCircle"
+        />
+        {type !== MailStatus.Delivered && (
+          <View
+            style={{
+              marginLeft: 14,
+              height: 40,
+              width: 7,
+              backgroundColor: Colors.BLACK_200,
+            }}
+          />
+        )}
+      </View>
+
+      <View style={{ flexDirection: 'column', width: 128 }}>
+        <Text
+          style={[
+            Typography.FONT_SEMIBOLD,
+            {
+              color: Colors.AMEELIO_BLACK,
+              fontSize: 16,
+              paddingBottom: 8,
+            },
+          ]}
+        >
+          {type}
+        </Text>
+        <Text
+          style={[
+            {
+              color: Colors.GRAY_DARKER,
+              fontSize: 14,
+              paddingBottom: 4,
+            },
+          ]}
+        >
+          {trackingEvent?.location ? trackingEvent.location.city : ''}
+        </Text>
+      </View>
+    </View>
+  );
+}
 
 export default LetterTracker;

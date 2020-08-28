@@ -5,10 +5,15 @@ import {
   TouchableOpacity,
   Keyboard,
   Platform,
-  KeyboardAvoidingView,
   EmitterSubscription,
 } from 'react-native';
-import { ComposeHeader, Input, ComposeTools, PicUpload } from '@components';
+import {
+  ComposeHeader,
+  Input,
+  ComposeTools,
+  PicUpload,
+  KeyboardAvoider,
+} from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
@@ -153,7 +158,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   onNextPress(): void {
     Keyboard.dismiss();
+    Segment.trackWithProperties('Compose - Click on Next', {
+      type: 'letter',
+    });
     if (this.props.composing.content.length <= 0) {
+      Segment.trackWithProperties('Compose - Click on Next Failure', {
+        type: 'letter',
+        Error: 'Letter must have content',
+      });
       popupAlert({
         title: i18n.t('Compose.letterMustHaveContent'),
         buttons: [
@@ -190,6 +202,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   setValid(val: boolean) {
+    if (val === this.state.valid) return;
     this.setState({ valid: val });
     setProfileOverride({
       enabled: val,
@@ -254,18 +267,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
+        <KeyboardAvoider
           style={{
-            flex: 1,
             flexDirection: 'column',
             justifyContent: 'flex-end',
           }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          pointerEvents="box-none"
         >
           <View
+            pointerEvents="box-none"
             style={[
               Styles.screenBackground,
               {
@@ -346,7 +355,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               numLeft={this.state.wordsLeft}
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
@@ -355,7 +364,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   recipientName: state.contact.active.firstName,
-  hasSentLetters: Object.values(state.mail.existing).some(
+  hasSentMail: Object.values(state.mail.existing).some(
     (mail) => mail.length > 0
   ),
 });

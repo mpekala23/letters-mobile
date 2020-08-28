@@ -70,7 +70,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           <View style={Styles.alertBackground}>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 { fontSize: 20, textAlign: 'center', marginBottom: 18 },
               ]}
             >
@@ -84,7 +84,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                     {
                       fontSize: 16,
                       textAlign: 'center',
-                      color: Colors.GRAY_DARK,
+                      color: Colors.GRAY_500,
                     },
                   ]}
                 >

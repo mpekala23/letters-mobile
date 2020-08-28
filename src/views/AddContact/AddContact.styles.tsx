@@ -6,7 +6,7 @@ export default StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     alignSelf: 'center',
-    backgroundColor: Colors.PINK_LIGHTEST,
+    backgroundColor: Colors.PINK_100,
   },
   bottomButton: {
     flex: 1,

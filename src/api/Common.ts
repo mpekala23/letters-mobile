@@ -9,18 +9,15 @@ import {
 } from '@store/User/UserActions';
 import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
-import { ABBREV_TO_STATE } from '@utils';
-import Constants from 'expo-constants';
+import { ABBREV_TO_STATE, isProduction } from '@utils';
 
-export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
-export const GENERAL_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
-    ? 'https://api.ameelio.org/'
-    : 'https://letters-api-staging.ameelio.org/';
-export const API_URL =
-  RELEASE_CHANNEL && RELEASE_CHANNEL.indexOf('prod') !== -1
-    ? 'https://api.ameelio.org/api/'
-    : 'https://letters-api-staging.ameelio.org/api/';
+export const GENERAL_URL = isProduction()
+  ? 'https://api.ameelio.org/'
+  : 'https://letters-api-staging.ameelio.org/';
+
+export const API_URL = isProduction()
+  ? 'https://api.ameelio.org/api/'
+  : 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
@@ -92,7 +89,6 @@ export async function fetchAuthenticated(
       firstName: tokenBody.data.first_name,
       lastName: tokenBody.data.last_name,
       email: tokenBody.data.email,
-      phone: tokenBody.data.phone,
       address1: tokenBody.data.addr_line_1,
       address2: tokenBody.data.addr_line_2 || '',
       postal: tokenBody.data.postal,
@@ -127,11 +123,12 @@ export async function uploadImage(
 ): Promise<Image> {
   const data = new FormData();
 
+  const uri = Platform.OS === 'android' ? `file://${image.uri}` : image.uri;
+
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),
     type: 'image/jpeg',
-    uri:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+    uri,
   };
 
   data.append('file', photo);
@@ -148,7 +145,7 @@ export async function uploadImage(
         Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
       },
     },
-    20000
+    30000
   );
   const body: ApiResponse = await response.json();
   if (body.status !== 'OK') throw body;

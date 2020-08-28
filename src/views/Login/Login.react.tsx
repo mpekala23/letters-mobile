@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  KeyboardAvoidingView,
   Platform,
   ScrollView,
   Keyboard,
@@ -13,7 +12,7 @@ import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { login } from '@api';
-import { Button, Input } from '@components';
+import { Button, Input, KeyboardAvoider } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Typography } from '@styles';
 import { UserLoginInfo } from '@store/User/UserTypes';
@@ -47,7 +46,7 @@ class LoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      remember: false,
+      remember: true,
       inputting: false,
     };
     this.emailRef = createRef();
@@ -55,7 +54,7 @@ class LoginScreen extends React.Component<Props, State> {
   }
 
   devSkip = async (): Promise<void> => {
-    if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org7');
+    if (this.emailRef.current) this.emailRef.current.set('team@ameelio.org');
     if (this.passwordRef.current) this.passwordRef.current.set('ThisGood1');
     setTimeout(() => {
       this.onLogin();
@@ -69,7 +68,7 @@ class LoginScreen extends React.Component<Props, State> {
         email: this.emailRef.current && this.emailRef.current.state.value,
         password:
           this.passwordRef.current && this.passwordRef.current.state.value,
-        remember: this.state.remember,
+        remember: true,
       };
       if (cred.email.length <= 0 || cred.password.length <= 0) {
         popupAlert({
@@ -116,10 +115,8 @@ class LoginScreen extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <View
             style={{
@@ -133,7 +130,7 @@ class LoginScreen extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 60 }} />
               <View style={Styles.loginBackground}>
-                <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
+                <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 26 }]}>
                   {i18n.t('LoginScreen.welcomeBack')}
                 </Text>
                 <Text style={[Typography.FONT_REGULAR, Styles.subtitle]}>
@@ -163,26 +160,28 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                   secure
                 />
-                <CheckBox
-                  checkedIcon={<Icon svg={CheckedIcon} />}
-                  uncheckedIcon={<Icon svg={UncheckedIcon} />}
-                  center
-                  title={i18n.t('LoginScreen.rememberMe')}
-                  containerStyle={{
-                    backgroundColor: 'white',
-                    width: '50%',
-                    borderWidth: 0,
-                  }}
-                  checked={this.state.remember}
-                  onPress={() => {
-                    this.setState((prevState) => {
-                      return { ...prevState, remember: !prevState.remember };
-                    });
-                  }}
-                />
+                {null && (
+                  <CheckBox
+                    checkedIcon={<Icon svg={CheckedIcon} />}
+                    uncheckedIcon={<Icon svg={UncheckedIcon} />}
+                    center
+                    title={i18n.t('LoginScreen.rememberMe')}
+                    containerStyle={{
+                      backgroundColor: 'white',
+                      width: '50%',
+                      borderWidth: 0,
+                    }}
+                    checked={this.state.remember}
+                    onPress={() => {
+                      this.setState((prevState) => {
+                        return { ...prevState, remember: !prevState.remember };
+                      });
+                    }}
+                  />
+                )}
                 <Button
                   containerStyle={Styles.button}
-                  textStyle={Typography.FONT_BOLD}
+                  textStyle={Typography.FONT_SEMIBOLD}
                   buttonText={i18n.t('LoginScreen.login')}
                   blocking
                   onPress={this.onLogin}
@@ -240,7 +239,7 @@ class LoginScreen extends React.Component<Props, State> {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }

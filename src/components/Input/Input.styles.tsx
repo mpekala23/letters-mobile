@@ -59,7 +59,7 @@ export default StyleSheet.create({
     height: OPTION_HEIGHT,
     justifyContent: 'center',
     borderBottomWidth: 1,
-    borderColor: Colors.GRAY_DARK,
+    borderColor: Colors.GRAY_500,
     paddingHorizontal: 10,
   },
   secureButtonsContainer: {

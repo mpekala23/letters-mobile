@@ -1,24 +1,17 @@
 import React, { Dispatch } from 'react';
-import {
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Platform,
-  FlatList,
-} from 'react-native';
-import { Icon } from '@components';
+import { Text, FlatList } from 'react-native';
+import { Button, KeyboardAvoider } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
-import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { Mail } from 'types';
+import { Mail, Contact } from 'types';
 import i18n from '@i18n';
-import AddContact from '@assets/views/ContactSelector/AddContact';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken, getZipcode } from '@api';
+import { getContacts, getUser, uploadPushToken } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
@@ -67,7 +60,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     try {
       await Notifs.setup();
       this.props.handleNotif();
-      await uploadPushToken(Notifs.getToken());
+      const token = Notifs.getToken();
+      await uploadPushToken(token);
     } catch (err) {
       dropdownError({ message: i18n.t('Permission.notifs') });
     }
@@ -101,7 +95,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       <ContactSelectorCard
         firstName={item.firstName}
         lastName={item.lastName}
-        imageUri={item.photo?.uri}
+        imageUri={item.image?.uri}
         mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);
@@ -114,13 +108,30 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     );
   };
 
+  renderAddContactButton = () => {
+    return (
+      <Button
+        buttonText={i18n.t('ContactSelectorScreen.addContact')}
+        onPress={() => {
+          this.props.navigation.navigate('ContactInfo', {
+            addFromSelector: true,
+          });
+          Segment.track('Contact Selector - Click on Add Contact');
+        }}
+        reverse
+        containerStyle={Styles.addContactButton}
+        textStyle={[Typography.FONT_BOLD]}
+      />
+    );
+  };
+
   static renderInitialMessage(): JSX.Element {
     return (
       <Text
         style={[
           Typography.FONT_MEDIUM,
           {
-            color: Colors.GRAY_DARK,
+            color: Colors.GRAY_500,
             fontSize: 16,
           },
         ]}
@@ -132,16 +143,12 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        style={Styles.trueBackground}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        enabled
-      >
+      <KeyboardAvoider style={Styles.trueBackground}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             {
-              color: Colors.GRAY_DARK,
+              color: Colors.GRAY_500,
               fontSize: 20,
               paddingBottom: 16,
             },
@@ -153,24 +160,13 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           data={this.props.existingContacts}
           renderItem={this.renderItem}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
+          ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}
           showsVerticalScrollIndicator={false}
           onRefresh={this.doRefresh}
           refreshing={this.state.refreshing}
         />
-        <TouchableOpacity
-          style={Styles.addContactButton}
-          onPress={() => {
-            this.props.navigation.navigate('ContactInfo', {
-              addFromSelector: true,
-            });
-            Segment.track('Contact Selector - Click on Add Contact');
-          }}
-          testID="addContact"
-        >
-          <Icon svg={AddContact} style={{ marginTop: 13, marginRight: 2 }} />
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </KeyboardAvoider>
     );
   }
 }

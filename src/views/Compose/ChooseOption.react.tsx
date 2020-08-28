@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { STATE_TO_ABBREV, PERSONAL_CATEGORY } from '@utils';
+import { STATE_TO_ABBREV } from '@utils';
 import i18n from '@i18n';
 import { User } from '@store/User/UserTypes';
 import * as Segment from 'expo-analytics-segment';
@@ -31,13 +31,13 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
   const { user } = props;
   return (
     <View style={Styles.screenBackground}>
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
         {i18n.t('Compose.chooseAnOption')}
       </Text>
       <Text
         style={[
           Typography.FONT_REGULAR,
-          { fontSize: 14, color: Colors.GRAY_DARK, paddingBottom: 10 },
+          { fontSize: 14, color: Colors.GRAY_500, paddingBottom: 10 },
         ]}
       >
         {i18n.t('Compose.psYourLovedOneWillRespondTo')} {user.address1}
@@ -59,7 +59,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             },
           });
           props.navigation.navigate('ComposePostcard', {
-            category: PERSONAL_CATEGORY,
+            category: {
+              name: 'personal',
+              id: -1,
+              image: { uri: '' },
+              blurb: '',
+            },
           });
         }}
       />

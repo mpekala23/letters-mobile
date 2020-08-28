@@ -13,10 +13,13 @@ export enum MailTypes {
 
 export interface PostcardDesign {
   image: Image;
+  thumbnail?: Image;
+  id?: number;
+  categoryId?: number;
+  subcategoryName?: string;
   name?: string;
   author?: string;
   custom?: boolean;
-  blurb?: string;
 }
 
 interface LetterSpecific {
@@ -31,12 +34,12 @@ interface PostcardSpecific {
 
 export enum MailStatus {
   Draft = 'Draft',
-  Created = 'Created',
+  Created = 'Created Order',
   Mailed = 'Mailed',
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
-  ProcessedForDelivery = 'Processed for Delivery',
-  Delivered = 'Delivered',
+  ProcessedForDelivery = 'Out for Delivery',
+  Delivered = 'Delivered to Facility',
   ReturnedToSender = 'Returned to Sender',
   Rerouted = 'Re-Routed',
 }
@@ -86,6 +89,7 @@ export enum PrisonTypes {
 
 export interface Facility {
   name: string;
+  fullName?: string;
   type: PrisonTypes;
   address: string;
   city: string;
@@ -93,6 +97,29 @@ export interface Facility {
   postal: string;
   phone: string;
 }
+
+// Contacts
+export interface ContactPersonal {
+  firstName: string;
+  lastName: string;
+  inmateNumber: string;
+  relationship: string;
+  image?: Image;
+}
+
+export interface ContactFacility {
+  facility: Facility;
+  dorm?: string;
+  unit?: string;
+}
+
+interface ContactCreated {
+  id: number;
+}
+
+export interface ContactDraft extends ContactPersonal, ContactFacility {}
+
+export interface Contact extends ContactDraft, ContactCreated {}
 
 // Tracking and Reporting
 export interface ZipcodeInfo {
@@ -133,6 +160,7 @@ export enum ProfilePicTypes {
   Topbar = 'Topbar',
   Contact = 'Contact',
   SingleContact = 'SingleContact',
+  Avatar = 'Avatar',
 }
 
 export enum Storage {
@@ -140,6 +168,9 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftCategoryId = 'Ameelio-DraftCategoryId',
+  DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
+  DraftDesignUri = 'Ameelio-DraftDesignUri',
 }
 
 export type TopbarBackAction = {
@@ -152,3 +183,8 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export enum Screen {
+  ReferFriends = 'ReferFriends',
+  Delivery = 'DeliveryReporting',
+}

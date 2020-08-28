@@ -11,6 +11,9 @@ export const FONT_FAMILY_REGULAR_ITALIC = 'Poppins-Regular-Italic';
 export const FONT_FAMILY_MEDIUM = 'Poppins-Medium';
 export const FONT_FAMILY_MEDIUM_ITALIC = 'Poppins-Medium-Italic';
 
+export const FONT_FAMILY_SEMIBOLD = 'Poppins-SemiBold';
+export const FONT_FAMILY_SEMIBOLD_ITALIC = 'Poppins-SemiBold-Italic';
+
 export const FONT_FAMILY_BOLD = 'Poppins-Bold';
 export const FONT_FAMILY_BOLD_ITALIC = 'Poppins-Bold-Italic';
 
@@ -37,6 +40,14 @@ export const FONT_MEDIUM: TextStyle = {
 
 export const FONT_MEDIUM_ITALIC: TextStyle = {
   fontFamily: FONT_FAMILY_MEDIUM_ITALIC,
+};
+
+export const FONT_SEMIBOLD: TextStyle = {
+  fontFamily: FONT_FAMILY_SEMIBOLD,
+};
+
+export const FONT_SEMIBOLD_ITALIC: TextStyle = {
+  fontFamily: FONT_FAMILY_SEMIBOLD_ITALIC,
 };
 
 export const FONT_BOLD: TextStyle = {

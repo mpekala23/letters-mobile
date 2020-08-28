@@ -72,7 +72,6 @@ export default StyleSheet.create({
   },
   memoryLaneText: {
     fontSize: 18,
-    fontWeight: '500',
     overflow: 'hidden',
   },
   memoryLanePostcardBackground: {
@@ -131,14 +130,18 @@ export default StyleSheet.create({
   creditsSendMoreText: {
     flex: 1,
     fontSize: 18,
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
   },
   categoryBackground: {
-    height: 184,
-    width: '100%',
+    height: 200,
+    flex: 1,
     padding: 0,
   },
   categoryTitle: {
     fontSize: 18,
+  },
+  categoryBlurb: {
+    color: Colors.GRAY_DARKER,
+    fontSize: 12,
   },
 });

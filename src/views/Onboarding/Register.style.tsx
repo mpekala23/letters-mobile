@@ -9,12 +9,12 @@ export default StyleSheet.create({
   },
   backgroundScroll: {
     flex: 1,
-    marginHorizontal: 10,
+    marginHorizontal: 16,
   },
   scrollContent: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 12,
+    paddingTop: 16,
     paddingBottom: 36,
   },
   fullWidth: {

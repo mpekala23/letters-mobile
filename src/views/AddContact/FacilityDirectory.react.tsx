@@ -4,23 +4,18 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  KeyboardAvoidingView,
   Platform,
   RefreshControl,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, Icon } from '@components';
-import { Facility } from 'types';
+import { Button, Input, Icon, KeyboardAvoider } from '@components';
+import { Facility, ContactFacility } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setAdding } from '@store/Contact/ContactActions';
-import {
-  ContactState,
-  Contact,
-  ContactActionTypes,
-} from '@store/Contact/ContactTypes';
+import { setAddingFacility } from '@store/Contact/ContactActions';
+import { ContactState, ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -42,7 +37,7 @@ export interface Props {
     params: { phyState: string };
   };
   contactState: ContactState;
-  setAdding: (contact: Contact) => void;
+  setAddingFacility: (contactFacility: ContactFacility) => void;
 }
 
 export interface State {
@@ -108,10 +103,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         Segment.trackWithProperties('Add Contact - Click on Next', {
           page: 'facility',
         });
-        const contact = this.props.contactState.adding;
-        contact.facility = this.state.selected;
-        this.props.setAdding(contact);
-        this.props.navigation.navigate('ReviewContact');
+        if (this.state.selected) {
+          this.props.setAddingFacility({ facility: this.state.selected });
+          this.props.navigation.navigate('ReviewContact');
+        }
       },
     });
   }
@@ -124,10 +119,10 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         Segment.trackWithProperties('Add Contact - Click on Next', {
           page: 'facility',
         });
-        const contact = this.props.contactState.adding;
-        contact.facility = this.state.selected;
-        this.props.setAdding(contact);
-        this.props.navigation.navigate('ReviewContact');
+        if (this.state.selected) {
+          this.props.setAddingFacility({ facility: this.state.selected });
+          this.props.navigation.navigate('ReviewContact');
+        }
       },
     });
   }
@@ -190,10 +185,12 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             this.setValid(true);
           }
         }}
-        key={item.name + item.address + item.postal}
+        key={
+          item.fullName ? item.fullName : item.name + item.address + item.postal
+        }
       >
-        <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
-          {item.name}
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.itemTitle]}>
+          {item.fullName ? item.fullName : item.name}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.itemInfo]}>
           {item.type}
@@ -212,7 +209,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           style={{
             width: '100%',
             height: 1,
-            backgroundColor: Colors.GRAY_LIGHT,
+            backgroundColor: Colors.BLACK_200,
             marginBottom: 8,
           }}
         />
@@ -249,11 +246,11 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <View style={Styles.hintBackground} testID="hintText">
           <Text style={[Typography.FONT_MEDIUM]}>
             {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint1')}{' '}
-            <Text style={Typography.FONT_BOLD}>
+            <Text style={Typography.FONT_SEMIBOLD}>
               {i18n.t('FacilityDirectoryScreen.statePrison')}{' '}
             </Text>
             {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint2')}{' '}
-            <Text style={Typography.FONT_BOLD}>
+            <Text style={Typography.FONT_SEMIBOLD}>
               &apos;{i18n.t('FacilityDirectoryScreen.smartCommunications')}
               &apos;
             </Text>{' '}
@@ -274,12 +271,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <View style={Styles.topSection}>
             <View
               style={{
@@ -318,7 +310,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             {this.renderFooter()}
             <View style={{ width: '100%', height: 24 }} />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
@@ -329,7 +321,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAddingFacility: (contactFacility: ContactFacility) =>
+      dispatch(setAddingFacility(contactFacility)),
   };
 };
 const FacilityDirectoryScreen = connect(

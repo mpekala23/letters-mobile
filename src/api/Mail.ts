@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import { Linking } from 'react-native';
 import url from 'url';
 import {
   Draft,
@@ -17,7 +16,9 @@ import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addBusinessDays, differenceInBusinessDays } from 'date-fns';
+import { addBusinessDays } from 'date-fns';
+import { estimateDelivery } from '@utils';
+
 import {
   getZipcode,
   fetchAuthenticated,
@@ -56,33 +57,35 @@ interface RawMail {
   delivered: boolean;
 }
 
+function cleanLobStatus(status: string): MailStatus {
+  // e.g 'In Transit' (single mail tracking event) and 'postcard.in_transit' (mail status)
+  const normalizedStatus = status.split(' ').join('_').toLowerCase();
+  if (!normalizedStatus) return MailStatus.Created;
+  if (normalizedStatus.includes('in_transit')) return MailStatus.InTransit;
+  if (normalizedStatus.includes('processed_for_delivery')) {
+    return MailStatus.ProcessedForDelivery;
+  }
+  if (normalizedStatus.includes('in_local_area')) return MailStatus.InLocalArea;
+  if (normalizedStatus.includes('mailed')) return MailStatus.Mailed;
+  if (normalizedStatus.includes('returned_to_sender'))
+    return MailStatus.ReturnedToSender;
+  return MailStatus.Created;
+}
+
 async function cleanTrackingEvent(
   event: RawTrackingEvent
 ): Promise<TrackingEvent> {
   const location = event.location
     ? await getZipcode(event.location)
     : undefined;
+  const date = new Date(event.date_modified);
+
   return {
     id: event.id,
-    name: event.name,
+    name: cleanLobStatus(event.name),
     location,
-    date: new Date(event.date_modified),
+    date: new Date(date),
   };
-}
-
-function cleanLobStatus(status: string, date: Date): MailStatus {
-  if (!status) return MailStatus.Created;
-  if (status.includes('in_transit')) return MailStatus.InTransit;
-  if (status.includes('processed_for_delivery')) {
-    if (!date) return MailStatus.ProcessedForDelivery;
-    if (Math.abs(differenceInBusinessDays(date, new Date())) <= 3)
-      return MailStatus.ProcessedForDelivery;
-    return MailStatus.Delivered;
-  }
-  if (status.includes('in_local_area')) return MailStatus.InLocalArea;
-  if (status.includes('mailed')) return MailStatus.Mailed;
-  if (status.includes('returned_to_sender')) return MailStatus.ReturnedToSender;
-  return MailStatus.Created;
 }
 
 export function mapTrackingEventsToMailStatus(
@@ -90,14 +93,7 @@ export function mapTrackingEventsToMailStatus(
 ): MailStatus {
   if (!events.length) return MailStatus.Created;
   const lastIdx = events.length - 1;
-  let mailStatus = events[lastIdx].name as MailStatus;
-  if (
-    events[lastIdx].name === MailStatus.ProcessedForDelivery &&
-    differenceInBusinessDays(new Date(), events[lastIdx].date) > 3
-  ) {
-    mailStatus = MailStatus.Delivered;
-  }
-  return mailStatus;
+  return cleanLobStatus(events[lastIdx].name);
 }
 
 // cleans mail returned from getSingleMail
@@ -125,6 +121,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const dateCreated = new Date(mail.created_at);
   let status: MailStatus;
   let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
+
   const trackingEvents = !mail.tracking_events
     ? []
     : await Promise.all(
@@ -132,12 +129,14 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       );
   if (!mail.sent) {
     status = MailStatus.Draft;
+  } else if (mail.delivered) {
+    status = MailStatus.Delivered;
   } else {
     status = mapTrackingEventsToMailStatus(trackingEvents);
     if (status === MailStatus.ProcessedForDelivery) {
-      expectedDelivery = addBusinessDays(
+      expectedDelivery = estimateDelivery(
         trackingEvents[trackingEvents.length - 1].date,
-        3
+        status
       );
     }
   }
@@ -164,6 +163,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    trackingEvents,
   };
 }
 
@@ -205,16 +205,22 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
         };
   const dateCreated = new Date(mail.created_at);
   const lastLobUpdate = new Date(mail.last_lob_status_update);
-  let status: MailStatus;
+
+  let status;
   if (!mail.sent) {
     status = MailStatus.Draft;
   } else {
-    status = cleanLobStatus(mail.lob_status, lastLobUpdate);
+    status = mail.delivered
+      ? MailStatus.Delivered
+      : cleanLobStatus(mail.lob_status);
   }
-  let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
-  if (status === MailStatus.ProcessedForDelivery) {
-    expectedDelivery = addBusinessDays(lastLobUpdate, 3);
-  }
+
+  const expectedDelivery = estimateDelivery(
+    status === MailStatus.ProcessedForDelivery
+      ? lastLobUpdate
+      : new Date(mail.created_at),
+    status
+  );
   if (type === MailTypes.Letter) {
     return {
       type,
@@ -300,17 +306,20 @@ export async function createMail(draft: Draft): Promise<Mail> {
   let imageExtension = {};
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      prepDraft.design.image = await uploadImage(
-        prepDraft.design.image,
-        'letter'
-      );
+      if (prepDraft.design.custom) {
+        prepDraft.design.image = await uploadImage(
+          prepDraft.design.image,
+          'letter'
+        );
+      }
       imageExtension = {
         s3_img_urls: [prepDraft.design.image.uri],
       };
     } catch (err) {
       const uploadError: ApiResponse = {
         status: 'ERROR',
-        message: 'Unable to upload image.',
+        message:
+          err.message === 'timeout' ? 'Image upload timeout' : err.message,
         date: Date.now(),
         data: {},
       };
@@ -325,7 +334,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     } catch (err) {
       const uploadError: ApiResponse = {
         status: 'ERROR',
-        message: 'Unable to upload image.',
+        message:
+          err.message === 'timeout' ? 'Image upload timeout' : err.message,
         date: Date.now(),
         data: {},
       };
@@ -355,21 +365,13 @@ export async function createMail(draft: Draft): Promise<Mail> {
   return createdMail;
 }
 
-export async function facebookShare(shareUrl: string): Promise<void> {
-  const supportedUrl = await Linking.canOpenURL(shareUrl);
-  if (supportedUrl) {
-    await Linking.openURL(shareUrl);
-  } else {
-    throw Error('Share Url not supported');
-  }
-}
-
 interface RawCategory {
   created_at: string;
   id: 1;
   img_src: string;
   name: string;
   updated_at: string;
+  blurb: string;
 }
 
 function cleanCategory(raw: RawCategory): Category {
@@ -377,7 +379,7 @@ function cleanCategory(raw: RawCategory): Category {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
-    blurb: '',
+    blurb: raw.blurb,
   };
 }
 
@@ -388,6 +390,11 @@ export async function getCategories(): Promise<Category[]> {
   const categories: Category[] = data.map((raw: RawCategory) =>
     cleanCategory(raw)
   );
+  const personalIx = categories.findIndex(
+    (cat: Category) => cat.name === 'personal'
+  );
+  const personalCategory = categories.splice(personalIx, 1);
+  categories.unshift(personalCategory[0]);
   return categories;
 }
 
@@ -397,15 +404,24 @@ interface RawDesign {
   updated_at: string;
   name: string;
   front_img_src: string;
+  thumbnail_src: string;
   type: MailTypes;
   back: null;
   subcategory_id: number;
 }
 
-function cleanDesign(raw: RawDesign): PostcardDesign {
+function cleanDesign(
+  raw: RawDesign,
+  categoryId?: number,
+  subcategoryName?: string
+): PostcardDesign {
   return {
     image: { uri: raw.front_img_src },
+    thumbnail: { uri: raw.thumbnail_src },
     name: raw.name,
+    id: raw.id,
+    categoryId,
+    subcategoryName,
   };
 }
 
@@ -422,7 +438,26 @@ export async function getSubcategories(
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
     cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw)
+      cleanDesign(raw, category.id, subName)
+    );
+  }
+  return cleanData;
+}
+
+export async function getSubcategoriesById(
+  categoryId: number
+): Promise<Record<string, PostcardDesign[]>> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `designs/${categoryId}`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as Record<string, RawDesign[]>;
+  const cleanData: Record<string, PostcardDesign[]> = {};
+  const subNames = Object.keys(data);
+  for (let ix = 0; ix < subNames.length; ix += 1) {
+    const subName = subNames[ix];
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;

@@ -35,7 +35,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               Typography.FONT_REGULAR,
               {
                 color:
-                  props.numLeft >= 0 ? Colors.GRAY_DARK : Colors.AMEELIO_RED,
+                  props.numLeft >= 0 ? Colors.GRAY_500 : Colors.AMEELIO_RED,
               },
             ]}
           >

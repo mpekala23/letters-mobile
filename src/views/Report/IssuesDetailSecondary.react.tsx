@@ -5,10 +5,9 @@ import { Button, Icon } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
-import { DeliveryReportTypes, Facility } from 'types';
+import { DeliveryReportTypes, Facility, Contact } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Contact } from '@store/Contact/ContactTypes';
 import LetterBox from '@assets/views/Issues/LetterBox';
 import * as Segment from 'expo-analytics-segment';
 import ReportStyles from './Report.styles';
@@ -167,7 +166,7 @@ const IssuesDetailSecondaryScreenBase: React.FC<Props> = (props: Props) => {
         { backgroundColor: props.navigation ? undefined : '' },
       ]}
     >
-      <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
+      <Text style={[Typography.FONT_SEMIBOLD, ReportStyles.title]}>
         {mapIssueToDetailsTitle(props.contact.facility, issue)}
       </Text>
       <Text

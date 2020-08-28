@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   selectedBackground: {
     borderWidth: 2,
-    borderColor: Colors.PINK_DARKER,
+    borderColor: Colors.PINK_500,
   },
   itemTitle: {
     fontSize: 16,
@@ -72,11 +72,11 @@ export default StyleSheet.create({
     width: 200,
   },
   hintBackground: {
-    backgroundColor: Colors.BLUE_LIGHTER,
+    backgroundColor: Colors.BLUE_200,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Colors.BLUE_LIGHT,
+    borderColor: Colors.BLUE_300,
     borderRadius: 4,
     padding: 6,
     marginHorizontal: 16,

@@ -4,13 +4,12 @@
 import store from '@store';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
-import { PrisonTypes } from 'types';
+import { ContactDraft, Contact, PrisonTypes } from 'types';
 import {
   setAdding as setAddingContact,
   setExisting as setExistingContacts,
   setActive as setActiveContact,
 } from '@store/Contact/ContactActions';
-import { Contact } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import { fetchAuthenticated, API_URL, uploadImage } from './Common';
@@ -37,11 +36,10 @@ interface RawContact {
 function cleanContact(data: RawContact): Contact {
   const dormExtension = data.dorm ? { dorm: data.dorm } : {};
   const unitExtension = data.unit ? { unit: data.unit } : {};
-  const photoExtension =
+  const imageExtension =
     data.s3_img_url || data.profile_img_path
       ? {
-          photo: {
-            type: 'image/jpeg',
+          image: {
             uri: data.s3_img_url || data.profile_img_path || '',
           },
         }
@@ -54,7 +52,7 @@ function cleanContact(data: RawContact): Contact {
     relationship: data.relationship,
     facility: {
       name: data.facility_name,
-      type: PrisonTypes.Federal, // TODO: once this is supported on the backend, update this field
+      type: PrisonTypes.Federal, // TODO: Once this is supported on the backend, update this
       address: data.facility_address,
       city: data.facility_city,
       state: ABBREV_TO_STATE[data.facility_state],
@@ -63,7 +61,7 @@ function cleanContact(data: RawContact): Contact {
     },
     ...dormExtension,
     ...unitExtension,
-    ...photoExtension,
+    ...imageExtension,
   };
 }
 
@@ -92,19 +90,19 @@ export async function getContact(id: number): Promise<Contact> {
   return cleanContact(body.data as RawContact);
 }
 
-export async function addContact(contactData: Contact): Promise<Contact> {
-  if (!contactData.facility) throw Error('No facility');
-  const dormExtension = contactData.dorm
-    ? { facility_dorm: contactData.dorm }
+export async function addContact(contactDraft: ContactDraft): Promise<Contact> {
+  if (!contactDraft.facility) throw Error('No facility');
+  const dormExtension = contactDraft.dorm
+    ? { facility_dorm: contactDraft.dorm }
     : {};
-  const unitExtension = contactData.unit
-    ? { facility_unit: contactData.unit }
+  const unitExtension = contactDraft.unit
+    ? { facility_unit: contactDraft.unit }
     : {};
   let photoExtension = {};
   let newPhoto;
-  if (contactData.photo) {
+  if (contactDraft.image) {
     try {
-      newPhoto = await uploadImage(contactData.photo, 'avatar');
+      newPhoto = await uploadImage(contactDraft.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
@@ -113,19 +111,19 @@ export async function addContact(contactData: Contact): Promise<Contact> {
   const body = await fetchAuthenticated(url.resolve(API_URL, 'contact'), {
     method: 'POST',
     body: JSON.stringify({
-      first_name: contactData.firstName,
-      last_name: contactData.lastName,
-      inmate_number: contactData.inmateNumber,
-      facility_name: contactData.facility.name,
-      facility_address: contactData.facility.address,
-      facility_city: contactData.facility.city,
-      facility_state: STATE_TO_ABBREV[contactData.facility.state],
-      facility_postal: contactData.facility.postal,
-      facility_phone: contactData.facility.phone,
+      first_name: contactDraft.firstName,
+      last_name: contactDraft.lastName,
+      inmate_number: contactDraft.inmateNumber,
+      facility_name: contactDraft.facility.name,
+      facility_address: contactDraft.facility.address,
+      facility_city: contactDraft.facility.city,
+      facility_state: STATE_TO_ABBREV[contactDraft.facility.state],
+      facility_postal: contactDraft.facility.postal,
+      facility_phone: contactDraft.facility.phone,
       ...dormExtension,
       ...unitExtension,
       ...photoExtension,
-      relationship: contactData.relationship,
+      relationship: contactDraft.relationship,
     }),
   });
   if (body.status !== 'OK') throw body;
@@ -136,12 +134,19 @@ export async function addContact(contactData: Contact): Promise<Contact> {
   store.dispatch(setExistingContacts(existing));
   store.dispatch(
     setAddingContact({
-      id: -1,
       firstName: '',
       lastName: '',
       inmateNumber: '',
       relationship: '',
-      facility: null,
+      facility: {
+        name: '',
+        type: PrisonTypes.State,
+        address: '',
+        city: '',
+        state: '',
+        postal: '',
+        phone: '',
+      },
     })
   );
   return newContact;
@@ -149,8 +154,8 @@ export async function addContact(contactData: Contact): Promise<Contact> {
 
 export async function updateContact(data: Contact): Promise<Contact[]> {
   if (!data.facility) throw Error('No facility');
-  let newPhoto = data.photo ? { ...data.photo } : undefined;
-  const existingPhoto = store.getState().contact.active.photo;
+  let newPhoto = data.image ? { ...data.image } : undefined;
+  const existingPhoto = store.getState().contact.active.image;
   if (
     newPhoto &&
     ((existingPhoto && newPhoto.uri !== existingPhoto.uri) || !existingPhoto)
@@ -189,7 +194,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
   );
   if (body.status === 'ERROR') throw body.data;
   const updatedContact = { ...data };
-  updatedContact.photo = newPhoto;
+  updatedContact.image = newPhoto;
   const { existing } = store.getState().contact;
   const newExisting = [];
   for (let ix = 0; ix < existing.length; ix += 1) {

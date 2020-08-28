@@ -6,7 +6,7 @@
   },
   "Error": {
     "network": "Error de red",
-    "requestTimedOut": "Se ha agotado el tiempo de espera de la solicitud.",
+    "requestTimedOut": "Se ha agotado el tiempo de espera de la solicitud. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "requestIncomplete": "No se pudo completar esta acción.",
     "unsavedToken": "No se pueden guardar las credenciales de acceso para la próxima vez",
     "cantLogout": "No se puede cerrar la sesión del usuario",
@@ -14,16 +14,19 @@
     "cantRefreshContacts": "No se pueden actualizar los contactos",
     "cantRefreshLetters": "No se pueden actualizar tus cartas",
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
+    "cantRefreshCategories": "No se pueden actualizar las categorias",
+    "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
     "unableToUploadContactPicture": "No se puede subir la nueva imagen de contacto. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
-    "letterTooLong": "Su carta no puede exceder los 16,000 caracteres."
+    "letterTooLong": "Su carta no puede exceder los 16,000 caracteres.",
+    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
     "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración.",
-    "camera": "Can't take a photo. Ensure that this is enabled in settings."
+    "camera": "No puede tomar una foto. Asegúrese de que está habilitado en la configuración."
   },
   "AddManuallyScreen": {
     "facilityName": "Nombre del presidio",
@@ -38,6 +41,10 @@
     "signUp": "Registrarte",
     "logIn": "Acceder"
   },
+  "Common": {
+    "possessivePronoun": "Tu",
+    "prepositionTo": "para"
+  },
   "ContactInfoScreen": {
     "addContact": "Agregar contacto",
     "needHelpFindingYourInmateID": "¿Necesita ayuda para encontrar el número de preso de su ser querido?",
@@ -47,21 +54,17 @@
     "firstName": "Nombre",
     "lastName": "Apellido",
     "inmateNumber": "Número de preso",
-    "relationshipToInmate": "Relación con el preso",
+    "relationshipToInmate": "Yo soy su",
     "state": "Estado",
     "postal": "Postal",
-    "mother": "Madre",
-    "father": "Padre",
-    "brother": "Hermano",
-    "sister": "Hermana",
-    "sibling": "Hermano/a",
-    "daughter": "Hija",
-    "son": "Hijo",
-    "grandmother": "Abuela",
-    "grandfather": "Abuelo",
-    "grandaughter": "Nieta",
-    "grandson": "Nieto",
-    "friend": "Amigo",
+    "spouse": "Esposo(a)/Novio(a)",
+    "parent": "Padre/Madre",
+    "kid": "Hijo(a)",
+    "sibling": "Hermano(a)",
+    "grandparent": "Abuelo(a)",
+    "family": "Familia extendida",
+    "mentor": "Mentor(a)/Pen Pal",
+    "friend": "Amigo(a)",
     "other": "Otro",
     "back": "Volver",
     "next": "Siguiente"
@@ -69,15 +72,16 @@
   "ContactSelectorScreen": {
     "yourLovedOnes": "Sus seres queridos",
     "miles": "millas",
-    "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo."
+    "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo.",
+    "addContact": "Agregar contacto"
   },
   "CreditsCard": {
-    "letter": "carta",
-    "letters": "cartas",
+    "letter": "crédito",
+    "letters": "créditos",
     "leftThisWeek": "te quedan esta semana",
-    "sendMore": "Enviar más",
-    "youUsedAllYourLetters": "Usaste todas tus cartas para la semana",
-    "creditsResetDaily": "Sus cartas se restablecen semanalmente.",
+    "sendMore": "Enviar",
+    "youUsedAllYourLetters": "Usaste todas tus créditos para la semana",
+    "creditsResetDaily": "Sus créditos se restablecen semanalmente.",
     "comeBackOnMondayForMore": "Sus cartas se restablecen semanalmente, el lunes a las 4:00AM EST."
   },
   "FacilityDirectoryScreen": {
@@ -93,8 +97,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "¿Su ser querido ha recibido la carta?",
-    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio. Avísanos si hubo un problema con la entrega!",
+    "hasYourLovedOneReceivedLetterPrefix": "¿",
+    "hasYourLovedOneReceivedLetter": " ha recibido tu carta?",
+    "letUsKnowIfThereIsAProblem": "Queremos que tengas la mejor experiencia posible con Ameelio.",
     "yepTheyReceivedIt": "¡Si, lo han recibido!",
     "notSureYet": "Todavía no estoy seguro...",
     "notYetReceived": "No lo han recibido"
@@ -105,7 +110,7 @@
     "whatsUp": "¿Qué pasó?",
     "weHopeYoullSendAnotherLetter": "¡Esperamos que envía otra carta pronto!",
     "yourLetterIsOnItsWay": "¡Tu carta está en camino a tu ser querido! Si tiene preguntas mientras tanto, comuníquese con nosotros en support@ameelio.org",
-    "shareOnFacebook": "Compartir en Facebook",
+    "share": "Compartir",
     "returnHome": "Vuelve al inicio",
     "IHaventAskedMyLovedOne": "¡No le pregunté mi ser querido!",
     "theyHaventReceivedLetter": "Aún no han recibido la carta",
@@ -117,9 +122,9 @@
     "talkToSomeoneAtAmeelio": "Habla con alguien en Ameelio",
     "tryMessagingUsOnFacebook": "Envíenos un mensaje en Facebook. Estamos aqui para responder tus preguntas. Te daré una respuesta lo antes posible."
   },
-  "LetterTrackingScreen": {
+  "MailTrackingScreen": {
     "letterTracking": "Rastreo de cartas",
-    "estimatedArrival": "Se estima que su carta llegará",
+    "estimatedArrival": "Se estima que su carta llegará ",
     "needHelp": "Necesito ayuda",
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
@@ -163,11 +168,10 @@
     "other": "Otro"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWayPrefix": "¡Tu carta para ",
     "yourLetterIsOnTheWaySuffix": " está en camino!",
     "weEstimateYourLetterToArriveOn": "Se estima que su carta llegará",
-    "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestras cartas. ¡Gracias por confiar en nosotros!",
-    "shareOnFacebook": "Compartir en Facebook",
+    "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestro correo. ¡Gracias por confiar en nosotros!",
+    "share": "Compartir",
     "done": "Hecho"
   },
   "RegisterScreen": {
@@ -188,10 +192,12 @@
     "register": "Regístrate",
     "emailAlreadyInUse": "Correo electrónico ya en uso.",
     "confirmPassword": "Confirma Contraseña",
-    "referer": "¿Cómo supiste de Ameelio?",
+    "referrer": "¿Cómo supiste de Ameelio?",
     "login": "Acceder",
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
-    "passwordsMustMatch": "Tus contraseñas deben ser las mismas"
+    "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
+    "next": "Siguiente",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -217,7 +223,7 @@
     "facilityCity": "Ciudad del Presidio",
     "facilityState": "Estado del Presidio",
     "facilityPostal": "C.P. del Presidio",
-    "facilityPhone": "Facility Phone (optional)",
+    "facilityPhone": "Número de teléfono del Presidio (opcional)",
     "optionalUnit": "Unidad (opcional, solo si necesario)",
     "optionalDorm": "Dormitorio (opcional, solo si necesario)",
     "save": "Guardar",
@@ -231,7 +237,6 @@
   "UpdateProfileScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "cellPhone": "Número de télefono celular",
     "addressLine1": "Dirección línea 1",
     "addressLine2": "Dirección línea 2",
     "zipcode": "Código Postas",
@@ -306,16 +311,15 @@
     "emulatorDetected": "Emulador detectado",
     "mustUsePhysical": "Tienes que usar un dispositivo físico para recibir notificaciones push",
     "okay": "Okay",
-    "noDesignSelected": "No design selected",
-    "selectADesign": "Select a design to continue."
+    "noDesignSelected": "Ningún diseño seleccionado",
+    "selectADesign": "Seleccione una diseño para continuar."
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",
     "psYourLovedOneWillRespondTo": "P.D. Tus seres queridos podrán responderte a través de la dirección remitente:",
     "placeholder": "¡Cuéntale a tu ser querido sobre algo que hiciste/viste hoy que te recordó de él/ella!",
     "warningCantCancel": "Advertencia: no se pueden cancelar tus cartas después de que se envíen.",
-    "send": "Enviar Carta",
-    "sendPostcard": "Enviar Postal",
+    "send": "Enviar",
     "preview": "Vista Previa de la Carta",
     "next": "Siguiente",
     "to": "Para",
@@ -326,11 +330,11 @@
     "uploadAnImage": "Subir una foto",
     "takePhoto": "Tomar foto",
     "uploadExistingPhoto": "Subir una foto existente",
-    "letterInProgress": "Tienes una carta en progreso",
-    "continueWritingAnd": "Continúe escribiendo y envíe esa carta a su ser querido",
+    "letterInProgress": "Tienes un borrador en progreso",
+    "continueWritingAnd": "Continúe escribiendo y envíe ese borrador a su ser querido",
     "continueWriting": "Continúe escribiendo",
-    "startNewLetter": "Empezar nueva carta",
-    "draftContactDeleted": "Empezar nueva carta.",
+    "startNewLetter": "Empezar nuevo borrador",
+    "draftContactDeleted": "Empezar nuevo borrador",
     "notEnoughCredits": "No hay suficientes créditos",
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
@@ -339,6 +343,9 @@
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
     "iWouldLikeToSend": "I would like to send something:",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
@@ -380,6 +387,11 @@
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
-    "reviewPostcard": "Review"
+    "reviewPostcard": "Revisar"
+  },
+  "Sharing": {
+    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
+    "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
   }
 }

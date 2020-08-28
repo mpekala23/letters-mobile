@@ -6,7 +6,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, MailTypes, Draft } from 'types';
+import { Storage, MailTypes, Draft, PostcardDesign } from 'types';
 import {
   loginUser,
   logoutUser,
@@ -25,7 +25,7 @@ import {
   fetchAuthenticated,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail } from './Mail';
+import { getMail, getSubcategoriesById } from './Mail';
 
 interface RawUser {
   id: number;
@@ -53,7 +53,6 @@ function cleanUser(user: RawUser): User {
     firstName: user.first_name,
     lastName: user.last_name,
     email: user.email,
-    phone: user.phone,
     address1: user.addr_line_1,
     address2: user.addr_line_2,
     postal: user.postal,
@@ -79,6 +78,9 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftType);
   await deleteItemAsync(Storage.DraftContent);
   await deleteItemAsync(Storage.DraftRecipientId);
+  await deleteItemAsync(Storage.DraftDesignUri);
+  await deleteItemAsync(Storage.DraftCategoryId);
+  await deleteItemAsync(Storage.DraftSubcategoryName);
 }
 
 export async function saveDraft(draft: Draft): Promise<void> {
@@ -86,6 +88,26 @@ export async function saveDraft(draft: Draft): Promise<void> {
   await setItemAsync(Storage.DraftType, draft.type);
   await setItemAsync(Storage.DraftContent, draft.content);
   await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
+  if (
+    draft.type === MailTypes.Postcard &&
+    draft.design.image.uri &&
+    draft.design.categoryId &&
+    draft.design.subcategoryName
+  ) {
+    await setItemAsync(Storage.DraftDesignUri, draft.design.image.uri);
+    await setItemAsync(
+      Storage.DraftCategoryId,
+      draft.design.categoryId.toString()
+    );
+    await setItemAsync(
+      Storage.DraftSubcategoryName,
+      draft.design.subcategoryName
+    );
+  } else {
+    await deleteItemAsync(Storage.DraftDesignUri);
+    await deleteItemAsync(Storage.DraftCategoryId);
+    await deleteItemAsync(Storage.DraftSubcategoryName);
+  }
 }
 
 export async function loadDraft(): Promise<Draft> {
@@ -93,27 +115,36 @@ export async function loadDraft(): Promise<Draft> {
     const draftType = await getItemAsync(Storage.DraftType);
     const draftContent = await getItemAsync(Storage.DraftContent);
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
-    if (!draftType || !draftContent || !draftRecipientId)
-      throw Error('No draft saved');
+    if (!draftType || !draftRecipientId) throw Error('No draft saved');
     if (draftType === MailTypes.Letter) {
       const draft: Draft = {
         type: MailTypes.Letter,
         recipientId: parseInt(draftRecipientId, 10),
-        content: draftContent,
+        content: draftContent || '',
       };
       store.dispatch(setComposing(draft));
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
+      const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
+      const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
+      const draftSubcategoryName = await getItemAsync(
+        Storage.DraftSubcategoryName
+      );
+      if (!draftDesignUri || !draftCategoryId || !draftSubcategoryName)
+        throw Error('Unable to load postcard design');
+      const subcategories = await getSubcategoriesById(
+        parseInt(draftCategoryId, 10)
+      );
+      const findDesign = subcategories[draftSubcategoryName].find(
+        (testDesign: PostcardDesign) => testDesign.image.uri === draftDesignUri
+      );
+      if (!findDesign) throw Error('Unable to load postcard design');
       const draft: Draft = {
         type: MailTypes.Postcard,
         recipientId: parseInt(draftRecipientId, 10),
-        content: draftContent,
-        design: {
-          image: {
-            uri: '',
-          },
-        },
+        content: draftContent || '',
+        design: findDesign,
       };
       store.dispatch(setComposing(draft));
       return draft;
@@ -168,7 +199,7 @@ export async function loginWithToken(): Promise<User> {
       }),
     });
     const body = await response.json();
-    if (body.status !== 'OK') throw Error('Invalid token');
+    if (body.status !== 'OK') throw body;
     const userData = cleanUser(body.data as RawUser);
     Segment.identify(userData.email);
     Segment.track('Login Success');
@@ -231,9 +262,9 @@ export async function logout(): Promise<void> {
 export async function register(data: UserRegisterInfo): Promise<User> {
   let photoExtension = {};
   let newPhoto;
-  if (data.photo) {
+  if (data.image) {
     try {
-      newPhoto = await uploadImage(data.photo, 'avatar');
+      newPhoto = await uploadImage(data.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
@@ -255,10 +286,9 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_2: data.address2,
       city: data.city,
       country: 'US',
-      state: STATE_TO_ABBREV[data.state],
-      referer: data.referer,
+      state: STATE_TO_ABBREV[data.phyState],
+      referer: data.referrer,
       postal: data.postal,
-      phone: data.phone,
       ...photoExtension,
     }),
   });
@@ -283,11 +313,10 @@ export async function register(data: UserRegisterInfo): Promise<User> {
   Segment.identifyWithTraits(userData.email, {
     name: `${userData.firstName} ${userData.lastName}`,
     email: userData.email,
-    phone: userData.phone,
     postal: userData.postal,
     city: userData.city,
     state: userData.state,
-    referrer: data.referer,
+    referrer: data.referrer,
   });
 
   store.dispatch(loginUser(userData));
@@ -335,7 +364,6 @@ export async function updateProfile(data: User): Promise<User> {
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,
-        phone: data.phone,
         addr_line_1: data.address1,
         addr_line_2: data.address2,
         city: data.city,

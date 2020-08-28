@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { ProfilePicTypes, Mail } from 'types';
+import { ProfilePicTypes, Mail, MailStatus } from 'types';
 import { format } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { haversine } from '@utils';
@@ -24,13 +24,17 @@ interface Props {
 const ContactSelectorCard: React.FC<Props> = (props: Props) => {
   const [lettersTravelled, setLettersTravelled] = useState(0);
 
+  const deliveredLetters = props.mail
+    ? props.mail.filter((mail) => mail.status === MailStatus.Delivered)
+    : [];
+
   useEffect(() => {
     const updateLettersTravelled = async (): Promise<void> => {
       try {
         if (props.userPostal && props.contactPostal && props.mail) {
           const loc1 = await getZipcode(props.userPostal);
           const loc2 = await getZipcode(props.contactPostal);
-          setLettersTravelled(haversine(loc1, loc2) * props.mail.length);
+          setLettersTravelled(haversine(loc1, loc2) * deliveredLetters.length);
         }
       } catch (err) {
         setLettersTravelled(0);
@@ -56,30 +60,30 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
         </View>
         <View style={[{ paddingLeft: 18 }]}>
           <Text style={[Typography.BASE_TITLE]}>{props.firstName}</Text>
-          <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
+          <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
             <Emoji name="love_letter" />{' '}
             {i18n.t('SingleContactScreen.received')}:{' '}
-            {props.mail ? props.mail.length : 0}
+            {props.mail ? deliveredLetters.length : 0}
           </Text>
           {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
-            <Text
-              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}
-            >
+            <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
               <Emoji name="calendar" />{' '}
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
               {format(props.mail[0].dateCreated, 'MMM dd')}
             </Text>
           )}
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              { paddingBottom: 4, color: Colors.GRAY_DARK },
-            ]}
-          >
-            <Emoji name="airplane" />{' '}
-            {i18n.t('SingleContactScreen.lettersTraveled')}: {lettersTravelled}{' '}
-            {i18n.t('ContactSelectorScreen.miles')}
-          </Text>
+          {lettersTravelled > 0 && (
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                { paddingBottom: 4, color: Colors.GRAY_500 },
+              ]}
+            >
+              <Emoji name="airplane" />{' '}
+              {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
+              {lettersTravelled} {i18n.t('ContactSelectorScreen.miles')}
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>
