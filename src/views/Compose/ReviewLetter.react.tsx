@@ -73,7 +73,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       await createMail(this.props.composing);
       this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
-        Option: 'Letter',
+        type: 'letter',
         facility: this.props.activeContact.facility?.name,
         facilityState: this.props.activeContact.facility?.state,
         facilityCity: this.props.activeContact.facility?.city,
@@ -107,7 +107,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       });
     } catch (err) {
       Segment.trackWithProperties('Review - Send Letter Failure', {
-        Option: 'letter',
+        type: 'letter',
         'Error Type': err,
       });
       if (err.message === 'Image upload timeout') {

@@ -106,7 +106,7 @@ export type AppStackParamList = {
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
   ReviewLetter: undefined;
-  ReviewPostcard: { horizontal: boolean };
+  ReviewPostcard: { horizontal: boolean; category: string };
   ReviewContact: undefined;
   Setup: undefined;
   SingleContact: undefined;
