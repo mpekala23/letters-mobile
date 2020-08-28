@@ -101,7 +101,9 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       deleteDraft();
       this.props.navigation.reset({
         index: 0,
-        routes: [{ name: 'ReferFriends' }],
+        routes: [
+          { name: 'ReferFriends', params: { mailType: MailTypes.Letter } },
+        ],
       });
     } catch (err) {
       Segment.trackWithProperties('Review - Send Letter Failure', {
