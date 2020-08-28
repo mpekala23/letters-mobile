@@ -146,7 +146,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       <KeyboardAvoider style={Styles.trueBackground}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             {
               color: Colors.GRAY_500,
               fontSize: 20,

@@ -130,7 +130,7 @@ class LoginScreen extends React.Component<Props, State> {
             >
               <View style={{ width: '100%', height: 60 }} />
               <View style={Styles.loginBackground}>
-                <Text style={[Typography.FONT_BOLD, { fontSize: 26 }]}>
+                <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 26 }]}>
                   {i18n.t('LoginScreen.welcomeBack')}
                 </Text>
                 <Text style={[Typography.FONT_REGULAR, Styles.subtitle]}>
@@ -181,7 +181,7 @@ class LoginScreen extends React.Component<Props, State> {
                 )}
                 <Button
                   containerStyle={Styles.button}
-                  textStyle={Typography.FONT_BOLD}
+                  textStyle={Typography.FONT_SEMIBOLD}
                   buttonText={i18n.t('LoginScreen.login')}
                   blocking
                   onPress={this.onLogin}

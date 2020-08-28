@@ -57,7 +57,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <View style={{ flex: 1, padding: 16, justifyContent: 'center' }}>
-          <Text style={[Typography.FONT_BOLD, CardStyles.categoryTitle]}>
+          <Text style={[Typography.FONT_SEMIBOLD, CardStyles.categoryTitle]}>
             {capitalize(props.category.name)}
           </Text>
           <Text style={[Typography.FONT_REGULAR, CardStyles.categoryBlurb]}>

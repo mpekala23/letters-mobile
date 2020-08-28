@@ -228,7 +228,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 }}
                 segmentErrorLogEvent="Edit Profile - Upload Image Error"
               />
-              <Text style={[Typography.FONT_BOLD, { fontSize: 24 }]}>
+              <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 24 }]}>
                 {user.firstName}
               </Text>
               <Text
@@ -240,7 +240,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
               </Text>
             </View>
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.firstName')}
             </Text>
             <Input
@@ -252,7 +252,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.lastName')}
             </Text>
             <Input
@@ -264,7 +264,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.address1}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.addressLine1')}
             </Text>
             <Input
@@ -277,7 +277,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.address2}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.addressLine2')}
             </Text>
             <Input
@@ -288,7 +288,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               nextInput={this.city}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.city')}
             </Text>
             <Input
@@ -301,7 +301,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.phyState}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.state')}
             </Text>
             <Input
@@ -315,7 +315,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.postal}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateProfileScreen.zipcode')}
             </Text>
             <Input

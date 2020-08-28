@@ -25,7 +25,7 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.creditsContainer}>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 CardStyles.creditsTitle,
                 { flex: 1 },
               ]}

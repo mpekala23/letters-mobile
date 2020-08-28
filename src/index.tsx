@@ -20,8 +20,10 @@ const customFonts = {
   'Poppins-Regular-Italic': require('./assets/fonts/Poppins-Italic.ttf'),
   'Poppins-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
   'Poppins-Medium-Italic': require('./assets/fonts/Poppins-MediumItalic.ttf'),
-  'Poppins-Bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
-  'Poppins-Bold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
+  'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+  'Poppins-SemiBold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
+  'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+  'Poppins-Bold-Italic': require('./assets/fonts/Poppins-BoldItalic.ttf'),
 };
 
 const customTextProps = {

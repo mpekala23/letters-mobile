@@ -189,7 +189,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           item.fullName ? item.fullName : item.name + item.address + item.postal
         }
       >
-        <Text style={[Typography.FONT_BOLD, Styles.itemTitle]}>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.itemTitle]}>
           {item.fullName ? item.fullName : item.name}
         </Text>
         <Text style={[Typography.FONT_REGULAR, Styles.itemInfo]}>
@@ -246,11 +246,11 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         <View style={Styles.hintBackground} testID="hintText">
           <Text style={[Typography.FONT_MEDIUM]}>
             {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint1')}{' '}
-            <Text style={Typography.FONT_BOLD}>
+            <Text style={Typography.FONT_SEMIBOLD}>
               {i18n.t('FacilityDirectoryScreen.statePrison')}{' '}
             </Text>
             {i18n.t('FacilityDirectoryScreen.PennsylvaniaHint2')}{' '}
-            <Text style={Typography.FONT_BOLD}>
+            <Text style={Typography.FONT_SEMIBOLD}>
               &apos;{i18n.t('FacilityDirectoryScreen.smartCommunications')}
               &apos;
             </Text>{' '}

@@ -224,7 +224,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             />
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   color: Colors.AMEELIO_BLACK,
                   fontSize: 25,
@@ -360,7 +360,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 }
               }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
-              textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
+              textStyle={(Typography.FONT_SEMIBOLD, { fontSize: 20 })}
               containerStyle={Styles.sendLetterButton}
               enabled={this.props.userState.user.credit > 0}
             />

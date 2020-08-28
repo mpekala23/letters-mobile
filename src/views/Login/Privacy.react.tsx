@@ -16,14 +16,14 @@ interface Props {
 const PrivacyScreen: React.FC<Props> = (props: Props) => {
   return (
     <ScrollView style={Styles.scrollViewStyle}>
-      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.titleText]}>
         Ameelio Privacy Policy
       </Text>
-      <Text style={[Typography.FONT_BOLD, Styles.titleText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.titleText]}>
         Effective Date: March 23, 2020
       </Text>
       <Text style={Styles.verticalPadding}>
-        {'\t'} 1. <Text style={Typography.FONT_BOLD}>Introduction. </Text>
+        {'\t'} 1. <Text style={Typography.FONT_SEMIBOLD}>Introduction. </Text>
         <Text>
           Ameelio, Inc.’s (“Ameelio”, “Company”, “we”, “our”, and “us”) mission
           is to improve the lives of those impacted by incarceration and provide
@@ -43,11 +43,13 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.bottomPadding}>
         {'\t'} 2.{' '}
-        <Text style={Typography.FONT_BOLD}>Information Collected. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>Information Collected. </Text>
       </Text>
       <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
-        <Text style={Typography.FONT_BOLD}>Information You Provide Us. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>
+          Information You Provide Us.{' '}
+        </Text>
         <Text>
           When you use the Services, you will have an opportunity to provide us
           some information directly. For example, we may collect information
@@ -59,7 +61,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
-        <Text style={Typography.FONT_BOLD}>
+        <Text style={Typography.FONT_SEMIBOLD}>
           Information We Automatically Collect.{' '}
         </Text>
         <Text>
@@ -76,7 +78,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.bottomPadding}>
         {'\t'}{' '}
-        <Text style={Typography.FONT_BOLD}>
+        <Text style={Typography.FONT_SEMIBOLD}>
           Information Provided by Third Parties.{' '}
         </Text>
         <Text>
@@ -91,7 +93,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.verticalPadding}>
         {'\t'} 4.{' '}
-        <Text style={Typography.FONT_BOLD}>Information We Disclose. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>Information We Disclose. </Text>
       </Text>
       <Text style={Styles.bottomPadding}>
         {'\t'} Ameelio may disclose aggregated or de-identified information
@@ -137,7 +139,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
         our employees, our Users, or others.
       </Text>
       <Text style={Styles.verticalPadding}>
-        {'\t'} 5. <Text style={Typography.FONT_BOLD}>Data Security. </Text>
+        {'\t'} 5. <Text style={Typography.FONT_SEMIBOLD}>Data Security. </Text>
         <Text>
           We take care to implement reasonable measures designed to protect your
           personal information. The safety and security of your information also
@@ -158,7 +160,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.verticalPadding}>
         {'\t'} 6.{' '}
-        <Text style={Typography.FONT_BOLD}>
+        <Text style={Typography.FONT_SEMIBOLD}>
           Modification and Retention of Information.{' '}
         </Text>
         <Text>
@@ -175,7 +177,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
         may be retained indefinitely and used for research or other purposes.
       </Text>
       <Text style={Styles.verticalPadding}>
-        {'\t'} 7. <Text style={Typography.FONT_BOLD}>Age of Users. </Text>
+        {'\t'} 7. <Text style={Typography.FONT_SEMIBOLD}>Age of Users. </Text>
         <Text>
           If you are younger than 13, you may not use, access, or provide any
           content using our Services. If your age is 13 or older but under the
@@ -195,7 +197,9 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.verticalPadding}>
         {'\t'} 8.{' '}
-        <Text style={Typography.FONT_BOLD}>California Privacy Rights. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>
+          California Privacy Rights.{' '}
+        </Text>
         <Text>
           If you are a resident of California, California law may provide you
           additional rights to the use of your personal information. To learn
@@ -219,7 +223,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.verticalPadding}>
         {'\t'} 9.{' '}
-        <Text style={Typography.FONT_BOLD}>Changes to the Policy. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>Changes to the Policy. </Text>
         <Text>
           We will post any changes we make to our Policy on this page. If we
           make material changes to how we treat User’s Personal Information, we
@@ -230,7 +234,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
       </Text>
       <Text style={Styles.verticalPadding}>
         {'\t'} 10.{' '}
-        <Text style={Typography.FONT_BOLD}>Contact Information. </Text>
+        <Text style={Typography.FONT_SEMIBOLD}>Contact Information. </Text>
         <Text>
           For any questions about this Policy or our privacy practices, contact
           us at:{' '}

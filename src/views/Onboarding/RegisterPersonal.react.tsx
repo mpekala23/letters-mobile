@@ -143,7 +143,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
             <TouchableOpacity style={{ flex: 1 }} activeOpacity={1.0}>
               <Text
                 style={[
-                  Typography.FONT_BOLD,
+                  Typography.FONT_SEMIBOLD,
                   {
                     fontSize: 20,
                     alignSelf: 'flex-start',

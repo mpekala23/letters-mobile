@@ -166,7 +166,7 @@ const IssuesDetailSecondaryScreenBase: React.FC<Props> = (props: Props) => {
         { backgroundColor: props.navigation ? undefined : '' },
       ]}
     >
-      <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
+      <Text style={[Typography.FONT_SEMIBOLD, ReportStyles.title]}>
         {mapIssueToDetailsTitle(props.contact.facility, issue)}
       </Text>
       <Text

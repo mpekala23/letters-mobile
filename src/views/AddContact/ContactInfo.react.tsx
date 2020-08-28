@@ -213,7 +213,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         >
           <Text style={{ color: Colors.PINK_500 }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}>
+            <Text
+              style={[Typography.FONT_SEMIBOLD, { color: Colors.PINK_500 }]}
+            >
               {this.state.stateToSearch}
             </Text>{' '}
             {i18n.t('ContactInfoScreen.database')}.
@@ -277,7 +279,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   <Text style={{ color: Colors.PINK_500 }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
-                      style={[Typography.FONT_BOLD, { color: Colors.PINK_500 }]}
+                      style={[
+                        Typography.FONT_SEMIBOLD,
+                        { color: Colors.PINK_500 },
+                      ]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}
                     </Text>{' '}

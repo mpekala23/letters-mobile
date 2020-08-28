@@ -72,7 +72,6 @@ export default StyleSheet.create({
   },
   memoryLaneText: {
     fontSize: 18,
-    fontWeight: '500',
     overflow: 'hidden',
   },
   memoryLanePostcardBackground: {

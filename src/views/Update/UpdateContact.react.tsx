@@ -283,7 +283,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             </View>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 14,
                   paddingBottom: 4,
@@ -300,7 +300,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.lastName}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.lastName')}
             </Text>
             <Input
@@ -311,7 +311,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.facilityName}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.facilityName')}
             </Text>
             <Input
@@ -322,7 +322,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onInvalid={() => this.setValid(false)}
               nextInput={this.facilityAddress}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.facilityAddress')}
             </Text>
             <Input
@@ -333,7 +333,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.facilityCity')}
             </Text>
             <Input
@@ -344,7 +344,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.facilityState')}
             </Text>
             <Input
@@ -358,7 +358,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             />
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 Styles.baseText,
                 { paddingTop: 12 },
               ]}
@@ -373,7 +373,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={() => this.setValid(false)}
             />
-            <Text style={[Typography.FONT_BOLD, Styles.baseText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
               {i18n.t('UpdateContactScreen.facilityPhone')}
             </Text>
             <Input
@@ -385,7 +385,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             />
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 Styles.baseText,
                 { color: Colors.GRAY_500 },
               ]}
@@ -398,7 +398,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
             />
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 Styles.baseText,
                 { color: Colors.GRAY_500 },
               ]}

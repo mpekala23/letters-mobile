@@ -6,6 +6,7 @@ import { Mail, MailTypes, MailStatus } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { format } from 'date-fns';
+import { Typography } from '@styles';
 import Styles from './MailDetails.styles';
 
 type MailDetailsScreenNavigationProp = StackNavigationProp<
@@ -50,10 +51,14 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
       ]}
     >
       <View style={Styles.letterDate}>
-        <Text style={Styles.baseText}>{mailDate}</Text>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+          {mailDate}
+        </Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={Styles.letterText}>{mail.content}</Text>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.letterText]}>
+          {mail.content}
+        </Text>
         {image}
       </ScrollView>
     </View>

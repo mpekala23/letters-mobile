@@ -35,7 +35,7 @@ class IssuesScreenBase extends React.Component<Props> {
       <View style={ReportStyles.background}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             ReportStyles.question,
             { marginBottom: 10 },
           ]}

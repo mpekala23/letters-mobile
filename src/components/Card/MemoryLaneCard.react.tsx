@@ -50,7 +50,10 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
             ]}
           >
             <Text
-              style={[CardStyles.memoryLanePostcardDate, Typography.FONT_BOLD]}
+              style={[
+                CardStyles.memoryLanePostcardDate,
+                Typography.FONT_SEMIBOLD,
+              ]}
             >
               {letterDate}
             </Text>
@@ -68,6 +71,7 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.memoryLaneTextBackground}>
             <Text
               style={[
+                Typography.FONT_MEDIUM,
                 CardStyles.memoryLaneText,
                 { height: props.imageUri ? 65 : 170 },
               ]}

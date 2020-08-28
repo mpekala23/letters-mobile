@@ -76,7 +76,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
       >
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             {
               fontSize: 16,
               paddingBottom: 8,
@@ -127,7 +127,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
       <View style={{ flexDirection: 'column', width: 128 }}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             {
               color: Colors.AMEELIO_BLACK,
               fontSize: 16,

@@ -52,7 +52,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.statusAndDateContainer}>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 CardStyles.letterStatusTitle,
                 { flex: 1 },
               ]}
