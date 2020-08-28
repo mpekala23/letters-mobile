@@ -25,7 +25,9 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       <View accessible accessibilityLabel="Ameelio Logo" style={Styles.header}>
         <Icon svg={LogoSmallGrey} />
       </View>
-      <Text style={[Typography.FONT_BOLD, Styles.titleText, { marginTop: 40 }]}>
+      <Text
+        style={[Typography.FONT_SEMIBOLD, Styles.titleText, { marginTop: 40 }]}
+      >
         {i18n.t('BeginScreen.connectWithYourLovedOnes')}
       </Text>
       <View style={{ paddingBottom: 80, paddingTop: 18 }}>
@@ -38,7 +40,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
             Segment.track('Begin - Click on Sign Up');
           }}
           buttonText={i18n.t('BeginScreen.signUp')}
-          textStyle={[Typography.FONT_BOLD, Styles.baseText]}
+          textStyle={[Typography.FONT_SEMIBOLD, Styles.baseText]}
           containerStyle={{ height: 47 }}
         />
         <Button
@@ -49,7 +51,9 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
           buttonText={i18n.t('BeginScreen.logIn')}
           reverse
           textStyle={
-            (Typography.FONT_BOLD, Styles.baseText, { color: Colors.PINK_500 })
+            (Typography.FONT_SEMIBOLD,
+            Styles.baseText,
+            { color: Colors.PINK_500 })
           }
           containerStyle={{ height: 47 }}
         />

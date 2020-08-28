@@ -132,7 +132,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
           >
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
               ]}
             >

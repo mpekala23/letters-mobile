@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Text, View } from 'react-native';
+import { Animated, Text, View, Platform } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { Prompts, getRandomPromptIx } from '@utils';
 import i18n from '@i18n';
@@ -134,7 +134,7 @@ class ComposeHeader extends React.Component<Props, State> {
           >
             <Animated.Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 14,
                   color: 'white',
@@ -144,13 +144,14 @@ class ComposeHeader extends React.Component<Props, State> {
                     outputRange: [0, 0.3, 1],
                   }),
                 },
+                Platform.OS === 'android' ? { paddingTop: 4 } : {},
               ]}
             >
               {i18n.t('Compose.collapse')}
             </Animated.Text>
             <Animated.Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 14,
                   color: 'white',
@@ -160,6 +161,7 @@ class ComposeHeader extends React.Component<Props, State> {
                     outputRange: [1, 0.3, 0],
                   }),
                 },
+                Platform.OS === 'android' ? { paddingTop: 4 } : {},
               ]}
             >
               {i18n.t('Compose.needIdeas')}

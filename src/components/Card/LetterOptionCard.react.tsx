@@ -29,7 +29,7 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
         svg={props.type === MailTypes.Postcard ? PostCardsIcon : LettersIcon}
         style={{ position: 'absolute', right: 0, bottom: 0 }}
       />
-      <Text style={[Typography.FONT_BOLD, CardStyles.cardTitle]}>
+      <Text style={[Typography.FONT_SEMIBOLD, CardStyles.cardTitle]}>
         {props.type === MailTypes.Postcard
           ? i18n.t('LetterTypes.postCardsTitle')
           : i18n.t('LetterTypes.lettersTitle')}

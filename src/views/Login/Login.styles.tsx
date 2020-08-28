@@ -32,11 +32,6 @@ export default StyleSheet.create({
     marginTop: 16,
     marginBottom: 10,
   },
-  forgotText: {
-    color: Colors.PINK_500,
-    fontSize: 16,
-    fontWeight: '500',
-  },
   termsContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',

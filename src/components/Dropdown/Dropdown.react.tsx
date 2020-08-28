@@ -186,7 +186,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
       >
         <Text
           style={[
-            Typography.FONT_REGULAR,
+            Typography.FONT_MEDIUM,
             notif.type === DropType.Success
               ? Styles.successText
               : Styles.errorText,

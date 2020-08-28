@@ -6,6 +6,7 @@ import {
   View,
   ViewStyle,
   Image,
+  Platform,
 } from 'react-native';
 import { Typography } from '@styles';
 import Next from '@assets/components/Button/Next';
@@ -76,11 +77,12 @@ const Button: React.FC<Props> = (props: Props) => {
         {buttonText ? (
           <Text
             style={[
-              Typography.FONT_MEDIUM,
+              Typography.FONT_BOLD,
               props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
               enabled ? {} : Styles.buttonTextDisabled,
               textStyle,
               enabled ? {} : disabledTextStyle,
+              Platform.OS === 'android' ? Styles.buttonPaddingAndroid : {},
               { opacity: blocked ? 0 : 1 },
             ]}
           >

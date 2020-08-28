@@ -31,7 +31,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
   const { user } = props;
   return (
     <View style={Styles.screenBackground}>
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
         {i18n.t('Compose.chooseAnOption')}
       </Text>
       <Text

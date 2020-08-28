@@ -147,7 +147,7 @@ const IssuesDetailScreen: React.FC<Props> = (props: Props) => {
         { backgroundColor: props.navigation ? undefined : '' },
       ]}
     >
-      <Text style={[Typography.FONT_BOLD, ReportStyles.title]}>
+      <Text style={[Typography.FONT_SEMIBOLD, ReportStyles.title]}>
         {mapIssueToDetailsTitle(issue)}
       </Text>
       <View style={{ marginTop: 32 }}>{mapIssueToVisual(issue)}</View>

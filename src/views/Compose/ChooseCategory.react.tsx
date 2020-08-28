@@ -79,7 +79,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             Styles.headerText,
             { fontSize: 18, paddingBottom: 8 },
           ]}

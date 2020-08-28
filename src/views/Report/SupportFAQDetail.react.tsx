@@ -110,7 +110,7 @@ const SupportFAQDetailScreen: React.FC<Props> = (props: Props) => {
         { backgroundColor: props.navigation ? undefined : '' },
       ]}
     >
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
         {i18n.t('SupportFAQDetailScreen.talkToSomeoneAtAmeelio')}
       </Text>
       <Text style={Styles.baseText}>{mapIssueToFAQDetails(issue)}</Text>

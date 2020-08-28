@@ -68,7 +68,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
         >
           <Text
             style={[
-              Typography.FONT_BOLD,
+              Typography.FONT_SEMIBOLD,
               { fontSize: 20, textAlign: 'center' },
             ]}
           >
@@ -78,7 +78,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           </Text>
           <Text style={[Typography.FONT_REGULAR, Styles.baseText]}>
             {i18n.t('ReferFriendsScreen.weEstimateYourLetterToArriveOn')}:{' '}
-            <Text style={Typography.FONT_BOLD}>
+            <Text style={Typography.FONT_SEMIBOLD}>
               {format(sixDaysFromNow, 'MMM dd')}
             </Text>
             .{'\n\n'} {i18n.t('ReferFriendsScreen.thanksAgain')}

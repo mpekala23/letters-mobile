@@ -40,21 +40,22 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: '700',
     color: 'white',
     padding: 6,
   },
   buttonTextReverse: {
     fontSize: 18,
-    fontWeight: '700',
     color: Colors.PINK_500,
     padding: 6,
   },
   buttonTextDisabled: {
     fontSize: 18,
-    fontWeight: '700',
     color: 'white',
     padding: 6,
+  },
+  buttonPaddingAndroid: {
+    paddingTop: 8,
+    paddingBottom: 4,
   },
   linkText: {
     fontSize: 16,

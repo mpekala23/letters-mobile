@@ -109,7 +109,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       startAnimation();
       return (
         <View style={[Styles.cardBackground]}>
-          <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
+          <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}>
             <Text>Status: </Text>
             {mail.status}
           </Text>
@@ -127,7 +127,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                     {
                       color: Colors.AMEELIO_WHITE,
                     },
-                    Typography.FONT_BOLD,
+                    Typography.FONT_SEMIBOLD,
                   ]}
                 >
                   USPS
@@ -138,7 +138,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                   {i18n.t('MailTrackingScreen.estimatedArrival')}
                 </Text>
                 <Text
-                  style={[Typography.FONT_BOLD, { fontSize: 16 }]}
+                  style={[Typography.FONT_SEMIBOLD, { fontSize: 16 }]}
                   testID="deliveryDate"
                 >
                   {deliveryDate}
@@ -148,7 +148,9 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           )}
           <View style={[Styles.endpointsContainer]}>
             <View>
-              <Text style={[Typography.FONT_BOLD, Styles.endpointCityLabel]}>
+              <Text
+                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+              >
                 {user.city}
               </Text>
               <Text style={[Styles.endpointDate]}>
@@ -157,7 +159,9 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             </View>
 
             <View>
-              <Text style={[Typography.FONT_BOLD, Styles.endpointCityLabel]}>
+              <Text
+                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+              >
                 {contact.facility.name}
               </Text>
               <Text style={[{ textAlign: 'right' }, Styles.endpointDate]}>
@@ -261,7 +265,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       <View style={{ alignItems: 'center', paddingTop: 24 }}>
         <Text
           style={[
-            Typography.FONT_BOLD,
+            Typography.FONT_SEMIBOLD,
             Styles.headerText,
             { textAlign: 'center' },
           ]}
@@ -279,7 +283,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             Segment.track('In-App Reporting - Click on Contact Support');
           }}
           buttonText={i18n.t('MailTrackingScreen.contactSupport')}
-          textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+          textStyle={[Typography.FONT_SEMIBOLD, { fontSize: 14 }]}
           containerStyle={Styles.needHelpButton}
         />
         <GrayBar />
@@ -294,7 +298,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               justifyContent: 'space-between',
             }}
           >
-            <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+            <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
               {i18n.t('MailTrackingScreen.letterTracking')}
             </Text>
             <Button
@@ -304,7 +308,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 Segment.track('In-App Reporting - Click on I Need Help');
               }}
               buttonText={i18n.t('MailTrackingScreen.needHelp')}
-              textStyle={[Typography.FONT_BOLD, { fontSize: 14 }]}
+              textStyle={[Typography.FONT_SEMIBOLD, { fontSize: 14 }]}
               containerStyle={Styles.needHelpButton}
             />
           </View>
@@ -321,7 +325,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       >
         {body}
         <View style={[Styles.cardBackground, { marginTop: 16 }]}>
-          <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+          <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>

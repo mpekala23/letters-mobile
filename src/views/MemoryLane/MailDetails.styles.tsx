@@ -15,12 +15,10 @@ export default StyleSheet.create({
   },
   baseText: {
     fontSize: 24,
-    fontWeight: '600',
   },
   letterText: {
     fontSize: 18,
     color: Colors.AMEELIO_BLACK,
-    fontWeight: '600',
     padding: 8,
     paddingTop: 16,
     paddingBottom: 36,
