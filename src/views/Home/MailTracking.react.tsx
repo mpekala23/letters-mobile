@@ -260,7 +260,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         >
           {i18n.t('MailTrackingScreen.yourLetterWasReturnedToSender')}
         </Text>
-        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_DARK }]}>
+        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
           {i18n.t('MailTrackingScreen.possibleReason')}
         </Text>
         <Icon svg={ReturnedToSender} style={{ paddingTop: 240 }} />

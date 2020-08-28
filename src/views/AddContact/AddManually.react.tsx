@@ -19,6 +19,7 @@ import { setAddingFacility } from '@store/Contact/ContactActions';
 import { ContactState, ContactActionTypes } from '@store/Contact/ContactTypes';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
+import { AppState } from '@store/types';
 import CommonStyles from './AddContact.styles';
 
 type AddManuallyScreenNavigationProp = StackNavigationProp<
@@ -305,7 +306,9 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: AppState) => ({
+  contactState: state.contact,
+});
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
     setAddingFacility: (contactFacility: ContactFacility) =>
