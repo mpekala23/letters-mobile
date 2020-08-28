@@ -33,6 +33,7 @@ export interface Props {
   route: {
     params: {
       horizontal: boolean;
+      category: string;
     };
   };
 }
@@ -78,11 +79,15 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
       await createMail(this.props.composing);
       this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
-        Option: 'Postcard',
+        type: 'postcard',
         facility: this.props.recipient.facility.name,
         facilityState: this.props.recipient.facility.state,
         facilityCity: this.props.recipient.facility.city,
         relationship: this.props.recipient.relationship,
+        category: this.props.route.params.category,
+        subcategory:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.subcategoryName,
       });
       Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
       Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
@@ -106,7 +111,9 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
       deleteDraft();
       this.props.navigation.reset({
         index: 0,
-        routes: [{ name: 'ReferFriends' }],
+        routes: [
+          { name: 'ReferFriends', params: { mailType: MailTypes.Postcard } },
+        ],
       });
     } catch (err) {
       Segment.trackWithProperties('Review - Send Letter Failure', {

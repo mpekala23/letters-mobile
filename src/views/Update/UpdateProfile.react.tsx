@@ -211,129 +211,131 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
             style={{ width: '100%' }}
             contentContainerStyle={{ paddingVertical: 24 }}
           >
-            <View style={Styles.profileCard}>
-              <PicUpload
-                shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
-                width={130}
-                height={130}
-                type={PicUploadTypes.Profile}
-                initial={this.props.userState.user.photo}
-                onSuccess={(image: Image) => this.setState({ image })}
-                onDelete={() => this.setState({ image: null })}
-                segmentOnPressLog={() => {
-                  Segment.track('Edit Profile - Click on Upload Image');
-                }}
-                segmentSuccessLog={() => {
-                  Segment.track('Edit Profile - Upload Image Success');
-                }}
-                segmentErrorLogEvent="Edit Profile - Upload Image Error"
+            <TouchableOpacity style={{ flex: 1 }} activeOpacity={1.0}>
+              <View style={Styles.profileCard}>
+                <PicUpload
+                  shapeBackground={{ borderWidth: 6, borderColor: 'white' }}
+                  width={130}
+                  height={130}
+                  type={PicUploadTypes.Profile}
+                  initial={this.props.userState.user.photo}
+                  onSuccess={(image: Image) => this.setState({ image })}
+                  onDelete={() => this.setState({ image: null })}
+                  segmentOnPressLog={() => {
+                    Segment.track('Edit Profile - Click on Upload Image');
+                  }}
+                  segmentSuccessLog={() => {
+                    Segment.track('Edit Profile - Upload Image Success');
+                  }}
+                  segmentErrorLogEvent="Edit Profile - Upload Image Error"
+                />
+                <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 24 }]}>
+                  {user.firstName}
+                </Text>
+                <Text
+                  style={[
+                    Typography.FONT_MEDIUM,
+                    { color: Colors.GRAY_500, paddingBottom: 6 },
+                  ]}
+                >
+                  {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
+                </Text>
+              </View>
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.firstName')}
+              </Text>
+              <Input
+                ref={this.firstName}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.firstName')}
+                required
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.lastName}
               />
-              <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 24 }]}>
-                {user.firstName}
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.lastName')}
               </Text>
-              <Text
-                style={[
-                  Typography.FONT_MEDIUM,
-                  { color: Colors.GRAY_500, paddingBottom: 6 },
-                ]}
-              >
-                {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
+              <Input
+                ref={this.lastName}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.lastName')}
+                required
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.address1}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.addressLine1')}
               </Text>
-            </View>
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.firstName')}
-            </Text>
-            <Input
-              ref={this.firstName}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.firstName')}
-              required
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.lastName}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.lastName')}
-            </Text>
-            <Input
-              ref={this.lastName}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.lastName')}
-              required
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.address1}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.addressLine1')}
-            </Text>
-            <Input
-              ref={this.address1}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
-              required
-              validate={Validation.Address}
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.address2}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.addressLine2')}
-            </Text>
-            <Input
-              ref={this.address2}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
-              validate={Validation.Address}
-              onValid={this.updateValid}
-              nextInput={this.city}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.city')}
-            </Text>
-            <Input
-              ref={this.city}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.city')}
-              required
-              validate={Validation.City}
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.phyState}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.state')}
-            </Text>
-            <Input
-              ref={this.phyState}
-              parentStyle={Styles.parentStyle}
-              placeholder={i18n.t('UpdateProfileScreen.state')}
-              required
-              validate={Validation.State}
-              options={STATES_DROPDOWN}
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-              nextInput={this.postal}
-            />
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
-              {i18n.t('UpdateProfileScreen.zipcode')}
-            </Text>
-            <Input
-              ref={this.postal}
-              placeholder={i18n.t('UpdateProfileScreen.zipcode')}
-              required
-              validate={Validation.Postal}
-              onValid={this.updateValid}
-              onInvalid={() => this.setValid(false)}
-            />
-            <Button
-              buttonText={i18n.t('UpdateProfileScreen.logOut')}
-              onPress={() => {
-                Segment.track('Logout');
-                logout();
-              }}
-              containerStyle={Styles.logOutButton}
-            />
+              <Input
+                ref={this.address1}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.addressLine1')}
+                required
+                validate={Validation.Address}
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.address2}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.addressLine2')}
+              </Text>
+              <Input
+                ref={this.address2}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.addressLine2')}
+                validate={Validation.Address}
+                onValid={this.updateValid}
+                nextInput={this.city}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.city')}
+              </Text>
+              <Input
+                ref={this.city}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.city')}
+                required
+                validate={Validation.City}
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.phyState}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.state')}
+              </Text>
+              <Input
+                ref={this.phyState}
+                parentStyle={Styles.parentStyle}
+                placeholder={i18n.t('UpdateProfileScreen.state')}
+                required
+                validate={Validation.State}
+                options={STATES_DROPDOWN}
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.postal}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateProfileScreen.zipcode')}
+              </Text>
+              <Input
+                ref={this.postal}
+                placeholder={i18n.t('UpdateProfileScreen.zipcode')}
+                required
+                validate={Validation.Postal}
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+              />
+              <Button
+                buttonText={i18n.t('UpdateProfileScreen.logOut')}
+                onPress={() => {
+                  Segment.track('Logout');
+                  logout();
+                }}
+                containerStyle={Styles.logOutButton}
+              />
+            </TouchableOpacity>
           </ScrollView>
         </KeyboardAvoider>
       </TouchableOpacity>

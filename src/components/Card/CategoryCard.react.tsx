@@ -8,6 +8,7 @@ import { setComposing } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
+import * as Segment from 'expo-analytics-segment';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -29,6 +30,9 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
           props.style,
         ]}
         onPress={() => {
+          Segment.trackWithProperties('Compose - Click on Category Option', {
+            category: props.category.name,
+          });
           if (props.category.name === 'personal') {
             props.navigate('ChooseOption');
           } else {

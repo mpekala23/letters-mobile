@@ -19,13 +19,7 @@ import {
   MailTypes,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import {
-  WINDOW_WIDTH,
-  WINDOW_HEIGHT,
-  takeImage,
-  capitalize,
-  sleep,
-} from '@utils';
+import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -328,10 +322,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   beginWriting(): void {
     this.setState({ horizontal: true });
     Segment.trackWithProperties('Compose - Click on Next', {
-      Option: 'Postcard',
-      Step: 'Image Selection',
+      type: 'postcard',
+      category: this.props.route.params.category.name,
+      subcategory: this.state.design.subcategoryName,
+      step: 'image',
     });
-    if (this.state.design.image.uri === '') {
+    if (!this.state.design.image.uri.length) {
       popupAlert({
         title: i18n.t('Alert.noDesignSelected'),
         message: i18n.t('Alert.selectADesign'),
@@ -385,12 +381,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   doneWriting(): void {
     if (!this.props.composing.content.length) {
+      Segment.trackWithProperties('Compose - Click on Next Failure', {
+        type: 'postcard',
+        Error: 'Letter must have content',
+      });
       dropdownError({ message: i18n.t('Compose.letterMustHaveContent') });
       return;
     }
     Segment.trackWithProperties('Compose - Click on Next', {
-      Option: 'Postcard',
-      Step: 'Caption',
+      type: 'postcard',
+      category: this.props.route.params.category.name,
+      subcategory: this.state.design.subcategoryName,
+      step: 'draft',
     });
     const designIsHorizontal = (): boolean => {
       const designWidth = this.state.design.image.width;
@@ -405,6 +407,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     };
     this.props.navigation.navigate('ReviewPostcard', {
       horizontal: designIsHorizontal(),
+      category: this.props.route.params.category.name,
     });
   }
 
@@ -422,6 +425,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               },
             ]}
             onPress={async () => {
+              Segment.trackWithProperties(
+                'Compose - Click on Subcategory Option',
+                { subcategory }
+              );
               if (subcategory === 'Take Photo') {
                 try {
                   const image = await takeImage({
