@@ -336,18 +336,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.relationshipToInmate')}
                   required
                   options={[
-                    i18n.t('ContactInfoScreen.mother'),
-                    i18n.t('ContactInfoScreen.father'),
-                    i18n.t('ContactInfoScreen.brother'),
-                    i18n.t('ContactInfoScreen.sister'),
-                    i18n.t('ContactInfoScreen.sibling'),
-                    i18n.t('ContactInfoScreen.daughter'),
-                    i18n.t('ContactInfoScreen.son'),
-                    i18n.t('ContactInfoScreen.grandmother'),
-                    i18n.t('ContactInfoScreen.grandfather'),
-                    i18n.t('ContactInfoScreen.grandaughter'),
-                    i18n.t('ContactInfoScreen.grandson'),
+                    i18n.t('ContactInfoScreen.spouse'),
+                    i18n.t('ContactInfoScreen.parent'),
+                    i18n.t('ContactInfoScreen.kid'),
+                    i18n.t('ContactInfoScreen.grandparent'),
+                    i18n.t('ContactInfoScreen.family'),
                     i18n.t('ContactInfoScreen.friend'),
+                    i18n.t('ContactInfoScreen.mentor'),
                     i18n.t('ContactInfoScreen.other'),
                   ]}
                   onValid={this.updateValid}
