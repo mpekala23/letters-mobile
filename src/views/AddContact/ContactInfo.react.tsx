@@ -339,6 +339,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     i18n.t('ContactInfoScreen.spouse'),
                     i18n.t('ContactInfoScreen.parent'),
                     i18n.t('ContactInfoScreen.kid'),
+                    i18n.t('ContactInfoScreen.sibling'),
                     i18n.t('ContactInfoScreen.grandparent'),
                     i18n.t('ContactInfoScreen.family'),
                     i18n.t('ContactInfoScreen.friend'),
