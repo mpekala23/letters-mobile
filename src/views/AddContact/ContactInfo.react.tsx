@@ -63,6 +63,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   private unsubscribeBlur: () => void;
 
+  private scrollView = createRef<ScrollView>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -235,10 +237,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             }}
           >
             <ScrollView
+              ref={this.scrollView}
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%' }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader
@@ -352,6 +354,11 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   ]}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
+                  strictDropdown
+                  onDropdownOpen={() => {
+                    if (this.scrollView.current)
+                      this.scrollView.current.scrollToEnd({ animated: true });
+                  }}
                 />
               </View>
             </ScrollView>

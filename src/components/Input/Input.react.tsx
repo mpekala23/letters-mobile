@@ -13,7 +13,8 @@ import TogglePassword from '@assets/components/Input/TogglePassword';
 import CreditCard from '@assets/components/Input/CreditCard';
 import DropdownTick from '@assets/components/Input/DropdownTick';
 import { validateFormat, Validation } from '@utils';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Styles, {
   INPUT_HEIGHT,
   DROP_HEIGHT,
@@ -31,6 +32,8 @@ export interface Props {
   onInvalid: () => void;
   onChangeText: (val: string) => void;
   onSubmitEditing: () => void;
+  onDropdownOpen: () => void;
+  onDropdownClose: () => void;
   blurOnSubmit: boolean;
   secure?: boolean;
   required?: boolean;
@@ -45,6 +48,7 @@ export interface Props {
   invalidFeedback?: string;
   mustMatch?: string;
   trimWhitespace: boolean;
+  strictDropdown: boolean;
 }
 
 export interface State {
@@ -63,6 +67,8 @@ class Input extends React.Component<Props, State> {
 
   private scrollRef = createRef<ScrollView>();
 
+  private childrenIds: number[];
+
   static defaultProps = {
     parentStyle: {},
     inputStyle: {},
@@ -73,6 +79,8 @@ class Input extends React.Component<Props, State> {
     onInvalid: (): null => null,
     onChangeText: (): null => null,
     onSubmitEditing: (): null => null,
+    onDropdownOpen: (): null => null,
+    onDropdownClose: (): null => null,
     blurOnSubmit: true,
     secure: false,
     enabled: true,
@@ -82,10 +90,12 @@ class Input extends React.Component<Props, State> {
     numLines: 1,
     required: false,
     trimWhitespace: true,
+    strictDropdown: false,
   };
 
   constructor(props: Props) {
     super(props);
+    this.childrenIds = [];
     this.state = {
       value: '',
       focused: false,
@@ -201,7 +211,13 @@ class Input extends React.Component<Props, State> {
       toValue: target,
       duration: 300,
       useNativeDriver: false,
-    }).start();
+    }).start(() => {
+      if (target === INPUT_HEIGHT) {
+        this.props.onDropdownClose();
+      } else {
+        this.props.onDropdownOpen();
+      }
+    });
   }
 
   updateResults(): void {
@@ -214,7 +230,8 @@ class Input extends React.Component<Props, State> {
         // simple options, just a list of strings
         if (
           option.toLowerCase().substring(0, value.length) ===
-          value.toLowerCase()
+            value.toLowerCase() ||
+          this.props.strictDropdown
         ) {
           results.push(option);
         }
@@ -225,7 +242,8 @@ class Input extends React.Component<Props, State> {
           const match: string = option[jx];
           if (
             match.toLowerCase().substring(0, value.length) ===
-            value.toLowerCase()
+              value.toLowerCase() ||
+            this.props.strictDropdown
           ) {
             results.push(option[0]);
             break;
@@ -334,12 +352,11 @@ class Input extends React.Component<Props, State> {
           ) : (
             <View testID="unfocused" />
           )}
-
           <TextInput
             ref={this.inputRef}
             secureTextEntry={secure && !this.state.shown}
             placeholder={placeholder}
-            onChangeText={this.set}
+            onChangeText={this.props.strictDropdown ? () => null : this.set}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSubmitEditing={this.onSubmitEditing}
@@ -356,22 +373,79 @@ class Input extends React.Component<Props, State> {
             ]}
             value={this.state.value}
           />
-          {options && options.length > 0 && (
-            <View
+          {this.props.strictDropdown && (
+            <TouchableOpacity
               style={[
+                Styles.baseInputStyle,
+                calcInputStyle,
+                validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
                 {
+                  height: this.props.height,
+                  position: 'absolute',
+                  width: '100%',
+                  backgroundColor: Colors.BLACK_200,
+                  justifyContent: 'center',
+                },
+                inputStyle,
+                Typography.FONT_REGULAR,
+              ]}
+              activeOpacity={1.0}
+              onPress={() => {
+                if (this.inputRef.current) this.inputRef.current.focus();
+              }}
+            >
+              <Text
+                style={[
+                  Typography.FONT_REGULAR,
+                  {
+                    color: this.state.value.length
+                      ? 'black'
+                      : 'rgb(205,205,205)',
+                    fontSize: 16,
+                    marginLeft: -2,
+                  },
+                ]}
+              >
+                {this.state.value.length ? this.state.value : placeholder}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {options &&
+            options.length > 0 &&
+            (this.state.focused ? (
+              <Animated.View
+                style={{
                   position: 'absolute',
                   justifyContent: 'center',
                   alignItems: 'center',
                   right: 20,
                   top: 20,
-                },
-                { opacity: enabled ? 1.0 : 0.7 },
-              ]}
-            >
-              <Icon svg={DropdownTick} />
-            </View>
-          )}
+                  opacity: enabled ? 1.0 : 0.7,
+                  transform: [{ rotateZ: '180deg' }],
+                }}
+              >
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    if (this.inputRef.current) this.inputRef.current.blur();
+                  }}
+                >
+                  <Icon svg={DropdownTick} />
+                </TouchableWithoutFeedback>
+              </Animated.View>
+            ) : (
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  right: 20,
+                  top: 20,
+                  opacity: enabled ? 1.0 : 0.7,
+                }}
+              >
+                <Icon svg={DropdownTick} />
+              </Animated.View>
+            ))}
           {validate === Validation.CreditCard && (
             <View
               style={[
