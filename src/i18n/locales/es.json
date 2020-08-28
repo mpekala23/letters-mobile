@@ -41,6 +41,10 @@
     "signUp": "Registrarte",
     "logIn": "Acceder"
   },
+  "Common": {
+    "possessivePronoun": "Tu",
+    "prepositionTo": "para"
+  },
   "ContactInfoScreen": {
     "addContact": "Agregar contacto",
     "needHelpFindingYourInmateID": "¿Necesita ayuda para encontrar el número de preso de su ser querido?",
@@ -50,21 +54,17 @@
     "firstName": "Nombre",
     "lastName": "Apellido",
     "inmateNumber": "Número de preso",
-    "relationshipToInmate": "Relación con el preso",
+    "relationshipToInmate": "Yo soy su",
     "state": "Estado",
     "postal": "Postal",
-    "mother": "Madre",
-    "father": "Padre",
-    "brother": "Hermano",
-    "sister": "Hermana",
-    "sibling": "Hermano/a",
-    "daughter": "Hija",
-    "son": "Hijo",
-    "grandmother": "Abuela",
-    "grandfather": "Abuelo",
-    "grandaughter": "Nieta",
-    "grandson": "Nieto",
-    "friend": "Amigo",
+    "spouse": "Esposo(a)/Novio(a)",
+    "parent": "Padre/Madre",
+    "kid": "Hijo(a)",
+    "sibling": "Hermano(a)",
+    "grandparent": "Abuelo(a)",
+    "family": "Familia extendida",
+    "mentor": "Mentor(a)/Pen Pal",
+    "friend": "Amigo(a)",
     "other": "Otro",
     "back": "Volver",
     "next": "Siguiente"
@@ -76,12 +76,12 @@
     "addContact": "Agregar contacto"
   },
   "CreditsCard": {
-    "letter": "carta",
-    "letters": "cartas",
+    "letter": "crédito",
+    "letters": "créditos",
     "leftThisWeek": "te quedan esta semana",
-    "sendMore": "Enviar más",
-    "youUsedAllYourLetters": "Usaste todas tus cartas para la semana",
-    "creditsResetDaily": "Sus cartas se restablecen semanalmente.",
+    "sendMore": "Enviar",
+    "youUsedAllYourLetters": "Usaste todas tus créditos para la semana",
+    "creditsResetDaily": "Sus créditos se restablecen semanalmente.",
     "comeBackOnMondayForMore": "Sus cartas se restablecen semanalmente, el lunes a las 4:00AM EST."
   },
   "FacilityDirectoryScreen": {
@@ -168,10 +168,9 @@
     "other": "Otro"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWayPrefix": "¡Tu carta para ",
     "yourLetterIsOnTheWaySuffix": " está en camino!",
     "weEstimateYourLetterToArriveOn": "Se estima que su carta llegará",
-    "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestras cartas. ¡Gracias por confiar en nosotros!",
+    "thanksAgain": "Debido a Covid, el servicio postal estadounidense tarda más de lo habitual en entregar nuestro correo. ¡Gracias por confiar en nosotros!",
     "share": "Compartir",
     "done": "Hecho"
   },
@@ -238,7 +237,6 @@
   "UpdateProfileScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "cellPhone": "Número de télefono celular",
     "addressLine1": "Dirección línea 1",
     "addressLine2": "Dirección línea 2",
     "zipcode": "Código Postas",

@@ -16,7 +16,7 @@ import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addBusinessDays, differenceInBusinessDays } from 'date-fns';
+import { addBusinessDays } from 'date-fns';
 import { estimateDelivery } from '@utils';
 
 import {
@@ -57,33 +57,35 @@ interface RawMail {
   delivered: boolean;
 }
 
+function cleanLobStatus(status: string): MailStatus {
+  // e.g 'In Transit' (single mail tracking event) and 'postcard.in_transit' (mail status)
+  const normalizedStatus = status.split(' ').join('_').toLowerCase();
+  if (!normalizedStatus) return MailStatus.Created;
+  if (normalizedStatus.includes('in_transit')) return MailStatus.InTransit;
+  if (normalizedStatus.includes('processed_for_delivery')) {
+    return MailStatus.ProcessedForDelivery;
+  }
+  if (normalizedStatus.includes('in_local_area')) return MailStatus.InLocalArea;
+  if (normalizedStatus.includes('mailed')) return MailStatus.Mailed;
+  if (normalizedStatus.includes('returned_to_sender'))
+    return MailStatus.ReturnedToSender;
+  return MailStatus.Created;
+}
+
 async function cleanTrackingEvent(
   event: RawTrackingEvent
 ): Promise<TrackingEvent> {
   const location = event.location
     ? await getZipcode(event.location)
     : undefined;
+  const date = new Date(event.date_modified);
+
   return {
     id: event.id,
-    name: event.name,
+    name: cleanLobStatus(event.name),
     location,
-    date: new Date(event.date_modified),
+    date: new Date(date),
   };
-}
-
-function cleanLobStatus(status: string, date: Date): MailStatus {
-  if (!status) return MailStatus.Created;
-  if (status.includes('in_transit')) return MailStatus.InTransit;
-  if (status.includes('processed_for_delivery')) {
-    if (!date) return MailStatus.ProcessedForDelivery;
-    if (Math.abs(differenceInBusinessDays(date, new Date())) <= 3)
-      return MailStatus.ProcessedForDelivery;
-    return MailStatus.Delivered;
-  }
-  if (status.includes('in_local_area')) return MailStatus.InLocalArea;
-  if (status.includes('mailed')) return MailStatus.Mailed;
-  if (status.includes('returned_to_sender')) return MailStatus.ReturnedToSender;
-  return MailStatus.Created;
 }
 
 export function mapTrackingEventsToMailStatus(
@@ -91,14 +93,7 @@ export function mapTrackingEventsToMailStatus(
 ): MailStatus {
   if (!events.length) return MailStatus.Created;
   const lastIdx = events.length - 1;
-  let mailStatus = events[lastIdx].name as MailStatus;
-  if (
-    events[lastIdx].name === MailStatus.ProcessedForDelivery &&
-    differenceInBusinessDays(new Date(), events[lastIdx].date) > 3
-  ) {
-    mailStatus = MailStatus.Delivered;
-  }
-  return mailStatus;
+  return cleanLobStatus(events[lastIdx].name);
 }
 
 // cleans mail returned from getSingleMail
@@ -126,6 +121,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const dateCreated = new Date(mail.created_at);
   let status: MailStatus;
   let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
+
   const trackingEvents = !mail.tracking_events
     ? []
     : await Promise.all(
@@ -133,6 +129,8 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       );
   if (!mail.sent) {
     status = MailStatus.Draft;
+  } else if (mail.delivered) {
+    status = MailStatus.Delivered;
   } else {
     status = mapTrackingEventsToMailStatus(trackingEvents);
     if (status === MailStatus.ProcessedForDelivery) {
@@ -207,12 +205,16 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
         };
   const dateCreated = new Date(mail.created_at);
   const lastLobUpdate = new Date(mail.last_lob_status_update);
-  let status: MailStatus;
+
+  let status;
   if (!mail.sent) {
     status = MailStatus.Draft;
   } else {
-    status = cleanLobStatus(mail.lob_status, lastLobUpdate);
+    status = mail.delivered
+      ? MailStatus.Delivered
+      : cleanLobStatus(mail.lob_status);
   }
+
   const expectedDelivery = estimateDelivery(
     status === MailStatus.ProcessedForDelivery
       ? lastLobUpdate

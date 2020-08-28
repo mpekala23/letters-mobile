@@ -1,9 +1,9 @@
 import React, { Dispatch } from 'react';
 import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
-import { StaticPostcard, Button } from '@components';
+import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { Draft, Contact } from 'types';
+import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';

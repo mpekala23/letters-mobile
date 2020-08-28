@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
-import { Button, GrayBar } from '@components';
+import { GrayBar } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
