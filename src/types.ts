@@ -36,7 +36,7 @@ export enum MailStatus {
   InTransit = 'In Transit',
   InLocalArea = 'In Local Area',
   ProcessedForDelivery = 'Out for Delivery',
-  Delivered = 'Delivered',
+  Delivered = 'Delivered to Facility',
   ReturnedToSender = 'Returned to Sender',
   Rerouted = 'Re-Routed',
 }

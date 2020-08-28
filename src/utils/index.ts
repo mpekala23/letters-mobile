@@ -26,6 +26,8 @@ export const STATUS_BAR_HEIGHT = 20;
 export const STATUS_BAR_WIDTH = 100;
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
+export const ETA_CREATED_TO_DELIVERED = 6;
+export const ETA_PROCESSED_TO_DELIVERED = 3;
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -259,9 +261,9 @@ export function capitalize(str: string): string {
 
 export function estimateDelivery(date: Date, status?: MailStatus): Date {
   if (status === MailStatus.ProcessedForDelivery) {
-    return addBusinessDays(date, 3);
+    return addBusinessDays(date, ETA_PROCESSED_TO_DELIVERED);
   }
-  return addBusinessDays(date, 6);
+  return addBusinessDays(date, ETA_CREATED_TO_DELIVERED);
 }
 
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
