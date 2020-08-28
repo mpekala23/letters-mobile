@@ -183,6 +183,7 @@ export async function uploadPushToken(token: string): Promise<void> {
 }
 
 export async function loginWithToken(): Promise<User> {
+  console.log('trying to log in with token');
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
@@ -199,7 +200,7 @@ export async function loginWithToken(): Promise<User> {
       }),
     });
     const body = await response.json();
-    if (body.status !== 'OK') throw Error('Invalid token');
+    if (body.status !== 'OK') throw body;
     const userData = cleanUser(body.data as RawUser);
     Segment.identify(userData.email);
     Segment.track('Login Success');
@@ -209,6 +210,7 @@ export async function loginWithToken(): Promise<User> {
     await loadDraft();
     return userData;
   } catch (err) {
+    console.log('failed with', err);
     store.dispatch(logoutUser());
     throw Error(err);
   }

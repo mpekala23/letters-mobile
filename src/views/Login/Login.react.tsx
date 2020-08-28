@@ -46,7 +46,7 @@ class LoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      remember: false,
+      remember: true,
       inputting: false,
     };
     this.emailRef = createRef();
@@ -68,7 +68,7 @@ class LoginScreen extends React.Component<Props, State> {
         email: this.emailRef.current && this.emailRef.current.state.value,
         password:
           this.passwordRef.current && this.passwordRef.current.state.value,
-        remember: this.state.remember,
+        remember: true,
       };
       if (cred.email.length <= 0 || cred.password.length <= 0) {
         popupAlert({
@@ -160,23 +160,25 @@ class LoginScreen extends React.Component<Props, State> {
                   }}
                   secure
                 />
-                <CheckBox
-                  checkedIcon={<Icon svg={CheckedIcon} />}
-                  uncheckedIcon={<Icon svg={UncheckedIcon} />}
-                  center
-                  title={i18n.t('LoginScreen.rememberMe')}
-                  containerStyle={{
-                    backgroundColor: 'white',
-                    width: '50%',
-                    borderWidth: 0,
-                  }}
-                  checked={this.state.remember}
-                  onPress={() => {
-                    this.setState((prevState) => {
-                      return { ...prevState, remember: !prevState.remember };
-                    });
-                  }}
-                />
+                {null && (
+                  <CheckBox
+                    checkedIcon={<Icon svg={CheckedIcon} />}
+                    uncheckedIcon={<Icon svg={UncheckedIcon} />}
+                    center
+                    title={i18n.t('LoginScreen.rememberMe')}
+                    containerStyle={{
+                      backgroundColor: 'white',
+                      width: '50%',
+                      borderWidth: 0,
+                    }}
+                    checked={this.state.remember}
+                    onPress={() => {
+                      this.setState((prevState) => {
+                        return { ...prevState, remember: !prevState.remember };
+                      });
+                    }}
+                  />
+                )}
                 <Button
                   containerStyle={Styles.button}
                   textStyle={Typography.FONT_BOLD}

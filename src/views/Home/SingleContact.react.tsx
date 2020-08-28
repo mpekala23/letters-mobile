@@ -303,7 +303,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                     category: {
                                       name: 'personal',
                                       id: -1,
-                                      image: '',
+                                      image: { uri: '' },
                                       blurb: '',
                                     },
                                   }

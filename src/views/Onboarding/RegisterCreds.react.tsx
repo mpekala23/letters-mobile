@@ -85,7 +85,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
       passwordConfirmation: this.passwordConfirmation.current
         ? this.passwordConfirmation.current.state.value
         : '',
-      remember: this.state.remember,
+      remember: true,
     });
   };
 
@@ -209,24 +209,26 @@ class RegisterCredsScreen extends React.Component<Props, State> {
                 {i18n.t('RegisterScreen.passwordsMustMatch')}
               </Text>
             )}
-            <CheckBox
-              checkedIcon={<Icon svg={CheckedIcon} />}
-              uncheckedIcon={<Icon svg={UncheckedIcon} />}
-              center
-              title="Remember Me"
-              containerStyle={{
-                backgroundColor: 'white',
-                width: '50%',
-                borderWidth: 0,
-                alignSelf: 'center',
-              }}
-              checked={this.state.remember}
-              onPress={() => {
-                this.setState((prevState) => {
-                  return { ...prevState, remember: !prevState.remember };
-                });
-              }}
-            />
+            {null && (
+              <CheckBox
+                checkedIcon={<Icon svg={CheckedIcon} />}
+                uncheckedIcon={<Icon svg={UncheckedIcon} />}
+                center
+                title="Remember Me"
+                containerStyle={{
+                  backgroundColor: 'white',
+                  width: '50%',
+                  borderWidth: 0,
+                  alignSelf: 'center',
+                }}
+                checked={this.state.remember}
+                onPress={() => {
+                  this.setState((prevState) => {
+                    return { ...prevState, remember: !prevState.remember };
+                  });
+                }}
+              />
+            )}
             <Button
               link
               buttonText={i18n.t('RegisterScreen.alreadyHaveAnAccount')}
