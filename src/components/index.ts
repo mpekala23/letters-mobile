@@ -23,6 +23,7 @@ import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import Icon from './Icon/Icon.react';
 import Topbar from './Topbar/Topbar.react';
+import NavListItem from './NavListItem/NavListItem.react';
 
 export {
   Alert,
@@ -50,4 +51,5 @@ export {
   Statusbar,
   Icon,
   Topbar,
+  NavListItem,
 };
