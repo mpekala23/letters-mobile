@@ -3,21 +3,23 @@ import {
   TouchableOpacity,
   ViewStyle,
   View,
-  Image,
+  Image as ImageComponent,
   Linking,
   Keyboard,
 } from 'react-native';
 import i18n from '@i18n';
 import { pickImage, takeImage } from '@utils';
-import { Photo } from 'types';
+import { Image } from 'types';
 import Camera from '@assets/components/PicUpload/Camera';
 import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
+import Avatar from '@assets/components/ProfilePic/Avatar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Colors } from '@styles';
 import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 export enum PicUploadTypes {
   Profile = 'Profile',
@@ -30,18 +32,19 @@ export interface Props {
   children?: JSX.Element;
   width: number;
   height: number;
-  onSuccess?: (image: Photo) => void;
+  onSuccess?: (image: Image) => void;
   onDelete?: () => void;
   aspect: [number, number];
   allowsEditing: boolean;
-  initial: Photo;
+  initial: Image;
   segmentOnPressLog?: () => void;
   segmentSuccessLog?: () => void;
   segmentErrorLogEvent?: string;
+  avatarPlaceholder?: boolean;
 }
 
 export interface State {
-  image: Photo | null;
+  image: Image | null;
 }
 
 class PicUpload extends React.Component<Props, State> {
@@ -53,6 +56,7 @@ class PicUpload extends React.Component<Props, State> {
     aspect: [3, 3],
     allowsEditing: true,
     initial: null,
+    avatarPlaceholder: false,
   };
 
   constructor(props: Props) {
@@ -62,7 +66,7 @@ class PicUpload extends React.Component<Props, State> {
     };
   }
 
-  getImage = (): Photo | null => {
+  getImage = (): Image | null => {
     return this.state.image;
   };
 
@@ -193,9 +197,9 @@ class PicUpload extends React.Component<Props, State> {
     let innerCircle;
     if (image && image.uri.slice(-4) !== '.svg') {
       innerCircle = (
-        <Image
+        <AsyncImage
           source={{ uri: image.uri }}
-          style={{
+          viewStyle={{
             width:
               image.width && image.height
                 ? (image.width / image.height) * this.props.height
@@ -210,7 +214,7 @@ class PicUpload extends React.Component<Props, State> {
       innerCircle =
         this.props.type === PicUploadTypes.Profile ? (
           <View testID="profile placeholder">
-            <Icon svg={Camera} />
+            <Icon svg={this.props.avatarPlaceholder ? Avatar : Camera} />
           </View>
         ) : (
           <View testID="media placeholder">

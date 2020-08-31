@@ -1,11 +1,11 @@
 import { ContactState } from './Contact/ContactTypes';
-import { LetterState } from './Letter/LetterTypes';
+import { MailState } from './Mail/MailTypes';
 import { NotifState } from './Notif/NotifTypes';
 import { UserState } from './User/UserTypes';
 
 export interface AppState {
   contact: ContactState;
-  letter: LetterState;
+  mail: MailState;
   notif: NotifState;
   user: UserState;
 }

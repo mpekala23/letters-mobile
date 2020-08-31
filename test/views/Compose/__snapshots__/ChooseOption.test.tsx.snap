@@ -63,8 +63,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       90210
       .
     </Text>
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Array [
           Object {
@@ -76,7 +75,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
           },
           Object {
             "flexDirection": "column",
-            "height": 90,
+            "height": 110,
             "justifyContent": "space-between",
           },
           Object {
@@ -89,7 +88,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             "shadowOpacity": 0.2,
             "shadowRadius": 2.62,
           },
-          undefined,
+          Object {},
         ]
       }
     >
@@ -212,26 +211,30 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             },
             Object {
               "color": "#282828",
-              "fontSize": 28,
+              "fontSize": 24,
             },
           ]
         }
       >
-        Post cards
+        Photos
       </Text>
       <Text
         style={
-          Object {
-            "color": "#6E757C",
-            "fontSize": 18,
-          }
+          Array [
+            Object {
+              "color": "#6E757C",
+              "fontSize": 18,
+            },
+            Object {
+              "maxWidth": "65%",
+            },
+          ]
         }
       >
-        1 photo, 300 characters
+        Glossy photo & short caption
       </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.2}
+    </>
+    <
       style={
         Array [
           Object {
@@ -243,7 +246,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
           },
           Object {
             "flexDirection": "column",
-            "height": 90,
+            "height": 110,
             "justifyContent": "space-between",
           },
           Object {
@@ -256,7 +259,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             "shadowOpacity": 0.2,
             "shadowRadius": 2.62,
           },
-          undefined,
+          Object {},
         ]
       }
     >
@@ -379,7 +382,7 @@ exports[`ChooseOption screen should match snapshot 1`] = `
             },
             Object {
               "color": "#282828",
-              "fontSize": 28,
+              "fontSize": 24,
             },
           ]
         }
@@ -388,15 +391,20 @@ exports[`ChooseOption screen should match snapshot 1`] = `
       </Text>
       <Text
         style={
-          Object {
-            "color": "#6E757C",
-            "fontSize": 18,
-          }
+          Array [
+            Object {
+              "color": "#6E757C",
+              "fontSize": 18,
+            },
+            Object {
+              "maxWidth": "65%",
+            },
+          ]
         }
       >
-        300 words
+        2,000 words & photo on regular paper
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

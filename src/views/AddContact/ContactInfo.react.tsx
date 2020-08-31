@@ -1,7 +1,6 @@
 import React, { createRef, Dispatch } from 'react';
 import {
   Keyboard,
-  KeyboardAvoidingView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import { Button, Icon, Input } from '@components';
+import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -21,16 +20,13 @@ import {
 } from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setAdding } from '@store/Contact/ContactActions';
-import {
-  ContactState,
-  Contact,
-  ContactActionTypes,
-} from '@store/Contact/ContactTypes';
-import { UserState } from '@store/User/UserTypes';
+import { setAddingPersonal } from '@store/Contact/ContactActions';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import * as Segment from 'expo-analytics-segment';
+import { ContactPersonal, ContactDraft } from 'types';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -40,12 +36,11 @@ type ContactInfoScreenNavigationProp = StackNavigationProp<
 
 export interface Props {
   navigation: ContactInfoScreenNavigationProp;
-  userState: UserState;
-  contactState: ContactState;
+  contactDraft: ContactDraft;
   route: {
     params: { addFromSelector?: boolean; phyState?: string };
   };
-  setAdding: (contact: Contact) => void;
+  setAddingPersonal: (contactPersonal: ContactPersonal) => void;
 }
 
 export interface State {
@@ -67,6 +62,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
   private unsubscribeBlur: () => void;
+
+  private scrollView = createRef<ScrollView>();
 
   constructor(props: Props) {
     super(props);
@@ -111,6 +108,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   };
 
   onNextPress() {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'info',
+    });
     if (
       this.stateRef.current &&
       this.firstName.current &&
@@ -118,15 +118,13 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.inmateNumber.current &&
       this.relationship.current
     ) {
-      const contact: Contact = {
-        id: -1,
+      const contactPersonal: ContactPersonal = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.inmateNumber.current.state.value,
         relationship: this.relationship.current.state.value,
-        facility: this.props.contactState.adding.facility,
       };
-      this.props.setAdding(contact);
+      this.props.setAddingPersonal(contactPersonal);
       this.props.navigation.setParams({
         phyState: this.stateRef.current.state.value,
       });
@@ -146,7 +144,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   loadValuesFromStore() {
-    const addingContact = this.props.contactState.adding;
+    const addingContact = this.props.contactDraft;
     if (this.props.route.params && this.props.route.params.addFromSelector) {
       if (this.stateRef.current)
         this.stateRef.current.setState({ dirty: false });
@@ -206,11 +204,18 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         <Button
           link
           containerStyle={{ marginBottom: 20, alignSelf: 'flex-start' }}
-          onPress={() => Linking.openURL(inmateDatabaseLink)}
+          onPress={() => {
+            Segment.trackWithProperties('Add Contact - Click on State Search', {
+              State: this.state.stateToSearch,
+            });
+            Linking.openURL(inmateDatabaseLink);
+          }}
         >
-          <Text style={{ color: Colors.PINK_DARKER }}>
+          <Text style={{ color: Colors.PINK_500 }}>
             {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-            <Text style={[Typography.FONT_BOLD, { color: Colors.PINK_DARKER }]}>
+            <Text
+              style={[Typography.FONT_SEMIBOLD, { color: Colors.PINK_500 }]}
+            >
               {this.state.stateToSearch}
             </Text>{' '}
             {i18n.t('ContactInfoScreen.database')}.
@@ -223,11 +228,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
+        <KeyboardAvoider
+          style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
           <View
             style={{
@@ -237,10 +239,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             }}
           >
             <ScrollView
+              ref={this.scrollView}
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={{ width: '100%' }} />
               <View style={CommonStyles.contactbackground}>
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader
@@ -252,7 +254,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   style={[
                     Typography.FONT_MEDIUM,
                     {
-                      color: Colors.GRAY_DARK,
+                      color: Colors.GRAY_500,
                       marginTop: 8,
                       fontSize: 15,
                     },
@@ -268,17 +270,18 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     alignSelf: 'flex-start',
                   }}
                   onPress={() => {
+                    Segment.track('Add Contact - Click on Federal Search');
                     Linking.openURL(
                       'https://www.bop.gov/mobile/find_inmate/byname.jsp'
                     );
                   }}
                 >
-                  <Text style={{ color: Colors.PINK_DARKER }}>
+                  <Text style={{ color: Colors.PINK_500 }}>
                     {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[
-                        Typography.FONT_BOLD,
-                        { color: Colors.PINK_DARKER },
+                        Typography.FONT_SEMIBOLD,
+                        { color: Colors.PINK_500 },
                       ]}
                     >
                       {i18n.t('ContactInfoScreen.federal')}
@@ -340,39 +343,40 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   placeholder={i18n.t('ContactInfoScreen.relationshipToInmate')}
                   required
                   options={[
-                    i18n.t('ContactInfoScreen.mother'),
-                    i18n.t('ContactInfoScreen.father'),
-                    i18n.t('ContactInfoScreen.brother'),
-                    i18n.t('ContactInfoScreen.sister'),
+                    i18n.t('ContactInfoScreen.spouse'),
+                    i18n.t('ContactInfoScreen.parent'),
+                    i18n.t('ContactInfoScreen.kid'),
                     i18n.t('ContactInfoScreen.sibling'),
-                    i18n.t('ContactInfoScreen.daughter'),
-                    i18n.t('ContactInfoScreen.son'),
-                    i18n.t('ContactInfoScreen.grandmother'),
-                    i18n.t('ContactInfoScreen.grandfather'),
-                    i18n.t('ContactInfoScreen.grandaughter'),
-                    i18n.t('ContactInfoScreen.grandson'),
+                    i18n.t('ContactInfoScreen.grandparent'),
+                    i18n.t('ContactInfoScreen.family'),
                     i18n.t('ContactInfoScreen.friend'),
+                    i18n.t('ContactInfoScreen.mentor'),
                     i18n.t('ContactInfoScreen.other'),
                   ]}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
+                  strictDropdown
+                  onDropdownOpen={() => {
+                    if (this.scrollView.current)
+                      this.scrollView.current.scrollToEnd({ animated: true });
+                  }}
                 />
               </View>
             </ScrollView>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  userState: state.user,
-  contactState: state.contact,
+  contactDraft: state.contact.adding,
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setAddingPersonal: (contactPersonal: ContactPersonal) =>
+      dispatch(setAddingPersonal(contactPersonal)),
   };
 };
 const ContactInfoScreen = connect(

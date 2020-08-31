@@ -10,27 +10,47 @@ import {
 import { Button, ProfilePic } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Contact, ContactActionTypes } from '@store/Contact/ContactTypes';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
-import { ProfilePicTypes, Letter } from 'types';
+import {
+  ProfilePicTypes,
+  Mail,
+  MailStatus,
+  MailTypes,
+  Draft,
+  Contact,
+  TrackingEvent,
+} from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
-import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
-import { setActive as setActiveLetter } from '@store/Letter/LetterActions';
-import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import {
+  setActive as setActiveLetter,
+  setComposing,
+} from '@store/Mail/MailActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
 import PencilIcon from '@assets/components/Card/Pencil';
 import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getLetters, getContact, getUser } from '@api';
+import {
+  getMail,
+  getContact,
+  getUser,
+  getTrackingEvents,
+  getCategories,
+} from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
+import * as Segment from 'expo-analytics-segment';
+import { differenceInBusinessDays } from 'date-fns';
+import { popupAlert } from '@components/Alert/Alert.react';
+import { deleteDraft } from '@api/User';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -45,12 +65,15 @@ interface State {
 interface Props {
   navigation: SingleContactScreenNavigationProp;
   activeContact: Contact;
-  existingLetters: Letter[];
+  existingMail: Mail[];
+  existingContacts: Contact[];
   userState: UserState;
-  setActiveLetter: (letter: Letter) => void;
+  setActiveLetter: (mail: Mail) => void;
+  setComposing: (draft: Draft) => void;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
   handleNotif: () => void;
+  composing: Draft;
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -61,38 +84,82 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
     const contact = this.props.activeContact;
-    const letters = this.props.existingLetters;
+    const mail = this.props.existingMail;
     const letterCards =
-      letters && letters.length > 0
-        ? letters.map((letter: Letter) => {
-            return (
-              <LetterStatusCard
-                status={letter.status}
-                date={letter.dateCreated ? letter.dateCreated : ''}
-                description={letter.content}
-                onPress={() => {
-                  this.props.setActiveLetter(letter);
-                  this.props.navigation.navigate('LetterTracking');
-                }}
-                key={letter.letterId}
-              />
-            );
+      mail && mail.length > 0
+        ? mail.map((item: Mail) => {
+            if (item.trackingEvents) {
+              let processedForDelivery = false;
+              let processedForDeliveryDate = new Date();
+              const processedEvent = item.trackingEvents.find(
+                (event: TrackingEvent) =>
+                  event.name === MailStatus.ProcessedForDelivery
+              );
+              processedForDelivery = !!processedEvent;
+              if (processedEvent) {
+                processedForDeliveryDate = processedEvent.date;
+              }
+              if (
+                item.status !== MailStatus.Draft &&
+                (!processedForDelivery ||
+                  differenceInBusinessDays(
+                    processedForDeliveryDate,
+                    new Date()
+                  ) <= 5)
+              ) {
+                return (
+                  <LetterStatusCard
+                    status={item.status}
+                    date={item.dateCreated}
+                    description={item.content}
+                    onPress={async () => {
+                      Segment.track('Contact View - Click on Letter Tracking');
+                      await getTrackingEvents(item.id);
+                      this.props.navigation.navigate('MailTracking');
+                    }}
+                    key={item.id}
+                  />
+                );
+              }
+              return null;
+            }
+            if (
+              item.status !== MailStatus.Draft &&
+              differenceInBusinessDays(
+                item.dateCreated ? item.dateCreated : new Date(),
+                new Date()
+              ) <= 11
+            )
+              return (
+                <LetterStatusCard
+                  status={item.status}
+                  date={item.dateCreated}
+                  description={item.content}
+                  onPress={async () => {
+                    Segment.track('Contact View - Click on Letter Tracking');
+                    await getTrackingEvents(item.id);
+                    this.props.navigation.navigate('MailTracking');
+                  }}
+                  key={item.id}
+                />
+              );
+            return null;
           })
         : null;
 
     const letterTrackingTitle =
-      letters && letters.length > 0 ? (
+      mail && mail.length > 0 ? (
         <Text
           style={[
             Typography.BASE_TITLE,
             {
-              color: Colors.GRAY_DARK,
+              color: Colors.GRAY_500,
               paddingTop: 12,
             },
           ]}
@@ -107,7 +174,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         onRefresh={async () => {
           this.setState({ refreshing: true });
           try {
-            await getLetters();
+            await getMail();
             await getContact(this.props.activeContact.id);
             await getUser();
           } catch (err) {
@@ -133,6 +200,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               <TouchableOpacity
                 onPress={() => {
+                  Segment.track('Contact View - Click on Edit Contact');
                   this.props.navigation.navigate('UpdateContact');
                 }}
                 style={{
@@ -151,12 +219,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             <ProfilePic
               firstName={contact.firstName}
               lastName={contact.lastName}
-              imageUri={contact.photo?.uri}
+              imageUri={contact.image?.uri}
               type={ProfilePicTypes.SingleContact}
             />
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   color: Colors.AMEELIO_BLACK,
                   fontSize: 25,
@@ -165,23 +233,134 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             >
               {contact.firstName} {contact.lastName}
             </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-              <Emoji name="love_letter" />{' '}
-              {i18n.t('SingleContactScreen.received')}:{' '}
-              {letters ? letters.length : 0}
-            </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-              <Emoji name="calendar" />{' '}
-              {i18n.t('SingleContactScreen.lastHeardFromYou')}:
-            </Text>
-            <Text style={[Typography.FONT_MEDIUM, Styles.profileCardInfo]}>
-              <Emoji name="airplane" />{' '}
-              {i18n.t('SingleContactScreen.lettersTraveled')}:
-            </Text>
+            {contact.facility && (
+              <View style={{ alignItems: 'center' }}>
+                <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+                  {contact.facility.name}
+                </Text>
+
+                <Text
+                  style={[
+                    Typography.FONT_REGULAR,
+                    Styles.profileCardInfo,
+                    { paddingBottom: 8 },
+                  ]}
+                >
+                  {contact.facility.address}
+                </Text>
+              </View>
+            )}
             <Button
-              onPress={() => this.props.navigation.navigate('ChooseOption')}
+              onPress={async () => {
+                Segment.trackWithProperties(
+                  'Contact View - Click on Send Letter',
+                  {
+                    Type:
+                      this.props.composing.content.length ||
+                      (this.props.composing.type === MailTypes.Letter &&
+                        this.props.composing.image) ||
+                      this.props.composing.type === MailTypes.Postcard
+                        ? 'draft'
+                        : 'blank',
+                  }
+                );
+                if (
+                  this.props.composing.content.length ||
+                  (this.props.composing.type === MailTypes.Letter &&
+                    this.props.composing.image) ||
+                  (this.props.composing.type === MailTypes.Postcard &&
+                    this.props.composing.design.image.uri.length)
+                ) {
+                  popupAlert({
+                    title: i18n.t('Compose.letterInProgress'),
+                    message: i18n.t('Compose.continueWritingAnd'),
+                    buttons: [
+                      {
+                        text: i18n.t('Compose.continueWriting'),
+                        onPress: async () => {
+                          const draftContact = this.props.existingContacts.find(
+                            (testContact) =>
+                              testContact.id ===
+                              this.props.composing.recipientId
+                          );
+                          if (draftContact) {
+                            this.props.setActiveContact(draftContact);
+                            if (
+                              this.props.composing.type === MailTypes.Letter
+                            ) {
+                              this.props.navigation.navigate('ComposeLetter');
+                            } else if (
+                              this.props.composing.type === MailTypes.Postcard
+                            ) {
+                              if (
+                                this.props.composing.design.custom ||
+                                this.props.composing.design.subcategoryName ===
+                                  'Library'
+                              ) {
+                                this.props.navigation.navigate(
+                                  'ComposePostcard',
+                                  {
+                                    category: {
+                                      name: 'personal',
+                                      id: -1,
+                                      image: { uri: '' },
+                                      blurb: '',
+                                    },
+                                  }
+                                );
+                              }
+                              const categories = await getCategories();
+                              const category = categories.find(
+                                (testCategory) =>
+                                  this.props.composing.type ===
+                                    MailTypes.Postcard &&
+                                  testCategory.id ===
+                                    this.props.composing.design.categoryId
+                              );
+                              if (!category) return;
+                              this.props.navigation.navigate(
+                                'ComposePostcard',
+                                {
+                                  category,
+                                }
+                              );
+                            }
+                          } else {
+                            dropdownError({
+                              message: i18n.t('Compose.draftContactDeleted'),
+                            });
+                            await deleteDraft();
+                            this.props.navigation.navigate('ChooseCategory');
+                          }
+                        },
+                      },
+                      {
+                        text: i18n.t('Compose.startNewLetter'),
+                        reverse: true,
+                        onPress: async () => {
+                          await deleteDraft();
+                          this.props.setComposing({
+                            type: MailTypes.Letter,
+                            recipientId: this.props.activeContact.id,
+                            content: '',
+                          });
+                          this.props.navigation.navigate('ChooseCategory');
+                        },
+                      },
+                    ],
+                  });
+                } else {
+                  await deleteDraft();
+                  this.props.setComposing({
+                    type: MailTypes.Letter,
+                    recipientId: this.props.activeContact.id,
+                    content: '',
+                  });
+                  this.props.navigation.navigate('ChooseCategory');
+                }
+              }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
-              textStyle={(Typography.FONT_BOLD, { fontSize: 20 })}
+              textStyle={(Typography.FONT_SEMIBOLD, { fontSize: 20 })}
               containerStyle={Styles.sendLetterButton}
               enabled={this.props.userState.user.credit > 0}
             />
@@ -191,12 +370,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               credits={this.props.userState.user.credit}
               onPress={() => {
                 Linking.openURL(
-                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20day&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20daily%20letter%20limit%3F"
+                  "mailto:outreach@ameelio.org?subject=I'd%20like%20to%20send%20more%20letters%20a%20weekly&body=Hi%20Team%20Ameelio%2C%20can%20you%20please%20let%20me%20know%20how%20I%20can%20increase%20my%20weekly%20letter%20limit%3F"
                 );
               }}
             />
             <MemoryLaneCountCard
-              letterCount={letters ? letters.length : 0}
+              letterCount={mail ? mail.length : 0}
               onPress={() => {
                 this.props.setActiveContact(contact);
                 this.props.navigation.navigate('MemoryLane');
@@ -219,19 +398,20 @@ class SingleContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
-  existingLetters: state.letter.existing[state.contact.active.id],
+  existingMail: state.mail.existing[state.contact.active.id],
+  existingContacts: state.contact.existing,
   userState: state.user,
   currentNotif: state.notif.currentNotif,
+  composing: state.mail.composing,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<LetterActionTypes | ContactActionTypes | NotifActionTypes>
-) => {
-  return {
-    setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
-    setActiveLetter: (letter: Letter) => dispatch(setActiveLetter(letter)),
-    handleNotif: () => dispatch(handleNotif()),
-  };
-};
+  dispatch: Dispatch<MailActionTypes | ContactActionTypes | NotifActionTypes>
+) => ({
+  setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
+  setActiveLetter: (mail: Mail) => dispatch(setActiveLetter(mail)),
+  setComposing: (draft: Draft) => dispatch(setComposing(draft)),
+  handleNotif: () => dispatch(handleNotif()),
+});
 const SingleContactScreen = connect(
   mapStateToProps,
   mapDispatchToProps

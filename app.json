@@ -1,16 +1,41 @@
 {
   "expo": {
-    "name": "Letters Mobile",
-    "slug": "letters-mobile",
+    "name": "Ameelio",
+    "slug": "Ameelio",
     "privacy": "public",
+    "sdkVersion": "38.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./src/assets/BlueBird.png",
-    "description": "This is the first version of Ameelio's Letters Mobile platform. You can test the app by installing the Expo app on your phone and scanning the QR code to the right. While testing, please open https://www.notion.so/a2c7a191b0f64f628f02988dbfc368f7?v=2273fcc8329b4cdca0b6baee5ab9295d and create a new document by clicking on the dropdown arrow of the 'New' button and selecting the 'Help Us Beta Test!' template, titling it your name.",
+    "icon": "./src/assets/icons/icon.png",
+    "description": "Ameelio's letter platform allows individuals to send free letters to their incarcerated loved ones. ",
     "notification": {
-      "icon": "./src/assets/BlueBird.png",
-      "color": "#448AF3"
+      "icon": "./src/assets/icons/icon.png",
+      "color": "#ffffff"
+    },
+    "android": {
+      "versionCode": 10,
+      "package": "com.ameelio.letters_mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/icons/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "CAMERA",
+        "AUDIO_RECORDING",
+        "CAMERA_ROLL",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "ios": {
+      "buildNumber": "1.1.0",
+      "bundleIdentifier": "com.ameelio.ameelio",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Ameelio uses the camera to allow users to take photos and attach them to the letters they send to their loved ones. Ameelio also accesses the camera to allow users to take photos for their profile, and the profiles of their loved ones in the app.",
+        "NSPhotoLibraryUsageDescription": "Ameelio accesses the photo library to allow users to attach saved photos to the letters they send to their loved ones. Ameelio also accesses the photo library to allow users to upload photos for their profile, and the profiles of their loved ones in the app."
+      }
     }
   }
 }

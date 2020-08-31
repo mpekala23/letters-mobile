@@ -1,15 +1,16 @@
 import React from 'react';
-import { Animated, Text, View } from 'react-native';
+import { Animated, Text, View, Platform } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { Prompts, getRandomPromptIx } from '@utils';
 import i18n from '@i18n';
 import Shuffle from '@assets/views/Compose/Shuffle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 60;
-const DEFAULT_OPEN_HEIGHT = 120;
+const DEFAULT_OPEN_HEIGHT = 150;
 const ANIM_DURATION = 250;
 
 interface Props {
@@ -94,10 +95,19 @@ class ComposeHeader extends React.Component<Props, State> {
           >
             {i18n.t('Compose.to')}: {this.props.recipientName}
           </Text>
+          <Text
+            style={[
+              Typography.FONT_MEDIUM_ITALIC,
+              { marginTop: 8, paddingRight: 16, color: Colors.GRAY_MEDIUM },
+            ]}
+          >
+            {i18n.t('Compose.autosaved')}
+          </Text>
           {this.state.open || this.state.animating ? (
             <TouchableOpacity
               onPress={() => {
                 this.setState((prevState) => {
+                  Segment.track('Compose - Click on Shuffle Ideas');
                   return {
                     ...prevState,
                     promptIx: (prevState.promptIx + 1) % Prompts.length,
@@ -112,14 +122,19 @@ class ComposeHeader extends React.Component<Props, State> {
           ) : null}
           <Button
             onPress={() => {
-              if (this.state.open) this.close();
-              else this.open();
+              if (this.state.open) {
+                Segment.track('Compose - Click on Collapse');
+                this.close();
+              } else {
+                Segment.track('Compose - Click on Need Ideas');
+                this.open();
+              }
             }}
             containerStyle={{ width: 130, height: 35 }}
           >
             <Animated.Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 14,
                   color: 'white',
@@ -129,13 +144,14 @@ class ComposeHeader extends React.Component<Props, State> {
                     outputRange: [0, 0.3, 1],
                   }),
                 },
+                Platform.OS === 'android' ? { paddingTop: 4 } : {},
               ]}
             >
               {i18n.t('Compose.collapse')}
             </Animated.Text>
             <Animated.Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 14,
                   color: 'white',
@@ -145,6 +161,7 @@ class ComposeHeader extends React.Component<Props, State> {
                     outputRange: [1, 0.3, 0],
                   }),
                 },
+                Platform.OS === 'android' ? { paddingTop: 4 } : {},
               ]}
             >
               {i18n.t('Compose.needIdeas')}
@@ -154,9 +171,9 @@ class ComposeHeader extends React.Component<Props, State> {
         {this.state.open || this.state.animating ? (
           <Animated.View
             style={{
-              height: 72,
+              height: 100,
               width: '100%',
-              backgroundColor: Colors.PINK_LIGHTEST,
+              backgroundColor: Colors.PINK_100,
               borderRadius: 8,
               opacity: this.state.progress,
             }}

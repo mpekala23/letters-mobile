@@ -36,4 +36,10 @@ const GenericCard: React.FC<Props> = (props: Props) => {
   );
 };
 
+GenericCard.defaultProps = {
+  onPress: () => null,
+  style: {},
+  children: [],
+};
+
 export default GenericCard;

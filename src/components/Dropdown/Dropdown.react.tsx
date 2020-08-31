@@ -2,7 +2,6 @@ import React, { createRef } from 'react';
 import { Text, View, Animated, TouchableOpacity } from 'react-native';
 
 import { Typography } from '@styles';
-import ComposePostcardScreen from '@views/Compose/ComposePostcard.react';
 import Styles from './Dropdown.styles';
 
 const DROPDOWN_HEIGHT = 100;
@@ -187,7 +186,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
       >
         <Text
           style={[
-            Typography.FONT_REGULAR,
+            Typography.FONT_MEDIUM,
             notif.type === DropType.Success
               ? Styles.successText
               : Styles.errorText,

@@ -75,7 +75,7 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
             { name: 'UpdateContact' },
           ],
         });
@@ -87,7 +87,7 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
           routes: [
             { name: 'ContactSelector' },
             { name: 'SingleContact' },
-            { name: 'LetterTracking' },
+            { name: 'MailTracking' },
             { name: 'UpdateContact' },
           ],
         });
@@ -104,8 +104,13 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
 const SupportFAQDetailScreen: React.FC<Props> = (props: Props) => {
   const { issue } = props.route.params;
   return (
-    <View style={Styles.trueBackground}>
-      <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+    <View
+      style={[
+        Styles.trueBackground,
+        { backgroundColor: props.navigation ? undefined : '' },
+      ]}
+    >
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
         {i18n.t('SupportFAQDetailScreen.talkToSomeoneAtAmeelio')}
       </Text>
       <Text style={Styles.baseText}>{mapIssueToFAQDetails(issue)}</Text>

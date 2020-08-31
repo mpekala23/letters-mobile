@@ -12,4 +12,8 @@ const Icon: React.FC<Props> = (props: Props) => {
   return <SvgXml xml={svg} style={style} />;
 };
 
+Icon.defaultProps = {
+  style: {},
+};
+
 export default Icon;

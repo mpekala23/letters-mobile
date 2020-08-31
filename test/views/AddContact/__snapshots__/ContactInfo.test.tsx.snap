@@ -10,7 +10,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -169,8 +169,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
             >
               Need help finding your loved one's inmate ID?
             </Text>
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Object {
                   "alignSelf": "flex-start",
@@ -207,7 +206,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                 database
                 .
               </Text>
-            </TouchableOpacity>
+            </>
             <View
               pointerEvents="auto"
               style={
@@ -223,7 +222,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="invalid"
+                testID="valid"
               />
               <View
                 testID="unfocused"
@@ -281,8 +280,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  <
                     style={
                       Array [
                         Object {
@@ -306,9 +304,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Alaska
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -332,9 +329,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Alabama
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -358,35 +354,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Arkansas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      American Samoa
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -410,9 +379,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Arizona
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -436,9 +404,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       California
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -462,9 +429,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Colorado
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -488,9 +454,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Connecticut
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -514,9 +479,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       District of Columbia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -540,9 +504,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Delaware
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -566,9 +529,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Florida
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -592,35 +554,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Georgia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Guam
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -644,9 +579,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Hawaii
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -670,9 +604,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Iowa
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -696,9 +629,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Idaho
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -722,9 +654,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Illinois
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -748,9 +679,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Indiana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -774,9 +704,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Kansas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -800,9 +729,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Kentucky
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -826,9 +754,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Louisiana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -852,9 +779,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Massachusetts
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -878,9 +804,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Maryland
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -904,9 +829,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Maine
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -930,9 +854,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Michigan
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -956,9 +879,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Minnesota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -982,9 +904,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Missouri
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1008,9 +929,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Mississippi
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1034,9 +954,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Montana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1060,9 +979,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       North Carolina
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1086,9 +1004,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       North Dakota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1112,9 +1029,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Nebraska
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1138,9 +1054,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       New Hampshire
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1164,9 +1079,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       New Jersey
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1190,9 +1104,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       New Mexico
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1216,9 +1129,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Nevada
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1242,9 +1154,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       New York
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1268,9 +1179,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Ohio
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1294,9 +1204,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Oklahoma
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1320,9 +1229,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Oregon
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1346,35 +1254,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Pennsylvania
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Puerto Rico
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1398,9 +1279,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Rhode Island
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1424,9 +1304,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       South Carolina
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1450,9 +1329,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       South Dakota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1476,9 +1354,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Tennessee
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1502,9 +1379,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Texas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1528,9 +1404,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Utah
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1554,35 +1429,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Virginia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Virgin Islands
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1606,9 +1454,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Vermont
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1632,9 +1479,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Washington
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1658,9 +1504,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Wisconsin
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1684,9 +1529,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       West Virginia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1712,7 +1556,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Wyoming
                     </Text>
-                  </TouchableOpacity>
+                  </>
                 </ScrollView>
               </View>
             </View>
@@ -2014,8 +1858,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  <
                     style={
                       Array [
                         Object {
@@ -2039,9 +1882,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Mother
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2065,9 +1907,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Father
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2091,9 +1932,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Brother
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2117,9 +1957,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Sister
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2143,9 +1982,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Sibling
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2169,9 +2007,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Daughter
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2195,9 +2032,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Son
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2221,9 +2057,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Grandmother
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2247,9 +2082,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Grandfather
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2273,9 +2107,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Grandaughter
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2299,9 +2132,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Grandson
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2325,9 +2157,8 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Friend
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -2353,7 +2184,7 @@ exports[`Contact Info Screen should match snapshot 1`] = `
                     >
                       Other
                     </Text>
-                  </TouchableOpacity>
+                  </>
                 </ScrollView>
               </View>
             </View>
@@ -2361,6 +2192,6 @@ exports[`Contact Info Screen should match snapshot 1`] = `
         </ScrollView>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

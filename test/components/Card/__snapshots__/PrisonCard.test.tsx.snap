@@ -10,8 +10,7 @@ exports[`Prison Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -31,7 +30,7 @@ exports[`Prison Card component should match snapshot 1`] = `
           "shadowOpacity": 0.2,
           "shadowRadius": 2.62,
         },
-        undefined,
+        Object {},
       ]
     }
   >
@@ -39,7 +38,7 @@ exports[`Prison Card component should match snapshot 1`] = `
       style={
         Object {
           "color": "#282828",
-          "fontSize": 28,
+          "fontSize": 24,
         }
       }
     >
@@ -70,6 +69,6 @@ exports[`Prison Card component should match snapshot 1`] = `
     >
       Address
     </Text>
-  </TouchableOpacity>
+  </>
 </View>
 `;

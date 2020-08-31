@@ -1,27 +1,133 @@
-// TODO: make this typing better
-// probably want a specific type for state abbrevs
+// Common
+export interface Image {
+  uri: string;
+  width?: number;
+  height?: number;
+}
+
+// Letters and Postcards (Commmon)
+export enum MailTypes {
+  Letter = 'letter',
+  Postcard = 'postcard',
+}
+
+export interface PostcardDesign {
+  image: Image;
+  thumbnail?: Image;
+  id?: number;
+  categoryId?: number;
+  subcategoryName?: string;
+  name?: string;
+  author?: string;
+  custom?: boolean;
+}
+
+interface LetterSpecific {
+  type: MailTypes.Letter;
+  image?: Image;
+}
+
+interface PostcardSpecific {
+  type: MailTypes.Postcard;
+  design: PostcardDesign;
+}
+
+export enum MailStatus {
+  Draft = 'Draft',
+  Created = 'Created Order',
+  Mailed = 'Mailed',
+  InTransit = 'In Transit',
+  InLocalArea = 'In Local Area',
+  ProcessedForDelivery = 'Out for Delivery',
+  Delivered = 'Delivered to Facility',
+  ReturnedToSender = 'Returned to Sender',
+  Rerouted = 'Re-Routed',
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  image: Image;
+  blurb: string;
+}
+
+// Letters and Postcards (Draft)
+interface DraftInfo {
+  type: MailTypes;
+  recipientId: number;
+  content: string;
+}
+
+export type DraftLetter = DraftInfo & LetterSpecific;
+
+export type DraftPostcard = DraftInfo & PostcardSpecific;
+
+export type Draft = DraftLetter | DraftPostcard;
+
+// Letters and Postcards (Mail)
+interface MailInfo extends DraftInfo {
+  id: number;
+  status: MailStatus;
+  dateCreated: Date;
+  expectedDelivery: Date;
+  trackingEvents?: TrackingEvent[];
+}
+
+export type MailLetter = MailInfo & LetterSpecific;
+
+export type MailPostcard = MailInfo & PostcardSpecific;
+
+export type Mail = MailLetter | MailPostcard;
+
+// Facilities
+export enum PrisonTypes {
+  State = 'State Prison',
+  Federal = 'Federal Prison',
+  County = 'County Jail',
+  Immigration = 'ICE Detention Center',
+}
+
 export interface Facility {
   name: string;
+  fullName?: string;
   type: PrisonTypes;
   address: string;
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
-export enum ProfilePicTypes {
-  Topbar = 'Topbar',
-  Contact = 'Contact',
-  SingleContact = 'SingleContact',
+// Contacts
+export interface ContactPersonal {
+  firstName: string;
+  lastName: string;
+  inmateNumber: string;
+  relationship: string;
+  image?: Image;
 }
 
-export enum Storage {
-  RememberToken = 'Ameelio-Token',
+export interface ContactFacility {
+  facility: Facility;
+  dorm?: string;
+  unit?: string;
 }
 
-export enum PrisonTypes {
-  State = 'State',
-  Federal = 'Federal',
+interface ContactCreated {
+  id: number;
+}
+
+export interface ContactDraft extends ContactPersonal, ContactFacility {}
+
+export interface Contact extends ContactDraft, ContactCreated {}
+
+// Tracking and Reporting
+export interface ZipcodeInfo {
+  zip: string;
+  city: string;
+  state: string;
+  lat?: number;
+  long?: number;
 }
 
 export enum SupportFAQTypes {
@@ -34,21 +140,6 @@ export enum SupportFAQTypes {
   TalkToAmeelio = 'TalkToAmeelio',
 }
 
-export enum LetterStatus {
-  Draft = 'Draft',
-  Created = 'Created',
-  Mailed = 'Mailed',
-  InTransit = 'In Transit',
-  InLocalArea = 'In Local Area',
-  OutForDelivery = 'Out for Delivery',
-  Delivered = 'Delivered',
-}
-
-export enum LetterTypes {
-  Postcard = 'postcard',
-  Letter = 'letter',
-}
-
 export enum DeliveryReportTypes {
   received = 'received',
   unsure = 'unsure',
@@ -57,25 +148,34 @@ export enum DeliveryReportTypes {
   haveNotReceived = 'haveNotReceived',
 }
 
-export interface Letter {
-  type: LetterTypes;
-  status: LetterStatus;
-  isDraft: boolean;
-  recipientId: number;
-  content: string;
-  photo?: Photo;
-  letterId?: number; // TODO: Once we have more info on this field and lob, use this more
-  expectedDeliveryDate?: string;
-  dateCreated?: string;
-  trackingEvents?: LetterTrackingEvent[];
-}
-
-export interface LetterTrackingEvent {
+export interface TrackingEvent {
   id: number;
   name: string;
-  location: ZipcodeInfo;
+  location?: ZipcodeInfo;
   date: Date;
 }
+
+// Miscelaneous
+export enum ProfilePicTypes {
+  Topbar = 'Topbar',
+  Contact = 'Contact',
+  SingleContact = 'SingleContact',
+  Avatar = 'Avatar',
+}
+
+export enum Storage {
+  RememberToken = 'Ameelio-Token',
+  DraftType = 'Ameelio-DraftType',
+  DraftContent = 'Ameelio-DraftContent',
+  DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftCategoryId = 'Ameelio-DraftCategoryId',
+  DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
+  DraftDesignUri = 'Ameelio-DraftDesignUri',
+}
+
+export type TopbarBackAction = {
+  action: () => void | Promise<void>;
+};
 
 export type TopbarRouteAction = {
   enabled: boolean;
@@ -84,15 +184,7 @@ export type TopbarRouteAction = {
   blocking?: boolean;
 };
 
-export interface ZipcodeInfo {
-  zip: string;
-  city: string;
-  state: string;
-}
-
-export interface Photo {
-  type?: 'image' | string;
-  width?: number;
-  height?: number;
-  uri: string;
+export enum Screen {
+  ReferFriends = 'ReferFriends',
+  Delivery = 'DeliveryReporting',
 }

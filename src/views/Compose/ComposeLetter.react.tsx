@@ -5,23 +5,29 @@ import {
   TouchableOpacity,
   Keyboard,
   Platform,
-  KeyboardAvoidingView,
   EmitterSubscription,
 } from 'react-native';
-import { ComposeHeader, Input, ComposeTools, PicUpload } from '@components';
+import {
+  ComposeHeader,
+  Input,
+  ComposeTools,
+  PicUpload,
+  KeyboardAvoider,
+} from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setDraft, setContent, setPhoto } from '@store/Letter/LetterActions';
-import { LetterActionTypes } from '@store/Letter/LetterTypes';
+import { setContent, setImage } from '@store/Mail/MailActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
-import { Letter, Photo } from 'types';
+import { Draft, Image, MailTypes } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { WINDOW_WIDTH } from '@utils';
 import * as Segment from 'expo-analytics-segment';
+import { saveDraft } from '@api';
 import Styles from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -29,22 +35,22 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
   'ComposeLetter'
 >;
 
-interface Props {
-  navigation: ComposeLetterScreenNavigationProp;
-  composing: Letter;
-  recipientName: string;
-  setContent: (content: string) => void;
-  setDraft: (value: boolean) => void;
-  setPhoto: (photo: Photo | undefined) => void;
-}
-
 interface State {
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
-  photoWidth: number;
-  photoHeight: number;
+  imageWidth: number;
+  imageHeight: number;
   open: boolean;
   valid: boolean;
+}
+
+interface Props {
+  navigation: ComposeLetterScreenNavigationProp;
+  composing: Draft;
+  recipientName: string;
+  hasSentMail: boolean;
+  setContent: (content: string) => void;
+  setImage: (image: Image | undefined) => void;
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
@@ -64,15 +70,15 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       keyboardOpacity: new Animated.Value(0),
-      wordsLeft: 300,
-      photoWidth: 200,
-      photoHeight: 200,
+      wordsLeft: 2000,
+      imageWidth: 200,
+      imageHeight: 200,
       open: false,
       valid: true,
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
-    this.registerPhoto = this.registerPhoto.bind(this);
+    this.registerImage = this.registerImage.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
     this.onNextPress = this.onNextPress.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -104,31 +110,45 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationFocus() {
-    const { photo } = this.props.composing;
-    if (this.wordRef.current)
-      this.wordRef.current.set(this.props.composing.content);
-    if (this.picRef.current && photo && photo.width && photo.height) {
+    if (this.props.composing.type === MailTypes.Postcard) {
+      this.props.navigation.goBack();
+      return;
+    }
+
+    const { image, content } = this.props.composing;
+
+    if (this.wordRef.current) {
+      if (!this.props.hasSentMail && !content) {
+        this.wordRef.current.set(
+          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+            this.props.recipientName
+          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
+        );
+      } else {
+        this.wordRef.current.set(content);
+      }
+    }
+    if (this.picRef.current && image && image.width && image.height) {
       this.picRef.current.setState({
-        image: photo,
+        image,
       });
-      if (photo.width < photo.height) {
+      if (image.width < image.height) {
         this.setState({
-          photoWidth: (photo.width / photo.height) * 200,
-          photoHeight: 200,
+          imageWidth: (image.width / image.height) * 200,
+          imageHeight: 200,
         });
       } else {
         this.setState({
-          photoWidth: 200,
-          photoHeight: (photo.height / photo.width) * 200,
+          imageWidth: 200,
+          imageHeight: (image.height / image.width) * 200,
         });
       }
     } else {
       this.setState({
-        photoWidth: 200,
-        photoHeight: 200,
+        imageWidth: 200,
+        imageHeight: 200,
       });
     }
-    this.props.setDraft(true);
     setProfileOverride({
       enabled: this.state.valid,
       text: i18n.t('Compose.next'),
@@ -138,7 +158,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   onNextPress(): void {
     Keyboard.dismiss();
+    Segment.trackWithProperties('Compose - Click on Next', {
+      type: 'letter',
+    });
     if (this.props.composing.content.length <= 0) {
+      Segment.trackWithProperties('Compose - Click on Next Failure', {
+        type: 'letter',
+        Error: 'Letter must have content',
+      });
       popupAlert({
         title: i18n.t('Compose.letterMustHaveContent'),
         buttons: [
@@ -148,7 +175,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
         ],
       });
     } else {
-      this.props.navigation.navigate('LetterPreview');
+      this.props.navigation.navigate('ReviewLetter');
     }
   }
 
@@ -175,6 +202,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   setValid(val: boolean) {
+    if (val === this.state.valid) return;
     this.setState({ valid: val });
     setProfileOverride({
       enabled: val,
@@ -183,32 +211,32 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     });
   }
 
-  registerPhoto(photo: Photo): void {
-    this.props.setPhoto(photo);
-    if (photo && photo.width && photo.height) {
-      if (photo.width < photo.height) {
+  registerImage(image: Image): void {
+    this.props.setImage(image);
+    if (image && image.width && image.height) {
+      if (image.width < image.height) {
         this.setState({
-          photoWidth: (photo.width / photo.height) * 200,
-          photoHeight: 200,
+          imageWidth: (image.width / image.height) * 200,
+          imageHeight: 200,
         });
       } else {
         this.setState({
-          photoWidth: 200,
-          photoHeight: (photo.height / photo.width) * 200,
+          imageWidth: 200,
+          imageHeight: (image.height / image.width) * 200,
         });
       }
     } else {
       this.setState({
-        photoWidth: 200,
-        photoHeight: 200,
+        imageWidth: 200,
+        imageHeight: 200,
       });
     }
     Keyboard.dismiss();
   }
 
   deletePhoto(): void {
-    this.props.setPhoto(undefined);
-    this.setState({ photoWidth: 200, photoHeight: 200 });
+    this.props.setImage(undefined);
+    this.setState({ imageWidth: 200, imageHeight: 200 });
   }
 
   updateWordsLeft(value: string): void {
@@ -221,13 +249,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     if (split[0] === '') {
       numWords = 0;
     }
-    this.setState({ wordsLeft: 300 - numWords });
-    this.setValid(300 - numWords >= 0);
+    this.setState({ wordsLeft: 2000 - numWords });
+    this.setValid(2000 - numWords >= 0);
   }
 
   changeText(value: string): void {
     this.updateWordsLeft(value);
     this.props.setContent(value);
+    saveDraft(this.props.composing);
   }
 
   render(): JSX.Element {
@@ -238,23 +267,19 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
+        <KeyboardAvoider
           style={{
-            flex: 1,
             flexDirection: 'column',
             justifyContent: 'flex-end',
           }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          pointerEvents="box-none"
         >
           <View
+            pointerEvents="box-none"
             style={[
               Styles.screenBackground,
               {
                 flex: 1,
-                paddingBottom: 50,
+                paddingBottom: this.state.open ? 50 : undefined,
               },
             ]}
           >
@@ -267,11 +292,11 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                 flex: 1,
                 textAlignVertical: 'top',
                 paddingTop: 8,
-                paddingBottom: this.state.open ? 8 : this.state.photoHeight + 8,
+                paddingBottom: this.state.open ? 8 : this.state.imageHeight + 8,
               }}
               onChangeText={this.changeText}
               placeholder={i18n.t('Compose.placeholder')}
-              numLines={100}
+              numLines={1000}
               testId="input"
             >
               <Animated.View
@@ -279,17 +304,17 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
                   position: 'absolute',
                   bottom: this.state.keyboardOpacity.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [0, -this.state.photoHeight / 4],
+                    outputRange: [0, -this.state.imageHeight / 4],
                   }),
                   right: this.state.keyboardOpacity.interpolate({
                     inputRange: [0, 1],
                     outputRange: [
-                      WINDOW_WIDTH - 30 - this.state.photoWidth,
-                      10 - this.state.photoWidth / 4,
+                      WINDOW_WIDTH - 30 - this.state.imageWidth,
+                      10 - this.state.imageWidth / 4,
                     ],
                   }),
-                  width: this.state.photoWidth,
-                  height: this.state.photoHeight,
+                  width: this.state.imageWidth,
+                  height: this.state.imageHeight,
                   transform: [
                     {
                       scale: this.state.keyboardOpacity.interpolate({
@@ -302,11 +327,11 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               >
                 <PicUpload
                   ref={this.picRef}
-                  onSuccess={this.registerPhoto}
+                  onSuccess={this.registerImage}
                   onDelete={this.deletePhoto}
                   type={PicUploadTypes.Media}
-                  width={this.state.photoWidth}
-                  height={this.state.photoHeight}
+                  width={this.state.imageWidth}
+                  height={this.state.imageHeight}
                   allowsEditing={false}
                   shapeBackground={{ left: 10, bottom: 10 }}
                   segmentOnPressLog={() => {
@@ -330,21 +355,24 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
               numLeft={this.state.wordsLeft}
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  composing: state.letter.composing,
+  composing: state.mail.composing,
   recipientName: state.contact.active.firstName,
+  hasSentMail: Object.values(state.mail.existing).some(
+    (mail) => mail.length > 0
+  ),
 });
-const mapDispatchToProps = (dispatch: Dispatch<LetterActionTypes>) => {
+
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
     setContent: (content: string) => dispatch(setContent(content)),
-    setPhoto: (photo: Photo | undefined) => dispatch(setPhoto(photo)),
-    setDraft: (value: boolean) => dispatch(setDraft(value)),
+    setImage: (image: Image | undefined) => dispatch(setImage(image)),
   };
 };
 const ComposeLetterScreen = connect(

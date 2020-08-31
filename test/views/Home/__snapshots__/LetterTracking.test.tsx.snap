@@ -10,7 +10,8 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     }
   }
 >
-  <View
+  <ScrollView
+    keyboardShouldPersistTaps="handled"
     style={
       Object {
         "backgroundColor": "white",
@@ -20,262 +21,264 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
       }
     }
   >
-    <View
-      style={
-        Object {
-          "paddingBottom": 12,
-        }
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-            },
-            Object {
-              "color": "#282828",
-              "fontSize": 21,
-              "paddingBottom": 4,
-            },
-          ]
-        }
-      >
-        Letter tracking
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-            },
-            Object {
-              "color": "#282828",
-              "fontSize": 14,
-            },
-          ]
-        }
-      >
-        Your letter is estimated to arrive on
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Bold",
-            },
-            Object {
-              "color": "#282828",
-              "fontSize": 14,
-            },
-          ]
-        }
-        testID="deliveryDate"
-      >
-        Jun 30
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "#F2F2F2",
-          "height": 2,
-          "marginVertical": 8,
-          "width": "100%",
-        }
-      }
-    />
-    <View
-      style={
-        Object {
-          "paddingTop": 24,
-        }
-      }
-    >
+    <View>
       <View
         style={
           Object {
-            "backgroundColor": "#F2F2F2",
-            "height": 0,
-            "marginLeft": 14,
-            "marginTop": 40,
-            "position": "absolute",
-            "width": 7,
+            "paddingBottom": 12,
           }
         }
-      />
-      <View>
-        <View
+      >
+        <Text
           style={
-            Object {
-              "flexDirection": "row",
-              "paddingBottom": 16,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "backgroundColor": "#CFF3DD",
-                "borderRadius": 50,
-                "height": 28,
-                "marginLeft": 4,
-                "marginRight": 24,
-                "width": 28,
-              }
-            }
-            testID="trackerCircle"
-          />
-          <View
-            style={
-              Object {
-                "flexDirection": "column",
-              }
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Bold",
-                  },
-                  Object {
-                    "color": "#282828",
-                    "fontSize": 16,
-                    "paddingBottom": 6,
-                  },
-                ]
-              }
-            >
-              Mailed
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Bold",
-                  },
-                  Object {
-                    "color": "#393939",
-                    "fontSize": 14,
-                    "paddingBottom": 4,
-                  },
-                ]
-              }
-            />
-          </View>
-          <View
-            style={
-              Object {
-                "alignItems": "flex-end",
-                "flexDirection": "column",
-                "marginLeft": "auto",
-              }
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                  Object {
-                    "color": "#393939",
-                    "fontSize": 14,
-                    "paddingBottom": 8,
-                  },
-                ]
-              }
-              testID="dateFormatted"
-            >
-              Jun 30
-            </Text>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontFamily": "Poppins-Regular",
-                  },
-                  Object {
-                    "color": "#393939",
-                    "fontSize": 14,
-                    "paddingBottom": 4,
-                  },
-                ]
-              }
-            >
-              Jun 30
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderColor": "#FF7171",
-            "borderRadius": 16,
-            "borderWidth": 2,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "marginVertical": 5,
-          },
-          Object {},
-          Object {
-            "alignSelf": "center",
-            "height": 50,
-            "marginBottom": 16,
-            "width": "50%",
-          },
-          Object {},
-          Object {
-            "elevation": 4,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.22,
-          },
-        ]
-      }
-      testID="clickable"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontFamily": "Poppins-Medium",
-            },
-            Object {
-              "color": "#FF7171",
-              "fontSize": 20,
-              "fontWeight": "700",
-              "padding": 6,
-            },
-            Object {},
             Array [
               Object {
                 "fontFamily": "Poppins-Bold",
               },
               Object {
+                "color": "#282828",
+                "fontSize": 21,
+                "paddingBottom": 4,
+              },
+            ]
+          }
+        >
+          Letter tracking
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "color": "#282828",
                 "fontSize": 14,
               },
-            ],
+            ]
+          }
+        >
+          Your letter is estimated to arrive on
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "color": "#282828",
+                "fontSize": 14,
+              },
+            ]
+          }
+          testID="deliveryDate"
+        >
+          Jun 30
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F2F2F2",
+            "height": 2,
+            "marginVertical": 8,
+            "width": "100%",
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingTop": 24,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#F2F2F2",
+              "height": 0,
+              "marginLeft": 14,
+              "marginTop": 40,
+              "position": "absolute",
+              "width": 7,
+            }
+          }
+        />
+        <View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "paddingBottom": 16,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#CFF3DD",
+                  "borderRadius": 50,
+                  "height": 28,
+                  "marginLeft": 4,
+                  "marginRight": 24,
+                  "width": 28,
+                }
+              }
+              testID="trackerCircle"
+            />
+            <View
+              style={
+                Object {
+                  "flexDirection": "column",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
+                      "color": "#282828",
+                      "fontSize": 16,
+                      "paddingBottom": 6,
+                    },
+                  ]
+                }
+              >
+                Mailed
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Bold",
+                    },
+                    Object {
+                      "color": "#393939",
+                      "fontSize": 14,
+                      "paddingBottom": 4,
+                    },
+                  ]
+                }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "flex-end",
+                  "flexDirection": "column",
+                  "marginLeft": "auto",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                    Object {
+                      "color": "#393939",
+                      "fontSize": 14,
+                      "paddingBottom": 8,
+                    },
+                  ]
+                }
+                testID="dateFormatted"
+              >
+                Jun 30
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                    Object {
+                      "color": "#393939",
+                      "fontSize": 14,
+                      "paddingBottom": 4,
+                    },
+                  ]
+                }
+              >
+                Jun 30
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <
+        activeOpacity={0.7}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#FF7171",
+              "borderRadius": 8,
+              "borderWidth": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginVertical": 5,
+            },
             Object {},
             Object {
-              "opacity": 1,
+              "alignSelf": "center",
+              "height": 50,
+              "marginBottom": 16,
+              "width": "50%",
+            },
+            Object {},
+            Object {
+              "elevation": 2,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
             },
           ]
         }
+        testID="clickable"
       >
-        I need help
-      </Text>
-    </TouchableOpacity>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Medium",
+              },
+              Object {
+                "color": "#FF7171",
+                "fontSize": 18,
+                "fontWeight": "700",
+                "padding": 6,
+              },
+              Object {},
+              Array [
+                Object {
+                  "fontFamily": "Poppins-Bold",
+                },
+                Object {
+                  "fontSize": 14,
+                },
+              ],
+              Object {},
+              Object {
+                "opacity": 1,
+              },
+            ]
+          }
+        >
+          I need help
+        </Text>
+      </>
+    </View>
     <Text
       style={
         Array [
@@ -292,19 +295,22 @@ exports[`Letter Tracking Screen should match snapshot 1`] = `
     >
       Letter content
     </Text>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text
-        style={
-          Object {
-            "fontSize": 15,
-          }
+    <Text
+      style={
+        Object {
+          "fontSize": 15,
         }
-      >
-        I'm trying out this new service called Ameelio...
-      </Text>
-    </ScrollView>
-  </View>
+      }
+    >
+      I'm trying out this new service called Ameelio...
+    </Text>
+    <View
+      style={
+        Object {
+          "height": 40,
+        }
+      }
+    />
+  </ScrollView>
 </View>
 `;

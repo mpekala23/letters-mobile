@@ -10,8 +10,7 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <
     style={
       Array [
         Object {
@@ -22,6 +21,7 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
           "width": "100%",
         },
         Object {
+          "borderRadius": 6,
           "height": 210,
           "padding": 0,
         },
@@ -35,62 +35,79 @@ exports[`Memory Lane Card component should match snapshot 1`] = `
           "shadowOpacity": 0.2,
           "shadowRadius": 2.62,
         },
-        undefined,
+        Object {},
       ]
     }
     testID="memoryLaneCard"
   >
-    <Image
-      source={
-        Object {
-          "uri": "test",
+    <View>
+      <Image
+        source={
+          Object {
+            "uri": "test",
+          }
         }
-      }
-      style={
-        Object {
-          "borderTopLeftRadius": 6,
-          "borderTopRightRadius": 6,
-          "height": "50%",
-          "resizeMode": "cover",
-          "width": "100%",
-        }
-      }
-      testID="memoryLaneImage"
-    />
-    <View
-      style={
-        Object {
-          "padding": 8,
-        }
-      }
-    >
-      <Text
         style={
           Object {
-            "fontSize": 18,
-            "fontWeight": "500",
-            "height": 65,
+            "borderTopLeftRadius": 6,
+            "borderTopRightRadius": 6,
+            "height": "50%",
+            "resizeMode": "cover",
+            "width": "100%",
+          }
+        }
+        testID="memoryLaneImage"
+      />
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 8,
           }
         }
       >
-        Text
-      </Text>
-      <Text
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "fontWeight": "500",
+                "overflow": "hidden",
+              },
+              Object {
+                "height": 65,
+              },
+            ]
+          }
+        >
+          Text
+        </Text>
+      </View>
+      <View
         style={
-          Array [
-            Object {
-              "color": "#6E757C",
-              "fontSize": 16,
-            },
-            Object {
-              "marginTop": 6,
-            },
-          ]
+          Object {
+            "paddingHorizontal": 8,
+          }
         }
       >
-        Jul 12, 2019
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#6E757C",
+                "fontSize": 16,
+                "marginBottom": 8,
+              },
+              Object {
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          July 12
+        </Text>
+      </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

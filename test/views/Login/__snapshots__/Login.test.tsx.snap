@@ -10,7 +10,7 @@ exports[`Login screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     accessible={false}
     activeOpacity={1}
     style={
@@ -110,7 +110,7 @@ exports[`Login screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="invalid"
+                testID="valid"
               />
               <View
                 testID="unfocused"
@@ -187,7 +187,7 @@ exports[`Login screen should match snapshot 1`] = `
               testID="parent"
             >
               <View
-                testID="invalid"
+                testID="valid"
               />
               <View
                 testID="unfocused"
@@ -249,16 +249,16 @@ exports[`Login screen should match snapshot 1`] = `
                 />
               </View>
             </View>
-            <TouchableOpacity
+            <
               accessibilityRole="checkbox"
               accessibilityState={
                 Object {
                   "checked": false,
                 }
               }
-              activeOpacity={0.2}
               checkedIcon={
                 <Icon
+                  style={Object {}}
                   svg="<svg width=\\"20\\" height=\\"20\\" viewBox=\\"0 0 20 20\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path fill-rule=\\"evenodd\\" clip-rule=\\"evenodd\\" d=\\"M4 0C1.79086 0 0 1.79086 0 4V16C0 18.2091 1.79086 20 4 20H16C18.2091 20 20 18.2091 20 16V4C20 1.79086 18.2091 0 16 0H4ZM14.9661 6L8.17232 12.8999L5.03389 9.71247L4 10.7625L8.17232 15L16 7.05004L14.9661 6Z\\" fill=\\"black\\"/>
 </svg>
@@ -283,6 +283,7 @@ exports[`Login screen should match snapshot 1`] = `
               uncheckedColor="#bfbfbf"
               uncheckedIcon={
                 <Icon
+                  style={Object {}}
                   svg="<svg width=\\"20\\" height=\\"20\\" viewBox=\\"0 0 20 20\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <rect x=\\"0.75\\" y=\\"0.75\\" width=\\"18.5\\" height=\\"18.5\\" rx=\\"3.25\\" stroke=\\"black\\" stroke-width=\\"1.5\\"/>
 </svg>
@@ -315,6 +316,7 @@ exports[`Login screen should match snapshot 1`] = `
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
+                      Object {},
                       Object {
                         "flex": 0,
                         "height": 20,
@@ -407,15 +409,15 @@ exports[`Login screen should match snapshot 1`] = `
                   Remember Me
                 </Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </>
+            <
               activeOpacity={0.7}
               style={
                 Array [
                   Object {
                     "alignItems": "center",
                     "backgroundColor": "#FF7171",
-                    "borderRadius": 16,
+                    "borderRadius": 8,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "marginVertical": 5,
@@ -430,7 +432,7 @@ exports[`Login screen should match snapshot 1`] = `
                   },
                   Object {},
                   Object {
-                    "elevation": 4,
+                    "elevation": 2,
                     "shadowColor": "#000",
                     "shadowOffset": Object {
                       "height": 5,
@@ -450,7 +452,7 @@ exports[`Login screen should match snapshot 1`] = `
                     },
                     Object {
                       "color": "white",
-                      "fontSize": 20,
+                      "fontSize": 18,
                       "fontWeight": "700",
                       "padding": 6,
                     },
@@ -467,7 +469,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 Log in
               </Text>
-            </TouchableOpacity>
+            </>
             <View
               style={
                 Object {
@@ -485,8 +487,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                 Forgot Your Password?
               </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Object {
                     "backgroundColor": "white",
@@ -513,7 +514,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Reset it
                 </Text>
-              </TouchableOpacity>
+              </>
             </View>
             <View
               accessibilityLabel="By creating an account, you agree to the terms of service and privacy policy."
@@ -544,8 +545,7 @@ exports[`Login screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={Object {}}
                 testID="clickable"
               >
@@ -565,7 +565,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Terms of Service
                 </Text>
-              </TouchableOpacity>
+              </>
               <Text
                 accessible={false}
                 style={
@@ -576,8 +576,7 @@ exports[`Login screen should match snapshot 1`] = `
               >
                  and 
               </Text>
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={Object {}}
                 testID="clickable"
               >
@@ -597,7 +596,7 @@ exports[`Login screen should match snapshot 1`] = `
                 >
                   Privacy Policy
                 </Text>
-              </TouchableOpacity>
+              </>
               <Text
                 style={
                   Object {
@@ -620,6 +619,6 @@ exports[`Login screen should match snapshot 1`] = `
         </ScrollView>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

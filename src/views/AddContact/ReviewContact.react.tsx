@@ -1,6 +1,5 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  KeyboardAvoidingView,
   View,
   ScrollView,
   Text,
@@ -11,25 +10,22 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, PicUpload } from '@components';
+import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
-import {
-  Contact,
-  ContactActionTypes,
-  ContactState,
-} from '@store/Contact/ContactTypes';
-import { Facility, Photo } from 'types';
+import { ContactActionTypes, ContactState } from '@store/Contact/ContactTypes';
+import { ContactDraft, Facility, Image, Contact } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setAdding } from '@store/Contact/ContactActions';
+import { setAdding, setActive } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
+import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -39,14 +35,15 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 
 export interface State {
   valid: boolean;
-  image: Photo | null;
+  image: Image | null;
 }
 
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
   hasSentLetter: boolean;
-  setAdding: (contact: Contact) => void;
+  setAdding: (contactDraft: ContactDraft) => void;
+  setActiveContact: (contact: Contact) => void;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -115,6 +112,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
   }
 
   doAddContact = async () => {
+    Segment.trackWithProperties('Add Contact - Click on Next', {
+      page: 'review',
+    });
     if (
       this.state.valid &&
       this.stateRef.current &&
@@ -122,8 +122,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.lastName.current &&
       this.postal.current &&
       this.facilityName.current &&
-      this.facilityAddress.current &&
-      this.props.contactState.adding.facility
+      this.facilityAddress.current
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
@@ -132,15 +131,15 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         city: this.props.contactState.adding.facility.city,
         state: this.stateRef.current.state.value,
         postal: this.postal.current.state.value,
+        phone: this.props.contactState.adding.facility.phone,
       };
-      const contact: Contact = {
-        id: -1,
+      const contactDraft: ContactDraft = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.props.contactState.adding.inmateNumber,
         relationship: this.props.contactState.adding.relationship,
         facility,
-        photo: this.state.image ? this.state.image : undefined,
+        image: this.state.image ? this.state.image : undefined,
         unit: this.unit.current?.state.value,
         dorm: this.dorm.current?.state.value,
       };
@@ -149,41 +148,55 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         // Check if contact being added already exists
         for (let ix = 0; ix < existing.length; ix += 1) {
           if (
-            contact.facility &&
-            existing[ix].firstName === contact.firstName &&
-            existing[ix].lastName === contact.lastName &&
-            existing[ix].inmateNumber === contact.inmateNumber &&
-            existing[ix].relationship === contact.relationship &&
-            existing[ix].facility?.name === contact.facility.name &&
-            existing[ix].facility?.address === contact.facility.address &&
-            existing[ix].facility?.city === contact.facility.city &&
-            existing[ix].facility?.postal === contact.facility.postal &&
-            existing[ix].facility?.state === contact.facility.state &&
-            existing[ix].facility?.type === contact.facility.type
+            existing[ix].firstName === contactDraft.firstName &&
+            existing[ix].lastName === contactDraft.lastName &&
+            existing[ix].inmateNumber === contactDraft.inmateNumber &&
+            existing[ix].relationship === contactDraft.relationship &&
+            existing[ix].facility.name === contactDraft.facility.name &&
+            existing[ix].facility.address === contactDraft.facility.address &&
+            existing[ix].facility.city === contactDraft.facility.city &&
+            existing[ix].facility.postal === contactDraft.facility.postal &&
+            existing[ix].facility.state === contactDraft.facility.state &&
+            existing[ix].facility.type === contactDraft.facility.type
           ) {
             throw Error('Contact already exists');
           }
         }
-        await addContact(contact);
+        const newContact = await addContact(contactDraft);
+        Segment.trackWithProperties('Add Contact - Success', {
+          relationship: newContact.relationship,
+          facility: newContact.facility.name,
+          facilityCity: newContact.facility.city,
+          facilityState: newContact.facility.state,
+          facilityPostal: newContact.facility.postal,
+          facilityType: newContact.facility.type,
+        });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
           Notifs.scheduleNotificationInHours(
             {
-              title: `${i18n.t('Notifs.readyToSend')} ${contact.firstName}?`,
+              title: `${i18n.t('Notifs.readyToSend')} ${newContact.firstName}?`,
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
               data: {
                 type: NotifTypes.NoFirstLetter,
                 data: {
-                  contactId: contact.id,
+                  contactId: newContact.id,
                 },
               },
             },
             hoursTill8Tomorrow() + 24
           );
         }
-        this.props.navigation.navigate('ContactSelector');
+        this.props.setActiveContact(newContact);
+        this.props.navigation.reset({
+          index: 0,
+          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+        });
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'missing inmate ID',
+          });
           popupAlert({
             title: i18n.t('ReviewContactScreen.invalidInmateNumber'),
             buttons: [
@@ -193,6 +206,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             ],
           });
         } else if (err.message === 'Contact already exists') {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'contact already exists',
+          });
           popupAlert({
             title: i18n.t('ReviewContactScreen.contactAlreadyExists'),
             buttons: [
@@ -202,6 +218,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
             ],
           });
         } else {
+          Segment.trackWithProperties('Add Contact - Error', {
+            'Error Type': 'other',
+          });
           dropdownError({ message: i18n.t('Error.requestIncomplete') });
         }
       }
@@ -235,12 +254,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : -200}
-          enabled
-        >
+        <KeyboardAvoider>
           <View
             style={{
               flex: 1,
@@ -268,8 +282,17 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                       type={PicUploadTypes.Profile}
                       width={136}
                       height={136}
-                      onSuccess={(image: Photo) => this.setState({ image })}
+                      onSuccess={(image: Image) => {
+                        this.setState({ image });
+                      }}
                       onDelete={() => this.setState({ image: null })}
+                      segmentOnPressLog={() => {
+                        Segment.track('Add Contact - Press Upload Image');
+                      }}
+                      segmentSuccessLog={() => {
+                        Segment.track('Add Contact - Upload Image');
+                      }}
+                      segmentErrorLogEvent="Add Contact - Failed Upload Image"
                     />
                   </View>
                   <Text
@@ -356,7 +379,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
               showNextIcon
             />
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoider>
       </TouchableOpacity>
     );
   }
@@ -364,11 +387,13 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
-  hasSentLetter: state.letter.existing !== {},
+  hasSentLetter: state.mail.existing !== {},
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
-    setAdding: (contact: Contact) => dispatch(setAdding(contact)),
+    setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
+    setAdding: (contactDraft: ContactDraft) =>
+      dispatch(setAdding(contactDraft)),
   };
 };
 const ReviewContactScreen = connect(

@@ -7,7 +7,7 @@ import { LetterTypes, LetterStatus } from 'types';
 
 const mockStore = configureStore([]);
 
-jest.mock('moment', () => () => ({
+jest.mock('date-fns', () => ({
   format: () => 'Jun 30',
 }));
 
@@ -20,13 +20,13 @@ const setup = (letterOverrides = {}) => {
     recipientId: 8,
     content: "I'm trying out this new service called Ameelio...",
     letterId: 1,
-    expectedDeliveryDate: '2019-06-30',
+    expectedDeliveryDate: new Date('2019-06-30T15:51:41.000Z'),
     trackingEvents: [
       {
         id: 1,
         name: LetterStatus.Mailed,
         location: '20002',
-        date: '2019-07-12T15:51:41.000Z',
+        date: new Date('2019-07-12T15:51:41.000Z'),
       },
     ],
     ...letterOverrides,
@@ -40,6 +40,12 @@ const setup = (letterOverrides = {}) => {
 
   const store = mockStore({
     letter: initialLetterState,
+    contact: {
+      active: {
+        firstName: 'First Name',
+        id: 6,
+      },
+    },
     notif: { currentNotif: null },
   });
 
@@ -83,7 +89,7 @@ describe('Letter Tracking Screen', () => {
       recipientId: 8,
       content: 'Redux Letter 1',
       letterId: 2,
-      expectedDeliveryDate: '2019-06-30',
+      expectedDeliveryDate: new Date('2019-06-30'),
     });
     expect(getByText('Redux Letter 1').props.children).toBe('Redux Letter 1');
   });
@@ -92,5 +98,23 @@ describe('Letter Tracking Screen', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('I need help'));
     expect(navigation.navigate).toHaveBeenCalledWith('SupportFAQ');
+  });
+
+  it('should show returned to send text if letter is returned', () => {
+    const { getByText } = setup({
+      type: LetterTypes.Postcard,
+      status: LetterStatus.ReturnedToSender,
+      trackingEvents: [
+        {
+          id: 1,
+          name: LetterStatus.ReturnedToSender,
+          location: '20002',
+          date: new Date('2019-07-12T15:51:41.000Z'),
+        },
+      ],
+    });
+    expect(
+      getByText('Your letter was returned to sender.').props.children
+    ).toBe('Your letter was returned to sender.');
   });
 });

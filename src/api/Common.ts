@@ -2,17 +2,26 @@
 import { User } from '@store/User/UserTypes';
 import store from '@store';
 import url from 'url';
-import { logoutUser, loginUser } from '@store/User/UserActions';
-import { Photo, ZipcodeInfo } from 'types';
+import {
+  logoutUser,
+  loginUser,
+  authenticateUser,
+} from '@store/User/UserActions';
+import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
-import { ABBREV_TO_STATE } from '@utils';
+import { ABBREV_TO_STATE, isProduction } from '@utils';
 
-export const GENERAL_URL = 'https://letters-api-staging.ameelio.org/';
-export const API_URL = 'https://letters-api-staging.ameelio.org/api/';
+export const GENERAL_URL = isProduction()
+  ? 'https://api.ameelio.org/'
+  : 'https://letters-api-staging.ameelio.org/';
+
+export const API_URL = isProduction()
+  ? 'https://api.ameelio.org/api/'
+  : 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
-  status?: 'OK' | 'ERROR';
+  status?: 'OK' | 'ERROR' | 'succeeded';
   message?: string;
   data: Record<string, unknown> | Record<string, unknown>[] | unknown;
 }
@@ -25,7 +34,7 @@ export interface UserResponse {
 export function fetchTimeout(
   fetchUrl: string,
   options: Record<string, unknown>,
-  timeout = 3000
+  timeout = 15000
 ): Promise<Response> {
   return Promise.race([
     fetch(fetchUrl, options),
@@ -38,7 +47,7 @@ export function fetchTimeout(
 export async function fetchAuthenticated(
   fetchUrl: string,
   options: Record<string, unknown> = {},
-  timeout = 3000
+  timeout = 15000
 ): Promise<ApiResponse> {
   const requestOptions = {
     ...options,
@@ -80,7 +89,6 @@ export async function fetchAuthenticated(
       firstName: tokenBody.data.first_name,
       lastName: tokenBody.data.last_name,
       email: tokenBody.data.email,
-      phone: tokenBody.data.phone,
       address1: tokenBody.data.addr_line_1,
       address2: tokenBody.data.addr_line_2 || '',
       postal: tokenBody.data.postal,
@@ -90,8 +98,9 @@ export async function fetchAuthenticated(
       joined: tokenBody.data.created_at,
     };
     store.dispatch(
-      loginUser(userData, tokenBody.data.token, tokenBody.data.remember)
+      authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)
     );
+    store.dispatch(loginUser(userData));
     // successfully logged in using the remember token, retry the original api call
     const retryOptions = {
       ...options,
@@ -109,16 +118,17 @@ export async function fetchAuthenticated(
 }
 
 export async function uploadImage(
-  image: Photo,
+  image: Image,
   type: 'avatar' | 'letter'
-): Promise<Photo> {
+): Promise<Image> {
   const data = new FormData();
+
+  const uri = Platform.OS === 'android' ? `file://${image.uri}` : image.uri;
 
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),
     type: 'image/jpeg',
-    uri:
-      Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+    uri,
   };
 
   data.append('file', photo);
@@ -135,14 +145,13 @@ export async function uploadImage(
         Authorization: `Bearer ${store.getState().user.authInfo.apiToken}`,
       },
     },
-    20000
+    30000
   );
   const body: ApiResponse = await response.json();
   if (body.status !== 'OK') throw body;
 
   return {
     uri: body.data as string,
-    type: 'image/jpeg',
   };
 }
 
@@ -158,10 +167,14 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     zip: string;
     city: string;
     state_id: string;
+    lat: string;
+    lng: string;
   };
   return {
     zip: data.zip,
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
+    lat: parseFloat(data.lat),
+    long: parseFloat(data.lng),
   };
 }

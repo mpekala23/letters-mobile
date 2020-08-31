@@ -4,12 +4,14 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   SET_USER,
+  AUTHENTICATE_USER,
 } from './UserTypes';
 
 const initialState: UserState = {
   authInfo: {
     isLoadingToken: true,
     isLoggedIn: false,
+    isLoaded: false,
     apiToken: '',
     rememberToken: '',
   },
@@ -18,7 +20,6 @@ const initialState: UserState = {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
     address1: '',
     address2: '',
     postal: '',
@@ -35,13 +36,24 @@ export default function UserReducer(
 ): UserState {
   const currentState = { ...state };
   switch (action.type) {
-    case LOGIN_USER:
+    case AUTHENTICATE_USER:
       return {
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
+          isLoaded: false,
           apiToken: action.payload.token,
           rememberToken: action.payload.remember,
+        },
+        user: action.payload.user,
+      };
+    case LOGIN_USER:
+      return {
+        authInfo: {
+          ...currentState.authInfo,
+          isLoadingToken: false,
+          isLoggedIn: true,
+          isLoaded: true,
         },
         user: action.payload.user,
       };
@@ -50,6 +62,7 @@ export default function UserReducer(
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: false,
+          isLoaded: false,
           apiToken: '',
           rememberToken: '',
         },
@@ -58,7 +71,6 @@ export default function UserReducer(
           firstName: '',
           lastName: '',
           email: '',
-          phone: '',
           address1: '',
           address2: '',
           postal: '',

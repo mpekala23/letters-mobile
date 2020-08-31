@@ -18,7 +18,6 @@ export default StyleSheet.create({
   },
   successText: {
     fontSize: 16,
-    fontWeight: '500',
     color: Colors.DROPDOWN_SUCCESS_TEXT,
   },
   errorBackground: {
@@ -26,7 +25,6 @@ export default StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    fontWeight: '500',
     color: Colors.DROPDOWN_ERROR_TEXT,
   },
 });

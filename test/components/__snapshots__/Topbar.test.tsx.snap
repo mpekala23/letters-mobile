@@ -32,13 +32,14 @@ exports[`Topbar component should match snapshot 1`] = `
           "zIndex": 10,
         },
         Object {
-          "display": "none",
+          "elevation": 0,
+          "height": 0,
+          "shadowColor": "#fff",
         },
       ]
     }
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
+    <
       style={
         Object {
           "alignItems": "center",
@@ -68,6 +69,7 @@ exports[`Topbar component should match snapshot 1`] = `
               "backgroundColor": "transparent",
               "borderWidth": 0,
             },
+            Object {},
             Object {
               "flex": 0,
               "height": 19,
@@ -109,7 +111,7 @@ exports[`Topbar component should match snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
-    </TouchableOpacity>
+    </>
     <Text
       style={
         Array [

@@ -70,8 +70,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             }
           }
         >
-          <TouchableOpacity
-            activeOpacity={0.2}
+          <
             style={
               Object {
                 "height": 50,
@@ -175,7 +174,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 </RNSVGGroup>
               </RNSVGGroup>
             </RNSVGSvgView>
-          </TouchableOpacity>
+          </>
         </ViewManagerAdapter_ExpoLinearGradient>
         <View
           pointerEvents="auto"
@@ -193,8 +192,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             }
           }
         >
-          <TouchableOpacity
-            activeOpacity={0.2}
+          <
             style={
               Object {
                 "alignItems": "center",
@@ -226,7 +224,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
             >
               
             </Text>
-          </TouchableOpacity>
+          </>
         </View>
         <Text
           style={
@@ -244,94 +242,14 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           First Name
            
         </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 16,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            💌
-          </Text>
-           
-          received
-          :
-           
-          1
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 16,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            📆
-          </Text>
-           
-          last heard from you
-          :
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontFamily": "Poppins-Medium",
-              },
-              Object {
-                "color": "#393939",
-                "fontSize": 16,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#000",
-              }
-            }
-          >
-            ✈️
-          </Text>
-           
-          letters traveled
-          :
-        </Text>
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#FF7171",
-                "borderRadius": 16,
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "marginVertical": 5,
@@ -344,7 +262,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
               Object {},
               Object {
-                "elevation": 4,
+                "elevation": 2,
                 "shadowColor": "#000",
                 "shadowOffset": Object {
                   "height": 5,
@@ -364,7 +282,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 },
                 Object {
                   "color": "white",
-                  "fontSize": 20,
+                  "fontSize": 18,
                   "fontWeight": "700",
                   "padding": 6,
                 },
@@ -381,7 +299,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
           >
             Send letter
           </Text>
-        </TouchableOpacity>
+        </>
       </View>
       <View
         style={
@@ -410,7 +328,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "shadowOpacity": 0.2,
                 "shadowRadius": 2.62,
               },
-              undefined,
+              Object {},
             ]
           }
           testID="creditsCard"
@@ -465,13 +383,12 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                   }
                 }
               >
-                Your letters reset weekly, on Monday at 4:00AM EST.
+                Your letters reset weekly.
               </Text>
             </View>
           </View>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.2}
+        <
           style={
             Array [
               Object {
@@ -483,7 +400,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
               Object {
                 "flexDirection": "column",
-                "height": 90,
+                "height": 110,
                 "justifyContent": "space-between",
               },
               Object {
@@ -501,6 +418,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               },
             ]
           }
+          testID="memoryLaneCountCard"
         >
           <RNSVGSvgView
             align="xMidYMid"
@@ -669,14 +587,14 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 },
                 Object {
                   "color": "#282828",
-                  "fontSize": 28,
+                  "fontSize": 24,
                 },
               ]
             }
           >
             1 Letter
           </Text>
-        </TouchableOpacity>
+        </>
         <Text
           style={
             Array [
@@ -693,8 +611,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
         >
           Letter Tracking
         </Text>
-        <TouchableOpacity
-          activeOpacity={0.2}
+        <
           style={
             Array [
               Object {
@@ -714,7 +631,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                 "shadowOpacity": 0.2,
                 "shadowRadius": 2.62,
               },
-              undefined,
+              Object {},
             ]
           }
           testID="letterStatusCard"
@@ -730,13 +647,13 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "borderRadius": 3,
+                    "borderRadius": 8,
                     "height": "100%",
                     "marginRight": 15,
                     "width": 6,
                   },
                   Object {
-                    "backgroundColor": "#09863D",
+                    "backgroundColor": "#21A453",
                   },
                 ]
               }
@@ -774,20 +691,22 @@ exports[`Single Contact Screen should match snapshot 1`] = `
                     ]
                   }
                 >
-                  Out for Delivery
+                  Processed for Delivery
                 </Text>
                 <Text
                   style={
                     Object {
                       "color": "#6E757C",
                       "fontSize": 16,
+                      "marginBottom": 8,
                     }
                   }
                 >
-                  Invalid date
+                  Jul 12
                 </Text>
               </View>
               <Text
+                numberOfLines={1}
                 style={
                   Object {
                     "color": "#6E757C",
@@ -799,7 +718,7 @@ exports[`Single Contact Screen should match snapshot 1`] = `
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </>
       </View>
     </ScrollView>
   </View>

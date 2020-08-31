@@ -30,6 +30,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="memoryLaneCountCard"
     >
       <Icon
         svg={LettersFilledIcon}
@@ -42,7 +43,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         style={
           props.letterCount === 0
             ? [
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 {
                   fontSize: 26,
                   color: Colors.AMEELIO_BLACK,
@@ -50,13 +51,17 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
                   paddingTop: 4,
                 },
               ]
-            : [Typography.FONT_BOLD, CardStyles.cardTitle]
+            : [Typography.FONT_SEMIBOLD, CardStyles.cardTitle]
         }
       >
         {cardMessage}
       </Text>
     </TouchableOpacity>
   );
+};
+
+MemoryLaneCardCount.defaultProps = {
+  style: {},
 };
 
 export default MemoryLaneCardCount;

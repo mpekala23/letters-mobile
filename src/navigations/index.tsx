@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   createStackNavigator,
@@ -8,35 +8,33 @@ import {
 import {
   AddManuallyScreen,
   BeginScreen,
+  ChooseCategoryScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
-  ExplainProblemScreen,
-  FirstLetterScreen,
   FacilityDirectoryScreen,
-  HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
-  LetterPreviewScreen,
-  LetterTrackingScreen,
-  MemoryLaneScreen,
-  LetterDetailsScreen,
   LoginScreen,
-  PostcardPreviewScreen,
+  MailTrackingScreen,
+  MemoryLaneScreen,
+  MailDetailsScreen,
   PrivacyScreen,
   ReferFriendsScreen,
-  RegisterScreen,
+  RegisterCredsScreen,
+  RegisterPersonalScreen,
+  RegisterAddressScreen,
+  ReviewLetterScreen,
+  ReviewPostcardScreen,
   ReviewContactScreen,
-  SetupScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,
-  ThanksScreen,
   UpdateContactScreen,
   UpdateProfileScreen,
 } from '@views';
@@ -44,7 +42,13 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import { SupportFAQTypes, DeliveryReportTypes } from 'types';
+import {
+  SupportFAQTypes,
+  DeliveryReportTypes,
+  Category,
+  Image,
+  MailTypes,
+} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -54,6 +58,7 @@ import Topbar, {
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+import i18n from '@i18n';
 
 export { navigationRef, navigate };
 
@@ -63,36 +68,51 @@ export type AuthStackParamList = {
   Login: undefined;
   Terms: undefined;
   Privacy: undefined;
-  Register: undefined;
+  RegisterCreds: undefined;
+  RegisterPersonal: {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+  };
+  RegisterAddress: {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    remember: boolean;
+    firstName: string;
+    lastName: string;
+    referrer: string;
+    image: Image | undefined;
+  };
 };
 
 export type AppStackParamList = {
   AddManually: { phyState: string };
+  ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
-  ComposePostcard: undefined;
+  ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
-  ExplainProblem: undefined;
   FacilityDirectory: { phyState: string };
-  FirstLetter: undefined;
-  Home: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
   LetterPreview: undefined;
   PostcardPreview: undefined;
-  LetterDetails: undefined;
-  LetterTracking: undefined;
+  MailDetails: undefined;
+  MailTracking: undefined;
   MemoryLane: undefined;
-  ReferFriends: undefined;
+  ReferFriends: { mailType: MailTypes };
+  ReviewLetter: undefined;
+  ReviewPostcard: { horizontal: boolean; category: string };
   ReviewContact: undefined;
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
-  Thanks: undefined;
   UpdateContact: { contactId: number } | undefined;
   UpdateProfile: undefined;
 };
@@ -105,34 +125,36 @@ interface RouteDetails {
 
 const mapRouteNameToDetails: Record<string, RouteDetails> = {
   Begin: { title: '', profile: false, shown: false },
-  Splash: { title: 'Splash', profile: false },
-  Login: { title: 'Login', profile: false },
-  Terms: { title: 'Terms of Service', profile: false },
-  Privacy: { title: 'Privacy Policy', profile: false },
-  Register: { title: 'Register', profile: false },
-  AddManually: { title: 'Add Manually', profile: false },
-  ChooseOption: { title: 'Compose', profile: false },
-  ComposeLetter: { title: 'Compose', profile: false },
-  ComposePostcard: { title: 'Compose', profile: false },
-  ContactInfo: { title: 'Contact Info', profile: false },
-  ContactSelector: { title: 'Contacts', profile: true },
-  ExplainProblem: { title: 'Explain Problem', profile: false },
+  Splash: { title: '', profile: false, shown: false },
+  Login: { title: i18n.t('Screens.login'), profile: false },
+  Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
+  Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
+  RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
+  RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
+  RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
+  AddManually: { title: i18n.t('Screens.addManually'), profile: false },
+  ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
+  ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
+  ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
+  ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
+  ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
+  ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
-  FirstLetter: { title: 'First Letter', profile: false },
-  Home: { title: 'Home', profile: true },
-  Issues: { title: 'Issues', profile: false },
-  LetterDetails: { title: 'Letter Details', profile: true },
-  LetterPreview: { title: 'Last Step', profile: false },
-  LetterTracking: { title: 'Tracking', profile: true },
-  MemoryLane: { title: 'Memory Lane', profile: true },
-  PostcardPreview: { title: 'Postcard Preview', profile: false },
-  ReferFriends: { title: 'Spread the Word', profile: false },
-  ReviewContact: { title: 'Review Contact', profile: false },
+  Issues: { title: i18n.t('Screens.issues'), profile: false },
+  MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
+  MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
+  MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
+  ReviewLetter: { title: i18n.t('Screens.lastStep'), profile: false },
+  ReviewPostcard: {
+    title: i18n.t('Screens.reviewPostcard'),
+    profile: false,
+  },
+  ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
   Setup: { title: '', profile: false },
-  SingleContact: { title: 'Home', profile: true },
-  Thanks: { title: 'Thanks', profile: false },
-  UpdateContact: { title: 'Update Contact', profile: false },
-  UpdateProfile: { title: 'Update Profile', profile: false },
+  SingleContact: { title: i18n.t('Screens.home'), profile: true },
+  UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
+  UpdateProfile: { title: i18n.t('Screens.updateProfile'), profile: false },
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
@@ -207,17 +229,22 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
+  const [currentRoute, setCurrentRoute] = useState('Splash');
   const topbar = (
     <Topbar
       userState={props.userState}
       navigation={navigationRef.current}
+      currentRoute={currentRoute}
       ref={topbarRef}
     />
   );
 
   // Determine which views should be accessible
   let screens;
-  if (props.authInfo.isLoadingToken) {
+  if (
+    props.authInfo.isLoadingToken ||
+    (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
+  ) {
     screens = (
       <Stack.Screen
         name="Splash"
@@ -225,26 +252,41 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         options={{ cardStyleInterpolator: fadeTransition }}
       />
     );
-  } else if (props.authInfo.isLoggedIn) {
+  } else if (!props.authInfo.isLoggedIn) {
+    screens = (
+      <>
+        <Stack.Screen name="Begin" component={BeginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Terms" component={TermsScreen} />
+        <Stack.Screen name="Privacy" component={PrivacyScreen} />
+        <Stack.Screen name="RegisterCreds" component={RegisterCredsScreen} />
+        <Stack.Screen
+          name="RegisterPersonal"
+          component={RegisterPersonalScreen}
+        />
+        <Stack.Screen
+          name="RegisterAddress"
+          component={RegisterAddressScreen}
+        />
+      </>
+    );
+  } else {
     screens = (
       <>
         <Stack.Screen
-          name="Setup"
-          component={SetupScreen}
+          name="ContactSelector"
+          component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ChooseCategory" component={ChooseCategoryScreen} />
         <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
         <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
           name="ComposePostcard"
           component={ComposePostcardScreen}
         />
-        <Stack.Screen name="LetterPreview" component={LetterPreviewScreen} />
-        <Stack.Screen
-          name="PostcardPreview"
-          component={PostcardPreviewScreen}
-        />
+        <Stack.Screen name="ReviewLetter" component={ReviewLetterScreen} />
+        <Stack.Screen name="ReviewPostcard" component={ReviewPostcardScreen} />
         <Stack.Screen
           name="ContactInfo"
           component={ContactInfoScreen}
@@ -260,24 +302,16 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen name="AddManually" component={AddManuallyScreen} />
         <Stack.Screen name="ReferFriends" component={ReferFriendsScreen} />
         <Stack.Screen name="ReviewContact" component={ReviewContactScreen} />
-        <Stack.Screen name="ExplainProblem" component={ExplainProblemScreen} />
-        <Stack.Screen name="FirstLetter" component={FirstLetterScreen} />
         <Stack.Screen name="Issues" component={IssuesScreen} />
         <Stack.Screen name="IssuesDetail" component={IssuesDetailScreen} />
         <Stack.Screen
           name="IssuesDetailSecondary"
           component={IssuesDetailSecondaryScreen}
         />
-        <Stack.Screen name="Thanks" component={ThanksScreen} />
-        <Stack.Screen
-          name="ContactSelector"
-          component={ContactSelectorScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
         <Stack.Screen name="SingleContact" component={SingleContactScreen} />
-        <Stack.Screen name="LetterTracking" component={LetterTrackingScreen} />
+        <Stack.Screen name="MailTracking" component={MailTrackingScreen} />
         <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
-        <Stack.Screen name="LetterDetails" component={LetterDetailsScreen} />
+        <Stack.Screen name="MailDetails" component={MailDetailsScreen} />
         <Stack.Screen name="SupportFAQ" component={SupportFAQScreen} />
         <Stack.Screen
           name="SupportFAQDetail"
@@ -301,29 +335,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         />
       </>
     );
-  } else {
-    screens = (
-      <>
-        <Stack.Screen
-          name="Begin"
-          component={BeginScreen}
-          options={{
-            cardStyleInterpolator: fadeTransition,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Terms" component={TermsScreen} />
-        <Stack.Screen name="Privacy" component={PrivacyScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-      </>
-    );
   }
   return (
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name;
+        if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
           setProfile(mapRouteNameToDetails[name].profile);

@@ -6,6 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   Animated,
+  Platform,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Button from '../Button/Button.react';
@@ -60,14 +61,17 @@ class Alert extends React.Component<Record<string, unknown>, State> {
       >
         <TouchableOpacity
           style={Styles.trueBackground}
-          onPress={() => this.setCurrent(null)}
+          onPress={() => {
+            this.setCurrent(null);
+            setStatusBackground('white');
+          }}
           activeOpacity={1.0}
         >
           <View style={Styles.alertBackground}>
             <Text
               style={[
-                Typography.FONT_BOLD,
-                { fontSize: 23, textAlign: 'center', marginBottom: 10 },
+                Typography.FONT_SEMIBOLD,
+                { fontSize: 20, textAlign: 'center', marginBottom: 18 },
               ]}
             >
               {this.state.current.title}
@@ -80,13 +84,13 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                     {
                       fontSize: 16,
                       textAlign: 'center',
-                      color: Colors.GRAY_DARK,
+                      color: Colors.GRAY_500,
                     },
                   ]}
                 >
                   {this.state.current.message}
                 </Text>
-                <View style={{ height: 40 }} />
+                <View style={{ height: 32 }} />
               </>
             )}
             {this.state.current.buttons &&
@@ -121,13 +125,16 @@ const alertRef = createRef<Alert>();
 const AlertInstance = (): JSX.Element => <Alert ref={alertRef} key="Alert" />;
 
 export function popupAlert(pop: AlertInfo): void {
-  setStatusBackground(GRAY_BACK);
-  if (alertRef.current)
+  setStatusBackground(Platform.OS === 'ios' ? GRAY_BACK : 'rgb(145,145,145)');
+  if (alertRef.current) {
     alertRef.current.setCurrent({
       title: pop.title,
       message: pop.message,
       buttons: pop.buttons,
     });
+  } else {
+    setStatusBackground('white');
+  }
 }
 
 export default AlertInstance;

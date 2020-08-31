@@ -20,7 +20,7 @@ export default StyleSheet.create({
     marginVertical: 6,
   },
   cardTitle: {
-    fontSize: 28,
+    fontSize: 24,
     color: Colors.AMEELIO_BLACK,
   },
   cardData: {
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   letterStatusBar: {
     width: 6,
     height: '100%',
-    borderRadius: 3,
+    borderRadius: 8,
     marginRight: 15,
   },
   statusAndDateContainer: {
@@ -53,13 +53,15 @@ export default StyleSheet.create({
   date: {
     fontSize: 16,
     color: Colors.AMEELIO_GRAY,
+    marginBottom: 8,
   },
   memoryLaneBackground: {
     padding: 0,
     height: 210,
+    borderRadius: 6,
   },
   memoryLaneTextBackground: {
-    padding: 8,
+    paddingHorizontal: 8,
   },
   memoryLanePicture: {
     height: '50%',
@@ -70,13 +72,29 @@ export default StyleSheet.create({
   },
   memoryLaneText: {
     fontSize: 18,
-    fontWeight: '500',
-    height: 65,
+    overflow: 'hidden',
+  },
+  memoryLanePostcardBackground: {
+    backgroundColor: 'rgba(0,0,0, 0.30)',
+    flex: 1,
+    borderRadius: 6,
+  },
+  memoryLanePostcardPicture: {
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    borderRadius: 6,
+  },
+  memoryLanePostcardDate: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 'auto',
+    marginBottom: 8,
   },
   letterOptionsBackground: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 90,
+    height: 110,
   },
   deliveryAndDateContainer: {
     flexDirection: 'row',
@@ -112,6 +130,18 @@ export default StyleSheet.create({
   creditsSendMoreText: {
     flex: 1,
     fontSize: 18,
-    color: Colors.PINK_DARKER,
+    color: Colors.PINK_500,
+  },
+  categoryBackground: {
+    height: 200,
+    flex: 1,
+    padding: 0,
+  },
+  categoryTitle: {
+    fontSize: 18,
+  },
+  categoryBlurb: {
+    color: Colors.GRAY_DARKER,
+    fontSize: 12,
   },
 });

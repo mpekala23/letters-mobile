@@ -1,29 +1,29 @@
 import React from 'react';
 import { Text, TouchableOpacity, ViewStyle, View } from 'react-native';
-import { LetterStatus } from 'types';
+import { MailStatus } from 'types';
 import CardStyles from './Card.styles';
 
 interface Props {
   title: string;
   date: string;
-  status: LetterStatus;
+  status: MailStatus;
   onPress: () => void;
   style?: ViewStyle;
 }
 
-function mapStatusToProgressStyle(type: LetterStatus) {
+function mapStatusToProgressStyle(type: MailStatus) {
   switch (type) {
-    case LetterStatus.Draft:
+    case MailStatus.Draft:
       return { width: '0%' };
-    case LetterStatus.Created:
+    case MailStatus.Created:
       return { width: '20%' };
-    case LetterStatus.Mailed:
+    case MailStatus.Mailed:
       return { width: '40%' };
-    case LetterStatus.InTransit:
+    case MailStatus.InTransit:
       return { width: '60%' };
-    case LetterStatus.OutForDelivery:
+    case MailStatus.ProcessedForDelivery:
       return { width: '80%' };
-    case LetterStatus.Delivered:
+    case MailStatus.Delivered:
       return { width: '100%' };
     default:
       return { width: '0%' };
@@ -52,6 +52,10 @@ const DeliveryStatusCard: React.FC<Props> = (props: Props) => {
       </View>
     </TouchableOpacity>
   );
+};
+
+DeliveryStatusCard.defaultProps = {
+  style: {},
 };
 
 export default DeliveryStatusCard;

@@ -1,3 +1,5 @@
+import { getZipcode } from './Common';
+
 import {
   addContact,
   updateContact,
@@ -8,7 +10,14 @@ import {
 
 import { getFacility, getFacilities } from './Facilities';
 
-import { createLetter, facebookShare, getLetters } from './Letters';
+import {
+  createMail,
+  getMail,
+  getSingleMail,
+  getTrackingEvents,
+  getCategories,
+  getSubcategories,
+} from './Mail';
 
 import {
   register,
@@ -17,9 +26,15 @@ import {
   logout,
   updateProfile,
   getUser,
+  uploadPushToken,
+  saveDraft,
+  deleteDraft,
+  loadDraft,
 } from './User';
 
 export {
+  uploadPushToken,
+  getZipcode,
   addContact,
   updateContact,
   deleteContact,
@@ -27,13 +42,19 @@ export {
   getContacts,
   getFacility,
   getFacilities,
-  createLetter,
-  facebookShare,
-  getLetters,
+  createMail,
+  getMail,
+  getSingleMail,
+  getTrackingEvents,
+  getCategories,
   register,
   login,
   loginWithToken,
   logout,
   updateProfile,
   getUser,
+  saveDraft,
+  deleteDraft,
+  loadDraft,
+  getSubcategories,
 };

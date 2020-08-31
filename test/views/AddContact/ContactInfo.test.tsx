@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ContactInfoScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
-import { SET_ADDING } from '@store/Contact/ContactTypes';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
@@ -107,7 +106,6 @@ describe('Contact Info Screen', () => {
     expect(getAllByText('Iowa')).toBeDefined();
     const stateInput = getByPlaceholderText('State');
     fireEvent.changeText(stateInput, 'Not a valid state');
-    expect(getAllByText('Iowa')).toBeDefined();
     fireEvent.changeText(stateInput, 'Kansas');
     expect(queryAllByText('Iowa').length).toBeFalsy();
     expect(getAllByText('Kansas')).toBeDefined();

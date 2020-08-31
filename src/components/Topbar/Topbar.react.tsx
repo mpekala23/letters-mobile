@@ -1,25 +1,30 @@
 import React, { createRef } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { ProfilePicTypes, TopbarRouteAction } from 'types';
+import { View, Text, TouchableOpacity, Keyboard, Animated } from 'react-native';
+import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
 import { NavigationContainerRef } from '@react-navigation/native';
-import Loading from '@assets/loading.gif';
+import * as Segment from 'expo-analytics-segment';
+import { LinearGradient } from 'expo-linear-gradient';
+import { WINDOW_WIDTH } from '@utils';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles from './Topbar.styles';
+import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
+import Button from '../Button/Button.react';
 
 interface Props {
   userState: UserState;
   navigation: NavigationContainerRef | null;
+  currentRoute: string;
 }
 
 interface State {
   shown: boolean;
+  shownAnim: Animated.Value;
   title: string;
   profile: boolean;
-  blocked: boolean;
+  backOverride?: TopbarBackAction;
   profileOverride?: {
     enabled: boolean;
     text: string;
@@ -33,10 +38,77 @@ class Topbar extends React.Component<Props, State> {
     super(props);
     this.state = {
       shown: false,
+      shownAnim: new Animated.Value(0),
       title: '',
       profile: true,
-      blocked: false,
     };
+    this.renderBackButton = this.renderBackButton.bind(this);
+  }
+
+  renderBackButton(): JSX.Element | null {
+    if (this.state.backOverride) {
+      return (
+        <TouchableOpacity
+          style={Styles.backContainer}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (this.state.backOverride) this.state.backOverride.action();
+          }}
+          testID="backButton"
+        >
+          <Icon svg={BackButton} />
+        </TouchableOpacity>
+      );
+    }
+    if (
+      this.props.navigation &&
+      (this.props.navigation.canGoBack() ||
+        this.props.currentRoute === 'Login' ||
+        this.props.currentRoute === 'Register1')
+    ) {
+      return (
+        <TouchableOpacity
+          style={Styles.backContainer}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (this.props.navigation) {
+              const route = this.props.navigation.getCurrentRoute()?.name;
+              if (route === 'Login' || route === 'Register1') {
+                this.props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Begin' }],
+                });
+              }
+              if (
+                route === 'ContactInfo' ||
+                route === 'FacilityDirectory' ||
+                route === 'AddManually' ||
+                route === 'ReviewContact'
+              ) {
+                let logName = '';
+                if (route === 'ContactInfo') {
+                  logName = 'info';
+                } else if (route === 'FacilityDirectory') {
+                  logName = 'facility';
+                } else if (route === 'AddManually') {
+                  logName = 'manual';
+                } else {
+                  logName = 'review';
+                }
+                Segment.trackWithProperties('Add Contact - Click on Back', {
+                  page: logName,
+                });
+              }
+              this.props.navigation.goBack();
+            }
+          }}
+          testID="backButton"
+        >
+          <Icon svg={BackButton} />
+        </TouchableOpacity>
+      );
+    }
+    return null;
   }
 
   render(): JSX.Element {
@@ -52,71 +124,44 @@ class Topbar extends React.Component<Props, State> {
       );
     } else if (this.state.profileOverride) {
       topRight = (
-        <TouchableOpacity
-          activeOpacity={
-            this.state.profileOverride?.enabled && !this.state.blocked
-              ? 0.7
-              : 1.0
-          }
+        <Button
+          enabled={this.state.profileOverride.enabled}
+          blocking={this.state.profileOverride.blocking}
           onPress={async () => {
-            if (this.state.profileOverride?.blocking) {
-              if (this.state.profileOverride?.enabled && !this.state.blocked) {
-                this.setState({ blocked: true });
-                await this.state.profileOverride.action();
-                this.setState({ blocked: false });
-              }
-            } else if (this.state.profileOverride?.enabled) {
-              this.state.profileOverride.action();
-            }
+            Keyboard.dismiss();
+            if (this.state.profileOverride)
+              await this.state.profileOverride.action();
           }}
-        >
-          {this.state.blocked ? (
-            <Image
-              source={Loading}
-              style={{ width: 25, height: 25, right: 10 }}
-              testID="loading"
-            />
-          ) : (
-            <Text
-              style={[
-                Typography.FONT_BOLD,
-                {
-                  color: this.state.profileOverride.enabled
-                    ? Colors.PINK_DARKER
-                    : Colors.GRAY_MEDIUM,
-                  fontSize: 16,
-                },
-              ]}
-              testID="topRightText"
-            >
-              {this.state.profileOverride.text}
-            </Text>
-          )}
-        </TouchableOpacity>
+          buttonText={this.state.profileOverride.text}
+          containerStyle={{ borderRadius: 20 }}
+        />
       );
     } else {
       topRight = <View testID="blank" />;
     }
     return (
-      <View
+      <Animated.View
         style={[
           Styles.barContainer,
-          { display: this.state.shown ? 'flex' : 'none' },
+          {
+            opacity: this.state.shownAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1],
+            }),
+            height: this.state.shownAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, barHeight],
+            }),
+            shadowColor: this.state.shown ? '#000' : '#fff',
+            elevation: this.state.shown ? 5 : 0,
+          },
         ]}
       >
-        {this.props.navigation && this.props.navigation.canGoBack() && (
-          <TouchableOpacity
-            style={Styles.backContainer}
-            onPress={this.props.navigation.goBack}
-            testID="backButton"
-          >
-            <Icon svg={BackButton} />
-          </TouchableOpacity>
-        )}
+        {this.renderBackButton()}
         <Text
           style={[
             Typography.FONT_MEDIUM,
-            { fontSize: 16, color: Colors.GRAY_DARK },
+            { fontSize: 16, color: Colors.GRAY_500, paddingTop: 10 },
           ]}
         >
           {this.state.title}
@@ -124,7 +169,19 @@ class Topbar extends React.Component<Props, State> {
         <View style={{ position: 'absolute', right: 19, paddingTop: 10 }}>
           {topRight}
         </View>
-      </View>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['rgba(0,0,0,0.2)', 'transparent']}
+          start={[0, 1.0]}
+          end={[0, 0]}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: WINDOW_WIDTH,
+            height: 4,
+          }}
+        />
+      </Animated.View>
     );
   }
 }
@@ -132,7 +189,15 @@ class Topbar extends React.Component<Props, State> {
 export const topbarRef = createRef<Topbar>();
 
 export const setShown = (val: boolean): void => {
-  if (topbarRef.current) topbarRef.current.setState({ shown: val });
+  if (topbarRef.current) {
+    Animated.timing(topbarRef.current.state.shownAnim, {
+      toValue: val ? 1 : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start(() => {
+      if (topbarRef.current) topbarRef.current.setState({ shown: val });
+    });
+  }
 };
 
 export const setTitle = (val: string): void => {
@@ -148,6 +213,12 @@ export const setProfileOverride = (
 ): void => {
   if (topbarRef.current)
     topbarRef.current.setState({ profileOverride: override });
+};
+
+export const setBackOverride = (
+  backOverride: TopbarBackAction | undefined
+): void => {
+  if (topbarRef.current) topbarRef.current.setState({ backOverride });
 };
 
 export default Topbar;

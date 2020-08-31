@@ -1,13 +1,14 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
-import { Typography, Colors } from '@styles';
+import { Typography } from '@styles';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
 import { navigate } from '@notifications';
 import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 export interface Props {
   firstName: string;
@@ -27,6 +28,11 @@ function mapProfileTypeToStyle(type: ProfilePicTypes) {
       return {
         image: Styles.singleContactPic,
         background: Styles.singleContactBackground,
+      };
+    case ProfilePicTypes.Avatar:
+      return {
+        image: Styles.avatarPic,
+        background: Styles.avatarBackground,
       };
     default:
       return {
@@ -48,7 +54,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   let insideCircle = (
     <Text
       style={[
-        Typography.FONT_REGULAR,
+        Typography.FONT_MEDIUM,
         props.type === ProfilePicTypes.SingleContact
           ? Styles.initialsBig
           : Styles.initials,
@@ -62,12 +68,15 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
     let avatar = AvatarTopbar;
     if (props.type === ProfilePicTypes.SingleContact) avatar = Avatar;
     else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
+    else if (props.type === ProfilePicTypes.Avatar) avatar = Avatar;
     insideCircle =
-      props.imageUri.slice(props.imageUri.length - 4) === '.svg' ? (
+      props.imageUri.indexOf('.svg') !== -1 ? (
         <Icon svg={avatar} />
       ) : (
-        <Image
-          style={mapProfileTypeToStyle(props.type).image}
+        <AsyncImage
+          download
+          loadingSize={20}
+          viewStyle={mapProfileTypeToStyle(props.type).image}
           source={{ uri: props.imageUri }}
           accessibilityLabel="Profile Picture"
         />

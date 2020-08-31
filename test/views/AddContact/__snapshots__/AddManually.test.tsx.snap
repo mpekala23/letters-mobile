@@ -10,7 +10,7 @@ exports[`Add Manually Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -445,8 +445,7 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     }
                   }
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  <
                     style={
                       Array [
                         Object {
@@ -470,9 +469,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Alaska
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -496,9 +494,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Alabama
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -522,35 +519,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Arkansas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      American Samoa
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -574,9 +544,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Arizona
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -600,9 +569,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       California
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -626,9 +594,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Colorado
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -652,9 +619,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Connecticut
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -678,9 +644,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       District of Columbia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -704,9 +669,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Delaware
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -730,9 +694,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Florida
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -756,35 +719,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Georgia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Guam
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -808,9 +744,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Hawaii
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -834,9 +769,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Iowa
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -860,9 +794,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Idaho
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -886,9 +819,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Illinois
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -912,9 +844,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Indiana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -938,9 +869,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Kansas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -964,9 +894,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Kentucky
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -990,9 +919,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Louisiana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1016,9 +944,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Massachusetts
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1042,9 +969,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Maryland
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1068,9 +994,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Maine
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1094,9 +1019,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Michigan
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1120,9 +1044,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Minnesota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1146,9 +1069,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Missouri
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1172,9 +1094,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Mississippi
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1198,9 +1119,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Montana
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1224,9 +1144,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       North Carolina
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1250,9 +1169,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       North Dakota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1276,9 +1194,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Nebraska
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1302,9 +1219,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       New Hampshire
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1328,9 +1244,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       New Jersey
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1354,9 +1269,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       New Mexico
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1380,9 +1294,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Nevada
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1406,9 +1319,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       New York
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1432,9 +1344,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Ohio
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1458,9 +1369,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Oklahoma
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1484,9 +1394,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Oregon
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1510,35 +1419,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Pennsylvania
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Puerto Rico
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1562,9 +1444,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Rhode Island
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1588,9 +1469,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       South Carolina
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1614,9 +1494,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       South Dakota
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1640,9 +1519,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Tennessee
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1666,9 +1544,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Texas
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1692,9 +1569,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Utah
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1718,35 +1594,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Virginia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
-                    style={
-                      Array [
-                        Object {
-                          "borderBottomWidth": 1,
-                          "borderColor": "#6D6D6D",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "paddingHorizontal": 10,
-                          "width": "100%",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontFamily": "Poppins-Regular",
-                        }
-                      }
-                    >
-                      Virgin Islands
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1770,9 +1619,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Vermont
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1796,9 +1644,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Washington
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1822,9 +1669,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Wisconsin
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1848,9 +1694,8 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       West Virginia
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.2}
+                  </>
+                  <
                     style={
                       Array [
                         Object {
@@ -1876,7 +1721,7 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                     >
                       Wyoming
                     </Text>
-                  </TouchableOpacity>
+                  </>
                 </ScrollView>
               </View>
             </View>
@@ -1955,10 +1800,85 @@ exports[`Add Manually Screen should match snapshot 1`] = `
                 />
               </View>
             </View>
+            <View
+              pointerEvents="auto"
+              style={
+                Object {
+                  "backgroundColor": "#F2F2F2",
+                  "borderRadius": 8,
+                  "height": 50,
+                  "marginBottom": 10,
+                  "overflow": "hidden",
+                  "width": "100%",
+                }
+              }
+              testID="parent"
+            >
+              <View
+                testID="valid"
+              />
+              <View
+                testID="unfocused"
+              />
+              <TextInput
+                allowFontScaling={true}
+                multiline={false}
+                numberOfLines={1}
+                placeholder="Facility Phone (optional)"
+                rejectResponderTermination={true}
+                secureTextEntry={false}
+                style={
+                  Array [
+                    Object {
+                      "borderColor": "rgba(0,0,0,0)",
+                      "borderRadius": 8,
+                      "borderWidth": 2,
+                      "color": "black",
+                      "fontSize": 16,
+                      "paddingHorizontal": 10,
+                      "textAlignVertical": "center",
+                      "width": "100%",
+                    },
+                    Object {},
+                    Object {},
+                    Object {
+                      "height": 50,
+                    },
+                    Object {},
+                    Object {
+                      "fontFamily": "Poppins-Regular",
+                    },
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                value=""
+              />
+              <View
+                style={
+                  Object {
+                    "height": 0,
+                    "width": "100%",
+                    "zIndex": 5,
+                  }
+                }
+              >
+                <ScrollView
+                  keyboardShouldPersistTaps="always"
+                  nestedScrollEnabled={true}
+                  scrollEnabled={true}
+                  style={
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
+                  }
+                />
+              </View>
+            </View>
           </View>
         </ScrollView>
       </View>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

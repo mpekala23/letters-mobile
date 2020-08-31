@@ -44,14 +44,30 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         : 
         Team A
       </Text>
-      <TouchableOpacity
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "Poppins-Medium-Italic",
+            },
+            Object {
+              "color": "#9A9A9A",
+              "marginTop": 8,
+              "paddingRight": 16,
+            },
+          ]
+        }
+      >
+        Autosaved
+      </Text>
+      <
         activeOpacity={0.7}
         style={
           Array [
             Object {
               "alignItems": "center",
               "backgroundColor": "#FF7171",
-              "borderRadius": 16,
+              "borderRadius": 8,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginVertical": 5,
@@ -64,7 +80,7 @@ exports[`ComposeHeader component should match snapshot 1`] = `
             },
             Object {},
             Object {
-              "elevation": 4,
+              "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
                 "height": 5,
@@ -102,7 +118,7 @@ exports[`ComposeHeader component should match snapshot 1`] = `
         >
           Need Ideas?
         </Text>
-      </TouchableOpacity>
+      </>
     </View>
   </View>
 </View>

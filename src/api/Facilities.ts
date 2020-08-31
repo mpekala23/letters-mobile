@@ -8,21 +8,25 @@ import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawFacility {
   name: string;
-  federal: number;
+  full_name: string;
+  type: string;
   address: string;
   city: string;
   state: string;
   postal: string;
+  phone: string;
 }
 
 function cleanFacility(facility: RawFacility): Facility {
   return {
     name: facility.name,
-    type: facility.federal ? PrisonTypes.Federal : PrisonTypes.State,
+    fullName: facility.full_name,
+    type: facility.type as PrisonTypes,
     address: facility.address,
     city: facility.city,
     state: ABBREV_TO_STATE[facility.state],
     postal: facility.postal,
+    phone: facility.phone,
   };
 }
 

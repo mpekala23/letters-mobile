@@ -208,14 +208,14 @@ exports[`Thanks screen should match snapshot 1`] = `
         </RNSVGGroup>
       </RNSVGSvgView>
     </View>
-    <TouchableOpacity
+    <
       activeOpacity={0.7}
       style={
         Array [
           Object {
             "alignItems": "center",
             "backgroundColor": "#FF7171",
-            "borderRadius": 16,
+            "borderRadius": 8,
             "flexDirection": "row",
             "justifyContent": "center",
             "marginVertical": 5,
@@ -228,7 +228,7 @@ exports[`Thanks screen should match snapshot 1`] = `
           },
           Object {},
           Object {
-            "elevation": 4,
+            "elevation": 2,
             "shadowColor": "#000",
             "shadowOffset": Object {
               "height": 5,
@@ -248,7 +248,7 @@ exports[`Thanks screen should match snapshot 1`] = `
             },
             Object {
               "color": "white",
-              "fontSize": 20,
+              "fontSize": 18,
               "fontWeight": "700",
               "padding": 6,
             },
@@ -263,7 +263,7 @@ exports[`Thanks screen should match snapshot 1`] = `
       >
         Return home
       </Text>
-    </TouchableOpacity>
+    </>
   </View>
 </View>
 `;

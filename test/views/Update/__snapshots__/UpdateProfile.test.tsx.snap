@@ -10,7 +10,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -64,8 +64,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
               }
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Array [
                   Object {
@@ -105,6 +104,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
+                      Object {},
                       Object {
                         "flex": 0,
                         "height": 130,
@@ -156,7 +156,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                   </RNSVGGroup>
                 </RNSVGSvgView>
               </View>
-            </TouchableOpacity>
+            </>
           </View>
           <Text
             style={
@@ -818,8 +818,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Array [
                     Object {
@@ -845,7 +844,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 >
                   Connecticut
                 </Text>
-              </TouchableOpacity>
+              </>
             </ScrollView>
           </View>
         </View>
@@ -939,14 +938,14 @@ exports[`Update Profile Screen should match snapshot 1`] = `
             />
           </View>
         </View>
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#FF7171",
-                "borderRadius": 16,
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "marginVertical": 5,
@@ -962,7 +961,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
               },
               Object {},
               Object {
-                "elevation": 4,
+                "elevation": 2,
                 "shadowColor": "#000",
                 "shadowOffset": Object {
                   "height": 5,
@@ -982,7 +981,7 @@ exports[`Update Profile Screen should match snapshot 1`] = `
                 },
                 Object {
                   "color": "white",
-                  "fontSize": 20,
+                  "fontSize": 18,
                   "fontWeight": "700",
                   "padding": 6,
                 },
@@ -997,9 +996,9 @@ exports[`Update Profile Screen should match snapshot 1`] = `
           >
             Log out
           </Text>
-        </TouchableOpacity>
+        </>
       </ScrollView>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

@@ -10,7 +10,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
     }
   }
 >
-  <TouchableOpacity
+  <
     activeOpacity={1}
     style={
       Object {
@@ -96,8 +96,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               }
             }
           >
-            <TouchableOpacity
-              activeOpacity={0.2}
+            <
               style={
                 Array [
                   Object {
@@ -137,6 +136,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
+                      Object {},
                       Object {
                         "flex": 0,
                         "height": 130,
@@ -188,7 +188,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                   </RNSVGGroup>
                 </RNSVGSvgView>
               </View>
-            </TouchableOpacity>
+            </>
           </View>
         </View>
         <Text
@@ -729,8 +729,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 }
               }
             >
-              <TouchableOpacity
-                activeOpacity={0.2}
+              <
                 style={
                   Array [
                     Object {
@@ -756,7 +755,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 >
                   Minnesota
                 </Text>
-              </TouchableOpacity>
+              </>
             </ScrollView>
           </View>
         </View>
@@ -769,6 +768,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               Object {
                 "fontSize": 14,
                 "paddingBottom": 4,
+              },
+              Object {
+                "paddingTop": 12,
               },
             ]
           }
@@ -860,6 +862,96 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 "fontSize": 14,
                 "paddingBottom": 4,
               },
+            ]
+          }
+        >
+          Facility Phone (optional)
+        </Text>
+        <View
+          pointerEvents="auto"
+          style={
+            Object {
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 8,
+              "height": 50,
+              "marginBottom": 10,
+              "overflow": "hidden",
+              "width": "100%",
+            }
+          }
+          testID="parent"
+        >
+          <View
+            testID="valid"
+          />
+          <View
+            testID="unfocused"
+          />
+          <TextInput
+            allowFontScaling={true}
+            multiline={false}
+            numberOfLines={1}
+            placeholder="Facility Phone (optional)"
+            rejectResponderTermination={true}
+            secureTextEntry={false}
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgba(0,0,0,0)",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "color": "black",
+                  "fontSize": 16,
+                  "paddingHorizontal": 10,
+                  "textAlignVertical": "center",
+                  "width": "100%",
+                },
+                Object {},
+                Object {},
+                Object {
+                  "height": 50,
+                },
+                Object {},
+                Object {
+                  "fontFamily": "Poppins-Regular",
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
+            style={
+              Object {
+                "height": 0,
+                "width": "100%",
+                "zIndex": 5,
+              }
+            }
+          >
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
+              style={
+                Object {
+                  "flex": 1,
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Poppins-Bold",
+              },
+              Object {
+                "fontSize": 14,
+                "paddingBottom": 4,
+              },
               Object {
                 "color": "#6D6D6D",
               },
@@ -883,7 +975,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="invalid"
+            testID="valid"
           />
           <View
             testID="unfocused"
@@ -978,7 +1070,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           testID="parent"
         >
           <View
-            testID="invalid"
+            testID="valid"
           />
           <View
             testID="unfocused"
@@ -1040,14 +1132,14 @@ exports[`Update Contact Screen should match snapshot 1`] = `
             />
           </View>
         </View>
-        <TouchableOpacity
+        <
           activeOpacity={0.7}
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#FF7171",
-                "borderRadius": 16,
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "marginVertical": 5,
@@ -1059,7 +1151,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
               },
               Object {},
               Object {
-                "elevation": 4,
+                "elevation": 2,
                 "shadowColor": "#000",
                 "shadowOffset": Object {
                   "height": 5,
@@ -1079,7 +1171,7 @@ exports[`Update Contact Screen should match snapshot 1`] = `
                 },
                 Object {
                   "color": "white",
-                  "fontSize": 20,
+                  "fontSize": 18,
                   "fontWeight": "700",
                   "padding": 6,
                 },
@@ -1094,9 +1186,9 @@ exports[`Update Contact Screen should match snapshot 1`] = `
           >
             Delete Profile
           </Text>
-        </TouchableOpacity>
+        </>
       </ScrollView>
     </View>
-  </TouchableOpacity>
+  </>
 </View>
 `;

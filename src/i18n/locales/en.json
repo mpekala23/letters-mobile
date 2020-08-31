@@ -14,27 +14,36 @@
     "cantRefreshContacts": "Unable to refresh your contacts",
     "cantRefreshLetters": "Unable to refresh your letters",
     "cantRefreshFacilities": "Unable to refresh your facilities",
+    "cantRefreshCategories": "Unable to refresh postcard categories",
+    "cantLoadDesigns": "Unable to load the designs",
     "timedOut": "The request timed out",
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
     "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
-    "unableToUploadLetterPhoto": "Unable to upload the attached image. Ensure you are connected to the internet and try again."
+    "unableToUploadLetterPhoto": "Unable to upload the attached image. Ensure you are connected to the internet and try again.",
+    "letterTooLong": "Your letter cannot exceed 16,000 characters.",
+    "uploadImageTimeout": "The request timed out while uploading the image. Ensure you are connected to the internet and try again."
   },
   "Permission": {
-    "photos": "Can't access photo library",
-    "notifs": "Can't register notifications. Ensure that this is enabled in settings."
+    "photos": "Can't access photo library. Ensure that this is enabled in settings.",
+    "notifs": "Can't register notifications. Ensure that this is enabled in settings.",
+    "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
   "AddManuallyScreen": {
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
-    "facilityPostal": "Facility Postal"
+    "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)"
   },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones",
-    "forFree": "for free",
+    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones, for free.",
     "signUp": "Sign up",
     "logIn": "Log in"
+  },
+  "Common": {
+    "possessivePronoun": "Your",
+    "prepositionTo": "to"
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
@@ -45,37 +54,35 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "inmateNumber": "Inmate Number",
-    "relationshipToInmate": "Relationship to Inmate",
+    "relationshipToInmate": "I am their..",
     "state": "State",
     "postal": "Postal",
-    "mother": "Mother",
-    "father": "Father",
-    "brother": "Brother",
-    "sister": "Sister",
+    "spouse": "Spouse/Significant Other",
+    "parent": "Parent",
+    "kid": "Son/Daughter",
     "sibling": "Sibling",
-    "daughter": "Daughter",
-    "son": "Son",
-    "grandmother": "Grandmother",
-    "grandfather": "Grandfather",
-    "grandaughter": "Grandaughter",
-    "grandson": "Grandson",
+    "grandparent": "Grandparent",
+    "family": "Extended Family",
     "friend": "Friend",
+    "mentor": "Mentor/Pen Pal",
     "other": "Other",
     "back": "Back",
     "next": "Next"
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Your loved ones",
-    "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below."
+    "miles": "miles",
+    "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below.",
+    "addContact": "Add contact"
   },
   "CreditsCard": {
-    "letter": "letter",
-    "letters": "letters",
+    "letter": "kite",
+    "letters": "kites",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your letters for today",
-    "creditsResetDaily": "Your letters reset weekly, on Monday at 4:00AM EST.",
-    "comeBackOnMondayForMore": "Come back on Monday for more."
+    "youUsedAllYourLetters": "You used all your kites for the week",
+    "creditsResetDaily": "Your kites reset weekly.",
+    "comeBackOnMondayForMore": "Your kites reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -90,8 +97,9 @@
     "smartCommunications": "Smart Communications"
   },
   "IssuesScreen": {
-    "hasYourLovedOneReceivedLetter": "Has your loved one received the leter?",
-    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio. Let us know if there was a problem with delivery!",
+    "hasYourLovedOneReceivedLetterPrefix": "Has ",
+    "hasYourLovedOneReceivedLetter": " received your letter?",
+    "letUsKnowIfThereIsAProblem": "We want you to have the best possible experience with Ameelio.",
     "yepTheyReceivedIt": "Yep, they received it!",
     "notSureYet": "I'm not sure yet...",
     "notYetReceived": "They haven't received it"
@@ -99,23 +107,29 @@
   "IssuesDetailScreen": {
     "awesomeThanksForUsingOurService": "Awesome! Thanks for using our service :)",
     "weWillCheckInTwoDays": "We'll check in with you again in two days.",
-    "whatsUp": "What's up?",
+    "whatsUp": "Can you tell us more about what happened?",
     "weHopeYoullSendAnotherLetter": "We hope you'll send another letter soon!",
-    "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at team@ameelio.org",
-    "shareOnFacebook": "Share on Facebook",
+    "yourLetterIsOnItsWay": "Your letter is on its way to your loved one! If you have questions in the meantime, reach out to us at support@ameelio.org",
+    "share": "Share",
     "returnHome": "Return home",
     "IHaventAskedMyLovedOne": "I haven't asked my loved one!",
     "theyHaventReceivedLetter": "They haven't received the letter yet",
-    "wantToCheckWithFacility": "Want to check with the facility?",
+    "wantToCheckWithFacility": "Would you like to check with",
     "waitCoupleDays": "Sometimes letters will be delayed at the facility. Click below to call and check in on your letter, or wait a couple more days.",
     "callFacility": "Call facility",
-    "IllWait": "I'll wait"
+    "IllWait": "I'll wait",
+    "talkToSomeone": "Talk to someone",
+    "talkToSomeoneAtAmeelio": "Talk to someone at Ameelio",
+    "tryMessagingUsOnFacebook": "Try messaging us on Facebook. We're here to answer your questions, so ask away! We'll get back to you as soon as possible."
   },
-  "LetterTrackingScreen": {
-    "letterTracking": "Letter tracking",
-    "estimatedArrival": "Your letter is estimated to arrive on",
-    "needHelp": "I need help",
-    "letterContent": "Letter content"
+  "MailTrackingScreen": {
+    "letterTracking": "Mail tracking",
+    "estimatedArrival": "Estimated delivery date",
+    "needHelp": "Help",
+    "letterContent": "Mail content",
+    "contactSupport": "Contact Support",
+    "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
+    "possibleReason": "Possible reason: Wrong mailing address"
   },
   "LoginScreen": {
     "welcomeBack": "Welcome back",
@@ -137,8 +151,8 @@
   },
   "MemoryLaneCountCard": {
     "noLettersYet": "No letters yet",
-    "oneLetter": "1 Letter",
-    "letters": "Letters"
+    "oneLetter": "1 Memory",
+    "letters": "Memories"
   },
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
@@ -154,10 +168,10 @@
     "other": "Other"
   },
   "ReferFriendsScreen": {
-    "yourLetterIsOnTheWay": "Your letter is on the way!",
-    "weEstimateYourLetterToArriveOn": "We estimate that your letter will arrive on",
-    "thanksAgain": "Thank you for trusting Ameelio to connect you with your loved one.",
-    "shareOnFacebook": "Share on Facebook",
+    "yourLetterIsOnTheWaySuffix": " is on the way!",
+    "weEstimateYourLetterToArriveOn": "Estimated delivery date",
+    "thanksAgain": "Due to Covid, USPS is taking longer than usual to deliver our mail. Thank you for trusting us!",
+    "share": "Share",
     "done": "Done"
   },
   "RegisterScreen": {
@@ -178,8 +192,15 @@
     "register": "Register",
     "emailAlreadyInUse": "Email already in use.",
     "confirmPassword": "Confirm Password",
-    "referer": "How did you hear about Ameelio?",
-    "login": "Log In"
+    "referrer": "How did you hear about Ameelio?",
+    "login": "Log In",
+    "passwordInvalid": "The password must be at least 8 characters.",
+    "passwordsMustMatch": "Your passwords must match.",
+    "next": "Next",
+    "registerAccount": "Register Account",
+    "enterBasic": "Enter Basic Information",
+    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "oneLastThing": "One Last Thing"
   },
   "ReviewContactScreen": {
     "reviewContact": "Review Contact",
@@ -194,7 +215,7 @@
     "received": "received",
     "lastHeardFromYou": "last heard from you",
     "lettersTraveled": "letters traveled",
-    "sendLetter": "Send letter",
+    "sendLetter": "Send",
     "letterTracking": "Letter Tracking"
   },
   "UpdateContactScreen": {
@@ -205,6 +226,7 @@
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
     "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)",
     "optionalUnit": "Unit (optional, only if needed)",
     "optionalDorm": "Dorm (optional, only if needed)",
     "save": "Save",
@@ -218,7 +240,6 @@
   "UpdateProfileScreen": {
     "firstName": "First name",
     "lastName": "Last name",
-    "cellPhone": "Cell phone",
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
     "zipcode": "Zip Code",
@@ -254,13 +275,35 @@
   },
   "PrisonTypes": {
     "state": "State Prison",
-    "federal": "Federal Prison"
+    "federal": "Federal Prison",
+    "county": "County Jail",
+    "immigration": "ICE Detention Center"
+  },
+  "Prompts": {
+    "prompt1": "How are things going with your life? Any milestones lately?",
+    "prompt2": "What was the best part of your day today?",
+    "prompt3": "Have you watched any interesting movies or TV shows lately?",
+    "prompt4": "Describe a dream trip you would like to take with your loved one in the future",
+    "prompt5": "Recall a fond memory with your loved one and describe it to him/her",
+    "prompt6": "Send a picture from an exciting day that you spent together and talk about it",
+    "prompt7": "Write about what you love most about your loved one",
+    "prompt8": "Include an uplifting poem and talk about how it makes you feel",
+    "prompt9": "Talk about a news article that you read recently and what you learned from it",
+    "prompt10": "Talk about a movie or TV show that made you laugh recently",
+    "prompt11": "Write the first verse of a song and challenge your loved one to write the next verse",
+    "prompt12": "Send your loved one an excerpt from a book and have them guess the book's ending",
+    "prompt13": "Choose a color to describe your mood and explain why you picked that color to your loved one",
+    "prompt14": "Send your loved one a picture of you from when you were younger and ask them to guess how old you are there",
+    "prompt15": "Write about a bible verse (or a verse from any other religious text) that you recently read and what it means to you",
+    "prompt16": "Write about something you did/saw today that reminded you of your loved one",
+    "prompt17": "Ask your loved one 10 questions, answer them yourself, and have him/her answer them",
+    "prompt18": "Send your loved one a playlist of all of the songs you are listening to right now"
   },
   "LetterTypes": {
-    "postCardsTitle": "Post cards",
-    "postCardsDesc": "1 photo, 300 characters",
+    "postCardsTitle": "Photos",
+    "postCardsDesc": "Glossy photo & short caption",
     "lettersTitle": "Letters",
-    "lettersDesc": "300 words"
+    "lettersDesc": "2,000 words & photo on regular paper"
   },
   "Alert": {
     "weNeedProfilePermission": "We need your permission to upload a profile photo",
@@ -270,33 +313,43 @@
     "maybeLater": "Maybe later",
     "emulatorDetected": "Emulator detected",
     "mustUsePhysical": "You must use a physical device to receive push notifications",
-    "okay": "Okay"
+    "okay": "Okay",
+    "noDesignSelected": "No design selected",
+    "selectADesign": "Select a design to continue."
   },
   "Compose": {
     "chooseAnOption": "Choose an option",
     "psYourLovedOneWillRespondTo": "P.S. Your loved ones will be able to respond to you via the return address:",
     "placeholder": "Tell your loved one about something you did / saw today that reminded you of them!",
     "warningCantCancel": "Warning: your letters cannot be cancelled once sent.",
-    "send": "Send Letter",
-    "sendPostcard": "Send Postcard",
+    "send": "Send",
     "preview": "Letter Preview",
     "next": "Next",
     "to": "To",
     "collapse": "Collapse",
     "needIdeas": "Need Ideas?",
     "letterMustHaveContent": "Your letter can't be empty.",
-    "postcardMustHaveContent": "Your postcard can't be empty",
+    "postcardMustHaveContent": "You have to select a photo.",
     "uploadAnImage": "Upload an Image",
     "takePhoto": "Take photo",
     "uploadExistingPhoto": "Upload existing photo",
-    "letterInProgress": "You have a letter in progress",
-    "continueWritingAnd": "Continue writing and send that letter to your loved one",
+    "letterInProgress": "You have a draft in progress",
+    "continueWritingAnd": "Continue writing and send that draft to your loved one",
     "continueWriting": "Continue writing",
-    "startNewLetter": "Start new letter",
-    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new letter.",
-    "notEnoughCredits": "Not enough credits"
+    "startNewLetter": "Start new draft",
+    "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new draft.",
+    "notEnoughCredits": "Not enough kites",
+    "autosaved": "Autosaved",
+    "firstLetterGhostTextSalutation": "Hey",
+    "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
+    "tapToAddMessage": "Tap to add a message.",
+    "done": "Done",
+    "noDesignSelected": "No design selected. Tap below to get started.",
+    "iWouldLikeToSend": "I would like to send something:",
+    "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
   "Notifs": {
+    "happy": "Happy",
     "your": "Your",
     "to": "to",
     "isOnItsWay": "is on its way!",
@@ -310,5 +363,34 @@
     "clickHereToBegin": "Click here to begin.",
     "readyToSend": "Ready to send your first letter to",
     "readyToSendAnother": "Ready to send another letter to"
+  },
+  "Screens": {
+    "login": "Login",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "register": "Register",
+    "addManually": "Add Manually",
+    "compose": "Compose",
+    "contactInfo": "Contact Info",
+    "contacts": "Contacts",
+    "home": "Home",
+    "issues": "Issues",
+    "letterDetails": "Letter Details",
+    "lastStep": "Last Step",
+    "tracking": "Tracking",
+    "memoryLane": "Memory Lane",
+    "postcardPreview": "Photo Preview",
+    "letterPreview": "Letter Preview",
+    "spreadTheWord": "Spread the Word",
+    "reviewContact": "Review Contact",
+    "thanks": "Thanks",
+    "updateContact": "Update Contact",
+    "updateProfile": "Update Profile",
+    "reviewPostcard": "Review"
+  },
+  "Sharing": {
+    "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
+    "title": "Ameelio: Free Photos and Letters to Prison",
+    "subjectLine": "Send free letters and photos to prison!"
   }
 }

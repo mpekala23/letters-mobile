@@ -1,69 +1,65 @@
 import AddManuallyScreen from './AddContact/AddManually.react';
-import BeginScreen from './Splash/Begin.react';
+import BeginScreen from './Onboarding/Begin.react';
+import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
 import ComposeLetterScreen from './Compose/ComposeLetter.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
-import ExplainProblemScreen from './Report/ExplainProblem.react';
-import FirstLetterScreen from './Report/FirstLetter.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
-import HomeScreen from './Home/Home.react';
 import IssuesScreen from './Report/Issues.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
 import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
-import LetterDetailsScreen from './MemoryLane/LetterDetails.react';
-import LetterPreviewScreen from './Compose/LetterPreview.react';
-import LetterTrackingScreen from './LetterTracking/LetterTracking.react';
 import LoginScreen from './Login/Login.react';
+import MailDetailsScreen from './MemoryLane/MailDetails.react';
+import MailTrackingScreen from './Home/MailTracking.react';
 import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
-import PostcardPreviewScreen from './Compose/PostcardPreview.react';
 import PrivacyScreen from './Login/Privacy.react';
-import ReferFriendsScreen from './ReferFriends/ReferFriends.react';
-import RegisterScreen from './Register/Register.react';
+import ReferFriendsScreen from './Compose/ReferFriends.react';
+import RegisterCredsScreen from './Onboarding/RegisterCreds.react';
+import RegisterPersonalScreen from './Onboarding/RegisterPersonal.react';
+import RegisterAddressScreen from './Onboarding/RegisterAddress.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
-import SetupScreen from './Splash/Setup.react';
+import ReviewLetterScreen from './Compose/ReviewLetter.react';
+import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
 import SingleContactScreen from './Home/SingleContact.react';
-import SplashScreen from './Splash/Splash.react';
+import SplashScreen from './Login/Splash.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
 import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import TermsScreen from './Login/Terms.react';
-import ThanksScreen from './Report/Thanks.react';
-import UpdateContactScreen from './UpdateContact/UpdateContact.react';
-import UpdateProfileScreen from './UpdateProfile/UpdateProfile.react';
+import UpdateContactScreen from './Update/UpdateContact.react';
+import UpdateProfileScreen from './Update/UpdateProfile.react';
 
 export {
   AddManuallyScreen,
   BeginScreen,
+  ChooseCategoryScreen,
   ChooseOptionScreen,
   ComposeLetterScreen,
   ComposePostcardScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
-  ExplainProblemScreen,
-  FirstLetterScreen,
   FacilityDirectoryScreen,
-  HomeScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
-  LetterPreviewScreen,
-  LetterDetailsScreen,
   LoginScreen,
-  LetterTrackingScreen,
+  MailDetailsScreen,
+  MailTrackingScreen,
   MemoryLaneScreen,
-  PostcardPreviewScreen,
   PrivacyScreen,
   ReferFriendsScreen,
-  RegisterScreen,
+  RegisterCredsScreen,
+  RegisterPersonalScreen,
+  RegisterAddressScreen,
+  ReviewLetterScreen,
+  ReviewPostcardScreen,
   ReviewContactScreen,
-  SetupScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,
-  ThanksScreen,
   UpdateContactScreen,
   UpdateProfileScreen,
 };

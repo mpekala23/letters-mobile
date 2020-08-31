@@ -12,13 +12,18 @@ exports[`Issues Detail screen should match snapshot 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
-        "flex": 1,
-        "paddingHorizontal": 16,
-        "paddingTop": 40,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "flex": 1,
+          "paddingHorizontal": 16,
+          "paddingTop": 40,
+        },
+        Object {
+          "backgroundColor": undefined,
+        },
+      ]
     }
   >
     <Text
@@ -35,8 +40,17 @@ exports[`Issues Detail screen should match snapshot 1`] = `
         ]
       }
     >
-      What's up?
+      Can you tell us more about what happened?
     </Text>
+    <View
+      style={
+        Object {
+          "marginTop": 32,
+        }
+      }
+    >
+      <View />
+    </View>
     <Text
       style={
         Array [

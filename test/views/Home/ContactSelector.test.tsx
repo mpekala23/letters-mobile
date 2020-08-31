@@ -45,6 +45,11 @@ const setup = (contactsOverrides = [], lettersOverrides = []) => {
     contact: initialContactState,
     letter: initialLetterState,
     notif: { currentNotif: null },
+    user: {
+      user: {
+        postal: '55419',
+      },
+    },
   });
 
   const StoreProvider = ({ children }: { children: JSX.Element }) => {
@@ -95,9 +100,9 @@ describe('Contact Selector Screen', () => {
     expect(getByText('Second Contact').props.children).toBe('Second Contact');
   });
 
-  it('should navigate to contact info screen when the plus button is pressed', () => {
-    const { navigation, getByTestId } = setup();
-    fireEvent.press(getByTestId('addContact'));
+  it('should navigate to contact info screen when add contact button is pressed', () => {
+    const { navigation, getByText } = setup();
+    fireEvent.press(getByText('Add contact'));
     expect(navigation.navigate).toHaveBeenCalledWith('ContactInfo', {
       addFromSelector: true,
     });

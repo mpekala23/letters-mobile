@@ -22,7 +22,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
       <View style={Styles.trueBackground}>
-        <Text style={[Typography.FONT_BOLD, Styles.headerText]}>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
           {i18n.t('SupportFAQScreen.howCanWeHelp')}
         </Text>
         <Button
@@ -37,7 +37,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.cancelMyLetter')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -52,7 +52,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.notYetArrived')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -67,7 +67,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wrongMailingAddress')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -82,7 +82,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wrongReturnAddress')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -97,7 +97,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.wouldLikeTrackingNumber')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -112,7 +112,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.somethingWrongWithTracking')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
         <Button
@@ -127,7 +127,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           }}
           reverse
           buttonText={i18n.t('SupportFAQScreen.talkToAmeelio')}
-          textStyle={Styles.buttonText}
+          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
           containerStyle={Styles.regularButton}
         />
       </View>

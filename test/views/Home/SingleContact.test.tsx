@@ -4,6 +4,16 @@ import { render, toJSON, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { LetterTypes, LetterStatus } from 'types';
+import { getTrackingEvents } from '@api';
+
+jest.mock('date-fns', () => ({
+  format: () => 'Jul 12',
+  differenceInBusinessDays: () => 1,
+}));
+
+jest.mock('@api', () => ({
+  getTrackingEvents: jest.fn(),
+}));
 
 const mockStore = configureStore([]);
 
@@ -20,7 +30,7 @@ const setup = (letterOverrides = {}) => {
     6: [
       {
         type: LetterTypes.Postcard,
-        status: LetterStatus.OutForDelivery,
+        status: LetterStatus.ProcessedForDelivery,
         isDraft: false,
         recipientId: 6,
         content: "Hi Emily! How are you doing? I'm trying out this...",
@@ -81,14 +91,14 @@ describe('Single Contact Screen', () => {
       6: [
         {
           type: LetterTypes.Postcard,
-          status: LetterStatus.OutForDelivery,
+          status: LetterStatus.ProcessedForDelivery,
           isDraft: false,
           recipientId: 8,
           content: 'Redux Letter 1',
         },
         {
           type: LetterTypes.Postcard,
-          status: LetterStatus.OutForDelivery,
+          status: LetterStatus.ProcessedForDelivery,
           isDraft: false,
           recipientId: 8,
           content: 'Redux Letter 2',
@@ -105,11 +115,15 @@ describe('Single Contact Screen', () => {
     expect(navigation.navigate).toHaveBeenCalledWith('ChooseOption');
   });
 
-  // TO-DO: Test navigation to memory lane screen when card is pressed
-
-  it('should navigate to letter tracking screen when letter card is pressed', () => {
+  it('should navigate to memory lane screen when count card is pressed', () => {
     const { navigation, getByTestId } = setup();
+    fireEvent.press(getByTestId('memoryLaneCountCard'));
+    expect(navigation.navigate).toHaveBeenCalledWith('MemoryLane');
+  });
+
+  it('should make api call when letter card is pressed', () => {
+    const { getByTestId } = setup();
     fireEvent.press(getByTestId('letterStatusCard'));
-    expect(navigation.navigate).toHaveBeenCalledWith('LetterTracking');
+    expect(getTrackingEvents).toHaveBeenCalled();
   });
 });

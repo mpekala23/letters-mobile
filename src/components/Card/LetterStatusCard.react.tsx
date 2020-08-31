@@ -1,34 +1,36 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { LetterStatus } from 'types';
+import { MailStatus } from 'types';
 import { Colors, Typography } from '@styles';
-import moment from 'moment';
+import { format } from 'date-fns';
 import CardStyles from './Card.styles';
 
 interface Props {
-  status: LetterStatus;
-  date: string;
+  status: MailStatus;
+  date?: Date;
   description: string;
   onPress: () => void;
   style?: ViewStyle;
 }
 
-function mapStatusToColorStyle(type: LetterStatus) {
+function mapStatusToColorStyle(type: MailStatus) {
   switch (type) {
-    case LetterStatus.Draft:
-      return { backgroundColor: Colors.GREEN_LIGHTEST };
-    case LetterStatus.Created:
-      return { backgroundColor: Colors.GREEN_LIGHTER };
-    case LetterStatus.Mailed:
-      return { backgroundColor: Colors.GREEN_LIGHT };
-    case LetterStatus.InTransit:
-      return { backgroundColor: Colors.GREEN_DARK };
-    case LetterStatus.InLocalArea:
-      return { backgroundColor: Colors.GREEN_DARKER };
-    case LetterStatus.OutForDelivery:
-      return { backgroundColor: Colors.GREEN_DARKEST };
+    case MailStatus.Created:
+      return { backgroundColor: Colors.BLUE_100 };
+    case MailStatus.Mailed:
+      return { backgroundColor: Colors.BLUE_200 };
+    case MailStatus.InTransit:
+      return { backgroundColor: Colors.BLUE_300 };
+    case MailStatus.InLocalArea:
+      return { backgroundColor: Colors.BLUE_400 };
+    case MailStatus.ProcessedForDelivery:
+      return { backgroundColor: Colors.BLUE_500 };
+    case MailStatus.Delivered:
+      return { backgroundColor: Colors.BLUE_600 };
+    case MailStatus.ReturnedToSender:
+      return { backgroundColor: Colors.AMEELIO_RED };
     default:
-      return { backgroundColor: '' };
+      return { backgroundColor: Colors.BLUE_100 };
   }
 }
 
@@ -50,7 +52,7 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.statusAndDateContainer}>
             <Text
               style={[
-                Typography.FONT_BOLD,
+                Typography.FONT_SEMIBOLD,
                 CardStyles.letterStatusTitle,
                 { flex: 1 },
               ]}
@@ -58,14 +60,21 @@ const LetterStatusCard: React.FC<Props> = (props: Props) => {
               {props.status}
             </Text>
             <Text style={CardStyles.date}>
-              {moment(new Date(props.date)).format('MMM DD, YYYY')}
+              {props.date ? format(props.date, 'MMM dd, yyyy') : ''}
             </Text>
           </View>
-          <Text style={CardStyles.letterStatusData}>{props.description}</Text>
+          <Text numberOfLines={1} style={CardStyles.letterStatusData}>
+            {props.description}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
   );
+};
+
+LetterStatusCard.defaultProps = {
+  date: new Date(),
+  style: {},
 };
 
 export default LetterStatusCard;
