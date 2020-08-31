@@ -23,6 +23,7 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { Mail, Contact } from 'types';
 import { addBusinessDays, format } from 'date-fns';
 import * as Segment from 'expo-analytics-segment';
+import { Screen } from '@navigations';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -153,7 +154,7 @@ class NotifsBase {
       } catch (err) {
         resetNavigation({
           index: 0,
-          routes: [{ name: 'Begin' }, { name: 'Login' }],
+          routes: [{ name: Screen.Begin }, { name: Screen.Login }],
         });
         return;
       }
@@ -194,7 +195,10 @@ class NotifsBase {
         if (!mail) {
           resetNavigation({
             index: 0,
-            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+            routes: [
+              { name: Screen.ContactSelector },
+              { name: Screen.SingleContact },
+            ],
           });
           break;
         }
@@ -202,9 +206,9 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+            { name: Screen.MailTracking },
           ],
         });
         break;
@@ -225,7 +229,10 @@ class NotifsBase {
         if (!mail) {
           resetNavigation({
             index: 0,
-            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+            routes: [
+              { name: Screen.ContactSelector },
+              { name: Screen.SingleContact },
+            ],
           });
           break;
         }
@@ -247,9 +254,9 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+            { name: Screen.MailTracking },
           ],
         });
         break;
@@ -263,7 +270,10 @@ class NotifsBase {
         if (!mail) {
           resetNavigation({
             index: 0,
-            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+            routes: [
+              { name: Screen.ContactSelector },
+              { name: Screen.SingleContact },
+            ],
           });
           break;
         }
@@ -271,10 +281,10 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
-            { name: 'Issues' },
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+            { name: Screen.MailTracking },
+            { name: Screen.Issues },
           ],
         });
         break;
@@ -297,7 +307,10 @@ class NotifsBase {
         if (!mail) {
           resetNavigation({
             index: 0,
-            routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+            routes: [
+              { name: Screen.ContactSelector },
+              { name: Screen.SingleContact },
+            ],
           });
           break;
         }
@@ -305,9 +318,9 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+            { name: Screen.MailTracking },
           ],
         });
         break;
@@ -321,7 +334,10 @@ class NotifsBase {
         );
         resetNavigation({
           index: 0,
-          routes: [{ name: 'ContactSelector' }, { name: 'ContactInfo' }],
+          routes: [
+            { name: Screen.ContactSelector },
+            { name: Screen.ContactInfo },
+          ],
         });
         break;
       case NotifTypes.NoFirstLetter:
@@ -344,7 +360,10 @@ class NotifsBase {
         if (contact) store.dispatch(setActiveContact(contact));
         resetNavigation({
           index: 0,
-          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          routes: [
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+          ],
         });
         break;
       case NotifTypes.Drought:
@@ -359,9 +378,9 @@ class NotifsBase {
         resetNavigation({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'ChooseOption' },
+            { name: Screen.ContactSelector },
+            { name: Screen.SingleContact },
+            { name: Screen.ChooseOption },
           ],
         });
         break;

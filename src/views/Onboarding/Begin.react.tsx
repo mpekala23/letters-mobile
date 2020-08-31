@@ -4,7 +4,7 @@ import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';
 import { Colors, Typography } from '@styles';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screen } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LovedOnes from '@assets/views/Onboarding/LovedOnes';
 import * as Segment from 'expo-analytics-segment';
@@ -36,7 +36,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
       <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
         <Button
           onPress={() => {
-            props.navigation.navigate('RegisterCreds');
+            props.navigation.navigate(Screen.RegisterCreds);
             Segment.track('Begin - Click on Sign Up');
           }}
           buttonText={i18n.t('BeginScreen.signUp')}
@@ -45,7 +45,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('Login');
+            props.navigation.navigate(Screen.Login);
             Segment.track('Begin - Click on Login');
           }}
           buttonText={i18n.t('BeginScreen.logIn')}

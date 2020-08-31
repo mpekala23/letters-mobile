@@ -3,7 +3,7 @@ import { Text, View, Platform } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import i18n from '@i18n';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -12,7 +12,7 @@ import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format } from 'date-fns';
-import { Contact, Screen, MailTypes } from 'types';
+import { Contact, MailTypes } from 'types';
 import { onNativeShare, estimateDelivery } from '@utils';
 
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
@@ -102,8 +102,8 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
               props.navigation.reset({
                 index: 0,
                 routes: [
-                  { name: 'ContactSelector' },
-                  { name: 'SingleContact' },
+                  { name: Screen.ContactSelector },
+                  { name: Screen.SingleContact },
                 ],
               });
             }}

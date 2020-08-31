@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Text, View } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes, Contact } from 'types';
@@ -56,7 +56,7 @@ class IssuesScreenBase extends React.Component<Props> {
         <Button
           buttonText={i18n.t('IssuesScreen.yepTheyReceivedIt')}
           onPress={() => {
-            this.props.navigation.navigate('IssuesDetail', {
+            this.props.navigation.navigate(Screen.IssuesDetail, {
               issue: DeliveryReportTypes.received,
             });
             Segment.track('Delivery Reporting - Received');
@@ -67,7 +67,7 @@ class IssuesScreenBase extends React.Component<Props> {
         <Button
           buttonText={i18n.t('IssuesScreen.notSureYet')}
           onPress={() => {
-            this.props.navigation.navigate('IssuesDetail', {
+            this.props.navigation.navigate(Screen.IssuesDetail, {
               issue: DeliveryReportTypes.unsure,
             });
             Segment.track('Delivery Reporting - Unknown');
@@ -78,7 +78,7 @@ class IssuesScreenBase extends React.Component<Props> {
         <Button
           buttonText={i18n.t('IssuesScreen.notYetReceived')}
           onPress={() => {
-            this.props.navigation.navigate('IssuesDetail', {
+            this.props.navigation.navigate(Screen.IssuesDetail, {
               issue: DeliveryReportTypes.notYetReceived,
             });
             Segment.track('Delivery Reporting - Not Received');

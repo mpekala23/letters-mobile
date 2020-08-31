@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BeginScreen } from '@views';
 import { render, toJSON, fireEvent } from '@testing-library/react-native';
+import { Screen } from '@navigations';
 
 const setup = () => {
   const navigation = { navigate: jest.fn() };
@@ -31,6 +32,6 @@ describe('Begin screen', () => {
   it('should navigate to login screen when log in is pressed', () => {
     const { navigation, getByText } = setup();
     fireEvent.press(getByText('Log in'));
-    expect(navigation.navigate).toHaveBeenCalledWith('Login');
+    expect(navigation.navigate).toHaveBeenCalledWith(Screen.Login);
   });
 });

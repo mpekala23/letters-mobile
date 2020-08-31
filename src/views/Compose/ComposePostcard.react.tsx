@@ -25,7 +25,7 @@ import {
   setProfileOverride,
 } from '@components/Topbar/Topbar.react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
@@ -405,7 +405,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       }
       return false;
     };
-    this.props.navigation.navigate('ReviewPostcard', {
+    this.props.navigation.navigate(Screen.ReviewPostcard, {
       horizontal: designIsHorizontal(),
       category: this.props.route.params.category.name,
     });

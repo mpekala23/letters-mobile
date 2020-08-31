@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screen } from '@navigations';
 import { Input, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
@@ -150,7 +150,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
           buttons: [
             {
               text: i18n.t('RegisterScreen.login'),
-              onPress: () => this.props.navigation.replace('Login'),
+              onPress: () => this.props.navigation.replace(Screen.Login),
             },
             {
               text: i18n.t('Alert.okay'),

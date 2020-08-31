@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
@@ -27,7 +27,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         </Text>
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.DeleteLetter,
             });
             Segment.trackWithProperties(
@@ -42,7 +42,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.NotArrived,
             });
             Segment.trackWithProperties(
@@ -57,7 +57,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.WrongMailingAddress,
             });
             Segment.trackWithProperties(
@@ -72,7 +72,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.WrongReturnAddress,
             });
             Segment.trackWithProperties(
@@ -87,7 +87,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.TrackingNumber,
             });
             Segment.trackWithProperties(
@@ -102,7 +102,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.TrackingError,
             });
             Segment.trackWithProperties(
@@ -117,7 +117,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         />
         <Button
           onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
+            props.navigation.navigate(Screen.SupportFAQDetail, {
               issue: SupportFAQTypes.TalkToAmeelio,
             });
             Segment.trackWithProperties(

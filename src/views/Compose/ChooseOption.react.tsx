@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Text, View } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import { MailTypes, Draft } from 'types';
 import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';
@@ -58,7 +58,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
               image: { uri: '' },
             },
           });
-          props.navigation.navigate('ComposePostcard', {
+          props.navigation(Screen.ComposePostcard, {
             category: {
               name: 'personal',
               id: -1,
@@ -79,7 +79,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             recipientId: props.recipientId,
             content: '',
           });
-          props.navigation.navigate('ComposeLetter');
+          props.navigation(Screen.ComposeLetter);
         }}
       />
     </View>

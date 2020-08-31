@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import {
   STATE_TO_ABBREV,
@@ -128,7 +128,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.props.navigation.setParams({
         phyState: this.stateRef.current.state.value,
       });
-      this.props.navigation.navigate('FacilityDirectory', {
+      this.props.navigation.navigate(Screen.FacilityDirectory, {
         phyState: this.stateRef.current.state.value,
       });
     }

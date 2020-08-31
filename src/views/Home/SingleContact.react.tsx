@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import { Button, ProfilePic } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screen } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';
@@ -121,7 +121,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     onPress={async () => {
                       Segment.track('Contact View - Click on Letter Tracking');
                       await getTrackingEvents(item.id);
-                      this.props.navigation.navigate('MailTracking');
+                      this.props.navigation.navigate(Screen.MailTracking);
                     }}
                     key={item.id}
                   />
@@ -144,7 +144,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   onPress={async () => {
                     Segment.track('Contact View - Click on Letter Tracking');
                     await getTrackingEvents(item.id);
-                    this.props.navigation.navigate('MailTracking');
+                    this.props.navigation.navigate(Screen.MailTracking);
                   }}
                   key={item.id}
                 />
@@ -201,7 +201,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               <TouchableOpacity
                 onPress={() => {
                   Segment.track('Contact View - Click on Edit Contact');
-                  this.props.navigation.navigate('UpdateContact');
+                  this.props.navigation.navigate(Screen.UpdateContact);
                 }}
                 style={{
                   width: 50,
@@ -288,7 +288,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             if (
                               this.props.composing.type === MailTypes.Letter
                             ) {
-                              this.props.navigation.navigate('ComposeLetter');
+                              this.props.navigation.navigate(
+                                Screen.ComposeLetter
+                              );
                             } else if (
                               this.props.composing.type === MailTypes.Postcard
                             ) {
@@ -298,7 +300,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                   'Library'
                               ) {
                                 this.props.navigation.navigate(
-                                  'ComposePostcard',
+                                  Screen.ComposePostcard,
                                   {
                                     category: {
                                       name: 'personal',
@@ -319,7 +321,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               );
                               if (!category) return;
                               this.props.navigation.navigate(
-                                'ComposePostcard',
+                                Screen.ComposePostcard,
                                 {
                                   category,
                                 }
@@ -330,7 +332,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               message: i18n.t('Compose.draftContactDeleted'),
                             });
                             await deleteDraft();
-                            this.props.navigation.navigate('ChooseCategory');
+                            this.props.navigation.navigate(
+                              Screen.ChooseCategory
+                            );
                           }
                         },
                       },
@@ -344,7 +348,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             recipientId: this.props.activeContact.id,
                             content: '',
                           });
-                          this.props.navigation.navigate('ChooseCategory');
+                          this.props.navigation.navigate(Screen.ChooseCategory);
                         },
                       },
                     ],
@@ -356,7 +360,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     recipientId: this.props.activeContact.id,
                     content: '',
                   });
-                  this.props.navigation.navigate('ChooseCategory');
+                  this.props.navigation.navigate(Screen.ChooseCategory);
                 }
               }}
               buttonText={i18n.t('SingleContactScreen.sendLetter')}
@@ -378,7 +382,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               letterCount={mail ? mail.length : 0}
               onPress={() => {
                 this.props.setActiveContact(contact);
-                this.props.navigation.navigate('MemoryLane');
+                this.props.navigation.navigate(Screen.MemoryLane);
               }}
               style={{ height: 100 }}
             >
