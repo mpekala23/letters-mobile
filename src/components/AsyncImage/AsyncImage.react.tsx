@@ -12,6 +12,7 @@ import Warning from '@assets/common/Warning.png';
 import { sleep } from '@utils';
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   source: Image;
@@ -47,16 +48,12 @@ class AsyncImage extends React.Component<Props, State> {
       imgURI: this.props.source.uri ? this.props.source.uri : undefined,
       loadOpacity: new Animated.Value(1.0),
     };
+    this.loadImage = this.loadImage.bind(this);
   }
 
   async componentDidMount(): Promise<void> {
     this.testTimeout();
-    if (this.props.source.uri) {
-      const filesystemURI = await this.getImageFilesystemKey(
-        this.props.source.uri
-      );
-      await this.loadImage(filesystemURI, this.props.source.uri);
-    }
+    await this.loadImage();
   }
 
   async componentDidUpdate(): Promise<void> {
@@ -70,7 +67,7 @@ class AsyncImage extends React.Component<Props, State> {
       ) {
         return;
       }
-      await this.loadImage(filesystemURI, this.props.source.uri);
+      await this.loadImage();
     }
   }
 
@@ -89,7 +86,11 @@ class AsyncImage extends React.Component<Props, State> {
     return `${FileSystem.cacheDirectory}${hashed}`;
   };
 
-  async loadImage(filesystemURI: string, remoteURI: string): Promise<void> {
+  async loadImage(): Promise<void> {
+    const filesystemURI = await this.getImageFilesystemKey(
+      this.props.source.uri
+    );
+    const remoteURI = this.props.source.uri;
     try {
       // Use the cached image if it exists
       const metadata = await FileSystem.getInfoAsync(filesystemURI);
@@ -152,7 +153,7 @@ class AsyncImage extends React.Component<Props, State> {
       } else {
         // timed out
         asyncFeedback = (
-          <View
+          <TouchableOpacity
             style={{
               position: 'absolute',
               width: '100%',
@@ -160,6 +161,14 @@ class AsyncImage extends React.Component<Props, State> {
               backgroundColor: 'rgba(255,255,255,0.2)',
               justifyContent: 'center',
               alignItems: 'center',
+            }}
+            onPress={async () => {
+              this.setState({
+                loaded: false,
+                timedOut: false,
+              });
+              this.testTimeout();
+              await this.loadImage();
             }}
           >
             <ImageComponent
@@ -171,7 +180,7 @@ class AsyncImage extends React.Component<Props, State> {
                   (this.props.loadingSize ? this.props.loadingSize : 30) * 1.5,
               }}
             />
-          </View>
+          </TouchableOpacity>
         );
       }
     }
