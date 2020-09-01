@@ -266,6 +266,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         const design: PostcardDesign = {
           image,
           custom: true,
+          subcategoryName: 'Library',
+          name: 'Camera Roll',
         };
         return design;
       });
@@ -436,7 +438,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                     allowsEditing: true,
                   });
                   if (image) {
-                    this.changeDesign({ image, custom: true });
+                    this.changeDesign({
+                      image,
+                      custom: true,
+                      name: 'Camera Roll',
+                      subcategoryName: 'Camera',
+                    });
                   }
                 } catch (err) {
                   dropdownError({ message: i18n.t('Permission.camera') });

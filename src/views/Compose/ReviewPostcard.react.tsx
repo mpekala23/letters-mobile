@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
-import { Draft, Contact, MailTypes } from 'types';
+import { Draft, Contact, MailTypes, DraftPostcard } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
@@ -77,7 +77,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   async doSend(): Promise<void> {
     try {
       await createMail(this.props.composing);
-      this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
         type: 'postcard',
         facility: this.props.recipient.facility.name,
@@ -88,7 +87,11 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         subcategory:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.subcategoryName,
+        option:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.name,
       });
+      this.props.clearComposing();
       Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
       Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
       Notifs.scheduleNotificationInDays(
@@ -116,6 +119,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         ],
       });
     } catch (err) {
+      console.log('send err', err);
       Segment.trackWithProperties('Review - Send Letter Failure', {
         Option: 'postcard',
         'Error Type': err,
