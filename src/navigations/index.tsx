@@ -264,7 +264,7 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  const [currentRoute, setCurrentRoute] = useState(Screen.Splash);
+  const [currentRoute, setCurrentRoute] = useState(Screen$.Splash);
   const topbar = (
     <Topbar
       userState={props.userState}
@@ -408,7 +408,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
-        const name = navigationRef.current?.getCurrentRoute()?.name;
+        const name = navigationRef.current?.getCurrentRoute()?.name as string;
         if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);
