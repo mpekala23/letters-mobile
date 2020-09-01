@@ -119,7 +119,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         ],
       });
     } catch (err) {
-      console.log('send err', err);
       Segment.trackWithProperties('Review - Send Letter Failure', {
         Option: 'postcard',
         'Error Type': err,
