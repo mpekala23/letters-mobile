@@ -18,6 +18,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { Typography, Colors } from '@styles';
+import { cancelNotifications } from '@utils/notifications';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
@@ -89,26 +90,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.subcategoryName,
       });
-      Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-      Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
-      Notifs.scheduleNotificationInDays(
-        {
-          title: `${i18n.t(
-            'Notifs.happy'
-          )} ${new Date().toDateString()}! ${i18n.t(
-            'Notifs.readyToSendAnother'
-          )} ${this.props.recipient.firstName}?`,
-          body: `${i18n.t('Notifs.clickHereToBegin')}`,
-          data: {
-            type: NotifTypes.Drought,
-            data: {
-              contactId: this.props.recipient.id,
-            },
-          },
-        },
-        hoursTill8Tomorrow() / 24 + 14
-      );
-      deleteDraft();
+      cancelNotifications(this.props.recipient);
       this.props.navigation.reset({
         index: 0,
         routes: [
