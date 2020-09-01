@@ -67,16 +67,16 @@ export default class App extends React.Component<null, State> {
   }
 
   static getSegmentWriteKeys(): Record<string, string> {
-    // if (isProduction())
-    return {
-      androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
-      iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',
-    };
+    if (isProduction())
+      return {
+        androidWriteKey: 'cveBC1HNczxB1HgrrquX8zjjfRAapEmx',
+        iosWriteKey: 'EryEQcrwG2YGcPKFsPz8AGUTZ9Rdcqvi',
+      };
     // On development or staging channels
-    /* return {
+    return {
       androidWriteKey: 'skQ1SzNOGHiOF2o5vkOCZzhl4QXykseD',
       iosWriteKey: 'emYpyC3ipSbi6XDHqaFn6mGuad2vn6Xy',
-    }; */
+    };
   }
 
   async loadFontsAsync(): Promise<void> {
