@@ -18,7 +18,7 @@ import { hoursTill8Tomorrow } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { deleteDraft } from '@api/User';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { cancelNotifications } from '@utils/notifications';
+import cancelNotifications from '@utils/notifications';
 import Styles from './Compose.styles';
 
 type ReviewLetterScreenNavigationProp = StackNavigationProp<

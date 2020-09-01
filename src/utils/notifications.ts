@@ -1,6 +1,6 @@
 import Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
-import { deleteDraft, deleteDraft } from '@api/User';
+import { deleteDraft } from '@api/User';
 import i18n from '@i18n';
 import { hoursTill8Tomorrow } from '@utils';
 import { Contact } from 'types';
