@@ -86,7 +86,7 @@ export enum Screen {
   ReviewContact = 'ReviewContact',
   Issues = 'Issues',
   IssuesDetail = 'IssuesDetail',
-  IssuesDetailSecondary = 'IssusesDetailSecondary',
+  IssuesDetailSecondary = 'IssuesDetailSecondary',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
@@ -264,7 +264,7 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  const [currentRoute, setCurrentRoute] = useState(Screen.Splash);
+  const [currentRoute, setCurrentRoute] = useState(Screen$.Splash);
   const topbar = (
     <Topbar
       userState={props.userState}
