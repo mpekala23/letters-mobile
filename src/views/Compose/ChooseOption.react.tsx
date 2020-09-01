@@ -58,7 +58,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
               image: { uri: '' },
             },
           });
-          props.navigation(Screen.ComposePostcard, {
+          props.navigation.navigate(Screen.ComposePostcard, {
             category: {
               name: 'personal',
               id: -1,
@@ -79,7 +79,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             recipientId: props.recipientId,
             content: '',
           });
-          props.navigation(Screen.ComposeLetter);
+          props.navigation.navigate(Screen.ComposeLetter);
         }}
       />
     </View>
