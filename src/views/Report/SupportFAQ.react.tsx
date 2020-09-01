@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Typography } from '@styles';
-import { NavListItem } from '@components';
+import { ListItem } from '@components';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
@@ -64,7 +64,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           {i18n.t('SupportFAQScreen.howCanWeHelp')}
         </Text>
         {FAQList.map((item) => (
-          <NavListItem
+          <ListItem
             key={item.text}
             onPress={() => {
               props.navigation.navigate('SupportFAQDetail', {

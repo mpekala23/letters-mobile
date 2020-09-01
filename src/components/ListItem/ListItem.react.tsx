@@ -9,17 +9,17 @@ import {
 } from 'react-native';
 import { Typography, Colors } from '@styles';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Styles from './NavListItem.styles';
+import Styles from './ListItem.styles';
 
 export interface Props {
   containerStyle?: ViewStyle | ViewStyle[];
   textStyle?: Record<string, unknown> | TextStyle | TextStyle[];
   itemText?: string;
-  onPress: () => void | Promise<void>;
+  onPress: () => void;
   children?: JSX.Element | JSX.Element[];
 }
 
-const NavListItem: React.FC<Props> = (props: Props) => {
+const ListItem: React.FC<Props> = (props: Props) => {
   const { itemText, textStyle, containerStyle, onPress, children } = props;
 
   const chevron = (
@@ -58,12 +58,10 @@ const NavListItem: React.FC<Props> = (props: Props) => {
   );
 };
 
-NavListItem.defaultProps = {
+ListItem.defaultProps = {
   textStyle: {},
   containerStyle: {},
-  onPress: () => {
-    /* nothing */
-  },
+  onPress: () => null,
 };
 
-export default NavListItem;
+export default ListItem;

@@ -11,22 +11,18 @@ export default StyleSheet.create({
   itemView: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 12,
-    paddingRight: 8,
-    paddingVertical: 12,
+    padding: 12,
   },
   itemText: {
-    flex: 15,
-    flexDirection: 'row',
+    flex: 14,
     textAlign: 'left',
     fontSize: 14,
     color: Colors.AMEELIO_BLACK,
     paddingVertical: 4,
-    marginRight: 24,
   },
   chevron: {
-    flex: 1,
-    flexDirection: 'row',
+    flex: 2,
+    textAlign: 'right',
   },
   textPaddingAndroid: {
     paddingTop: 6,
