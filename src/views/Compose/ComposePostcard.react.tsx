@@ -266,7 +266,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         const design: PostcardDesign = {
           image,
           custom: true,
-          subcategoryName: 'Library',
+          subcategoryName: 'Personal Photo',
           name: 'Camera Roll',
         };
         return design;
@@ -441,8 +441,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                     this.changeDesign({
                       image,
                       custom: true,
-                      name: 'Camera Roll',
-                      subcategoryName: 'Camera',
+                      name: 'Personal Photo',
+                      subcategoryName: 'Selfie',
                     });
                   }
                 } catch (err) {
