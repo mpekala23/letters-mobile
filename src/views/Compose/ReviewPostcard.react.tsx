@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
@@ -95,7 +95,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         index: 0,
         routes: [
           {
-            name: Screen.ReferFriends,
+            name: Screens.ReferFriends,
             params: { mailType: MailTypes.Postcard },
           },
         ],

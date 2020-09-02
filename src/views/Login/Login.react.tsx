@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, Screen } from '@navigations';
+import { AuthStackParamList, Screens } from '@navigations';
 import { login } from '@api';
 import { Button, Input, KeyboardAvoider } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -227,7 +227,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.privacyPolicy')}
                     onPress={() => {
-                      this.props.navigation.navigate(Screen.Privacy);
+                      this.props.navigation.navigate(Screens.Privacy);
                     }}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>

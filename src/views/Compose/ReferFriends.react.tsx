@@ -3,7 +3,7 @@ import { Text, View, Platform } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import i18n from '@i18n';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -89,7 +89,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
             buttonText={i18n.t('ReferFriendsScreen.share')}
             onPress={() => {
               onNativeShare(
-                Screen.ReferFriends,
+                Screens.ReferFriends,
                 i18n.t('ReferFriendsScreen.share')
               );
             }}
@@ -102,8 +102,8 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
               props.navigation.reset({
                 index: 0,
                 routes: [
-                  { name: Screen.ContactSelector },
-                  { name: Screen.SingleContact },
+                  { name: Screens.ContactSelector },
+                  { name: Screens.SingleContact },
                 ],
               });
             }}

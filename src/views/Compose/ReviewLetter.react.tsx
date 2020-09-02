@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { GrayBar } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Draft, MailTypes, Contact } from 'types';
@@ -84,7 +84,10 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       this.props.navigation.reset({
         index: 0,
         routes: [
-          { name: Screen.ReferFriends, params: { mailType: MailTypes.Letter } },
+          {
+            name: Screens.ReferFriends,
+            params: { mailType: MailTypes.Letter },
+          },
         ],
       });
     } catch (err) {

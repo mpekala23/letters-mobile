@@ -62,7 +62,7 @@ import i18n from '@i18n';
 
 export { navigationRef, navigate };
 
-export enum Screen {
+export enum Screens {
   Begin = 'Begin',
   Splash = 'Splash',
   Login = 'Login',
@@ -264,7 +264,7 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  const [currentRoute, setCurrentRoute] = useState(Screen.Splash);
+  const [currentRoute, setCurrentRoute] = useState(Screens.Splash);
   const topbar = (
     <Topbar
       userState={props.userState}
@@ -282,7 +282,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   ) {
     screens = (
       <Stack.Screen
-        name={Screen.Splash}
+        name={Screens.Splash}
         component={SplashScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
@@ -290,20 +290,20 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (!props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screen name={Screen.Begin} component={BeginScreen} />
-        <Stack.Screen name={Screen.Login} component={LoginScreen} />
-        <Stack.Screen name={Screen.Terms} component={TermsScreen} />
-        <Stack.Screen name={Screen.Privacy} component={PrivacyScreen} />
+        <Stack.Screen name={Screens.Begin} component={BeginScreen} />
+        <Stack.Screen name={Screens.Login} component={LoginScreen} />
+        <Stack.Screen name={Screens.Terms} component={TermsScreen} />
+        <Stack.Screen name={Screens.Privacy} component={PrivacyScreen} />
         <Stack.Screen
-          name={Screen.RegisterCreds}
+          name={Screens.RegisterCreds}
           component={RegisterCredsScreen}
         />
         <Stack.Screen
-          name={Screen.RegisterPersonal}
+          name={Screens.RegisterPersonal}
           component={RegisterPersonalScreen}
         />
         <Stack.Screen
-          name={Screen.RegisterAddress}
+          name={Screens.RegisterAddress}
           component={RegisterAddressScreen}
         />
       </>
@@ -312,36 +312,36 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
-          name={Screen.ContactSelector}
+          name={Screens.ContactSelector}
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
-          name={Screen.RegisterAddress}
+          name={Screens.RegisterAddress}
           component={ChooseCategoryScreen}
         />
         <Stack.Screen
-          name={Screen.ChooseOption}
+          name={Screens.ChooseOption}
           component={ChooseOptionScreen}
         />
         <Stack.Screen
-          name={Screen.ComposeLetter}
+          name={Screens.ComposeLetter}
           component={ComposeLetterScreen}
         />
         <Stack.Screen
-          name={Screen.ComposePostcard}
+          name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
         />
         <Stack.Screen
-          name={Screen.ReviewLetter}
+          name={Screens.ReviewLetter}
           component={ReviewLetterScreen}
         />
         <Stack.Screen
-          name={Screen.ReviewPostcard}
+          name={Screens.ReviewPostcard}
           component={ReviewPostcardScreen}
         />
         <Stack.Screen
-          name={Screen.ContactInfo}
+          name={Screens.ContactInfo}
           component={ContactInfoScreen}
           options={{
             cardStyleInterpolator:
@@ -349,44 +349,50 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
-          name={Screen.FacilityDirectory}
+          name={Screens.FacilityDirectory}
           component={FacilityDirectoryScreen}
         />
-        <Stack.Screen name={Screen.AddManually} component={AddManuallyScreen} />
         <Stack.Screen
-          name={Screen.ReferFriends}
+          name={Screens.AddManually}
+          component={AddManuallyScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReferFriends}
           component={ReferFriendsScreen}
         />
         <Stack.Screen
-          name={Screen.ReviewContact}
+          name={Screens.ReviewContact}
           component={ReviewContactScreen}
         />
-        <Stack.Screen name={Screen.Issues} component={IssuesScreen} />
+        <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
         <Stack.Screen
-          name={Screen.IssuesDetail}
+          name={Screens.IssuesDetail}
           component={IssuesDetailScreen}
         />
         <Stack.Screen
-          name={Screen.IssuesDetailSecondary}
+          name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
         />
         <Stack.Screen
-          name={Screen.SingleContact}
+          name={Screens.SingleContact}
           component={SingleContactScreen}
         />
         <Stack.Screen
-          name={Screen.MailTracking}
+          name={Screens.MailTracking}
           component={MailTrackingScreen}
         />
-        <Stack.Screen name={Screen.MemoryLane} component={MemoryLaneScreen} />
-        <Stack.Screen name={Screen.MailDetails} component={MailDetailsScreen} />
-        <Stack.Screen name={Screen.SupportFAQ} component={SupportFAQScreen} />
+        <Stack.Screen name={Screens.MemoryLane} component={MemoryLaneScreen} />
         <Stack.Screen
-          name={Screen.SupportFAQDetail}
+          name={Screens.MailDetails}
+          component={MailDetailsScreen}
+        />
+        <Stack.Screen name={Screens.SupportFAQ} component={SupportFAQScreen} />
+        <Stack.Screen
+          name={Screens.SupportFAQDetail}
           component={SupportFAQDetailScreen}
         />
         <Stack.Screen
-          name={Screen.UpdateContact}
+          name={Screens.UpdateContact}
           component={UpdateContactScreen}
           options={{
             cardStyleInterpolator:
@@ -394,7 +400,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
-          name={Screen.UpdateProfile}
+          name={Screens.UpdateProfile}
           component={UpdateProfileScreen}
           options={{
             cardStyleInterpolator:
@@ -408,7 +414,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
-        const name = navigationRef.current?.getCurrentRoute()?.name as Screen;
+        const name = navigationRef.current?.getCurrentRoute()?.name as Screens;
         if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);

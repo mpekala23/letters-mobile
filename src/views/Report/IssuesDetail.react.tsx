@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button, Icon } from '@components';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes } from 'types';
@@ -65,7 +65,7 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
     case DeliveryReportTypes.received:
       return defaultCTAButton(
         () =>
-          onNativeShare(Screen.Delivery, i18n.t('IssuesDetailScreen.share')),
+          onNativeShare(Screens.Delivery, i18n.t('IssuesDetailScreen.share')),
         i18n.t('IssuesDetailScreen.share'),
         ReportStyles.buttonTextReverse,
         ReportStyles.button
@@ -75,7 +75,7 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
         () => {
           props.navigation.reset({
             index: 0,
-            routes: [{ name: Screen.ContactSelector }],
+            routes: [{ name: Screens.ContactSelector }],
           });
         },
         i18n.t('IssuesDetailScreen.returnHome'),
@@ -85,7 +85,7 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
     case DeliveryReportTypes.notYetReceived:
       return defaultCTAButton(
         () =>
-          props.navigation.navigate(Screen.IssuesDetailSecondary, {
+          props.navigation.navigate(Screens.IssuesDetailSecondary, {
             issue: DeliveryReportTypes.haveNotAsked,
           }),
         i18n.t('IssuesDetailScreen.IHaventAskedMyLovedOne'),
@@ -107,7 +107,7 @@ function mapIssueToDetailsSecondaryCTA(
         () => {
           props.navigation.reset({
             index: 0,
-            routes: [{ name: Screen.ContactSelector }],
+            routes: [{ name: Screens.ContactSelector }],
           });
         },
         i18n.t('IssuesDetailScreen.returnHome'),
@@ -117,7 +117,7 @@ function mapIssueToDetailsSecondaryCTA(
     case DeliveryReportTypes.notYetReceived:
       return defaultCTAButton(
         () =>
-          props.navigation.navigate(Screen.IssuesDetailSecondary, {
+          props.navigation.navigate(Screens.IssuesDetailSecondary, {
             issue: DeliveryReportTypes.haveNotReceived,
           }),
         i18n.t('IssuesDetailScreen.theyHaventReceivedLetter'),

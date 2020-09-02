@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -95,7 +95,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
 
     if (!mail) {
-      this.props.navigation.navigate(Screen.SingleContact);
+      this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
     const deliveryDate = format(

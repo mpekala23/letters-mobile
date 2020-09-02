@@ -8,7 +8,7 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { WINDOW_WIDTH } from '@utils';
-import { Screen } from '@navigations';
+import { Screens } from '@navigations';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
@@ -64,7 +64,7 @@ class Topbar extends React.Component<Props, State> {
     if (
       this.props.navigation &&
       (this.props.navigation.canGoBack() ||
-        this.props.currentRoute === Screen.Login ||
+        this.props.currentRoute === Screens.Login ||
         this.props.currentRoute === 'Register1')
     ) {
       return (
@@ -74,24 +74,24 @@ class Topbar extends React.Component<Props, State> {
             Keyboard.dismiss();
             if (this.props.navigation) {
               const route = this.props.navigation.getCurrentRoute()?.name;
-              if (route === Screen.Login || route === 'Register1') {
+              if (route === Screens.Login || route === 'Register1') {
                 this.props.navigation.reset({
                   index: 0,
-                  routes: [{ name: Screen.Begin }],
+                  routes: [{ name: Screens.Begin }],
                 });
               }
               if (
-                route === Screen.ContactInfo ||
-                route === Screen.FacilityDirectory ||
-                route === Screen.AddManually ||
-                route === Screen.ReviewContact
+                route === Screens.ContactInfo ||
+                route === Screens.FacilityDirectory ||
+                route === Screens.AddManually ||
+                route === Screens.ReviewContact
               ) {
                 let logName = '';
-                if (route === Screen.ContactInfo) {
+                if (route === Screens.ContactInfo) {
                   logName = 'info';
-                } else if (route === Screen.FacilityDirectory) {
+                } else if (route === Screens.FacilityDirectory) {
                   logName = 'facility';
-                } else if (route === Screen.AddManually) {
+                } else if (route === Screens.AddManually) {
                   logName = 'manual';
                 } else {
                   logName = 'review';
