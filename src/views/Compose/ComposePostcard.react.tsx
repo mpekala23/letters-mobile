@@ -8,6 +8,7 @@ import {
   Keyboard,
   EmitterSubscription,
   Platform,
+  Image as ImageComponent,
 } from 'react-native';
 import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
 import {
@@ -37,6 +38,7 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
+import Loading from '@assets/common/loading.gif';
 import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -65,6 +67,7 @@ interface State {
   data: Record<string, PostcardDesign[]>;
   subcategory: string;
   design: PostcardDesign;
+  loading?: PostcardDesign;
   writing: boolean;
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
@@ -254,6 +257,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
   }
 
+  designIsHorizontal = (): boolean => {
+    const designWidth = this.state.design.image.width;
+    const designHeight = this.state.design.image.height;
+    if (!designWidth || !designHeight) {
+      return true;
+    }
+    if (designWidth > designHeight) {
+      return true;
+    }
+    return false;
+  };
+
   async loadData(): Promise<void> {
     if (this.props.route.params.category.name === 'personal') {
       const assets = await MediaLibrary.getAssetsAsync();
@@ -302,17 +317,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   changeDesign(design: PostcardDesign): void {
+    if (design === this.state.design) return;
     saveDraft(this.props.composing);
     this.props.setDesign(design);
-    this.setState({ design });
+    this.setState({ design, loading: design });
     if (
       design.image.width &&
       design.image.height &&
-      design.image.height > design.image.width
+      design.image.width > design.image.height
     ) {
-      this.setState({ horizontal: false });
-    } else {
       this.setState({ horizontal: true });
+    } else {
+      this.setState({ horizontal: false });
     }
     Segment.trackWithProperties('Compose - Add Image Success', {
       Option: 'Postcard',
@@ -359,6 +375,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     Keyboard.dismiss();
     setBackOverride(undefined);
     this.changeDesign(this.state.design);
+    this.setState({ horizontal: this.designIsHorizontal() });
     Segment.trackWithProperties('Compose - Click on Back', {
       Option: 'Postcard',
       Step: 'Caption',
@@ -394,19 +411,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       subcategory: this.state.design.subcategoryName,
       step: 'draft',
     });
-    const designIsHorizontal = (): boolean => {
-      const designWidth = this.state.design.image.width;
-      const designHeight = this.state.design.image.height;
-      if (!designWidth || !designHeight) {
-        return true;
-      }
-      if (designWidth > designHeight) {
-        return true;
-      }
-      return false;
-    };
     this.props.navigation.navigate('ReviewPostcard', {
-      horizontal: designIsHorizontal(),
+      horizontal: this.designIsHorizontal(),
       category: this.props.route.params.category.name,
     });
   }
@@ -500,7 +506,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         onPress={() => this.changeDesign(design)}
       >
         <AsyncImage
-          download
           source={design.thumbnail ? design.thumbnail : design.image}
           imageStyle={{
             flex: 1,
@@ -508,6 +513,23 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             overflow: 'hidden',
           }}
         />
+        {this.state.loading === design && (
+          <View
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.6)',
+            }}
+          >
+            <ImageComponent
+              style={{ width: 40, height: 40 }}
+              source={Loading}
+            />
+          </View>
+        )}
       </TouchableOpacity>
     );
   }
@@ -561,6 +583,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               flip={this.state.flip}
               onChangeText={this.changeText}
               horizontal={this.state.horizontal}
+              onLoad={() => {
+                this.setState({ loading: undefined });
+              }}
               active
             />
           </Animated.View>

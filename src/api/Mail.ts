@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import url from 'url';
+import url, { resolve } from 'url';
 import {
   Draft,
   Mail,
@@ -19,6 +19,8 @@ import i18n from '@i18n';
 import { addBusinessDays } from 'date-fns';
 import { estimateDelivery } from '@utils';
 
+import { Image as ImageComponent } from 'react-native';
+import { number } from 'prop-types';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -410,14 +412,32 @@ interface RawDesign {
   subcategory_id: number;
 }
 
-function cleanDesign(
+async function cleanDesign(
   raw: RawDesign,
   categoryId?: number,
   subcategoryName?: string
-): PostcardDesign {
+): Promise<PostcardDesign> {
+  const getImageDims = (
+    uri: string
+  ): Promise<{ width: number; height: number }> => {
+    return new Promise((res, rej) => {
+      ImageComponent.getSize(
+        uri,
+        (width, height) => {
+          res({ width, height });
+        },
+        rej
+      );
+    });
+  };
+  const imageDims = await getImageDims(raw.front_img_src);
+  const thumbnailDims = await getImageDims(raw.thumbnail_src);
   return {
-    image: { uri: raw.front_img_src },
-    thumbnail: { uri: raw.thumbnail_src },
+    image: {
+      uri: raw.front_img_src,
+      ...imageDims,
+    },
+    thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
     name: raw.name,
     id: raw.id,
     categoryId,
@@ -437,8 +457,10 @@ export async function getSubcategories(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, category.id, subName)
+    cleanData[subName] = await Promise.all(
+      data[subName].map((raw: RawDesign) =>
+        cleanDesign(raw, category.id, subName)
+      )
     );
   }
   return cleanData;
@@ -456,8 +478,10 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, categoryId, subName)
+    cleanData[subName] = await Promise.all(
+      data[subName].map((raw: RawDesign) =>
+        cleanDesign(raw, categoryId, subName)
+      )
     );
   }
   return cleanData;

@@ -19,9 +19,10 @@ interface Props {
   viewStyle?: ViewStyle;
   imageStyle?: ImageStyle;
   loadingSize?: number;
-  timeout?: number;
+  timeout: number;
   download?: boolean;
   accessibilityLabel?: string;
+  onLoad?: () => void;
 }
 
 interface State {
@@ -36,17 +37,17 @@ class AsyncImage extends React.Component<Props, State> {
     viewStyle: { flex: 1 },
     imageStyle: { flex: 1 },
     loadingSize: 30,
-    timeout: 10000,
+    timeout: 3000,
     download: false,
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      loaded: true,
+      loaded: false,
       timedOut: false,
-      imgURI: this.props.source.uri ? this.props.source.uri : undefined,
-      loadOpacity: new Animated.Value(1.0),
+      imgURI: undefined,
+      loadOpacity: new Animated.Value(0.3),
     };
     this.loadImage = this.loadImage.bind(this);
   }
@@ -56,23 +57,13 @@ class AsyncImage extends React.Component<Props, State> {
     await this.loadImage();
   }
 
-  async componentDidUpdate(): Promise<void> {
-    if (this.props.source.uri) {
-      const filesystemURI = await this.getImageFilesystemKey(
-        this.props.source.uri
-      );
-      if (
-        this.props.source.uri === this.state.imgURI ||
-        filesystemURI === this.state.imgURI
-      ) {
-        return;
-      }
-      await this.loadImage();
-    }
+  componentDidUpdate(prevProps: Props): void {
+    if (prevProps.source.uri === this.props.source.uri) return;
+    this.loadImage();
   }
 
   testTimeout = async (): Promise<void> => {
-    await sleep(this.props.timeout || 10000);
+    await sleep(this.props.timeout);
     if (!this.state.loaded) {
       this.setState({ timedOut: true });
     }
@@ -86,7 +77,26 @@ class AsyncImage extends React.Component<Props, State> {
     return `${FileSystem.cacheDirectory}${hashed}`;
   };
 
+  loadFinished(imgURI: string): void {
+    if (this.props.onLoad) this.props.onLoad();
+    this.setState({
+      loaded: true,
+      timedOut: false,
+      imgURI,
+    });
+    Animated.timing(this.state.loadOpacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
+
   async loadImage(): Promise<void> {
+    this.setState({
+      loaded: false,
+      timedOut: false,
+      loadOpacity: new Animated.Value(0.6),
+    });
     const filesystemURI = await this.getImageFilesystemKey(
       this.props.source.uri
     );
@@ -95,32 +105,23 @@ class AsyncImage extends React.Component<Props, State> {
       // Use the cached image if it exists
       const metadata = await FileSystem.getInfoAsync(filesystemURI);
       if (metadata.exists) {
-        this.setState({
-          imgURI: filesystemURI,
-        });
+        this.loadFinished(filesystemURI);
         return;
       }
       // If no cached image exists and download is false default to remote
       if (!this.props.download) {
-        this.setState({
-          imgURI: remoteURI,
-        });
+        this.loadFinished(remoteURI);
         return;
       }
-      this.setState({
-        loaded: false,
-        loadOpacity: new Animated.Value(0.3),
-      });
       // otherwise download to cache
       const imageObject = await FileSystem.downloadAsync(
         remoteURI,
         filesystemURI
       );
-      this.setState({
-        imgURI: imageObject.uri,
-      });
+      this.loadFinished(imageObject.uri);
+      return;
     } catch (err) {
-      this.setState({ imgURI: remoteURI });
+      this.setState({ loaded: false, imgURI: remoteURI });
     }
   }
 
@@ -195,19 +196,7 @@ class AsyncImage extends React.Component<Props, State> {
               uri: this.state.imgURI,
             }}
             style={[this.props.imageStyle, { opacity: this.state.loadOpacity }]}
-            onLoad={() => {
-              if (this.props.source.uri && this.props.source.uri.length) {
-                this.setState({
-                  loaded: true,
-                  timedOut: false,
-                });
-                Animated.timing(this.state.loadOpacity, {
-                  toValue: 1,
-                  duration: 300,
-                  useNativeDriver: true,
-                }).start();
-              }
-            }}
+            loadingIndicatorSource={Loading}
           />
         )}
         {asyncFeedback}

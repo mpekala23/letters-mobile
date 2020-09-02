@@ -15,6 +15,7 @@ interface Props {
   onChangeText: (text: string) => void;
   recipient: Contact;
   horizontal?: boolean;
+  onLoad?: () => void;
 }
 
 interface State {
@@ -87,7 +88,9 @@ class EditablePostcard extends React.Component<Props, State> {
             width: this.state.width,
             height: this.state.height,
           }}
-          source={this.props.design.image}
+          source={this.props.design.thumbnail || this.props.design.image}
+          onLoad={this.props.onLoad}
+          download={!!this.props.design.thumbnail}
         />
       );
     } else {
@@ -98,7 +101,9 @@ class EditablePostcard extends React.Component<Props, State> {
             height: this.state.width,
             transform: [{ rotateZ: '270deg' }],
           }}
-          source={this.props.design.image}
+          source={this.props.design.thumbnail || this.props.design.image}
+          onLoad={this.props.onLoad}
+          download={!!this.props.design.thumbnail}
         />
       );
     }
