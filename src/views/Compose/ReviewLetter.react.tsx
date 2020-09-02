@@ -18,7 +18,6 @@ import { hoursTill8Tomorrow } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { deleteDraft } from '@api/User';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { cancelNotifications } from '@utils/notifications';
 import Styles from './Compose.styles';
 
 type ReviewLetterScreenNavigationProp = StackNavigationProp<
@@ -80,7 +79,26 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         facilityCity: this.props.activeContact.facility?.city,
         relationship: this.props.activeContact.relationship,
       });
-      cancelNotifications(this.props.activeContact);
+      Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
+      Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
+      Notifs.scheduleNotificationInDays(
+        {
+          title: `${i18n.t(
+            'Notifs.happy'
+          )} ${new Date().toDateString()}! ${i18n.t(
+            'Notifs.readyToSendAnother'
+          )} ${this.props.activeContact.firstName}?`,
+          body: `${i18n.t('Notifs.clickHereToBegin')}`,
+          data: {
+            type: NotifTypes.Drought,
+            data: {
+              contactId: this.props.activeContact.id,
+            },
+          },
+        },
+        hoursTill8Tomorrow() / 24 + 7
+      );
+      deleteDraft();
       this.props.navigation.reset({
         index: 0,
         routes: [
