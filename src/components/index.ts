@@ -1,4 +1,5 @@
 import Alert from './Alert/Alert.react';
+import AsyncImage from './AsyncImage/AsyncImage.react';
 import Button from './Button/Button.react';
 import CategoryCard from './Card/CategoryCard.react';
 import ContactSelectorCard from './Card/ContactSelectorCard.react';
@@ -27,6 +28,7 @@ import Topbar from './Topbar/Topbar.react';
 
 export {
   Alert,
+  AsyncImage,
   Button,
   CategoryCard,
   ContactSelectorCard,
