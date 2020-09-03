@@ -421,67 +421,74 @@ class NotifsBase {
     store.dispatch(setFutureNotifs(futureNotifs));
   };
 
-  cancelNotificationById = async (id: ReactText) => {
-    const result = await Notifications.cancelScheduledNotificationAsync(id);
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    for (let ix = 0; ix < futureNotifs.length; ix += 1) {
-      if (futureNotifs[ix].id !== id) {
-        newFuture.push(futureNotifs[ix]);
+  cancelNotificationById = async (id: ReactText): Promise<void> => {
+    try {
+      await Notifications.cancelScheduledNotificationAsync(id);
+      const { futureNotifs } = store.getState().notif;
+      const newFuture = [];
+      for (let ix = 0; ix < futureNotifs.length; ix += 1) {
+        if (futureNotifs[ix].id !== id) {
+          newFuture.push(futureNotifs[ix]);
+        }
       }
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
   // cancels the most recently scheduled notification of a certain type
-  cancelSingleNotificationByType = async (type: NotifTypes) => {
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    let hasRemoved = false;
-    let removingId: ReactText = '';
-    for (let ix = futureNotifs.length - 1; ix >= 0; ix -= 1) {
-      if (futureNotifs[ix].nativeNotif.data.type !== type || hasRemoved) {
-        newFuture.push(futureNotifs[ix]);
-      } else {
-        removingId = futureNotifs[ix].id;
-        hasRemoved = true;
+  cancelSingleNotificationByType = async (type: NotifTypes): Promise<void> => {
+    try {
+      const { futureNotifs } = store.getState().notif;
+      const newFuture = [];
+      let hasRemoved = false;
+      let removingId: ReactText = '';
+      for (let ix = futureNotifs.length - 1; ix >= 0; ix -= 1) {
+        if (futureNotifs[ix].nativeNotif.data.type !== type || hasRemoved) {
+          newFuture.push(futureNotifs[ix]);
+        } else {
+          removingId = futureNotifs[ix].id;
+          hasRemoved = true;
+        }
       }
+      newFuture.reverse();
+      await Notifications.cancelScheduledNotificationAsync(removingId);
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    newFuture.reverse();
-    const result = await Notifications.cancelScheduledNotificationAsync(
-      removingId
-    );
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
-  cancelAllNotificationsByType = async (type: NotifTypes) => {
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    const removingIds = [];
-    for (let ix = 0; ix < futureNotifs.length; ix += 1) {
-      if (futureNotifs[ix].nativeNotif.data.type !== type) {
-        newFuture.push(futureNotifs[ix]);
-      } else {
-        removingIds.push(futureNotifs[ix].id);
+  cancelAllNotificationsByType = async (type: NotifTypes): Promise<void> => {
+    try {
+      const { futureNotifs } = store.getState().notif;
+      const newFuture = [];
+      const removingIds = [];
+      for (let ix = 0; ix < futureNotifs.length; ix += 1) {
+        if (futureNotifs[ix].nativeNotif.data.type !== type) {
+          newFuture.push(futureNotifs[ix]);
+        } else {
+          removingIds.push(futureNotifs[ix].id);
+        }
       }
+      for (let jx = 0; jx < removingIds.length; jx += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        await Notifications.cancelScheduledNotificationAsync(removingIds[jx]);
+      }
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    let result;
-    for (let jx = 0; jx < removingIds.length; jx += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      result = await Notifications.cancelScheduledNotificationAsync(
-        removingIds[jx]
-      );
-    }
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
-  cancelAllNotifications = async () => {
-    const result = await Notifications.cancelAllScheduledNotificationsAsync();
-    store.dispatch(setFutureNotifs([]));
-    return result;
+  cancelAllNotifications = async (): Promise<void> => {
+    try {
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      store.dispatch(setFutureNotifs([]));
+    } catch (err) {
+      /* do nothing */
+    }
   };
 }
 
