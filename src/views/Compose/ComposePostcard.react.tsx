@@ -67,7 +67,7 @@ interface State {
   data: Record<string, PostcardDesign[]>;
   subcategory: string;
   design: PostcardDesign;
-  loading?: PostcardDesign;
+  loading: PostcardDesign | null;
   writing: boolean;
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
@@ -109,6 +109,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       mediaGranted: true,
       renderMethod: 'grid',
       horizontal: true,
+      loading: null,
     };
 
     this.beginWriting = this.beginWriting.bind(this);
@@ -332,6 +333,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
     Segment.trackWithProperties('Compose - Add Image Success', {
       Option: 'Postcard',
+      orientation: this.state.horizontal ? 'horizontal' : 'vertical',
     });
   }
 
@@ -584,7 +586,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               onChangeText={this.changeText}
               horizontal={this.state.horizontal}
               onLoad={() => {
-                this.setState({ loading: undefined });
+                this.setState({ loading: null });
               }}
               active
             />

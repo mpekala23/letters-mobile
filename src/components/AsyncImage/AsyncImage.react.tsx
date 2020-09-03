@@ -37,7 +37,7 @@ class AsyncImage extends React.Component<Props, State> {
     viewStyle: { flex: 1 },
     imageStyle: { flex: 1 },
     loadingSize: 30,
-    timeout: 3000,
+    timeout: 10000,
     download: false,
   };
 
