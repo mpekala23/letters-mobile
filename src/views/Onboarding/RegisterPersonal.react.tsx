@@ -1,17 +1,11 @@
 import React, { createRef } from 'react';
-import {
-  ScrollView,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Input, PicUpload, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { REFERERS, sleep, Validation } from '@utils';
+import { REFERERS, Validation } from '@utils';
 import { Image } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
