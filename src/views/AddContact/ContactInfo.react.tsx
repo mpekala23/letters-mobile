@@ -5,8 +5,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform,
-  Linking,
 } from 'react-native';
 import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
@@ -134,6 +132,27 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     }
   }
 
+  setStoreValues = () => {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current &&
+      this.relationship.current
+    ) {
+      const contactPersonal: ContactPersonal = {
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.inmateNumber.current.state.value,
+        relationship: this.relationship.current.state.value,
+      };
+      this.props.setAddingPersonal(contactPersonal);
+      this.props.navigation.setParams({
+        phyState: this.stateRef.current.state.value,
+      });
+    }
+  };
+
   setValid(val: boolean) {
     this.setState({ valid: val });
     setProfileOverride({
@@ -157,6 +176,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       if (this.relationship.current)
         this.relationship.current.setState({ dirty: false });
     }
+
+    this.props.navigation.setParams({ addFromSelector: false });
 
     if (this.stateRef.current) {
       if (this.props.route.params && this.props.route.params.phyState) {
@@ -208,7 +229,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             Segment.trackWithProperties('Add Contact - Click on State Search', {
               State: this.state.stateToSearch,
             });
-            Linking.openURL(inmateDatabaseLink);
+            this.setStoreValues();
+            this.props.navigation.navigate('InmateLocator', {
+              uri: inmateDatabaseLink,
+            });
           }}
         >
           <Text style={{ color: Colors.PINK_500 }}>
@@ -271,9 +295,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onPress={() => {
                     Segment.track('Add Contact - Click on Federal Search');
-                    Linking.openURL(
-                      'https://www.bop.gov/mobile/find_inmate/byname.jsp'
-                    );
+                    this.setStoreValues();
+                    this.props.navigation.navigate('InmateLocator', {
+                      uri: 'https://www.bop.gov/mobile/find_inmate/byname.jsp',
+                    });
                   }}
                 >
                   <Text style={{ color: Colors.PINK_500 }}>
