@@ -32,7 +32,7 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
-import { saveDraft, getSubcategories } from '@api';
+import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
@@ -64,7 +64,6 @@ export interface Props {
 }
 
 interface State {
-  data: Record<string, PostcardDesign[]>;
   subcategory: string;
   design: PostcardDesign;
   loading: PostcardDesign | null;
@@ -96,7 +95,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      data: {},
       subcategory: props.initialSubcategory,
       design: {
         image: { uri: '' },
@@ -170,6 +168,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   componentWillUnmount(): void {
+    this.unsubscribeFocus();
+    this.unsubscribeBlur();
     this.unsubscribeKeyboardOpen.remove();
     this.unsubscribeKeyboardClose.remove();
   }
@@ -216,11 +216,37 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       }
       this.setState({ mediaGranted: finalStatus === 'granted' });
       if (finalStatus === 'granted') {
-        this.loadData();
+        const assets = await MediaLibrary.getAssetsAsync();
+        const library = assets.assets.map((value) => {
+          const image: Image = {
+            uri: value.uri,
+            width: value.width,
+            height: value.height,
+          };
+          const design: PostcardDesign = {
+            image,
+            custom: true,
+          };
+          return design;
+        });
+        this.setState({ subcategory: 'Library' });
+        this.props.navigation.setParams({
+          category: {
+            ...this.props.route.params.category,
+            subcategories: {
+              Library: library,
+              'Take Photo': [],
+            },
+          },
+        });
       }
     } else {
-      this.setState({ renderMethod: 'bars' });
-      this.loadData();
+      this.setState({
+        renderMethod: 'bars',
+        subcategory: Object.keys(
+          this.props.route.params.category.subcategories
+        )[0],
+      });
     }
   };
 
@@ -269,42 +295,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
     return false;
   };
-
-  async loadData(): Promise<void> {
-    if (this.props.route.params.category.name === 'personal') {
-      const assets = await MediaLibrary.getAssetsAsync();
-      const library = assets.assets.map((value) => {
-        const image: Image = {
-          uri: value.uri,
-          width: value.width,
-          height: value.height,
-        };
-        const design: PostcardDesign = {
-          image,
-          custom: true,
-        };
-        return design;
-      });
-      const data = {
-        Library: library,
-        'Take Photo': [],
-      };
-      this.setState({ data, subcategory: 'Library' });
-    } else {
-      try {
-        const data = await getSubcategories(this.props.route.params.category);
-        const subcategory = Object.keys(data).length
-          ? Object.keys(data)[0]
-          : '';
-        this.setState({
-          data,
-          subcategory,
-        });
-      } catch (err) {
-        dropdownError({ message: i18n.t('Error.cantLoadDesigns') });
-      }
-    }
-  }
 
   updateCharsLeft(value: string): void {
     this.setState({ charsLeft: 300 - value.length });
@@ -420,7 +410,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   renderSubcategorySelector(): JSX.Element {
-    const subcategories = Object.keys(this.state.data);
+    const subcategories = Object.keys(
+      this.props.route.params.category.subcategories
+    );
     return (
       <View style={Styles.subcategorySelectorBackground}>
         {subcategories.map((subcategory) => (
@@ -605,7 +597,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             {this.renderSubcategorySelector()}
             {this.state.mediaGranted && (
               <FlatList
-                data={this.state.data[this.state.subcategory]}
+                data={
+                  this.props.route.params.category.subcategories[
+                    this.state.subcategory
+                  ]
+                }
                 renderItem={({ item }) => this.renderItem(item)}
                 keyExtractor={(item: PostcardDesign, index: number) => {
                   return item.image.uri + index.toString();

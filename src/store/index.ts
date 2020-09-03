@@ -2,6 +2,7 @@ import { combineReducers, createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 import { AppState } from './types';
+import CategoryReducer from './Category/CategoryReducer';
 import ContactReducer from './Contact/ContactReducer';
 import MailReducer from './Mail/MailReducer';
 import NotifReducer from './Notif/NotifReducer';
@@ -11,11 +12,12 @@ const config = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: ['user'],
-  whitelist: ['contact', 'notif', 'mail'],
+  whitelist: ['category', 'contact', 'notif', 'mail'],
 };
 
 const combinedReducers = combineReducers<AppState>({
   user: UserReducer,
+  category: CategoryReducer,
   contact: ContactReducer,
   notif: NotifReducer,
   mail: MailReducer,

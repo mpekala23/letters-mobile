@@ -24,10 +24,10 @@ interface Props {
   navigation: ChooseCategoryScreenNavigationProp;
   recipientId: number;
   setComposing: (draft: Draft) => void;
+  categories: Category[];
 }
 
 interface State {
-  categories: Category[];
   refreshing: boolean;
 }
 
@@ -35,23 +35,17 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      categories: [],
       refreshing: true,
     };
     this.renderCategory = this.renderCategory.bind(this);
     this.refreshCategories = this.refreshCategories.bind(this);
   }
 
-  async componentDidMount() {
-    await this.refreshCategories();
-  }
-
   async refreshCategories() {
     this.setState({ refreshing: true }, async () => {
       try {
-        const categories = await getCategories();
+        await getCategories();
         this.setState({
-          categories,
           refreshing: false,
         });
       } catch (err) {
@@ -87,11 +81,11 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
           {i18n.t('Compose.iWouldLikeToSend')}
         </Text>
         <FlatList
-          data={this.state.categories.slice(1)}
+          data={this.props.categories.slice(1)}
           ListHeaderComponent={
-            this.state.categories.length > 0 ? (
+            this.props.categories.length > 0 ? (
               <CategoryCard
-                category={this.state.categories[0]}
+                category={this.props.categories[0]}
                 navigate={
                   this.props.navigation.navigate as (
                     val: string,
@@ -116,6 +110,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   recipientId: state.contact.active.id,
+  categories: state.category.categories,
 });
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
