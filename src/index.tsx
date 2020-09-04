@@ -56,7 +56,8 @@ export default class App extends React.Component<null, State> {
     const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys();
     Segment.initialize({ androidWriteKey, iosWriteKey });
     Segment.trackWithProperties('App Open', {
-      'App Version': Constants.nativeBuildVersion,
+      'App Version': process.env.APP_VERSION,
+      'Native Build Version': Constants.nativeBuildVersion,
     });
     try {
       await loginWithToken();

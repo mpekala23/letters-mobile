@@ -147,7 +147,8 @@ class NotifsBase {
     if (notification.origin === 'received') return;
     Segment.trackWithProperties('App Open', {
       channel: 'Push',
-      'App Version': process.env.app_version,
+      'App Version': process.env.APP_VERSION,
+      'Native Build Version': Constants.nativeBuildVersion,
     });
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
