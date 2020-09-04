@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
     "cantRefreshCategories": "No se pueden actualizar las categorias",
     "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
+    "cantLoadMail": "No puedo cargar este correo",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
     "unableToUploadContactPicture": "No se puede subir la nueva imagen de contacto. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",

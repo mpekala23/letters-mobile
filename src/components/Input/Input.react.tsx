@@ -248,9 +248,10 @@ class Input extends React.Component<Props, State> {
         for (let jx = 0; jx < option.length; jx += 1) {
           const match: string = option[jx];
           if (
-            match.toLowerCase().substring(0, value.length) ===
-              value.toLowerCase() ||
-            this.props.strictDropdown
+            this.props.strictDropdown ||
+            (value &&
+              match.toLowerCase().substring(0, value.length) ===
+                value.toLowerCase())
           ) {
             results.push(option[0]);
             break;

@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "cantRefreshCategories": "Unable to refresh postcard categories",
     "cantLoadDesigns": "Unable to load the designs",
+    "cantLoadMail": "Unable to load this piece of mail",
     "timedOut": "The request timed out",
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
     "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
