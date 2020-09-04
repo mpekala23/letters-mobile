@@ -53,6 +53,7 @@
     "federal": "Federal",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "nameTooLong": "¡Ay, el nombre de su ser querido es un poco largo! ¿Podría abreviar?",
     "inmateNumber": "Número de preso",
     "relationshipToInmate": "Yo soy su",
     "state": "Estado",
