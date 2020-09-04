@@ -82,7 +82,7 @@ export function removeSubcategory(
   };
 }
 
-export function setLastUpdated(date: Date): CategoryActionTypes {
+export function setLastUpdated(date: string): CategoryActionTypes {
   return {
     type: SET_LAST_UPDATED,
     payload: date,

@@ -38,7 +38,7 @@ interface Props {
   userPostal: string;
   handleNotif: () => void;
   userId: number;
-  lastUpdatedCategories: Date;
+  lastUpdatedCategories: string | null;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -78,7 +78,13 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       this.props.navigation.replace('ContactInfo', {});
     }
     await this.doRefresh();
-    if (differenceInHours(this.props.lastUpdatedCategories, new Date()) > 6) {
+    if (
+      !this.props.lastUpdatedCategories ||
+      differenceInHours(
+        new Date(this.props.lastUpdatedCategories),
+        new Date()
+      ) > 6
+    ) {
       getCategories();
     }
   }

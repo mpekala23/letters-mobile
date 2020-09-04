@@ -14,7 +14,7 @@ export const SET_LAST_UPDATED = 'cateogry/set_last_updated';
 
 export interface CategoryState {
   categories: Category[];
-  lastUpdated: Date;
+  lastUpdated: string | null;
 }
 
 interface SetCategoriesAction {
@@ -62,7 +62,7 @@ interface RemoveSubcategoryAction {
 
 interface SetLastUpdatedAction {
   type: typeof SET_LAST_UPDATED;
-  payload: Date;
+  payload: string;
 }
 
 export type CategoryActionTypes =

@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import url, { resolve } from 'url';
+import url from 'url';
 import {
   Draft,
   Mail,
@@ -20,7 +20,6 @@ import { addBusinessDays } from 'date-fns';
 import { estimateDelivery } from '@utils';
 
 import { Image as ImageComponent } from 'react-native';
-import { number } from 'prop-types';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import {
   getZipcode,
@@ -472,6 +471,6 @@ export async function getCategories(): Promise<Category[]> {
   const personalCategory = categories.splice(personalIx, 1);
   categories.unshift(personalCategory[0]);
   store.dispatch(setCategories(categories));
-  store.dispatch(setLastUpdated(new Date()));
+  store.dispatch(setLastUpdated(new Date().toDateString()));
   return categories;
 }

@@ -15,7 +15,7 @@ import {
 
 const initialState: CategoryState = {
   categories: [],
-  lastUpdated: new Date(),
+  lastUpdated: null,
 };
 
 export default function CategoryReducer(
