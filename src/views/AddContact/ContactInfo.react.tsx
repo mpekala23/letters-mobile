@@ -383,7 +383,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   isInvalidInput={this.isExceedsNameCharLimit}
                 />
                 {this.isExceedsNameCharLimit() && (
-                  <Text>{i18n.t('ContactInfoScreen.nameTooLong')}</Text>
+                  <Text style={{ textAlign: 'center', marginBottom: 5 }}>
+                    {i18n.t('ContactInfoScreen.nameTooLong')}
+                  </Text>
                 )}
                 <Input
                   ref={this.inmateNumber}

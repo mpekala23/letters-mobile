@@ -88,7 +88,7 @@ class Input extends React.Component<Props, State> {
     required: false,
     trimWhitespace: true,
     strictDropdown: false,
-    isInvalidInput: (): null => null,
+    isInvalidInput: (): false => false,
   };
 
   constructor(props: Props) {
