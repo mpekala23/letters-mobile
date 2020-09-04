@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import url, { resolve } from 'url';
+import url from 'url';
 import {
   Draft,
   Mail,
@@ -20,7 +20,7 @@ import { addBusinessDays } from 'date-fns';
 import { estimateDelivery } from '@utils';
 
 import { Image as ImageComponent } from 'react-native';
-import { number } from 'prop-types';
+import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -376,28 +376,17 @@ interface RawCategory {
   blurb: string;
 }
 
-function cleanCategory(raw: RawCategory): Category {
+function cleanCategory(
+  raw: RawCategory,
+  subcategories: Record<string, PostcardDesign[]>
+): Category {
   return {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
     blurb: raw.blurb,
+    subcategories,
   };
-}
-
-export async function getCategories(): Promise<Category[]> {
-  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as RawCategory[];
-  const categories: Category[] = data.map((raw: RawCategory) =>
-    cleanCategory(raw)
-  );
-  const personalIx = categories.findIndex(
-    (cat: Category) => cat.name === 'personal'
-  );
-  const personalCategory = categories.splice(personalIx, 1);
-  categories.unshift(personalCategory[0]);
-  return categories;
 }
 
 interface RawDesign {
@@ -445,27 +434,6 @@ async function cleanDesign(
   };
 }
 
-export async function getSubcategories(
-  category: Category
-): Promise<Record<string, PostcardDesign[]>> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `designs/${category.id}`)
-  );
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as Record<string, RawDesign[]>;
-  const cleanData: Record<string, PostcardDesign[]> = {};
-  const subNames = Object.keys(data);
-  for (let ix = 0; ix < subNames.length; ix += 1) {
-    const subName = subNames[ix];
-    cleanData[subName] = await Promise.all(
-      data[subName].map((raw: RawDesign) =>
-        cleanDesign(raw, category.id, subName)
-      )
-    );
-  }
-  return cleanData;
-}
-
 export async function getSubcategoriesById(
   categoryId: number
 ): Promise<Record<string, PostcardDesign[]>> {
@@ -485,4 +453,24 @@ export async function getSubcategoriesById(
     );
   }
   return cleanData;
+}
+
+export async function getCategories(): Promise<Category[]> {
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as RawCategory[];
+  const categories: Category[] = await Promise.all(
+    data.map(async (raw: RawCategory) => {
+      const subcategories = await getSubcategoriesById(raw.id);
+      return cleanCategory(raw, subcategories);
+    })
+  );
+  const personalIx = categories.findIndex(
+    (cat: Category) => cat.name === 'personal'
+  );
+  const personalCategory = categories.splice(personalIx, 1);
+  categories.unshift(personalCategory[0]);
+  store.dispatch(setCategories(categories));
+  store.dispatch(setLastUpdated(new Date().toDateString()));
+  return categories;
 }

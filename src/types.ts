@@ -49,6 +49,7 @@ export interface Category {
   name: string;
   image: Image;
   blurb: string;
+  subcategories: Record<string, PostcardDesign[]>;
 }
 
 // Letters and Postcards (Draft)

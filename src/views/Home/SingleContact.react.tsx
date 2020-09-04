@@ -305,6 +305,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                       id: -1,
                                       image: { uri: '' },
                                       blurb: '',
+                                      subcategories: {},
                                     },
                                   }
                                 );

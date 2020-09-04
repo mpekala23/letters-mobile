@@ -11,12 +11,13 @@ import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken } from '@api';
+import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Notifs from '@notifications';
+import { differenceInHours } from 'date-fns';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -37,6 +38,7 @@ interface Props {
   userPostal: string;
   handleNotif: () => void;
   userId: number;
+  lastUpdatedCategories: string | null;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -76,6 +78,15 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       this.props.navigation.replace('ContactInfo', {});
     }
     await this.doRefresh();
+    if (
+      !this.props.lastUpdatedCategories ||
+      differenceInHours(
+        new Date(this.props.lastUpdatedCategories),
+        new Date()
+      ) > 6
+    ) {
+      getCategories();
+    }
   }
 
   async doRefresh() {
@@ -177,6 +188,7 @@ const mapStateToProps = (state: AppState) => ({
   currentNotif: state.notif.currentNotif,
   userPostal: state.user.user.postal,
   userId: state.user.user.id,
+  lastUpdatedCategories: state.category.lastUpdated,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
