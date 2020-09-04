@@ -145,7 +145,10 @@ class NotifsBase {
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
     if (notification.origin === 'received') return;
-    Segment.trackWithProperties('App Open', { channel: 'Push' });
+    Segment.trackWithProperties('App Open', {
+      channel: 'Push',
+      'App Version': process.env.app_version,
+    });
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();

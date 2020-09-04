@@ -124,6 +124,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                         await getTrackingEvents(item.id);
                         this.props.navigation.navigate('MailTracking');
                       } catch (err) {
+                        Segment.trackWithProperties(
+                          'Letter Tracking - Loading Error',
+                          { error: err }
+                        );
                         dropdownError({
                           message: i18n.t('Error.cantLoadMail'),
                         });
@@ -149,8 +153,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   description={item.content}
                   onPress={async () => {
                     Segment.track('Contact View - Click on Letter Tracking');
-                    await getTrackingEvents(item.id);
-                    this.props.navigation.navigate('MailTracking');
+                    try {
+                      await getTrackingEvents(item.id);
+                      this.props.navigation.navigate('MailTracking');
+                    } catch (err) {
+                      Segment.trackWithProperties(
+                        'Letter Tracking - Loading Error',
+                        { error: err }
+                      );
+                      dropdownError({
+                        message: i18n.t('Error.cantLoadMail'),
+                      });
+                    }
                   }}
                   key={item.id}
                 />

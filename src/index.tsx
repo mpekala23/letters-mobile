@@ -11,6 +11,7 @@ import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
 import * as Sentry from 'sentry-expo';
+import Constants from 'expo-constants';
 import { isProduction } from '@utils';
 
 const customFonts = {
@@ -54,7 +55,9 @@ export default class App extends React.Component<null, State> {
 
     const { androidWriteKey, iosWriteKey } = App.getSegmentWriteKeys();
     Segment.initialize({ androidWriteKey, iosWriteKey });
-    Segment.track('App Open');
+    Segment.trackWithProperties('App Open', {
+      'App Version': Constants.nativeBuildVersion,
+    });
     try {
       await loginWithToken();
     } catch (err) {
