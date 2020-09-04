@@ -483,7 +483,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                     allowsEditing: true,
                   });
                   if (image) {
-                    this.changeDesign({ image, custom: true });
+                    this.changeDesign({
+                      image,
+                      custom: true,
+                      name: 'Personal Photo',
+                      subcategoryName: 'Selfie',
+                    });
                   }
                 } catch (err) {
                   dropdownError({ message: i18n.t('Permission.camera') });

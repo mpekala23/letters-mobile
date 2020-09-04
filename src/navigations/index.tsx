@@ -15,6 +15,7 @@ import {
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
+  InmateLocatorScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -96,6 +97,7 @@ export type AppStackParamList = {
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
+  InmateLocator: { uri: string };
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
@@ -107,7 +109,7 @@ export type AppStackParamList = {
   ReferFriends: { mailType: MailTypes };
   ReviewLetter: undefined;
   ReviewPostcard: { horizontal: boolean; category: string };
-  ReviewContact: undefined;
+  ReviewContact: { manual: boolean };
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
@@ -140,6 +142,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
+  InmateLocator: { title: i18n.t('Screens.inmateLocator'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
   MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
@@ -333,6 +336,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
+        <Stack.Screen name="InmateLocator" component={InmateLocatorScreen} />
       </>
     );
   }

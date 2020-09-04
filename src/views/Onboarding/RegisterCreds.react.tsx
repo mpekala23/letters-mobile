@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { ScrollView, Platform, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '@navigations';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
