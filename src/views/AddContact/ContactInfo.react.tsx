@@ -11,6 +11,7 @@ import { Colors, Typography } from '@styles';
 import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import {
+  LOB_NAME_CHAR_LIMIT,
   STATE_TO_ABBREV,
   STATE_TO_INMATE_DB,
   STATES_DROPDOWN,
@@ -81,6 +82,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       'blur',
       this.onNavigationBlur
     );
+    this.isExceedsNameCharLimit = this.isExceedsNameCharLimit.bind(this);
   }
 
   componentDidMount() {
@@ -217,6 +219,22 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     }
   }
 
+  isExceedsNameCharLimit() {
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current
+    ) {
+      return (
+        this.firstName.current.state.value.length +
+          this.lastName.current.state.value.length +
+          this.inmateNumber.current.state.value.length >
+        LOB_NAME_CHAR_LIMIT
+      );
+    }
+    return false;
+  }
+
   render() {
     const inmateDatabaseLink =
       STATE_TO_INMATE_DB[STATE_TO_ABBREV[this.state.stateToSearch]]?.link;
@@ -339,25 +357,50 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
+                  onChangeText={() => {
+                    if (this.lastName.current) {
+                      this.lastName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.lastName}
+                  isInvalidInput={this.isExceedsNameCharLimit}
                 />
                 <Input
                   ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
+                  onChangeText={() => {
+                    if (this.firstName.current) {
+                      this.firstName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.inmateNumber}
+                  isInvalidInput={this.isExceedsNameCharLimit}
                 />
+                {this.isExceedsNameCharLimit() && (
+                  <Text style={{ textAlign: 'center', marginBottom: 5 }}>
+                    {i18n.t('ContactInfoScreen.nameTooLong')}
+                  </Text>
+                )}
                 <Input
                   ref={this.inmateNumber}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
                   validate={Validation.InmateNumber}
+                  onChangeText={() => {
+                    if (this.firstName.current) {
+                      this.firstName.current.doValidate();
+                    }
+                    if (this.lastName.current) {
+                      this.lastName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.relationship}

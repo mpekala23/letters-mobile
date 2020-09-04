@@ -182,6 +182,8 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
+export const LOB_NAME_CHAR_LIMIT = 37; // excluding spaces
+
 export {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
