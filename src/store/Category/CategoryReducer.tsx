@@ -24,13 +24,18 @@ export default function CategoryReducer(
 ): CategoryState {
   const currentState = { ...state };
   let ix = -1;
+  let categories: Category[] = [];
   switch (action.type) {
     case SET_CATEGORIES:
       currentState.categories = action.payload;
       return currentState;
     case ADD_CATEGORY:
-      currentState.categories.push(action.payload);
-      return currentState;
+      categories = [...currentState.categories];
+      categories.push(action.payload);
+      return {
+        ...currentState,
+        categories,
+      };
     case SET_CATEGORY:
       ix = currentState.categories.findIndex(
         (value: Category) => value.id === action.payload.id
@@ -39,12 +44,13 @@ export default function CategoryReducer(
       currentState.categories[ix] = action.payload;
       return currentState;
     case REMOVE_CATEGORY:
-      ix = currentState.categories.findIndex(
-        (value: Category) => value.id === action.payload.id
+      categories = currentState.categories.filter(
+        (value: Category) => value.id !== action.payload.id
       );
-      if (ix < 0) return currentState;
-      currentState.categories.splice(ix, 1);
-      return currentState;
+      return {
+        ...currentState,
+        categories,
+      };
     case SET_SUBCATEGORIES:
       ix = currentState.categories.findIndex(
         (value: Category) => value.id === action.payload.categoryId
@@ -69,12 +75,13 @@ export default function CategoryReducer(
         action.payload.designs;
       return currentState;
     case REMOVE_SUBCATEGORY:
-      ix = currentState.categories.findIndex(
-        (value: Category) => value.id === action.payload.categoryId
+      categories = currentState.categories.filter(
+        (value: Category) => value.id !== action.payload.categoryId
       );
-      if (ix < 0) return currentState;
-      delete currentState.categories[ix].subcategories[action.payload.name];
-      return currentState;
+      return {
+        ...currentState,
+        categories,
+      };
     case SET_LAST_UPDATED:
       currentState.lastUpdated = action.payload;
       return currentState;
