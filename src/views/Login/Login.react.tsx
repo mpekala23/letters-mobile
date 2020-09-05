@@ -217,7 +217,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.termsOfService')}
                     onPress={() => {
-                      this.props.navigation.navigate(Screen.Terms);
+                      this.props.navigation.navigate(Screens.Terms);
                     }}
                   />
                   <Text accessible={false} style={Typography.FONT_REGULAR}>

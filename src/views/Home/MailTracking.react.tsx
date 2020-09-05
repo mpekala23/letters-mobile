@@ -302,7 +302,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             <Button
               reverse
               onPress={() => {
-                this.props.navigation.navigate(Screen.SupportFAQ);
+                this.props.navigation.navigate(Screens.SupportFAQ);
                 Segment.track('In-App Reporting - Click on I Need Help');
               }}
               buttonText={i18n.t('MailTrackingScreen.needHelp')}

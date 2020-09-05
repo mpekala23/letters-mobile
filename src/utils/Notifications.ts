@@ -18,7 +18,6 @@ export function handleNotificationsAfterSend(activeContact: Contact): void {
         type: NotifTypes.Drought,
         data: {
           contactId: activeContact.id,
-          x,
         },
       },
     },

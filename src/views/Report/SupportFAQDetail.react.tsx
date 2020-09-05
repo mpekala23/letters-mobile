@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Linking } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
