@@ -281,7 +281,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
   ) {
     screens = (
-      <Stack.Screens
+      <Stack.Screen
         name={Screens.Splash}
         component={SplashScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
@@ -290,19 +290,19 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (!props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screens name={Screens.Begin} component={BeginScreen} />
-        <Stack.Screens name={Screens.Login} component={LoginScreen} />
-        <Stack.Screens name={Screens.Terms} component={TermsScreen} />
-        <Stack.Screens name={Screens.Privacy} component={PrivacyScreen} />
-        <Stack.Screens
+        <Stack.Screen name={Screens.Begin} component={BeginScreen} />
+        <Stack.Screen name={Screens.Login} component={LoginScreen} />
+        <Stack.Screen name={Screens.Terms} component={TermsScreen} />
+        <Stack.Screen name={Screens.Privacy} component={PrivacyScreen} />
+        <Stack.Screen
           name={Screens.RegisterCreds}
           component={RegisterCredsScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.RegisterPersonal}
           component={RegisterPersonalScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.RegisterAddress}
           component={RegisterAddressScreen}
         />
@@ -311,36 +311,36 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ContactSelector}
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.RegisterAddress}
           component={ChooseCategoryScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ChooseOption}
           component={ChooseOptionScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ComposeLetter}
           component={ComposeLetterScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ReviewLetter}
           component={ReviewLetterScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ReviewPostcard}
           component={ReviewPostcardScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ContactInfo}
           component={ContactInfoScreen}
           options={{
@@ -348,50 +348,50 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               Platform.OS === 'ios' ? fadeTransition : bottomTopTransition,
           }}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.FacilityDirectory}
           component={FacilityDirectoryScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.AddManually}
           component={AddManuallyScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ReferFriends}
           component={ReferFriendsScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.ReviewContact}
           component={ReviewContactScreen}
         />
-        <Stack.Screens name={Screens.Issues} component={IssuesScreen} />
-        <Stack.Screens
+        <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
+        <Stack.Screen
           name={Screens.IssuesDetail}
           component={IssuesDetailScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.SingleContact}
           component={SingleContactScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.MailTracking}
           component={MailTrackingScreen}
         />
-        <Stack.Screens name={Screens.MemoryLane} component={MemoryLaneScreen} />
-        <Stack.Screens
+        <Stack.Screen name={Screens.MemoryLane} component={MemoryLaneScreen} />
+        <Stack.Screen
           name={Screens.MailDetails}
           component={MailDetailsScreen}
         />
-        <Stack.Screens name={Screens.SupportFAQ} component={SupportFAQScreen} />
-        <Stack.Screens
+        <Stack.Screen name={Screens.SupportFAQ} component={SupportFAQScreen} />
+        <Stack.Screen
           name={Screens.SupportFAQDetail}
           component={SupportFAQDetailScreen}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.UpdateContact}
           component={UpdateContactScreen}
           options={{
@@ -399,7 +399,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
-        <Stack.Screens
+        <Stack.Screen
           name={Screens.UpdateProfile}
           component={UpdateProfileScreen}
           options={{

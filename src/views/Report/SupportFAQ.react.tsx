@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Typography } from '@styles';
+import { ListItem } from '@components';
+import { AppStackParamList } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
