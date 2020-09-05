@@ -73,10 +73,10 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
         props.navigation.reset({
           index: 0,
           routes: [
-            { name: Screen.ContactSelector },
-            { name: Screen.SingleContact },
-            { name: Screen.MailTracking },
-            { name: Screen.UpdateContact },
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+            { name: Screens.MailTracking },
+            { name: Screens.UpdateContact },
           ],
         });
       }, i18n.t('SupportFAQDetailScreen.updateAddress'));
@@ -85,10 +85,10 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
         props.navigation.reset({
           index: 0,
           routes: [
-            { name: Screen.ContactSelector },
-            { name: Screen.SingleContact },
-            { name: Screen.MailTracking },
-            { name: Screen.UpdateContact },
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+            { name: Screens.MailTracking },
+            { name: Screens.UpdateContact },
           ],
         });
       }, i18n.t('SupportFAQDetailScreen.updateProfile'));
