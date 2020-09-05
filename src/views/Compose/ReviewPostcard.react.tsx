@@ -7,11 +7,8 @@ import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
-import { hoursTill8Tomorrow } from '@utils';
+import { cleanupAfterSend } from '@utils';
 import * as Segment from 'expo-analytics-segment';
-import { deleteDraft } from '@api/User';
-import Notifs from '@notifications';
-import { NotifTypes } from '@store/Notif/NotifTypes';
 import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
@@ -89,26 +86,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.subcategoryName,
       });
-      Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-      Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
-      Notifs.scheduleNotificationInDays(
-        {
-          title: `${i18n.t(
-            'Notifs.happy'
-          )} ${new Date().toDateString()}! ${i18n.t(
-            'Notifs.readyToSendAnother'
-          )} ${this.props.recipient.firstName}?`,
-          body: `${i18n.t('Notifs.clickHereToBegin')}`,
-          data: {
-            type: NotifTypes.Drought,
-            data: {
-              contactId: this.props.recipient.id,
-            },
-          },
-        },
-        hoursTill8Tomorrow() / 24 + 7
-      );
-      deleteDraft();
+      cleanupAfterSend(this.props.recipient);
       this.props.navigation.reset({
         index: 0,
         routes: [

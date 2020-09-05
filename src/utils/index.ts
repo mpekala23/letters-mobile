@@ -9,7 +9,7 @@ import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
-import { Screen } from '@navigations';
+import { Screens } from '@navigations';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -18,6 +18,7 @@ import {
 } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 import REFERERS from './Referers';
+import { cleanupAfterSend } from './Notifications';
 
 export { Prompts, getRandomPromptIx };
 export { REFERERS };
@@ -29,6 +30,8 @@ export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
 export const ETA_PROCESSED_TO_DELIVERED = 3;
+
+export { cleanupAfterSend };
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -266,7 +269,7 @@ export function isProduction(): boolean {
 }
 
 export const onNativeShare = async (
-  screen: Screen,
+  screen: Screens,
   cta: string
 ): Promise<void> => {
   const PROPERTIES = { screen, cta };
