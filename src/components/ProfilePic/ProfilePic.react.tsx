@@ -6,7 +6,7 @@ import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
 import { navigate } from '@notifications';
 import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
-import { Screen } from '@navigations';
+import { Screens } from '@navigations';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
@@ -98,9 +98,9 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
         onPress={async () => {
           if (props.disabled) return;
           if (props.type === ProfilePicTypes.SingleContact)
-            navigate(Screen.UpdateContact);
+            navigate(Screens.UpdateContact);
           else if (props.type === ProfilePicTypes.Topbar)
-            navigate(Screen.UpdateProfile);
+            navigate(Screens.UpdateProfile);
         }}
         testID="profilePicture"
       >

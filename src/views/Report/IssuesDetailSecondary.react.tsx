@@ -2,7 +2,7 @@ import React from 'react';
 import { Linking, Text, View, TextStyle, ViewStyle } from 'react-native';
 import { Typography } from '@styles';
 import { Button, Icon } from '@components';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { DeliveryReportTypes, Facility, Contact } from 'types';
@@ -91,7 +91,7 @@ function mapIssueToDetailsPrimaryCTA(props: Props, type: DeliveryReportTypes) {
         () => {
           props.navigation.reset({
             index: 0,
-            routes: [{ name: Screen.ContactSelector }],
+            routes: [{ name: Screens.ContactSelector }],
           });
         },
         i18n.t('IssuesDetailScreen.returnHome'),
@@ -143,7 +143,7 @@ function mapIssueToDetailsSecondaryCTA(
           () => {
             props.navigation.reset({
               index: 0,
-              routes: [{ name: Screen.ContactSelector }],
+              routes: [{ name: Screens.ContactSelector }],
             });
           },
           i18n.t('IssuesDetailScreen.IllWait'),

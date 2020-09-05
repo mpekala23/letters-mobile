@@ -62,7 +62,7 @@ import i18n from '@i18n';
 
 export { navigationRef, navigate };
 
-export enum Screen {
+export enum Screens {
   Begin = 'Begin',
   Splash = 'Splash',
   Login = 'Login',
@@ -264,7 +264,7 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  const [currentRoute, setCurrentRoute] = useState(Screen.Splash);
+  const [currentRoute, setCurrentRoute] = useState(Screens.Splash);
   const topbar = (
     <Topbar
       userState={props.userState}
@@ -281,8 +281,8 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
   ) {
     screens = (
-      <Stack.Screen
-        name={Screen.Splash}
+      <Stack.Screens
+        name={Screens.Splash}
         component={SplashScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
@@ -290,20 +290,20 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (!props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screen name={Screen.Begin} component={BeginScreen} />
-        <Stack.Screen name={Screen.Login} component={LoginScreen} />
-        <Stack.Screen name={Screen.Terms} component={TermsScreen} />
-        <Stack.Screen name={Screen.Privacy} component={PrivacyScreen} />
-        <Stack.Screen
-          name={Screen.RegisterCreds}
+        <Stack.Screens name={Screens.Begin} component={BeginScreen} />
+        <Stack.Screens name={Screens.Login} component={LoginScreen} />
+        <Stack.Screens name={Screens.Terms} component={TermsScreen} />
+        <Stack.Screens name={Screens.Privacy} component={PrivacyScreen} />
+        <Stack.Screens
+          name={Screens.RegisterCreds}
           component={RegisterCredsScreen}
         />
-        <Stack.Screen
-          name={Screen.RegisterPersonal}
+        <Stack.Screens
+          name={Screens.RegisterPersonal}
           component={RegisterPersonalScreen}
         />
-        <Stack.Screen
-          name={Screen.RegisterAddress}
+        <Stack.Screens
+          name={Screens.RegisterAddress}
           component={RegisterAddressScreen}
         />
       </>
@@ -311,90 +311,96 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
-        <Stack.Screen
-          name={Screen.ContactSelector}
+        <Stack.Screens
+          name={Screens.ContactSelector}
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen
-          name={Screen.RegisterAddress}
+        <Stack.Screens
+          name={Screens.RegisterAddress}
           component={ChooseCategoryScreen}
         />
-        <Stack.Screen
-          name={Screen.ChooseOption}
+        <Stack.Screens
+          name={Screens.ChooseOption}
           component={ChooseOptionScreen}
         />
-        <Stack.Screen
-          name={Screen.ComposeLetter}
+        <Stack.Screens
+          name={Screens.ComposeLetter}
           component={ComposeLetterScreen}
         />
-        <Stack.Screen
-          name={Screen.ComposePostcard}
+        <Stack.Screens
+          name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
         />
-        <Stack.Screen
-          name={Screen.ReviewLetter}
+        <Stack.Screens
+          name={Screens.ReviewLetter}
           component={ReviewLetterScreen}
         />
-        <Stack.Screen
-          name={Screen.ReviewPostcard}
+        <Stack.Screens
+          name={Screens.ReviewPostcard}
           component={ReviewPostcardScreen}
         />
-        <Stack.Screen
-          name={Screen.ContactInfo}
+        <Stack.Screens
+          name={Screens.ContactInfo}
           component={ContactInfoScreen}
           options={{
             cardStyleInterpolator:
               Platform.OS === 'ios' ? fadeTransition : bottomTopTransition,
           }}
         />
-        <Stack.Screen
-          name={Screen.FacilityDirectory}
+        <Stack.Screens
+          name={Screens.FacilityDirectory}
           component={FacilityDirectoryScreen}
         />
-        <Stack.Screen name={Screen.AddManually} component={AddManuallyScreen} />
-        <Stack.Screen
-          name={Screen.ReferFriends}
+        <Stack.Screens
+          name={Screens.AddManually}
+          component={AddManuallyScreen}
+        />
+        <Stack.Screens
+          name={Screens.ReferFriends}
           component={ReferFriendsScreen}
         />
-        <Stack.Screen
-          name={Screen.ReviewContact}
+        <Stack.Screens
+          name={Screens.ReviewContact}
           component={ReviewContactScreen}
         />
-        <Stack.Screen name={Screen.Issues} component={IssuesScreen} />
-        <Stack.Screen
-          name={Screen.IssuesDetail}
+        <Stack.Screens name={Screens.Issues} component={IssuesScreen} />
+        <Stack.Screens
+          name={Screens.IssuesDetail}
           component={IssuesDetailScreen}
         />
-        <Stack.Screen
-          name={Screen.IssuesDetailSecondary}
+        <Stack.Screens
+          name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
         />
-        <Stack.Screen
-          name={Screen.SingleContact}
+        <Stack.Screens
+          name={Screens.SingleContact}
           component={SingleContactScreen}
         />
-        <Stack.Screen
-          name={Screen.MailTracking}
+        <Stack.Screens
+          name={Screens.MailTracking}
           component={MailTrackingScreen}
         />
-        <Stack.Screen name={Screen.MemoryLane} component={MemoryLaneScreen} />
-        <Stack.Screen name={Screen.MailDetails} component={MailDetailsScreen} />
-        <Stack.Screen name={Screen.SupportFAQ} component={SupportFAQScreen} />
-        <Stack.Screen
-          name={Screen.SupportFAQDetail}
+        <Stack.Screens name={Screens.MemoryLane} component={MemoryLaneScreen} />
+        <Stack.Screens
+          name={Screens.MailDetails}
+          component={MailDetailsScreen}
+        />
+        <Stack.Screens name={Screens.SupportFAQ} component={SupportFAQScreen} />
+        <Stack.Screens
+          name={Screens.SupportFAQDetail}
           component={SupportFAQDetailScreen}
         />
-        <Stack.Screen
-          name={Screen.UpdateContact}
+        <Stack.Screens
+          name={Screens.UpdateContact}
           component={UpdateContactScreen}
           options={{
             cardStyleInterpolator:
               Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
-        <Stack.Screen
-          name={Screen.UpdateProfile}
+        <Stack.Screens
+          name={Screens.UpdateProfile}
           component={UpdateProfileScreen}
           options={{
             cardStyleInterpolator:
@@ -408,7 +414,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
-        const name = navigationRef.current?.getCurrentRoute()?.name as Screen;
+        const name = navigationRef.current?.getCurrentRoute()?.name as Screens;
         if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);

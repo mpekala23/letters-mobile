@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
-import { AuthStackParamList, Screen } from '@navigations';
+import { AuthStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Typography, Colors } from '@styles';
 import Styles from './Privacy.styles';
@@ -110,7 +110,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           Ameelio takes the privacy of its users seriously. Our{' '}
           <Text
             style={{ color: Colors.AMEELIO_BLUE }}
-            onPress={() => props.navigation.navigate(Screen.Privacy)}
+            onPress={() => props.navigation.navigate(Screens.Privacy)}
           >
             Privacy Policy{' '}
           </Text>
@@ -127,7 +127,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           to our Privacy Policy{' '}
           <Text
             style={{ color: Colors.AMEELIO_BLUE }}
-            onPress={() => props.navigation.navigate(Screen.Privacy)}
+            onPress={() => props.navigation.navigate(Screens.Privacy)}
           >
             here
           </Text>
@@ -139,7 +139,7 @@ const TermsScreen: React.FC<Props> = (props: Props) => {
           the Privacy Policy{' '}
           <Text
             style={{ color: Colors.AMEELIO_BLUE }}
-            onPress={() => props.navigation.navigate(Screen.Privacy)}
+            onPress={() => props.navigation.navigate(Screens.Privacy)}
           >
             here
           </Text>

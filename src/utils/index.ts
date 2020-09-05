@@ -9,7 +9,7 @@ import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
-import { Screen } from '@navigations';
+import { Screens } from '@navigations';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,

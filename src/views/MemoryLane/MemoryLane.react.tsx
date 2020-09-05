@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { AppStackParamList, Screen } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Mail, MailTypes, Contact } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
@@ -44,7 +44,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
             onPress={() => {
               props.setActiveMail(item);
               Segment.track('Memory Lane - Click on Memory Card');
-              props.navigation.navigate(Screen.MailDetails);
+              props.navigation.navigate(Screens.MailDetails);
             }}
             style={{ width: '45%', marginLeft: 6 }}
           />
