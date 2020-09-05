@@ -120,8 +120,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     description={item.content}
                     onPress={async () => {
                       Segment.track('Contact View - Click on Letter Tracking');
-                      await getTrackingEvents(item.id);
-                      this.props.navigation.navigate(Screens.MailTracking);
+                      try {
+                        await getTrackingEvents(item.id);
+                        this.props.navigation.navigate(Screens.MailTracking);
+                      } catch (err) {
+                        Segment.trackWithProperties(
+                          'Letter Tracking - Loading Error',
+                          { error: err }
+                        );
+                        dropdownError({
+                          message: i18n.t('Error.cantLoadMail'),
+                        });
+                      }
                     }}
                     key={item.id}
                   />
@@ -143,8 +153,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   description={item.content}
                   onPress={async () => {
                     Segment.track('Contact View - Click on Letter Tracking');
-                    await getTrackingEvents(item.id);
-                    this.props.navigation.navigate(Screens.MailTracking);
+                    try {
+                      await getTrackingEvents(item.id);
+                      this.props.navigation.navigate(Screens.MailTracking);
+                    } catch (err) {
+                      Segment.trackWithProperties(
+                        'Letter Tracking - Loading Error',
+                        { error: err }
+                      );
+                      dropdownError({
+                        message: i18n.t('Error.cantLoadMail'),
+                      });
+                    }
                   }}
                   key={item.id}
                 />
@@ -307,6 +327,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                       id: -1,
                                       image: { uri: '' },
                                       blurb: '',
+                                      subcategories: {},
                                     },
                                   }
                                 );

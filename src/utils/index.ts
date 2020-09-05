@@ -186,6 +186,8 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
+export const LOB_NAME_CHAR_LIMIT = 37; // excluding spaces
+
 export {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -263,9 +265,8 @@ export function estimateDelivery(date: Date, status?: MailStatus): Date {
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 
 export function isProduction(): boolean {
-  return true;
-  /* if (!RELEASE_CHANNEL) return false;
-  return RELEASE_CHANNEL.indexOf('prod') !== -1; */
+  if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }
 
 export const onNativeShare = async (

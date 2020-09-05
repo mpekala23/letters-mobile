@@ -74,7 +74,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   async doSend(): Promise<void> {
     try {
       await createMail(this.props.composing);
-      this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
         type: 'postcard',
         facility: this.props.recipient.facility.name,
@@ -85,7 +84,11 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         subcategory:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.subcategoryName,
+        option:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.name,
       });
+      this.props.clearComposing();
       cleanupAfterSend(this.props.recipient);
       this.props.navigation.reset({
         index: 0,

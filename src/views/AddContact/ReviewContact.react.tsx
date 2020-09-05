@@ -33,17 +33,18 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
   'ReviewContact'
 >;
 
-export interface State {
-  valid: boolean;
-  image: Image | null;
-}
-
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
   hasSentLetter: boolean;
   setAdding: (contactDraft: ContactDraft) => void;
   setActiveContact: (contact: Contact) => void;
+  route: { params: { manual: boolean } };
+}
+
+export interface State {
+  valid: boolean;
+  image: Image | null;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -170,6 +171,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           facilityState: newContact.facility.state,
           facilityPostal: newContact.facility.postal,
           facilityType: newContact.facility.type,
+          Manual: this.props.route.params.manual,
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {

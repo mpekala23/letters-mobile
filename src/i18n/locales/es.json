@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
     "cantRefreshCategories": "No se pueden actualizar las categorias",
     "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
+    "cantLoadMail": "No puedo cargar este correo",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
     "unableToUploadContactPicture": "No se puede subir la nueva imagen de contacto. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
@@ -53,6 +54,7 @@
     "federal": "Federal",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "nameTooLong": "¡Ay, el nombre de su ser querido es un poco largo! ¿Podría abreviar?",
     "inmateNumber": "Número de preso",
     "relationshipToInmate": "Yo soy su",
     "state": "Estado",
@@ -387,7 +389,8 @@
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
-    "reviewPostcard": "Revisar"
+    "reviewPostcard": "Vista previa",
+    "inmateLocator": " Localizador de Presos"
   },
   "Sharing": {
     "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",

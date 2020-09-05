@@ -5,7 +5,10 @@ import { EventSubscription } from 'fbemitter';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import { Notification } from 'expo/build/Notifications/Notifications.types';
+import {
+  Notification,
+  LocalNotification,
+} from 'expo/build/Notifications/Notifications.types';
 import store from '@store';
 import { addNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
 import { NavigationContainerRef } from '@react-navigation/native';
@@ -143,7 +146,11 @@ class NotifsBase {
   async notifHandler(notification: Notification) {
     this.purgeFutureNotifs();
     if (notification.origin === 'received') return;
-    Segment.trackWithProperties('App Open', { channel: 'Push' });
+    Segment.trackWithProperties('App Open', {
+      channel: 'Push',
+      'App Version': process.env.APP_VERSION,
+      'Native Build Version': Constants.nativeBuildVersion,
+    });
     const notif: Notif = notification.data;
     store.dispatch(addNotif(notif));
     const state: AppState = store.getState();
@@ -440,67 +447,72 @@ class NotifsBase {
     store.dispatch(setFutureNotifs(futureNotifs));
   };
 
-  cancelNotificationById = async (id: ReactText) => {
-    const result = await Notifications.cancelScheduledNotificationAsync(id);
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    for (let ix = 0; ix < futureNotifs.length; ix += 1) {
-      if (futureNotifs[ix].id !== id) {
-        newFuture.push(futureNotifs[ix]);
-      }
+  cancelNotificationById = async (id: ReactText): Promise<void> => {
+    try {
+      await Notifications.cancelScheduledNotificationAsync(id);
+      const { futureNotifs } = store.getState().notif;
+      const newFuture = futureNotifs.filter(
+        (value: FutureNotif) => value.id !== id
+      );
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
   // cancels the most recently scheduled notification of a certain type
-  cancelSingleNotificationByType = async (type: NotifTypes) => {
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    let hasRemoved = false;
-    let removingId: ReactText = '';
-    for (let ix = futureNotifs.length - 1; ix >= 0; ix -= 1) {
-      if (futureNotifs[ix].nativeNotif.data.type !== type || hasRemoved) {
-        newFuture.push(futureNotifs[ix]);
-      } else {
-        removingId = futureNotifs[ix].id;
+  cancelSingleNotificationByType = async (type: NotifTypes): Promise<void> => {
+    try {
+      const { futureNotifs } = store.getState().notif;
+      let hasRemoved = false;
+      let removingId: ReactText = '';
+      const newFuture = futureNotifs.reverse().filter((value: FutureNotif) => {
+        if (value.nativeNotif.data.type !== type || hasRemoved) {
+          return true;
+        }
+        removingId = value.id;
         hasRemoved = true;
-      }
+        return false;
+      });
+      await Notifications.cancelScheduledNotificationAsync(removingId);
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    newFuture.reverse();
-    const result = await Notifications.cancelScheduledNotificationAsync(
-      removingId
-    );
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
-  cancelAllNotificationsByType = async (type: NotifTypes) => {
-    const { futureNotifs } = store.getState().notif;
-    const newFuture = [];
-    const removingIds = [];
-    for (let ix = 0; ix < futureNotifs.length; ix += 1) {
-      if (futureNotifs[ix].nativeNotif.data.type !== type) {
-        newFuture.push(futureNotifs[ix]);
-      } else {
-        removingIds.push(futureNotifs[ix].id);
-      }
-    }
-    let result;
-    for (let jx = 0; jx < removingIds.length; jx += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      result = await Notifications.cancelScheduledNotificationAsync(
-        removingIds[jx]
+  cancelAllNotificationsByType = async (type: NotifTypes): Promise<void> => {
+    try {
+      const { futureNotifs } = store.getState().notif;
+      const removingIds: ReactText[] = [];
+      const newFuture = futureNotifs.filter((value: FutureNotif) => {
+        if (value.nativeNotif.data.type !== type) {
+          return true;
+        }
+        removingIds.push(value.id);
+        return false;
+      });
+
+      await Promise.all(
+        removingIds.map(
+          async (value: ReactText): Promise<void> => {
+            await Notifications.cancelScheduledNotificationAsync(value);
+          }
+        )
       );
+      store.dispatch(setFutureNotifs(newFuture));
+    } catch (err) {
+      /* do nothing */
     }
-    store.dispatch(setFutureNotifs(newFuture));
-    return result;
   };
 
-  cancelAllNotifications = async () => {
-    const result = await Notifications.cancelAllScheduledNotificationsAsync();
-    store.dispatch(setFutureNotifs([]));
-    return result;
+  cancelAllNotifications = async (): Promise<void> => {
+    try {
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      store.dispatch(setFutureNotifs([]));
+    } catch (err) {
+      /* do nothing */
+    }
   };
 }
 

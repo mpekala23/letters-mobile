@@ -121,7 +121,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       };
       const contactFacility = { facility };
       this.props.setAddingFacility(contactFacility);
-      this.props.navigation.navigate(Screens.ReviewContact);
+      this.props.navigation.navigate(Screens.ReviewContact, { manual: true });
     }
     Keyboard.dismiss();
   }

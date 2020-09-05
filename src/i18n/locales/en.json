@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "cantRefreshCategories": "Unable to refresh postcard categories",
     "cantLoadDesigns": "Unable to load the designs",
+    "cantLoadMail": "Unable to load this piece of mail",
     "timedOut": "The request timed out",
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
     "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
@@ -53,6 +54,7 @@
     "federal": "Federal",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "nameTooLong": "Oops, your loved one's name is a bit too long! Could you please abbreviate?",
     "inmateNumber": "Inmate Number",
     "relationshipToInmate": "I am their..",
     "state": "State",
@@ -386,7 +388,8 @@
     "thanks": "Thanks",
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
-    "reviewPostcard": "Review"
+    "reviewPostcard": "Preview",
+    "inmateLocator": "Inmate Locator"
   },
   "Sharing": {
     "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
