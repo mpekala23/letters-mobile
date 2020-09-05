@@ -105,7 +105,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact);
+          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
         }
       },
     });
@@ -121,7 +121,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact);
+          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
         }
       },
     });

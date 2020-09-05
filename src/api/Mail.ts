@@ -19,6 +19,8 @@ import i18n from '@i18n';
 import { addBusinessDays } from 'date-fns';
 import { estimateDelivery } from '@utils';
 
+import { Image as ImageComponent } from 'react-native';
+import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -374,28 +376,17 @@ interface RawCategory {
   blurb: string;
 }
 
-function cleanCategory(raw: RawCategory): Category {
+function cleanCategory(
+  raw: RawCategory,
+  subcategories: Record<string, PostcardDesign[]>
+): Category {
   return {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
     blurb: raw.blurb,
+    subcategories,
   };
-}
-
-export async function getCategories(): Promise<Category[]> {
-  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as RawCategory[];
-  const categories: Category[] = data.map((raw: RawCategory) =>
-    cleanCategory(raw)
-  );
-  const personalIx = categories.findIndex(
-    (cat: Category) => cat.name === 'personal'
-  );
-  const personalCategory = categories.splice(personalIx, 1);
-  categories.unshift(personalCategory[0]);
-  return categories;
 }
 
 interface RawDesign {
@@ -410,38 +401,37 @@ interface RawDesign {
   subcategory_id: number;
 }
 
-function cleanDesign(
+async function cleanDesign(
   raw: RawDesign,
   categoryId?: number,
   subcategoryName?: string
-): PostcardDesign {
+): Promise<PostcardDesign> {
+  const getImageDims = (
+    uri: string
+  ): Promise<{ width: number; height: number }> => {
+    return new Promise((res, rej) => {
+      ImageComponent.getSize(
+        uri,
+        (width, height) => {
+          res({ width, height });
+        },
+        rej
+      );
+    });
+  };
+  const imageDims = await getImageDims(raw.front_img_src);
+  const thumbnailDims = await getImageDims(raw.thumbnail_src);
   return {
-    image: { uri: raw.front_img_src },
-    thumbnail: { uri: raw.thumbnail_src },
+    image: {
+      uri: raw.front_img_src,
+      ...imageDims,
+    },
+    thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
     name: raw.name,
     id: raw.id,
     categoryId,
     subcategoryName,
   };
-}
-
-export async function getSubcategories(
-  category: Category
-): Promise<Record<string, PostcardDesign[]>> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `designs/${category.id}`)
-  );
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as Record<string, RawDesign[]>;
-  const cleanData: Record<string, PostcardDesign[]> = {};
-  const subNames = Object.keys(data);
-  for (let ix = 0; ix < subNames.length; ix += 1) {
-    const subName = subNames[ix];
-    cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, category.id, subName)
-    );
-  }
-  return cleanData;
 }
 
 export async function getSubcategoriesById(
@@ -456,9 +446,31 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, categoryId, subName)
+    cleanData[subName] = await Promise.all(
+      data[subName].map((raw: RawDesign) =>
+        cleanDesign(raw, categoryId, subName)
+      )
     );
   }
   return cleanData;
+}
+
+export async function getCategories(): Promise<Category[]> {
+  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
+  if (body.status !== 'OK' || !body.data) throw body;
+  const data = body.data as RawCategory[];
+  const categories: Category[] = await Promise.all(
+    data.map(async (raw: RawCategory) => {
+      const subcategories = await getSubcategoriesById(raw.id);
+      return cleanCategory(raw, subcategories);
+    })
+  );
+  const personalIx = categories.findIndex(
+    (cat: Category) => cat.name === 'personal'
+  );
+  const personalCategory = categories.splice(personalIx, 1);
+  categories.unshift(personalCategory[0]);
+  store.dispatch(setCategories(categories));
+  store.dispatch(setLastUpdated(new Date().toDateString()));
+  return categories;
 }

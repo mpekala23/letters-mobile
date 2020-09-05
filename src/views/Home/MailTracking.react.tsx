@@ -20,9 +20,7 @@ import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
 import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
-
 import * as Segment from 'expo-analytics-segment';
-
 import { User } from '@store/User/UserTypes';
 import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
 import { differenceInBusinessDays } from 'date-fns/esm';
