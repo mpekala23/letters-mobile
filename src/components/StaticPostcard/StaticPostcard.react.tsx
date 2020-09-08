@@ -4,7 +4,8 @@ import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
-import AdjustableText from '@components/Text/AdjustableText';
+import AdjustableText from '@components/Text/AdjustableText.react';
+import MailingAddressPreview from '@components/MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -77,26 +78,15 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
               style={[
                 Typography.FONT_REGULAR,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
                   paddingHorizontal: 10,
                   alignItems: 'center',
                 },
               ]}
-              text={props.composing.content}
-              numberOfLines={4}
-            />
-            {/* <Text
-              style={[
-                Typography.FONT_REGULAR,
-                {
-                  fontSize: 14,
-                  paddingHorizontal: 10,
-                  alignItems: 'center',
-                },
-              ]}
+              numberOfLines={8}
             >
               {props.composing.content}
-            </Text> */}
+            </AdjustableText>
           </View>
           <View style={Styles.writingDivider} />
           <View
@@ -106,23 +96,10 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
               style={{ position: 'absolute', top: 10, right: 10 }}
               svg={Stamp}
             />
-            <View>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {props.recipient.firstName} {props.recipient.lastName},{' '}
-                {props.recipient.inmateNumber}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {props.recipient.facility?.name}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {props.recipient.facility?.address}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {props.recipient.facility?.city},{' '}
-                {props.recipient.facility?.state}{' '}
-                {props.recipient.facility?.postal}
-              </Text>
-            </View>
+            <MailingAddressPreview
+              style={{ paddingHorizontal: 8, paddingTop: 24 }}
+              recipient={props.recipient}
+            />
           </View>
         </View>
       )}

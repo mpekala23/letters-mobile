@@ -11,15 +11,13 @@ import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
 
-export const GENERAL_URL =
-  true || isProduction()
-    ? 'https://api.ameelio.org/'
-    : 'https://letters-api-staging.ameelio.org/';
+export const GENERAL_URL = isProduction()
+  ? 'https://api.ameelio.org/'
+  : 'https://letters-api-staging.ameelio.org/';
 
-export const API_URL =
-  true || isProduction()
-    ? 'https://api.ameelio.org/api/'
-    : 'https://letters-api-staging.ameelio.org/api/';
+export const API_URL = isProduction()
+  ? 'https://api.ameelio.org/api/'
+  : 'https://letters-api-staging.ameelio.org/api/';
 
 export interface ApiResponse {
   date: number;
