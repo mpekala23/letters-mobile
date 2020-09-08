@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Typography, Colors } from '@styles';
 import Styles from './Privacy.styles';
@@ -108,7 +108,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
         For more information about our services, please see the Terms of Service{' '}
         <Text
           style={{ color: Colors.AMEELIO_BLUE }}
-          onPress={() => props.navigation.navigate('Terms')}
+          onPress={() => props.navigation.navigate(Screens.Terms)}
         >
           here
         </Text>
@@ -130,7 +130,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
         of Service{' '}
         <Text
           style={{ color: Colors.AMEELIO_BLUE }}
-          onPress={() => props.navigation.navigate('Terms')}
+          onPress={() => props.navigation.navigate(Screens.Terms)}
         >
           here
         </Text>{' '}
@@ -185,7 +185,7 @@ const PrivacyScreen: React.FC<Props> = (props: Props) => {
           parent or legal guardian who agrees to be bound by the{' '}
           <Text
             style={{ color: Colors.AMEELIO_BLUE }}
-            onPress={() => props.navigation.navigate('Terms')}
+            onPress={() => props.navigation.navigate(Screens.Terms)}
           >
             Terms of Service
           </Text>{' '}

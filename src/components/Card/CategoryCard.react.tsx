@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
+import { Screens } from '@navigations';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -34,7 +35,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
             category: props.category.name,
           });
           if (props.category.name === 'personal') {
-            props.navigate('ChooseOption');
+            props.navigate(Screens.ChooseOption);
           } else {
             props.setComposing({
               type: MailTypes.Postcard,
@@ -44,7 +45,9 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
                 image: { uri: '' },
               },
             });
-            props.navigate('ComposePostcard', { category: props.category });
+            props.navigate(Screens.ComposePostcard, {
+              category: props.category,
+            });
           }
         }}
       >

@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -93,7 +93,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
 
     if (!mail) {
-      this.props.navigation.navigate('SingleContact');
+      this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
     const deliveryDate = format(
@@ -302,7 +302,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             <Button
               reverse
               onPress={() => {
-                this.props.navigation.navigate('SupportFAQ');
+                this.props.navigation.navigate(Screens.SupportFAQ);
                 Segment.track('In-App Reporting - Click on I Need Help');
               }}
               buttonText={i18n.t('MailTrackingScreen.needHelp')}

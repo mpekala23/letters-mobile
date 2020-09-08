@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import { Facility, ContactFacility } from 'types';
@@ -105,7 +105,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate('ReviewContact', { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
         }
       },
     });
@@ -121,7 +121,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate('ReviewContact', { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
         }
       },
     });
@@ -231,7 +231,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           onPress={() => {
             Segment.track('Add Contact - Click on Manual Facility Add');
             this.setState({ selected: null });
-            this.props.navigation.navigate('AddManually', {
+            this.props.navigation.navigate(Screens.AddManually, {
               phyState: this.state.phyState,
             });
           }}

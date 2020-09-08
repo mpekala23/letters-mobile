@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Linking } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
@@ -73,10 +73,10 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
         props.navigation.reset({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
-            { name: 'UpdateContact' },
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+            { name: Screens.MailTracking },
+            { name: Screens.UpdateContact },
           ],
         });
       }, i18n.t('SupportFAQDetailScreen.updateAddress'));
@@ -85,10 +85,10 @@ function mapIssueToFAQCTA(props: Props, type: SupportFAQTypes) {
         props.navigation.reset({
           index: 0,
           routes: [
-            { name: 'ContactSelector' },
-            { name: 'SingleContact' },
-            { name: 'MailTracking' },
-            { name: 'UpdateContact' },
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+            { name: Screens.MailTracking },
+            { name: Screens.UpdateContact },
           ],
         });
       }, i18n.t('SupportFAQDetailScreen.updateProfile'));

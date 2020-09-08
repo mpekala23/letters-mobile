@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Input, Icon, KeyboardAvoider } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
@@ -121,7 +121,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       };
       const contactFacility = { facility };
       this.props.setAddingFacility(contactFacility);
-      this.props.navigation.navigate('ReviewContact', { manual: true });
+      this.props.navigation.navigate(Screens.ReviewContact, { manual: true });
     }
     Keyboard.dismiss();
   }

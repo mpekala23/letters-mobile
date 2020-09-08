@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screens } from '@navigations';
 import { Input, PicUpload, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
@@ -82,7 +82,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
     Segment.trackWithProperties('Signup - Clicks on Next', {
       step: 'Personal',
     });
-    this.props.navigation.navigate('RegisterAddress', {
+    this.props.navigation.navigate(Screens.RegisterAddress, {
       ...this.props.route.params,
       firstName: this.firstName.current
         ? this.firstName.current.state.value

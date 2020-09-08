@@ -4,11 +4,12 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, Screen, MailStatus } from 'types';
+import { ZipcodeInfo, MailStatus } from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
+import { Screens } from '@navigations';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -266,7 +267,7 @@ export function isProduction(): boolean {
 }
 
 export const onNativeShare = async (
-  screen: Screen,
+  screen: Screens,
   cta: string
 ): Promise<void> => {
   const PROPERTIES = { screen, cta };

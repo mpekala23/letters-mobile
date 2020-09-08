@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Text, FlatList } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -75,7 +75,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
   async onNavigationFocus() {
     if (this.props.existingContacts.length <= 0) {
-      this.props.navigation.replace('ContactInfo', {});
+      this.props.navigation.replace(Screens.ContactInfo, {});
     }
     await this.doRefresh();
     if (
@@ -110,7 +110,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);
-          this.props.navigation.navigate('SingleContact');
+          this.props.navigation.navigate(Screens.SingleContact);
         }}
         userPostal={this.props.userPostal}
         contactPostal={item.facility?.postal}
@@ -124,7 +124,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       <Button
         buttonText={i18n.t('ContactSelectorScreen.addContact')}
         onPress={() => {
-          this.props.navigation.navigate('ContactInfo', {
+          this.props.navigation.navigate(Screens.ContactInfo, {
             addFromSelector: true,
           });
           Segment.track('Contact Selector - Click on Add Contact');

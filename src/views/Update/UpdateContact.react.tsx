@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -125,7 +125,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     try {
       await deleteContact(this.props.contact.id);
       Segment.track('Edit Contact - Delete Contact');
-      this.props.navigation.navigate('ContactSelector');
+      this.props.navigation.navigate(Screens.ContactSelector);
     } catch (err) {
       dropdownError({ message: i18n.t('Error.requestIncomplete') });
     }

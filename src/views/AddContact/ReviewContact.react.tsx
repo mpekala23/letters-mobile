@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@navigations';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
@@ -192,7 +192,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.setActiveContact(newContact);
         this.props.navigation.reset({
           index: 0,
-          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          routes: [
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+          ],
         });
       } catch (err) {
         if (err.message === 'Invalid inmate number') {
