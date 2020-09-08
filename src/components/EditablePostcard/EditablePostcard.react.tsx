@@ -4,6 +4,7 @@ import { PostcardDesign, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
+import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';
@@ -214,23 +215,10 @@ class EditablePostcard extends React.Component<Props, State> {
               style={{ position: 'absolute', top: 10, right: 10 }}
               svg={Stamp}
             />
-            <View>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {this.props.recipient.firstName} {this.props.recipient.lastName}
-                , {this.props.recipient.inmateNumber}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {this.props.recipient.facility?.name}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {this.props.recipient.facility?.address}
-              </Text>
-              <Text style={[Typography.FONT_REGULAR, { fontSize: 14 }]}>
-                {this.props.recipient.facility?.city},{' '}
-                {this.props.recipient.facility?.state}{' '}
-                {this.props.recipient.facility?.postal}
-              </Text>
-            </View>
+            <MailingAddressPreview
+              style={{ paddingHorizontal: 8, paddingTop: 24 }}
+              recipient={this.props.recipient}
+            />
           </View>
         </Animated.View>
       </Animated.View>

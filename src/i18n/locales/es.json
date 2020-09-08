@@ -199,7 +199,11 @@
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
     "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
     "next": "Siguiente",
-    "oneLastThing": "One Last Thing"
+    "registerAccount": "¡Creemos tu perfil!",
+    "enterCreds": "¡Que bueno verte aquí!",
+    "enterBasic": "Hola",
+    "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
+    "oneLastThing": "Una última cosa"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",

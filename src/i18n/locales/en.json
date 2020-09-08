@@ -78,13 +78,13 @@
     "addContact": "Add contact"
   },
   "CreditsCard": {
-    "letter": "kite",
-    "letters": "kites",
+    "letter": "credit",
+    "letters": "credits",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your kites for the week",
-    "creditsResetDaily": "Your kites reset weekly.",
-    "comeBackOnMondayForMore": "Your kites reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your credits for the week",
+    "creditsResetDaily": "Your credits reset weekly.",
+    "comeBackOnMondayForMore": "Your credits reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -199,8 +199,9 @@
     "passwordInvalid": "The password must be at least 8 characters.",
     "passwordsMustMatch": "Your passwords must match.",
     "next": "Next",
-    "registerAccount": "Register Account",
-    "enterBasic": "Enter Basic Information",
+    "registerAccount": "Let's create your profile!",
+    "enterCreds": "Good to see you here!",
+    "enterBasic": "Welcome",
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "oneLastThing": "One Last Thing"
   },

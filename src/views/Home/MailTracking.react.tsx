@@ -233,7 +233,16 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         processedTrack &&
         Math.abs(differenceInBusinessDays(processedTrack.date, new Date())) >=
           ETA_PROCESSED_TO_DELIVERED
-          ? processedTrack
+          ? {
+              id: -2,
+              name: MailStatus.Delivered,
+              location: {
+                city: this.props.contact.facility.name,
+                zip: this.props.contact.facility.postal,
+                state: this.props.contact.facility.state,
+              },
+              date: processedTrack.date,
+            }
           : undefined;
 
       return (

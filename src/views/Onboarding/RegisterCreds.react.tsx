@@ -136,7 +136,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
               ]}
             >
-              {i18n.t('RegisterScreen.enterBasic')}
+              {i18n.t('RegisterScreen.enterCreds')}
             </Text>
             <Input
               ref={this.email}
