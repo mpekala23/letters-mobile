@@ -209,6 +209,14 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       (e: TrackingEvent) => e.name === MailStatus.ReturnedToSender
     );
 
+    const createDeliveredTrack = (processed: TrackingEvent) => {
+      const deliveredTrack = processed;
+      if (deliveredTrack.location) {
+        deliveredTrack.location.city = this.props.contact.facility.name;
+      }
+      return processed;
+    };
+
     const genTimelineComponent = (): JSX.Element => {
       if (returnedTrack) return <View />;
 
@@ -233,7 +241,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         processedTrack &&
         Math.abs(differenceInBusinessDays(processedTrack.date, new Date())) >=
           ETA_PROCESSED_TO_DELIVERED
-          ? processedTrack
+          ? createDeliveredTrack(processedTrack)
           : undefined;
 
       return (
