@@ -26,7 +26,7 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { Mail, Contact } from 'types';
 import { addBusinessDays, format } from 'date-fns';
 import * as Segment from 'expo-analytics-segment';
-import { Screens } from '@navigations';
+import { Screens } from '@utils/Screens';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 

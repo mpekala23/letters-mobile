@@ -4,6 +4,8 @@
 import url from 'url';
 import { Facility, PrisonTypes } from 'types';
 import { ABBREV_TO_STATE } from '@utils';
+import store from '@store';
+import { setFacilities, setLoaded } from '@store/Facility/FacilityActions';
 import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawFacility {
@@ -40,6 +42,8 @@ export async function getFacilities(state: string): Promise<Facility[]> {
   const facilities = data.map((facility: RawFacility) =>
     cleanFacility(facility)
   );
+  store.dispatch(setFacilities(facilities));
+  store.dispatch(setLoaded(true));
   return facilities;
 }
 

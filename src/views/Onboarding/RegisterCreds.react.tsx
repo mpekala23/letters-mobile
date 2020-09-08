@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, Screens } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';

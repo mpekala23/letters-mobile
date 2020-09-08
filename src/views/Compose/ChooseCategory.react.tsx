@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Text, View, Image as ImageComponent } from 'react-native';
 import { CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList } from '@utils/Screens';
 import { Draft, Category } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';

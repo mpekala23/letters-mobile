@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Mail, MailTypes, Contact } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';

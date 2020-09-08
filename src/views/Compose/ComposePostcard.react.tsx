@@ -26,7 +26,7 @@ import {
   setProfileOverride,
 } from '@components/Topbar/Topbar.react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';

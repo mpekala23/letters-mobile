@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
-import { Screens } from '@navigations';
+import { Screens } from '@utils/Screens';
 import CardStyles from './Card.styles';
 
 interface Props {

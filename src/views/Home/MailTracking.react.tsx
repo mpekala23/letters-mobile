@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';

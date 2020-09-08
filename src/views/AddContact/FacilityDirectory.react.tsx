@@ -4,11 +4,10 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  Platform,
   RefreshControl,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import { Facility, ContactFacility } from 'types';
@@ -24,6 +23,7 @@ import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
+import { FacilityState } from '@store/Facility/FacilityTypes';
 import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -38,10 +38,10 @@ export interface Props {
   };
   contactState: ContactState;
   setAddingFacility: (contactFacility: ContactFacility) => void;
+  facilityState: FacilityState;
 }
 
 export interface State {
-  facilityData: Facility[];
   phyState: string;
   search: string;
   selected: Facility | null;
@@ -57,7 +57,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      facilityData: [],
       phyState: '',
       search: '',
       selected: null,
@@ -82,7 +81,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   async componentDidMount() {
     this.loadValuesFromStore();
-    await this.refreshFacilities();
   }
 
   componentWillUnmount() {
@@ -105,7 +103,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, {
+            manual: false,
+          });
         }
       },
     });
@@ -121,7 +121,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, {
+            manual: false,
+          });
         }
       },
     });
@@ -142,8 +144,8 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     try {
       const { phyState } = this.props.route.params;
       this.setState({ refreshing: true });
-      const facilities = await getFacilities(STATE_TO_ABBREV[phyState]);
-      this.setState({ facilityData: facilities, refreshing: false });
+      getFacilities(STATE_TO_ABBREV[phyState]);
+      this.setState({ refreshing: false });
     } catch (err) {
       dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });
       this.setState({ refreshing: false });
@@ -152,8 +154,8 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   filterData() {
     const result = [];
-    for (let ix = 0; ix < this.state.facilityData.length; ix += 1) {
-      const facility = this.state.facilityData[ix];
+    for (let ix = 0; ix < this.props.facilityState.facilities.length; ix += 1) {
+      const facility = this.props.facilityState.facilities[ix];
       const search = this.state.search.toLowerCase();
       if (
         facility.name.toLowerCase().indexOf(search) > -1 ||
@@ -203,6 +205,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   renderFooter() {
+    if (!this.props.facilityState.loaded) {
+      return null;
+    }
     const manualEntry = this.state.manual ? (
       <View>
         <View
@@ -318,6 +323,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
+  facilityState: state.facility,
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

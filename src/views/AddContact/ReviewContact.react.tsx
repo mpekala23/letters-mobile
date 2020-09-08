@@ -5,10 +5,9 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';

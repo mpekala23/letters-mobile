@@ -3,7 +3,7 @@ import { Text, View, Platform } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
