@@ -199,8 +199,9 @@
     "passwordInvalid": "The password must be at least 8 characters.",
     "passwordsMustMatch": "Your passwords must match.",
     "next": "Next",
-    "registerAccount": "Register Account",
-    "enterBasic": "Enter Basic Information",
+    "registerAccount": "Now, let's create your profile!",
+    "enterCreds": "Good to see you here!",
+    "enterBasic": "Welcome",
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "oneLastThing": "One Last Thing"
   },

@@ -192,7 +192,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 8 },
               ]}
             >
-              {i18n.t('RegisterScreen.enterBasic')}
+              {i18n.t('RegisterScreen.enterBasic')},{' '}
+              {this.props.route.params.firstName}!
             </Text>
             <Text style={[Typography.FONT_REGULAR, { paddingBottom: 8 }]}>
               {i18n.t('RegisterScreen.weWillOnly')}

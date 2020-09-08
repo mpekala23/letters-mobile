@@ -4,6 +4,7 @@ import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
+import AdjustableText from '@components/Text/AdjustableText';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -72,7 +73,19 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
               justifyContent: 'center',
             }}
           >
-            <Text
+            <AdjustableText
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  fontSize: 14,
+                  paddingHorizontal: 10,
+                  alignItems: 'center',
+                },
+              ]}
+              text={props.composing.content}
+              numberOfLines={4}
+            />
+            {/* <Text
               style={[
                 Typography.FONT_REGULAR,
                 {
@@ -83,7 +96,7 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
               ]}
             >
               {props.composing.content}
-            </Text>
+            </Text> */}
           </View>
           <View style={Styles.writingDivider} />
           <View
