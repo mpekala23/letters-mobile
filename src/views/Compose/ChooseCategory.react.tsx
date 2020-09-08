@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image as ImageComponent } from 'react-native';
 import { CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '@navigations';
@@ -13,6 +13,7 @@ import i18n from '@i18n';
 import { getCategories } from '@api';
 import { FlatList } from 'react-native-gesture-handler';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import Loading from '@assets/common/loading.gif';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -39,6 +40,12 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
     };
     this.renderCategory = this.renderCategory.bind(this);
     this.refreshCategories = this.refreshCategories.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.categories.length === 0) {
+      getCategories();
+    }
   }
 
   async refreshCategories() {
@@ -71,38 +78,54 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   render() {
     return (
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
-        <Text
-          style={[
-            Typography.FONT_SEMIBOLD,
-            Styles.headerText,
-            { fontSize: 18, paddingBottom: 8 },
-          ]}
-        >
-          {i18n.t('Compose.iWouldLikeToSend')}
-        </Text>
-        <FlatList
-          data={this.props.categories.slice(1)}
-          ListHeaderComponent={
-            this.props.categories.length > 0 ? (
-              <CategoryCard
-                category={this.props.categories[0]}
-                navigate={
-                  this.props.navigation.navigate as (
-                    val: string,
-                    params?: Record<string, unknown>
-                  ) => void
-                }
-              />
-            ) : (
-              <View />
-            )
-          }
-          renderItem={({ item }) => this.renderCategory(item)}
-          keyExtractor={(item: Category) => item.id.toString()}
-          numColumns={2}
-          refreshing={this.state.refreshing}
-          onRefresh={this.refreshCategories}
-        />
+        {this.props.categories.length ? (
+          <View>
+            <Text
+              style={[
+                Typography.FONT_SEMIBOLD,
+                Styles.headerText,
+                { fontSize: 18, paddingBottom: 8 },
+              ]}
+            >
+              {i18n.t('Compose.iWouldLikeToSend')}
+            </Text>
+            <FlatList
+              data={this.props.categories.slice(1)}
+              ListHeaderComponent={
+                this.props.categories.length > 0 ? (
+                  <CategoryCard
+                    category={this.props.categories[0]}
+                    navigate={
+                      this.props.navigation.navigate as (
+                        val: string,
+                        params?: Record<string, unknown>
+                      ) => void
+                    }
+                  />
+                ) : (
+                  <View />
+                )
+              }
+              renderItem={({ item }) => this.renderCategory(item)}
+              keyExtractor={(item: Category) => item.id.toString()}
+              numColumns={2}
+              refreshing={this.state.refreshing}
+              onRefresh={this.refreshCategories}
+            />
+          </View>
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <ImageComponent
+              source={Loading}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
+          </View>
+        )}
       </View>
     );
   }

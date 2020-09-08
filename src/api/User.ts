@@ -25,7 +25,7 @@ import {
   fetchAuthenticated,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail, getSubcategoriesById } from './Mail';
+import { getMail, getSubcategoriesById, getCategories } from './Mail';
 
 interface RawUser {
   id: number;
@@ -207,6 +207,7 @@ export async function loginWithToken(): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
+    getCategories();
     return userData;
   } catch (err) {
     store.dispatch(logoutUser());
@@ -250,6 +251,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   }
   store.dispatch(loginUser(userData));
   await loadDraft();
+  getCategories();
   return userData;
 }
 
