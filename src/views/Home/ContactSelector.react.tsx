@@ -77,12 +77,11 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     if (this.props.existingContacts.length <= 0) {
       this.props.navigation.replace('ContactInfo', {});
     }
-    await this.doRefresh();
     if (
       !this.props.lastUpdatedCategories ||
       differenceInHours(
-        new Date(this.props.lastUpdatedCategories),
-        new Date()
+        new Date(),
+        new Date(this.props.lastUpdatedCategories)
       ) > 6
     ) {
       getCategories();

@@ -419,19 +419,32 @@ async function cleanDesign(
       );
     });
   };
-  const imageDims = await getImageDims(raw.front_img_src);
-  const thumbnailDims = await getImageDims(raw.thumbnail_src);
-  return {
-    image: {
-      uri: raw.front_img_src,
-      ...imageDims,
-    },
-    thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
-    name: raw.name,
-    id: raw.id,
-    categoryId,
-    subcategoryName,
-  };
+  try {
+    const imageDims = await getImageDims(raw.front_img_src);
+    const thumbnailDims = await getImageDims(raw.thumbnail_src);
+    return {
+      image: {
+        uri: raw.front_img_src,
+        ...imageDims,
+      },
+      thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
+      name: raw.name,
+      id: raw.id,
+      categoryId,
+      subcategoryName,
+    };
+  } catch (err) {
+    return {
+      image: {
+        uri: raw.front_img_src,
+      },
+      thumbnail: { uri: raw.thumbnail_src },
+      name: raw.name,
+      id: raw.id,
+      categoryId,
+      subcategoryName,
+    };
+  }
 }
 
 export async function getSubcategoriesById(
