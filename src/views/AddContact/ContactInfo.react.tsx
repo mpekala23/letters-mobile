@@ -27,6 +27,7 @@ import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
 import { ContactPersonal, ContactDraft } from 'types';
 import { getFacilities } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -347,7 +348,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     ) {
                       const abbrev =
                         STATE_TO_ABBREV[this.stateRef.current.state.value];
-                      if (abbrev) getFacilities(abbrev);
+                      if (abbrev)
+                        getFacilities(abbrev).catch(() => {
+                          dropdownError({
+                            message: i18n.t('Error.cantRefreshFacilities'),
+                          });
+                        });
                       this.setState({
                         stateToSearch: this.stateRef.current.state.value,
                       });

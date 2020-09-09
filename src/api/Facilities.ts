@@ -42,6 +42,19 @@ export async function getFacilities(state: string): Promise<Facility[]> {
   const facilities = data.map((facility: RawFacility) =>
     cleanFacility(facility)
   );
+  facilities.sort((a, b) => {
+    if (
+      (a.fullName && b.fullName && a.fullName < b.fullName) ||
+      a.name < b.name
+    )
+      return -1;
+    if (
+      (a.fullName && b.fullName && a.fullName === b.fullName) ||
+      a.name === b.name
+    )
+      return 0;
+    return 1;
+  });
   store.dispatch(setFacilities(facilities));
   store.dispatch(setLoaded(true));
   return facilities;
