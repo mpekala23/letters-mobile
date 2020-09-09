@@ -20,10 +20,16 @@ interface RawFacility {
 }
 
 function cleanFacility(facility: RawFacility): Facility {
+  let type: PrisonTypes;
+  try {
+    type = facility.type as PrisonTypes;
+  } catch (err) {
+    type = PrisonTypes.Federal;
+  }
   return {
     name: facility.name,
     fullName: facility.full_name,
-    type: facility.type as PrisonTypes,
+    type,
     address: facility.address,
     city: facility.city,
     state: ABBREV_TO_STATE[facility.state],
