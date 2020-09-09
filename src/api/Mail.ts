@@ -484,6 +484,6 @@ export async function getCategories(): Promise<Category[]> {
   const personalCategory = categories.splice(personalIx, 1);
   categories.unshift(personalCategory[0]);
   store.dispatch(setCategories(categories));
-  store.dispatch(setLastUpdated(new Date().toDateString()));
+  store.dispatch(setLastUpdated(new Date().toISOString()));
   return categories;
 }

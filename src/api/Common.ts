@@ -10,6 +10,7 @@ import {
 import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
+import { setZipcode } from '@store/Zip/ZipActions';
 
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
@@ -156,6 +157,9 @@ export async function uploadImage(
 }
 
 export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
+  if (Object.keys(store.getState().zip.zips).indexOf(zipcode) >= 0) {
+    return store.getState().zip.zips[zipcode];
+  }
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `zips/${zipcode}`),
     {
@@ -170,11 +174,13 @@ export async function getZipcode(zipcode: string): Promise<ZipcodeInfo> {
     lat: string;
     lng: string;
   };
-  return {
+  const resultInfo = {
     zip: data.zip,
     city: data.city,
     state: ABBREV_TO_STATE[data.state_id],
     lat: parseFloat(data.lat),
     long: parseFloat(data.lng),
   };
+  store.dispatch(setZipcode(zipcode, resultInfo));
+  return resultInfo;
 }

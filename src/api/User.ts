@@ -207,7 +207,9 @@ export async function loginWithToken(): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
-    getCategories();
+    getCategories().catch(() => {
+      /* do nothing */
+    });
     return userData;
   } catch (err) {
     store.dispatch(logoutUser());
@@ -246,12 +248,14 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   );
   try {
     await Promise.all([getContacts(), getMail()]);
+    await loadDraft();
   } catch (err) {
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
   store.dispatch(loginUser(userData));
-  await loadDraft();
-  getCategories();
+  getCategories().catch(() => {
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+  });
   return userData;
 }
 
