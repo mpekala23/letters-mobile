@@ -21,6 +21,8 @@ import LetterTracker from './LetterTracker/LetterTracker.react';
 import ListItem from './ListItem/ListItem.react';
 import MailingAddressPreview from './MailingAddressPreview/MailingAddressPreview.react';
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
+import NativePicker from './NativePicker/NativePicker.react';
+import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
@@ -52,6 +54,8 @@ export {
   ListItem,
   MailingAddressPreview,
   MemoryLaneCard,
+  NativePicker,
+  Picker,
   PicUpload,
   PrisonCard,
   ProfilePic,
@@ -59,3 +63,5 @@ export {
   Statusbar,
   Topbar,
 };
+
+export type { PickerRef };
