@@ -86,6 +86,7 @@ export enum PrisonTypes {
   Federal = 'Federal Prison',
   County = 'County Jail',
   Immigration = 'ICE Detention Center',
+  Juvenile = 'Juvenile Detention Center',
 }
 
 export interface Facility {
