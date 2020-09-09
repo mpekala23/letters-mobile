@@ -145,20 +145,15 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   filterData() {
-    const result = [];
-    for (let ix = 0; ix < this.props.facilityState.facilities.length; ix += 1) {
-      const facility = this.props.facilityState.facilities[ix];
-      const search = this.state.search.toLowerCase();
-      if (
+    const search = this.state.search.toLowerCase();
+    return this.props.facilityState.facilities.filter((facility) => {
+      return (
         facility.name.toLowerCase().indexOf(search) > -1 ||
         facility.city.toLowerCase().indexOf(search) > -1 ||
         facility.postal.toLowerCase().indexOf(search) > -1 ||
         facility.state.toLowerCase().indexOf(search) > -1
-      ) {
-        result.push(facility);
-      }
-    }
-    return result;
+      );
+    });
   }
 
   renderItem({ item, index }: { item: Facility; index: number }) {
