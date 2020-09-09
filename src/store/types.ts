@@ -4,6 +4,7 @@ import { FacilityState } from './Facility/FacilityTypes';
 import { MailState } from './Mail/MailTypes';
 import { NotifState } from './Notif/NotifTypes';
 import { UserState } from './User/UserTypes';
+import { ZipState } from './Zip/ZipTypes';
 
 export interface AppState {
   category: CategoryState;
@@ -12,4 +13,5 @@ export interface AppState {
   mail: MailState;
   notif: NotifState;
   user: UserState;
+  zip: ZipState;
 }

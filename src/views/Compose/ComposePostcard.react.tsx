@@ -225,7 +225,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           assets,
           hasNextPage,
           endCursor,
-        } = await MediaLibrary.getAssetsAsync();
+        } = await MediaLibrary.getAssetsAsync({
+          sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+        });
         const library = assets.map((value) => {
           const image: Image = {
             uri: value.uri,
@@ -343,7 +345,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       assets,
       hasNextPage,
       endCursor,
-    } = await MediaLibrary.getAssetsAsync({ after: this.state.endCursor });
+    } = await MediaLibrary.getAssetsAsync({
+      after: this.state.endCursor,
+      sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+    });
     const library = this.props.route.params.category.subcategories.Library;
     if (!library) return;
     const designs = assets.map((value) => {
