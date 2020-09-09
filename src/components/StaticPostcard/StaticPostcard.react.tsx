@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View } from 'react-native';
 import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
@@ -83,7 +83,7 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
                   alignItems: 'center',
                 },
               ]}
-              numberOfLines={8}
+              numberOfLines={12}
             >
               {props.composing.content}
             </AdjustableText>

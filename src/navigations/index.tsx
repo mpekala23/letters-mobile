@@ -280,10 +280,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={IssuesDetailSecondaryScreen}
         />
         <Stack.Screen
-          name={Screens.ChooseCategory}
-          component={ChooseCategoryScreen}
-        />
-        <Stack.Screen
           name={Screens.SingleContact}
           component={SingleContactScreen}
         />

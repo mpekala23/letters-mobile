@@ -79,7 +79,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
     return (
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         {this.props.categories.length ? (
-          <View>
+          <>
             <Text
               style={[
                 Typography.FONT_SEMIBOLD,
@@ -90,6 +90,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               {i18n.t('Compose.iWouldLikeToSend')}
             </Text>
             <FlatList
+              style={{ flex: 1 }}
               data={this.props.categories.slice(1)}
               ListHeaderComponent={
                 this.props.categories.length > 0 ? (
@@ -112,7 +113,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               refreshing={this.state.refreshing}
               onRefresh={this.refreshCategories}
             />
-          </View>
+          </>
         ) : (
           <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
