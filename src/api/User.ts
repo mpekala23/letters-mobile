@@ -254,7 +254,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   }
   store.dispatch(loginUser(userData));
   getCategories().catch(() => {
-    /* do nothing */
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
   });
   return userData;
 }
