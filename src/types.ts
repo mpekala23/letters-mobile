@@ -87,6 +87,7 @@ export enum PrisonTypes {
   County = 'County Jail',
   Immigration = 'ICE Detention Center',
   Juvenile = 'Juvenile Detention Center',
+  Fallback = 'Facility',
 }
 
 export interface Facility {

@@ -24,7 +24,7 @@ function cleanFacility(facility: RawFacility): Facility {
   try {
     type = facility.type as PrisonTypes;
   } catch (err) {
-    type = PrisonTypes.Federal;
+    type = PrisonTypes.Fallback;
   }
   return {
     name: facility.name,
