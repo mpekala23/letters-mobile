@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
@@ -77,7 +77,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   async doSend(): Promise<void> {
     try {
       await createMail(this.props.composing);
-      this.props.clearComposing();
       Segment.trackWithProperties('Review - Send Letter Success', {
         type: 'postcard',
         facility: this.props.recipient.facility.name,
@@ -88,7 +87,11 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         subcategory:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.subcategoryName,
+        option:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.name,
       });
+      this.props.clearComposing();
       Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
       Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
       Notifs.scheduleNotificationInDays(
@@ -106,13 +109,16 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             },
           },
         },
-        hoursTill8Tomorrow() / 24 + 14
+        hoursTill8Tomorrow() / 24 + 7
       );
       deleteDraft();
       this.props.navigation.reset({
         index: 0,
         routes: [
-          { name: 'ReferFriends', params: { mailType: MailTypes.Postcard } },
+          {
+            name: Screens.ReferFriends,
+            params: { mailType: MailTypes.Postcard },
+          },
         ],
       });
     } catch (err) {

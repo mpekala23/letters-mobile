@@ -15,7 +15,7 @@ import {
   KeyboardAvoider,
 } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setContent, setImage } from '@store/Mail/MailActions';
@@ -175,7 +175,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
         ],
       });
     } else {
-      this.props.navigation.navigate('ReviewLetter');
+      this.props.navigation.navigate(Screens.ReviewLetter);
     }
   }
 

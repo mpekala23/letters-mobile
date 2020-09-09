@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -20,9 +20,7 @@ import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
 import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
-
 import * as Segment from 'expo-analytics-segment';
-
 import { User } from '@store/User/UserTypes';
 import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
 import { differenceInBusinessDays } from 'date-fns/esm';
@@ -95,7 +93,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
 
     if (!mail) {
-      this.props.navigation.navigate('SingleContact');
+      this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
     const deliveryDate = format(
@@ -235,7 +233,16 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         processedTrack &&
         Math.abs(differenceInBusinessDays(processedTrack.date, new Date())) >=
           ETA_PROCESSED_TO_DELIVERED
-          ? processedTrack
+          ? {
+              id: -2,
+              name: MailStatus.Delivered,
+              location: {
+                city: this.props.contact.facility.name,
+                zip: this.props.contact.facility.postal,
+                state: this.props.contact.facility.state,
+              },
+              date: processedTrack.date,
+            }
           : undefined;
 
       return (
@@ -304,7 +311,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             <Button
               reverse
               onPress={() => {
-                this.props.navigation.navigate('SupportFAQ');
+                this.props.navigation.navigate(Screens.SupportFAQ);
                 Segment.track('In-App Reporting - Click on I Need Help');
               }}
               buttonText={i18n.t('MailTrackingScreen.needHelp')}

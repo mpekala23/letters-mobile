@@ -4,12 +4,11 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
-  Platform,
   View,
 } from 'react-native';
 import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';

@@ -71,7 +71,7 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
           <View style={CardStyles.memoryLaneTextBackground}>
             <Text
               style={[
-                Typography.FONT_MEDIUM,
+                Typography.FONT_REGULAR,
                 CardStyles.memoryLaneText,
                 { height: props.imageUri ? 65 : 170 },
               ]}

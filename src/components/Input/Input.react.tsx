@@ -49,6 +49,7 @@ export interface Props {
   mustMatch?: string;
   trimWhitespace: boolean;
   strictDropdown: boolean;
+  isInvalidInput: () => boolean; // additional validation if neighboring input is needed
 }
 
 export interface State {
@@ -64,10 +65,6 @@ export interface State {
 
 class Input extends React.Component<Props, State> {
   private inputRef = createRef<TextInput>();
-
-  private scrollRef = createRef<ScrollView>();
-
-  private childrenIds: number[];
 
   static defaultProps = {
     parentStyle: {},
@@ -91,11 +88,11 @@ class Input extends React.Component<Props, State> {
     required: false,
     trimWhitespace: true,
     strictDropdown: false,
+    isInvalidInput: (): false => false,
   };
 
   constructor(props: Props) {
     super(props);
-    this.childrenIds = [];
     this.state = {
       value: '',
       focused: false,
@@ -159,7 +156,14 @@ class Input extends React.Component<Props, State> {
 
   doValidate = (): void => {
     const { value } = this.state;
-    const { required, validate, onValid, onInvalid, mustMatch } = this.props;
+    const {
+      required,
+      validate,
+      onValid,
+      onInvalid,
+      mustMatch,
+      isInvalidInput,
+    } = this.props;
     let result = true;
     if (value || validate || required) {
       if (validate) {
@@ -173,6 +177,9 @@ class Input extends React.Component<Props, State> {
     }
     if (mustMatch) {
       result = result && mustMatch === value;
+    }
+    if (isInvalidInput()) {
+      result = false;
     }
     if (!required && value === '') {
       result = true;
@@ -241,9 +248,10 @@ class Input extends React.Component<Props, State> {
         for (let jx = 0; jx < option.length; jx += 1) {
           const match: string = option[jx];
           if (
-            match.toLowerCase().substring(0, value.length) ===
-              value.toLowerCase() ||
-            this.props.strictDropdown
+            this.props.strictDropdown ||
+            (value &&
+              match.toLowerCase().substring(0, value.length) ===
+                value.toLowerCase())
           ) {
             results.push(option[0]);
             break;

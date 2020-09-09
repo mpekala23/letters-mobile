@@ -1,8 +1,8 @@
 import React, { Dispatch } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image as ImageComponent } from 'react-native';
 import { CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList } from '@utils/Screens';
 import { Draft, Category } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import i18n from '@i18n';
 import { getCategories } from '@api';
 import { FlatList } from 'react-native-gesture-handler';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import Loading from '@assets/common/loading.gif';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -24,10 +25,10 @@ interface Props {
   navigation: ChooseCategoryScreenNavigationProp;
   recipientId: number;
   setComposing: (draft: Draft) => void;
+  categories: Category[];
 }
 
 interface State {
-  categories: Category[];
   refreshing: boolean;
 }
 
@@ -35,23 +36,23 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      categories: [],
       refreshing: true,
     };
     this.renderCategory = this.renderCategory.bind(this);
     this.refreshCategories = this.refreshCategories.bind(this);
   }
 
-  async componentDidMount() {
-    await this.refreshCategories();
+  componentDidMount() {
+    if (this.props.categories.length === 0) {
+      getCategories();
+    }
   }
 
   async refreshCategories() {
     this.setState({ refreshing: true }, async () => {
       try {
-        const categories = await getCategories();
+        await getCategories();
         this.setState({
-          categories,
           refreshing: false,
         });
       } catch (err) {
@@ -77,38 +78,55 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   render() {
     return (
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
-        <Text
-          style={[
-            Typography.FONT_SEMIBOLD,
-            Styles.headerText,
-            { fontSize: 18, paddingBottom: 8 },
-          ]}
-        >
-          {i18n.t('Compose.iWouldLikeToSend')}
-        </Text>
-        <FlatList
-          data={this.state.categories.slice(1)}
-          ListHeaderComponent={
-            this.state.categories.length > 0 ? (
-              <CategoryCard
-                category={this.state.categories[0]}
-                navigate={
-                  this.props.navigation.navigate as (
-                    val: string,
-                    params?: Record<string, unknown>
-                  ) => void
-                }
-              />
-            ) : (
-              <View />
-            )
-          }
-          renderItem={({ item }) => this.renderCategory(item)}
-          keyExtractor={(item: Category) => item.id.toString()}
-          numColumns={2}
-          refreshing={this.state.refreshing}
-          onRefresh={this.refreshCategories}
-        />
+        {this.props.categories.length ? (
+          <>
+            <Text
+              style={[
+                Typography.FONT_SEMIBOLD,
+                Styles.headerText,
+                { fontSize: 18, paddingBottom: 8 },
+              ]}
+            >
+              {i18n.t('Compose.iWouldLikeToSend')}
+            </Text>
+            <FlatList
+              style={{ flex: 1 }}
+              data={this.props.categories.slice(1)}
+              ListHeaderComponent={
+                this.props.categories.length > 0 ? (
+                  <CategoryCard
+                    category={this.props.categories[0]}
+                    navigate={
+                      this.props.navigation.navigate as (
+                        val: string,
+                        params?: Record<string, unknown>
+                      ) => void
+                    }
+                  />
+                ) : (
+                  <View />
+                )
+              }
+              renderItem={({ item }) => this.renderCategory(item)}
+              keyExtractor={(item: Category) => item.id.toString()}
+              numColumns={2}
+              refreshing={this.state.refreshing}
+              onRefresh={this.refreshCategories}
+            />
+          </>
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <ImageComponent
+              source={Loading}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
+          </View>
+        )}
       </View>
     );
   }
@@ -116,6 +134,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   recipientId: state.contact.active.id,
+  categories: state.category.categories,
 });
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {

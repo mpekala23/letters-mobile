@@ -7,6 +7,7 @@ import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
+import InmateLocatorScreen from './AddContact/InmateLocator.react';
 import IssuesScreen from './Report/Issues.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
 import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
@@ -40,6 +41,7 @@ export {
   ContactInfoScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
+  InmateLocatorScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,

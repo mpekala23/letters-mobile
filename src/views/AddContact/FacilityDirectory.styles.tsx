@@ -58,7 +58,7 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_GRAY,
   },
   footerBackground: {
-    marginTop: 20,
+    marginTop: 8,
     alignItems: 'center',
   },
   searchParent: {

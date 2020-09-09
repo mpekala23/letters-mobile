@@ -49,7 +49,10 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
   const genDate = (): string => {
     if (!trackingEvent) return '';
     return type === MailStatus.Delivered
-      ? format(estimateDelivery(trackingEvent.date), 'MMM dd, yyyy')
+      ? format(
+          estimateDelivery(trackingEvent.date, MailStatus.ProcessedForDelivery),
+          'MMM dd, yyyy'
+        )
       : format(trackingEvent.date, 'MMM dd, yyyy');
   };
 

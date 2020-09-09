@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Platform,
   ScrollView,
   Keyboard,
   Text,
@@ -10,7 +9,7 @@ import {
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { login } from '@api';
 import { Button, Input, KeyboardAvoider } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -217,7 +216,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.termsOfService')}
                     onPress={() => {
-                      this.props.navigation.navigate('Terms');
+                      this.props.navigation.navigate(Screens.Terms);
                     }}
                   />
                   <Text accessible={false} style={Typography.FONT_REGULAR}>
@@ -227,7 +226,7 @@ class LoginScreen extends React.Component<Props, State> {
                     link
                     buttonText={i18n.t('LoginScreen.privacyPolicy')}
                     onPress={() => {
-                      this.props.navigation.navigate('Privacy');
+                      this.props.navigation.navigate(Screens.Privacy);
                     }}
                   />
                   <Text style={Typography.FONT_REGULAR}>.</Text>

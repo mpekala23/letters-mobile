@@ -16,6 +16,7 @@
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "cantRefreshCategories": "Unable to refresh postcard categories",
     "cantLoadDesigns": "Unable to load the designs",
+    "cantLoadMail": "Unable to load this piece of mail",
     "timedOut": "The request timed out",
     "unableToUploadContactPicture": "Unable to upload the new contact picture. Ensure you are connected to the internet and try again.",
     "unableToUploadProfilePicture": "Unable to upload the new profile picture. Ensure you are connected to the internet and try again.",
@@ -53,6 +54,7 @@
     "federal": "Federal",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "nameTooLong": "Oops, your loved one's name is a bit too long! Could you please abbreviate?",
     "inmateNumber": "Inmate Number",
     "relationshipToInmate": "I am their..",
     "state": "State",
@@ -76,13 +78,13 @@
     "addContact": "Add contact"
   },
   "CreditsCard": {
-    "letter": "kite",
-    "letters": "kites",
+    "letter": "credit",
+    "letters": "credits",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your kites for the week",
-    "creditsResetDaily": "Your kites reset weekly.",
-    "comeBackOnMondayForMore": "Your kites reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your credits for the week",
+    "creditsResetDaily": "Your credits reset weekly.",
+    "comeBackOnMondayForMore": "Your credits reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -197,8 +199,9 @@
     "passwordInvalid": "The password must be at least 8 characters.",
     "passwordsMustMatch": "Your passwords must match.",
     "next": "Next",
-    "registerAccount": "Register Account",
-    "enterBasic": "Enter Basic Information",
+    "registerAccount": "Let's create your profile!",
+    "enterCreds": "Good to see you here!",
+    "enterBasic": "Welcome",
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "oneLastThing": "One Last Thing"
   },
@@ -277,7 +280,8 @@
     "state": "State Prison",
     "federal": "Federal Prison",
     "county": "County Jail",
-    "immigration": "ICE Detention Center"
+    "immigration": "ICE Detention Center",
+    "juvenile": "Juvenile Detention Center"
   },
   "Prompts": {
     "prompt1": "How are things going with your life? Any milestones lately?",
@@ -386,7 +390,8 @@
     "thanks": "Thanks",
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
-    "reviewPostcard": "Review"
+    "reviewPostcard": "Preview",
+    "inmateLocator": "Inmate Locator"
   },
   "Sharing": {
     "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",

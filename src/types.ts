@@ -49,6 +49,7 @@ export interface Category {
   name: string;
   image: Image;
   blurb: string;
+  subcategories: Record<string, PostcardDesign[]>;
 }
 
 // Letters and Postcards (Draft)
@@ -85,6 +86,8 @@ export enum PrisonTypes {
   Federal = 'Federal Prison',
   County = 'County Jail',
   Immigration = 'ICE Detention Center',
+  Juvenile = 'Juvenile Detention Center',
+  Fallback = 'Facility',
 }
 
 export interface Facility {
@@ -183,8 +186,3 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
-
-export enum Screen {
-  ReferFriends = 'ReferFriends',
-  Delivery = 'DeliveryReporting',
-}

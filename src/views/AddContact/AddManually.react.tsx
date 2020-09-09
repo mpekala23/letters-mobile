@@ -1,13 +1,7 @@
 import React, { createRef, Dispatch } from 'react';
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import { View, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Input, Icon, KeyboardAvoider } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
@@ -121,7 +115,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       };
       const contactFacility = { facility };
       this.props.setAddingFacility(contactFacility);
-      this.props.navigation.navigate('ReviewContact');
+      this.props.navigation.navigate(Screens.ReviewContact, { manual: true });
     }
     Keyboard.dismiss();
   }

@@ -5,10 +5,9 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  Platform,
 } from 'react-native';
 import { Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
 import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
@@ -33,17 +32,18 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
   'ReviewContact'
 >;
 
-export interface State {
-  valid: boolean;
-  image: Image | null;
-}
-
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
   hasSentLetter: boolean;
   setAdding: (contactDraft: ContactDraft) => void;
   setActiveContact: (contact: Contact) => void;
+  route: { params: { manual: boolean } };
+}
+
+export interface State {
+  valid: boolean;
+  image: Image | null;
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
@@ -170,6 +170,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           facilityState: newContact.facility.state,
           facilityPostal: newContact.facility.postal,
           facilityType: newContact.facility.type,
+          Manual: this.props.route.params.manual,
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentLetter) {
@@ -190,7 +191,10 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         this.props.setActiveContact(newContact);
         this.props.navigation.reset({
           index: 0,
-          routes: [{ name: 'ContactSelector' }, { name: 'SingleContact' }],
+          routes: [
+            { name: Screens.ContactSelector },
+            { name: Screens.SingleContact },
+          ],
         });
       } catch (err) {
         if (err.message === 'Invalid inmate number') {

@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
-import { ScrollView, Platform, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
@@ -78,7 +78,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
 
   goForward = (): void => {
     Segment.trackWithProperties('Signup - Clicks on Next', { step: 'Account' });
-    this.props.navigation.navigate('RegisterPersonal', {
+    this.props.navigation.navigate(Screens.RegisterPersonal, {
       ...this.props.route.params,
       email: this.email.current ? this.email.current.state.value : '',
       password: this.password.current ? this.password.current.state.value : '',
@@ -136,7 +136,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 16 },
               ]}
             >
-              {i18n.t('RegisterScreen.enterBasic')}
+              {i18n.t('RegisterScreen.enterCreds')}
             </Text>
             <Input
               ref={this.email}
@@ -240,7 +240,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
               onPress={() => {
                 this.props.navigation.reset({
                   index: 0,
-                  routes: [{ name: 'Begin' }, { name: 'Login' }],
+                  routes: [{ name: Screens.Begin }, { name: Screens.Login }],
                 });
               }}
             />

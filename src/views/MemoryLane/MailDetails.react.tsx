@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Mail, MailTypes, MailStatus } from 'types';
 import { connect } from 'react-redux';
@@ -56,7 +56,7 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         </Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={[Typography.FONT_SEMIBOLD, Styles.letterText]}>
+        <Text style={[Typography.FONT_REGULAR, Styles.letterText]}>
           {mail.content}
         </Text>
         {image}

@@ -16,7 +16,6 @@ import {
   getSingleMail,
   getTrackingEvents,
   getCategories,
-  getSubcategories,
 } from './Mail';
 
 import {
@@ -56,5 +55,4 @@ export {
   saveDraft,
   deleteDraft,
   loadDraft,
-  getSubcategories,
 };

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { Input, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
@@ -150,7 +150,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
           buttons: [
             {
               text: i18n.t('RegisterScreen.login'),
-              onPress: () => this.props.navigation.replace('Login'),
+              onPress: () => this.props.navigation.replace(Screens.Login),
             },
             {
               text: i18n.t('Alert.okay'),
@@ -192,7 +192,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 8 },
               ]}
             >
-              {i18n.t('RegisterScreen.enterBasic')}
+              {i18n.t('RegisterScreen.enterBasic')},{' '}
+              {this.props.route.params.firstName}!
             </Text>
             <Text style={[Typography.FONT_REGULAR, { paddingBottom: 8 }]}>
               {i18n.t('RegisterScreen.weWillOnly')}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Typography } from '@styles';
-import { Button } from '@components';
-import { AppStackParamList } from '@navigations';
+import { ListItem } from '@components';
+import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
@@ -18,6 +18,44 @@ interface Props {
   navigation: SupportFAQScreenNavigationProp;
 }
 
+const FAQList = [
+  {
+    text: i18n.t('SupportFAQScreen.cancelMyLetter'),
+    issue: SupportFAQTypes.DeleteLetter,
+    segmentOption: 'delays',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.notYetArrived'),
+    issue: SupportFAQTypes.NotArrived,
+    segmentOption: 'delete letter',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.wrongMailingAddress'),
+    issue: SupportFAQTypes.WrongMailingAddress,
+    segmentOption: 'wrong mailing address',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.wrongReturnAddress'),
+    issue: SupportFAQTypes.WrongReturnAddress,
+    segmentOption: 'wrong return address',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.wouldLikeTrackingNumber'),
+    issue: SupportFAQTypes.TrackingNumber,
+    segmentOption: 'tracking number',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.somethingWrongWithTracking'),
+    issue: SupportFAQTypes.TrackingError,
+    segmentOption: 'tracking error',
+  },
+  {
+    text: i18n.t('SupportFAQScreen.talkToAmeelio'),
+    issue: SupportFAQTypes.TalkToAmeelio,
+    segmentOption: 'support',
+  },
+];
+
 const SupportFAQScreen: React.FC<Props> = (props: Props) => {
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
@@ -25,111 +63,21 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
         <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
           {i18n.t('SupportFAQScreen.howCanWeHelp')}
         </Text>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.DeleteLetter,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'delays' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.cancelMyLetter')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.NotArrived,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'delete letter' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.notYetArrived')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.WrongMailingAddress,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'wrong mailing address' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.wrongMailingAddress')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.WrongReturnAddress,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'wrong return address' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.wrongReturnAddress')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.TrackingNumber,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'tracking number' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.wouldLikeTrackingNumber')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.TrackingError,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'tracking error' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.somethingWrongWithTracking')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
-        <Button
-          onPress={() => {
-            props.navigation.navigate('SupportFAQDetail', {
-              issue: SupportFAQTypes.TalkToAmeelio,
-            });
-            Segment.trackWithProperties(
-              'In-App Reporting - Click on Problem Option',
-              { Option: 'support' }
-            );
-          }}
-          reverse
-          buttonText={i18n.t('SupportFAQScreen.talkToAmeelio')}
-          textStyle={[Typography.FONT_MEDIUM, Styles.buttonText]}
-          containerStyle={Styles.regularButton}
-        />
+        {FAQList.map((item) => (
+          <ListItem
+            key={item.text}
+            onPress={() => {
+              props.navigation.navigate('SupportFAQDetail', {
+                issue: item.issue,
+              });
+              Segment.trackWithProperties(
+                'In-App Reporting - Click on Problem Option',
+                { Option: item.segmentOption }
+              );
+            }}
+            itemText={item.text}
+          />
+        ))}
       </View>
     </ScrollView>
   );

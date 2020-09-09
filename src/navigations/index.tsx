@@ -15,6 +15,7 @@ import {
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
+  InmateLocatorScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -42,13 +43,6 @@ import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@notifications';
 import { Notif } from '@store/Notif/NotifTypes';
-import {
-  SupportFAQTypes,
-  DeliveryReportTypes,
-  Category,
-  Image,
-  MailTypes,
-} from 'types';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -59,63 +53,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 import i18n from '@i18n';
+import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
 
 export { navigationRef, navigate };
-
-export type AuthStackParamList = {
-  Splash: undefined;
-  Begin: undefined;
-  Login: undefined;
-  Terms: undefined;
-  Privacy: undefined;
-  RegisterCreds: undefined;
-  RegisterPersonal: {
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-    remember: boolean;
-  };
-  RegisterAddress: {
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-    remember: boolean;
-    firstName: string;
-    lastName: string;
-    referrer: string;
-    image: Image | undefined;
-  };
-};
-
-export type AppStackParamList = {
-  AddManually: { phyState: string };
-  ChooseCategory: undefined;
-  ChooseOption: undefined;
-  ComposeLetter: undefined;
-  ComposePostcard: { category: Category };
-  ContactInfo: { addFromSelector?: boolean; phyState?: string };
-  ContactSelector: undefined;
-  FacilityDirectory: { phyState: string };
-  Issues: undefined;
-  IssuesDetail: { issue: DeliveryReportTypes } | undefined;
-  IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;
-  LetterPreview: undefined;
-  PostcardPreview: undefined;
-  MailDetails: undefined;
-  MailTracking: undefined;
-  MemoryLane: undefined;
-  ReferFriends: { mailType: MailTypes };
-  ReviewLetter: undefined;
-  ReviewPostcard: { horizontal: boolean; category: string };
-  ReviewContact: undefined;
-  Setup: undefined;
-  SingleContact: undefined;
-  Splash: undefined;
-  SupportFAQ: undefined;
-  SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
-  UpdateContact: { contactId: number } | undefined;
-  UpdateProfile: undefined;
-};
 
 interface RouteDetails {
   title: string;
@@ -140,6 +80,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
+  InmateLocator: { title: i18n.t('Screens.inmateLocator'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
   MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
@@ -229,7 +170,7 @@ const bottomTopTransition = (
 };
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
-  const [currentRoute, setCurrentRoute] = useState('Splash');
+  const [currentRoute, setCurrentRoute] = useState(Screens.Splash);
   const topbar = (
     <Topbar
       userState={props.userState}
@@ -247,7 +188,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   ) {
     screens = (
       <Stack.Screen
-        name="Splash"
+        name={Screens.Splash}
         component={SplashScreen}
         options={{ cardStyleInterpolator: fadeTransition }}
       />
@@ -255,17 +196,20 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else if (!props.authInfo.isLoggedIn) {
     screens = (
       <>
-        <Stack.Screen name="Begin" component={BeginScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Terms" component={TermsScreen} />
-        <Stack.Screen name="Privacy" component={PrivacyScreen} />
-        <Stack.Screen name="RegisterCreds" component={RegisterCredsScreen} />
+        <Stack.Screen name={Screens.Begin} component={BeginScreen} />
+        <Stack.Screen name={Screens.Login} component={LoginScreen} />
+        <Stack.Screen name={Screens.Terms} component={TermsScreen} />
+        <Stack.Screen name={Screens.Privacy} component={PrivacyScreen} />
         <Stack.Screen
-          name="RegisterPersonal"
+          name={Screens.RegisterCreds}
+          component={RegisterCredsScreen}
+        />
+        <Stack.Screen
+          name={Screens.RegisterPersonal}
           component={RegisterPersonalScreen}
         />
         <Stack.Screen
-          name="RegisterAddress"
+          name={Screens.RegisterAddress}
           component={RegisterAddressScreen}
         />
       </>
@@ -274,21 +218,36 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
-          name="ContactSelector"
+          name={Screens.ContactSelector}
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
-        <Stack.Screen name="ChooseCategory" component={ChooseCategoryScreen} />
-        <Stack.Screen name="ChooseOption" component={ChooseOptionScreen} />
-        <Stack.Screen name="ComposeLetter" component={ComposeLetterScreen} />
         <Stack.Screen
-          name="ComposePostcard"
+          name={Screens.ChooseCategory}
+          component={ChooseCategoryScreen}
+        />
+        <Stack.Screen
+          name={Screens.ChooseOption}
+          component={ChooseOptionScreen}
+        />
+        <Stack.Screen
+          name={Screens.ComposeLetter}
+          component={ComposeLetterScreen}
+        />
+        <Stack.Screen
+          name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
         />
-        <Stack.Screen name="ReviewLetter" component={ReviewLetterScreen} />
-        <Stack.Screen name="ReviewPostcard" component={ReviewPostcardScreen} />
         <Stack.Screen
-          name="ContactInfo"
+          name={Screens.ReviewLetter}
+          component={ReviewLetterScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReviewPostcard}
+          component={ReviewPostcardScreen}
+        />
+        <Stack.Screen
+          name={Screens.ContactInfo}
           component={ContactInfoScreen}
           options={{
             cardStyleInterpolator:
@@ -296,29 +255,50 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
-          name="FacilityDirectory"
+          name={Screens.FacilityDirectory}
           component={FacilityDirectoryScreen}
         />
-        <Stack.Screen name="AddManually" component={AddManuallyScreen} />
-        <Stack.Screen name="ReferFriends" component={ReferFriendsScreen} />
-        <Stack.Screen name="ReviewContact" component={ReviewContactScreen} />
-        <Stack.Screen name="Issues" component={IssuesScreen} />
-        <Stack.Screen name="IssuesDetail" component={IssuesDetailScreen} />
         <Stack.Screen
-          name="IssuesDetailSecondary"
+          name={Screens.AddManually}
+          component={AddManuallyScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReferFriends}
+          component={ReferFriendsScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReviewContact}
+          component={ReviewContactScreen}
+        />
+        <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
+        <Stack.Screen
+          name={Screens.IssuesDetail}
+          component={IssuesDetailScreen}
+        />
+        <Stack.Screen
+          name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
         />
-        <Stack.Screen name="SingleContact" component={SingleContactScreen} />
-        <Stack.Screen name="MailTracking" component={MailTrackingScreen} />
-        <Stack.Screen name="MemoryLane" component={MemoryLaneScreen} />
-        <Stack.Screen name="MailDetails" component={MailDetailsScreen} />
-        <Stack.Screen name="SupportFAQ" component={SupportFAQScreen} />
         <Stack.Screen
-          name="SupportFAQDetail"
+          name={Screens.SingleContact}
+          component={SingleContactScreen}
+        />
+        <Stack.Screen
+          name={Screens.MailTracking}
+          component={MailTrackingScreen}
+        />
+        <Stack.Screen name={Screens.MemoryLane} component={MemoryLaneScreen} />
+        <Stack.Screen
+          name={Screens.MailDetails}
+          component={MailDetailsScreen}
+        />
+        <Stack.Screen name={Screens.SupportFAQ} component={SupportFAQScreen} />
+        <Stack.Screen
+          name={Screens.SupportFAQDetail}
           component={SupportFAQDetailScreen}
         />
         <Stack.Screen
-          name="UpdateContact"
+          name={Screens.UpdateContact}
           component={UpdateContactScreen}
           options={{
             cardStyleInterpolator:
@@ -326,13 +306,14 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <Stack.Screen
-          name="UpdateProfile"
+          name={Screens.UpdateProfile}
           component={UpdateProfileScreen}
           options={{
             cardStyleInterpolator:
               Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
           }}
         />
+        <Stack.Screen name="InmateLocator" component={InmateLocatorScreen} />
       </>
     );
   }
@@ -340,7 +321,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
-        const name = navigationRef.current?.getCurrentRoute()?.name;
+        const name = navigationRef.current?.getCurrentRoute()?.name as Screens;
         if (name) setCurrentRoute(name);
         if (name && name in mapRouteNameToDetails) {
           setTitle(mapRouteNameToDetails[name].title);

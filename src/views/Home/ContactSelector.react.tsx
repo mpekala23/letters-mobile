@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Text, FlatList } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -11,12 +11,13 @@ import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken } from '@api';
+import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Notifs from '@notifications';
+import { differenceInHours } from 'date-fns';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -37,6 +38,7 @@ interface Props {
   userPostal: string;
   handleNotif: () => void;
   userId: number;
+  lastUpdatedCategories: string | null;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -73,9 +75,17 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
   async onNavigationFocus() {
     if (this.props.existingContacts.length <= 0) {
-      this.props.navigation.replace('ContactInfo', {});
+      this.props.navigation.replace(Screens.ContactInfo, {});
     }
-    await this.doRefresh();
+    if (
+      !this.props.lastUpdatedCategories ||
+      differenceInHours(
+        new Date(),
+        new Date(this.props.lastUpdatedCategories)
+      ) > 6
+    ) {
+      getCategories();
+    }
   }
 
   async doRefresh() {
@@ -99,7 +109,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);
-          this.props.navigation.navigate('SingleContact');
+          this.props.navigation.navigate(Screens.SingleContact);
         }}
         userPostal={this.props.userPostal}
         contactPostal={item.facility?.postal}
@@ -113,7 +123,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       <Button
         buttonText={i18n.t('ContactSelectorScreen.addContact')}
         onPress={() => {
-          this.props.navigation.navigate('ContactInfo', {
+          this.props.navigation.navigate(Screens.ContactInfo, {
             addFromSelector: true,
           });
           Segment.track('Contact Selector - Click on Add Contact');
@@ -177,6 +187,7 @@ const mapStateToProps = (state: AppState) => ({
   currentNotif: state.notif.currentNotif,
   userPostal: state.user.user.postal,
   userId: state.user.user.id,
+  lastUpdatedCategories: state.category.lastUpdated,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes>

@@ -5,14 +5,13 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform,
-  Linking,
 } from 'react-native';
 import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import {
+  LOB_NAME_CHAR_LIMIT,
   STATE_TO_ABBREV,
   STATE_TO_INMATE_DB,
   STATES_DROPDOWN,
@@ -27,6 +26,8 @@ import Letter from '@assets/views/AddContact/Letter';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
 import { ContactPersonal, ContactDraft } from 'types';
+import { getFacilities } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -83,6 +84,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       'blur',
       this.onNavigationBlur
     );
+    this.isExceedsNameCharLimit = this.isExceedsNameCharLimit.bind(this);
   }
 
   componentDidMount() {
@@ -128,11 +130,32 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.props.navigation.setParams({
         phyState: this.stateRef.current.state.value,
       });
-      this.props.navigation.navigate('FacilityDirectory', {
+      this.props.navigation.navigate(Screens.FacilityDirectory, {
         phyState: this.stateRef.current.state.value,
       });
     }
   }
+
+  setStoreValues = () => {
+    if (
+      this.stateRef.current &&
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current &&
+      this.relationship.current
+    ) {
+      const contactPersonal: ContactPersonal = {
+        firstName: this.firstName.current.state.value,
+        lastName: this.lastName.current.state.value,
+        inmateNumber: this.inmateNumber.current.state.value,
+        relationship: this.relationship.current.state.value,
+      };
+      this.props.setAddingPersonal(contactPersonal);
+      this.props.navigation.setParams({
+        phyState: this.stateRef.current.state.value,
+      });
+    }
+  };
 
   setValid(val: boolean) {
     this.setState({ valid: val });
@@ -157,6 +180,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       if (this.relationship.current)
         this.relationship.current.setState({ dirty: false });
     }
+
+    this.props.navigation.setParams({ addFromSelector: false });
 
     if (this.stateRef.current) {
       if (this.props.route.params && this.props.route.params.phyState) {
@@ -196,6 +221,22 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     }
   }
 
+  isExceedsNameCharLimit() {
+    if (
+      this.firstName.current &&
+      this.lastName.current &&
+      this.inmateNumber.current
+    ) {
+      return (
+        this.firstName.current.state.value.length +
+          this.lastName.current.state.value.length +
+          this.inmateNumber.current.state.value.length >
+        LOB_NAME_CHAR_LIMIT
+      );
+    }
+    return false;
+  }
+
   render() {
     const inmateDatabaseLink =
       STATE_TO_INMATE_DB[STATE_TO_ABBREV[this.state.stateToSearch]]?.link;
@@ -208,7 +249,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
             Segment.trackWithProperties('Add Contact - Click on State Search', {
               State: this.state.stateToSearch,
             });
-            Linking.openURL(inmateDatabaseLink);
+            this.setStoreValues();
+            this.props.navigation.navigate('InmateLocator', {
+              uri: inmateDatabaseLink,
+            });
           }}
         >
           <Text style={{ color: Colors.PINK_500 }}>
@@ -271,9 +315,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onPress={() => {
                     Segment.track('Add Contact - Click on Federal Search');
-                    Linking.openURL(
-                      'https://www.bop.gov/mobile/find_inmate/byname.jsp'
-                    );
+                    this.setStoreValues();
+                    this.props.navigation.navigate('InmateLocator', {
+                      uri: 'https://www.bop.gov/mobile/find_inmate/byname.jsp',
+                    });
                   }}
                 >
                   <Text style={{ color: Colors.PINK_500 }}>
@@ -300,10 +345,19 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     if (
                       this.stateRef.current &&
                       this.stateRef.current.state.valid
-                    )
+                    ) {
+                      const abbrev =
+                        STATE_TO_ABBREV[this.stateRef.current.state.value];
+                      if (abbrev)
+                        getFacilities(abbrev).catch(() => {
+                          dropdownError({
+                            message: i18n.t('Error.cantRefreshFacilities'),
+                          });
+                        });
                       this.setState({
-                        stateToSearch: this.stateRef.current?.state.value,
+                        stateToSearch: this.stateRef.current.state.value,
                       });
+                    }
                     this.updateValid();
                   }}
                   onInvalid={() => this.setState({ valid: false })}
@@ -314,25 +368,50 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.firstName')}
                   required
+                  onChangeText={() => {
+                    if (this.lastName.current) {
+                      this.lastName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.lastName}
+                  isInvalidInput={this.isExceedsNameCharLimit}
                 />
                 <Input
                   ref={this.lastName}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.lastName')}
                   required
+                  onChangeText={() => {
+                    if (this.firstName.current) {
+                      this.firstName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.inmateNumber}
+                  isInvalidInput={this.isExceedsNameCharLimit}
                 />
+                {this.isExceedsNameCharLimit() && (
+                  <Text style={{ textAlign: 'center', marginBottom: 5 }}>
+                    {i18n.t('ContactInfoScreen.nameTooLong')}
+                  </Text>
+                )}
                 <Input
                   ref={this.inmateNumber}
                   parentStyle={CommonStyles.fullWidth}
                   placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
                   required
                   validate={Validation.InmateNumber}
+                  onChangeText={() => {
+                    if (this.firstName.current) {
+                      this.firstName.current.doValidate();
+                    }
+                    if (this.lastName.current) {
+                      this.lastName.current.doValidate();
+                    }
+                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.relationship}

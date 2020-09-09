@@ -4,7 +4,7 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, Category, Screen, MailStatus } from 'types';
+import { ZipcodeInfo, MailStatus } from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
@@ -17,6 +17,7 @@ import {
 } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
 import REFERERS from './Referers';
+import { Screens } from './Screens';
 
 export { Prompts, getRandomPromptIx };
 export { REFERERS };
@@ -182,6 +183,8 @@ export function validateFormat(format: Validation, value: string): boolean {
   }
 }
 
+export const LOB_NAME_CHAR_LIMIT = 37; // excluding spaces
+
 export {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -259,13 +262,12 @@ export function estimateDelivery(date: Date, status?: MailStatus): Date {
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 
 export function isProduction(): boolean {
-  return true;
-  /* if (!RELEASE_CHANNEL) return false;
-  return RELEASE_CHANNEL.indexOf('prod') !== -1; */
+  if (!RELEASE_CHANNEL) return false;
+  return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }
 
 export const onNativeShare = async (
-  screen: Screen,
+  screen: Screens,
   cta: string
 ): Promise<void> => {
   const PROPERTIES = { screen, cta };
