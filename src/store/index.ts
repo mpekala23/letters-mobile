@@ -8,12 +8,13 @@ import FacilityReducer from './Facility/FacilityReducer';
 import MailReducer from './Mail/MailReducer';
 import NotifReducer from './Notif/NotifReducer';
 import UserReducer from './User/UserReducer';
+import ZipReducer from './Zip/ZipReducer';
 
 const config = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: ['user', 'facility'],
-  whitelist: ['category', 'contact', 'notif', 'mail'],
+  whitelist: ['category', 'contact', 'notif', 'mail', 'zip'],
 };
 
 const combinedReducers = combineReducers<AppState>({
@@ -21,8 +22,9 @@ const combinedReducers = combineReducers<AppState>({
   category: CategoryReducer,
   contact: ContactReducer,
   facility: FacilityReducer,
-  notif: NotifReducer,
   mail: MailReducer,
+  notif: NotifReducer,
+  zip: ZipReducer,
 });
 
 const persistedReducers = persistReducer(config, combinedReducers);
