@@ -5,12 +5,13 @@ import React, {
   useImperativeHandle,
   Ref,
 } from 'react';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Styles, { pickerStyles } from './Picker.styles';
 
 export interface Props {
+  parentStyle?: ViewStyle | ViewStyle[];
   items: string[];
   placeholder: string;
   onValueChange: (v: string) => void;
@@ -27,7 +28,7 @@ const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
   const [value, setValue] = useState('');
   const [dirty, setDirty] = useState(false);
   const [isStoredValue, setIsStoredValue] = useState(false);
-  const { items, placeholder, onValueChange } = props;
+  const { parentStyle, items, placeholder, onValueChange } = props;
 
   function isValueSelected(): boolean {
     return !(value === '');
@@ -52,7 +53,7 @@ const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
   }
 
   return (
-    <View style={[Styles.pickerContainer, validityStyle]}>
+    <View style={[Styles.pickerContainer, validityStyle, parentStyle]}>
       <RNPickerSelect
         placeholder={{ label: placeholder, value: '' }}
         items={items.map((item) => {
@@ -79,6 +80,7 @@ const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
 });
 
 Picker.defaultProps = {
+  parentStyle: {},
   items: [],
   placeholder: '',
   onValueChange: () => null,
