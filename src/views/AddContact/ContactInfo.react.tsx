@@ -342,7 +342,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                 {tapHereToSearchStateDatabase}
                 <Picker
                   ref={this.statePicker}
-                  items={STATES_DROPDOWN.map((el) => el[0])}
+                  items={STATES_DROPDOWN}
                   placeholder={i18n.t('ContactInfoScreen.state')}
                   onValueChange={(v) => {
                     this.setState({ stateToSearch: v });

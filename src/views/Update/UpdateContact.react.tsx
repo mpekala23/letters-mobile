@@ -359,7 +359,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               </Text>
               <Picker
                 ref={this.facilityStatePicker}
-                items={STATES_DROPDOWN.map((el) => el[0])}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('UpdateContactScreen.facilityState')}
                 onValueChange={() => {
                   this.updateValid();

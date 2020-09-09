@@ -318,7 +318,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 <View style={{ width: '100%', marginTop: 10 }}>
                   <Picker
                     ref={this.statePicker}
-                    items={STATES_DROPDOWN.map((el) => el[0])}
+                    items={STATES_DROPDOWN}
                     placeholder={i18n.t('ContactInfoScreen.state')}
                     onValueChange={() => {
                       this.updateValid();

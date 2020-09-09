@@ -230,7 +230,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               <Picker
                 ref={this.statePicker}
                 parentStyle={{ flex: 5, marginRight: 4 }}
-                items={STATES_DROPDOWN.map((el) => el[0])}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('RegisterScreen.state')}
                 onValueChange={() => {
                   this.updateValid();

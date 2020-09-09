@@ -314,7 +314,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
               <Picker
                 ref={this.statePicker}
                 parentStyle={Styles.parentStyle}
-                items={STATES_DROPDOWN.map((el) => el[0])}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('UpdateProfileScreen.state')}
                 onValueChange={() => {
                   this.updateValid();

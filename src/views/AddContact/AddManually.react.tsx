@@ -249,7 +249,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
                 />
                 <Picker
                   ref={this.facilityStatePicker}
-                  items={STATES_DROPDOWN.map((el) => el[0])}
+                  items={STATES_DROPDOWN}
                   placeholder={i18n.t('AddManuallyScreen.facilityState')}
                   onValueChange={() => {
                     this.updateValid();
