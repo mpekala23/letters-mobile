@@ -16,11 +16,11 @@ import {
   STATE_TO_INMATE_DB,
 } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
-import REFERERS from './Referers';
+import REFERRERS from './Referrers';
 import { Screens } from './Screens';
 
 export { Prompts, getRandomPromptIx };
-export { REFERERS };
+export { REFERRERS };
 
 // Global constants
 export const STATUS_BAR_HEIGHT = 20;
@@ -153,7 +153,7 @@ export function isValidCity(city: string): boolean {
 }
 
 export function isValidReferrer(referrer: string): boolean {
-  return REFERERS.indexOf(referrer) >= 0;
+  return REFERRERS.indexOf(referrer) >= 0;
 }
 
 export function validateFormat(format: Validation, value: string): boolean {
