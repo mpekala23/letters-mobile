@@ -103,12 +103,10 @@ export enum Validation {
   Phone = 'Phone',
   Password = 'Password',
   Postal = 'Postal',
-  State = 'State',
   CreditCard = 'CreditCard',
   InmateNumber = 'InmateNumber',
   Address = 'Address',
   City = 'City',
-  Referrer = 'Referrer',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -130,10 +128,6 @@ export function isValidPostal(postal: string): boolean {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(postal);
 }
 
-export function isValidState(state: string): boolean {
-  return Object.values(ABBREV_TO_STATE).indexOf(state) > -1;
-}
-
 export function isValidCreditCard(card: string): boolean {
   return /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(
     card
@@ -152,10 +146,6 @@ export function isValidCity(city: string): boolean {
   return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
 }
 
-export function isValidReferrer(referrer: string): boolean {
-  return REFERRERS.indexOf(referrer) >= 0;
-}
-
 export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
@@ -166,8 +156,6 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidPassword(value);
     case Validation.Postal:
       return isValidPostal(value);
-    case Validation.State:
-      return isValidState(value);
     case Validation.CreditCard:
       return isValidCreditCard(value);
     case Validation.InmateNumber:
@@ -176,8 +164,6 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidAddress(value);
     case Validation.City:
       return isValidCity(value);
-    case Validation.Referrer:
-      return isValidReferrer(value);
     default:
       return false;
   }
