@@ -8,7 +8,7 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { WINDOW_WIDTH } from '@utils';
-import { Screens } from '@navigations';
+import { Screens } from '@utils/Screens';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles, { barHeight } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';

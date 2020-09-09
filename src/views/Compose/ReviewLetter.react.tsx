@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { GrayBar } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { Draft, MailTypes, Contact } from 'types';

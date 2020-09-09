@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
-import { AuthStackParamList, Screens } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Typography, Colors } from '@styles';
 import Styles from './Privacy.styles';

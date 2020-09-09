@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Text, View } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { MailTypes, Draft } from 'types';
 import { Colors, Typography } from '@styles';
 import { connect } from 'react-redux';

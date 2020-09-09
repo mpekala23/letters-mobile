@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Text, FlatList } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';

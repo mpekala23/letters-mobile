@@ -280,7 +280,8 @@
     "state": "Prisión Estatal",
     "federal": "Prisión Federal",
     "county": "Carcel del Condado",
-    "immigration": "Centro de Detención"
+    "immigration": "Centro de Detención",
+    "juvenile": "Centro de Detención Juvenil"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",

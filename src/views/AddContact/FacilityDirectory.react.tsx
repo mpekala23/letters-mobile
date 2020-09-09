@@ -1,14 +1,7 @@
 import React, { Dispatch } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Keyboard,
-  Platform,
-  RefreshControl,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, FlatList } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
 import { Facility, ContactFacility } from 'types';
@@ -18,12 +11,12 @@ import { setAddingFacility } from '@store/Contact/ContactActions';
 import { ContactState, ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import FacilityIcon from '@assets/views/AddContact/Facility';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
+import { FacilityState } from '@store/Facility/FacilityTypes';
 import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -38,10 +31,10 @@ export interface Props {
   };
   contactState: ContactState;
   setAddingFacility: (contactFacility: ContactFacility) => void;
+  facilityState: FacilityState;
 }
 
 export interface State {
-  facilityData: Facility[];
   phyState: string;
   search: string;
   selected: Facility | null;
@@ -57,12 +50,11 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      facilityData: [],
       phyState: '',
       search: '',
       selected: null,
       manual: null,
-      refreshing: true,
+      refreshing: false,
     };
     this.renderItem = this.renderItem.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -82,7 +74,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   async componentDidMount() {
     this.loadValuesFromStore();
-    await this.refreshFacilities();
   }
 
   componentWillUnmount() {
@@ -95,6 +86,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   };
 
   onNavigationFocus() {
+    if (!this.props.facilityState.loaded) {
+      this.refreshFacilities();
+    }
     this.loadValuesFromStore();
     setProfileOverride({
       enabled: this.state.selected !== null,
@@ -105,7 +99,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, {
+            manual: false,
+          });
         }
       },
     });
@@ -121,7 +117,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
         });
         if (this.state.selected) {
           this.props.setAddingFacility({ facility: this.state.selected });
-          this.props.navigation.navigate(Screens.ReviewContact, { manual: false });
+          this.props.navigation.navigate(Screens.ReviewContact, {
+            manual: false,
+          });
         }
       },
     });
@@ -135,39 +133,30 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       this.setState({ phyState: this.props.route.params.phyState });
     }
     this.props.navigation.setParams({ phyState });
-    this.refreshFacilities();
   }
 
   async refreshFacilities() {
     try {
       const { phyState } = this.props.route.params;
-      this.setState({ refreshing: true });
-      const facilities = await getFacilities(STATE_TO_ABBREV[phyState]);
-      this.setState({ facilityData: facilities, refreshing: false });
+      await getFacilities(STATE_TO_ABBREV[phyState]);
     } catch (err) {
       dropdownError({ message: i18n.t('Error.cantRefreshFacilities') });
-      this.setState({ refreshing: false });
     }
   }
 
   filterData() {
-    const result = [];
-    for (let ix = 0; ix < this.state.facilityData.length; ix += 1) {
-      const facility = this.state.facilityData[ix];
-      const search = this.state.search.toLowerCase();
-      if (
+    const search = this.state.search.toLowerCase();
+    return this.props.facilityState.facilities.filter((facility) => {
+      return (
         facility.name.toLowerCase().indexOf(search) > -1 ||
         facility.city.toLowerCase().indexOf(search) > -1 ||
         facility.postal.toLowerCase().indexOf(search) > -1 ||
         facility.state.toLowerCase().indexOf(search) > -1
-      ) {
-        result.push(facility);
-      }
-    }
-    return result;
+      );
+    });
   }
 
-  renderItem({ item }: { item: Facility }) {
+  renderItem({ item, index }: { item: Facility; index: number }) {
     return (
       <TouchableOpacity
         style={[
@@ -186,7 +175,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           }
         }}
         key={
-          item.fullName ? item.fullName : item.name + item.address + item.postal
+          (item.fullName
+            ? item.fullName
+            : item.name + item.address + item.postal) + index.toString()
         }
       >
         <Text style={[Typography.FONT_SEMIBOLD, Styles.itemTitle]}>
@@ -203,6 +194,9 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   renderFooter() {
+    if (!this.props.facilityState.loaded) {
+      return null;
+    }
     const manualEntry = this.state.manual ? (
       <View>
         <View
@@ -213,7 +207,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
             marginBottom: 8,
           }}
         />
-        {this.renderItem({ item: this.state.manual })}
+        {this.renderItem({ item: this.state.manual, index: -1 })}
       </View>
     ) : (
       <View />
@@ -221,7 +215,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
     return (
       <View style={Styles.footerBackground}>
         {manualEntry}
-        <Text style={[Typography.BASE_TEXT, { marginBottom: 20 }]}>
+        <Text style={[Typography.BASE_TEXT, { marginBottom: 8 }]}>
           {i18n.t('FacilityDirectoryScreen.dontSeeTheFacility')}
         </Text>
         <Button
@@ -258,12 +252,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
           </Text>
         </View>
       ) : null;
-    const refresh = (
-      <RefreshControl
-        refreshing={this.state.refreshing}
-        onRefresh={this.refreshFacilities}
-      />
-    );
 
     return (
       <TouchableOpacity
@@ -295,21 +283,24 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
               }}
             />
           </View>
-          <ScrollView
+          <FlatList
             style={{ flex: 1 }}
             contentContainerStyle={{
               justifyContent: 'center',
               alignItems: 'center',
+              paddingVertical: 24,
             }}
-            scrollEnabled
-            overScrollMode="always"
-            refreshControl={refresh}
-          >
-            <View style={{ width: '100%', height: 24 }} />
-            {this.filterData().map((value) => this.renderItem({ item: value }))}
-            {this.renderFooter()}
-            <View style={{ width: '100%', height: 24 }} />
-          </ScrollView>
+            data={this.filterData()}
+            keyExtractor={(item, index) => {
+              return (
+                (item.fullName ? item.fullName : item.name) + index.toString()
+              );
+            }}
+            renderItem={this.renderItem}
+            refreshing={this.state.refreshing}
+            onRefresh={this.refreshFacilities}
+            ListFooterComponent={this.renderFooter()}
+          />
         </KeyboardAvoider>
       </TouchableOpacity>
     );
@@ -318,6 +309,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
+  facilityState: state.facility,
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

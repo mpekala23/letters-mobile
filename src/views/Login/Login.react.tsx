@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import {
-  Platform,
   ScrollView,
   Keyboard,
   Text,
@@ -10,7 +9,7 @@ import {
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, Screens } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { login } from '@api';
 import { Button, Input, KeyboardAvoider } from '@components';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
