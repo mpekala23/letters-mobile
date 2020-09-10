@@ -52,6 +52,10 @@ export interface Category {
   subcategories: Record<string, PostcardDesign[]>;
 }
 
+export interface Layout {
+  image: Image;
+}
+
 // Letters and Postcards (Draft)
 interface DraftInfo {
   type: MailTypes;

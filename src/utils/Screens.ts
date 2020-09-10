@@ -21,6 +21,7 @@ export enum Screens {
   ChooseCategory = 'ChooseCategory',
   ChooseOption = 'ChooseOption',
   ComposeLetter = 'ComposeLetter',
+  ComposePersonal = 'ComposePersonal',
   ComposePostcard = 'ComposePostcard',
   ReviewLetter = 'ReviewLetter',
   ReviewPostcard = 'ReviewPostcard',
@@ -71,6 +72,7 @@ export type AppStackParamList = {
   ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
+  ComposePersonal: undefined;
   ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;

@@ -48,7 +48,7 @@ type ComposePostcardScreenNavigationProp = StackNavigationProp<
   'ComposePostcard'
 >;
 
-export interface Props {
+interface Props {
   navigation: ComposePostcardScreenNavigationProp;
   route: {
     params: {

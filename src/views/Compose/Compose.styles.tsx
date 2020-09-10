@@ -3,7 +3,6 @@ import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
 export default StyleSheet.create({
   screenBackground: {
-    padding: 16,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
@@ -56,4 +55,19 @@ export default StyleSheet.create({
     paddingBottom: 26,
   },
   gridDesignBackground: {},
+  designButtons: {
+    position: 'absolute',
+    height: 200,
+    width: WINDOW_WIDTH,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    justifyContent: 'flex-end',
+  },
+  bottom: {
+    position: 'absolute',
+    height: 400,
+    width: WINDOW_WIDTH,
+    backgroundColor: '#323334',
+    paddingTop: 32,
+  },
 });

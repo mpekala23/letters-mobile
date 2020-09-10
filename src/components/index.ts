@@ -22,6 +22,7 @@ import ListItem from './ListItem/ListItem.react';
 import MailingAddressPreview from './MailingAddressPreview/MailingAddressPreview.react';
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import PicUpload from './PicUpload/PicUpload.react';
+import PostcardTools from './PostcardTools/PostcardTools.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
@@ -53,6 +54,7 @@ export {
   MailingAddressPreview,
   MemoryLaneCard,
   PicUpload,
+  PostcardTools,
   PrisonCard,
   ProfilePic,
   StaticPostcard,
