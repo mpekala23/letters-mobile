@@ -175,27 +175,26 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   loadValuesFromStore() {
     const addingContact = this.props.contactDraft;
-    if (this.props.route.params && this.props.route.params.addFromSelector) {
-      if (this.statePicker.current)
-        this.statePicker.current.setIsStoredValue(true);
+    const addingFromSelector = this.props.route.params.addFromSelector === true;
+
+    if (addingFromSelector) {
       if (this.firstName.current)
         this.firstName.current.setState({ dirty: false });
       if (this.lastName.current)
         this.lastName.current.setState({ dirty: false });
       if (this.inmateNumber.current)
         this.inmateNumber.current.setState({ dirty: false });
-      if (this.relationshipPicker.current)
-        this.relationshipPicker.current.setIsStoredValue(true);
     }
 
     this.props.navigation.setParams({ addFromSelector: false });
 
     if (this.statePicker.current) {
-      if (this.props.route.params && this.props.route.params.phyState) {
-        this.statePicker.current.setValue(this.props.route.params.phyState);
-      } else if (addingContact.facility) {
-        this.statePicker.current.setValue(addingContact.facility.state);
-      }
+      this.statePicker.current.setStoredValue(
+        this.props.route.params.phyState
+          ? this.props.route.params.phyState
+          : addingContact.facility.state,
+        !addingFromSelector
+      );
       this.setState({ stateToSearch: this.statePicker.current.value });
     }
     if (this.firstName.current)
@@ -204,8 +203,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.lastName.current.set(addingContact.lastName);
     if (this.inmateNumber.current)
       this.inmateNumber.current.set(addingContact.inmateNumber);
-    if (this.relationshipPicker.current)
-      this.relationshipPicker.current.setValue(addingContact.relationship);
+    if (this.relationshipPicker.current) {
+      this.relationshipPicker.current.setStoredValue(
+        addingContact.relationship,
+        !addingFromSelector
+      );
+    }
   }
 
   updateValid() {

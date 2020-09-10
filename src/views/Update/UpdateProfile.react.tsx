@@ -171,8 +171,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       );
       this.postal.current.set(this.props.userState.user.postal);
       this.city.current.set(this.props.userState.user.city);
-      this.statePicker.current.setValue(this.props.userState.user.state);
-      this.statePicker.current.setIsStoredValue(true);
+      this.statePicker.current.setStoredValue(this.props.userState.user.state);
     }
   }
 

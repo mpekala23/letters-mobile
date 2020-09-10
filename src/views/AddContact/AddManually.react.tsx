@@ -164,10 +164,9 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         this.facilityPhone.current.set(addingFacility.phone);
     }
     if (this.facilityStatePicker.current) {
-      this.facilityStatePicker.current.setValue(
+      this.facilityStatePicker.current.setStoredValue(
         this.props.route.params.phyState
       );
-      this.facilityStatePicker.current.setIsStoredValue(true);
     }
   }
 

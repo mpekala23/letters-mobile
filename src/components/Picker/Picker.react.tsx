@@ -20,40 +20,47 @@ export interface Props {
 export interface PickerRef {
   isValueSelected: () => boolean;
   value: string;
-  setValue: (v: string) => void;
-  setIsStoredValue: (isStored: boolean) => void;
+  setStoredValue: (v: string, makeDirty?: boolean) => void;
 }
 
 const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
   const [value, setValue] = useState('');
   const [dirty, setDirty] = useState(false);
-  const [isStoredValue, setIsStoredValue] = useState(false);
+  const [styleIgnoresValueChange, setStyleIgnoresValueChange] = useState(false);
   const { parentStyle, items, placeholder, onValueChange } = props;
 
   function isValueSelected(): boolean {
     return !(value === '');
   }
 
+  // default: sets value without immediately triggering container style change.
+  // setting makeDirty=true triggers container style change
+  function setStoredValue(v: string, makeDirty?: boolean): void {
+    if (v && v !== value) {
+      setStyleIgnoresValueChange(makeDirty !== true);
+      setValue(v);
+    }
+  }
+
   useImperativeHandle(ref, () => ({
     isValueSelected,
     value,
-    setValue,
-    setIsStoredValue,
+    setStoredValue,
   }));
 
   useEffect(() => {
     onValueChange(value);
-  }, [value, isStoredValue]);
+  }, [value, styleIgnoresValueChange]);
 
-  let validityStyle = {};
+  let checkValueStyle = {};
   if (dirty) {
-    validityStyle = isValueSelected()
+    checkValueStyle = isValueSelected()
       ? Styles.valueSelected
       : Styles.noValueSelected;
   }
 
   return (
-    <View style={[Styles.pickerContainer, validityStyle, parentStyle]}>
+    <View style={[Styles.pickerContainer, checkValueStyle, parentStyle]}>
       <RNPickerSelect
         placeholder={{ label: placeholder, value: '' }}
         items={items.map((item) => {
@@ -64,12 +71,8 @@ const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
         value={value}
         onValueChange={(v) => {
           setValue(v);
-          if (isStoredValue) {
-            setIsStoredValue(false);
-            setDirty(false);
-          } else {
-            setDirty(true);
-          }
+          setDirty(!styleIgnoresValueChange);
+          if (styleIgnoresValueChange) setStyleIgnoresValueChange(false);
         }}
         Icon={() => {
           return <Entypo name="chevron-thin-down" size={16} color="gray" />;

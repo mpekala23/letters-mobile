@@ -198,10 +198,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
       this.facilityCity.current.set(this.props.contact.facility.city);
-      this.facilityStatePicker.current.setValue(
+      this.facilityStatePicker.current.setStoredValue(
         this.props.contact.facility.state
       );
-      this.facilityStatePicker.current.setIsStoredValue(true);
       this.facilityPostal.current.set(this.props.contact.facility.postal);
       this.facilityPhone.current.set(
         this.props.contact.facility.phone

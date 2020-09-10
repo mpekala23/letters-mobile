@@ -105,10 +105,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
-      this.statePicker.current.setValue(
+      this.statePicker.current.setStoredValue(
         this.props.contactState.adding.facility.state
       );
-      this.statePicker.current.setIsStoredValue(true);
       this.firstName.current.set(this.props.contactState.adding.firstName);
       this.lastName.current.set(this.props.contactState.adding.lastName);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
