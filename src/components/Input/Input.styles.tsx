@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 
-export const INPUT_HEIGHT = 50;
 export const VERTICAL_MARGIN = 5;
 
 export default StyleSheet.create({
   parentStyle: {
-    height: INPUT_HEIGHT,
     width: '100%',
     marginBottom: VERTICAL_MARGIN * 2,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.BLACK_200,
     borderRadius: 8,
     overflow: 'hidden',
   },
@@ -18,32 +16,35 @@ export default StyleSheet.create({
     width: '100%',
   },
   baseInputStyle: {
-    height: INPUT_HEIGHT,
     width: '100%',
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: 'rgba(0,0,0,0)',
+    borderColor: Colors.BLACK_200,
     paddingHorizontal: 10,
     fontSize: 16,
     color: 'black',
-    textAlignVertical: 'center',
+    paddingVertical: 8,
+  },
+  baseInputAndroidPadding: {
+    paddingTop: 10,
+    paddingBottom: 6,
   },
   inputStyleFocused: {
     color: Colors.AMEELIO_BLACK,
   },
   validStyle: {
-    backgroundColor: '#F0FAF3',
-    borderColor: '#9EE2B8',
+    backgroundColor: Colors.GREEN_100,
+    borderColor: Colors.GREEN_300,
     color: 'black',
   },
   invalidStyle: {
-    color: '#9A9A9A',
-    borderColor: '#FF9E9E',
-    backgroundColor: '#FFF5F5',
+    color: Colors.GRAY_MEDIUM,
+    borderColor: Colors.PINK_400,
+    backgroundColor: Colors.PINK_100,
   },
   disabledInputStyle: {
     opacity: 0.7,
-    color: '#9A9A9A',
+    color: Colors.GRAY_MEDIUM,
   },
   secureButtonsContainer: {
     position: 'absolute',

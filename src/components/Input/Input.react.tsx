@@ -240,7 +240,7 @@ class Input extends React.Component<Props, State> {
               validate === Validation.CreditCard ? { paddingLeft: 65 } : {},
               inputStyle,
               Typography.FONT_REGULAR,
-              Platform.OS === 'android' ? { paddingTop: 2 } : {},
+              Platform.OS === 'android' ? Styles.baseInputAndroidPadding : {},
             ]}
             value={this.state.value}
           />

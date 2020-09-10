@@ -290,15 +290,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                   segmentErrorLogEvent="Edit Contact - Upload Image Error"
                 />
               </View>
-              <Text
-                style={[
-                  Typography.FONT_SEMIBOLD,
-                  {
-                    fontSize: 14,
-                    paddingBottom: 4,
-                  },
-                ]}
-              >
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateContactScreen.firstName')}
               </Text>
               <Input
@@ -364,13 +356,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                   this.updateValid();
                 }}
               />
-              <Text
-                style={[
-                  Typography.FONT_SEMIBOLD,
-                  Styles.baseText,
-                  { paddingTop: 12 },
-                ]}
-              >
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateContactScreen.facilityPostal')}
               </Text>
               <Input

@@ -1,45 +1,41 @@
 import { StyleSheet } from 'react-native';
-import { Typography } from '@styles';
+import { Typography, Colors } from '@styles';
 
 export default StyleSheet.create({
   pickerContainer: {
     borderRadius: 8,
     marginBottom: 10,
     borderWidth: 2,
-    backgroundColor: '#F2F2F2',
-    borderColor: '#F2F2F2',
+    backgroundColor: Colors.BLACK_200,
+    borderColor: Colors.BLACK_200,
   },
   valueSelected: {
-    backgroundColor: '#F0FAF3',
-    borderColor: '#9EE2B8',
+    backgroundColor: Colors.GREEN_100,
+    borderColor: Colors.GREEN_300,
   },
   noValueSelected: {
-    color: '#9A9A9A',
-    borderColor: '#FF9E9E',
-    backgroundColor: '#FFF5F5',
+    color: Colors.GRAY_MEDIUM,
+    backgroundColor: Colors.PINK_100,
+    borderColor: Colors.PINK_400,
   },
 });
 
 export const pickerStyles = StyleSheet.create({
   inputIOS: {
-    borderRadius: 8,
     paddingHorizontal: 10,
     fontSize: 16,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    marginVertical: 3,
-    paddingVertical: 6,
+    paddingVertical: 8,
   },
   inputAndroid: {
-    borderRadius: 8,
     paddingHorizontal: 10,
     fontSize: 16,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    marginVertical: 3,
-    paddingTop: 8,
-    paddingBottom: 4,
+    paddingTop: 10,
+    paddingBottom: 6,
   },
   placeholder: {
-    color: '#cdcdcd',
+    color: '#C7C7CD',
   },
   iconContainer: {
     top: 16,
