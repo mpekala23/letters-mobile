@@ -2,13 +2,11 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 
 export const INPUT_HEIGHT = 50;
-export const DROP_HEIGHT = 250;
-export const OPTION_HEIGHT = 50;
-export const NUM_OPTIONS = 4;
 export const VERTICAL_MARGIN = 5;
 
 export default StyleSheet.create({
   parentStyle: {
+    height: INPUT_HEIGHT,
     width: '100%',
     marginBottom: VERTICAL_MARGIN * 2,
     backgroundColor: '#F2F2F2',
@@ -20,6 +18,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   baseInputStyle: {
+    height: INPUT_HEIGHT,
     width: '100%',
     borderRadius: 8,
     borderWidth: 2,
@@ -45,22 +44,6 @@ export default StyleSheet.create({
   disabledInputStyle: {
     opacity: 0.7,
     color: '#9A9A9A',
-  },
-  optionBackground: {
-    width: '100%',
-    zIndex: 5,
-  },
-  optionScroll: {
-    width: '100%',
-    flex: 1,
-  },
-  optionContainer: {
-    width: '100%',
-    height: OPTION_HEIGHT,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderColor: Colors.GRAY_500,
-    paddingHorizontal: 10,
   },
   secureButtonsContainer: {
     position: 'absolute',
