@@ -3,7 +3,7 @@ import {
   SET_COMPOSING,
   SET_RECIPIENT_ID,
   SET_CONTENT,
-  SET_IMAGE,
+  SET_IMAGES,
   SET_DESIGN,
   CLEAR_COMPOSING,
   ADD_MAIL,
@@ -50,9 +50,9 @@ export default function LetterReducer(
     case SET_CONTENT:
       currentState.composing.content = action.payload;
       return currentState;
-    case SET_IMAGE:
+    case SET_IMAGES:
       if (currentState.composing.type !== MailTypes.Letter) return currentState;
-      currentState.composing.image = action.payload;
+      currentState.composing.images = action.payload;
       return currentState;
     case SET_DESIGN:
       if (currentState.composing.type !== MailTypes.Postcard)

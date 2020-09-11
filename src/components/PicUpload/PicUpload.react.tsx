@@ -33,7 +33,7 @@ export interface Props {
   width: number;
   height: number;
   onSuccess?: (image: Image) => void;
-  onDelete?: () => void;
+  onDelete?: (imageUri?: string) => void;
   aspect: [number, number];
   allowsEditing: boolean;
   initial: Image;
@@ -203,8 +203,9 @@ class PicUpload extends React.Component<Props, State> {
   };
 
   deleteImage = (): void => {
+    const imageUri = this.state.image?.uri;
     this.setState({ image: null }, () => {
-      if (this.props.onDelete) this.props.onDelete();
+      if (this.props.onDelete) this.props.onDelete(imageUri);
     });
   };
 

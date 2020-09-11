@@ -18,7 +18,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setContent, setImage } from '@store/Mail/MailActions';
+import { setContent, setImages } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { Draft, Image, MailTypes } from 'types';
@@ -42,6 +42,7 @@ interface State {
   imageHeight: number;
   open: boolean;
   valid: boolean;
+  images: Image[];
 }
 
 interface Props {
@@ -50,7 +51,7 @@ interface Props {
   recipientName: string;
   hasSentMail: boolean;
   setContent: (content: string) => void;
-  setImage: (image: Image | undefined) => void;
+  setImages: (images: Image[]) => void;
 }
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
@@ -75,6 +76,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       imageHeight: 200,
       open: false,
       valid: true,
+      images: [],
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
@@ -115,7 +117,9 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       return;
     }
 
-    const { image, content } = this.props.composing;
+    const { images, content } = this.props.composing;
+    let image;
+    if (images?.length) [image] = images;
 
     if (this.wordRef.current) {
       if (!this.props.hasSentMail && !content) {
@@ -212,7 +216,14 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   registerImage(image: Image): void {
-    this.props.setImage(image);
+    this.setState(
+      (prevState) => ({
+        images: [...prevState.images, image],
+      }),
+      () => {
+        this.props.setImages(this.state.images);
+      }
+    );
     if (image && image.width && image.height) {
       if (image.width < image.height) {
         this.setState({
@@ -234,8 +245,20 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     Keyboard.dismiss();
   }
 
-  deletePhoto(): void {
-    this.props.setImage(undefined);
+  deletePhoto(imageUri: string | undefined): void {
+    const deleteIndex = this.state.images.findIndex(
+      (el) => el.uri === imageUri
+    );
+    if (deleteIndex !== -1) {
+      this.setState(
+        (prevState) => ({
+          images: [...prevState.images].splice(deleteIndex),
+        }),
+        () => {
+          this.props.setImages(this.state.images);
+        }
+      );
+    }
     this.setState({ imageWidth: 200, imageHeight: 200 });
   }
 
@@ -372,7 +395,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
     setContent: (content: string) => dispatch(setContent(content)),
-    setImage: (image: Image | undefined) => dispatch(setImage(image)),
+    setImages: (images: Image[]) => dispatch(setImages(images)),
   };
 };
 const ComposeLetterScreen = connect(

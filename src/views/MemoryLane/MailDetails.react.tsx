@@ -26,11 +26,11 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
     'MMM dd, yyyy'
   );
   let image = null;
-  if (mail.type === MailTypes.Letter && mail.image) {
+  if (mail.type === MailTypes.Letter && mail.images?.length) {
     image = (
       <Image
         style={Styles.memoryLanePicture}
-        source={mail.image}
+        source={mail.images[0]}
         testID="memoryLaneImage"
       />
     );

@@ -24,7 +24,8 @@ export interface PostcardDesign {
 
 interface LetterSpecific {
   type: MailTypes.Letter;
-  image?: Image;
+  images?: Image[];
+  // image: Image | undefined;
 }
 
 interface PostcardSpecific {

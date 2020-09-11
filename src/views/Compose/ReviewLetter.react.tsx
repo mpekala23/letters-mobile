@@ -122,7 +122,10 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       this.props.navigation.goBack();
       return null;
     }
-    const { image } = this.props.composing;
+    const { images } = this.props.composing;
+    let image;
+    if (images?.length === 1) [image] = images;
+
     let width = 275;
     let height = 275;
     if (image && image.width && image.height) {
@@ -149,9 +152,9 @@ class ReviewLetterScreenBase extends React.Component<Props> {
               {this.props.composing.content}
             </Text>
             <View style={{ flex: 1 }}>
-              {this.props.composing.image && (
+              {this.props.composing.images?.length && (
                 <Image
-                  source={this.props.composing.image}
+                  source={this.props.composing.images[0]}
                   style={{
                     height,
                     width,

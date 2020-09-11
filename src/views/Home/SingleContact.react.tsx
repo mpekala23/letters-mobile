@@ -278,7 +278,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     Type:
                       this.props.composing.content.length ||
                       (this.props.composing.type === MailTypes.Letter &&
-                        this.props.composing.image) ||
+                        this.props.composing.images?.length) ||
                       this.props.composing.type === MailTypes.Postcard
                         ? 'draft'
                         : 'blank',
@@ -287,7 +287,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 if (
                   this.props.composing.content.length ||
                   (this.props.composing.type === MailTypes.Letter &&
-                    this.props.composing.image) ||
+                    this.props.composing.images?.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
                     this.props.composing.design.image.uri.length)
                 ) {
