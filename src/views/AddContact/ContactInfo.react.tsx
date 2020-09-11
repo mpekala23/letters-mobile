@@ -175,7 +175,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   loadValuesFromStore() {
     const addingContact = this.props.contactDraft;
-    const addingFromSelector = this.props.route.params.addFromSelector === true;
+    const addingFromSelector = this.props.route.params.addFromSelector;
 
     if (addingFromSelector) {
       if (this.firstName.current)
