@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import {
   Text,
   View,
@@ -16,6 +16,8 @@ import {
   PostcardTools,
   Input,
   EditablePostcard,
+  Icon,
+  DynamicPostcard,
 } from '@components';
 import { PostcardDesign, Contact, Layout, Draft, Image } from 'types';
 import {
@@ -35,13 +37,14 @@ import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
 import { string } from 'prop-types';
-import { WINDOW_WIDTH, takeImage, capitalize } from '@utils';
+import { WINDOW_WIDTH, takeImage, capitalize, WINDOW_HEIGHT } from '@utils';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import Styles from './Compose.styles';
+import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
+import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
-const SLIDE_DURATION = 500;
+const SLIDE_DURATION = 300;
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -63,6 +66,7 @@ interface State {
     bottomDetails: 'layout' | 'design' | null;
     bottomSlide: Animated.Value;
     layout: Layout;
+    commonLayout: Layout;
     design: PostcardDesign;
     flip: Animated.Value;
     horizontal: boolean;
@@ -70,6 +74,7 @@ interface State {
     endCursor: string;
     hasNextPage: boolean;
     library: PostcardDesign[];
+    activePosition: number;
   };
   textState: {
     charsLeft: number;
@@ -94,7 +99,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       designState: {
         bottomDetails: null,
         bottomSlide: new Animated.Value(0),
-        layout: { image: { uri: '' } },
+        layout: { ...LAYOUTS[0] },
+        commonLayout: { ...COMMON_LAYOUT },
         design: { image: { uri: '' } },
         flip: new Animated.Value(0),
         horizontal: true,
@@ -102,6 +108,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         endCursor: '',
         hasNextPage: true,
         library: [],
+        activePosition: 1,
       },
       textState: {
         charsLeft: 300,
@@ -116,6 +123,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
     this.openBottom = this.openBottom.bind(this);
     this.closeBottom = this.closeBottom.bind(this);
+    this.loadMoreImages = this.loadMoreImages.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
@@ -196,6 +204,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     bottomDetails?: 'layout' | 'design' | null;
     bottomSlide?: Animated.Value;
     layout?: Layout;
+    commonLayout?: Layout;
     design?: PostcardDesign;
     flip?: Animated.Value;
     horizontal?: boolean;
@@ -203,12 +212,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     endCursor?: string;
     hasNextPage?: boolean;
     library?: PostcardDesign[];
+    activePosition?: number;
   }) {
     this.setState((prevState) => ({
       ...prevState,
       designState: {
         ...prevState.designState,
-        newState,
+        ...newState,
       },
     }));
   }
@@ -222,7 +232,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       ...prevState,
       textState: {
         ...prevState.textState,
-        newState,
+        ...newState,
       },
     }));
   }
@@ -237,12 +247,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   closeBottom() {
-    this.setDesignState({ bottomDetails: null });
     Animated.timing(this.state.designState.bottomSlide, {
       toValue: 0,
       duration: SLIDE_DURATION,
       useNativeDriver: false,
-    }).start();
+    }).start(() => this.setDesignState({ bottomDetails: null }));
   }
 
   async loadMoreImages(): Promise<void> {
@@ -285,18 +294,27 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           {
             bottom: this.state.textState.keyboardOpacity.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, -200],
+              outputRange: [0, -DESIGN_BUTTONS_HEIGHT],
             }),
           },
         ]}
       >
         <PostcardTools
           onAddLayout={() => this.openBottom('layout')}
-          onAddPhoto={() => null}
+          onAddPhoto={() => this.openBottom('design')}
           onAddStickers={() => null}
           style={{ paddingBottom: 16 }}
         />
-        <Button onPress={() => undefined} buttonText={i18n.t('Compose.next')} />
+        <Button
+          onPress={() => {
+            Animated.timing(this.state.designState.flip, {
+              toValue: 1,
+              duration: FLIP_DURATION,
+              useNativeDriver: false,
+            }).start();
+          }}
+          buttonText={i18n.t('Compose.next')}
+        />
       </Animated.View>
     );
   };
@@ -304,7 +322,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   renderSubcategorySelector = (): JSX.Element => {
     const subcategories = ['Library', 'Take Photo'];
     return (
-      <View style={Styles.subcategorySelectorBackground}>
+      <View style={[Styles.subcategorySelectorBackground, { marginTop: 32 }]}>
         {subcategories.map((subcategory) => (
           <TouchableOpacity
             style={[
@@ -366,7 +384,17 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           height: (WINDOW_WIDTH - 32) / 3,
           margin: 4,
         }}
-        onPress={() => console.log(this.state.designState.design)}
+        onPress={() => {
+          const layout = { ...this.state.designState.layout };
+          const commonLayout = { ...this.state.designState.layout };
+          const { activePosition } = this.state.designState;
+          layout.positions[activePosition] = design;
+          commonLayout.positions[activePosition] = design;
+          this.setDesignState({
+            layout,
+            commonLayout,
+          });
+        }}
       >
         <AsyncImage
           source={design.thumbnail ? design.thumbnail : design.image}
@@ -376,7 +404,36 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     );
   }
 
-  renderBottom = (): JSX.Element => {
+  renderLayoutItem(layout: Layout): JSX.Element {
+    return (
+      <TouchableOpacity
+        style={{
+          width: (WINDOW_WIDTH - 32) / 2,
+          height: WINDOW_HEIGHT * 0.2 - 16,
+          margin: 4,
+        }}
+        onPress={() => {
+          const keys = Object.keys(layout.positions);
+          const oldLayout = this.state.designState.layout;
+          const { commonLayout } = this.state.designState;
+          const newLayout = { ...layout };
+          keys.forEach((key) => {
+            const nKey = parseInt(key, 10);
+            if (oldLayout.positions.hasOwnProperty(nKey)) {
+              newLayout.positions[nKey] = oldLayout.positions[nKey];
+            } else {
+              newLayout.positions[nKey] = commonLayout.positions[nKey];
+            }
+          });
+          this.setDesignState({ layout });
+        }}
+      >
+        <Icon svg={layout.svg} />
+      </TouchableOpacity>
+    );
+  }
+
+  renderBottomContent = (): JSX.Element => {
     const emptyLoading = (
       <View
         style={{
@@ -389,33 +446,34 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
       </View>
     );
-    return (
-      <Animated.View
-        style={[
-          Styles.bottom,
-          {
-            bottom: this.state.designState.bottomSlide.interpolate({
-              inputRange: [0, 1],
-              outputRange: [-400, 0],
-            }),
-          },
-        ]}
-      >
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              color: 'white',
-              fontSize: 18,
-              position: 'absolute',
-              top: 8,
-              right: 8,
-            },
-          ]}
-          onPress={this.closeBottom}
+    if (this.state.designState.bottomDetails === 'layout') {
+      return (
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            paddingTop: 8,
+          }}
         >
-          {i18n.t('Compose.done')}
-        </Text>
+          <Text
+            style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
+          >
+            Layouts
+          </Text>
+          <FlatList
+            data={LAYOUTS}
+            renderItem={({ item }) => this.renderLayoutItem(item)}
+            keyExtractor={(item: Layout) => {
+              return item.id.toString();
+            }}
+            numColumns={2}
+            contentContainerStyle={Styles.gridBackground}
+          />
+        </View>
+      );
+    }
+    return (
+      <>
         {this.renderSubcategorySelector()}
         <FlatList
           data={this.state.designState.library}
@@ -428,6 +486,40 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           onEndReached={this.loadMoreImages}
           ListEmptyComponent={emptyLoading}
         />
+      </>
+    );
+  };
+
+  renderBottom = (): JSX.Element => {
+    return (
+      <Animated.View
+        style={[
+          Styles.bottom,
+          {
+            bottom: this.state.designState.bottomSlide.interpolate({
+              inputRange: [0, 1],
+              outputRange: [-BOTTOM_HEIGHT, 0],
+            }),
+          },
+        ]}
+      >
+        {this.renderBottomContent()}
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 8, right: 8 }}
+          onPress={this.closeBottom}
+        >
+          <Text
+            style={[
+              Typography.FONT_REGULAR,
+              {
+                color: 'white',
+                fontSize: 18,
+              },
+            ]}
+          >
+            {i18n.t('Compose.done')}
+          </Text>
+        </TouchableOpacity>
       </Animated.View>
     );
   };
@@ -441,10 +533,39 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           onPress={Keyboard.dismiss}
         >
           <KeyboardAvoider>
-            <View style={{ flex: 1 }}>
-              <EditablePostcard
-                design={this.state.designState.design}
+            <View
+              style={{
+                flex: 1,
+                paddingBottom: DESIGN_BUTTONS_HEIGHT,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <DynamicPostcard
+                layout={this.state.designState.layout}
+                activePosition={this.state.designState.activePosition}
+                highlightActive={
+                  this.state.designState.bottomDetails === 'design'
+                }
+                commonLayout={this.state.designState.commonLayout}
+                onImageAdd={(position: number) => {
+                  this.setDesignState({ activePosition: position });
+                  this.openBottom('design');
+                }}
+                flip={this.state.designState.flip}
+                onChangeText={() => null}
                 recipient={this.props.recipient}
+                width={WINDOW_WIDTH - 32}
+                height={WINDOW_HEIGHT * 0.35}
+              />
+              <Animated.View
+                style={{
+                  width: WINDOW_WIDTH,
+                  height: this.state.designState.bottomSlide.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, BOTTOM_HEIGHT - DESIGN_BUTTONS_HEIGHT],
+                  }),
+                }}
               />
             </View>
           </KeyboardAvoider>

@@ -9,6 +9,7 @@ import ComposeHeader from './ComposeHeader/ComposeHeader.react';
 import ComposeTools from './ComposeTools/ComposeTools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import Dropdown from './Dropdown/Dropdown.react';
+import DynamicPostcard from './DynamicPostcard/DynamicPostcard.react';
 import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
 import GrayBar from './GrayBar/GrayBar.react';
@@ -41,6 +42,7 @@ export {
   ComposeTools,
   DeliveryStatusCard,
   Dropdown,
+  DynamicPostcard,
   EditablePostcard,
   GenericCard,
   GrayBar,

@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
+export const BOTTOM_HEIGHT = WINDOW_HEIGHT * 0.5;
+export const DESIGN_BUTTONS_HEIGHT = 208;
+
 export default StyleSheet.create({
   screenBackground: {
     flex: 1,
@@ -57,7 +60,7 @@ export default StyleSheet.create({
   gridDesignBackground: {},
   designButtons: {
     position: 'absolute',
-    height: 200,
+    height: DESIGN_BUTTONS_HEIGHT,
     width: WINDOW_WIDTH,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -65,9 +68,8 @@ export default StyleSheet.create({
   },
   bottom: {
     position: 'absolute',
-    height: 400,
+    height: BOTTOM_HEIGHT,
     width: WINDOW_WIDTH,
     backgroundColor: '#323334',
-    paddingTop: 32,
   },
 });

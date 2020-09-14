@@ -53,7 +53,9 @@ export interface Category {
 }
 
 export interface Layout {
-  image: Image;
+  id: number;
+  positions: Record<number, PostcardDesign | undefined>;
+  svg: string;
 }
 
 // Letters and Postcards (Draft)
