@@ -224,6 +224,7 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
+    "inmateNumber": "Inmate Number",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
