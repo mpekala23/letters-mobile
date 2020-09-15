@@ -4,10 +4,16 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
-  Platform,
   View,
 } from 'react-native';
-import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
+import {
+  Button,
+  Input,
+  PicUpload,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -52,7 +58,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   private city = createRef<Input>();
 
-  private phyState = createRef<Input>();
+  private statePicker = createRef<PickerRef>();
 
   private unsubscribeFocus: () => void;
 
@@ -119,7 +125,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.address2.current &&
       this.postal.current &&
       this.city.current &&
-      this.phyState.current
+      this.statePicker.current
     ) {
       const user: User = {
         id: this.props.userState.user.id,
@@ -130,7 +136,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         address2: this.address2.current.state.value,
         postal: this.postal.current.state.value,
         city: this.city.current.state.value,
-        state: this.phyState.current.state.value,
+        state: this.statePicker.current.value,
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
         joined: this.props.userState.user.joined,
@@ -153,7 +159,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.address2.current &&
       this.postal.current &&
       this.city.current &&
-      this.phyState.current
+      this.statePicker.current
     ) {
       this.firstName.current.set(this.props.userState.user.firstName);
       this.lastName.current.set(this.props.userState.user.lastName);
@@ -165,7 +171,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       );
       this.postal.current.set(this.props.userState.user.postal);
       this.city.current.set(this.props.userState.user.city);
-      this.phyState.current.set(this.props.userState.user.state);
+      this.statePicker.current.setStoredValue(this.props.userState.user.state);
     }
   }
 
@@ -176,7 +182,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
       this.address1.current &&
       this.postal.current &&
       this.city.current &&
-      this.phyState.current
+      this.statePicker.current
     ) {
       const result =
         this.firstName.current.state.valid &&
@@ -184,7 +190,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         this.address1.current.state.valid &&
         this.postal.current.state.valid &&
         this.city.current.state.valid &&
-        this.phyState.current.state.valid;
+        this.statePicker.current.isValueSelected();
       this.setValid(result);
     }
   }
@@ -300,21 +306,18 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 validate={Validation.City}
                 onValid={this.updateValid}
                 onInvalid={() => this.setValid(false)}
-                nextInput={this.phyState}
               />
               <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateProfileScreen.state')}
               </Text>
-              <Input
-                ref={this.phyState}
+              <Picker
+                ref={this.statePicker}
                 parentStyle={Styles.parentStyle}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('UpdateProfileScreen.state')}
-                required
-                validate={Validation.State}
-                options={STATES_DROPDOWN}
-                onValid={this.updateValid}
-                onInvalid={() => this.setValid(false)}
-                nextInput={this.postal}
+                onValueChange={() => {
+                  this.updateValid();
+                }}
               />
               <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateProfileScreen.zipcode')}

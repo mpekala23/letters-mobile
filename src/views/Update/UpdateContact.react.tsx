@@ -6,7 +6,14 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
+import {
+  Button,
+  Input,
+  PicUpload,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -49,7 +56,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private facilityCity = createRef<Input>();
 
-  private facilityState = createRef<Input>();
+  private facilityStatePicker = createRef<PickerRef>();
 
   private facilityPostal = createRef<Input>();
 
@@ -137,7 +144,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
-      this.facilityState.current &&
+      this.facilityStatePicker.current &&
       this.facilityPostal.current &&
       this.facilityPhone.current &&
       this.props.contact.facility
@@ -147,7 +154,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         type: this.props.contact.facility.type,
         address: this.facilityAddress.current.state.value,
         city: this.facilityCity.current.state.value,
-        state: this.facilityState.current.state.value,
+        state: this.facilityStatePicker.current.value,
         postal: this.facilityPostal.current.state.value,
         phone: this.facilityPhone.current.state.value,
       };
@@ -179,7 +186,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
-      this.facilityState.current &&
+      this.facilityStatePicker.current &&
       this.facilityPostal.current &&
       this.facilityPhone.current &&
       this.unit.current &&
@@ -191,7 +198,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
       this.facilityCity.current.set(this.props.contact.facility.city);
-      this.facilityState.current.set(this.props.contact.facility.state);
+      this.facilityStatePicker.current.setStoredValue(
+        this.props.contact.facility.state
+      );
       this.facilityPostal.current.set(this.props.contact.facility.postal);
       this.facilityPhone.current.set(
         this.props.contact.facility.phone
@@ -281,15 +290,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                   segmentErrorLogEvent="Edit Contact - Upload Image Error"
                 />
               </View>
-              <Text
-                style={[
-                  Typography.FONT_SEMIBOLD,
-                  {
-                    fontSize: 14,
-                    paddingBottom: 4,
-                  },
-                ]}
-              >
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateContactScreen.firstName')}
               </Text>
               <Input
@@ -347,22 +348,15 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateContactScreen.facilityState')}
               </Text>
-              <Input
-                ref={this.facilityState}
+              <Picker
+                ref={this.facilityStatePicker}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('UpdateContactScreen.facilityState')}
-                required
-                validate={Validation.State}
-                options={STATES_DROPDOWN}
-                onValid={this.updateValid}
-                onInvalid={() => this.setValid(false)}
+                onValueChange={() => {
+                  this.updateValid();
+                }}
               />
-              <Text
-                style={[
-                  Typography.FONT_SEMIBOLD,
-                  Styles.baseText,
-                  { paddingTop: 12 },
-                ]}
-              >
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
                 {i18n.t('UpdateContactScreen.facilityPostal')}
               </Text>
               <Input
