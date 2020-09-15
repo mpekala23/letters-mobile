@@ -9,7 +9,7 @@ import {
 import { Image } from 'types';
 import Loading from '@assets/common/loading.gif';
 import Warning from '@assets/common/Warning.png';
-import { sleep } from '@utils';
+import { getImageDims, sleep } from '@utils';
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -23,6 +23,7 @@ interface Props {
   download?: boolean;
   accessibilityLabel?: string;
   onLoad?: () => void;
+  autorotate?: boolean;
 }
 
 interface State {
@@ -30,6 +31,10 @@ interface State {
   timedOut: boolean;
   loadOpacity: Animated.Value;
   imgURI?: string;
+  viewWidth: number;
+  viewHeight: number;
+  imageWidth: number;
+  imageHeight: number;
 }
 
 class AsyncImage extends React.Component<Props, State> {
@@ -39,6 +44,7 @@ class AsyncImage extends React.Component<Props, State> {
     loadingSize: 30,
     timeout: 10000,
     download: false,
+    autorotate: true,
   };
 
   constructor(props: Props) {
@@ -48,6 +54,10 @@ class AsyncImage extends React.Component<Props, State> {
       timedOut: false,
       imgURI: undefined,
       loadOpacity: new Animated.Value(0.3),
+      viewWidth: 200,
+      viewHeight: 200,
+      imageWidth: 200,
+      imageHeight: 200,
     };
     this.loadImage = this.loadImage.bind(this);
   }
@@ -79,6 +89,14 @@ class AsyncImage extends React.Component<Props, State> {
 
   loadFinished(imgURI: string): void {
     if (this.props.onLoad) this.props.onLoad();
+    getImageDims(imgURI)
+      .then(({ width, height }) => {
+        this.setState({
+          imageWidth: width,
+          imageHeight: height,
+        });
+      })
+      .catch(() => null);
     this.setState({
       loaded: true,
       timedOut: false,
@@ -127,6 +145,58 @@ class AsyncImage extends React.Component<Props, State> {
 
   render(): JSX.Element {
     let asyncFeedback: JSX.Element = <View />;
+    const viewIsHorizontal = this.state.viewWidth >= this.state.viewHeight;
+    const imageIsHorizontal = this.state.imageWidth >= this.state.imageHeight;
+
+    let renderedImage: JSX.Element;
+    if (
+      (viewIsHorizontal && imageIsHorizontal) ||
+      (!viewIsHorizontal && !imageIsHorizontal) ||
+      !this.props.autorotate
+    ) {
+      renderedImage = (
+        <Animated.Image
+          source={{
+            uri: this.state.imgURI,
+          }}
+          style={[
+            this.props.imageStyle,
+            {
+              width: this.state.viewWidth,
+              height: this.state.viewHeight,
+              opacity: this.state.loadOpacity,
+            },
+          ]}
+          loadingIndicatorSource={Loading}
+        />
+      );
+    } else {
+      renderedImage = (
+        <View
+          style={{
+            width: this.state.viewHeight,
+            height: this.state.viewWidth,
+            transform: [{ rotateZ: '270deg' }],
+          }}
+        >
+          <Animated.Image
+            source={{
+              uri: this.state.imgURI,
+            }}
+            style={[
+              this.props.imageStyle,
+              {
+                width: '100%',
+                height: '100%',
+                opacity: this.state.loadOpacity,
+              },
+            ]}
+            loadingIndicatorSource={Loading}
+          />
+        </View>
+      );
+    }
+
     if (!this.state.loaded) {
       // the image is still loading / timed out
       if (!this.state.timedOut) {
@@ -187,18 +257,25 @@ class AsyncImage extends React.Component<Props, State> {
     }
     return (
       <View
-        style={this.props.viewStyle}
+        style={[
+          {
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+          },
+          this.props.viewStyle,
+        ]}
         accessibilityLabel={this.props.accessibilityLabel}
+        onLayout={(e: {
+          nativeEvent: { layout: { width: number; height: number } };
+        }) => {
+          this.setState({
+            viewWidth: e.nativeEvent.layout.width,
+            viewHeight: e.nativeEvent.layout.height,
+          });
+        }}
       >
-        {this.props.source.uri && this.state.imgURI && (
-          <Animated.Image
-            source={{
-              uri: this.state.imgURI,
-            }}
-            style={[this.props.imageStyle, { opacity: this.state.loadOpacity }]}
-            loadingIndicatorSource={Loading}
-          />
-        )}
+        {!!this.props.source.uri && !!this.state.imgURI && renderedImage}
         {asyncFeedback}
       </View>
     );

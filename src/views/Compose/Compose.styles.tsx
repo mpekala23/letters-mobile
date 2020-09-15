@@ -7,6 +7,7 @@ export const DESIGN_BUTTONS_HEIGHT = 208;
 export default StyleSheet.create({
   screenBackground: {
     flex: 1,
+    paddingHorizontal: 16,
     flexDirection: 'column',
     backgroundColor: 'white',
   },

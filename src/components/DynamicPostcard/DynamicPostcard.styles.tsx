@@ -7,6 +7,14 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'rgb(221,221,221)',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   writingBackground: {
     flexDirection: 'row',

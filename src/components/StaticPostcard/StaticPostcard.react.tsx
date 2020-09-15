@@ -13,7 +13,6 @@ interface Props {
   front: boolean;
   composing: Draft;
   recipient: Contact;
-  horizontal?: boolean;
 }
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
@@ -43,9 +42,8 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
         >
           <AsyncImage
             viewStyle={{
-              width: props.horizontal ? width : height,
-              height: props.horizontal ? height : width,
-              transform: [{ rotateZ: props.horizontal ? '0deg' : '270deg' }],
+              width,
+              height,
             }}
             source={
               props.composing.design.thumbnail
@@ -105,10 +103,6 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
       )}
     </View>
   );
-};
-
-StaticPostcard.defaultProps = {
-  horizontal: true,
 };
 
 export default StaticPostcard;

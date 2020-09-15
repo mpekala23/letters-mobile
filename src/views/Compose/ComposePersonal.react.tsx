@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   View,
@@ -14,8 +14,6 @@ import {
   KeyboardAvoider,
   Button,
   PostcardTools,
-  Input,
-  EditablePostcard,
   Icon,
   DynamicPostcard,
 } from '@components';
@@ -24,6 +22,7 @@ import {
   setBackOverride,
   setProfileOverride,
 } from '@components/Topbar/Topbar.react';
+import { BAR_HEIGHT } from '@components/Topbar/Topbar.styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -31,20 +30,27 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
-import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
-import { string } from 'prop-types';
-import { WINDOW_WIDTH, takeImage, capitalize, WINDOW_HEIGHT } from '@utils';
+import {
+  WINDOW_WIDTH,
+  takeImage,
+  capitalize,
+  WINDOW_HEIGHT,
+  STATUS_BAR_HEIGHT,
+  sleep,
+} from '@utils';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
 const SLIDE_DURATION = 300;
+const POSTCARD_HEIGHT = WINDOW_HEIGHT - BOTTOM_HEIGHT - BAR_HEIGHT - 32;
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -69,12 +75,14 @@ interface State {
     commonLayout: Layout;
     design: PostcardDesign;
     flip: Animated.Value;
+    animatingFlip: boolean;
     horizontal: boolean;
     mediaGranted: boolean;
     endCursor: string;
     hasNextPage: boolean;
     library: PostcardDesign[];
     activePosition: number;
+    snapshot: Image | null;
   };
   textState: {
     charsLeft: number;
@@ -92,6 +100,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   private unsubscribeKeyboardClose: EmitterSubscription;
 
+  private postcardRef = createRef<DynamicPostcard>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -103,12 +113,14 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         commonLayout: { ...COMMON_LAYOUT },
         design: { image: { uri: '' } },
         flip: new Animated.Value(0),
+        animatingFlip: false,
         horizontal: true,
         mediaGranted: true,
         endCursor: '',
         hasNextPage: true,
         library: [],
         activePosition: 1,
+        snapshot: null,
       },
       textState: {
         charsLeft: 300,
@@ -124,6 +136,9 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.openBottom = this.openBottom.bind(this);
     this.closeBottom = this.closeBottom.bind(this);
     this.loadMoreImages = this.loadMoreImages.bind(this);
+    this.startWriting = this.startWriting.bind(this);
+    this.backWriting = this.backWriting.bind(this);
+    this.doneWriting = this.doneWriting.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
@@ -143,8 +158,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     );
   }
 
-  componentDidMount() {}
-
   componentWillUnmount() {
     this.unsubscribeFocus();
     this.unsubscribeBlur();
@@ -153,36 +166,50 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   async onNavigationFocus() {
-    let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
-    if (finalStatus !== 'granted') {
-      finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
+    if (!this.state.designState.library.length) {
+      let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
+      if (finalStatus !== 'granted') {
+        finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
+      }
+      this.setDesignState({ mediaGranted: finalStatus === 'granted' });
+      if (finalStatus === 'granted') {
+        const {
+          assets,
+          hasNextPage,
+          endCursor,
+        } = await MediaLibrary.getAssetsAsync({
+          sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+        });
+        const library = assets.map((value) => {
+          const image: Image = {
+            uri: value.uri,
+            width: value.width,
+            height: value.height,
+          };
+          const design: PostcardDesign = {
+            image,
+            custom: true,
+          };
+          return design;
+        });
+        this.setDesignState({ library, hasNextPage, endCursor });
+      }
     }
-    this.setDesignState({ mediaGranted: finalStatus === 'granted' });
-    if (finalStatus === 'granted') {
-      const {
-        assets,
-        hasNextPage,
-        endCursor,
-      } = await MediaLibrary.getAssetsAsync({
-        sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+    if (this.state.subscreen === 'Text') {
+      setBackOverride({
+        action: this.backWriting,
       });
-      const library = assets.map((value) => {
-        const image: Image = {
-          uri: value.uri,
-          width: value.width,
-          height: value.height,
-        };
-        const design: PostcardDesign = {
-          image,
-          custom: true,
-        };
-        return design;
+      setProfileOverride({
+        enabled: true,
+        text: i18n.t('Compose.done'),
+        action: this.doneWriting,
       });
-      this.setDesignState({ library, hasNextPage, endCursor });
     }
   }
 
-  onNavigationBlur() {}
+  onNavigationBlur = () => {
+    setBackOverride(undefined);
+  };
 
   onKeyboardOpen(): void {
     Animated.timing(this.state.textState.keyboardOpacity, {
@@ -207,12 +234,14 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     commonLayout?: Layout;
     design?: PostcardDesign;
     flip?: Animated.Value;
+    animatingFlip?: boolean;
     horizontal?: boolean;
     mediaGranted?: boolean;
     endCursor?: string;
     hasNextPage?: boolean;
     library?: PostcardDesign[];
     activePosition?: number;
+    snapshot?: Image | null;
   }) {
     this.setState((prevState) => ({
       ...prevState,
@@ -286,35 +315,118 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     });
   }
 
+  designsAreFilled(): boolean {
+    const { layout } = this.state.designState;
+    const keys = Object.keys(layout.designs);
+    let filled = true;
+    keys.forEach((key) => {
+      if (!layout.designs[parseInt(key, 10)]) filled = false;
+    });
+    return filled;
+  }
+
+  startWriting() {
+    if (!this.designsAreFilled()) {
+      popupAlert({
+        title: i18n.t('Alert.imagesNotFilled'),
+        message: i18n.t('Alert.fillAllImages'),
+        buttons: [
+          {
+            text: i18n.t('Alert.okay'),
+          },
+        ],
+      });
+      return;
+    }
+    this.setDesignState({ animatingFlip: true });
+    Animated.timing(this.state.designState.flip, {
+      toValue: 1,
+      duration: FLIP_DURATION,
+      useNativeDriver: false,
+    }).start(() => {
+      this.setState({ subscreen: 'Text' });
+      this.setDesignState({ animatingFlip: false });
+      if (this.postcardRef.current) {
+        this.postcardRef.current.focus();
+      }
+    });
+    setBackOverride({
+      action: this.backWriting,
+    });
+    setProfileOverride({
+      enabled: true,
+      text: i18n.t('Compose.done'),
+      action: this.doneWriting,
+    });
+  }
+
+  backWriting() {
+    Animated.timing(this.state.designState.flip, {
+      toValue: 0,
+      duration: FLIP_DURATION,
+      useNativeDriver: false,
+    }).start(() => {
+      this.setState({ subscreen: 'Design' });
+      this.setDesignState({ animatingFlip: false });
+    });
+    sleep(1).then(() => {
+      this.setDesignState({ animatingFlip: true });
+    });
+    setBackOverride(undefined);
+    setProfileOverride(undefined);
+  }
+
+  doneWriting(): void {
+    if (!this.props.composing.content.length) {
+      Segment.trackWithProperties('Compose - Click on Next Failure', {
+        type: 'postcard',
+        Error: 'Letter must have content',
+      });
+      popupAlert({
+        title: i18n.t('Compose.letterMustHaveContent'),
+        buttons: [{ text: i18n.t('Alert.okay') }],
+      });
+      return;
+    }
+    this.props.navigation.navigate(Screens.ReviewPostcard, {
+      category: 'New personal compose',
+    });
+  }
+
   renderDesignButtons = (): JSX.Element => {
+    const middle =
+      !this.state.designState.animatingFlip &&
+      this.state.subscreen !== 'Design' ? (
+        <View />
+      ) : (
+        <>
+          <PostcardTools
+            onAddLayout={() => this.openBottom('layout')}
+            onAddPhoto={() => this.openBottom('design')}
+            onAddStickers={() => null}
+            style={{ paddingBottom: 16 }}
+          />
+          <Button
+            onPress={this.startWriting}
+            buttonText={i18n.t('Compose.next')}
+          />
+        </>
+      );
     return (
       <Animated.View
         style={[
           Styles.designButtons,
           {
-            bottom: this.state.textState.keyboardOpacity.interpolate({
+            opacity: this.state.designState.flip.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, -DESIGN_BUTTONS_HEIGHT],
+              outputRange: [1, 0],
             }),
+            overflow: 'hidden',
+            bottom: 0,
           },
         ]}
       >
-        <PostcardTools
-          onAddLayout={() => this.openBottom('layout')}
-          onAddPhoto={() => this.openBottom('design')}
-          onAddStickers={() => null}
-          style={{ paddingBottom: 16 }}
-        />
-        <Button
-          onPress={() => {
-            Animated.timing(this.state.designState.flip, {
-              toValue: 1,
-              duration: FLIP_DURATION,
-              useNativeDriver: false,
-            }).start();
-          }}
-          buttonText={i18n.t('Compose.next')}
-        />
+        {middle}
       </Animated.View>
     );
   };
@@ -388,8 +500,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           const layout = { ...this.state.designState.layout };
           const commonLayout = { ...this.state.designState.layout };
           const { activePosition } = this.state.designState;
-          layout.positions[activePosition] = design;
-          commonLayout.positions[activePosition] = design;
+          layout.designs[activePosition] = design;
+          commonLayout.designs[activePosition] = design;
           this.setDesignState({
             layout,
             commonLayout,
@@ -399,6 +511,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         <AsyncImage
           source={design.thumbnail ? design.thumbnail : design.image}
           imageStyle={{ flex: 1, aspectRatio: 1 }}
+          autorotate={false}
         />
       </TouchableOpacity>
     );
@@ -413,16 +526,16 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           margin: 4,
         }}
         onPress={() => {
-          const keys = Object.keys(layout.positions);
+          const keys = Object.keys(layout.designs);
           const oldLayout = this.state.designState.layout;
           const { commonLayout } = this.state.designState;
           const newLayout = { ...layout };
           keys.forEach((key) => {
             const nKey = parseInt(key, 10);
-            if (oldLayout.positions.hasOwnProperty(nKey)) {
-              newLayout.positions[nKey] = oldLayout.positions[nKey];
+            if (Object.prototype.hasOwnProperty.call(oldLayout.designs, nKey)) {
+              newLayout.designs[nKey] = oldLayout.designs[nKey];
             } else {
-              newLayout.positions[nKey] = commonLayout.positions[nKey];
+              newLayout.designs[nKey] = commonLayout.designs[nKey];
             }
           });
           this.setDesignState({ layout });
@@ -533,15 +646,50 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           onPress={Keyboard.dismiss}
         >
           <KeyboardAvoider>
-            <View
+            <Animated.View
               style={{
                 flex: 1,
-                paddingBottom: DESIGN_BUTTONS_HEIGHT,
-                justifyContent: 'center',
+                paddingTop:
+                  this.state.subscreen === 'Design'
+                    ? this.state.designState.bottomSlide.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [
+                          (WINDOW_HEIGHT -
+                            DESIGN_BUTTONS_HEIGHT -
+                            BAR_HEIGHT -
+                            POSTCARD_HEIGHT -
+                            STATUS_BAR_HEIGHT) /
+                            2,
+                          (WINDOW_HEIGHT -
+                            BOTTOM_HEIGHT -
+                            POSTCARD_HEIGHT -
+                            BAR_HEIGHT -
+                            STATUS_BAR_HEIGHT) /
+                            2,
+                        ],
+                      })
+                    : this.state.textState.keyboardOpacity.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [
+                          (WINDOW_HEIGHT -
+                            DESIGN_BUTTONS_HEIGHT -
+                            BAR_HEIGHT -
+                            POSTCARD_HEIGHT -
+                            STATUS_BAR_HEIGHT) /
+                            2,
+                          (WINDOW_HEIGHT * 0.65 -
+                            STATUS_BAR_HEIGHT -
+                            BAR_HEIGHT -
+                            POSTCARD_HEIGHT) /
+                            2,
+                        ],
+                      }),
+                justifyContent: 'flex-start',
                 alignItems: 'center',
               }}
             >
               <DynamicPostcard
+                ref={this.postcardRef}
                 layout={this.state.designState.layout}
                 activePosition={this.state.designState.activePosition}
                 highlightActive={
@@ -553,10 +701,21 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   this.openBottom('design');
                 }}
                 flip={this.state.designState.flip}
-                onChangeText={() => null}
+                onChangeText={(text) => {
+                  this.props.setContent(text);
+                }}
                 recipient={this.props.recipient}
                 width={WINDOW_WIDTH - 32}
-                height={WINDOW_HEIGHT * 0.35}
+                height={POSTCARD_HEIGHT}
+                updateSnapshot={(snapshot) => {
+                  this.setDesignState({ snapshot });
+                  if (snapshot) {
+                    this.props.setDesign({
+                      image: snapshot,
+                      custom: true,
+                    });
+                  }
+                }}
               />
               <Animated.View
                 style={{
@@ -567,7 +726,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   }),
                 }}
               />
-            </View>
+            </Animated.View>
           </KeyboardAvoider>
           {this.renderDesignButtons()}
           {this.renderBottom()}

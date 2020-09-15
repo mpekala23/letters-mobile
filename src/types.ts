@@ -54,7 +54,7 @@ export interface Category {
 
 export interface Layout {
   id: number;
-  positions: Record<number, PostcardDesign | undefined>;
+  designs: Record<number, PostcardDesign | null>;
   svg: string;
 }
 

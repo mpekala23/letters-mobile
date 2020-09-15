@@ -1,20 +1,21 @@
 import React, { createRef } from 'react';
-import {
-  View,
-  Animated,
-  Text,
-  TouchableOpacity,
-  Image as ImageComponent,
-} from 'react-native';
-import { Contact, Layout } from 'types';
+import { View, Animated, TouchableOpacity, PixelRatio } from 'react-native';
+import { Contact, Image, Layout } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
-import { Typography, Colors } from '@styles';
+import { Colors } from '@styles';
 import AddImage from '@assets/components/DynamicPostcard/AddImage';
+import { captureRef } from 'react-native-view-shot';
+import { sleep } from '@utils';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './DynamicPostcard.styles';
 import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
+
+const pixelRatio = PixelRatio.get();
+const pixelWidth = 1800 / pixelRatio;
+const pixelHeight = 1200 / pixelRatio;
 
 interface Props {
   layout: Layout;
@@ -28,15 +29,24 @@ interface Props {
   onImageAdd: (position: number) => void;
   activePosition: number;
   highlightActive: boolean;
+  updateSnapshot: (snapshot: Image | null) => void;
 }
 
 class DynamicPostcard extends React.Component<Props> {
   private inputRef = createRef<Input>();
 
+  private viewShotRef = createRef<View>();
+
   constructor(props: Props) {
     super(props);
     this.focus = this.focus.bind(this);
     this.set = this.set.bind(this);
+  }
+
+  componentDidUpdate(prevProps: Props): void {
+    if (prevProps.layout !== this.props.layout) {
+      this.updateSnapshot();
+    }
   }
 
   focus(): void {
@@ -47,12 +57,22 @@ class DynamicPostcard extends React.Component<Props> {
     if (this.inputRef.current) this.inputRef.current.set(value);
   }
 
-  renderImage(position: number): JSX.Element {
-    const design = this.props.layout.positions[position];
+  async updateSnapshot(): Promise<void> {
+    await sleep(500);
+    const result = await captureRef(this.viewShotRef, {
+      format: 'png',
+      width: pixelWidth,
+      height: pixelHeight,
+    });
+    this.props.updateSnapshot({ uri: result });
+  }
+
+  renderImage(position: number, border = true): JSX.Element {
+    const design = this.props.layout.designs[position];
     return (
       <TouchableOpacity
         style={{
-          flex: 1,
+          height: '100%',
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
@@ -63,16 +83,16 @@ class DynamicPostcard extends React.Component<Props> {
             this.props.highlightActive
               ? Colors.BLUE_300
               : 'transparent',
-          borderWidth: 2,
-          borderRadius: 2,
+          borderWidth: border ? 2 : 0,
+          borderRadius: border ? 2 : 0,
         }}
         onPress={() => this.props.onImageAdd(position)}
       >
         {!design ? (
           <Icon svg={AddImage} />
         ) : (
-          <ImageComponent
-            style={{ width: '100%', height: '100%' }}
+          <AsyncImage
+            viewStyle={{ width: '100%', height: '100%' }}
             source={design.image}
           />
         )}
@@ -81,8 +101,9 @@ class DynamicPostcard extends React.Component<Props> {
   }
 
   renderImages(): JSX.Element {
+    const PADDING = 4;
     if (this.props.layout.id === 1) {
-      return this.renderImage(1);
+      return this.renderImage(1, false);
     }
     if (this.props.layout.id === 2) {
       return (
@@ -93,10 +114,12 @@ class DynamicPostcard extends React.Component<Props> {
             flexDirection: 'row',
           }}
         >
-          <View style={{ flex: 1, padding: 8, paddingRight: 4 }}>
+          <View
+            style={{ flex: 1, padding: PADDING, paddingRight: PADDING / 2 }}
+          >
             {this.renderImage(1)}
           </View>
-          <View style={{ flex: 1, padding: 8, paddingLeft: 4 }}>
+          <View style={{ flex: 1, padding: PADDING, paddingLeft: PADDING / 2 }}>
             {this.renderImage(2)}
           </View>
         </View>
@@ -111,21 +134,23 @@ class DynamicPostcard extends React.Component<Props> {
             flexDirection: 'row',
           }}
         >
-          <View style={{ flex: 1, padding: 8, paddingRight: 4 }}>
+          <View
+            style={{ flex: 1, padding: PADDING, paddingRight: PADDING / 2 }}
+          >
             {this.renderImage(1)}
           </View>
           <View
             style={{
               flex: 1,
-              padding: 10,
-              paddingLeft: 5,
+              padding: PADDING,
+              paddingLeft: PADDING / 2,
               flexDirection: 'column',
             }}
           >
-            <View style={{ flex: 1, paddingBottom: 4 }}>
+            <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
               {this.renderImage(2)}
             </View>
-            <View style={{ flex: 1, paddingTop: 4 }}>
+            <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
               {this.renderImage(3)}
             </View>
           </View>
@@ -143,28 +168,32 @@ class DynamicPostcard extends React.Component<Props> {
         <View
           style={{
             flex: 1,
-            padding: 8,
-            paddingRight: 4,
+            padding: PADDING,
+            paddingRight: PADDING / 2,
             flexDirection: 'column',
           }}
         >
-          <View style={{ flex: 1, paddingBottom: 4 }}>
+          <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
             {this.renderImage(1)}
           </View>
-          <View style={{ flex: 1, paddingTop: 4 }}>{this.renderImage(3)}</View>
+          <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
+            {this.renderImage(3)}
+          </View>
         </View>
         <View
           style={{
             flex: 1,
-            padding: 8,
-            paddingLeft: 4,
+            padding: PADDING,
+            paddingLeft: PADDING / 2,
             flexDirection: 'column',
           }}
         >
-          <View style={{ flex: 1, paddingBottom: 4 }}>
+          <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
             {this.renderImage(2)}
           </View>
-          <View style={{ flex: 1, paddingTop: 4 }}>{this.renderImage(4)}</View>
+          <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
+            {this.renderImage(4)}
+          </View>
         </View>
       </View>
     );
@@ -194,9 +223,9 @@ class DynamicPostcard extends React.Component<Props> {
         <Animated.View
           style={[
             {
+              position: 'absolute',
               width: '100%',
               height: '100%',
-              position: 'absolute',
               backgroundColor: 'rgba(0,0,0,0.05)',
               opacity: this.props.flip
                 ? this.props.flip.interpolate({
@@ -237,7 +266,12 @@ class DynamicPostcard extends React.Component<Props> {
           style={{
             position: 'absolute',
             width: '100%',
-            height: '100%',
+            height: this.props.flip
+              ? this.props.flip.interpolate({
+                  inputRange: [0, 0.9999999, 1],
+                  outputRange: ['100%', '100%', '0%'],
+                })
+              : '100%',
             opacity: this.props.flip
               ? this.props.flip.interpolate({
                   inputRange: [0, 0.4999, 0.5, 1],
@@ -248,7 +282,21 @@ class DynamicPostcard extends React.Component<Props> {
             alignItems: 'center',
           }}
         >
-          {this.renderImages()}
+          <View
+            ref={this.viewShotRef}
+            collapsable={false}
+            style={{
+              position: 'absolute',
+              width: pixelWidth,
+              height: pixelHeight,
+              opacity: 0,
+            }}
+          >
+            {this.renderImages()}
+          </View>
+          <View collapsable={false} style={{ width: '100%', height: '100%' }}>
+            {this.renderImages()}
+          </View>
         </Animated.View>
       </Animated.View>
     );

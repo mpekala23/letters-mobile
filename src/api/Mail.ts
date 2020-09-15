@@ -17,7 +17,7 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays } from 'date-fns';
-import { estimateDelivery } from '@utils';
+import { estimateDelivery, getImageDims } from '@utils';
 
 import { Image as ImageComponent } from 'react-native';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
@@ -406,19 +406,6 @@ async function cleanDesign(
   categoryId?: number,
   subcategoryName?: string
 ): Promise<PostcardDesign> {
-  const getImageDims = (
-    uri: string
-  ): Promise<{ width: number; height: number }> => {
-    return new Promise((res, rej) => {
-      ImageComponent.getSize(
-        uri,
-        (width, height) => {
-          res({ width, height });
-        },
-        rej
-      );
-    });
-  };
   try {
     const imageDims = await getImageDims(raw.front_img_src);
     const thumbnailDims = await getImageDims(raw.thumbnail_src);

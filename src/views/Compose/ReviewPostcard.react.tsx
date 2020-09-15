@@ -171,7 +171,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             front
             composing={this.props.composing}
             recipient={this.props.recipient}
-            horizontal={this.props.route.params.horizontal}
           />
         </View>
         <View style={Styles.gridPreviewBackground}>

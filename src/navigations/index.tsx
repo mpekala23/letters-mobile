@@ -220,10 +220,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     screens = (
       <>
         <Stack.Screen
-          name={Screens.ComposePersonal}
-          component={ComposePersonalScreen}
-        />
-        <Stack.Screen
           name={Screens.ContactSelector}
           component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
@@ -239,6 +235,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ComposeLetter}
           component={ComposeLetterScreen}
+        />
+        <Stack.Screen
+          name={Screens.ComposePersonal}
+          component={ComposePersonalScreen}
         />
         <Stack.Screen
           name={Screens.ComposePostcard}
