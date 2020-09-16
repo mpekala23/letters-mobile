@@ -22,12 +22,14 @@ const initialState: MailState = {
     type: MailTypes.Letter,
     recipientId: -1,
     content: '',
+    images: [],
   },
   active: {
     id: -1,
     type: MailTypes.Letter,
     recipientId: -1,
     content: '',
+    images: [],
     status: MailStatus.Created,
     dateCreated: new Date(),
     expectedDelivery: new Date(),
@@ -64,6 +66,7 @@ export default function LetterReducer(
         type: MailTypes.Letter,
         recipientId: -1,
         content: '',
+        images: [],
       };
       return currentState;
     case ADD_MAIL:

@@ -43,7 +43,7 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         <Text style={[Typography.FONT_REGULAR, Styles.letterText]}>
           {mail.content}
         </Text>
-        {mail.type === MailTypes.Letter && mail.images && (
+        {mail.type === MailTypes.Letter && (
           <DisplayImage images={mail.images} />
         )}
         {mail.type === MailTypes.Postcard && (
@@ -62,6 +62,7 @@ const blankMail: Mail = {
   dateCreated: new Date(),
   expectedDelivery: new Date(),
   content: '',
+  images: [],
 };
 
 const mapStateToProps = (state: AppState) => ({

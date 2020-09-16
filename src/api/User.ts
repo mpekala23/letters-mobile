@@ -78,6 +78,7 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftType);
   await deleteItemAsync(Storage.DraftContent);
   await deleteItemAsync(Storage.DraftRecipientId);
+  await deleteItemAsync(Storage.DraftImages);
   await deleteItemAsync(Storage.DraftDesignUri);
   await deleteItemAsync(Storage.DraftCategoryId);
   await deleteItemAsync(Storage.DraftSubcategoryName);
@@ -88,7 +89,9 @@ export async function saveDraft(draft: Draft): Promise<void> {
   await setItemAsync(Storage.DraftType, draft.type);
   await setItemAsync(Storage.DraftContent, draft.content);
   await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
-  if (
+  if (draft.type === MailTypes.Letter) {
+    await setItemAsync(Storage.DraftImages, JSON.stringify(draft.images));
+  } else if (
     draft.type === MailTypes.Postcard &&
     draft.design.image.uri &&
     draft.design.categoryId &&
@@ -117,10 +120,12 @@ export async function loadDraft(): Promise<Draft> {
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
     if (!draftType || !draftRecipientId) throw Error('No draft saved');
     if (draftType === MailTypes.Letter) {
+      const draftImages = await getItemAsync(Storage.DraftImages);
       const draft: Draft = {
         type: MailTypes.Letter,
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
+        images: draftImages ? JSON.parse(draftImages) : [],
       };
       store.dispatch(setComposing(draft));
       return draft;
@@ -154,6 +159,7 @@ export async function loadDraft(): Promise<Draft> {
       type: MailTypes.Letter,
       recipientId: -1,
       content: '',
+      images: [],
     };
     store.dispatch(setComposing(draft));
     return draft;
@@ -163,6 +169,7 @@ export async function loadDraft(): Promise<Draft> {
       type: MailTypes.Letter,
       recipientId: -1,
       content: '',
+      images: [],
     };
     store.dispatch(setComposing(draft));
     return draft;

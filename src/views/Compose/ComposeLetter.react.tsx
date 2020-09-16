@@ -199,6 +199,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       }),
       () => {
         this.props.setImages(this.state.images);
+        saveDraft(this.props.composing);
       }
     );
     Keyboard.dismiss();

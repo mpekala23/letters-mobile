@@ -139,9 +139,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            {this.props.composing.images && (
-              <DisplayImage images={this.props.composing.images} />
-            )}
+            <DisplayImage images={this.props.composing.images} />
           </ScrollView>
         </View>
         <Text

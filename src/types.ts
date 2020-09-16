@@ -24,7 +24,7 @@ export interface PostcardDesign {
 
 interface LetterSpecific {
   type: MailTypes.Letter;
-  images?: Image[]; // TODO make not optional
+  images: Image[];
 }
 
 interface PostcardSpecific {
@@ -171,6 +171,7 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftImages = 'Ameelio-DraftImages',
   DraftCategoryId = 'Ameelio-DraftCategoryId',
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',

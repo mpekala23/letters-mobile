@@ -278,7 +278,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     Type:
                       this.props.composing.content.length ||
                       (this.props.composing.type === MailTypes.Letter &&
-                        this.props.composing.images?.length) ||
+                        this.props.composing.images.length) ||
                       this.props.composing.type === MailTypes.Postcard
                         ? 'draft'
                         : 'blank',
@@ -287,7 +287,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 if (
                   this.props.composing.content.length ||
                   (this.props.composing.type === MailTypes.Letter &&
-                    this.props.composing.images?.length) ||
+                    this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
                     this.props.composing.design.image.uri.length)
                 ) {
@@ -368,6 +368,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                             type: MailTypes.Letter,
                             recipientId: this.props.activeContact.id,
                             content: '',
+                            images: [],
                           });
                           this.props.navigation.navigate(
                             Screens.ChooseCategory
@@ -382,6 +383,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     type: MailTypes.Letter,
                     recipientId: this.props.activeContact.id,
                     content: '',
+                    images: [],
                   });
                   this.props.navigation.navigate(Screens.ChooseCategory);
                 }

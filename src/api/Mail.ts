@@ -102,7 +102,7 @@ export function mapTrackingEventsToMailStatus(
 async function cleanMail(mail: RawMail): Promise<Mail> {
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  let images;
+  let images: Image[] = [];
   if (mail.images.length) {
     try {
       images = await Promise.all(
@@ -199,7 +199,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   }
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  let images;
+  let images: Image[] = [];
   if (mail.images.length) {
     try {
       images = await Promise.all(
@@ -351,7 +351,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
-  } else if (prepDraft.images && prepDraft.images.length) {
+  } else if (prepDraft.images.length) {
     try {
       const uris = await Promise.all(
         prepDraft.images.map(async (image) => {

@@ -343,7 +343,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>
-          {mail.type === MailTypes.Letter && mail.images?.length && (
+          {mail.type === MailTypes.Letter && (
             <DisplayImage images={mail.images} heightLetter={160} />
           )}
           {mail.type === MailTypes.Postcard && (
