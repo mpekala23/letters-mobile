@@ -11,6 +11,7 @@ import {
   MailStatus,
   Category,
   PostcardDesign,
+  Image,
 } from 'types';
 import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
@@ -101,21 +102,37 @@ export function mapTrackingEventsToMailStatus(
 async function cleanMail(mail: RawMail): Promise<Mail> {
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const images = mail.images.length
-    ? mail.images.map((rawImage) => ({ uri: rawImage.img_src }))
-    : undefined;
-  const design =
-    mail.images.length > 0
-      ? {
-          image: {
-            uri: mail.images[0].img_src,
-          },
-        }
-      : {
-          image: {
-            uri: '',
-          },
-        };
+  let images;
+  if (mail.images.length) {
+    try {
+      images = await Promise.all(
+        mail.images.map(async (rawImage) => {
+          const dimensions = await getImageDims(rawImage.img_src);
+          return {
+            uri: rawImage.img_src,
+            ...dimensions,
+          };
+        })
+      );
+    } catch {
+      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
+    }
+  }
+  let design = { image: { uri: '' } };
+  if (mail.images.length) {
+    try {
+      const dimensions = await getImageDims(mail.images[0].img_src);
+      design = {
+        image: {
+          uri: mail.images[0].img_src,
+          ...dimensions,
+        },
+      };
+    } catch {
+      design = { image: { uri: mail.images[0].img_src } };
+    }
+  }
+
   const dateCreated = new Date(mail.created_at);
   let status: MailStatus;
   let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
@@ -182,22 +199,36 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   }
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const images = mail.images.length
-    ? mail.images.map((rawImage) => ({ uri: rawImage.img_src }))
-    : undefined;
-  const design =
-    mail.images.length > 0
-      ? {
-          image: {
-            uri: mail.images[0].img_src,
-          },
-          blurb: '',
-        }
-      : {
-          image: {
-            uri: '',
-          },
-        };
+  let images;
+  if (mail.images.length) {
+    try {
+      images = await Promise.all(
+        mail.images.map(async (rawImage) => {
+          const dimensions = await getImageDims(rawImage.img_src);
+          return {
+            uri: rawImage.img_src,
+            ...dimensions,
+          };
+        })
+      );
+    } catch {
+      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
+    }
+  }
+  let design = { image: { uri: '' } };
+  if (mail.images.length) {
+    try {
+      const dimensions = await getImageDims(mail.images[0].img_src);
+      design = {
+        image: {
+          uri: mail.images[0].img_src,
+          ...dimensions,
+        },
+      };
+    } catch {
+      design = { image: { uri: mail.images[0].img_src } };
+    }
+  }
   const dateCreated = new Date(mail.created_at);
   const lastLobUpdate = new Date(mail.last_lob_status_update);
 

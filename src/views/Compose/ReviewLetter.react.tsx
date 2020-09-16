@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import { GrayBar } from '@components';
+import { View, Text, ScrollView } from 'react-native';
+import { GrayBar, DisplayImage } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import Styles, { LETTER_REVIEW_IMAGE_HEIGHT } from './Compose.styles';
+import Styles from './Compose.styles';
 
 type ReviewLetterScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -139,27 +139,9 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {this.props.composing.images?.map((image) => {
-                const aspect =
-                  image && image.width && image.height
-                    ? image.width / image.height
-                    : 1;
-                return (
-                  <Image
-                    key={image.uri}
-                    source={image}
-                    style={{
-                      height: LETTER_REVIEW_IMAGE_HEIGHT,
-                      width: LETTER_REVIEW_IMAGE_HEIGHT * aspect,
-                      aspectRatio: aspect,
-                      borderRadius: 8,
-                      margin: 4,
-                    }}
-                  />
-                );
-              })}
-            </View>
+            {this.props.composing.images && (
+              <DisplayImage images={this.props.composing.images} />
+            )}
           </ScrollView>
         </View>
         <Text

@@ -28,7 +28,6 @@ import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import * as Segment from 'expo-analytics-segment';
 import { saveDraft } from '@api';
-import { Colors } from '@styles';
 import Styles, { LETTER_COMPOSE_IMAGE_HEIGHT } from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<

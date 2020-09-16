@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
 export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
-export const LETTER_REVIEW_IMAGE_HEIGHT = 225;
 
 export default StyleSheet.create({
   screenBackground: {
