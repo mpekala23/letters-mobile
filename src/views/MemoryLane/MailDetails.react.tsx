@@ -47,7 +47,11 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
           <DisplayImage images={mail.images} />
         )}
         {mail.type === MailTypes.Postcard && (
-          <DisplayImage images={[mail.design.image]} isPostcard />
+          <DisplayImage
+            images={[mail.design.image]}
+            isPostcard
+            paddingPostcard={5}
+          />
         )}
       </ScrollView>
     </View>

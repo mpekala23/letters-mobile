@@ -53,7 +53,7 @@ interface Props {
   setImages: (images: Image[]) => void;
 }
 
-const MAX_NUM_IMAGES = 4;
+const MAX_NUM_IMAGES = 2;
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
   private textRef = createRef<TextInput>();

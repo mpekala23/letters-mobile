@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
+import { Linking, Text, ScrollView, View, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import {
@@ -347,7 +347,11 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             <DisplayImage images={mail.images} heightLetter={160} />
           )}
           {mail.type === MailTypes.Postcard && (
-            <DisplayImage images={[mail.design.image]} isPostcard />
+            <DisplayImage
+              images={[mail.design.image]}
+              isPostcard
+              paddingPostcard={20}
+            />
           )}
           <View style={{ height: 40 }} />
         </View>

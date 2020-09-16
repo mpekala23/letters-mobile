@@ -7,6 +7,7 @@ export interface Props {
   images: Image[];
   isPostcard?: boolean;
   heightLetter?: number;
+  paddingPostcard?: number; // additional padding to decrease width
 }
 
 const getAspectRatio = (image: Image): number => {
@@ -14,21 +15,26 @@ const getAspectRatio = (image: Image): number => {
 };
 
 const DisplayImage: React.FC<Props> = (props: Props) => {
-  const { images, isPostcard, heightLetter } = props;
+  const { images, isPostcard, heightLetter, paddingPostcard } = props;
 
   if (!images.length) return null;
 
   if (isPostcard) {
     const aspectRatio = getAspectRatio(images[0]);
+    const padding = paddingPostcard ? 2 * paddingPostcard : 0;
     return (
       <ImageComponent
         style={[
           Styles.postcardImage,
           {
             height:
-              aspectRatio > 1 ? WIDTH_POSTCARD / aspectRatio : WIDTH_POSTCARD,
+              aspectRatio > 1
+                ? (WIDTH_POSTCARD - padding) / aspectRatio
+                : WIDTH_POSTCARD,
             width:
-              aspectRatio > 1 ? WIDTH_POSTCARD : WIDTH_POSTCARD * aspectRatio,
+              aspectRatio > 1
+                ? WIDTH_POSTCARD - padding
+                : WIDTH_POSTCARD * aspectRatio,
           },
         ]}
         source={images[0]}
@@ -44,10 +50,8 @@ const DisplayImage: React.FC<Props> = (props: Props) => {
           style={[
             Styles.letterImage,
             {
-              height: heightLetter,
-              width: heightLetter
-                ? heightLetter * getAspectRatio(image)
-                : heightLetter,
+              height: heightLetter || HEIGHT_LETTER,
+              width: (heightLetter || HEIGHT_LETTER) * getAspectRatio(image),
             },
           ]}
           source={image}
@@ -60,7 +64,6 @@ const DisplayImage: React.FC<Props> = (props: Props) => {
 DisplayImage.defaultProps = {
   images: [],
   isPostcard: false,
-  heightLetter: HEIGHT_LETTER,
 };
 
 export default DisplayImage;
