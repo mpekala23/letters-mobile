@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   ViewStyle,
   View,
-  Image as ImageComponent,
   Linking,
   Keyboard,
 } from 'react-native';
@@ -17,6 +16,7 @@ import Avatar from '@assets/components/ProfilePic/Avatar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Colors } from '@styles';
 import * as Segment from 'expo-analytics-segment';
+import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
@@ -70,6 +70,26 @@ class PicUpload extends React.Component<Props, State> {
     return this.state.image;
   };
 
+  // returns height, width
+  getDimensions = (result: ImageInfo): [number, number] => {
+    if (this.props.type === PicUploadTypes.Profile) {
+      const minDim = Math.min(result.width, result.height);
+      return [minDim, minDim];
+    }
+    if (
+      result.exif &&
+      result.exif.Orientation &&
+      result.exif.ImageLength &&
+      result.exif.ImageWidth
+    ) {
+      if (result.exif.Orientation > 4)
+        // image is rotated to be on its side
+        return [result.exif.ImageWidth, result.exif.ImageLength];
+      return [result.exif.ImageLength, result.exif.ImageWidth];
+    }
+    return [result.height, result.width];
+  };
+
   selectImage = async (): Promise<void> => {
     popupAlert({
       title: i18n.t('Compose.uploadAnImage'),
@@ -83,11 +103,12 @@ class PicUpload extends React.Component<Props, State> {
                 allowsEditing: this.props.allowsEditing,
               });
               if (result) {
+                const [height, width] = this.getDimensions(result);
                 const image = {
                   uri: result.uri,
                   type: 'image',
-                  width: result.width,
-                  height: result.height,
+                  width,
+                  height,
                 };
 
                 this.setState(
@@ -135,17 +156,12 @@ class PicUpload extends React.Component<Props, State> {
                 allowsEditing: this.props.allowsEditing,
               });
               if (result) {
+                const [height, width] = this.getDimensions(result);
                 const image = {
                   uri: result.uri,
                   type: 'image',
-                  width:
-                    this.props.type === PicUploadTypes.Profile
-                      ? Math.min(result.width, result.height)
-                      : result.width,
-                  height:
-                    this.props.type === PicUploadTypes.Profile
-                      ? Math.min(result.width, result.height)
-                      : result.height,
+                  width,
+                  height,
                 };
                 this.setState(
                   {
