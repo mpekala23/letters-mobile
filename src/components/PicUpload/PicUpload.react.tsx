@@ -41,6 +41,7 @@ export interface Props {
   segmentSuccessLog?: () => void;
   segmentErrorLogEvent?: string;
   avatarPlaceholder?: boolean;
+  maintainStateImage: boolean;
 }
 
 export interface State {
@@ -57,6 +58,7 @@ class PicUpload extends React.Component<Props, State> {
     allowsEditing: true,
     initial: null,
     avatarPlaceholder: false,
+    maintainStateImage: true,
   };
 
   constructor(props: Props) {
@@ -111,18 +113,24 @@ class PicUpload extends React.Component<Props, State> {
                   height,
                 };
 
-                this.setState(
-                  {
-                    image,
-                  },
-                  () => {
-                    if (this.props.onSuccess) {
-                      this.props.onSuccess(image);
-                      if (this.props.segmentSuccessLog)
-                        this.props.segmentSuccessLog();
+                if (this.props.maintainStateImage) {
+                  this.setState(
+                    {
+                      image,
+                    },
+                    () => {
+                      if (this.props.onSuccess) {
+                        this.props.onSuccess(image);
+                        if (this.props.segmentSuccessLog)
+                          this.props.segmentSuccessLog();
+                      }
                     }
-                  }
-                );
+                  );
+                } else if (this.props.onSuccess) {
+                  this.props.onSuccess(image);
+                  if (this.props.segmentSuccessLog)
+                    this.props.segmentSuccessLog();
+                }
               }
             } catch (err) {
               if (this.props.segmentErrorLogEvent)
@@ -163,18 +171,24 @@ class PicUpload extends React.Component<Props, State> {
                   width,
                   height,
                 };
-                this.setState(
-                  {
-                    image,
-                  },
-                  () => {
-                    if (this.props.onSuccess) {
-                      this.props.onSuccess(image);
-                      if (this.props.segmentSuccessLog)
-                        this.props.segmentSuccessLog();
+                if (this.props.maintainStateImage) {
+                  this.setState(
+                    {
+                      image,
+                    },
+                    () => {
+                      if (this.props.onSuccess) {
+                        this.props.onSuccess(image);
+                        if (this.props.segmentSuccessLog)
+                          this.props.segmentSuccessLog();
+                      }
                     }
-                  }
-                );
+                  );
+                } else if (this.props.onSuccess) {
+                  this.props.onSuccess(image);
+                  if (this.props.segmentSuccessLog)
+                    this.props.segmentSuccessLog();
+                }
               }
             } catch (err) {
               if (this.props.segmentErrorLogEvent)
@@ -267,6 +281,7 @@ class PicUpload extends React.Component<Props, State> {
             this.selectImage();
             if (this.props.segmentOnPressLog) this.props.segmentOnPressLog();
           }}
+          disabled={image && image.uri.slice(-4) !== '.svg'}
           testID="clickable"
         >
           {innerCircle}

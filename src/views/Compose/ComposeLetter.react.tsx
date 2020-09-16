@@ -6,10 +6,11 @@ import {
   Keyboard,
   Platform,
   EmitterSubscription,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import {
   ComposeHeader,
-  Input,
   ComposeTools,
   PicUpload,
   KeyboardAvoider,
@@ -25,10 +26,10 @@ import { Draft, Image, MailTypes } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
-import { WINDOW_WIDTH } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { saveDraft } from '@api';
-import Styles from './Compose.styles';
+import { Colors } from '@styles';
+import Styles, { LETTER_COMPOSE_IMAGE_HEIGHT } from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -38,10 +39,9 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
 interface State {
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
-  imageWidth: number;
-  imageHeight: number;
   open: boolean;
   valid: boolean;
+  text: string;
   images: Image[];
 }
 
@@ -54,10 +54,12 @@ interface Props {
   setImages: (images: Image[]) => void;
 }
 
-class ComposeLetterScreenBase extends React.Component<Props, State> {
-  private wordRef = createRef<Input>();
+const MAX_NUM_IMAGES = 4;
 
-  private picRef = createRef<PicUpload>();
+class ComposeLetterScreenBase extends React.Component<Props, State> {
+  private textRef = createRef<TextInput>();
+
+  private imageUploadRef = createRef<PicUpload>();
 
   private unsubscribeFocus: () => void;
 
@@ -72,10 +74,9 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     this.state = {
       keyboardOpacity: new Animated.Value(0),
       wordsLeft: 2000,
-      imageWidth: 200,
-      imageHeight: 200,
       open: false,
       valid: true,
+      text: '',
       images: [],
     };
     this.updateWordsLeft = this.updateWordsLeft.bind(this);
@@ -118,41 +119,18 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     }
 
     const { images, content } = this.props.composing;
-    let image;
-    if (images?.length) [image] = images;
+    this.setState({
+      text:
+        !this.props.hasSentMail && !content
+          ? `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+              this.props.recipientName
+            }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
+          : content,
+      images: images || [],
+    });
 
-    if (this.wordRef.current) {
-      if (!this.props.hasSentMail && !content) {
-        this.wordRef.current.set(
-          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
-            this.props.recipientName
-          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
-        );
-      } else {
-        this.wordRef.current.set(content);
-      }
-    }
-    if (this.picRef.current && image && image.width && image.height) {
-      this.picRef.current.setState({
-        image,
-      });
-      if (image.width < image.height) {
-        this.setState({
-          imageWidth: (image.width / image.height) * 200,
-          imageHeight: 200,
-        });
-      } else {
-        this.setState({
-          imageWidth: 200,
-          imageHeight: (image.height / image.width) * 200,
-        });
-      }
-    } else {
-      this.setState({
-        imageWidth: 200,
-        imageHeight: 200,
-      });
-    }
+    if (this.textRef.current) this.textRef.current.focus();
+
     setProfileOverride({
       enabled: this.state.valid,
       text: i18n.t('Compose.next'),
@@ -224,24 +202,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
         this.props.setImages(this.state.images);
       }
     );
-    if (image && image.width && image.height) {
-      if (image.width < image.height) {
-        this.setState({
-          imageWidth: (image.width / image.height) * 200,
-          imageHeight: 200,
-        });
-      } else {
-        this.setState({
-          imageWidth: 200,
-          imageHeight: (image.height / image.width) * 200,
-        });
-      }
-    } else {
-      this.setState({
-        imageWidth: 200,
-        imageHeight: 200,
-      });
-    }
     Keyboard.dismiss();
   }
 
@@ -252,14 +212,13 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     if (deleteIndex !== -1) {
       this.setState(
         (prevState) => ({
-          images: [...prevState.images].splice(deleteIndex),
+          images: prevState.images.filter((_, i) => i !== deleteIndex),
         }),
         () => {
           this.props.setImages(this.state.images);
         }
       );
     }
-    this.setState({ imageWidth: 200, imageHeight: 200 });
   }
 
   updateWordsLeft(value: string): void {
@@ -277,10 +236,65 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   changeText(value: string): void {
+    this.setState({ text: value });
     this.updateWordsLeft(value);
     this.props.setContent(value);
     saveDraft(this.props.composing);
   }
+
+  renderImages = (): JSX.Element[] => {
+    const images: (Image | null)[] = [...this.state.images];
+    if (this.state.images.length < MAX_NUM_IMAGES) {
+      const upload = null;
+      images.push(upload);
+    }
+    return images.map((image) => {
+      if (image) {
+        return (
+          <PicUpload
+            key={image.uri}
+            onSuccess={this.registerImage}
+            onDelete={this.deletePhoto}
+            type={PicUploadTypes.Media}
+            initial={image}
+            width={LETTER_COMPOSE_IMAGE_HEIGHT}
+            height={LETTER_COMPOSE_IMAGE_HEIGHT}
+            allowsEditing={false}
+            shapeBackground={{ margin: 4 }}
+          />
+        );
+      }
+      return (
+        <PicUpload
+          ref={this.imageUploadRef}
+          key="addNewImage"
+          maintainStateImage={false}
+          onSuccess={this.registerImage}
+          onDelete={this.deletePhoto}
+          type={PicUploadTypes.Media}
+          width={LETTER_COMPOSE_IMAGE_HEIGHT}
+          height={LETTER_COMPOSE_IMAGE_HEIGHT}
+          allowsEditing={false}
+          shapeBackground={{
+            margin: 4,
+            borderWidth: 2,
+            borderColor: '#CCCCCC',
+          }}
+          segmentOnPressLog={() => {
+            Segment.trackWithProperties('Compose - Click on Add Image', {
+              Option: 'Letter',
+            });
+          }}
+          segmentSuccessLog={() => {
+            Segment.trackWithProperties('Compose - Add Image Success', {
+              Option: 'Letter',
+            });
+          }}
+          segmentErrorLogEvent="Compose - Add Image Error"
+        />
+      );
+    });
+  };
 
   render(): JSX.Element {
     return (
@@ -307,74 +321,52 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             ]}
           >
             <ComposeHeader recipientName={this.props.recipientName} />
-            <Input
-              ref={this.wordRef}
-              parentStyle={{ flex: 1 }}
-              inputStyle={{
-                fontSize: 18,
-                flex: 1,
-                textAlignVertical: 'top',
-                paddingTop: 8,
-                paddingBottom: this.state.open ? 8 : this.state.imageHeight + 8,
-              }}
-              onChangeText={this.changeText}
-              placeholder={i18n.t('Compose.placeholder')}
-              numLines={1000}
-              testId="input"
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={{ flexGrow: 1 }}
             >
-              <Animated.View
+              <TextInput
+                ref={this.textRef}
+                placeholder={i18n.t('Compose.placeholder')}
+                value={this.state.text}
+                style={[
+                  {
+                    fontSize: 18,
+                    textAlignVertical: 'top',
+                    flex: 1,
+                    paddingHorizontal: 8,
+                    paddingTop: 10,
+                    marginBottom: 16,
+                  },
+                ]}
+                multiline
+                scrollEnabled={false}
+                onChangeText={this.changeText}
+              />
+              <View
                 style={{
-                  position: 'absolute',
-                  bottom: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, -this.state.imageHeight / 4],
-                  }),
-                  right: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [
-                      WINDOW_WIDTH - 30 - this.state.imageWidth,
-                      10 - this.state.imageWidth / 4,
-                    ],
-                  }),
-                  width: this.state.imageWidth,
-                  height: this.state.imageHeight,
-                  transform: [
-                    {
-                      scale: this.state.keyboardOpacity.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1, 0.5],
-                      }),
-                    },
-                  ],
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  marginHorizontal: 6,
+                  marginBottom: 8,
                 }}
               >
-                <PicUpload
-                  ref={this.picRef}
-                  onSuccess={this.registerImage}
-                  onDelete={this.deletePhoto}
-                  type={PicUploadTypes.Media}
-                  width={this.state.imageWidth}
-                  height={this.state.imageHeight}
-                  allowsEditing={false}
-                  shapeBackground={{ left: 10, bottom: 10 }}
-                  segmentOnPressLog={() => {
-                    Segment.trackWithProperties(
-                      'Compose - Click on Add Image',
-                      { Option: 'Letter' }
-                    );
-                  }}
-                  segmentSuccessLog={() => {
-                    Segment.trackWithProperties('Compose - Add Image Success', {
-                      Option: 'Letter',
-                    });
-                  }}
-                  segmentErrorLogEvent="Compose - Add Image Error"
-                />
-              </Animated.View>
-            </Input>
+                {this.renderImages()}
+              </View>
+              <TouchableOpacity
+                style={{ flexGrow: 1 }}
+                onPress={() => {
+                  if (this.textRef.current) this.textRef.current.focus();
+                }}
+              />
+            </ScrollView>
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
-              picRef={this.picRef}
+              picRef={
+                this.state.images.length < MAX_NUM_IMAGES
+                  ? this.imageUploadRef
+                  : undefined
+              }
               numLeft={this.state.wordsLeft}
             />
           </View>

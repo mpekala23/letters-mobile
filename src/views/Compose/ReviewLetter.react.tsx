@@ -15,7 +15,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import Styles from './Compose.styles';
+import Styles, { LETTER_REVIEW_IMAGE_HEIGHT } from './Compose.styles';
 
 type ReviewLetterScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -122,19 +122,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       this.props.navigation.goBack();
       return null;
     }
-    const { images } = this.props.composing;
-    let image;
-    if (images?.length === 1) [image] = images;
 
-    let width = 275;
-    let height = 275;
-    if (image && image.width && image.height) {
-      if (image.width > image.height) {
-        height = (image.height / image.width) * width;
-      } else {
-        width = (image.width / image.height) * height;
-      }
-    }
     return (
       <View style={Styles.screenBackground}>
         <View style={{ flex: 1 }}>
@@ -151,21 +139,26 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            <View style={{ flex: 1 }}>
-              {this.props.composing.images?.length && (
-                <Image
-                  source={this.props.composing.images[0]}
-                  style={{
-                    height,
-                    width,
-                    borderRadius: 10,
-                    aspectRatio:
-                      image && image.width && image.height
-                        ? image.width / image.height
-                        : 1,
-                  }}
-                />
-              )}
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              {this.props.composing.images?.map((image) => {
+                const aspect =
+                  image && image.width && image.height
+                    ? image.width / image.height
+                    : 1;
+                return (
+                  <Image
+                    key={image.uri}
+                    source={image}
+                    style={{
+                      height: LETTER_REVIEW_IMAGE_HEIGHT,
+                      width: LETTER_REVIEW_IMAGE_HEIGHT * aspect,
+                      aspectRatio: aspect,
+                      borderRadius: 8,
+                      margin: 4,
+                    }}
+                  />
+                );
+              })}
             </View>
           </ScrollView>
         </View>
