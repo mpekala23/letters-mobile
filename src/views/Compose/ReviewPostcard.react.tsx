@@ -7,7 +7,7 @@ import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
-import { cleanupAfterSend } from '@utils';
+import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
 import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';

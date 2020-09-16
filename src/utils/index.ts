@@ -16,8 +16,7 @@ import {
   STATE_TO_INMATE_DB,
 } from './States';
 import { Prompts, getRandomPromptIx } from './FeelingStuck';
-import REFERERS from './Referers';
-import { cleanupAfterSend } from './Notifications';
+import REFERRERS from './Referrers';
 import { Screens } from './Screens';
 
 export { Prompts, getRandomPromptIx };
@@ -30,8 +29,6 @@ export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
 export const ETA_PROCESSED_TO_DELIVERED = 3;
-
-export { cleanupAfterSend };
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus

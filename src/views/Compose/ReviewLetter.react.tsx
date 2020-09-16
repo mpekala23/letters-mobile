@@ -12,7 +12,7 @@ import { createMail } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { cleanupAfterSend } from '@utils';
+import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './Compose.styles';
