@@ -1,4 +1,4 @@
-import { Dimensions, Share } from 'react-native';
+import { Dimensions, Share, Image as ImageComponent } from 'react-native';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
@@ -301,3 +301,17 @@ export const onNativeShare = async (
     });
   }
 };
+
+export function getImageDims(
+  uri: string
+): Promise<{ width: number; height: number }> {
+  return new Promise((res, rej) => {
+    ImageComponent.getSize(
+      uri,
+      (width, height) => {
+        res({ width, height });
+      },
+      rej
+    );
+  });
+}

@@ -31,4 +31,10 @@ export default StyleSheet.create({
     borderRadius: 10,
     aspectRatio: 1,
   },
+  memoryLaneLetterImages: {
+    height: 225,
+    borderRadius: 8,
+    margin: 4,
+    aspectRatio: 1,
+  },
 });

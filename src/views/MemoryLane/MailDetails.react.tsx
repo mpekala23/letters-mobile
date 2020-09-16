@@ -25,17 +25,18 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
     mail.dateCreated ? mail.dateCreated : new Date(),
     'MMM dd, yyyy'
   );
-  let image = null;
+  let images = null;
   if (mail.type === MailTypes.Letter && mail.images?.length) {
-    image = (
+    images = mail.images.map((image) => (
       <Image
-        style={Styles.memoryLanePicture}
-        source={mail.images[0]}
+        key={image.uri}
+        style={Styles.memoryLaneLetterImages}
+        source={image}
         testID="memoryLaneImage"
       />
-    );
+    ));
   } else if (mail.type === MailTypes.Postcard) {
-    image = (
+    images = (
       <Image
         style={Styles.memoryLanePicture}
         source={mail.design.image}
@@ -59,7 +60,7 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         <Text style={[Typography.FONT_REGULAR, Styles.letterText]}>
           {mail.content}
         </Text>
-        {image}
+        {images}
       </ScrollView>
     </View>
   );

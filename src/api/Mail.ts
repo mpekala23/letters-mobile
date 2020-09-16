@@ -17,9 +17,8 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays } from 'date-fns';
-import { estimateDelivery } from '@utils';
+import { estimateDelivery, getImageDims } from '@utils';
 
-import { Image as ImageComponent } from 'react-native';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import {
   getZipcode,
@@ -102,12 +101,9 @@ export function mapTrackingEventsToMailStatus(
 async function cleanMail(mail: RawMail): Promise<Mail> {
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const image =
-    mail.images.length > 0
-      ? {
-          uri: mail.images[0].img_src,
-        }
-      : undefined;
+  const images = mail.images.length
+    ? mail.images.map((rawImage) => ({ uri: rawImage.img_src }))
+    : undefined;
   const design =
     mail.images.length > 0
       ? {
@@ -152,7 +148,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       status,
       dateCreated,
       expectedDelivery,
-      image,
+      images,
       trackingEvents,
     };
   }
@@ -186,12 +182,9 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   }
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const image =
-    mail.images.length > 0
-      ? {
-          uri: mail.images[0].img_src,
-        }
-      : undefined;
+  const images = mail.images.length
+    ? mail.images.map((rawImage) => ({ uri: rawImage.img_src }))
+    : undefined;
   const design =
     mail.images.length > 0
       ? {
@@ -232,7 +225,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       status,
       dateCreated,
       expectedDelivery,
-      image,
+      images,
     };
   }
   return {
@@ -327,11 +320,15 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
-  } else if (prepDraft.image) {
+  } else if (prepDraft.images && prepDraft.images.length) {
     try {
-      prepDraft.image = await uploadImage(prepDraft.image, 'letter');
+      const uris = await Promise.all(
+        prepDraft.images.map(async (image) => {
+          return (await uploadImage(image, 'letter')).uri;
+        })
+      );
       imageExtension = {
-        s3_img_urls: [prepDraft.image?.uri],
+        s3_img_urls: uris,
       };
     } catch (err) {
       const uploadError: ApiResponse = {
@@ -406,19 +403,6 @@ async function cleanDesign(
   categoryId?: number,
   subcategoryName?: string
 ): Promise<PostcardDesign> {
-  const getImageDims = (
-    uri: string
-  ): Promise<{ width: number; height: number }> => {
-    return new Promise((res, rej) => {
-      ImageComponent.getSize(
-        uri,
-        (width, height) => {
-          res({ width, height });
-        },
-        rej
-      );
-    });
-  };
   try {
     const imageDims = await getImageDims(raw.front_img_src);
     const thumbnailDims = await getImageDims(raw.thumbnail_src);

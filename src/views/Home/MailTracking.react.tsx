@@ -336,22 +336,26 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>
-          {mail.type === MailTypes.Letter && mail.images?.length ? (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    mail.images[0].width && mail.images[0].height
-                      ? (mail.images[0].width / mail.images[0].height) * 275
-                      : 275,
-                },
-              ]}
-              source={mail.images[0]}
-              testID="memoryLaneImage"
-            />
-          ) : null}
+          {mail.type === MailTypes.Letter &&
+            mail.images?.length &&
+            mail.images.map((image) => (
+              <Image
+                key={image.uri}
+                style={[
+                  Styles.trackingPhoto,
+                  {
+                    margin: 4,
+                    height: 275,
+                    width:
+                      image.width && image.height
+                        ? (image.width / image.height) * 275
+                        : 275,
+                  },
+                ]}
+                source={image}
+                testID="memoryLaneImage"
+              />
+            ))}
           {mail.type === MailTypes.Postcard && (
             <Image
               style={[
