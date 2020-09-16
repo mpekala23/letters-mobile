@@ -160,7 +160,7 @@
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
     "lovedOne": "Ser Querido Encarcelado",
@@ -199,7 +199,11 @@
     "passwordInvalid": "La contraseña debe tener al menos 8 caracteres.",
     "passwordsMustMatch": "Tus contraseñas deben ser las mismas",
     "next": "Siguiente",
-    "oneLastThing": "One Last Thing"
+    "registerAccount": "¡Creemos tu perfil!",
+    "enterCreds": "¡Que bueno verte aquí!",
+    "enterBasic": "Hola",
+    "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
+    "oneLastThing": "Una última cosa"
   },
   "ReviewContactScreen": {
     "reviewContact": "Revisar Contacto",
@@ -276,7 +280,8 @@
     "state": "Prisión Estatal",
     "federal": "Prisión Federal",
     "county": "Carcel del Condado",
-    "immigration": "Centro de Detención"
+    "immigration": "Centro de Detención",
+    "juvenile": "Centro de Detención Juvenil"
   },
   "Prompts": {
     "prompt1": "Cómo van las cosas en tu vida? Algún hito últimamente?",

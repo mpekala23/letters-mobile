@@ -1,11 +1,17 @@
 import React, { createRef } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, Screens } from '@navigations';
-import { Input, PicUpload, KeyboardAvoider } from '@components';
+import { AuthStackParamList, Screens } from '@utils/Screens';
+import {
+  Input,
+  PicUpload,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { REFERERS, Validation } from '@utils';
+import { REFERRERS } from '@utils';
 import { Image } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
@@ -39,7 +45,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
 
   private lastName = createRef<Input>();
 
-  private referrer = createRef<Input>();
+  private referrerPicker = createRef<PickerRef>();
 
   private scrollView = createRef<ScrollView>();
 
@@ -88,7 +94,9 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
         ? this.firstName.current.state.value
         : '',
       lastName: this.lastName.current ? this.lastName.current.state.value : '',
-      referrer: this.referrer.current ? this.referrer.current.state.value : '',
+      referrer: this.referrerPicker.current
+        ? this.referrerPicker.current.value
+        : '',
       image: this.state.image,
     });
   };
@@ -97,12 +105,12 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.referrer.current
+      this.referrerPicker.current
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.referrer.current.state.valid;
+        this.referrerPicker.current.isValueSelected();
       this.setState({ valid: result });
       setProfileOverride({
         enabled: result,
@@ -194,28 +202,17 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 onValid={this.updateValid}
                 onInvalid={this.updateValid}
                 blurOnSubmit={false}
-                nextInput={this.referrer}
               />
-              <Input
-                ref={this.referrer}
-                parentStyle={Styles.fullWidth}
+              <Picker
+                ref={this.referrerPicker}
+                items={REFERRERS}
                 placeholder={i18n.t('RegisterScreen.referrer')}
-                required
-                validate={Validation.Referrer}
-                options={REFERERS}
-                onDropdownOpen={() => {
-                  if (this.scrollView.current)
-                    this.scrollView.current.scrollToEnd({ animated: true });
-                }}
-                onValid={this.updateValid}
-                onInvalid={this.updateValid}
-                blurOnSubmit={false}
-                onSubmitEditing={() => {
+                onValueChange={() => {
+                  this.updateValid();
                   if (this.state.valid) {
                     this.goForward();
                   }
                 }}
-                strictDropdown
               />
             </TouchableOpacity>
           </ScrollView>

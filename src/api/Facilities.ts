@@ -4,6 +4,8 @@
 import url from 'url';
 import { Facility, PrisonTypes } from 'types';
 import { ABBREV_TO_STATE } from '@utils';
+import store from '@store';
+import { setFacilities, setLoaded } from '@store/Facility/FacilityActions';
 import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawFacility {
@@ -18,10 +20,16 @@ interface RawFacility {
 }
 
 function cleanFacility(facility: RawFacility): Facility {
+  let type: PrisonTypes;
+  try {
+    type = facility.type as PrisonTypes;
+  } catch (err) {
+    type = PrisonTypes.Fallback;
+  }
   return {
     name: facility.name,
     fullName: facility.full_name,
-    type: facility.type as PrisonTypes,
+    type,
     address: facility.address,
     city: facility.city,
     state: ABBREV_TO_STATE[facility.state],
@@ -40,6 +48,21 @@ export async function getFacilities(state: string): Promise<Facility[]> {
   const facilities = data.map((facility: RawFacility) =>
     cleanFacility(facility)
   );
+  facilities.sort((a, b) => {
+    if (
+      (a.fullName && b.fullName && a.fullName < b.fullName) ||
+      a.name < b.name
+    )
+      return -1;
+    if (
+      (a.fullName && b.fullName && a.fullName === b.fullName) ||
+      a.name === b.name
+    )
+      return 0;
+    return 1;
+  });
+  store.dispatch(setFacilities(facilities));
+  store.dispatch(setLoaded(true));
   return facilities;
 }
 

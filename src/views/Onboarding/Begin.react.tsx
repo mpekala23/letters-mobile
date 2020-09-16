@@ -4,7 +4,7 @@ import i18n from '@i18n';
 import { Icon, Button } from '@components';
 import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';
 import { Colors, Typography } from '@styles';
-import { AuthStackParamList, Screens } from '@navigations';
+import { AuthStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LovedOnes from '@assets/views/Onboarding/LovedOnes';
 import * as Segment from 'expo-analytics-segment';

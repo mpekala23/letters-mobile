@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import { Button, ProfilePic } from '@components';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { Colors, Typography } from '@styles';

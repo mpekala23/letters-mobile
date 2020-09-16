@@ -1,17 +1,11 @@
 import React, { createRef } from 'react';
-import {
-  ScrollView,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, Screens } from '@navigations';
-import { Input, KeyboardAvoider } from '@components';
+import { AuthStackParamList, Screens } from '@utils/Screens';
+import { Input, KeyboardAvoider, Picker, PickerRef } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { Validation, STATES_DROPDOWN, sleep, hoursTill8Tomorrow } from '@utils';
+import { Validation, STATES_DROPDOWN, hoursTill8Tomorrow } from '@utils';
 import { Image } from 'types';
 import * as Segment from 'expo-analytics-segment';
 import { UserRegisterInfo } from '@store/User/UserTypes';
@@ -55,11 +49,9 @@ class RegisterAddressScreen extends React.Component<Props, State> {
 
   private city = createRef<Input>();
 
-  private phyState = createRef<Input>();
+  private statePicker = createRef<PickerRef>();
 
   private postal = createRef<Input>();
-
-  private passwordConfirmation = createRef<Input>();
 
   private scrollView = createRef<ScrollView>();
 
@@ -99,14 +91,14 @@ class RegisterAddressScreen extends React.Component<Props, State> {
       this.address1.current &&
       this.address2.current &&
       this.city.current &&
-      this.phyState.current &&
+      this.statePicker.current &&
       this.postal.current
     ) {
       const result =
         this.address1.current.state.valid &&
         this.address2.current.state.valid &&
         this.city.current.state.valid &&
-        this.phyState.current.state.valid &&
+        this.statePicker.current.isValueSelected() &&
         this.postal.current.state.valid;
       setProfileOverride({
         enabled: result,
@@ -124,7 +116,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
       address1: this.address1.current ? this.address1.current.state.value : '',
       address2: this.address2.current ? this.address2.current.state.value : '',
       city: this.city.current ? this.city.current.state.value : '',
-      phyState: this.phyState.current ? this.phyState.current.state.value : '',
+      phyState: this.statePicker.current ? this.statePicker.current.value : '',
       postal: this.postal.current ? this.postal.current.state.value : '',
     };
     try {
@@ -192,7 +184,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 { fontSize: 20, alignSelf: 'flex-start', paddingBottom: 8 },
               ]}
             >
-              {i18n.t('RegisterScreen.enterBasic')}
+              {i18n.t('RegisterScreen.enterBasic')},{' '}
+              {this.props.route.params.firstName}!
             </Text>
             <Text style={[Typography.FONT_REGULAR, { paddingBottom: 8 }]}>
               {i18n.t('RegisterScreen.weWillOnly')}
@@ -227,7 +220,6 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               onValid={this.updateValid}
               onInvalid={this.updateValid}
               blurOnSubmit={false}
-              nextInput={this.phyState}
             />
             <View
               style={{
@@ -235,27 +227,19 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 width: '100%',
               }}
             >
-              <Input
-                ref={this.phyState}
+              <Picker
+                ref={this.statePicker}
+                parentStyle={{ flex: 5, marginRight: 4 }}
+                items={STATES_DROPDOWN}
                 placeholder={i18n.t('RegisterScreen.state')}
-                parentStyle={{ flex: 1, marginRight: 4 }}
-                required
-                validate={Validation.State}
-                options={STATES_DROPDOWN}
-                onValid={this.updateValid}
-                onInvalid={this.updateValid}
-                onFocus={async () => {
-                  await sleep(400);
-                  if (this.scrollView.current)
-                    this.scrollView.current.scrollToEnd({ animated: true });
+                onValueChange={() => {
+                  this.updateValid();
                 }}
-                blurOnSubmit={false}
-                nextInput={this.postal}
               />
               <Input
                 ref={this.postal}
                 placeholder={i18n.t('RegisterScreen.zipcode')}
-                parentStyle={{ flex: 1, marginLeft: 4 }}
+                parentStyle={{ flex: 3, marginLeft: 4 }}
                 required
                 validate={Validation.Postal}
                 onValid={this.updateValid}

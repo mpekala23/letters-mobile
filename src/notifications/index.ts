@@ -5,10 +5,7 @@ import { EventSubscription } from 'fbemitter';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import {
-  Notification,
-  LocalNotification,
-} from 'expo/build/Notifications/Notifications.types';
+import { Notification } from 'expo/build/Notifications/Notifications.types';
 import store from '@store';
 import { addNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
 import { NavigationContainerRef } from '@react-navigation/native';
@@ -26,7 +23,7 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { Mail, Contact } from 'types';
 import { addBusinessDays, format } from 'date-fns';
 import * as Segment from 'expo-analytics-segment';
-import { Screens } from '@navigations';
+import { Screens } from '@utils/Screens';
 
 export const navigationRef = createRef<NavigationContainerRef>();
 
@@ -75,7 +72,7 @@ class NotifsBase {
   }
 
   goToSettings = () => {
-    Linking.openURL('app-settings:');
+    Linking.openURL('app-settings');
   };
 
   async setup() {

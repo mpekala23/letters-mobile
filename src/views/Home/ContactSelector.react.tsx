@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Text, FlatList } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -77,15 +77,16 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     if (this.props.existingContacts.length <= 0) {
       this.props.navigation.replace(Screens.ContactInfo, {});
     }
-    await this.doRefresh();
     if (
       !this.props.lastUpdatedCategories ||
       differenceInHours(
-        new Date(this.props.lastUpdatedCategories),
-        new Date()
+        new Date(),
+        new Date(this.props.lastUpdatedCategories)
       ) > 6
     ) {
-      getCategories();
+      getCategories().catch(() => {
+        dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+      });
     }
   }
 

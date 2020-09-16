@@ -26,7 +26,7 @@ import {
   setProfileOverride,
 } from '@components/Topbar/Topbar.react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
@@ -225,7 +225,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           assets,
           hasNextPage,
           endCursor,
-        } = await MediaLibrary.getAssetsAsync();
+        } = await MediaLibrary.getAssetsAsync({
+          sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+        });
         const library = assets.map((value) => {
           const image: Image = {
             uri: value.uri,
@@ -343,7 +345,10 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       assets,
       hasNextPage,
       endCursor,
-    } = await MediaLibrary.getAssetsAsync({ after: this.state.endCursor });
+    } = await MediaLibrary.getAssetsAsync({
+      after: this.state.endCursor,
+      sortBy: [[MediaLibrary.SortBy.creationTime, false]],
+    });
     const library = this.props.route.params.category.subcategories.Library;
     if (!library) return;
     const designs = assets.map((value) => {

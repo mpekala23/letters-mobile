@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList, Screens } from '@navigations';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -233,7 +233,16 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         processedTrack &&
         Math.abs(differenceInBusinessDays(processedTrack.date, new Date())) >=
           ETA_PROCESSED_TO_DELIVERED
-          ? processedTrack
+          ? {
+              id: -2,
+              name: MailStatus.Delivered,
+              location: {
+                city: this.props.contact.facility.name,
+                zip: this.props.contact.facility.postal,
+                state: this.props.contact.facility.state,
+              },
+              date: processedTrack.date,
+            }
           : undefined;
 
       return (

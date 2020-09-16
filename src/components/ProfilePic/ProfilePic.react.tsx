@@ -6,7 +6,7 @@ import Avatar from '@assets/components/ProfilePic/Avatar';
 import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
 import { navigate } from '@notifications';
 import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
-import { Screens } from '@navigations';
+import { Screens } from '@utils/Screens';
 import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
