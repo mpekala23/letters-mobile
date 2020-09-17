@@ -20,7 +20,7 @@ type MemoryLaneScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: MemoryLaneScreenNavigationProp;
   contact: Contact;
-  existingMail: Record<number, Mail[]>;
+  existingMail: Record<string, Mail[]>;
   setActiveMail: (mail: Mail) => void;
 }
 

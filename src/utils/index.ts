@@ -9,6 +9,8 @@ import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
+import { createRef } from 'react';
+import { NavigationContainerRef } from '@react-navigation/native';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -29,6 +31,24 @@ export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
 export const ETA_PROCESSED_TO_DELIVERED = 3;
+
+export const navigationRef = createRef<NavigationContainerRef>();
+
+export function navigate(name: string, params = {}): void {
+  if (navigationRef.current) navigationRef.current.navigate(name, params);
+}
+
+export function resetNavigation({
+  index,
+  routes,
+}: {
+  index: number;
+  routes: { name: string }[];
+}): void {
+  if (navigationRef.current) {
+    navigationRef.current.reset({ index, routes });
+  }
+}
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -178,7 +198,7 @@ export {
   STATE_TO_INMATE_DB,
 };
 
-const mapNumToDay: Record<number, string> = {
+const mapNumToDay: Record<string, string> = {
   0: 'Sunday',
   1: 'Monday',
   2: 'Tuesday',
@@ -248,6 +268,7 @@ export function estimateDelivery(date: Date, status?: MailStatus): Date {
 export const RELEASE_CHANNEL = Constants.manifest.releaseChannel;
 
 export function isProduction(): boolean {
+  return true;
   if (!RELEASE_CHANNEL) return false;
   return RELEASE_CHANNEL.indexOf('prod') !== -1;
 }

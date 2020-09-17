@@ -247,7 +247,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   };
 }
 
-export async function getMail(page = 1): Promise<Record<number, Mail[]>> {
+export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
   const params = new URLSearchParams({ page: page.toString() });
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `letters?${params}`),
@@ -257,7 +257,7 @@ export async function getMail(page = 1): Promise<Record<number, Mail[]>> {
   );
   const data = body.data as { current_page: number; data: RawMail[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
-  const newExisting: Record<number, Mail[]> = {};
+  const newExisting: Record<string, Mail[]> = {};
   await Promise.all(
     data.data.map(async (raw) => {
       try {

@@ -3,7 +3,6 @@ import {
   ADD_NOTIF,
   HANDLE_NOTIF,
   SET_CURRENT_NOTIF,
-  SET_PAST_NOTIFS,
   FutureNotif,
   SET_FUTURE_NOTIFS,
   NotifActionTypes,
@@ -27,13 +26,6 @@ export function setCurrentNotif(notif: Notif): NotifActionTypes {
   return {
     type: SET_CURRENT_NOTIF,
     payload: notif,
-  };
-}
-
-export function setPastNotifs(notifs: Notif[]): NotifActionTypes {
-  return {
-    type: SET_PAST_NOTIFS,
-    payload: notifs,
   };
 }
 
