@@ -83,6 +83,7 @@ export async function takeImage(
     allowsEditing,
     aspect,
     quality: 1,
+    exif: true,
   });
   if (result.cancelled) {
     return null;
@@ -111,6 +112,7 @@ export async function pickImage(
     allowsEditing,
     aspect,
     quality: 1,
+    exif: true,
   });
   if (result.cancelled) {
     return null;

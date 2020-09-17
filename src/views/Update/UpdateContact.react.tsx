@@ -50,6 +50,8 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private lastName = createRef<Input>();
 
+  private inmateNumber = createRef<Input>();
+
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
@@ -141,6 +143,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
+      this.inmateNumber.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
@@ -162,7 +165,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         id: this.props.contact.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
-        inmateNumber: this.props.contact.inmateNumber,
+        inmateNumber: this.inmateNumber.current.state.value,
         relationship: this.props.contact.relationship,
         facility,
         dorm: this.dorm.current?.state.value,
@@ -183,6 +186,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
+      this.inmateNumber.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
@@ -195,6 +199,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     ) {
       this.firstName.current.set(this.props.contact.firstName);
       this.lastName.current.set(this.props.contact.lastName);
+      this.inmateNumber.current.set(this.props.contact.inmateNumber);
       this.facilityName.current.set(this.props.contact.facility.name);
       this.facilityAddress.current.set(this.props.contact.facility.address);
       this.facilityCity.current.set(this.props.contact.facility.city);
@@ -220,6 +225,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
+      this.inmateNumber.current &&
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityPhone.current &&
@@ -228,6 +234,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
+        this.inmateNumber.current.state.valid &&
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityPhone.current.state.valid;
@@ -307,6 +314,17 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
               <Input
                 ref={this.lastName}
                 placeholder={i18n.t('UpdateContactScreen.lastName')}
+                required
+                onValid={this.updateValid}
+                onInvalid={() => this.setValid(false)}
+                nextInput={this.inmateNumber}
+              />
+              <Text style={[Typography.FONT_SEMIBOLD, Styles.baseText]}>
+                {i18n.t('UpdateContactScreen.inmateNumber')}
+              </Text>
+              <Input
+                ref={this.inmateNumber}
+                placeholder={i18n.t('UpdateContactScreen.inmateNumber')}
                 required
                 onValid={this.updateValid}
                 onInvalid={() => this.setValid(false)}
