@@ -160,7 +160,7 @@
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Heard from an Ameelio Ambassador",
     "recommendation": "Recommendation from Friends or Family",
     "lovedOne": "Incarcerated Loved-One",
@@ -224,6 +224,7 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
+    "inmateNumber": "Inmate Number",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
