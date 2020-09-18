@@ -1,12 +1,23 @@
 import React, { createRef } from 'react';
-import { View, Animated, TouchableOpacity, PixelRatio } from 'react-native';
-import { Contact, Image, Layout } from 'types';
+import {
+  View,
+  Animated,
+  TouchableOpacity,
+  PixelRatio,
+  Image as ImageComponent,
+} from 'react-native';
+import { Contact, Image, Layout, Sticker } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Colors } from '@styles';
 import AddImage from '@assets/components/DynamicPostcard/AddImage';
 import { captureRef } from 'react-native-view-shot';
 import { sleep } from '@utils';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
+import Draggable from 'react-native-draggable';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './DynamicPostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -30,9 +41,15 @@ interface Props {
   activePosition: number;
   highlightActive: boolean;
   updateSnapshot: (snapshot: Image | null) => void;
+  activeSticker: Sticker | null;
 }
 
-class DynamicPostcard extends React.Component<Props> {
+interface State {
+  stickerX: number;
+  stickerY: number;
+}
+
+class DynamicPostcard extends React.Component<Props, State> {
   private inputRef = createRef<Input>();
 
   private viewShotRef = createRef<View>();
@@ -41,6 +58,10 @@ class DynamicPostcard extends React.Component<Props> {
     super(props);
     this.focus = this.focus.bind(this);
     this.set = this.set.bind(this);
+    this.state = {
+      stickerX: 0,
+      stickerY: 0,
+    };
   }
 
   componentDidUpdate(prevProps: Props): void {
@@ -49,12 +70,17 @@ class DynamicPostcard extends React.Component<Props> {
     }
   }
 
-  focus(): void {
-    if (this.inputRef.current) this.inputRef.current.forceFocus();
-  }
+  handleGesture = (evt: PanGestureHandlerGestureEvent): void => {
+    const { nativeEvent } = evt;
+    this.setState({ stickerX: nativeEvent.x, stickerY: nativeEvent.y });
+  };
 
   set(value: string): void {
     if (this.inputRef.current) this.inputRef.current.set(value);
+  }
+
+  focus(): void {
+    if (this.inputRef.current) this.inputRef.current.forceFocus();
   }
 
   async updateSnapshot(): Promise<void> {
@@ -78,9 +104,7 @@ class DynamicPostcard extends React.Component<Props> {
           alignItems: 'center',
           backgroundColor: '#F7F7F7',
           borderColor:
-            this.props.layout.id !== 1 &&
-            position === this.props.activePosition &&
-            this.props.highlightActive
+            position === this.props.activePosition && this.props.highlightActive
               ? Colors.BLUE_300
               : 'transparent',
           borderWidth: border ? 2 : 0,
@@ -240,7 +264,7 @@ class DynamicPostcard extends React.Component<Props> {
         >
           <View style={{ flex: 1, height: '105%' }}>
             <Input
-              numLines={1000}
+              numLines={50}
               parentStyle={{ flex: 1 }}
               inputStyle={{ flex: 1, fontSize: 14 }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
@@ -294,9 +318,42 @@ class DynamicPostcard extends React.Component<Props> {
           >
             {this.renderImages()}
           </View>
-          <View collapsable={false} style={{ width: '100%', height: '100%' }}>
-            {this.renderImages()}
-          </View>
+          <PanGestureHandler onGestureEvent={this.handleGesture}>
+            <View collapsable={false} style={{ width: '100%', height: '100%' }}>
+              {this.renderImages()}
+              <View
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'yellow',
+                }}
+              >
+                {true && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 10,
+                      height: 10,
+                      backgroundColor: 'red',
+                      left: this.state.stickerX,
+                      top: this.state.stickerY,
+                    }}
+                  />
+                )}
+                <Draggable
+                  x={75}
+                  y={100}
+                  renderSize={56}
+                  renderColor="black"
+                  renderText="A"
+                  isCircle
+                  shouldReverse
+                  onShortPressRelease={() => alert('touched!!')}
+                />
+              </View>
+            </View>
+          </PanGestureHandler>
         </Animated.View>
       </Animated.View>
     );

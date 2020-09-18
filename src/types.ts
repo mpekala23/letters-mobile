@@ -5,6 +5,10 @@ export interface Image {
   height?: number;
 }
 
+export interface Sticker {
+  source: string;
+}
+
 // Letters and Postcards (Commmon)
 export enum MailTypes {
   Letter = 'letter',

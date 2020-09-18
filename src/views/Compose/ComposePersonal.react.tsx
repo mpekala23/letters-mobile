@@ -17,7 +17,7 @@ import {
   Icon,
   DynamicPostcard,
 } from '@components';
-import { PostcardDesign, Contact, Layout, Draft, Image } from 'types';
+import { PostcardDesign, Contact, Layout, Draft, Image, Sticker } from 'types';
 import {
   setBackOverride,
   setProfileOverride,
@@ -40,17 +40,23 @@ import {
   capitalize,
   WINDOW_HEIGHT,
   STATUS_BAR_HEIGHT,
-  sleep,
 } from '@utils';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
+import HeartSticker from '@assets/stickers/heart.png';
 import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
 const SLIDE_DURATION = 300;
 const POSTCARD_HEIGHT = WINDOW_HEIGHT - BOTTOM_HEIGHT - BAR_HEIGHT - 32;
+
+const STICKERS: Sticker[] = [
+  {
+    source: HeartSticker,
+  },
+];
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -69,7 +75,7 @@ interface Props {
 interface State {
   subscreen: 'Design' | 'Text';
   designState: {
-    bottomDetails: 'layout' | 'design' | null;
+    bottomDetails: 'layout' | 'design' | 'stickers' | null;
     bottomSlide: Animated.Value;
     layout: Layout;
     commonLayout: Layout;
@@ -83,6 +89,7 @@ interface State {
     library: PostcardDesign[];
     activePosition: number;
     snapshot: Image | null;
+    activeSticker: Sticker | null;
   };
   textState: {
     charsLeft: number;
@@ -121,6 +128,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         library: [],
         activePosition: 1,
         snapshot: null,
+        activeSticker: null,
       },
       textState: {
         charsLeft: 300,
@@ -228,7 +236,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   setDesignState(newState: {
-    bottomDetails?: 'layout' | 'design' | null;
+    bottomDetails?: 'layout' | 'design' | 'stickers' | null;
     bottomSlide?: Animated.Value;
     layout?: Layout;
     commonLayout?: Layout;
@@ -242,6 +250,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     library?: PostcardDesign[];
     activePosition?: number;
     snapshot?: Image | null;
+    activeSticker?: Sticker | null;
   }) {
     this.setState((prevState) => ({
       ...prevState,
@@ -266,7 +275,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     }));
   }
 
-  openBottom(details: 'layout' | 'design') {
+  openBottom(details: 'layout' | 'design' | 'stickers') {
     this.setDesignState({ bottomDetails: details });
     Animated.timing(this.state.designState.bottomSlide, {
       toValue: 1,
@@ -318,11 +327,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   designsAreFilled(): boolean {
     const { layout } = this.state.designState;
     const keys = Object.keys(layout.designs);
-    let filled = true;
-    keys.forEach((key) => {
-      if (!layout.designs[parseInt(key, 10)]) filled = false;
-    });
-    return filled;
+    return keys.every((key) => layout.designs[parseInt(key, 10)]);
   }
 
   startWriting() {
@@ -369,9 +374,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       this.setState({ subscreen: 'Design' });
       this.setDesignState({ animatingFlip: false });
     });
-    sleep(1).then(() => {
-      this.setDesignState({ animatingFlip: true });
-    });
+    this.setDesignState({ animatingFlip: true });
     setBackOverride(undefined);
     setProfileOverride(undefined);
   }
@@ -403,7 +406,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           <PostcardTools
             onAddLayout={() => this.openBottom('layout')}
             onAddPhoto={() => this.openBottom('design')}
-            onAddStickers={() => null}
+            onAddStickers={() => this.openBottom('stickers')}
             style={{ paddingBottom: 16 }}
           />
           <Button
@@ -417,12 +420,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         style={[
           Styles.designButtons,
           {
-            opacity: this.state.designState.flip.interpolate({
+            bottom: this.state.designState.flip.interpolate({
               inputRange: [0, 1],
-              outputRange: [1, 0],
+              outputRange: [0, -2 * DESIGN_BUTTONS_HEIGHT],
             }),
             overflow: 'hidden',
-            bottom: 0,
           },
         ]}
       >
@@ -538,10 +540,30 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
               newLayout.designs[nKey] = commonLayout.designs[nKey];
             }
           });
-          this.setDesignState({ layout });
+          this.setDesignState({ layout: newLayout });
         }}
       >
         <Icon svg={layout.svg} />
+      </TouchableOpacity>
+    );
+  }
+
+  renderStickerItem(sticker: Sticker) {
+    return (
+      <TouchableOpacity
+        style={{
+          width: (WINDOW_WIDTH - 32) / 2,
+          height: WINDOW_HEIGHT * 0.2 - 16,
+          margin: 4,
+        }}
+        onPress={() => {
+          this.setDesignState({ activeSticker: sticker });
+        }}
+      >
+        <ImageComponent
+          source={sticker.source}
+          style={{ width: '100%', height: '100%' }}
+        />
       </TouchableOpacity>
     );
   }
@@ -578,6 +600,32 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
             renderItem={({ item }) => this.renderLayoutItem(item)}
             keyExtractor={(item: Layout) => {
               return item.id.toString();
+            }}
+            numColumns={2}
+            contentContainerStyle={Styles.gridBackground}
+          />
+        </View>
+      );
+    }
+    if (this.state.designState.bottomDetails === 'stickers') {
+      return (
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            paddingTop: 8,
+          }}
+        >
+          <Text
+            style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
+          >
+            Layouts
+          </Text>
+          <FlatList
+            data={STICKERS}
+            renderItem={({ item }) => this.renderStickerItem(item)}
+            keyExtractor={(item: Sticker) => {
+              return item.source;
             }}
             numColumns={2}
             contentContainerStyle={Styles.gridBackground}
@@ -716,6 +764,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     });
                   }
                 }}
+                activeSticker={this.state.designState.activeSticker}
               />
               <Animated.View
                 style={{
