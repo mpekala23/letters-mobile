@@ -1,11 +1,5 @@
 import React, { createRef } from 'react';
-import {
-  View,
-  Animated,
-  TouchableOpacity,
-  PixelRatio,
-  Image as ImageComponent,
-} from 'react-native';
+import { View, Animated, TouchableOpacity, PixelRatio } from 'react-native';
 import { Contact, Image, Layout, Sticker } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
@@ -13,16 +7,12 @@ import { Colors } from '@styles';
 import AddImage from '@assets/components/DynamicPostcard/AddImage';
 import { captureRef } from 'react-native-view-shot';
 import { sleep } from '@utils';
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import Draggable from 'react-native-draggable';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './DynamicPostcard.styles';
 import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
+import StickerManager from '../StickerManager/StickerManager.react';
 
 const pixelRatio = PixelRatio.get();
 const pixelWidth = 1800 / pixelRatio;
@@ -44,12 +34,7 @@ interface Props {
   activeSticker: Sticker | null;
 }
 
-interface State {
-  stickerX: number;
-  stickerY: number;
-}
-
-class DynamicPostcard extends React.Component<Props, State> {
+class DynamicPostcard extends React.Component<Props> {
   private inputRef = createRef<Input>();
 
   private viewShotRef = createRef<View>();
@@ -58,10 +43,6 @@ class DynamicPostcard extends React.Component<Props, State> {
     super(props);
     this.focus = this.focus.bind(this);
     this.set = this.set.bind(this);
-    this.state = {
-      stickerX: 0,
-      stickerY: 0,
-    };
   }
 
   componentDidUpdate(prevProps: Props): void {
@@ -69,11 +50,6 @@ class DynamicPostcard extends React.Component<Props, State> {
       this.updateSnapshot();
     }
   }
-
-  handleGesture = (evt: PanGestureHandlerGestureEvent): void => {
-    const { nativeEvent } = evt;
-    this.setState({ stickerX: nativeEvent.x, stickerY: nativeEvent.y });
-  };
 
   set(value: string): void {
     if (this.inputRef.current) this.inputRef.current.set(value);
@@ -318,42 +294,10 @@ class DynamicPostcard extends React.Component<Props, State> {
           >
             {this.renderImages()}
           </View>
-          <PanGestureHandler onGestureEvent={this.handleGesture}>
-            <View collapsable={false} style={{ width: '100%', height: '100%' }}>
-              {this.renderImages()}
-              <View
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'yellow',
-                }}
-              >
-                {true && (
-                  <View
-                    style={{
-                      position: 'absolute',
-                      width: 10,
-                      height: 10,
-                      backgroundColor: 'red',
-                      left: this.state.stickerX,
-                      top: this.state.stickerY,
-                    }}
-                  />
-                )}
-                <Draggable
-                  x={75}
-                  y={100}
-                  renderSize={56}
-                  renderColor="black"
-                  renderText="A"
-                  isCircle
-                  shouldReverse
-                  onShortPressRelease={() => alert('touched!!')}
-                />
-              </View>
-            </View>
-          </PanGestureHandler>
+          <View collapsable={false} style={{ width: '100%', height: '100%' }}>
+            {this.renderImages()}
+            <StickerManager />
+          </View>
         </Animated.View>
       </Animated.View>
     );

@@ -29,6 +29,7 @@ import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
+import StickerManager from './StickerManager/StickerManager.react';
 import Topbar from './Topbar/Topbar.react';
 
 export {
@@ -63,6 +64,7 @@ export {
   ProfilePic,
   StaticPostcard,
   Statusbar,
+  StickerManager,
   Topbar,
 };
 
