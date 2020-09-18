@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image as ImageComponent } from 'react-native';
 import { Image } from 'types';
+import { getAspectRatio } from '@utils';
 import Styles, { HEIGHT_LETTER, WIDTH_POSTCARD } from './DisplayImage.styles';
 
 export interface Props {
@@ -10,13 +11,12 @@ export interface Props {
   paddingPostcard?: number; // additional padding to decrease width
 }
 
-const getAspectRatio = (image: Image): number => {
-  return image.width && image.height ? image.width / image.height : 1;
-};
-
-const DisplayImage: React.FC<Props> = (props: Props) => {
-  const { images, isPostcard, heightLetter, paddingPostcard } = props;
-
+const DisplayImage: React.FC<Props> = ({
+  images,
+  isPostcard,
+  heightLetter,
+  paddingPostcard,
+}: Props) => {
   if (!images.length) return null;
 
   if (isPostcard) {

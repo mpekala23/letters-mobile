@@ -245,8 +245,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   renderImages = (): JSX.Element[] => {
     const images: (Image | null)[] = [...this.state.images];
     if (this.state.images.length < MAX_NUM_IMAGES) {
-      const upload = null;
-      images.push(upload);
+      images.push(null);
     }
     return images.map((image) => {
       if (image) {
