@@ -14,7 +14,7 @@ import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
 import { isProduction } from '@utils';
 import { cleanupNotifs, setupNotifs } from '@notifications';
-import { removePushTokenListeners } from '@notifications/newNotifs';
+
 import { Subscription } from 'types';
 
 const customFonts = {

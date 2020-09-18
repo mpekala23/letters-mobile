@@ -11,13 +11,13 @@ import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
+import { getContacts, getUser, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
-import Notifs, { scheduleNotificationInHours } from '@notifications';
 import { differenceInHours } from 'date-fns';
+import * as Notifications from '@notifications';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<

@@ -1,19 +1,11 @@
 import {
   Notif,
-  ADD_NOTIF,
   HANDLE_NOTIF,
   SET_CURRENT_NOTIF,
   FutureNotif,
   SET_FUTURE_NOTIFS,
   NotifActionTypes,
 } from './NotifTypes';
-
-export function addNotif(notif: Notif): NotifActionTypes {
-  return {
-    type: ADD_NOTIF,
-    payload: notif,
-  };
-}
 
 export function handleNotif(): NotifActionTypes {
   return {

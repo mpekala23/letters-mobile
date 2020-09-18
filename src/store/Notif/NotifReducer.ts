@@ -1,7 +1,6 @@
 import {
   NotifState,
   NotifActionTypes,
-  ADD_NOTIF,
   HANDLE_NOTIF,
   SET_CURRENT_NOTIF,
   SET_FUTURE_NOTIFS,
@@ -18,9 +17,6 @@ export default function NotifReducer(
 ): NotifState {
   const currentState = { ...state };
   switch (action.type) {
-    case ADD_NOTIF:
-      currentState.currentNotif = action.payload;
-      return currentState;
     case HANDLE_NOTIF:
       currentState.currentNotif = null;
       return currentState;

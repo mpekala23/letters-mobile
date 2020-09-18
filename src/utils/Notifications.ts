@@ -1,8 +1,7 @@
-import Notifs from '@notifications';
+import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { deleteDraft } from '@api/User';
 import i18n from '@i18n';
-import { hoursTill8Tomorrow } from '@utils';
 import { Contact } from 'types';
 
 export function handleNotificationsAfterSend(activeContact: Contact): void {
@@ -14,14 +13,12 @@ export function handleNotificationsAfterSend(activeContact: Contact): void {
         'Notifs.readyToSendAnother'
       )} ${activeContact.firstName}?`,
       body: `${i18n.t('Notifs.clickHereToBegin')}`,
+      type: NotifTypes.Drought,
       data: {
-        type: NotifTypes.Drought,
-        data: {
-          contactId: activeContact.id,
-        },
+        contactId: activeContact.id,
       },
     },
-    hoursTill8Tomorrow() / 24 + 7
+    7
   );
 }
 

@@ -1,6 +1,3 @@
-import { ReactText } from 'react';
-
-export const ADD_NOTIF = 'notification/add_notif';
 export const HANDLE_NOTIF = 'notification/handle_notif';
 export const SET_CURRENT_NOTIF = 'notification/set_current_notif';
 export const SET_FUTURE_NOTIFS = 'notification/set_future_notifs';
@@ -19,12 +16,14 @@ export interface Notif {
   title: string;
   body: string;
   type: NotifTypes;
-  contactId?: number;
-  letterId?: number;
+  data?: {
+    contactId?: number;
+    letterId?: number;
+  };
 }
 
 export interface FutureNotif {
-  id: ReactText;
+  id: string;
   time: string;
   notif: Notif;
 }
@@ -34,11 +33,6 @@ export interface FutureNotif {
 export interface NotifState {
   currentNotif: Notif | null;
   futureNotifs: FutureNotif[];
-}
-
-interface AddNotifAction {
-  type: 'notification/add_notif';
-  payload: Notif;
 }
 
 interface SetCurrentNotifAction {
@@ -57,7 +51,6 @@ interface HandleNotifAction {
 }
 
 export type NotifActionTypes =
-  | AddNotifAction
   | SetCurrentNotifAction
   | HandleNotifAction
   | SetFutureNotifsAction;

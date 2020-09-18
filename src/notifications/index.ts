@@ -11,8 +11,8 @@ import {
   NotificationResponse,
   PushTokenListener,
 } from 'expo-notifications';
-import { Notif, NotifTypes } from '@store/Notif/NotifTypes';
-import { addBusinessDays, addSeconds, format } from 'date-fns';
+import { Notif, NotifTypes, FutureNotif } from '@store/Notif/NotifTypes';
+import { addBusinessDays, addDays, addSeconds, format } from 'date-fns';
 import store from '@store';
 import { Contact, Mail, Subscription } from 'types';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
@@ -20,6 +20,7 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { resetNavigation } from '@utils';
 import { Screens } from '@utils/Screens';
 import * as Segment from 'expo-analytics-segment';
+import { setCurrentNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
 
 export async function getPushToken(): Promise<string> {
   if (!Constants.isDevice) {
@@ -85,44 +86,50 @@ export function removePushTokenListeners(): void {
 
 function cleanNotificationRequest(request: NotificationRequest): Notif | null {
   const { title, body } = request.content;
-  let { type, contactId, letterId } = request.content.data as {
+  let dataFormat = request.content.data as {
     type: NotifTypes;
-    contactId: number;
-    letterId: number;
-  };
-  if (!type) {
-    const otherFormat = request.content.data.body as {
-      type: NotifTypes;
+    data: {
       contactId: number;
       letterId: number;
     };
-    type = otherFormat.type;
-    contactId = otherFormat.contactId;
-    letterId = otherFormat.letterId;
+  };
+  if (!dataFormat.type) {
+    dataFormat = request.content.data.body as {
+      type: NotifTypes;
+      data: {
+        contactId: number;
+        letterId: number;
+      };
+    };
   }
+  const { type } = dataFormat;
+  const { contactId, letterId } = dataFormat.data;
   if (!title || !body) return null;
   return {
     title,
     body,
     type,
-    contactId,
-    letterId,
+    data: {
+      contactId,
+      letterId,
+    },
   };
 }
 
-export async function scheduleNotificationInHours(
+export async function scheduleNotificationInSeconds(
   notif: Notif,
-  hours: number
+  seconds: number
 ): Promise<void> {
-  const time = addSeconds(new Date(), hours * 3600);
+  const time = addSeconds(new Date(), seconds);
   const id = await Notifications.scheduleNotificationAsync({
     content: {
       title: notif.title,
       body: notif.body,
       data: {
         type: notif.type,
-        contactId: notif.contactId,
-        letterId: notif.letterId,
+        data: {
+          ...notif.data,
+        },
       },
     },
     trigger: time,
@@ -133,6 +140,42 @@ export async function scheduleNotificationInHours(
     time: time.toISOString(),
     notif,
   });
+  store.dispatch(setFutureNotifs(futureNotifs));
+}
+
+export async function scheduleNotificationInHours(
+  notif: Notif,
+  hours: number
+): Promise<void> {
+  await scheduleNotificationInSeconds(notif, hours * 3600);
+}
+
+export async function scheduleNotificationInDays(
+  notif: Notif,
+  days: number
+): Promise<void> {
+  const time = addDays(new Date(), days);
+  time.setHours(20);
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: notif.title,
+      body: notif.body,
+      data: {
+        type: notif.type,
+        data: {
+          ...notif.data,
+        },
+      },
+    },
+    trigger: time,
+  });
+  const futureNotifs = [...store.getState().notif.futureNotifs];
+  futureNotifs.push({
+    id,
+    time: time.toISOString(),
+    notif,
+  });
+  store.dispatch(setFutureNotifs(futureNotifs));
 }
 
 export async function scheduleNotificationInBusinessDays(
@@ -147,8 +190,9 @@ export async function scheduleNotificationInBusinessDays(
       body: notif.body,
       data: {
         type: notif.type,
-        contactId: notif.contactId,
-        letterId: notif.letterId,
+        data: {
+          ...notif.data,
+        },
       },
     },
     trigger: time,
@@ -159,6 +203,30 @@ export async function scheduleNotificationInBusinessDays(
     time: time.toISOString(),
     notif,
   });
+  store.dispatch(setFutureNotifs(futureNotifs));
+}
+
+export async function cancelAllNotificationsByType(
+  type: NotifTypes
+): Promise<void> {
+  const scheduled = store.getState().notif.futureNotifs;
+  const removing = scheduled.filter((fNotif) => fNotif.notif.type === type);
+  const keeping = scheduled.filter((fNotif) => fNotif.notif.type !== type);
+  await Promise.all(
+    removing.map(async (fNotif) => {
+      await Notifications.cancelScheduledNotificationAsync(fNotif.id);
+    })
+  );
+  store.dispatch(setFutureNotifs(keeping));
+}
+
+export function purgeFutureNotifs(): FutureNotif[] {
+  const currentTime = new Date().toISOString();
+  const scheduled = store.getState().notif.futureNotifs;
+  const removing = scheduled.filter((fNotif) => fNotif.time < currentTime);
+  const keeping = scheduled.filter((fNotif) => fNotif.time >= currentTime);
+  store.dispatch(setFutureNotifs(keeping));
+  return removing;
 }
 
 // called when a notification is received by the phone
@@ -171,15 +239,17 @@ async function notifReceived({
   if (!notif) return;
   switch (notif.type) {
     case NotifTypes.ProcessedForDelivery:
-      scheduleNotificationInBusinessDays(
+      scheduleNotificationInHours(
         {
           title: `${i18n.t('Notifs.hasYourLovedOne')}`,
           body: `${i18n.t('Notifs.letUsKnow')}`,
           type: NotifTypes.HasReceived,
-          contactId: notif.contactId,
-          letterId: notif.letterId,
+          data: {
+            contactId: notif.data && notif.data.contactId,
+            letterId: notif.data && notif.data.letterId,
+          },
         },
-        5
+        1 / 60 / 10
       );
       break;
     default:
@@ -196,20 +266,21 @@ function notifResponse(event: NotificationResponse): void {
   });
   const notif = cleanNotificationRequest(event.notification.request);
   if (!notif) return;
+  store.dispatch(setCurrentNotif(notif));
   const state = store.getState();
   let contact: Contact | undefined;
-  if (notif.contactId) {
+  if (notif.data && notif.data.contactId) {
     contact = state.contact.existing.find((testContact) => {
-      return testContact.id === notif.contactId;
+      return notif.data && testContact.id === notif.data.contactId;
     });
   }
   if (contact) {
     store.dispatch(setActiveContact(contact));
   }
   let mail: Mail | undefined;
-  if (contact && notif.letterId) {
+  if (contact && notif.data && notif.data.letterId) {
     mail = state.mail.existing[contact.id].find(
-      (testMail) => testMail.id === notif.letterId
+      (testMail) => notif.data && testMail.id === notif.data.letterId
     );
   }
   if (mail) {
@@ -297,6 +368,7 @@ function notifResponse(event: NotificationResponse): void {
         routes: [
           { name: Screens.ContactSelector },
           { name: Screens.SingleContact },
+          { name: Screens.ChooseCategory },
         ],
       });
       break;
@@ -337,6 +409,7 @@ export function setupNotifs(): Subscription[] {
       shouldSetBadge: false,
     }),
   });
+  purgeFutureNotifs();
   return [receivedSubscription, responseSubscription];
 }
 
