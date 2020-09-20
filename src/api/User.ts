@@ -2,7 +2,13 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
+import {
+  User,
+  UserLoginInfo,
+  UserRegisterInfo,
+  UserReferralsInfo,
+  FamilyConnection,
+} from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
@@ -44,10 +50,12 @@ interface RawUser {
   referer: string;
   country: string;
   created_at: string;
+  referral_link: string;
 }
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
+
   return {
     id: user.id,
     firstName: user.first_name,
@@ -63,6 +71,7 @@ function cleanUser(user: RawUser): User {
     },
     credit: user.credit,
     joined: new Date(user.created_at),
+    referralCode: user.referral_link,
   };
 }
 
@@ -385,4 +394,53 @@ export async function updateProfile(data: User): Promise<User> {
   userData.photo = newPhoto;
   store.dispatch(setUser(userData));
   return userData;
+}
+
+interface FamilyConnectionRaw {
+  contact_first_name: string;
+  contact_image: string;
+  user_first_name: string;
+  user_image: string;
+  city: string;
+  state: string;
+}
+
+interface RawReferral {
+  families: FamilyConnectionRaw[];
+  num_referrals: number;
+  num_lives_impacted: number;
+  num_mail_sent: number;
+}
+
+function cleanFamilyConnectionInfo(
+  families: FamilyConnectionRaw[]
+): FamilyConnection[] {
+  return families.map((family) => ({
+    contactImage: family.contact_image,
+    contactName: family.contact_first_name,
+    userImage: family.user_image,
+    userName: family.user_first_name,
+    city: family.city,
+    state: family.state,
+  }));
+}
+
+function cleanReferralInfo(data: RawReferral): UserReferralsInfo {
+  return {
+    families: cleanFamilyConnectionInfo(data.families),
+    numReferrals: data.num_referrals,
+    numLivesImpacted: data.num_lives_impacted,
+    numMailSent: data.num_mail_sent,
+  };
+}
+
+export async function getUserReferrals(): Promise<UserReferralsInfo> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `user/${store.getState().user.user.id}/referrals`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+
+  const data = body.data as UserReferralsInfo;
+  const cleanData = cleanReferralInfo(data);
+  return cleanData;
 }

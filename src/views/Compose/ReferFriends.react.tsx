@@ -118,6 +118,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
+    referralCode: state.user.user.referralCode,
   };
 };
 

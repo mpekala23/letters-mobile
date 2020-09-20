@@ -1,23 +1,33 @@
 import React, { Dispatch } from 'react';
-import { Text, FlatList } from 'react-native';
-import { Button, KeyboardAvoider } from '@components';
+import { Text, FlatList, View } from 'react-native';
+import { Button, Icon, KeyboardAvoider } from '@components';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { Mail, Contact } from 'types';
+import { Mail, Contact, UserReferralsInfo } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
+import {
+  getContacts,
+  getUser,
+  uploadPushToken,
+  getCategories,
+  getUserReferrals,
+} from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import Notifs from '@notifications';
 import { differenceInHours } from 'date-fns';
+import { LinearGradient } from 'expo-linear-gradient';
+import { setUserReferrals } from '@store/User/UserActions';
+import { UserActionTypes } from '@store/User/UserTypes';
+import CardBackground from '@assets/views/Referrals/CardBackground';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -39,6 +49,7 @@ interface Props {
   handleNotif: () => void;
   userId: number;
   lastUpdatedCategories: string | null;
+  setReferrals: (referrals: UserReferralsInfo) => void;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -156,13 +167,45 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   render() {
     return (
       <KeyboardAvoider style={Styles.trueBackground}>
+        <View style={[Styles.referralCardBackground]}>
+          <LinearGradient
+            colors={['#032658', '#0748A6']}
+            style={Styles.referralCardBgGradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+          />
+          <Icon
+            svg={CardBackground}
+            style={Styles.referralCardBackgroundIllustration}
+          />
+          <View style={Styles.referralCardDesc}>
+            <Text style={[Styles.referralCardTitle, Typography.FONT_BOLD]}>
+              {i18n.t('ContactSelectorScreen.referralCardTitle')}
+            </Text>
+            <Text style={[Styles.referralCardSubtitle]}>
+              {i18n.t('ContactSelectorScreen.referralCardSubtitle')}
+            </Text>
+            <Button
+              buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
+              onPress={async () => {
+                const referrals = await getUserReferrals();
+                this.props.setReferrals(referrals);
+                this.props.navigation.navigate(Screens.ReferralDashboard);
+                Segment.track('Contact Selector - Click on Referral Card');
+              }}
+              reverse
+              containerStyle={Styles.referralCardCta}
+              textStyle={[Typography.FONT_BOLD]}
+            />
+          </View>
+        </View>
         <Text
           style={[
             Typography.FONT_SEMIBOLD,
             {
               color: Colors.GRAY_500,
               fontSize: 20,
-              paddingBottom: 16,
+              paddingVertical: 16,
             },
           ]}
         >
@@ -192,11 +235,13 @@ const mapStateToProps = (state: AppState) => ({
   lastUpdatedCategories: state.category.lastUpdated,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
+  dispatch: Dispatch<ContactActionTypes | NotifActionTypes | UserActionTypes>
 ) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
     handleNotif: () => dispatch(handleNotif()),
+    setReferrals: (userReferrals: UserReferralsInfo) =>
+      dispatch(setUserReferrals(userReferrals)),
   };
 };
 const ContactSelectorScreen = connect(

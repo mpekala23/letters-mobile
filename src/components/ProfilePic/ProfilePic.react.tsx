@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import { Typography } from '@styles';
 import Avatar from '@assets/components/ProfilePic/Avatar';
@@ -21,8 +21,14 @@ export interface Props {
 
 function mapProfileTypeToStyle(type: ProfilePicTypes) {
   switch (type) {
+    case ProfilePicTypes.ReferralDashboardConnection:
     case ProfilePicTypes.Topbar:
       return { image: Styles.userPic, background: Styles.userBackground };
+    case ProfilePicTypes.ReferralDashboard:
+      return {
+        image: Styles.referralDashPic,
+        background: Styles.referralDashBackground,
+      };
     case ProfilePicTypes.Contact:
       return { image: Styles.contactPic, background: Styles.contactBackground };
     case ProfilePicTypes.SingleContact:

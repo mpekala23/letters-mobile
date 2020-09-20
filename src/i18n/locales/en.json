@@ -75,7 +75,10 @@
     "yourLovedOnes": "Your loved ones",
     "miles": "miles",
     "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below.",
-    "addContact": "Add contact"
+    "addContact": "Add contact",
+    "referralCardTitle": "Spread the Word",
+    "referralCardSubtitle": "Over 1,500 people shared",
+    "referralCardCta": "Help others"
   },
   "CreditsCard": {
     "letter": "credit",
@@ -386,6 +389,7 @@
     "postcardPreview": "Photo Preview",
     "letterPreview": "Letter Preview",
     "spreadTheWord": "Spread the Word",
+    "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
@@ -394,8 +398,18 @@
     "inmateLocator": "Inmate Locator"
   },
   "Sharing": {
-    "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
+    "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
     "title": "Ameelio: Free Photos and Letters to Prison",
     "subjectLine": "Send free letters and photos to prison!"
+  },
+  "ReferralDashboardScreen": {
+    "helpNowHeader": "Help others now!",
+    "helpNowBody": "Share your unique link to help more families connect with their loved ones for free.",
+    "shareCta": "Share with others",
+    "familesHelped": "Families You Helped",
+    "mailSent": "Mail Sent",
+    "moneySaved": "Money Saved",
+    "thankYou": "Thanks to you, the community is growing!",
+    "nullStateThankYou": "You'll see your impact here when people use your ambassador link."
   }
 }

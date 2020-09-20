@@ -37,4 +37,37 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 4,
   },
+  referralCardBackground: {
+    paddingVertical: 16,
+    height: 150,
+    overflow: 'hidden',
+    borderRadius: 10,
+  },
+  referralCardBackgroundIllustration: {
+    position: 'absolute',
+    marginTop: 8,
+  },
+  referralCardBgGradient: {
+    height: 150,
+    width: '100%',
+    position: 'absolute',
+  },
+  referralCardButton: {
+    alignSelf: 'flex-end',
+  },
+  referralCardDesc: {
+    marginLeft: 16,
+  },
+  referralCardTitle: {
+    color: Colors.AMEELIO_WHITE,
+    fontSize: 20,
+  },
+  referralCardSubtitle: {
+    color: Colors.AMEELIO_WHITE,
+  },
+  referralCardCta: {
+    alignSelf: 'flex-start',
+    color: Colors.AMEELIO_BLACK,
+    marginTop: 24,
+  },
 });
