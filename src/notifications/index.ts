@@ -366,6 +366,25 @@ function notifResponse(event: NotificationResponse): void {
         ],
       });
       break;
+    case NotifTypes.SpecialEvent:
+      Segment.trackWithProperties(
+        'Notifications - Click on Send Weekly Letter',
+        {
+          channel: 'Push',
+          hour: format(new Date(), 'hh'),
+          weekday: format(new Date(), 'dddd'),
+          title: notif.title,
+        }
+      );
+      resetNavigation({
+        index: 0,
+        routes: [
+          { name: Screens.ContactSelector },
+          { name: Screens.SingleContact },
+          { name: Screens.ChooseCategory },
+        ],
+      });
+      break;
     default:
       break;
   }

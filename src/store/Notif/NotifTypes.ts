@@ -10,6 +10,8 @@ export enum NotifTypes {
   NoFirstContact = 'NoFirstContact',
   NoFirstLetter = 'NoFirstLetter',
   Drought = 'Drought',
+  ReferralSignup = 'ReferralSignup',
+  SpecialEvent = 'SpecialEvent',
 }
 
 export interface Notif {
