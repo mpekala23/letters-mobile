@@ -269,7 +269,7 @@ export function isProduction(): boolean {
 export const onNativeShare = async (
   screen: Screens,
   cta: string,
-  referralCode: string
+  referralCode?: string
 ): Promise<void> => {
   const PROPERTIES = { screen, cta };
 
@@ -278,11 +278,12 @@ export const onNativeShare = async (
   });
 
   try {
+    const link = referralCode
+      ? `https://ameelio.org/#/join/${referralCode}`
+      : 'https://ameelio.org/#/';
     const result = await Share.share(
       {
-        message: `${i18n.t(
-          'Sharing.message'
-        )}${' '}https://ameelio.org/#/join/${referralCode}`,
+        message: `${i18n.t('Sharing.message')}${' '}${link}`,
         title: i18n.t('Sharing.title'),
       },
       {

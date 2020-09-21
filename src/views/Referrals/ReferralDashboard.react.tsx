@@ -14,6 +14,7 @@ import { onNativeShare } from '@utils';
 import i18n from '@i18n';
 import ReferralConnectionCard from '@components/Card/ReferralConnectionCard.react';
 
+import { Screens } from '@utils/Screens';
 import Styles from './ReferralDashboard.style';
 
 interface Props {

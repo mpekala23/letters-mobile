@@ -2,17 +2,18 @@
 /* eslint-disable camelcase */
 // The above is necessary because a lot of the responses from the server are forced snake case on us
 import store from '@store';
-import {
-  User,
-  UserLoginInfo,
-  UserRegisterInfo,
-  UserReferralsInfo,
-  FamilyConnection,
-} from '@store/User/UserTypes';
+import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, MailTypes, Draft, PostcardDesign } from 'types';
+import {
+  Storage,
+  MailTypes,
+  Draft,
+  PostcardDesign,
+  FamilyConnection,
+  UserReferralsInfo,
+} from 'types';
 import {
   loginUser,
   logoutUser,

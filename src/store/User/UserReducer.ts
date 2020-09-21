@@ -28,6 +28,7 @@ const initialState: UserState = {
     state: '',
     credit: 0,
     joined: new Date(Date.now()),
+    referralCode: '',
   },
   userReferrals: {
     families: [],
@@ -93,6 +94,7 @@ export default function UserReducer(
           state: '',
           credit: 0,
           joined: new Date(Date.now()),
+          referralCode: '',
         },
       };
     case SET_USER:
