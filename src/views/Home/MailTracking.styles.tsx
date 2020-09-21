@@ -44,14 +44,6 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_BLACK,
     fontSize: 14,
   },
-  trackingPhoto: {
-    height: 275,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    aspectRatio: 1,
-  },
   animatedTruck: {
     borderRadius: 50,
     backgroundColor: Colors.BLUE_500,

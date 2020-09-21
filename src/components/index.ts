@@ -8,6 +8,7 @@ import CreditsCard from './Card/CreditsCard.react';
 import ComposeHeader from './ComposeHeader/ComposeHeader.react';
 import ComposeTools from './ComposeTools/ComposeTools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
+import DisplayImage from './DisplayImage/DisplayImage.react';
 import Dropdown from './Dropdown/Dropdown.react';
 import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
@@ -40,6 +41,7 @@ export {
   ComposeHeader,
   ComposeTools,
   DeliveryStatusCard,
+  DisplayImage,
   Dropdown,
   EditablePostcard,
   GenericCard,

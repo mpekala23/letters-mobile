@@ -4,7 +4,7 @@ import { Draft, Mail, MailStatus, Image, PostcardDesign } from 'types';
 export const SET_COMPOSING = 'mail/set_composing';
 export const SET_RECIPIENT_ID = 'mail/set_recipient_id';
 export const SET_CONTENT = 'mail/set_content';
-export const SET_IMAGE = 'mail/set_image';
+export const SET_IMAGES = 'mail/set_images';
 export const SET_DESIGN = 'mail/set_design';
 export const CLEAR_COMPOSING = 'mail/clear_composing';
 
@@ -29,9 +29,9 @@ interface SetContentAction {
   payload: string;
 }
 
-interface SetImageAction {
-  type: typeof SET_IMAGE;
-  payload: Image | undefined;
+interface SetImagesAction {
+  type: typeof SET_IMAGES;
+  payload: Image[];
 }
 
 interface SetDesignAction {
@@ -107,7 +107,7 @@ export type MailActionTypes =
   | SetComposingAction
   | SetRecipientIdAction
   | SetContentAction
-  | SetImageAction
+  | SetImagesAction
   | SetDesignAction
   | ClearComposingAction
   | AddMailAction

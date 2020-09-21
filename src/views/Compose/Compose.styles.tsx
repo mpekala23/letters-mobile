@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
+export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
+
 export default StyleSheet.create({
   screenBackground: {
     padding: 16,
@@ -55,5 +57,4 @@ export default StyleSheet.create({
     paddingHorizontal: 4,
     paddingBottom: 26,
   },
-  gridDesignBackground: {},
 });

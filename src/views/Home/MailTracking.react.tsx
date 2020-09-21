@@ -1,8 +1,15 @@
 import React, { Dispatch } from 'react';
-import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
+import { Linking, Text, ScrollView, View, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
+import {
+  Button,
+  LetterTracker,
+  GrayBar,
+  Icon,
+  ProfilePic,
+  DisplayImage,
+} from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -336,37 +343,14 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>
-          {mail.type === MailTypes.Letter && mail.image?.uri ? (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    mail.image.width && mail.image.height
-                      ? (mail.image.width / mail.image.height) * 275
-                      : 275,
-                },
-              ]}
-              source={mail.image}
-              testID="memoryLaneImage"
-            />
-          ) : null}
+          {mail.type === MailTypes.Letter && (
+            <DisplayImage images={mail.images} heightLetter={160} />
+          )}
           {mail.type === MailTypes.Postcard && (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    mail.design.image.width && mail.design.image.height
-                      ? (mail.design.image.width / mail.design.image.height) *
-                        275
-                      : 275,
-                },
-              ]}
-              source={mail.design.image}
-              testID="memoryLaneImage"
+            <DisplayImage
+              images={[mail.design.image]}
+              isPostcard
+              paddingPostcard={20}
             />
           )}
           <View style={{ height: 40 }} />
