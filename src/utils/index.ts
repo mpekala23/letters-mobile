@@ -290,6 +290,19 @@ export const onNativeShare = async (
   }
 };
 
+export function getNumWords(content: string): number {
+  let s = content;
+  s = s.replace(/\n/g, ' '); // newlines to space
+  s = s.replace(/(^\s*)|(\s*$)/gi, ''); // remove spaces from start + end
+  s = s.replace(/[ ]{2,}/gi, ' '); // 2 or more spaces to 1
+  const split = s.split(' ');
+  let numWords = split.length;
+  if (split[0] === '') {
+    numWords = 0;
+  }
+  return numWords;
+}
+
 export function getImageDims(
   uri: string
 ): Promise<{ width: number; height: number }> {

@@ -26,6 +26,7 @@ import { Draft, Image, MailTypes } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { getNumWords } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { saveDraft } from '@api';
 import Styles, { LETTER_COMPOSE_IMAGE_HEIGHT } from './Compose.styles';
@@ -222,15 +223,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   updateWordsLeft(value: string): void {
-    let s = value;
-    s = s.replace(/\n/g, ' '); // newlines to space
-    s = s.replace(/(^\s*)|(\s*$)/gi, ''); // remove spaces from start + end
-    s = s.replace(/[ ]{2,}/gi, ' '); // 2 or more spaces to 1
-    const split = s.split(' ');
-    let numWords = split.length;
-    if (split[0] === '') {
-      numWords = 0;
-    }
+    const numWords = getNumWords(value);
     this.setState({ wordsLeft: 2000 - numWords });
     this.setValid(2000 - numWords >= 0);
   }
