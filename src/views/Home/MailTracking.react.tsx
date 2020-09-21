@@ -74,6 +74,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           return (WINDOW_WIDTH / 8) * 1;
         case MailStatus.InTransit:
           return (WINDOW_WIDTH / 8) * 2;
+        case MailStatus.InLocalArea:
+          return (WINDOW_WIDTH / 8) * 2.75;
         case MailStatus.ProcessedForDelivery:
           return (WINDOW_WIDTH / 8) * 3.5;
         case MailStatus.Delivered:

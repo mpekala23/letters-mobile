@@ -50,7 +50,7 @@ export default StyleSheet.create({
     height: 48,
     width: 48,
     position: 'absolute',
-    left: 0,
+    left: -5,
     zIndex: 999,
   },
   endpointsContainer: {
