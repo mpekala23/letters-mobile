@@ -267,12 +267,15 @@ function notifResponse(event: NotificationResponse): void {
   if (mail) {
     store.dispatch(setActiveMail(mail));
   }
+  const commonTracks = {
+    hour: format(new Date(), 'hh'),
+    weekday: format(new Date(), 'dddd'),
+    type: 'In Transit',
+  };
   switch (notif.type) {
     case NotifTypes.OnItsWay:
       Segment.trackWithProperties('Notifications - Click on Delivery Update', {
-        hour: format(new Date(), 'hh'),
-        weekday: format(new Date(), 'dddd'),
-        type: 'In Transit',
+        ...commonTracks,
       });
       resetNavigation({
         index: 0,
@@ -285,9 +288,7 @@ function notifResponse(event: NotificationResponse): void {
       break;
     case NotifTypes.ProcessedForDelivery:
       Segment.trackWithProperties('Notifications - Click on Delivery Update', {
-        hour: format(new Date(), 'hh'),
-        weekday: format(new Date(), 'dddd'),
-        type: 'Out for Delivery',
+        ...commonTracks,
       });
       resetNavigation({
         index: 0,
@@ -311,6 +312,9 @@ function notifResponse(event: NotificationResponse): void {
       });
       break;
     case NotifTypes.ReturnedToSender:
+      Segment.trackWithProperties('Notifications - Returned to Sender', {
+        ...commonTracks,
+      });
       resetNavigation({
         index: 0,
         routes: [
@@ -324,8 +328,7 @@ function notifResponse(event: NotificationResponse): void {
       Segment.trackWithProperties(
         'Notifications - Click on Add First Contact',
         {
-          hour: format(new Date(), 'hh'),
-          weekday: format(new Date(), 'dddd'),
+          ...commonTracks,
         }
       );
       resetNavigation({
@@ -340,8 +343,7 @@ function notifResponse(event: NotificationResponse): void {
       Segment.trackWithProperties(
         'Notifications - Click on Send First Letter',
         {
-          hour: format(new Date(), 'hh'),
-          weekday: format(new Date(), 'dddd'),
+          ...commonTracks,
         }
       );
       resetNavigation({
@@ -357,9 +359,7 @@ function notifResponse(event: NotificationResponse): void {
       Segment.trackWithProperties(
         'Notifications - Click on Send Weekly Letter',
         {
-          channel: 'Push',
-          hour: format(new Date(), 'hh'),
-          weekday: format(new Date(), 'dddd'),
+          ...commonTracks,
         }
       );
       resetNavigation({
@@ -373,9 +373,7 @@ function notifResponse(event: NotificationResponse): void {
       break;
     case NotifTypes.ReferralSignup:
       Segment.trackWithProperties('Notifications - Click on Referral Signup', {
-        channel: 'Push',
-        hour: format(new Date(), 'hh'),
-        weekday: format(new Date(), 'dddd'),
+        ...commonTracks,
       });
       resetNavigation({
         index: 0,
@@ -386,9 +384,7 @@ function notifResponse(event: NotificationResponse): void {
       Segment.trackWithProperties(
         'Notifications - Click on Send Weekly Letter',
         {
-          channel: 'Push',
-          hour: format(new Date(), 'hh'),
-          weekday: format(new Date(), 'dddd'),
+          ...commonTracks,
           title: notif.title,
         }
       );
@@ -403,9 +399,7 @@ function notifResponse(event: NotificationResponse): void {
       break;
     case NotifTypes.Wildcard:
       Segment.trackWithProperties('Notifications - Click on Wildcard', {
-        channel: 'Push',
-        hour: format(new Date(), 'hh'),
-        weekday: format(new Date(), 'dddd'),
+        ...commonTracks,
         title: notif.title,
       });
       if (notif.data && notif.data.routes) {
