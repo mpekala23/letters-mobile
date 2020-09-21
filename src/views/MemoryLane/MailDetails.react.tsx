@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View, Image } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Mail, MailTypes, MailStatus } from 'types';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { format } from 'date-fns';
 import { Typography } from '@styles';
+import { DisplayImage } from '@components';
 import Styles from './MailDetails.styles';
 
 type MailDetailsScreenNavigationProp = StackNavigationProp<
@@ -25,24 +26,7 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
     mail.dateCreated ? mail.dateCreated : new Date(),
     'MMM dd, yyyy'
   );
-  let image = null;
-  if (mail.type === MailTypes.Letter && mail.image) {
-    image = (
-      <Image
-        style={Styles.memoryLanePicture}
-        source={mail.image}
-        testID="memoryLaneImage"
-      />
-    );
-  } else if (mail.type === MailTypes.Postcard) {
-    image = (
-      <Image
-        style={Styles.memoryLanePicture}
-        source={mail.design.image}
-        testID="memoryLaneImage"
-      />
-    );
-  }
+
   return (
     <View
       style={[
@@ -59,7 +43,16 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         <Text style={[Typography.FONT_REGULAR, Styles.letterText]}>
           {mail.content}
         </Text>
-        {image}
+        {mail.type === MailTypes.Letter && (
+          <DisplayImage images={mail.images} />
+        )}
+        {mail.type === MailTypes.Postcard && (
+          <DisplayImage
+            images={[mail.design.image]}
+            isPostcard
+            paddingPostcard={5}
+          />
+        )}
       </ScrollView>
     </View>
   );
@@ -73,6 +66,7 @@ const blankMail: Mail = {
   dateCreated: new Date(),
   expectedDelivery: new Date(),
   content: '',
+  images: [],
 };
 
 const mapStateToProps = (state: AppState) => ({

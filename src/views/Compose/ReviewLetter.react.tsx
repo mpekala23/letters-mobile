@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import { GrayBar } from '@components';
+import { View, Text, ScrollView } from 'react-native';
+import { GrayBar, DisplayImage } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
@@ -122,16 +122,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       this.props.navigation.goBack();
       return null;
     }
-    const { image } = this.props.composing;
-    let width = 275;
-    let height = 275;
-    if (image && image.width && image.height) {
-      if (image.width > image.height) {
-        height = (image.height / image.width) * width;
-      } else {
-        width = (image.width / image.height) * height;
-      }
-    }
+
     return (
       <View style={Styles.screenBackground}>
         <View style={{ flex: 1 }}>
@@ -148,22 +139,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            <View style={{ flex: 1 }}>
-              {this.props.composing.image && (
-                <Image
-                  source={this.props.composing.image}
-                  style={{
-                    height,
-                    width,
-                    borderRadius: 10,
-                    aspectRatio:
-                      image && image.width && image.height
-                        ? image.width / image.height
-                        : 1,
-                  }}
-                />
-              )}
-            </View>
+            <DisplayImage images={this.props.composing.images} />
           </ScrollView>
         </View>
         <Text

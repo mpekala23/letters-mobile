@@ -1,10 +1,10 @@
-import { Dimensions, Share } from 'react-native';
+import { Dimensions, Share, Image as ImageComponent } from 'react-native';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, MailStatus } from 'types';
+import { ZipcodeInfo, MailStatus, Image } from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
@@ -313,4 +313,22 @@ export function getNumWords(content: string): number {
     numWords = 0;
   }
   return numWords;
+}
+
+export function getImageDims(
+  uri: string
+): Promise<{ width: number; height: number }> {
+  return new Promise((res, rej) => {
+    ImageComponent.getSize(
+      uri,
+      (width, height) => {
+        res({ width, height });
+      },
+      rej
+    );
+  });
+}
+
+export function getAspectRatio(image: Image): number {
+  return image.width && image.height ? image.width / image.height : 1;
 }
