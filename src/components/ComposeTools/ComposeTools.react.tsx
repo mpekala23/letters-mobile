@@ -39,7 +39,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {props.numLeft} left
+            {props.numLeft} words left
           </Text>
         </View>
         {props.picRef ? (
