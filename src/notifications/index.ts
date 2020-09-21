@@ -215,7 +215,7 @@ async function notifReceived({
   if (!notif) return;
   switch (notif.type) {
     case NotifTypes.ProcessedForDelivery:
-      scheduleNotificationInHours(
+      scheduleNotificationInBusinessDays(
         {
           title: `${i18n.t('Notifs.hasYourLovedOne')}`,
           body: `${i18n.t('Notifs.letUsKnow')}`,
@@ -225,7 +225,7 @@ async function notifReceived({
             letterId: notif.data && notif.data.letterId,
           },
         },
-        1 / 60 / 10
+        5
       );
       break;
     default:
