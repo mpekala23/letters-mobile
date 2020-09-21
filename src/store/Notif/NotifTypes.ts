@@ -1,3 +1,5 @@
+import { Screens } from '@utils/Screens';
+
 export const HANDLE_NOTIF = 'notification/handle_notif';
 export const SET_CURRENT_NOTIF = 'notification/set_current_notif';
 export const SET_FUTURE_NOTIFS = 'notification/set_future_notifs';
@@ -12,6 +14,7 @@ export enum NotifTypes {
   Drought = 'Drought',
   ReferralSignup = 'ReferralSignup',
   SpecialEvent = 'SpecialEvent',
+  Wildcard = 'Wildcard',
 }
 
 export interface Notif {
@@ -21,6 +24,7 @@ export interface Notif {
   data?: {
     contactId?: number;
     letterId?: number;
+    routes?: { name: Screens }[];
   };
 }
 

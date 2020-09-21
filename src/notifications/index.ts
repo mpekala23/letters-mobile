@@ -94,22 +94,26 @@ function cleanNotificationRequest(request: NotificationRequest): Notif | null {
   const { title, body } = request.content;
   let dataFormat = request.content.data as {
     type: NotifTypes;
-    data: {
-      contactId: number;
-      letterId: number;
+    data?: {
+      contactId?: number;
+      letterId?: number;
+      routes?: { name: Screens }[];
     };
   };
   if (!dataFormat.type) {
     dataFormat = request.content.data.body as {
       type: NotifTypes;
-      data: {
-        contactId: number;
-        letterId: number;
+      data?: {
+        contactId?: number;
+        letterId?: number;
+        routes?: { name: Screens }[];
       };
     };
   }
   const { type } = dataFormat;
-  const { contactId, letterId } = dataFormat.data;
+  const { contactId, letterId, routes } = dataFormat.data
+    ? dataFormat.data
+    : { contactId: undefined, letterId: undefined, routes: undefined };
   if (!title || !body) return null;
   return {
     title,
@@ -118,6 +122,7 @@ function cleanNotificationRequest(request: NotificationRequest): Notif | null {
     data: {
       contactId,
       letterId,
+      routes,
     },
   };
 }
@@ -366,6 +371,17 @@ function notifResponse(event: NotificationResponse): void {
         ],
       });
       break;
+    case NotifTypes.ReferralSignup:
+      Segment.trackWithProperties('Notifications - Click on Referral Signup', {
+        channel: 'Push',
+        hour: format(new Date(), 'hh'),
+        weekday: format(new Date(), 'dddd'),
+      });
+      resetNavigation({
+        index: 0,
+        routes: [{ name: Screens.ContactSelector }],
+      });
+      break;
     case NotifTypes.SpecialEvent:
       Segment.trackWithProperties(
         'Notifications - Click on Send Weekly Letter',
@@ -384,6 +400,20 @@ function notifResponse(event: NotificationResponse): void {
           { name: Screens.ChooseCategory },
         ],
       });
+      break;
+    case NotifTypes.Wildcard:
+      Segment.trackWithProperties('Notifications - Click on Wildcard', {
+        channel: 'Push',
+        hour: format(new Date(), 'hh'),
+        weekday: format(new Date(), 'dddd'),
+        title: notif.title,
+      });
+      if (notif.data && notif.data.routes) {
+        resetNavigation({
+          index: 0,
+          routes: notif.data.routes,
+        });
+      }
       break;
     default:
       break;
