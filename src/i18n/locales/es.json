@@ -356,6 +356,9 @@
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
+  "ComposeTools": {
+    "wordsLeft": "palabras"
+  },
   "Notifs": {
     "happy": "Feliz",
     "your": "Tu",

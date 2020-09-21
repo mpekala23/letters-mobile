@@ -353,6 +353,9 @@
     "iWouldLikeToSend": "I would like to send something:",
     "yourOwnLettersAndPhotos": "Your own letters and photos."
   },
+  "ComposeTools": {
+    "wordsLeft": "words left"
+  },
   "Notifs": {
     "happy": "Happy",
     "your": "Your",

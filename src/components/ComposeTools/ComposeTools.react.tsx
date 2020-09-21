@@ -4,6 +4,7 @@ import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH } from '@utils';
 import ImageIcon from '@assets/views/Compose/Image';
 import CheckIcon from '@assets/views/Compose/Check';
+import i18n from '@i18n';
 import Icon from '../Icon/Icon.react';
 import Styles from './ComposeTools.styles';
 import PicUpload from '../PicUpload/PicUpload.react';
@@ -39,7 +40,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               },
             ]}
           >
-            {props.numLeft} words left
+            {props.numLeft} {i18n.t('ComposeTools.wordsLeft')}
           </Text>
         </View>
         {props.picRef ? (
