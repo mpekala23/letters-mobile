@@ -183,7 +183,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
         if (!this.props.hasSentMail) {
-          Notifs.scheduleNotificationInSeconds(
+          Notifs.scheduleNotificationInDays(
             {
               title: `${i18n.t('Notifs.readyToSend')} ${newContact.firstName}?`,
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
@@ -192,7 +192,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                 contactId: newContact.id,
               },
             },
-            30
+            1
           );
         }
         this.props.setActiveContact(newContact);

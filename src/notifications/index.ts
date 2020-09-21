@@ -12,7 +12,13 @@ import {
   PushTokenListener,
 } from 'expo-notifications';
 import { Notif, NotifTypes, FutureNotif } from '@store/Notif/NotifTypes';
-import { addBusinessDays, addDays, addSeconds, format } from 'date-fns';
+import {
+  addBusinessDays,
+  addDays,
+  addHours,
+  addSeconds,
+  format,
+} from 'date-fns';
 import store from '@store';
 import { Contact, Mail, Subscription } from 'types';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
@@ -116,11 +122,10 @@ function cleanNotificationRequest(request: NotificationRequest): Notif | null {
   };
 }
 
-export async function scheduleNotificationInSeconds(
+export async function scheduleNotificationAtTime(
   notif: Notif,
-  seconds: number
+  time: Date
 ): Promise<void> {
-  const time = addSeconds(new Date(), seconds);
   const id = await Notifications.scheduleNotificationAsync({
     content: {
       title: notif.title,
@@ -143,11 +148,20 @@ export async function scheduleNotificationInSeconds(
   store.dispatch(setFutureNotifs(futureNotifs));
 }
 
+export async function scheduleNotificationInSeconds(
+  notif: Notif,
+  seconds: number
+): Promise<void> {
+  const time = addSeconds(new Date(), seconds);
+  await scheduleNotificationAtTime(notif, time);
+}
+
 export async function scheduleNotificationInHours(
   notif: Notif,
   hours: number
 ): Promise<void> {
-  await scheduleNotificationInSeconds(notif, hours * 3600);
+  const time = addHours(new Date(), hours);
+  await scheduleNotificationAtTime(notif, time);
 }
 
 export async function scheduleNotificationInDays(
@@ -156,26 +170,7 @@ export async function scheduleNotificationInDays(
 ): Promise<void> {
   const time = addDays(new Date(), days);
   time.setHours(20);
-  const id = await Notifications.scheduleNotificationAsync({
-    content: {
-      title: notif.title,
-      body: notif.body,
-      data: {
-        type: notif.type,
-        data: {
-          ...notif.data,
-        },
-      },
-    },
-    trigger: time,
-  });
-  const futureNotifs = [...store.getState().notif.futureNotifs];
-  futureNotifs.push({
-    id,
-    time: time.toISOString(),
-    notif,
-  });
-  store.dispatch(setFutureNotifs(futureNotifs));
+  await scheduleNotificationAtTime(notif, time);
 }
 
 export async function scheduleNotificationInBusinessDays(
@@ -184,26 +179,7 @@ export async function scheduleNotificationInBusinessDays(
 ): Promise<void> {
   const time = addBusinessDays(new Date(), bdays);
   time.setHours(20);
-  const id = await Notifications.scheduleNotificationAsync({
-    content: {
-      title: notif.title,
-      body: notif.body,
-      data: {
-        type: notif.type,
-        data: {
-          ...notif.data,
-        },
-      },
-    },
-    trigger: time,
-  });
-  const futureNotifs = [...store.getState().notif.futureNotifs];
-  futureNotifs.push({
-    id,
-    time: time.toISOString(),
-    notif,
-  });
-  store.dispatch(setFutureNotifs(futureNotifs));
+  await scheduleNotificationAtTime(notif, time);
 }
 
 export async function cancelAllNotificationsByType(
