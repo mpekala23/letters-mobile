@@ -130,7 +130,7 @@ export function setContactsMail(
   };
 }
 
-export function setExistingMail(mail: Record<number, Mail[]>): MailActionTypes {
+export function setExistingMail(mail: Record<string, Mail[]>): MailActionTypes {
   return {
     type: SET_EXISTING_MAIL,
     payload: mail,

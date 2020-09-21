@@ -5,6 +5,10 @@ export interface Image {
   height?: number;
 }
 
+export type Subscription = {
+  remove: () => void;
+};
+
 // Letters and Postcards (Commmon)
 export enum MailTypes {
   Letter = 'letter',

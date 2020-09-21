@@ -5,12 +5,12 @@ import { AuthStackParamList, Screens } from '@utils/Screens';
 import { Input, KeyboardAvoider, Picker, PickerRef } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
-import { Validation, STATES_DROPDOWN, hoursTill8Tomorrow } from '@utils';
+import { Validation, STATES_DROPDOWN } from '@utils';
 import { Image } from 'types';
 import * as Segment from 'expo-analytics-segment';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { register } from '@api';
-import Notifs from '@notifications';
+import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -122,15 +122,13 @@ class RegisterAddressScreen extends React.Component<Props, State> {
     try {
       await register(data);
       Segment.track('Signup - Account Created');
-      Notifs.scheduleNotificationInHours(
+      Notifs.scheduleNotificationInDays(
         {
           title: `${i18n.t('Notifs.youreOneTapAway')}`,
           body: `${i18n.t('Notifs.clickHereToBegin')}`,
-          data: {
-            type: NotifTypes.NoFirstContact,
-          },
+          type: NotifTypes.NoFirstContact,
         },
-        hoursTill8Tomorrow()
+        1
       );
     } catch (err) {
       if (err.data && err.data.email) {

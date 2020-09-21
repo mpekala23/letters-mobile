@@ -11,7 +11,7 @@ export const CLEAR_COMPOSING = 'mail/clear_composing';
 export interface MailState {
   composing: Draft;
   active: Mail | null;
-  existing: Record<number, Mail[]>;
+  existing: Record<string, Mail[]>;
 }
 
 interface SetComposingAction {
@@ -100,7 +100,7 @@ interface SetContactsMailAction {
 
 interface SetExistingMailAction {
   type: typeof SET_EXISTING_MAIL;
-  payload: Record<number, Mail[]>;
+  payload: Record<string, Mail[]>;
 }
 
 export type MailActionTypes =

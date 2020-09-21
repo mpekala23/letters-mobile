@@ -18,11 +18,13 @@ import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
+import { getPushToken } from '@notifications';
 import {
   uploadImage,
   fetchTimeout,
   API_URL,
   fetchAuthenticated,
+  ApiResponse,
 } from './Common';
 import { getContacts } from './Contacts';
 import { getMail, getSubcategoriesById, getCategories } from './Mail';
@@ -177,6 +179,14 @@ export async function loadDraft(): Promise<Draft> {
 }
 
 export async function uploadPushToken(token: string): Promise<void> {
+  if (!token.length) {
+    const err: ApiResponse = {
+      status: 'ERROR',
+      date: new Date().valueOf(),
+      data: 'Null push token',
+    };
+    throw err;
+  }
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `exponent/devices/subscribe`),
     {
@@ -214,8 +224,12 @@ export async function loginWithToken(): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
+    const pushToken = await getPushToken();
+    uploadPushToken(pushToken).catch(() => {
+      dropdownError({ message: i18n.t('Permission.notifs') });
+    });
     getCategories().catch(() => {
-      /* do nothing */
+      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
     });
     return userData;
   } catch (err) {
@@ -260,6 +274,10 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
   store.dispatch(loginUser(userData));
+  const pushToken = await getPushToken();
+  uploadPushToken(pushToken).catch(() => {
+    dropdownError({ message: i18n.t('Permission.notifs') });
+  });
   getCategories().catch(() => {
     dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
   });

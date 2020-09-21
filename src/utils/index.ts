@@ -9,6 +9,8 @@ import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
+import { createRef } from 'react';
+import { NavigationContainerRef } from '@react-navigation/native';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -29,6 +31,24 @@ export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
 export const ETA_PROCESSED_TO_DELIVERED = 3;
+
+export const navigationRef = createRef<NavigationContainerRef>();
+
+export function navigate(name: string, params = {}): void {
+  if (navigationRef.current) navigationRef.current.navigate(name, params);
+}
+
+export function resetNavigation({
+  index,
+  routes,
+}: {
+  index: number;
+  routes: { name: string }[];
+}): void {
+  if (navigationRef.current) {
+    navigationRef.current.reset({ index, routes });
+  }
+}
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -179,38 +199,6 @@ export {
   STATES_DROPDOWN,
   STATE_TO_INMATE_DB,
 };
-
-const mapNumToDay: Record<number, string> = {
-  0: 'Sunday',
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday',
-};
-
-export function threeBusinessDaysFromNow(): string {
-  const today = new Date(Date.now()).getDay();
-  if (today <= 2) {
-    // Sunday through Tuesday just add three
-    return mapNumToDay[(today + 3) % 7];
-  }
-  if (today <= 5) {
-    return mapNumToDay[(today + 5) % 7];
-  }
-  return mapNumToDay[(today + 4) % 7];
-}
-
-export function hoursTill8Tomorrow(): number {
-  const today = new Date();
-  const hourOfDay = today.getHours();
-  const minuteOfDay = today.getMinutes();
-  if (hourOfDay < 20) {
-    return 24 + 19 + minuteOfDay / 60 - hourOfDay;
-  }
-  return hourOfDay - 20;
-}
 
 export function sleep(ms: number, error = false): Promise<void> {
   return new Promise((resolve, reject) =>
