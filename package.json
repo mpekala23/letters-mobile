@@ -130,7 +130,6 @@
       "prettier --write"
     ]
   },
-  "proxy": "http://192.168.1.103",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

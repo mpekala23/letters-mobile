@@ -22,7 +22,10 @@ interface Props {
   userState: User;
 }
 
-const ReferralDashboardScreenBase = ({ userReferrals, userState }: Props) => {
+const ReferralDashboardScreenBase: React.FC<Props> = ({
+  userReferrals,
+  userState,
+}: Props) => {
   const renderItem = (item: FamilyConnection, index: number) => {
     return (
       <View

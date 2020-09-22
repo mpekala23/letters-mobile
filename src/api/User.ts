@@ -441,7 +441,7 @@ export async function getUserReferrals(): Promise<UserReferralsInfo> {
   );
   if (body.status !== 'OK' || !body.data) throw body;
 
-  const data = body.data as UserReferralsInfo;
+  const data = body.data as RawReferral;
   const cleanData = cleanReferralInfo(data);
   return cleanData;
 }

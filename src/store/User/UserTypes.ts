@@ -90,7 +90,7 @@ interface SetUserAction {
   payload: User;
 }
 
-interface SetUseReferralsAction {
+interface SetUserReferralsAction {
   type: typeof SET_USER_REFERRALS;
   payload: UserReferralsInfo;
 }
@@ -100,4 +100,4 @@ export type UserActionTypes =
   | LoginUserAction
   | LogoutUserAction
   | SetUserAction
-  | SetUseReferralsAction;
+  | SetUserReferralsAction;

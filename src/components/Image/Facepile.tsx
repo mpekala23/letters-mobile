@@ -1,6 +1,6 @@
 import ProfilePic from '@components/ProfilePic/ProfilePic.react';
 import { ProfilePicTypes } from 'types';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 interface Person {
@@ -14,7 +14,7 @@ interface Props {
   type: ProfilePicTypes;
 }
 
-const Facepile = ({ people, type }: Props): ReactElement => {
+const Facepile: React.FC<Props> = ({ people, type }: Props) => {
   return (
     <View style={{ flexDirection: 'row' }}>
       {people.map((person) => (
