@@ -1,5 +1,5 @@
 import { FamilyConnection, ProfilePicTypes } from 'types';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import Facepile from '@components/Image/Facepile';
 
@@ -7,7 +7,9 @@ interface Props {
   familyConnection: FamilyConnection;
 }
 
-const ReferralConnectionCard = ({ familyConnection }: Props): ReactElement => {
+const ReferralConnectionCard: React.FC<Props> = ({
+  familyConnection,
+}: Props) => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <View>

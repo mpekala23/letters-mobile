@@ -26,6 +26,7 @@ import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
+import * as Sentry from 'sentry-expo';
 import {
   uploadImage,
   fetchTimeout,
@@ -169,6 +170,7 @@ export async function loadDraft(): Promise<Draft> {
     store.dispatch(setComposing(draft));
     return draft;
   } catch (err) {
+    Sentry.captureException(err);
     await deleteDraft();
     const draft: Draft = {
       type: MailTypes.Letter,
@@ -269,17 +271,17 @@ export async function loginWithToken(): Promise<User> {
     Segment.identify(userData.email);
     Segment.track('Login Success');
     store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
+    try {
+      Promise.all([getCategories(), getUserReferrals()]);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
-    getCategories().catch(() => {
-      /* do nothing */
-    });
-    getUserReferrals().catch(() => {
-      /* do nothing */
-    });
     return userData;
   } catch (err) {
+    Sentry.captureException(err);
     store.dispatch(logoutUser());
     throw Error(err);
   }
@@ -303,6 +305,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     try {
       await saveToken(body.data.remember);
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
       });
@@ -318,15 +321,15 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     await loadDraft();
   } catch (err) {
+    Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
   store.dispatch(loginUser(userData));
-  getCategories().catch(() => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-  });
-  getUserReferrals().catch(() => {
-    dropdownError({ message: i18n.t('Error.cantRefreshReferrals') });
-  });
+  try {
+    Promise.all([getCategories(), getUserReferrals()]);
+  } catch (err) {
+    Sentry.captureException(err);
+  }
   return userData;
 }
 
@@ -344,6 +347,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       newPhoto = await uploadImage(data.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
@@ -376,6 +380,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     try {
       await saveToken(body.data.remember);
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
       });
@@ -424,6 +429,7 @@ export async function updateProfile(data: User): Promise<User> {
     try {
       newPhoto = await uploadImage(newPhoto, 'avatar');
     } catch (err) {
+      Sentry.captureException(err);
       newPhoto = undefined;
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }

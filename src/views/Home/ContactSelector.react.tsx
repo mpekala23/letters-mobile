@@ -7,7 +7,7 @@ import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { Mail, Contact, UserReferralsInfo } from 'types';
+import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
@@ -19,7 +19,6 @@ import * as Segment from 'expo-analytics-segment';
 import Notifs from '@notifications';
 import { differenceInHours } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
-import { setUserReferrals } from '@store/User/UserActions';
 import { UserActionTypes } from '@store/User/UserTypes';
 import CardBackground from '@assets/views/Referrals/CardBackground';
 import Styles from './ContactSelector.styles';
@@ -226,13 +225,11 @@ const mapStateToProps = (state: AppState) => ({
   lastUpdatedCategories: state.category.lastUpdated,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<ContactActionTypes | NotifActionTypes | UserActionTypes>
+  dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
 ) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
     handleNotif: () => dispatch(handleNotif()),
-    setReferrals: (userReferrals: UserReferralsInfo) =>
-      dispatch(setUserReferrals(userReferrals)),
   };
 };
 const ContactSelectorScreen = connect(
