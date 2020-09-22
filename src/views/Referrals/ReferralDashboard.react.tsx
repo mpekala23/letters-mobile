@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { FamilyConnection, ProfilePicTypes, UserReferralsInfo } from 'types';
@@ -15,6 +15,9 @@ import i18n from '@i18n';
 import ReferralConnectionCard from '@components/Card/ReferralConnectionCard.react';
 
 import { Screens } from '@utils/Screens';
+import { getUserReferrals } from '@api';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { ScrollView } from 'react-native-gesture-handler';
 import Styles from './ReferralDashboard.style';
 
 interface Props {
@@ -26,18 +29,36 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
   userReferrals,
   userState,
 }: Props) => {
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
   const renderItem = (item: FamilyConnection, index: number) => {
     return (
       <View
         style={{ marginTop: 16 }}
-        key={`${item.userName}-${item.contactName}-${item.state}-${index}`}
+        key={`${item.userFirstName}-${item.contactFirstName}-${item.state}-${index}`}
       >
         <ReferralConnectionCard familyConnection={item} />
       </View>
     );
   };
+
+  const doRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await getUserReferrals;
+    } catch (e) {
+      dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
+    }
+    setRefreshing(false);
+  };
+
   return (
-    <View style={Styles.trueBackground}>
+    <ScrollView
+      style={Styles.trueBackground}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={doRefresh} />
+      }
+    >
       <View style={Styles.headerWrapper}>
         <LinearGradient
           style={Styles.gradientBackground}
@@ -109,20 +130,16 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
           <Text style={[Typography.FONT_BOLD]}>
             {i18n.t('ReferralDashboardScreen.thankYou')}
           </Text>
-          <FlatList
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              justifyContent: 'center',
-            }}
-            data={userReferrals.families}
-            renderItem={({ item, index }) => renderItem(item, index)}
-            keyExtractor={(item, index) => {
-              return item.userName + item.contactName + index.toString();
-            }}
-          />
+          <View
+            style={{ flex: 1, justifyContent: 'center', paddingBottom: 24 }}
+          >
+            {userReferrals.families.map((family, index) =>
+              renderItem(family, index)
+            )}
+          </View>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

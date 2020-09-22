@@ -15,6 +15,7 @@
     "cantRefreshLetters": "No se pueden actualizar tus cartas",
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
     "cantRefreshCategories": "No se pueden actualizar las categorias",
+    "cantRefreshReferrals": "No se pueden actualizar tus métricas de impacto",
     "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
     "cantLoadMail": "No puedo cargar este correo",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",

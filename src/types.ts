@@ -160,8 +160,10 @@ export interface TrackingEvent {
 
 export interface FamilyConnection {
   contactImage: string;
-  contactName: string;
-  userName: string;
+  contactFirstName: string;
+  contactLastName: string;
+  userFirstName: string;
+  userLastName: string;
   userImage: string;
   city: string;
   state: string;

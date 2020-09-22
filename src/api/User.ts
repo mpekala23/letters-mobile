@@ -19,6 +19,7 @@ import {
   logoutUser,
   setUser,
   authenticateUser,
+  setUserReferrals,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
@@ -179,6 +180,60 @@ export async function loadDraft(): Promise<Draft> {
   }
 }
 
+interface FamilyConnectionRaw {
+  contact_first_name: string;
+  contact_last_name: string;
+  contact_image: string;
+  user_first_name: string;
+  user_last_name: string;
+  user_image: string;
+  city: string;
+  state: string;
+}
+
+interface RawReferral {
+  families: FamilyConnectionRaw[];
+  num_referrals: number;
+  num_lives_impacted: number;
+  num_mail_sent: number;
+}
+
+function cleanFamilyConnectionInfo(
+  families: FamilyConnectionRaw[]
+): FamilyConnection[] {
+  return families.map((family) => ({
+    contactImage: family.contact_image,
+    contactFirstName: family.contact_first_name,
+    contactLastName: family.contact_last_name,
+    userImage: family.user_image,
+    userFirstName: family.user_first_name,
+    userLastName: family.user_last_name,
+    city: family.city,
+    state: family.state,
+  }));
+}
+
+function cleanReferralInfo(data: RawReferral): UserReferralsInfo {
+  return {
+    families: cleanFamilyConnectionInfo(data.families),
+    numReferrals: data.num_referrals,
+    numLivesImpacted: data.num_lives_impacted,
+    numMailSent: data.num_mail_sent,
+  };
+}
+
+export async function getUserReferrals(): Promise<UserReferralsInfo> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `user/${store.getState().user.user.id}/referrals`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+
+  const data = body.data as RawReferral;
+  const referrals = cleanReferralInfo(data);
+  store.dispatch(setUserReferrals(referrals));
+  return referrals;
+}
+
 export async function uploadPushToken(token: string): Promise<void> {
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `exponent/devices/subscribe`),
@@ -218,6 +273,9 @@ export async function loginWithToken(): Promise<User> {
     store.dispatch(loginUser(userData));
     await loadDraft();
     getCategories().catch(() => {
+      /* do nothing */
+    });
+    getUserReferrals().catch(() => {
       /* do nothing */
     });
     return userData;
@@ -265,6 +323,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   store.dispatch(loginUser(userData));
   getCategories().catch(() => {
     dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+  });
+  getUserReferrals().catch(() => {
+    dropdownError({ message: i18n.t('Error.cantRefreshReferrals') });
   });
   return userData;
 }
@@ -395,53 +456,4 @@ export async function updateProfile(data: User): Promise<User> {
   userData.photo = newPhoto;
   store.dispatch(setUser(userData));
   return userData;
-}
-
-interface FamilyConnectionRaw {
-  contact_first_name: string;
-  contact_image: string;
-  user_first_name: string;
-  user_image: string;
-  city: string;
-  state: string;
-}
-
-interface RawReferral {
-  families: FamilyConnectionRaw[];
-  num_referrals: number;
-  num_lives_impacted: number;
-  num_mail_sent: number;
-}
-
-function cleanFamilyConnectionInfo(
-  families: FamilyConnectionRaw[]
-): FamilyConnection[] {
-  return families.map((family) => ({
-    contactImage: family.contact_image,
-    contactName: family.contact_first_name,
-    userImage: family.user_image,
-    userName: family.user_first_name,
-    city: family.city,
-    state: family.state,
-  }));
-}
-
-function cleanReferralInfo(data: RawReferral): UserReferralsInfo {
-  return {
-    families: cleanFamilyConnectionInfo(data.families),
-    numReferrals: data.num_referrals,
-    numLivesImpacted: data.num_lives_impacted,
-    numMailSent: data.num_mail_sent,
-  };
-}
-
-export async function getUserReferrals(): Promise<UserReferralsInfo> {
-  const body = await fetchAuthenticated(
-    url.resolve(API_URL, `user/${store.getState().user.user.id}/referrals`)
-  );
-  if (body.status !== 'OK' || !body.data) throw body;
-
-  const data = body.data as RawReferral;
-  const cleanData = cleanReferralInfo(data);
-  return cleanData;
 }

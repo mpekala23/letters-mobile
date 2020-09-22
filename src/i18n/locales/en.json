@@ -15,6 +15,7 @@
     "cantRefreshLetters": "Unable to refresh your letters",
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "cantRefreshCategories": "Unable to refresh postcard categories",
+    "cantRefreshReferrals": "Unable to refresh your referrals",
     "cantLoadDesigns": "Unable to load the designs",
     "cantLoadMail": "Unable to load this piece of mail",
     "timedOut": "The request timed out",

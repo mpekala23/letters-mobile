@@ -11,13 +11,7 @@ import { Mail, Contact, UserReferralsInfo } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import {
-  getContacts,
-  getUser,
-  uploadPushToken,
-  getCategories,
-  getUserReferrals,
-} from '@api';
+import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
@@ -49,7 +43,6 @@ interface Props {
   handleNotif: () => void;
   userId: number;
   lastUpdatedCategories: string | null;
-  setReferrals: (referrals: UserReferralsInfo) => void;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -188,8 +181,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
             <Button
               buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
               onPress={async () => {
-                const referrals = await getUserReferrals();
-                this.props.setReferrals(referrals);
                 this.props.navigation.navigate(Screens.ReferralDashboard);
                 Segment.track('Contact Selector - Click on Referral Card');
               }}

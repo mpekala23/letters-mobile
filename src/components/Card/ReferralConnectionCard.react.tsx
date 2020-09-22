@@ -15,20 +15,20 @@ const ReferralConnectionCard = ({ familyConnection }: Props): ReactElement => {
           people={[
             {
               image: familyConnection.userImage,
-              firstName: familyConnection.userName,
-              lastName: '',
+              firstName: familyConnection.userFirstName,
+              lastName: familyConnection.userLastName,
             },
             {
               image: familyConnection.contactImage,
-              firstName: familyConnection.contactName,
-              lastName: '',
+              firstName: familyConnection.contactFirstName,
+              lastName: familyConnection.contactLastName,
             },
           ]}
           type={ProfilePicTypes.ReferralDashboardConnection}
         />
       </View>
       <View style={{ marginLeft: 24 }}>
-        <Text>{`${familyConnection.userName} & ${familyConnection.contactName}`}</Text>
+        <Text>{`${familyConnection.userFirstName} & ${familyConnection.contactFirstName}`}</Text>
         <Text style={{ fontSize: 12 }}>
           {familyConnection.city}, {familyConnection.state}
         </Text>
