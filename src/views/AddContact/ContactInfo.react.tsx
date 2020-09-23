@@ -6,7 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Button, Icon, Input, KeyboardAvoider } from '@components';
+import {
+  Button,
+  Icon,
+  Input,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
 import { Colors, Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -39,7 +46,7 @@ export interface Props {
   navigation: ContactInfoScreenNavigationProp;
   contactDraft: ContactDraft;
   route: {
-    params: { addFromSelector?: boolean; phyState?: string };
+    params?: { addFromSelector?: boolean; phyState?: string };
   };
   setAddingPersonal: (contactPersonal: ContactPersonal) => void;
 }
@@ -50,7 +57,7 @@ export interface State {
 }
 
 class ContactInfoScreenBase extends React.Component<Props, State> {
-  private stateRef = createRef<Input>();
+  private statePicker = createRef<PickerRef>();
 
   private firstName = createRef<Input>();
 
@@ -58,7 +65,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   private inmateNumber = createRef<Input>();
 
-  private relationship = createRef<Input>();
+  private relationshipPicker = createRef<PickerRef>();
 
   private unsubscribeFocus: () => void;
 
@@ -114,45 +121,45 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       page: 'info',
     });
     if (
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.inmateNumber.current &&
-      this.relationship.current
+      this.relationshipPicker.current
     ) {
       const contactPersonal: ContactPersonal = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.inmateNumber.current.state.value,
-        relationship: this.relationship.current.state.value,
+        relationship: this.relationshipPicker.current.value,
       };
       this.props.setAddingPersonal(contactPersonal);
       this.props.navigation.setParams({
-        phyState: this.stateRef.current.state.value,
+        phyState: this.statePicker.current.value,
       });
       this.props.navigation.navigate(Screens.FacilityDirectory, {
-        phyState: this.stateRef.current.state.value,
+        phyState: this.statePicker.current.value,
       });
     }
   }
 
   setStoreValues = () => {
     if (
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.inmateNumber.current &&
-      this.relationship.current
+      this.relationshipPicker.current
     ) {
       const contactPersonal: ContactPersonal = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
         inmateNumber: this.inmateNumber.current.state.value,
-        relationship: this.relationship.current.state.value,
+        relationship: this.relationshipPicker.current.value,
       };
       this.props.setAddingPersonal(contactPersonal);
       this.props.navigation.setParams({
-        phyState: this.stateRef.current.state.value,
+        phyState: this.statePicker.current.value,
       });
     }
   };
@@ -168,30 +175,28 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   loadValuesFromStore() {
     const addingContact = this.props.contactDraft;
-    if (this.props.route.params && this.props.route.params.addFromSelector) {
-      if (this.stateRef.current)
-        this.stateRef.current.setState({ dirty: false });
+    const addingFromSelector =
+      this.props.route.params && this.props.route.params.addFromSelector;
+
+    if (addingFromSelector) {
       if (this.firstName.current)
         this.firstName.current.setState({ dirty: false });
       if (this.lastName.current)
         this.lastName.current.setState({ dirty: false });
       if (this.inmateNumber.current)
         this.inmateNumber.current.setState({ dirty: false });
-      if (this.relationship.current)
-        this.relationship.current.setState({ dirty: false });
     }
 
     this.props.navigation.setParams({ addFromSelector: false });
 
-    if (this.stateRef.current) {
-      if (this.props.route.params && this.props.route.params.phyState) {
-        this.stateRef.current.set(this.props.route.params.phyState);
-      } else if (addingContact.facility) {
-        this.stateRef.current.set(addingContact.facility.state);
-      } else {
-        this.stateRef.current.set('');
-      }
-      this.setState({ stateToSearch: this.stateRef.current.state.value });
+    if (this.statePicker.current) {
+      this.statePicker.current.setStoredValue(
+        this.props.route.params && this.props.route.params.phyState
+          ? this.props.route.params.phyState
+          : addingContact.facility.state,
+        !addingFromSelector
+      );
+      this.setState({ stateToSearch: this.statePicker.current.value });
     }
     if (this.firstName.current)
       this.firstName.current.set(addingContact.firstName);
@@ -199,24 +204,28 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.lastName.current.set(addingContact.lastName);
     if (this.inmateNumber.current)
       this.inmateNumber.current.set(addingContact.inmateNumber);
-    if (this.relationship.current)
-      this.relationship.current.set(addingContact.relationship);
+    if (this.relationshipPicker.current) {
+      this.relationshipPicker.current.setStoredValue(
+        addingContact.relationship,
+        !addingFromSelector
+      );
+    }
   }
 
   updateValid() {
     if (
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.inmateNumber.current &&
-      this.relationship.current
+      this.relationshipPicker.current
     ) {
       const result =
-        this.stateRef.current.state.valid &&
+        this.statePicker.current.isValueSelected() &&
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.inmateNumber.current.state.valid &&
-        this.relationship.current.state.valid;
+        this.relationshipPicker.current.isValueSelected();
       this.setValid(result);
     }
   }
@@ -335,33 +344,21 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   </Text>
                 </Button>
                 {tapHereToSearchStateDatabase}
-                <Input
-                  ref={this.stateRef}
-                  parentStyle={(CommonStyles.fullWidth, { marginBottom: 10 })}
+                <Picker
+                  ref={this.statePicker}
+                  items={STATES_DROPDOWN}
                   placeholder={i18n.t('ContactInfoScreen.state')}
-                  options={STATES_DROPDOWN}
-                  validate={Validation.State}
-                  onValid={() => {
-                    if (
-                      this.stateRef.current &&
-                      this.stateRef.current.state.valid
-                    ) {
-                      const abbrev =
-                        STATE_TO_ABBREV[this.stateRef.current.state.value];
-                      if (abbrev)
-                        getFacilities(abbrev).catch(() => {
-                          dropdownError({
-                            message: i18n.t('Error.cantRefreshFacilities'),
-                          });
-                        });
-                      this.setState({
-                        stateToSearch: this.stateRef.current.state.value,
-                      });
-                    }
+                  onValueChange={(v) => {
+                    this.setState({ stateToSearch: v });
                     this.updateValid();
+                    const abbrev = STATE_TO_ABBREV[v];
+                    if (abbrev)
+                      getFacilities(abbrev).catch(() => {
+                        dropdownError({
+                          message: i18n.t('Error.cantRefreshFacilities'),
+                        });
+                      });
                   }}
-                  onInvalid={() => this.setState({ valid: false })}
-                  nextInput={this.firstName}
                 />
                 <Input
                   ref={this.firstName}
@@ -414,14 +411,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
-                  nextInput={this.relationship}
                 />
-                <Input
-                  ref={this.relationship}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.relationshipToInmate')}
-                  required
-                  options={[
+                <Picker
+                  ref={this.relationshipPicker}
+                  items={[
                     i18n.t('ContactInfoScreen.spouse'),
                     i18n.t('ContactInfoScreen.parent'),
                     i18n.t('ContactInfoScreen.kid'),
@@ -432,12 +425,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     i18n.t('ContactInfoScreen.mentor'),
                     i18n.t('ContactInfoScreen.other'),
                   ]}
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setValid(false)}
-                  strictDropdown
-                  onDropdownOpen={() => {
-                    if (this.scrollView.current)
-                      this.scrollView.current.scrollToEnd({ animated: true });
+                  placeholder={i18n.t('ContactInfoScreen.relationshipToInmate')}
+                  onValueChange={() => {
+                    this.updateValid();
                   }}
                 />
               </View>

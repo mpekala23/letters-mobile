@@ -2,12 +2,8 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ProfilePicTypes } from 'types';
 import { Typography } from '@styles';
-import Avatar from '@assets/components/ProfilePic/Avatar';
-import AvatarSmall from '@assets/components/ProfilePic/AvatarSmall';
-import { navigate } from '@notifications';
-import AvatarTopbar from '@assets/components/ProfilePic/AvatarTopbar';
+import { navigate } from '@utils';
 import { Screens } from '@utils/Screens';
-import Icon from '../Icon/Icon.react';
 import Styles from './ProfilePic.styles';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
 
@@ -72,13 +68,10 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
   );
 
   if (props.imageUri) {
-    let avatar = AvatarTopbar;
-    if (props.type === ProfilePicTypes.SingleContact) avatar = Avatar;
-    else if (props.type === ProfilePicTypes.Contact) avatar = AvatarSmall;
-    else if (props.type === ProfilePicTypes.Avatar) avatar = Avatar;
+    // instead of using the default image svg, let's just use the initials
     insideCircle =
       props.imageUri.indexOf('.svg') !== -1 ? (
-        <Icon svg={avatar} />
+        insideCircle
       ) : (
         <AsyncImage
           download

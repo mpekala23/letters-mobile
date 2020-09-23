@@ -9,8 +9,15 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input, PicUpload, KeyboardAvoider } from '@components';
-import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
+import {
+  Button,
+  Input,
+  PicUpload,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
+import { STATES_DROPDOWN, Validation } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
 import { ContactActionTypes, ContactState } from '@store/Contact/ContactTypes';
@@ -22,7 +29,7 @@ import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
-import Notifs from '@notifications';
+import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
@@ -35,7 +42,7 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
-  hasSentLetter: boolean;
+  hasSentMail: boolean;
   setAdding: (contactDraft: ContactDraft) => void;
   setActiveContact: (contact: Contact) => void;
   route: { params: { manual: boolean } };
@@ -47,7 +54,7 @@ export interface State {
 }
 
 class ReviewContactScreenBase extends React.Component<Props, State> {
-  private stateRef = createRef<Input>();
+  private statePicker = createRef<PickerRef>();
 
   private firstName = createRef<Input>();
 
@@ -90,7 +97,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     if (
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.postal.current &&
@@ -98,7 +105,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.props.contactState.adding.facility
     ) {
-      this.stateRef.current.set(this.props.contactState.adding.facility.state);
+      this.statePicker.current.setStoredValue(
+        this.props.contactState.adding.facility.state
+      );
       this.firstName.current.set(this.props.contactState.adding.firstName);
       this.lastName.current.set(this.props.contactState.adding.lastName);
       this.postal.current.set(this.props.contactState.adding.facility.postal);
@@ -117,7 +126,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
     });
     if (
       this.state.valid &&
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.postal.current &&
@@ -129,7 +138,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         type: this.props.contactState.adding.facility.type,
         address: this.facilityAddress.current.state.value,
         city: this.props.contactState.adding.facility.city,
-        state: this.stateRef.current.state.value,
+        state: this.statePicker.current.value,
         postal: this.postal.current.state.value,
         phone: this.props.contactState.adding.facility.phone,
       };
@@ -173,19 +182,17 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           Manual: this.props.route.params.manual,
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
-        if (!this.props.hasSentLetter) {
-          Notifs.scheduleNotificationInHours(
+        if (!this.props.hasSentMail) {
+          Notifs.scheduleNotificationInDays(
             {
               title: `${i18n.t('Notifs.readyToSend')} ${newContact.firstName}?`,
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
+              type: NotifTypes.NoFirstLetter,
               data: {
-                type: NotifTypes.NoFirstLetter,
-                data: {
-                  contactId: newContact.id,
-                },
+                contactId: newContact.id,
               },
             },
-            hoursTill8Tomorrow() + 24
+            1
           );
         }
         this.props.setActiveContact(newContact);
@@ -233,7 +240,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
   updateValid() {
     if (
-      this.stateRef.current &&
+      this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
       this.postal.current &&
@@ -241,7 +248,7 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current
     ) {
       const result =
-        this.stateRef.current.state.valid &&
+        this.statePicker.current.isValueSelected() &&
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
         this.postal.current.state.valid &&
@@ -305,71 +312,60 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
                     {i18n.t('ReviewContactScreen.clickToUploadContactImage')}
                   </Text>
                 </View>
-                <Input
-                  ref={this.stateRef}
-                  parentStyle={{
-                    width: '100%',
-                    marginTop: 10,
-                    marginBottom: 10,
-                  }}
-                  placeholder={i18n.t('ContactInfoScreen.state')}
-                  options={STATES_DROPDOWN}
-                  validate={Validation.State}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.firstName}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.firstName')}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.lastName}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.lastName')}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.postal}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.postal')}
-                  required
-                  validate={Validation.Postal}
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.facilityName}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('AddManuallyScreen.facilityName')}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.facilityAddress}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.unit}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ReviewContactScreen.optionalUnit')}
-                />
-                <Input
-                  ref={this.dorm}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ReviewContactScreen.optionalDorm')}
-                />
+                <View style={{ width: '100%', marginTop: 10 }}>
+                  <Picker
+                    ref={this.statePicker}
+                    items={STATES_DROPDOWN}
+                    placeholder={i18n.t('ContactInfoScreen.state')}
+                    onValueChange={() => {
+                      this.updateValid();
+                    }}
+                  />
+                  <Input
+                    ref={this.firstName}
+                    placeholder={i18n.t('ContactInfoScreen.firstName')}
+                    required
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setState({ valid: false })}
+                  />
+                  <Input
+                    ref={this.lastName}
+                    placeholder={i18n.t('ContactInfoScreen.lastName')}
+                    required
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setState({ valid: false })}
+                  />
+                  <Input
+                    ref={this.postal}
+                    placeholder={i18n.t('ContactInfoScreen.postal')}
+                    required
+                    validate={Validation.Postal}
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setState({ valid: false })}
+                  />
+                  <Input
+                    ref={this.facilityName}
+                    placeholder={i18n.t('AddManuallyScreen.facilityName')}
+                    required
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setState({ valid: false })}
+                  />
+                  <Input
+                    ref={this.facilityAddress}
+                    placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
+                    required
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setState({ valid: false })}
+                  />
+                  <Input
+                    ref={this.unit}
+                    placeholder={i18n.t('ReviewContactScreen.optionalUnit')}
+                  />
+                  <Input
+                    ref={this.dorm}
+                    placeholder={i18n.t('ReviewContactScreen.optionalDorm')}
+                  />
+                </View>
               </View>
             </ScrollView>
           </View>
@@ -391,7 +387,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
-  hasSentLetter: state.mail.existing !== {},
+  hasSentMail: Object.values(state.mail.existing).some(
+    (mail) => mail.length > 0
+  ),
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

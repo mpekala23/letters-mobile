@@ -20,7 +20,7 @@ type MemoryLaneScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: MemoryLaneScreenNavigationProp;
   contact: Contact;
-  existingMail: Record<number, Mail[]>;
+  existingMail: Record<string, Mail[]>;
   setActiveMail: (mail: Mail) => void;
 }
 
@@ -30,8 +30,8 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
     mail && mail.length > 0 ? (
       mail.map((item: Mail) => {
         let imageUri = '';
-        if (item.type === MailTypes.Letter && item.image)
-          imageUri = item.image.uri;
+        if (item.type === MailTypes.Letter && item.images.length)
+          imageUri = item.images[0].uri;
         else if (item.type === MailTypes.Postcard)
           imageUri = item.design.image.uri;
         return (

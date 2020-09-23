@@ -42,7 +42,7 @@ import {
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
-import { navigationRef, navigate } from '@notifications';
+import { navigationRef, navigate, WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 import { Notif } from '@store/Notif/NotifTypes';
 import Topbar, {
   setTitle,
@@ -52,7 +52,7 @@ import Topbar, {
 } from '@components/Topbar/Topbar.react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+
 import i18n from '@i18n';
 import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
 

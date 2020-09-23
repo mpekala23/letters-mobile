@@ -27,11 +27,13 @@ import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
+import { getPushToken } from '@notifications';
 import {
   uploadImage,
   fetchTimeout,
   API_URL,
   fetchAuthenticated,
+  ApiResponse,
 } from './Common';
 import { getContacts } from './Contacts';
 import { getMail, getSubcategoriesById, getCategories } from './Mail';
@@ -90,6 +92,7 @@ export async function deleteDraft(): Promise<void> {
   await deleteItemAsync(Storage.DraftType);
   await deleteItemAsync(Storage.DraftContent);
   await deleteItemAsync(Storage.DraftRecipientId);
+  await deleteItemAsync(Storage.DraftImages);
   await deleteItemAsync(Storage.DraftDesignUri);
   await deleteItemAsync(Storage.DraftCategoryId);
   await deleteItemAsync(Storage.DraftSubcategoryName);
@@ -100,7 +103,9 @@ export async function saveDraft(draft: Draft): Promise<void> {
   await setItemAsync(Storage.DraftType, draft.type);
   await setItemAsync(Storage.DraftContent, draft.content);
   await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
-  if (
+  if (draft.type === MailTypes.Letter) {
+    await setItemAsync(Storage.DraftImages, JSON.stringify(draft.images));
+  } else if (
     draft.type === MailTypes.Postcard &&
     draft.design.image.uri &&
     draft.design.categoryId &&
@@ -129,10 +134,12 @@ export async function loadDraft(): Promise<Draft> {
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
     if (!draftType || !draftRecipientId) throw Error('No draft saved');
     if (draftType === MailTypes.Letter) {
+      const draftImages = await getItemAsync(Storage.DraftImages);
       const draft: Draft = {
         type: MailTypes.Letter,
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
+        images: draftImages ? JSON.parse(draftImages) : [],
       };
       store.dispatch(setComposing(draft));
       return draft;
@@ -166,6 +173,7 @@ export async function loadDraft(): Promise<Draft> {
       type: MailTypes.Letter,
       recipientId: -1,
       content: '',
+      images: [],
     };
     store.dispatch(setComposing(draft));
     return draft;
@@ -176,6 +184,7 @@ export async function loadDraft(): Promise<Draft> {
       type: MailTypes.Letter,
       recipientId: -1,
       content: '',
+      images: [],
     };
     store.dispatch(setComposing(draft));
     return draft;
@@ -237,6 +246,14 @@ export async function getUserReferrals(): Promise<UserReferralsInfo> {
 }
 
 export async function uploadPushToken(token: string): Promise<void> {
+  if (!token.length) {
+    const err: ApiResponse = {
+      status: 'ERROR',
+      date: new Date().valueOf(),
+      data: 'Null push token',
+    };
+    throw err;
+  }
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `exponent/devices/subscribe`),
     {
@@ -279,6 +296,13 @@ export async function loginWithToken(): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
+    const pushToken = await getPushToken();
+    uploadPushToken(pushToken).catch(() => {
+      dropdownError({ message: i18n.t('Permission.notifs') });
+    });
+    getCategories().catch(() => {
+      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    });
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -328,8 +352,13 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   try {
     Promise.all([getCategories(), getUserReferrals()]);
   } catch (err) {
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
     Sentry.captureException(err);
   }
+  const pushToken = await getPushToken();
+  uploadPushToken(pushToken).catch(() => {
+    dropdownError({ message: i18n.t('Permission.notifs') });
+  });
   return userData;
 }
 

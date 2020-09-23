@@ -164,7 +164,7 @@
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
     "lovedOne": "Ser Querido Encarcelado",
@@ -228,6 +228,7 @@
   "UpdateContactScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "inmateNumber": "Número de preso",
     "facilityName": "Nombre del Presidio",
     "facilityAddress": "Dirección del Presidio",
     "facilityCity": "Ciudad del Presidio",
@@ -358,6 +359,9 @@
     "enterBasic": "Enter Basic Information",
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
     "yourOwnLettersAndPhotos": "Your own letters and photos."
+  },
+  "ComposeTools": {
+    "wordsLeft": "palabras"
   },
   "Notifs": {
     "happy": "Feliz",

@@ -11,15 +11,13 @@ import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
-import { getContacts, getUser, uploadPushToken, getCategories } from '@api';
+import { getContacts, getUser, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
 import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
-import Notifs from '@notifications';
 import { differenceInHours } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
-import { UserActionTypes } from '@store/User/UserTypes';
 import CardBackground from '@assets/views/Referrals/CardBackground';
 import Styles from './ContactSelector.styles';
 
@@ -34,7 +32,7 @@ interface State {
 
 interface Props {
   existingContacts: Contact[];
-  existingMail: Record<number, Mail[]>;
+  existingMail: Record<string, Mail[]>;
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
   currentNotif: Notif | null;
@@ -62,14 +60,14 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 
   async componentDidMount() {
     if (this.props.currentNotif) this.props.handleNotif();
-    try {
+    /* try {
       await Notifs.setup();
       this.props.handleNotif();
       const token = Notifs.getToken();
       await uploadPushToken(token);
     } catch (err) {
       dropdownError({ message: i18n.t('Permission.notifs') });
-    }
+    } */
   }
 
   componentWillUnmount() {

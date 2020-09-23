@@ -5,6 +5,10 @@ export interface Image {
   height?: number;
 }
 
+export type Subscription = {
+  remove: () => void;
+};
+
 // Letters and Postcards (Commmon)
 export enum MailTypes {
   Letter = 'letter',
@@ -24,7 +28,7 @@ export interface PostcardDesign {
 
 interface LetterSpecific {
   type: MailTypes.Letter;
-  image?: Image;
+  images: Image[];
 }
 
 interface PostcardSpecific {
@@ -191,6 +195,7 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftImages = 'Ameelio-DraftImages',
   DraftCategoryId = 'Ameelio-DraftCategoryId',
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',

@@ -13,6 +13,9 @@ import * as Segment from 'expo-analytics-segment';
 import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
 import { isProduction } from '@utils';
+import { cleanupNotifs, setupNotifs } from '@notifications';
+
+import { Subscription } from 'types';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -35,12 +38,13 @@ const customTextProps = {
 
 export interface State {
   fontsLoaded: boolean;
+  notifSubscriptions: Subscription[];
 }
 
 export default class App extends React.Component<null, State> {
   constructor(props: null) {
     super(props);
-    this.state = { fontsLoaded: false };
+    this.state = { fontsLoaded: false, notifSubscriptions: [] };
   }
 
   async componentDidMount(): Promise<void> {
@@ -64,10 +68,14 @@ export default class App extends React.Component<null, State> {
     } catch (err) {
       /* Unable to load token */
     }
+
+    const notifSubscriptions = setupNotifs();
+    this.setState({ notifSubscriptions });
   }
 
   componentWillUnmount(): void {
     Segment.track('App Closed');
+    cleanupNotifs(this.state.notifSubscriptions);
   }
 
   static getSegmentWriteKeys(): Record<string, string> {

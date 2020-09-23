@@ -3,7 +3,7 @@ import { View, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
 import { Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Input, Icon, KeyboardAvoider } from '@components';
+import { Input, Icon, KeyboardAvoider, Picker, PickerRef } from '@components';
 import { Validation, STATES_DROPDOWN } from '@utils';
 import { Facility, PrisonTypes, ContactFacility } from 'types';
 import i18n from '@i18n';
@@ -44,7 +44,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
 
   private facilityCity = createRef<Input>();
 
-  private facilityState = createRef<Input>();
+  private facilityStatePicker = createRef<PickerRef>();
 
   private facilityPostal = createRef<Input>();
 
@@ -101,7 +101,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityPostal.current &&
-      this.facilityState.current &&
+      this.facilityStatePicker.current &&
       this.facilityPhone.current
     ) {
       const facility: Facility = {
@@ -109,7 +109,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         type: PrisonTypes.Federal,
         address: this.facilityAddress.current.state.value,
         city: this.facilityCity.current.state.value,
-        state: this.facilityState.current.state.value,
+        state: this.facilityStatePicker.current.value,
         postal: this.facilityPostal.current.state.value,
         phone: this.facilityPhone.current.state.value,
       };
@@ -134,7 +134,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
-      this.facilityState.current &&
+      this.facilityStatePicker.current &&
       this.facilityPostal.current &&
       this.facilityPhone.current
     ) {
@@ -142,7 +142,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
         this.facilityName.current.state.valid &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
-        this.facilityState.current.state.valid &&
+        this.facilityStatePicker.current.isValueSelected() &&
         this.facilityPostal.current.state.valid &&
         this.facilityPhone.current.state.valid;
       this.setValid(result);
@@ -163,8 +163,11 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       if (this.facilityPhone.current)
         this.facilityPhone.current.set(addingFacility.phone);
     }
-    if (this.facilityState.current)
-      this.facilityState.current.set(this.props.route.params.phyState);
+    if (this.facilityStatePicker.current) {
+      this.facilityStatePicker.current.setStoredValue(
+        this.props.route.params.phyState
+      );
+    }
   }
 
   render(): JSX.Element {
@@ -242,24 +245,14 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
-                  nextInput={this.facilityState}
                 />
-                <Input
-                  ref={this.facilityState}
-                  parentStyle={[CommonStyles.fullWidth, { marginBottom: 10 }]}
+                <Picker
+                  ref={this.facilityStatePicker}
+                  items={STATES_DROPDOWN}
                   placeholder={i18n.t('AddManuallyScreen.facilityState')}
-                  required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
+                  onValueChange={() => {
+                    this.updateValid();
                   }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
-                  validate={Validation.State}
-                  options={STATES_DROPDOWN}
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setValid(false)}
-                  nextInput={this.facilityPostal}
                 />
                 <Input
                   ref={this.facilityPostal}

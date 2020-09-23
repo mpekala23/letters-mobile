@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, RefreshControl } from 'react-native';
+import { View, Text, RefreshControl } from 'react-native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { FamilyConnection, ProfilePicTypes, UserReferralsInfo } from 'types';
@@ -125,7 +125,7 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
         containerStyle={{ width: '100%' }}
       />
 
-      {userReferrals.families.length && (
+      {userReferrals.families.length > 0 && (
         <View style={Styles.thanksToYouWrapper}>
           <Text style={[Typography.FONT_BOLD]}>
             {i18n.t('ReferralDashboardScreen.thankYou')}

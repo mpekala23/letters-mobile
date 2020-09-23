@@ -20,7 +20,13 @@ import {
   MailTypes,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
+import {
+  WINDOW_WIDTH,
+  WINDOW_HEIGHT,
+  takeImage,
+  capitalize,
+  getNumWords,
+} from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -70,7 +76,7 @@ interface State {
   writing: boolean;
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
-  charsLeft: number;
+  wordsLeft: number;
   valid: boolean;
   mediaGranted: boolean;
   renderMethod: 'grid' | 'bars';
@@ -104,7 +110,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       writing: false,
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
-      charsLeft: 300,
+      wordsLeft: 100,
       valid: true,
       mediaGranted: true,
       renderMethod: 'grid',
@@ -120,7 +126,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.renderGridItem = this.renderGridItem.bind(this);
     this.renderBarItem = this.renderBarItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
-    this.updateCharsLeft = this.updateCharsLeft.bind(this);
+    this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
@@ -307,13 +313,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     return false;
   };
 
-  updateCharsLeft(value: string): void {
-    this.setState({ charsLeft: 300 - value.length });
-    this.setValid(300 - value.length >= 0);
+  updateWordsLeft(value: string): void {
+    const numWords = getNumWords(value);
+    this.setState({ wordsLeft: 100 - numWords });
+    this.setValid(100 - numWords >= 0);
   }
 
   changeText(value: string): void {
-    this.updateCharsLeft(value);
+    this.updateWordsLeft(value);
     this.props.setContent(value);
     saveDraft(this.props.composing);
   }
@@ -721,7 +728,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             </Animated.View>
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
-              numLeft={this.state.charsLeft}
+              numLeft={this.state.wordsLeft}
             />
           </View>
         </KeyboardAvoider>

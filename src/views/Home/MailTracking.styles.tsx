@@ -44,21 +44,13 @@ export default StyleSheet.create({
     color: Colors.AMEELIO_BLACK,
     fontSize: 14,
   },
-  trackingPhoto: {
-    height: 275,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    aspectRatio: 1,
-  },
   animatedTruck: {
     borderRadius: 50,
     backgroundColor: Colors.BLUE_500,
     height: 48,
     width: 48,
     position: 'absolute',
-    left: 0,
+    left: -5,
     zIndex: 999,
   },
   endpointsContainer: {

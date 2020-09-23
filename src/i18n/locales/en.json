@@ -164,7 +164,7 @@
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Heard from an Ameelio Ambassador",
     "recommendation": "Recommendation from Friends or Family",
     "lovedOne": "Incarcerated Loved-One",
@@ -228,6 +228,7 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
+    "inmateNumber": "Inmate Number",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
@@ -355,6 +356,9 @@
     "noDesignSelected": "No design selected. Tap below to get started.",
     "iWouldLikeToSend": "I would like to send something:",
     "yourOwnLettersAndPhotos": "Your own letters and photos."
+  },
+  "ComposeTools": {
+    "wordsLeft": "words left"
   },
   "Notifs": {
     "happy": "Happy",

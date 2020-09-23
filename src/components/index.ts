@@ -8,6 +8,7 @@ import CreditsCard from './Card/CreditsCard.react';
 import ComposeHeader from './ComposeHeader/ComposeHeader.react';
 import ComposeTools from './ComposeTools/ComposeTools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
+import DisplayImage from './DisplayImage/DisplayImage.react';
 import Dropdown from './Dropdown/Dropdown.react';
 import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
@@ -21,6 +22,7 @@ import LetterTracker from './LetterTracker/LetterTracker.react';
 import ListItem from './ListItem/ListItem.react';
 import MailingAddressPreview from './MailingAddressPreview/MailingAddressPreview.react';
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
+import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
@@ -39,6 +41,7 @@ export {
   ComposeHeader,
   ComposeTools,
   DeliveryStatusCard,
+  DisplayImage,
   Dropdown,
   EditablePostcard,
   GenericCard,
@@ -52,6 +55,7 @@ export {
   ListItem,
   MailingAddressPreview,
   MemoryLaneCard,
+  Picker,
   PicUpload,
   PrisonCard,
   ProfilePic,
@@ -59,3 +63,5 @@ export {
   Statusbar,
   Topbar,
 };
+
+export type { PickerRef };
