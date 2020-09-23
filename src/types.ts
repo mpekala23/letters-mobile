@@ -6,7 +6,17 @@ export interface Image {
 }
 
 export interface Sticker {
-  source: string;
+  svg: string;
+  name: string;
+}
+
+export interface PlacedSticker {
+  sticker: Sticker;
+  position: {
+    x: number;
+    y: number;
+  };
+  id: number;
 }
 
 // Letters and Postcards (Commmon)
