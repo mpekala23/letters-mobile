@@ -60,7 +60,7 @@
     "react-native-elements": "^2.0.0",
     "react-native-emoji": "^1.8.0",
     "react-native-env": "0.0.6",
-    "react-native-gesture-handler": "~1.6.0",
+    "react-native-gesture-handler": "^1.6.1",
     "react-native-global-props": "^1.1.5",
     "react-native-picker-select": "^8.0.0",
     "react-native-reanimated": "^1.9.0",

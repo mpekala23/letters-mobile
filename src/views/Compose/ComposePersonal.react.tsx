@@ -335,6 +335,17 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       });
       return;
     }
+    if (this.postcardRef.current) {
+      this.postcardRef.current.getSnapshot().then((snapshot) => {
+        this.setDesignState({ snapshot });
+        if (snapshot) {
+          this.props.setDesign({
+            image: snapshot,
+            custom: true,
+          });
+        }
+      });
+    }
     this.setDesignState({ animatingFlip: true });
     Animated.timing(this.state.designState.flip, {
       toValue: 1,
@@ -390,8 +401,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   renderDesignButtons = (): JSX.Element => {
     const middle =
-      !this.state.designState.animatingFlip &&
-      this.state.subscreen !== 'Design' ? (
+      this.state.subscreen !== 'Design' &&
+      !this.state.designState.animatingFlip ? (
         <View />
       ) : (
         <>
@@ -749,15 +760,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 recipient={this.props.recipient}
                 width={WINDOW_WIDTH - 32}
                 height={POSTCARD_HEIGHT}
-                updateSnapshot={(snapshot) => {
-                  this.setDesignState({ snapshot });
-                  if (snapshot) {
-                    this.props.setDesign({
-                      image: snapshot,
-                      custom: true,
-                    });
-                  }
-                }}
                 bottomDetails={this.state.designState.bottomDetails}
               />
               <Animated.View

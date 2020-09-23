@@ -6,7 +6,6 @@ import i18n from '@i18n';
 import { Colors } from '@styles';
 import AddImage from '@assets/components/DynamicPostcard/AddImage';
 import { captureRef } from 'react-native-view-shot';
-import { sleep } from '@utils';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './DynamicPostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -30,7 +29,6 @@ interface Props {
   onImageAdd: (position: number) => void;
   activePosition: number;
   highlightActive: boolean;
-  updateSnapshot: (snapshot: Image | null) => void;
   bottomDetails: 'layout' | 'design' | 'stickers' | null;
 }
 
@@ -54,10 +52,17 @@ class DynamicPostcard extends React.Component<Props, State> {
     };
   }
 
-  componentDidUpdate(prevProps: Props): void {
-    if (prevProps.layout !== this.props.layout) {
-      this.updateSnapshot();
-    }
+  async getSnapshot(): Promise<Image> {
+    const result = await captureRef(this.viewShotRef, {
+      format: 'png',
+      width: pixelWidth,
+      height: pixelHeight,
+    });
+    return {
+      uri: result,
+      width: pixelWidth,
+      height: pixelHeight,
+    };
   }
 
   set(value: string): void {
@@ -68,20 +73,10 @@ class DynamicPostcard extends React.Component<Props, State> {
     if (this.inputRef.current) this.inputRef.current.forceFocus();
   }
 
-  addSticker(sticker: Sticker) {
+  addSticker(sticker: Sticker): void {
     if (this.stickerManagerRef.current) {
       this.stickerManagerRef.current.addSticker(sticker);
     }
-  }
-
-  async updateSnapshot(): Promise<void> {
-    await sleep(500);
-    const result = await captureRef(this.viewShotRef, {
-      format: 'png',
-      width: pixelWidth,
-      height: pixelHeight,
-    });
-    this.props.updateSnapshot({ uri: result });
   }
 
   renderImage(position: number, border = true): JSX.Element {
@@ -236,11 +231,79 @@ class DynamicPostcard extends React.Component<Props, State> {
         ]}
       >
         <Animated.View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: this.props.flip
+              ? this.props.flip.interpolate({
+                  inputRange: [0, 0.9999999, 1],
+                  outputRange: ['100%', '100%', '0%'],
+                })
+              : '100%',
+            opacity: this.props.flip
+              ? this.props.flip.interpolate({
+                  inputRange: [0, 0.4999, 0.5, 1],
+                  outputRange: [1, 1, 0, 0],
+                })
+              : 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ opacity: 0.0 }}>
+            <View
+              ref={this.viewShotRef}
+              collapsable={false}
+              style={{
+                position: 'absolute',
+                width: pixelWidth,
+                height: pixelHeight,
+              }}
+            >
+              {this.renderImages()}
+              {this.state.placedStickers.map((placedSticker) => {
+                const growBy = pixelWidth / this.props.width;
+                return (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 64 * growBy,
+                      height: 64 * growBy,
+                      left: placedSticker.position.x * growBy - 32 * growBy,
+                      top: placedSticker.position.y * growBy - 32 * growBy,
+                    }}
+                    key={placedSticker.id}
+                  >
+                    <Icon svg={placedSticker.sticker.svg} />
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+          <View collapsable={false} style={{ width: '100%', height: '100%' }}>
+            {this.renderImages()}
+            <StickerManager
+              ref={this.stickerManagerRef}
+              active={this.props.bottomDetails === 'stickers'}
+              updateStickers={(placedStickers) => {
+                this.setState({ placedStickers });
+              }}
+              width={this.props.width}
+              height={this.props.height}
+            />
+          </View>
+        </Animated.View>
+        <Animated.View
           style={[
             {
               position: 'absolute',
               width: '100%',
-              height: '100%',
+              height: this.props.flip
+                ? this.props.flip.interpolate({
+                    inputRange: [0, 0.000001, 1],
+                    outputRange: ['0%', '100%', '100%'],
+                  })
+                : 0,
               backgroundColor: 'rgba(0,0,0,0.05)',
               opacity: this.props.flip
                 ? this.props.flip.interpolate({
@@ -274,69 +337,6 @@ class DynamicPostcard extends React.Component<Props, State> {
             <MailingAddressPreview
               style={{ paddingHorizontal: 8, paddingTop: 24 }}
               recipient={this.props.recipient}
-            />
-          </View>
-        </Animated.View>
-        <Animated.View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: this.props.flip
-              ? this.props.flip.interpolate({
-                  inputRange: [0, 0.9999999, 1],
-                  outputRange: ['100%', '100%', '0%'],
-                })
-              : '100%',
-            opacity: this.props.flip
-              ? this.props.flip.interpolate({
-                  inputRange: [0, 0.4999, 0.5, 1],
-                  outputRange: [1, 1, 0, 0],
-                })
-              : 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            ref={this.viewShotRef}
-            collapsable={false}
-            style={{
-              position: 'absolute',
-              width: pixelWidth,
-              height: pixelHeight,
-              opacity: 0,
-            }}
-          >
-            {this.renderImages()}
-            {this.state.placedStickers.map((placedSticker) => {
-              const growBy = pixelWidth / this.props.width;
-              return (
-                <View
-                  style={{
-                    position: 'absolute',
-                    width: 64 * growBy,
-                    height: 64 * growBy,
-                    left: placedSticker.position.x * growBy - 32 * growBy,
-                    top: placedSticker.position.y * growBy - 32 * growBy,
-                  }}
-                  key={placedSticker.id}
-                >
-                  <Icon svg={placedSticker.sticker.svg} />
-                </View>
-              );
-            })}
-          </View>
-          <View collapsable={false} style={{ width: '100%', height: '100%' }}>
-            {this.renderImages()}
-            <StickerManager
-              ref={this.stickerManagerRef}
-              active={this.props.bottomDetails === 'stickers'}
-              updateStickers={(placedStickers) => {
-                this.setState({ placedStickers });
-                this.updateSnapshot();
-              }}
-              width={this.props.width}
-              height={this.props.height}
             />
           </View>
         </Animated.View>

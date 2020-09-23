@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { createRef } from 'react';
 import { PanResponderInstance, Animated, PanResponder } from 'react-native';
 import { Sticker } from 'types';
 import {
@@ -36,6 +36,10 @@ export default class StickerComponent extends React.Component<Props> {
 
   private locValue: { x: number; y: number };
 
+  private pinchRef = createRef<PinchGestureHandler>();
+
+  private rotateRef = createRef<RotationGestureHandler>();
+
   constructor(props: Props) {
     super(props);
     this.animatedLocation = new Animated.ValueXY();
@@ -55,7 +59,7 @@ export default class StickerComponent extends React.Component<Props> {
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt) => evt.nativeEvent.touches.length < 2,
       onMoveShouldSetPanResponder: (evt) => evt.nativeEvent.touches.length < 2,
-      onPanResponderGrant: (e, g) => {
+      onPanResponderGrant: () => {
         this.animatedLocation.setOffset({
           x: this.locValue.x,
           y: this.locValue.y,
@@ -84,24 +88,30 @@ export default class StickerComponent extends React.Component<Props> {
   render(): JSX.Element {
     return (
       <RotationGestureHandler
+        ref={this.rotateRef}
         onGestureEvent={(e) => {
           this.rotation.setValue(e.nativeEvent.rotation);
+          this.props.setDragging(false);
         }}
         onHandlerStateChange={(e) => {
           this.lastRotation += e.nativeEvent.rotation;
           this.rotation.setOffset(this.lastRotation);
           this.rotation.setValue(0);
         }}
+        simultaneousHandlers={this.pinchRef}
       >
         <PinchGestureHandler
+          ref={this.pinchRef}
           onGestureEvent={(e) => {
             this.pinchScale.setValue(e.nativeEvent.scale);
+            this.props.setDragging(false);
           }}
           onHandlerStateChange={(e) => {
             this.lastScale *= e.nativeEvent.scale;
             this.baseScale.setValue(this.lastScale);
             this.pinchScale.setValue(1);
           }}
+          simultaneousHandlers={this.rotateRef}
         >
           <Animated.View
             style={[
@@ -115,6 +125,7 @@ export default class StickerComponent extends React.Component<Props> {
                     translateY: this.animatedLocation.y,
                   },
                 ],
+                flex: 1,
               },
             ]}
           >

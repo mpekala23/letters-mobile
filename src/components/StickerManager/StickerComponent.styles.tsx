@@ -7,5 +7,6 @@ export default StyleSheet.create({
     position: 'absolute',
     width: STICKER_SIZE,
     height: STICKER_SIZE,
+    borderRadius: STICKER_SIZE / 2,
   },
 });
