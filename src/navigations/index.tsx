@@ -24,6 +24,7 @@ import {
   MemoryLaneScreen,
   MailDetailsScreen,
   PrivacyScreen,
+  ReferralDashboardScreen,
   ReferFriendsScreen,
   RegisterCredsScreen,
   RegisterPersonalScreen,
@@ -85,6 +86,10 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
   MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
   MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  ReferralDashboardScreen: {
+    title: i18n.t('Screens.referralDashboard'),
+    profile: true,
+  },
   ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
   ReviewLetter: { title: i18n.t('Screens.lastStep'), profile: false },
   ReviewPostcard: {
@@ -265,6 +270,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ReferFriends}
           component={ReferFriendsScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReferralDashboard}
+          component={ReferralDashboardScreen}
         />
         <Stack.Screen
           name={Screens.ReviewContact}

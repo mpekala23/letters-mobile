@@ -6,18 +6,27 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
-import { Storage, MailTypes, Draft, PostcardDesign } from 'types';
+import {
+  Storage,
+  MailTypes,
+  Draft,
+  PostcardDesign,
+  FamilyConnection,
+  UserReferralsInfo,
+} from 'types';
 import {
   loginUser,
   logoutUser,
   setUser,
   authenticateUser,
+  setUserReferrals,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
+import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
 import {
   uploadImage,
@@ -46,10 +55,12 @@ interface RawUser {
   referer: string;
   country: string;
   created_at: string;
+  referral_link: string;
 }
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
+
   return {
     id: user.id,
     firstName: user.first_name,
@@ -65,6 +76,7 @@ function cleanUser(user: RawUser): User {
     },
     credit: user.credit,
     joined: new Date(user.created_at),
+    referralCode: user.referral_link,
   };
 }
 
@@ -166,6 +178,7 @@ export async function loadDraft(): Promise<Draft> {
     store.dispatch(setComposing(draft));
     return draft;
   } catch (err) {
+    Sentry.captureException(err);
     await deleteDraft();
     const draft: Draft = {
       type: MailTypes.Letter,
@@ -176,6 +189,60 @@ export async function loadDraft(): Promise<Draft> {
     store.dispatch(setComposing(draft));
     return draft;
   }
+}
+
+interface FamilyConnectionRaw {
+  contact_first_name: string;
+  contact_last_name: string;
+  contact_image: string;
+  user_first_name: string;
+  user_last_name: string;
+  user_image: string;
+  city: string;
+  state: string;
+}
+
+interface RawReferral {
+  families: FamilyConnectionRaw[];
+  num_referrals: number;
+  num_lives_impacted: number;
+  num_mail_sent: number;
+}
+
+function cleanFamilyConnectionInfo(
+  families: FamilyConnectionRaw[]
+): FamilyConnection[] {
+  return families.map((family) => ({
+    contactImage: family.contact_image,
+    contactFirstName: family.contact_first_name,
+    contactLastName: family.contact_last_name,
+    userImage: family.user_image,
+    userFirstName: family.user_first_name,
+    userLastName: family.user_last_name,
+    city: family.city,
+    state: family.state,
+  }));
+}
+
+function cleanReferralInfo(data: RawReferral): UserReferralsInfo {
+  return {
+    families: cleanFamilyConnectionInfo(data.families),
+    numReferrals: data.num_referrals,
+    numLivesImpacted: data.num_lives_impacted,
+    numMailSent: data.num_mail_sent,
+  };
+}
+
+export async function getUserReferrals(): Promise<UserReferralsInfo> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `user/${store.getState().user.user.id}/referrals`)
+  );
+  if (body.status !== 'OK' || !body.data) throw body;
+
+  const data = body.data as RawReferral;
+  const referrals = cleanReferralInfo(data);
+  store.dispatch(setUserReferrals(referrals));
+  return referrals;
 }
 
 export async function uploadPushToken(token: string): Promise<void> {
@@ -221,6 +288,11 @@ export async function loginWithToken(): Promise<User> {
     Segment.identify(userData.email);
     Segment.track('Login Success');
     store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
+    try {
+      Promise.all([getCategories(), getUserReferrals()]);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
@@ -233,6 +305,7 @@ export async function loginWithToken(): Promise<User> {
     });
     return userData;
   } catch (err) {
+    Sentry.captureException(err);
     store.dispatch(logoutUser());
     throw Error(err);
   }
@@ -256,6 +329,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     try {
       await saveToken(body.data.remember);
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
       });
@@ -271,15 +345,19 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     await Promise.all([getContacts(), getMail()]);
     await loadDraft();
   } catch (err) {
+    Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
   store.dispatch(loginUser(userData));
+  try {
+    Promise.all([getCategories(), getUserReferrals()]);
+  } catch (err) {
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    Sentry.captureException(err);
+  }
   const pushToken = await getPushToken();
   uploadPushToken(pushToken).catch(() => {
     dropdownError({ message: i18n.t('Permission.notifs') });
-  });
-  getCategories().catch(() => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
   });
   return userData;
 }
@@ -298,6 +376,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       newPhoto = await uploadImage(data.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
@@ -330,6 +409,7 @@ export async function register(data: UserRegisterInfo): Promise<User> {
     try {
       await saveToken(body.data.remember);
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
       });
@@ -378,6 +458,7 @@ export async function updateProfile(data: User): Promise<User> {
     try {
       newPhoto = await uploadImage(newPhoto, 'avatar');
     } catch (err) {
+      Sentry.captureException(err);
       newPhoto = undefined;
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }

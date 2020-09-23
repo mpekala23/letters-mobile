@@ -29,6 +29,7 @@ import {
   saveDraft,
   deleteDraft,
   loadDraft,
+  getUserReferrals,
 } from './User';
 
 export {
@@ -52,6 +53,7 @@ export {
   logout,
   updateProfile,
   getUser,
+  getUserReferrals,
   saveDraft,
   deleteDraft,
   loadDraft,

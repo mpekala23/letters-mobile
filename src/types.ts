@@ -162,12 +162,32 @@ export interface TrackingEvent {
   date: Date;
 }
 
+export interface FamilyConnection {
+  contactImage: string;
+  contactFirstName: string;
+  contactLastName: string;
+  userFirstName: string;
+  userLastName: string;
+  userImage: string;
+  city: string;
+  state: string;
+}
+
+export interface UserReferralsInfo {
+  families: FamilyConnection[];
+  numReferrals: number;
+  numLivesImpacted: number;
+  numMailSent: number;
+}
+
 // Miscelaneous
 export enum ProfilePicTypes {
   Topbar = 'Topbar',
   Contact = 'Contact',
   SingleContact = 'SingleContact',
   Avatar = 'Avatar',
+  ReferralDashboard = 'ReferralDashboard',
+  ReferralDashboardConnection = 'ReferralDashboardConnection',
 }
 
 export enum Storage {

@@ -15,6 +15,7 @@
     "cantRefreshLetters": "No se pueden actualizar tus cartas",
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
     "cantRefreshCategories": "No se pueden actualizar las categorias",
+    "cantRefreshReferrals": "No se pueden actualizar tus métricas de impacto",
     "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
     "cantLoadMail": "No puedo cargar este correo",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
@@ -75,7 +76,10 @@
     "yourLovedOnes": "Sus seres queridos",
     "miles": "millas",
     "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo.",
-    "addContact": "Agregar contacto"
+    "addContact": "Agregar contacto",
+    "referralCardTitle": "Comparter con otros",
+    "referralCardSubtitle": "Más de 1.500 personas han compartido",
+    "referralCardCta": "Ayude a otros"
   },
   "CreditsCard": {
     "letter": "crédito",
@@ -394,6 +398,7 @@
     "postcardPreview": "Vista previa de la postal",
     "letterPreview": "Vista previa de la carta",
     "spreadTheWord": "Correr la voz",
+    "referralDashboard": "Tu impacto",
     "reviewContact": "Revisar contacto",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
@@ -402,8 +407,18 @@
     "inmateLocator": " Localizador de Presos"
   },
   "Sharing": {
-    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
     "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
     "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
+  },
+  "ReferralDashboardScreen": {
+    "helpNowHeader": "Ayude a otros ahor!",
+    "helpNowBody": "Comparta su link único para ayudar a más familias a conectarse con sus seres queridos de forma gratuita.",
+    "shareCta": "Comparte con otros",
+    "familesHelped": "Familias Ayudadas",
+    "mailSent": "Ameelios Enviados",
+    "moneySaved": "Dinero Ahorrado",
+    "thankYou": "¡Gracias a ti, la comunidad está creciendo!",
+    "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
   }
 }
