@@ -13,61 +13,6 @@ import Stars from './Stars.png';
 import Sunshine from './Sunshine.png';
 import TwoPeas from './TwoPeas.png';
 
-/*
-import Dad from './Dad.pn';
-import Eggcelent from './Eggcelent';
-import HappyBirthday from './HappyBirthday';
-import Hearts from './Hearts';
-import LoveYou from './LoveYou';
-import MissYou from './MissYou';
-import SentByAmeelio from './SentByAmeelio';
-import Stars from './Stars';
-import Sunshine from './Sunshine';
-import TwoPeas from './TwoPeas';
-
-const STICKERS_SVG: Sticker[] = [
-  {
-    svg: Dad,
-    name: '#1 Dad',
-  },
-  {
-    svg: Eggcelent,
-    name: 'Egg',
-  },
-  {
-    svg: HappyBirthday,
-    name: 'Happy Birthday',
-  },
-  {
-    svg: Hearts,
-    name: 'Hearts',
-  },
-  {
-    svg: LoveYou,
-    name: 'Love You',
-  },
-  {
-    svg: MissYou,
-    name: 'Miss You',
-  },
-  {
-    svg: SentByAmeelio,
-    name: 'Sent By Ameelio',
-  },
-  {
-    svg: Stars,
-    name: 'Stars',
-  },
-  {
-    svg: Sunshine,
-    name: 'Sunshine',
-  },
-  {
-    svg: TwoPeas,
-    name: 'Two Peas in a Pod',
-  },
-]; */
-
 const AmeelioComponent = (
   <ImageComponent source={Ameelio} style={{ width: '100%', height: '100%' }} />
 );

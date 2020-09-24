@@ -17,7 +17,15 @@ import {
   Icon,
   DynamicPostcard,
 } from '@components';
-import { PostcardDesign, Contact, Layout, Draft, Image, Sticker } from 'types';
+import {
+  PostcardDesign,
+  Contact,
+  Layout,
+  Draft,
+  Image,
+  Sticker,
+  ComposeBottomDetails,
+} from 'types';
 import {
   setBackOverride,
   setProfileOverride,
@@ -46,11 +54,11 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
 import STICKERS from '@assets/stickers';
+import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
 const SLIDE_DURATION = 300;
-const POSTCARD_HEIGHT = WINDOW_HEIGHT - BOTTOM_HEIGHT - BAR_HEIGHT - 32;
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -69,7 +77,7 @@ interface Props {
 interface State {
   subscreen: 'Design' | 'Text';
   designState: {
-    bottomDetails: 'layout' | 'design' | 'stickers' | null;
+    bottomDetails: ComposeBottomDetails | null;
     bottomSlide: Animated.Value;
     layout: Layout;
     commonLayout: Layout;
@@ -229,7 +237,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   setDesignState(newState: {
-    bottomDetails?: 'layout' | 'design' | 'stickers' | null;
+    bottomDetails?: ComposeBottomDetails | null;
     bottomSlide?: Animated.Value;
     layout?: Layout;
     commonLayout?: Layout;
@@ -267,7 +275,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     }));
   }
 
-  openBottom(details: 'layout' | 'design' | 'stickers') {
+  openBottom(details: ComposeBottomDetails) {
     this.setDesignState({ bottomDetails: details });
     Animated.timing(this.state.designState.bottomSlide, {
       toValue: 1,
@@ -461,12 +469,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     allowsEditing: true,
                   });
                   if (image) {
-                    /* this.changeDesign({
-                      image,
-                      custom: true,
-                      name: 'Personal Photo',
-                      subcategoryName: 'Selfie',
-                    }); */
+                    const layout = { ...this.state.designState.layout };
+                    const commonLayout = { ...this.state.designState.layout };
+                    const { activePosition } = this.state.designState;
+                    layout.designs[activePosition] = { image };
+                    commonLayout.designs[activePosition] = { image };
+                    this.setDesignState({
+                      layout,
+                      commonLayout,
+                    });
                   }
                 } catch (err) {
                   dropdownError({ message: i18n.t('Permission.camera') });
@@ -758,7 +769,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   this.props.setContent(text);
                 }}
                 recipient={this.props.recipient}
-                width={WINDOW_WIDTH - 32}
+                width={POSTCARD_WIDTH}
                 height={POSTCARD_HEIGHT}
                 bottomDetails={this.state.designState.bottomDetails}
               />

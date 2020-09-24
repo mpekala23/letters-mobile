@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
@@ -13,16 +13,17 @@ interface Props {
   front: boolean;
   composing: Draft;
   recipient: Contact;
+  width: number;
+  height: number;
 }
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
   if (props.composing.type !== MailTypes.Postcard) return <View />;
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
   return (
-    <View style={Styles.background}>
+    <View
+      style={[Styles.background, { width: props.width, height: props.height }]}
+    >
       {props.front ? (
         <View
           style={{
@@ -33,17 +34,11 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onLayout={(e: {
-            nativeEvent: { layout: { width: number; height: number } };
-          }) => {
-            setWidth(e.nativeEvent.layout.width);
-            setHeight(e.nativeEvent.layout.height);
-          }}
         >
           <AsyncImage
             viewStyle={{
-              width,
-              height,
+              width: '100%',
+              height: '100%',
             }}
             source={
               props.composing.design.thumbnail

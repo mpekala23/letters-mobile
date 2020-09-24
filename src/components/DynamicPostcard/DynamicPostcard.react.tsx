@@ -1,6 +1,13 @@
 import React, { createRef } from 'react';
 import { View, Animated, TouchableOpacity, PixelRatio } from 'react-native';
-import { Contact, Image, Layout, Sticker, PlacedSticker } from 'types';
+import {
+  Contact,
+  Image,
+  Layout,
+  Sticker,
+  PlacedSticker,
+  ComposeBottomDetails,
+} from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Colors } from '@styles';
@@ -14,9 +21,12 @@ import AsyncImage from '../AsyncImage/AsyncImage.react';
 import StickerManager from '../StickerManager/StickerManager.react';
 import { STICKER_SIZE } from '../StickerManager/StickerComponent.styles';
 
+const DESIRED_ACTUAL_PIXEL_WIDTH = 1800;
+const DESIRED_ACTUAL_PIXEL_HEIGHT = 1200;
+
 const pixelRatio = PixelRatio.get();
-const pixelWidth = 1800 / pixelRatio;
-const pixelHeight = 1200 / pixelRatio;
+const pixelWidth = DESIRED_ACTUAL_PIXEL_WIDTH / pixelRatio;
+const pixelHeight = DESIRED_ACTUAL_PIXEL_HEIGHT / pixelRatio;
 
 interface Props {
   layout: Layout;
@@ -30,7 +40,7 @@ interface Props {
   onImageAdd: (position: number) => void;
   activePosition: number;
   highlightActive: boolean;
-  bottomDetails: 'layout' | 'design' | 'stickers' | null;
+  bottomDetails: ComposeBottomDetails | null;
 }
 
 interface State {
@@ -84,19 +94,18 @@ class DynamicPostcard extends React.Component<Props, State> {
     const design = this.props.layout.designs[position];
     return (
       <TouchableOpacity
-        style={{
-          height: '100%',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#F7F7F7',
-          borderColor:
-            position === this.props.activePosition && this.props.highlightActive
-              ? Colors.BLUE_300
-              : 'transparent',
-          borderWidth: border ? 2 : 0,
-          borderRadius: border ? 2 : 0,
-        }}
+        style={[
+          Styles.imageBackground,
+          {
+            borderColor:
+              position === this.props.activePosition &&
+              this.props.highlightActive
+                ? Colors.BLUE_300
+                : 'transparent',
+            borderWidth: border ? 2 : 0,
+            borderRadius: border ? 2 : 0,
+          },
+        ]}
         onPress={() => this.props.onImageAdd(position)}
       >
         {!design ? (
@@ -112,99 +121,37 @@ class DynamicPostcard extends React.Component<Props, State> {
   }
 
   renderImages(): JSX.Element {
-    const PADDING = 4;
     if (this.props.layout.id === 1) {
       return this.renderImage(1, false);
     }
     if (this.props.layout.id === 2) {
       return (
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            flexDirection: 'row',
-          }}
-        >
-          <View
-            style={{ flex: 1, padding: PADDING, paddingRight: PADDING / 2 }}
-          >
-            {this.renderImage(1)}
-          </View>
-          <View style={{ flex: 1, padding: PADDING, paddingLeft: PADDING / 2 }}>
-            {this.renderImage(2)}
-          </View>
+        <View style={Styles.imagesBackground}>
+          <View style={Styles.leftFull}>{this.renderImage(1)}</View>
+          <View style={Styles.rightFull}>{this.renderImage(2)}</View>
         </View>
       );
     }
     if (this.props.layout.id === 3) {
       return (
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            flexDirection: 'row',
-          }}
-        >
-          <View
-            style={{ flex: 1, padding: PADDING, paddingRight: PADDING / 2 }}
-          >
-            {this.renderImage(1)}
-          </View>
-          <View
-            style={{
-              flex: 1,
-              padding: PADDING,
-              paddingLeft: PADDING / 2,
-              flexDirection: 'column',
-            }}
-          >
-            <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
-              {this.renderImage(2)}
-            </View>
-            <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
-              {this.renderImage(3)}
-            </View>
+        <View style={Styles.imagesBackground}>
+          <View style={Styles.leftFull}>{this.renderImage(1)}</View>
+          <View style={Styles.rightContainer}>
+            <View style={Styles.rightTop}>{this.renderImage(2)}</View>
+            <View style={Styles.rightBottom}>{this.renderImage(3)}</View>
           </View>
         </View>
       );
     }
     return (
-      <View
-        style={{
-          width: '100%',
-          height: '100%',
-          flexDirection: 'row',
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            padding: PADDING,
-            paddingRight: PADDING / 2,
-            flexDirection: 'column',
-          }}
-        >
-          <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
-            {this.renderImage(1)}
-          </View>
-          <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
-            {this.renderImage(3)}
-          </View>
+      <View style={Styles.imagesBackground}>
+        <View style={Styles.leftContainer}>
+          <View style={Styles.leftTop}>{this.renderImage(1)}</View>
+          <View style={Styles.leftBottom}>{this.renderImage(3)}</View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            padding: PADDING,
-            paddingLeft: PADDING / 2,
-            flexDirection: 'column',
-          }}
-        >
-          <View style={{ flex: 1, paddingBottom: PADDING / 2 }}>
-            {this.renderImage(2)}
-          </View>
-          <View style={{ flex: 1, paddingTop: PADDING / 2 }}>
-            {this.renderImage(4)}
-          </View>
+        <View style={Styles.rightContainer}>
+          <View style={Styles.rightTop}>{this.renderImage(2)}</View>
+          <View style={Styles.rightBottom}>{this.renderImage(4)}</View>
         </View>
       </View>
     );
@@ -232,24 +179,25 @@ class DynamicPostcard extends React.Component<Props, State> {
         ]}
       >
         <Animated.View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: this.props.flip
-              ? this.props.flip.interpolate({
-                  inputRange: [0, 0.9999999, 1],
-                  outputRange: ['100%', '100%', '0%'],
-                })
-              : '100%',
-            opacity: this.props.flip
-              ? this.props.flip.interpolate({
-                  inputRange: [0, 0.4999, 0.5, 1],
-                  outputRange: [1, 1, 0, 0],
-                })
-              : 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          style={[
+            Styles.sideBackground,
+            {
+              height: this.props.flip
+                ? this.props.flip.interpolate({
+                    inputRange: [0, 0.9999999, 1],
+                    outputRange: ['100%', '100%', '0%'],
+                  })
+                : '100%',
+              opacity: this.props.flip
+                ? this.props.flip.interpolate({
+                    inputRange: [0, 0.4999, 0.5, 1],
+                    outputRange: [1, 1, 0, 0],
+                  })
+                : 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}
         >
           <View style={{ opacity: 0.0 }}>
             <View
@@ -304,9 +252,8 @@ class DynamicPostcard extends React.Component<Props, State> {
         </Animated.View>
         <Animated.View
           style={[
+            Styles.sideBackground,
             {
-              position: 'absolute',
-              width: '100%',
               height: this.props.flip
                 ? this.props.flip.interpolate({
                     inputRange: [0, 0.000001, 1],

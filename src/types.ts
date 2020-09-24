@@ -233,3 +233,5 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
