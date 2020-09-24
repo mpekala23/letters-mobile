@@ -79,6 +79,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             type: MailTypes.Letter,
             recipientId: props.recipientId,
             content: '',
+            images: [],
           });
           props.navigation.navigate(Screens.ComposeLetter);
         }}

@@ -15,7 +15,7 @@ import {
   PickerRef,
 } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { AppStackParamList, Screens } from '@utils/Screens';
+import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -140,6 +140,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
         joined: this.props.userState.user.joined,
+        referralCode: this.props.userState.user.referralCode,
       };
       try {
         await updateProfile(user);

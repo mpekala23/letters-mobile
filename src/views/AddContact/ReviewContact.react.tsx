@@ -17,7 +17,7 @@ import {
   Picker,
   PickerRef,
 } from '@components';
-import { STATES_DROPDOWN, Validation, hoursTill8Tomorrow } from '@utils';
+import { STATES_DROPDOWN, Validation } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
 import { ContactActionTypes, ContactState } from '@store/Contact/ContactTypes';
@@ -29,7 +29,7 @@ import { connect } from 'react-redux';
 import i18n from '@i18n';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
-import Notifs from '@notifications';
+import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import * as Segment from 'expo-analytics-segment';
 import CommonStyles from './AddContact.styles';
@@ -42,7 +42,7 @@ type ReviewContactScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ReviewContactScreenNavigationProp;
   contactState: ContactState;
-  hasSentLetter: boolean;
+  hasSentMail: boolean;
   setAdding: (contactDraft: ContactDraft) => void;
   setActiveContact: (contact: Contact) => void;
   route: { params: { manual: boolean } };
@@ -182,19 +182,17 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           Manual: this.props.route.params.manual,
         });
         Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstContact);
-        if (!this.props.hasSentLetter) {
-          Notifs.scheduleNotificationInHours(
+        if (!this.props.hasSentMail) {
+          Notifs.scheduleNotificationInDays(
             {
               title: `${i18n.t('Notifs.readyToSend')} ${newContact.firstName}?`,
               body: `${i18n.t('Notifs.clickHereToBegin')}`,
+              type: NotifTypes.NoFirstLetter,
               data: {
-                type: NotifTypes.NoFirstLetter,
-                data: {
-                  contactId: newContact.id,
-                },
+                contactId: newContact.id,
               },
             },
-            hoursTill8Tomorrow() + 24
+            1
           );
         }
         this.props.setActiveContact(newContact);
@@ -389,7 +387,9 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
-  hasSentLetter: state.mail.existing !== {},
+  hasSentMail: Object.values(state.mail.existing).some(
+    (mail) => mail.length > 0
+  ),
 });
 const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {

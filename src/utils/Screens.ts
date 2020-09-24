@@ -23,6 +23,7 @@ export enum Screens {
   ComposeLetter = 'ComposeLetter',
   ComposePersonal = 'ComposePersonal',
   ComposePostcard = 'ComposePostcard',
+  ReferralDashboard = 'ReferralDashboard',
   ReviewLetter = 'ReviewLetter',
   ReviewPostcard = 'ReviewPostcard',
   ContactInfo = 'ContactInfo',
@@ -87,6 +88,7 @@ export type AppStackParamList = {
   MailTracking: undefined;
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
+  ReferralDashboard: undefined;
   ReviewLetter: undefined;
   ReviewPostcard: { category: string };
   ReviewContact: { manual: boolean };

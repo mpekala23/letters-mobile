@@ -4,11 +4,13 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, MailStatus } from 'types';
+import { ZipcodeInfo, MailStatus, Image } from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
+import { createRef } from 'react';
+import { NavigationContainerRef } from '@react-navigation/native';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -29,6 +31,24 @@ export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
 export const ETA_PROCESSED_TO_DELIVERED = 3;
+
+export const navigationRef = createRef<NavigationContainerRef>();
+
+export function navigate(name: string, params = {}): void {
+  if (navigationRef.current) navigationRef.current.navigate(name, params);
+}
+
+export function resetNavigation({
+  index,
+  routes,
+}: {
+  index: number;
+  routes: { name: string }[];
+}): void {
+  if (navigationRef.current) {
+    navigationRef.current.reset({ index, routes });
+  }
+}
 
 export async function getCameraPermission(): Promise<
   ImagePicker.PermissionStatus
@@ -180,38 +200,6 @@ export {
   STATE_TO_INMATE_DB,
 };
 
-const mapNumToDay: Record<number, string> = {
-  0: 'Sunday',
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday',
-};
-
-export function threeBusinessDaysFromNow(): string {
-  const today = new Date(Date.now()).getDay();
-  if (today <= 2) {
-    // Sunday through Tuesday just add three
-    return mapNumToDay[(today + 3) % 7];
-  }
-  if (today <= 5) {
-    return mapNumToDay[(today + 5) % 7];
-  }
-  return mapNumToDay[(today + 4) % 7];
-}
-
-export function hoursTill8Tomorrow(): number {
-  const today = new Date();
-  const hourOfDay = today.getHours();
-  const minuteOfDay = today.getMinutes();
-  if (hourOfDay < 20) {
-    return 24 + 19 + minuteOfDay / 60 - hourOfDay;
-  }
-  return hourOfDay - 20;
-}
-
 export function sleep(ms: number, error = false): Promise<void> {
   return new Promise((resolve, reject) =>
     setTimeout(() => {
@@ -256,7 +244,8 @@ export function isProduction(): boolean {
 
 export const onNativeShare = async (
   screen: Screens,
-  cta: string
+  cta: string,
+  referralCode?: string
 ): Promise<void> => {
   const PROPERTIES = { screen, cta };
 
@@ -265,9 +254,12 @@ export const onNativeShare = async (
   });
 
   try {
+    const link = referralCode
+      ? `https://ameelio.org/#/join/${referralCode}`
+      : 'https://ameelio.org/#/';
     const result = await Share.share(
       {
-        message: i18n.t('Sharing.message'),
+        message: `${i18n.t('Sharing.message')}${' '}${link}`,
         title: i18n.t('Sharing.title'),
       },
       {
@@ -302,6 +294,19 @@ export const onNativeShare = async (
   }
 };
 
+export function getNumWords(content: string): number {
+  let s = content;
+  s = s.replace(/\n/g, ' '); // newlines to space
+  s = s.replace(/(^\s*)|(\s*$)/gi, ''); // remove spaces from start + end
+  s = s.replace(/[ ]{2,}/gi, ' '); // 2 or more spaces to 1
+  const split = s.split(' ');
+  let numWords = split.length;
+  if (split[0] === '') {
+    numWords = 0;
+  }
+  return numWords;
+}
+
 export function getImageDims(
   uri: string
 ): Promise<{ width: number; height: number }> {
@@ -323,4 +328,8 @@ export function distance(
   return Math.sqrt(
     (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)
   );
+}
+
+export function getAspectRatio(image: Image): number {
+  return image.width && image.height ? image.width / image.height : 1;
 }

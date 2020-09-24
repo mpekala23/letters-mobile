@@ -26,6 +26,7 @@ type ReferFriendsScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: ReferFriendsScreenNavigationProp;
   contact: Contact;
+  referralCode: string;
   route: {
     params: { mailType: MailTypes };
   };
@@ -90,7 +91,8 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
             onPress={() => {
               onNativeShare(
                 Screens.ReferFriends,
-                i18n.t('ReferFriendsScreen.share')
+                i18n.t('ReferFriendsScreen.share'),
+                props.referralCode
               );
             }}
             containerStyle={{ width: '100%' }}
@@ -118,6 +120,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
+    referralCode: state.user.user.referralCode,
   };
 };
 

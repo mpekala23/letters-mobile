@@ -27,7 +27,8 @@
         "CAMERA_ROLL",
         "WRITE_EXTERNAL_STORAGE",
         "READ_EXTERNAL_STORAGE"
-      ]
+      ],
+      "useNextNotificationsApi": true
     },
     "ios": {
       "buildNumber": "1.1.1",

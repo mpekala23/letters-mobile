@@ -46,7 +46,7 @@ export interface Props {
   navigation: ContactInfoScreenNavigationProp;
   contactDraft: ContactDraft;
   route: {
-    params: { addFromSelector?: boolean; phyState?: string };
+    params?: { addFromSelector?: boolean; phyState?: string };
   };
   setAddingPersonal: (contactPersonal: ContactPersonal) => void;
 }
@@ -175,7 +175,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   loadValuesFromStore() {
     const addingContact = this.props.contactDraft;
-    const addingFromSelector = this.props.route.params.addFromSelector;
+    const addingFromSelector =
+      this.props.route.params && this.props.route.params.addFromSelector;
 
     if (addingFromSelector) {
       if (this.firstName.current)
@@ -190,7 +191,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
     if (this.statePicker.current) {
       this.statePicker.current.setStoredValue(
-        this.props.route.params.phyState
+        this.props.route.params && this.props.route.params.phyState
           ? this.props.route.params.phyState
           : addingContact.facility.state,
         !addingFromSelector

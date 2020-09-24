@@ -3,7 +3,7 @@ import {
   SET_COMPOSING,
   SET_RECIPIENT_ID,
   SET_CONTENT,
-  SET_IMAGE,
+  SET_IMAGES,
   SET_DESIGN,
   CLEAR_COMPOSING,
   ADD_MAIL,
@@ -37,10 +37,10 @@ export function setContent(content: string): MailActionTypes {
   };
 }
 
-export function setImage(image: Image | undefined): MailActionTypes {
+export function setImages(images: Image[]): MailActionTypes {
   return {
-    type: SET_IMAGE,
-    payload: image,
+    type: SET_IMAGES,
+    payload: images,
   };
 }
 
@@ -130,7 +130,7 @@ export function setContactsMail(
   };
 }
 
-export function setExistingMail(mail: Record<number, Mail[]>): MailActionTypes {
+export function setExistingMail(mail: Record<string, Mail[]>): MailActionTypes {
   return {
     type: SET_EXISTING_MAIL,
     payload: mail,

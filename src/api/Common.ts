@@ -97,6 +97,7 @@ export async function fetchAuthenticated(
       state: tokenBody.data.state,
       credit: tokenBody.data.credit,
       joined: tokenBody.data.created_at,
+      referralCode: tokenBody.data.referral_link,
     };
     store.dispatch(
       authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)

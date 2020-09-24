@@ -3,6 +3,7 @@ import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 
 export const BOTTOM_HEIGHT = WINDOW_HEIGHT * 0.5;
 export const DESIGN_BUTTONS_HEIGHT = 208;
+export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
 
 export default StyleSheet.create({
   screenBackground: {
