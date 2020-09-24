@@ -13,6 +13,7 @@ import i18n from '@i18n';
 import { Colors } from '@styles';
 import AddImage from '@assets/components/DynamicPostcard/AddImage';
 import { captureRef } from 'react-native-view-shot';
+import * as Segment from 'expo-analytics-segment';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './DynamicPostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -64,6 +65,12 @@ class DynamicPostcard extends React.Component<Props, State> {
   }
 
   async getSnapshot(): Promise<Image> {
+    Segment.trackWithProperties('Compose - Start Writing', {
+      layout: this.props.layout.id,
+      stickers: this.state.placedStickers.map(
+        (placedSticker) => placedSticker.sticker.name
+      ),
+    });
     const result = await captureRef(this.viewShotRef, {
       format: 'png',
       width: pixelWidth,

@@ -357,7 +357,8 @@
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
     "iWouldLikeToSend": "I would like to send something:",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "yourOwnLettersAndPhotos": "Your own letters and photos.",
+    "stickers": "Stickers"
   },
   "ComposeTools": {
     "wordsLeft": "words left"

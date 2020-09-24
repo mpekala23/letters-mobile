@@ -4,7 +4,7 @@ import { View, Animated, Image as ImageComponent } from 'react-native';
 import { Sticker, PlacedSticker } from 'types';
 import { distance } from '@utils';
 import TrashCan from '@assets/stickers/TrashCan.png';
-import Icon from '../Icon/Icon.react';
+import * as Segment from 'expo-analytics-segment';
 import Styles from './StickerManager.styles';
 import StickerComponent from './StickerComponent.react';
 
@@ -58,6 +58,9 @@ export default class StickerManager extends React.Component<Props, State> {
   }
 
   addSticker(sticker: Sticker): void {
+    Segment.trackWithProperties('Compose - Add Sticker', {
+      option: sticker.name,
+    });
     this.setState(
       (prevState) => {
         const newStickers = [...prevState.stickers];
@@ -80,6 +83,13 @@ export default class StickerManager extends React.Component<Props, State> {
 
   updatePosition(id: number, dx: number, dy: number): void {
     if (this.state.trashing) {
+      const placedSticker = this.state.stickers.find(
+        (stick) => stick.id === id
+      );
+      if (!placedSticker) return;
+      Segment.trackWithProperties('Compose - Delete Sticker', {
+        option: placedSticker.sticker.name,
+      });
       this.setState(
         (prevState) => {
           const newStickers = prevState.stickers.filter(

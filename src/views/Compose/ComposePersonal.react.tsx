@@ -634,7 +634,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           <Text
             style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
           >
-            Stickers
+            {i18n.t('Compose.stickers')}
           </Text>
           <FlatList
             data={STICKERS}
@@ -656,7 +656,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           data={this.state.designState.library}
           renderItem={({ item }) => this.renderGridItem(item)}
           keyExtractor={(item: PostcardDesign, index: number) => {
-            return item.image.uri + index.toString();
+            return `${item.image.uri} ${index.toString()}`;
           }}
           numColumns={3}
           contentContainerStyle={Styles.gridBackground}
