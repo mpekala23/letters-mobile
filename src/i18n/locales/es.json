@@ -358,7 +358,9 @@
     "registerAccount": "Register Account",
     "enterBasic": "Enter Basic Information",
     "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "yourOwnLettersAndPhotos": "Your own letters and photos.",
+    "dueToTDCJ": "Due to a TDCJ policy, loved ones in Texas state prisons are not allowed to receive postcards. Only",
+    "willBeAccepted": "letters will be accepted."
   },
   "ComposeTools": {
     "wordsLeft": "palabras"

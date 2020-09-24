@@ -20,6 +20,13 @@ export default StyleSheet.create({
     fontSize: 16,
     color: Colors.DROPDOWN_SUCCESS_TEXT,
   },
+  warningBackground: {
+    backgroundColor: Colors.DROPDOWN_WARNING_BACKGROUND,
+  },
+  warningText: {
+    fontSize: 16,
+    color: Colors.DROPDOWN_WARNING_TEXT,
+  },
   errorBackground: {
     backgroundColor: Colors.DROPDOWN_ERROR_BACKGROUND,
   },
