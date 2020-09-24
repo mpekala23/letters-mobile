@@ -8,11 +8,14 @@ import {
 } from 'react-native-gesture-handler';
 import Styles, { STICKER_SIZE } from './StickerComponent.styles';
 import Icon from '../Icon/Icon.react';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 interface Props {
   sticker: Sticker;
   position: { x: number; y: number };
   updatePosition: (dx: number, dy: number) => void;
+  updateRotation: (rotation: number) => void;
+  updateScale: (scale: number) => void;
   hoverOver: (x: number, y: number) => void;
   setDragging: (val: boolean) => void;
 }
@@ -97,6 +100,7 @@ export default class StickerComponent extends React.Component<Props> {
           this.lastRotation += e.nativeEvent.rotation;
           this.rotation.setOffset(this.lastRotation);
           this.rotation.setValue(0);
+          this.props.updateRotation(this.lastRotation);
         }}
         simultaneousHandlers={this.pinchRef}
       >
@@ -110,6 +114,7 @@ export default class StickerComponent extends React.Component<Props> {
             this.lastScale *= e.nativeEvent.scale;
             this.baseScale.setValue(this.lastScale);
             this.pinchScale.setValue(1);
+            this.props.updateScale(this.lastScale);
           }}
           simultaneousHandlers={this.rotateRef}
         >
@@ -135,7 +140,7 @@ export default class StickerComponent extends React.Component<Props> {
               }}
               {...this.panResponder.panHandlers}
             >
-              <Icon svg={this.props.sticker.svg} />
+              {this.props.sticker.component}
             </Animated.View>
           </Animated.View>
         </PinchGestureHandler>

@@ -12,6 +12,7 @@ import Icon from '../Icon/Icon.react';
 import Input from '../Input/Input.react';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
 import StickerManager from '../StickerManager/StickerManager.react';
+import { STICKER_SIZE } from '../StickerManager/StickerComponent.styles';
 
 const pixelRatio = PixelRatio.get();
 const pixelWidth = 1800 / pixelRatio;
@@ -267,14 +268,22 @@ class DynamicPostcard extends React.Component<Props, State> {
                   <View
                     style={{
                       position: 'absolute',
-                      width: 64 * growBy,
-                      height: 64 * growBy,
-                      left: placedSticker.position.x * growBy - 32 * growBy,
-                      top: placedSticker.position.y * growBy - 32 * growBy,
+                      width: STICKER_SIZE * growBy,
+                      height: STICKER_SIZE * growBy,
+                      left:
+                        placedSticker.position.x * growBy -
+                        (STICKER_SIZE / 2) * growBy,
+                      top:
+                        placedSticker.position.y * growBy -
+                        (STICKER_SIZE / 2) * growBy,
+                      transform: [
+                        { scale: placedSticker.scale },
+                        { rotateZ: placedSticker.rotation.toString() },
+                      ],
                     }}
                     key={placedSticker.id}
                   >
-                    <Icon svg={placedSticker.sticker.svg} />
+                    {placedSticker.sticker.component}
                   </View>
                 );
               })}

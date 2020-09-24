@@ -6,7 +6,7 @@ export interface Image {
 }
 
 export interface Sticker {
-  svg: string;
+  component: JSX.Element;
   name: string;
 }
 
@@ -16,6 +16,8 @@ export interface PlacedSticker {
     x: number;
     y: number;
   };
+  rotation: number;
+  scale: number;
   id: number;
 }
 

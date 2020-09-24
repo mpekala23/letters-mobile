@@ -1,15 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import {
-  View,
-  Animated,
-  PanResponderInstance,
-  PanResponder,
-} from 'react-native';
+import { View, Animated, Image as ImageComponent } from 'react-native';
 import { Sticker, PlacedSticker } from 'types';
 import { distance } from '@utils';
-import TrashCan from '@assets/stickers/TrashCan';
-import { PinchGestureHandler } from 'react-native-gesture-handler';
+import TrashCan from '@assets/stickers/TrashCan.png';
 import Icon from '../Icon/Icon.react';
 import Styles from './StickerManager.styles';
 import StickerComponent from './StickerComponent.react';
@@ -73,6 +67,8 @@ export default class StickerManager extends React.Component<Props, State> {
             x: this.props.width / 2,
             y: this.props.height / 2,
           },
+          rotation: 0,
+          scale: 1,
           id: this.stickerId,
         });
         this.stickerId += 1;
@@ -112,6 +108,36 @@ export default class StickerManager extends React.Component<Props, State> {
     );
   }
 
+  updateRotation(id: number, rotation: number): void {
+    const ix = this.state.stickers.findIndex(
+      (placedSticker) => placedSticker.id === id
+    );
+    if (ix < 0) return;
+    this.setState(
+      (prevState) => {
+        const newStickers = [...prevState.stickers];
+        newStickers[ix].rotation = rotation;
+        return { ...prevState, stickers: newStickers };
+      },
+      () => this.props.updateStickers(this.state.stickers)
+    );
+  }
+
+  updateScale(id: number, scale: number): void {
+    const ix = this.state.stickers.findIndex(
+      (placedSticker) => placedSticker.id === id
+    );
+    if (ix < 0) return;
+    this.setState(
+      (prevState) => {
+        const newStickers = [...prevState.stickers];
+        newStickers[ix].scale = scale;
+        return { ...prevState, stickers: newStickers };
+      },
+      () => this.props.updateStickers(this.state.stickers)
+    );
+  }
+
   render(): JSX.Element {
     return (
       <View style={[Styles.background]}>
@@ -122,6 +148,12 @@ export default class StickerManager extends React.Component<Props, State> {
             position={placedSticker.position}
             updatePosition={(x, y) => {
               this.updatePosition(placedSticker.id, x, y);
+            }}
+            updateRotation={(rotation) => {
+              this.updateRotation(placedSticker.id, rotation);
+            }}
+            updateScale={(scale) => {
+              this.updateScale(placedSticker.id, scale);
             }}
             hoverOver={(x, y) => {
               this.setTrashing(
@@ -165,7 +197,10 @@ export default class StickerManager extends React.Component<Props, State> {
               ],
             }}
           >
-            <Icon svg={TrashCan} />
+            <ImageComponent
+              source={TrashCan}
+              style={{ width: '100%', height: '100%' }}
+            />
           </Animated.View>
         )}
       </View>

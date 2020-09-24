@@ -567,7 +567,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           this.closeBottom();
         }}
       >
-        <Icon svg={sticker.svg} style={{ width: '100%', height: '100%' }} />
+        {sticker.component}
       </TouchableOpacity>
     );
   }
