@@ -10,12 +10,14 @@ const DROP_DURATION = 4000;
 
 export enum DropType {
   Success = 'Success',
+  Warning = 'Warning',
   Error = 'Error',
 }
 
 export interface DropNotif {
   type: DropType;
-  message: string;
+  message: string | JSX.Element;
+  dynamic?: boolean;
   persist: boolean;
   duration: number;
   onPress?: () => void;
@@ -67,11 +69,13 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
   // convenient success dropdown
   queueSuccess({
     message,
+    dynamic,
     onPress,
     persist,
     duration,
   }: {
-    message: string;
+    message: string | JSX.Element;
+    dynamic?: boolean;
     onPress: () => void;
     persist: boolean;
     duration: number;
@@ -79,6 +83,32 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     const successNotif: DropNotif = {
       type: DropType.Success,
       message,
+      dynamic,
+      onPress,
+      persist,
+      duration,
+    };
+    this.queueNotif(successNotif);
+  }
+
+  // convenient success dropdown
+  queueWarning({
+    message,
+    dynamic,
+    onPress,
+    persist,
+    duration,
+  }: {
+    message: string | JSX.Element;
+    dynamic?: boolean;
+    onPress: () => void;
+    persist: boolean;
+    duration: number;
+  }): void {
+    const successNotif: DropNotif = {
+      type: DropType.Warning,
+      message,
+      dynamic,
       onPress,
       persist,
       duration,
@@ -89,11 +119,13 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
   // convenient error dropdown
   queueError({
     message,
+    dynamic,
     onPress,
     persist,
     duration,
   }: {
-    message: string;
+    message: string | JSX.Element;
+    dynamic?: boolean;
     onPress: () => void;
     persist: boolean;
     duration: number;
@@ -101,6 +133,7 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
     const errorNotif: DropNotif = {
       type: DropType.Error,
       message,
+      dynamic,
       onPress,
       persist,
       duration,
@@ -169,31 +202,32 @@ export class Dropdown extends React.Component<Record<string, unknown>, State> {
   renderNotif(): JSX.Element {
     const notif = this.state.notifQ[0];
     if (!notif) return <View />;
+    let typeBackground = Styles.errorBackground;
+    let typeText = Styles.errorText;
+    if (notif.type === DropType.Warning) {
+      typeBackground = Styles.warningBackground;
+      typeText = Styles.warningText;
+    } else if (notif.type === DropType.Success) {
+      typeBackground = Styles.successBackground;
+      typeText = Styles.successText;
+    }
     return this.state.dropped ? (
       <TouchableOpacity
         testID="touchable"
-        style={[
-          Styles.commonBackground,
-          notif.type === DropType.Success
-            ? Styles.successBackground
-            : Styles.errorBackground,
-        ]}
+        style={[Styles.commonBackground, typeBackground]}
         onPress={() => {
           if (notif.onPress) notif.onPress();
           if (notif.id) this.endNotif(notif.id);
         }}
         activeOpacity={0.9}
       >
-        <Text
-          style={[
-            Typography.FONT_MEDIUM,
-            notif.type === DropType.Success
-              ? Styles.successText
-              : Styles.errorText,
-          ]}
-        >
-          {notif.message}
-        </Text>
+        {notif.dynamic ? (
+          notif.message
+        ) : (
+          <Text style={[Typography.FONT_MEDIUM, typeText]}>
+            {notif.message}
+          </Text>
+        )}
       </TouchableOpacity>
     ) : (
       <View />
@@ -224,11 +258,13 @@ const DropdownInstance = (): JSX.Element => (
 
 export function dropdownSuccess({
   message,
+  dynamic,
   onPress,
   persist,
   duration,
 }: {
-  message?: string;
+  message?: string | JSX.Element;
+  dynamic?: boolean;
   onPress?: () => void;
   persist?: boolean;
   duration?: number;
@@ -236,6 +272,30 @@ export function dropdownSuccess({
   if (dropdownRef.current)
     dropdownRef.current.queueSuccess({
       message: message || '',
+      dynamic,
+      onPress: onPress || (() => null),
+      persist: persist || false,
+      duration: duration || DROP_DURATION,
+    });
+}
+
+export function dropdownWarning({
+  message,
+  dynamic,
+  onPress,
+  persist,
+  duration,
+}: {
+  message?: string | JSX.Element;
+  dynamic?: boolean;
+  onPress?: () => void;
+  persist?: boolean;
+  duration?: number;
+}): void {
+  if (dropdownRef.current)
+    dropdownRef.current.queueWarning({
+      message: message || '',
+      dynamic,
       onPress: onPress || (() => null),
       persist: persist || false,
       duration: duration || DROP_DURATION,
@@ -244,11 +304,13 @@ export function dropdownSuccess({
 
 export function dropdownError({
   message,
+  dynamic,
   onPress,
   persist,
   duration,
 }: {
-  message?: string;
+  message?: string | JSX.Element;
+  dynamic?: boolean;
   onPress?: () => void;
   persist?: boolean;
   duration?: number;
@@ -256,6 +318,7 @@ export function dropdownError({
   if (dropdownRef.current)
     dropdownRef.current.queueError({
       message: message || '',
+      dynamic,
       onPress: onPress || (() => null),
       persist: persist || false,
       duration: duration || DROP_DURATION,
