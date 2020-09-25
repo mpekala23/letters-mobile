@@ -608,7 +608,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           <Text
             style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
           >
-            Layouts
+            {i18n.t('Compose.Layouts')}
           </Text>
           <FlatList
             data={LAYOUTS}

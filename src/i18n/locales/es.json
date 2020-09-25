@@ -325,8 +325,8 @@
     "okay": "Okay",
     "noDesignSelected": "Ningún diseño seleccionado",
     "selectADesign": "Seleccione imágenes para todos los espacios.",
-    "imagesNotFilled": "Images not filled",
-    "fillAllImages": "You must choose an image for each slot in the layout to continue"
+    "imagesNotFilled": "Algunos espacios están incompletos",
+    "fillAllImages": "Debes elegir una imagen para cada espacio para continuar."
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",
@@ -359,9 +359,10 @@
     "iWouldLikeToSend": "I would like to send something:",
     "registerAccount": "Register Account",
     "enterBasic": "Enter Basic Information",
-    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
+    "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
     "yourOwnLettersAndPhotos": "Your own letters and photos.",
-    "stickers": "Stickers"
+    "stickers": "Stickers",
+    "layouts": "Layouts"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"
