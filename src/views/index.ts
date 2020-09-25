@@ -3,6 +3,7 @@ import BeginScreen from './Onboarding/Begin.react';
 import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
 import ComposeLetterScreen from './Compose/ComposeLetter.react';
+import ComposePersonalScreen from './Compose/ComposePersonal.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
@@ -38,6 +39,7 @@ export {
   ChooseCategoryScreen,
   ChooseOptionScreen,
   ComposeLetterScreen,
+  ComposePersonalScreen,
   ComposePostcardScreen,
   ContactInfoScreen,
   ContactSelectorScreen,

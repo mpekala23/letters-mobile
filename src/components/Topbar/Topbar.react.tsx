@@ -10,7 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { WINDOW_WIDTH } from '@utils';
 import { Screens } from '@utils/Screens';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles, { barHeight } from './Topbar.styles';
+import Styles, { BAR_HEIGHT } from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
@@ -151,7 +151,7 @@ class Topbar extends React.Component<Props, State> {
             }),
             height: this.state.shownAnim.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, barHeight],
+              outputRange: [0, BAR_HEIGHT],
             }),
             shadowColor: this.state.shown ? '#000' : '#fff',
             elevation: this.state.shown ? 5 : 0,

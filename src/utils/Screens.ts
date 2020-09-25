@@ -21,6 +21,7 @@ export enum Screens {
   ChooseCategory = 'ChooseCategory',
   ChooseOption = 'ChooseOption',
   ComposeLetter = 'ComposeLetter',
+  ComposePersonal = 'ComposePersonal',
   ComposePostcard = 'ComposePostcard',
   ReferralDashboard = 'ReferralDashboard',
   ReviewLetter = 'ReviewLetter',
@@ -72,6 +73,7 @@ export type AppStackParamList = {
   ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
+  ComposePersonal: { category: Category };
   ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
@@ -88,7 +90,7 @@ export type AppStackParamList = {
   ReferFriends: { mailType: MailTypes };
   ReferralDashboard: undefined;
   ReviewLetter: undefined;
-  ReviewPostcard: { horizontal: boolean; category: string };
+  ReviewPostcard: { category: string };
   ReviewContact: { manual: boolean };
   Setup: undefined;
   SingleContact: undefined;

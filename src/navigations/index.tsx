@@ -12,6 +12,7 @@ import {
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
+  ComposePersonalScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
@@ -77,6 +78,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
+  ComposePersonal: { title: i18n.t('Screens.compose'), profile: false },
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
@@ -238,6 +240,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ComposeLetter}
           component={ComposeLetterScreen}
+        />
+        <Stack.Screen
+          name={Screens.ComposePersonal}
+          component={ComposePersonalScreen}
         />
         <Stack.Screen
           name={Screens.ComposePostcard}

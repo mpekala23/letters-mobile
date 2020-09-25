@@ -5,6 +5,22 @@ export interface Image {
   height?: number;
 }
 
+export interface Sticker {
+  component: JSX.Element;
+  name: string;
+}
+
+export interface PlacedSticker {
+  sticker: Sticker;
+  position: {
+    x: number;
+    y: number;
+  };
+  rotation: number;
+  scale: number;
+  id: number;
+}
+
 export type Subscription = {
   remove: () => void;
 };
@@ -54,6 +70,12 @@ export interface Category {
   image: Image;
   blurb: string;
   subcategories: Record<string, PostcardDesign[]>;
+}
+
+export interface Layout {
+  id: number;
+  designs: Record<number, PostcardDesign | null>;
+  svg: string;
 }
 
 // Letters and Postcards (Draft)
@@ -211,3 +233,5 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';

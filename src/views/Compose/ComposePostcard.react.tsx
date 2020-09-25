@@ -54,7 +54,7 @@ type ComposePostcardScreenNavigationProp = StackNavigationProp<
   'ComposePostcard'
 >;
 
-export interface Props {
+interface Props {
   navigation: ComposePostcardScreenNavigationProp;
   route: {
     params: {
@@ -463,7 +463,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       step: 'draft',
     });
     this.props.navigation.navigate(Screens.ReviewPostcard, {
-      horizontal: this.designIsHorizontal(),
       category: this.props.route.params.category.name,
     });
   }
