@@ -324,7 +324,9 @@
     "mustUsePhysical": "You must use a physical device to receive push notifications",
     "okay": "Okay",
     "noDesignSelected": "No design selected",
-    "selectADesign": "Select a design to continue."
+    "selectADesign": "Select a design to continue.",
+    "imagesNotFilled": "Images not filled",
+    "fillAllImages": "You must choose an image for each slot in the layout to continue"
   },
   "Compose": {
     "chooseAnOption": "Choose an option",
@@ -355,7 +357,9 @@
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
     "iWouldLikeToSend": "I would like to send something:",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "yourOwnLettersAndPhotos": "Your own letters and photos.",
+    "stickers": "Stickers",
+    "layouts": "Layouts"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
