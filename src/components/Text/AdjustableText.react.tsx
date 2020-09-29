@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import { ViewStyle, Text } from 'react-native';
+import { ViewStyle, Text, TextStyle } from 'react-native';
 
 interface Props {
-  style: ViewStyle | ViewStyle[];
+  style: ViewStyle | ViewStyle[] | TextStyle | TextStyle[];
   numberOfLines: number;
   children: React.ReactNode;
 }

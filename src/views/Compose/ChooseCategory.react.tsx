@@ -78,6 +78,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
             </Text>
           </Text>
         ),
+        persist: true,
       });
   }
 

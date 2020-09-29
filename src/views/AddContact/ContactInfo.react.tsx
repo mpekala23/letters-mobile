@@ -284,7 +284,8 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         <KeyboardAvoider
           style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
-          <View
+          <TouchableOpacity
+            activeOpacity={1.0}
             style={{
               flex: 1,
               justifyContent: 'center',
@@ -296,7 +297,10 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
               keyboardShouldPersistTaps="handled"
               style={{ width: '100%' }}
             >
-              <View style={CommonStyles.contactbackground}>
+              <TouchableOpacity
+                activeOpacity={1.0}
+                style={CommonStyles.contactbackground}
+              >
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader
                     text={i18n.t('ContactInfoScreen.addContact')}
@@ -430,9 +434,9 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     this.updateValid();
                   }}
                 />
-              </View>
+              </TouchableOpacity>
             </ScrollView>
-          </View>
+          </TouchableOpacity>
         </KeyboardAvoider>
       </TouchableOpacity>
     );
