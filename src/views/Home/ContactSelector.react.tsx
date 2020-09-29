@@ -11,14 +11,16 @@ import { Mail, Contact } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
+import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { getContacts, getUser, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
-import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import { differenceInHours } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardBackground from '@assets/views/Referrals/CardBackground';
+import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
+import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -35,11 +37,12 @@ interface Props {
   existingMail: Record<string, Mail[]>;
   navigation: ContactSelectorScreenNavigationProp;
   setActiveContact: (contact: Contact) => void;
-  currentNotif: Notif | null;
   userPostal: string;
-  handleNotif: () => void;
   userId: number;
   lastUpdatedCategories: string | null;
+  unrespondedNotifs: Notif[];
+  setUnrespondedNotifs: (notifs: Notif[]) => void;
+  setActiveMail: (mail: Mail) => void;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props, State> {
@@ -58,16 +61,35 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     );
   }
 
-  async componentDidMount() {
-    if (this.props.currentNotif) this.props.handleNotif();
-    /* try {
-      await Notifs.setup();
-      this.props.handleNotif();
-      const token = Notifs.getToken();
-      await uploadPushToken(token);
-    } catch (err) {
-      dropdownError({ message: i18n.t('Permission.notifs') });
-    } */
+  componentDidMount() {
+    if (this.props.unrespondedNotifs.length) {
+      const ix = this.props.unrespondedNotifs.findIndex(
+        (notif) => notif.type === NotifTypes.HasReceived
+      );
+      if (ix < 0) return;
+      const notif = this.props.unrespondedNotifs[ix];
+      let contact: Contact | undefined;
+      if (notif.data && notif.data.contactId) {
+        contact = this.props.existingContacts.find((testContact) => {
+          return notif.data && testContact.id === notif.data.contactId;
+        });
+      }
+      if (contact) {
+        this.props.setActiveContact(contact);
+      }
+      let mail: Mail | undefined;
+      if (contact && notif.data && notif.data.letterId) {
+        mail = this.props.existingMail[contact.id].find(
+          (testMail) => notif.data && testMail.id === notif.data.letterId
+        );
+      }
+      if (mail) {
+        this.props.setActiveMail(mail);
+      }
+      Segment.track('Notifications - Delivery Check-In ');
+      this.props.setUnrespondedNotifs([]);
+      this.props.navigation.navigate(Screens.Issues);
+    }
   }
 
   componentWillUnmount() {
@@ -217,17 +239,19 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   existingContacts: state.contact.existing,
   existingMail: state.mail.existing,
-  currentNotif: state.notif.currentNotif,
   userPostal: state.user.user.postal,
   userId: state.user.user.id,
   lastUpdatedCategories: state.category.lastUpdated,
+  unrespondedNotifs: state.notif.unrespondedNotifs,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<ContactActionTypes | NotifActionTypes>
+  dispatch: Dispatch<ContactActionTypes | NotifActionTypes | MailActionTypes>
 ) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
-    handleNotif: () => dispatch(handleNotif()),
+    setUnrespondedNotifs: (notifs: Notif[]) =>
+      dispatch(setUnrespondedNotifs(notifs)),
+    setActiveMail: (mail: Mail) => dispatch(setActiveMail(mail)),
   };
 };
 const ContactSelectorScreen = connect(

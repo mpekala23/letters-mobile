@@ -1,13 +1,12 @@
 import {
   NotifState,
   NotifActionTypes,
-  HANDLE_NOTIF,
-  SET_CURRENT_NOTIF,
+  SET_UNRESPONDED_NOTIFS,
   SET_FUTURE_NOTIFS,
 } from './NotifTypes';
 
 const initialState: NotifState = {
-  currentNotif: null,
+  unrespondedNotifs: [],
   futureNotifs: [],
 };
 
@@ -17,11 +16,8 @@ export default function NotifReducer(
 ): NotifState {
   const currentState = { ...state };
   switch (action.type) {
-    case HANDLE_NOTIF:
-      currentState.currentNotif = null;
-      return currentState;
-    case SET_CURRENT_NOTIF:
-      currentState.currentNotif = action.payload;
+    case SET_UNRESPONDED_NOTIFS:
+      currentState.unrespondedNotifs = action.payload;
       return currentState;
     case SET_FUTURE_NOTIFS:
       currentState.futureNotifs = action.payload;

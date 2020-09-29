@@ -14,7 +14,7 @@ const config = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: ['user', 'facility'],
-  whitelist: ['category', 'contact', 'notif', 'mail', 'zip'],
+  whitelist: ['category', 'contact', 'mail', 'zip', 'notif'],
 };
 
 const combinedReducers = combineReducers<AppState>({

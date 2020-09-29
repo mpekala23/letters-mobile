@@ -26,7 +26,10 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { resetNavigation } from '@utils';
 import { Screens } from '@utils/Screens';
 import * as Segment from 'expo-analytics-segment';
-import { setCurrentNotif, setFutureNotifs } from '@store/Notif/NotifiActions';
+import {
+  setUnrespondedNotifs,
+  setFutureNotifs,
+} from '@store/Notif/NotifiActions';
 
 export async function getPushToken(): Promise<string> {
   if (!Constants.isDevice) {
@@ -218,6 +221,11 @@ async function notifReceived({
 }): Promise<void> {
   const notif = cleanNotificationRequest(request);
   if (!notif) return;
+
+  const newUnresponded = store.getState().notif.unrespondedNotifs;
+  newUnresponded.push(notif);
+  store.dispatch(setUnrespondedNotifs(newUnresponded));
+
   switch (notif.type) {
     case NotifTypes.ProcessedForDelivery:
       scheduleNotificationInBusinessDays(
@@ -238,7 +246,7 @@ async function notifReceived({
   }
 }
 
-// called when a notification is interacted with (opened) from background
+// called when a notification is interacted with
 function notifResponse(event: NotificationResponse): void {
   Segment.trackWithProperties('App Open', {
     channel: 'Push',
@@ -247,8 +255,17 @@ function notifResponse(event: NotificationResponse): void {
   });
   const notif = cleanNotificationRequest(event.notification.request);
   if (!notif) return;
-  store.dispatch(setCurrentNotif(notif));
   const state = store.getState();
+
+  const newUnresponded = state.notif.unrespondedNotifs.filter((testNotif) => {
+    return (
+      testNotif.type !== notif.type ||
+      testNotif.title !== notif.title ||
+      testNotif.body !== notif.body
+    );
+  });
+  store.dispatch(setUnrespondedNotifs(newUnresponded));
+
   let contact: Contact | undefined;
   if (notif.data && notif.data.contactId) {
     contact = state.contact.existing.find((testContact) => {

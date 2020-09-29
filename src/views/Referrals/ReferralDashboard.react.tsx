@@ -45,9 +45,11 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
   const doRefresh = async () => {
     setRefreshing(true);
     try {
-      await getUserReferrals;
+      await getUserReferrals();
     } catch (e) {
-      dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
+      dropdownError({
+        message: i18n.t('Error.cantRefreshContacts'),
+      });
     }
     setRefreshing(false);
   };

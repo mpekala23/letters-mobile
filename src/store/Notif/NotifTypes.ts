@@ -1,7 +1,6 @@
 import { Screens } from '@utils/Screens';
 
-export const HANDLE_NOTIF = 'notification/handle_notif';
-export const SET_CURRENT_NOTIF = 'notification/set_current_notif';
+export const SET_UNRESPONDED_NOTIFS = 'notification/set_unresponded_notifs';
 export const SET_FUTURE_NOTIFS = 'notification/set_future_notifs';
 
 export enum NotifTypes {
@@ -34,29 +33,23 @@ export interface FutureNotif {
   notif: Notif;
 }
 
-// currentNotif is only not-null when there is a notification waiting to be dealt with
-// pastNotifs includes the current notif, when it exists
+// unrespondedNotifs are notifications that have been received but not tapped on
+// futureNotifs are notifications that are yet to be received
 export interface NotifState {
-  currentNotif: Notif | null;
+  unrespondedNotifs: Notif[];
   futureNotifs: FutureNotif[];
 }
 
-interface SetCurrentNotifAction {
-  type: 'notification/set_current_notif';
-  payload: Notif | null;
+interface SetUnrespondedNotifsAction {
+  type: typeof SET_UNRESPONDED_NOTIFS;
+  payload: Notif[];
 }
 
 interface SetFutureNotifsAction {
-  type: 'notification/set_future_notifs';
+  type: typeof SET_FUTURE_NOTIFS;
   payload: FutureNotif[];
 }
 
-interface HandleNotifAction {
-  type: 'notification/handle_notif';
-  payload: null;
-}
-
 export type NotifActionTypes =
-  | SetCurrentNotifAction
-  | HandleNotifAction
+  | SetUnrespondedNotifsAction
   | SetFutureNotifsAction;
