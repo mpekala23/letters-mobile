@@ -440,7 +440,7 @@ export async function getSubcategoriesById(
   categoryId: number
 ): Promise<Record<string, PostcardDesign[]>> {
   const body = await fetchAuthenticated(
-    url.resolve(API_URL, `designs/${categoryId}`)
+    url.resolve(API_URL, `/categories/${categoryId}/designs`)
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;

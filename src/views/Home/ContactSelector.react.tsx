@@ -107,7 +107,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         new Date(this.props.lastUpdatedCategories)
       ) > 6
     ) {
-      getCategories().catch(() => {
+      getCategories().catch((err) => {
         dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
       });
     }

@@ -45,6 +45,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
+import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
 import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -628,6 +629,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               {
                 flex: 1,
                 paddingBottom: 50,
+                alignItems: 'center',
               },
             ]}
           >
@@ -635,6 +637,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               style={[
                 Styles.gridPreviewBackground,
                 {
+                  alignItems: 'center',
                   transform: [
                     {
                       scale: this.state.keyboardOpacity.interpolate({
@@ -666,6 +669,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   this.setState({ loading: null });
                 }}
                 active
+                width={POSTCARD_WIDTH}
+                height={POSTCARD_HEIGHT}
               />
             </Animated.View>
             <Animated.View

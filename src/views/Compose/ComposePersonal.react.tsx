@@ -214,6 +214,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         action: this.doneWriting,
       });
     }
+    console.log('on nav finished');
   }
 
   onNavigationBlur = () => {
@@ -608,7 +609,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           <Text
             style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
           >
-            {i18n.t('Compose.Layouts')}
+            {i18n.t('Compose.layouts')}
           </Text>
           <FlatList
             data={LAYOUTS}

@@ -9,6 +9,7 @@ import { getZipcode } from '@api/Common';
 import { haversine } from '@utils';
 import CardStyles from './Card.styles';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
+import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
   firstName: string;
@@ -49,7 +50,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
       onPress={props.onPress}
       testID="ContactSelectorCard"
     >
-      <View style={[{ flex: 1, flexDirection: 'row' }]}>
+      <View style={[{ flex: 1, flexDirection: 'row', alignItems: 'center' }]}>
         <View style={[{ paddingTop: 12 }]}>
           <ProfilePic
             firstName={props.firstName}
@@ -58,16 +59,19 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
             type={ProfilePicTypes.Contact}
           />
         </View>
-        <View style={[{ paddingLeft: 18 }]}>
+        <View style={{ paddingLeft: 18, flex: 1 }}>
           <Text style={[Typography.BASE_TITLE]}>{props.firstName}</Text>
-          <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
+          <AdjustableText
+            style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+            numberOfLines={1}
+          >
             <Emoji name="love_letter" />{' '}
             {i18n.t('SingleContactScreen.received')}:{' '}
             {props.mail ? deliveredLetters.length : 0}
-          </Text>
+          </AdjustableText>
           {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
             <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
-              <Emoji name="calendar" />{' '}
+              <Emoji name="calendar" />
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
               {format(props.mail[0].dateCreated, 'MMM dd')}
             </Text>
