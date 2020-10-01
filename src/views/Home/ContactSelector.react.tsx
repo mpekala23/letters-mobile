@@ -61,7 +61,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (this.props.unrespondedNotifs.length) {
+    if (this.props.unrespondedNotifs && this.props.unrespondedNotifs.length) {
       const ix = this.props.unrespondedNotifs.findIndex(
         (notif) => notif.type === NotifTypes.HasReceived
       );
