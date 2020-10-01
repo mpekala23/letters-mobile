@@ -7,7 +7,6 @@ import { Alert, Dropdown, Statusbar } from '@components';
 import { loginWithToken } from '@api';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
 import { setCustomText } from 'react-native-global-props';
 import * as Segment from 'expo-analytics-segment';
 import * as Sentry from 'sentry-expo';

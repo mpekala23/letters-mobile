@@ -8,7 +8,7 @@ import {
 
 export const BOTTOM_HEIGHT =
   WINDOW_HEIGHT - POSTCARD_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - 16;
-export const DESIGN_BUTTONS_HEIGHT = 208;
+export const DESIGN_BUTTONS_HEIGHT = 200;
 export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
 
 export default StyleSheet.create({
@@ -66,7 +66,8 @@ export default StyleSheet.create({
   gridDesignBackground: {},
   designButtons: {
     position: 'absolute',
-    height: DESIGN_BUTTONS_HEIGHT,
+    height:
+      WINDOW_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - POSTCARD_HEIGHT - 96,
     width: WINDOW_WIDTH,
     paddingHorizontal: 16,
     paddingVertical: 12,

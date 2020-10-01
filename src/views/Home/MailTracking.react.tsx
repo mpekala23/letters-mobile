@@ -23,8 +23,6 @@ import {
 } from 'types';
 import { format, addBusinessDays } from 'date-fns';
 import i18n from '@i18n';
-import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
-import { handleNotif } from '@store/Notif/NotifiActions';
 import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
 import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
 import * as Segment from 'expo-analytics-segment';
@@ -42,8 +40,6 @@ interface Props {
   navigation: MailTrackingScreenNavigationProp;
   mail: Mail | null;
   contact: Contact;
-  currentNotif: Notif | null;
-  handleNotif: () => void;
   user: User;
 }
 
@@ -57,10 +53,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     this.state = {
       animation: new Animated.Value(0),
     };
-  }
-
-  componentDidMount() {
-    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
@@ -365,15 +357,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
   mail: state.mail.active,
-  currentNotif: state.notif.currentNotif,
   user: state.user.user,
 });
-const mapDispatchToProps = (dispatch: Dispatch<NotifActionTypes>) => ({
-  handleNotif: () => dispatch(handleNotif()),
-});
-const MailTrackingScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MailTrackingScreenBase);
+const MailTrackingScreen = connect(mapStateToProps)(MailTrackingScreenBase);
 
 export default MailTrackingScreen;

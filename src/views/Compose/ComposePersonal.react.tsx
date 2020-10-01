@@ -713,13 +713,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         >
           <KeyboardAvoider>
             <ScrollView
-              style={{ flex: 1, paddingHorizontal: 16 }}
+              style={{
+                paddingHorizontal: 16,
+              }}
               showsVerticalScrollIndicator={false}
             >
               <Animated.View
                 style={{
-                  height: POSTCARD_HEIGHT + 72,
-                  paddingBottom: 40,
                   paddingTop:
                     this.state.subscreen === 'Design'
                       ? this.state.designState.bottomSlide.interpolate({
@@ -786,24 +786,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   height={POSTCARD_HEIGHT}
                   bottomDetails={this.state.designState.bottomDetails}
                 />
-                <Animated.View
-                  style={{
-                    width: WINDOW_WIDTH,
-                    height: this.state.designState.bottomSlide.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, BOTTOM_HEIGHT - DESIGN_BUTTONS_HEIGHT],
-                    }),
-                  }}
-                />
               </Animated.View>
             </ScrollView>
             <ComposeTools
               keyboardOpacity={this.state.textState.keyboardOpacity}
               numLeft={this.state.textState.wordsLeft}
             />
+            {this.renderDesignButtons()}
+            {this.renderBottom()}
           </KeyboardAvoider>
-          {this.renderDesignButtons()}
-          {this.renderBottom()}
         </TouchableOpacity>
       </>
     );

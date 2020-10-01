@@ -150,12 +150,9 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={Styles.screenBackground}>
         <ScrollView style={{ flex: 1 }}>
-          <TouchableOpacity
-            activeOpacity={1.0}
-            style={[Styles.screenBackground, { paddingVertical: 16 }]}
-          >
+          <TouchableOpacity activeOpacity={1.0} style={{ paddingVertical: 16 }}>
             <StaticPostcard
               front
               composing={this.props.composing}
