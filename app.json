@@ -13,7 +13,7 @@
       "color": "#ffffff"
     },
     "android": {
-      "versionCode": 20,
+      "versionCode": 120,
       "package": "com.ameelio.letters_mobile",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/icon.png",
