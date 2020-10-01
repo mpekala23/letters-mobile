@@ -70,7 +70,7 @@ export default class StickerManager extends React.Component<Props, State> {
             x: this.props.width / 2,
             y: this.props.height / 2,
           },
-          rotation: 0,
+          rotation: '0rad',
           scale: 1,
           id: this.stickerId,
         });
@@ -118,7 +118,7 @@ export default class StickerManager extends React.Component<Props, State> {
     );
   }
 
-  updateRotation(id: number, rotation: number): void {
+  updateRotation(id: number, rotation: string): void {
     const ix = this.state.stickers.findIndex(
       (placedSticker) => placedSticker.id === id
     );

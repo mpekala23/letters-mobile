@@ -14,26 +14,14 @@ const MailingAddressPreview = ({ recipient, style }: Props): ReactElement => {
     <View style={style}>
       <AdjustableText
         style={[Typography.FONT_REGULAR, { fontSize: 14 }]}
-        numberOfLines={1}
+        numberOfLines={4}
       >
-        {recipient.firstName} {recipient.lastName}, {recipient.inmateNumber}
-      </AdjustableText>
-      <AdjustableText
-        style={[Typography.FONT_REGULAR, { fontSize: 14 }]}
-        numberOfLines={1}
-      >
-        {recipient.facility?.name}
-      </AdjustableText>
-      <AdjustableText
-        style={[Typography.FONT_REGULAR, { fontSize: 14 }]}
-        numberOfLines={1}
-      >
+        {recipient.firstName} {recipient.lastName}, {recipient.inmateNumber}{' '}
+        {'\n'}
+        {recipient.facility.name}
+        {'\n'}
         {recipient.facility?.address}
-      </AdjustableText>
-      <AdjustableText
-        style={[Typography.FONT_REGULAR, { fontSize: 14 }]}
-        numberOfLines={1}
-      >
+        {'\n'}
         {recipient.facility?.city}, {recipient.facility?.state}{' '}
         {recipient.facility?.postal}
       </AdjustableText>

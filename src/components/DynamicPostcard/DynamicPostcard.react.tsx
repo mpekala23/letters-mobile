@@ -233,7 +233,7 @@ class DynamicPostcard extends React.Component<Props, State> {
                         (STICKER_SIZE / 2) * growBy,
                       transform: [
                         { scale: placedSticker.scale },
-                        { rotateZ: placedSticker.rotation.toString() },
+                        { rotateZ: placedSticker.rotation },
                       ],
                     }}
                     key={placedSticker.id}
@@ -298,7 +298,13 @@ class DynamicPostcard extends React.Component<Props, State> {
               svg={Stamp}
             />
             <MailingAddressPreview
-              style={{ paddingHorizontal: 8, paddingTop: 24 }}
+              style={{
+                flex: 1,
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
               recipient={this.props.recipient}
             />
           </View>

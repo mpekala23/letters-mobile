@@ -88,15 +88,9 @@ class EditablePostcard extends React.Component<Props, State> {
             transform: this.props.flip
               ? [
                   {
-                    scale: this.state.rotate.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 0.65],
-                    }),
-                  },
-                  {
                     rotateZ: this.state.rotate.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [0, 3.1415926 / 2],
+                      outputRange: ['0rad', `${(3.1415926 / 2).toString()}rad`],
                     }),
                   },
                   {

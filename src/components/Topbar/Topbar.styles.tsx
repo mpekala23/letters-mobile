@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-export const BAR_HEIGHT = 80;
+import { BAR_HEIGHT } from '@utils/Constants';
 
 export default StyleSheet.create({
   barContainer: {

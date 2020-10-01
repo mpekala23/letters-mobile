@@ -110,6 +110,6 @@ export default class App extends React.Component<null, State> {
         </Provider>
       );
     }
-    return <AppLoading />;
+    return <></>;
   }
 }

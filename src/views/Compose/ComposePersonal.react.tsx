@@ -9,6 +9,7 @@ import {
   EmitterSubscription,
   Platform,
   Image as ImageComponent,
+  ScrollView,
 } from 'react-native';
 import {
   KeyboardAvoider,
@@ -16,6 +17,7 @@ import {
   PostcardTools,
   Icon,
   DynamicPostcard,
+  ComposeTools,
 } from '@components';
 import {
   PostcardDesign,
@@ -30,7 +32,6 @@ import {
   setBackOverride,
   setProfileOverride,
 } from '@components/Topbar/Topbar.react';
-import { BAR_HEIGHT } from '@components/Topbar/Topbar.styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -48,13 +49,14 @@ import {
   capitalize,
   WINDOW_HEIGHT,
   STATUS_BAR_HEIGHT,
+  getNumWords,
 } from '@utils';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
 import STICKERS from '@assets/stickers';
-import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
+import { POSTCARD_HEIGHT, POSTCARD_WIDTH, BAR_HEIGHT } from '@utils/Constants';
 import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -93,7 +95,7 @@ interface State {
     snapshot: Image | null;
   };
   textState: {
-    charsLeft: number;
+    wordsLeft: number;
     valid: boolean;
     keyboardOpacity: Animated.Value;
   };
@@ -131,7 +133,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         snapshot: null,
       },
       textState: {
-        charsLeft: 300,
+        wordsLeft: 100,
         valid: true,
         keyboardOpacity: new Animated.Value(0),
       },
@@ -214,7 +216,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         action: this.doneWriting,
       });
     }
-    console.log('on nav finished');
   }
 
   onNavigationBlur = () => {
@@ -263,9 +264,9 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   setTextState(newState: {
-    charsLeft: number;
-    valid: boolean;
-    keyboardOpacity: Animated.Value;
+    wordsLeft?: number;
+    valid?: boolean;
+    keyboardOpacity?: Animated.Value;
   }) {
     this.setState((prevState) => ({
       ...prevState,
@@ -448,7 +449,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   renderSubcategorySelector = (): JSX.Element => {
     const subcategories = ['Library', 'Take Photo'];
     return (
-      <View style={[Styles.subcategorySelectorBackground, { marginTop: 32 }]}>
+      <View style={[Styles.subcategorySelectorBackground, { marginTop: 16 }]}>
         {subcategories.map((subcategory) => (
           <TouchableOpacity
             style={[
@@ -603,7 +604,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           style={{
             flex: 1,
             alignItems: 'center',
-            paddingTop: 8,
+            paddingTop: 4,
           }}
         >
           <Text
@@ -629,7 +630,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           style={{
             flex: 1,
             alignItems: 'center',
-            paddingTop: 8,
+            paddingTop: 4,
           }}
         >
           <Text
@@ -683,7 +684,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       >
         {this.renderBottomContent()}
         <TouchableOpacity
-          style={{ position: 'absolute', top: 8, right: 8 }}
+          style={{ position: 'absolute', top: 4, right: 8 }}
           onPress={this.closeBottom}
         >
           <Text
@@ -706,84 +707,100 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     return (
       <>
         <TouchableOpacity
-          style={Styles.screenBackground}
+          style={[Styles.screenBackground, { paddingHorizontal: 0 }]}
           activeOpacity={1.0}
           onPress={Keyboard.dismiss}
         >
           <KeyboardAvoider>
-            <Animated.View
-              style={{
-                flex: 1,
-                paddingTop:
-                  this.state.subscreen === 'Design'
-                    ? this.state.designState.bottomSlide.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [
-                          (WINDOW_HEIGHT -
-                            DESIGN_BUTTONS_HEIGHT -
-                            BAR_HEIGHT -
-                            POSTCARD_HEIGHT -
-                            STATUS_BAR_HEIGHT) /
-                            2,
-                          (WINDOW_HEIGHT -
-                            BOTTOM_HEIGHT -
-                            POSTCARD_HEIGHT -
-                            BAR_HEIGHT -
-                            STATUS_BAR_HEIGHT) /
-                            2,
-                        ],
-                      })
-                    : this.state.textState.keyboardOpacity.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [
-                          (WINDOW_HEIGHT -
-                            DESIGN_BUTTONS_HEIGHT -
-                            BAR_HEIGHT -
-                            POSTCARD_HEIGHT -
-                            STATUS_BAR_HEIGHT) /
-                            2,
-                          (WINDOW_HEIGHT * 0.65 -
-                            STATUS_BAR_HEIGHT -
-                            BAR_HEIGHT -
-                            POSTCARD_HEIGHT) /
-                            2,
-                        ],
-                      }),
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-              }}
+            <ScrollView
+              style={{ flex: 1, paddingHorizontal: 16 }}
+              showsVerticalScrollIndicator={false}
             >
-              <DynamicPostcard
-                ref={this.postcardRef}
-                layout={this.state.designState.layout}
-                activePosition={this.state.designState.activePosition}
-                highlightActive={
-                  this.state.designState.bottomDetails === 'design'
-                }
-                commonLayout={this.state.designState.commonLayout}
-                onImageAdd={(position: number) => {
-                  this.setDesignState({ activePosition: position });
-                  this.openBottom('design');
-                }}
-                flip={this.state.designState.flip}
-                onChangeText={(text) => {
-                  this.props.setContent(text);
-                }}
-                recipient={this.props.recipient}
-                width={POSTCARD_WIDTH}
-                height={POSTCARD_HEIGHT}
-                bottomDetails={this.state.designState.bottomDetails}
-              />
               <Animated.View
                 style={{
-                  width: WINDOW_WIDTH,
-                  height: this.state.designState.bottomSlide.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, BOTTOM_HEIGHT - DESIGN_BUTTONS_HEIGHT],
-                  }),
+                  height: POSTCARD_HEIGHT + 72,
+                  paddingBottom: 40,
+                  paddingTop:
+                    this.state.subscreen === 'Design'
+                      ? this.state.designState.bottomSlide.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [
+                            (WINDOW_HEIGHT -
+                              DESIGN_BUTTONS_HEIGHT -
+                              BAR_HEIGHT -
+                              POSTCARD_HEIGHT -
+                              STATUS_BAR_HEIGHT) /
+                              2,
+                            (WINDOW_HEIGHT -
+                              BOTTOM_HEIGHT -
+                              POSTCARD_HEIGHT -
+                              BAR_HEIGHT -
+                              STATUS_BAR_HEIGHT) /
+                              2,
+                          ],
+                        })
+                      : this.state.textState.keyboardOpacity.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [
+                            (WINDOW_HEIGHT -
+                              DESIGN_BUTTONS_HEIGHT -
+                              BAR_HEIGHT -
+                              POSTCARD_HEIGHT -
+                              STATUS_BAR_HEIGHT) /
+                              2,
+                            Math.min(
+                              (WINDOW_HEIGHT -
+                                DESIGN_BUTTONS_HEIGHT -
+                                BAR_HEIGHT -
+                                POSTCARD_HEIGHT -
+                                STATUS_BAR_HEIGHT) /
+                                2,
+                              16
+                            ),
+                          ],
+                        }),
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                 }}
-              />
-            </Animated.View>
+              >
+                <DynamicPostcard
+                  ref={this.postcardRef}
+                  layout={this.state.designState.layout}
+                  activePosition={this.state.designState.activePosition}
+                  highlightActive={
+                    this.state.designState.bottomDetails === 'design'
+                  }
+                  commonLayout={this.state.designState.commonLayout}
+                  onImageAdd={(position: number) => {
+                    this.setDesignState({ activePosition: position });
+                    this.openBottom('design');
+                  }}
+                  flip={this.state.designState.flip}
+                  onChangeText={(text) => {
+                    this.props.setContent(text);
+                    const numWords = getNumWords(text);
+                    this.setTextState({ wordsLeft: 100 - numWords });
+                  }}
+                  recipient={this.props.recipient}
+                  width={POSTCARD_WIDTH}
+                  height={POSTCARD_HEIGHT}
+                  bottomDetails={this.state.designState.bottomDetails}
+                />
+                <Animated.View
+                  style={{
+                    width: WINDOW_WIDTH,
+                    height: this.state.designState.bottomSlide.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, BOTTOM_HEIGHT - DESIGN_BUTTONS_HEIGHT],
+                    }),
+                  }}
+                />
+              </Animated.View>
+            </ScrollView>
+            <ComposeTools
+              keyboardOpacity={this.state.textState.keyboardOpacity}
+              numLeft={this.state.textState.wordsLeft}
+            />
           </KeyboardAvoider>
           {this.renderDesignButtons()}
           {this.renderBottom()}

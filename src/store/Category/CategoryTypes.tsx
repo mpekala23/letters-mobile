@@ -62,7 +62,7 @@ interface RemoveSubcategoryAction {
 
 interface SetLastUpdatedAction {
   type: typeof SET_LAST_UPDATED;
-  payload: string;
+  payload: string | null;
 }
 
 export type CategoryActionTypes =

@@ -56,7 +56,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
   componentDidMount() {
     if (this.props.categories.length === 0) {
-      getCategories();
+      this.refreshCategories();
     }
   }
 
@@ -127,7 +127,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               style={{ flex: 1 }}
               data={this.props.categories.slice(1)}
               ListHeaderComponent={
-                this.props.categories.length > 0 ? (
+                this.props.categories.length ? (
                   <CategoryCard
                     category={this.props.categories[0]}
                     navigate={

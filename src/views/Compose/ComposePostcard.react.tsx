@@ -9,6 +9,7 @@ import {
   EmitterSubscription,
   Platform,
   Image as ImageComponent,
+  ScrollView,
 } from 'react-native';
 import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
 import {
@@ -20,13 +21,7 @@ import {
   MailTypes,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import {
-  WINDOW_WIDTH,
-  WINDOW_HEIGHT,
-  takeImage,
-  capitalize,
-  getNumWords,
-} from '@utils';
+import { WINDOW_WIDTH, takeImage, capitalize, getNumWords } from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -46,7 +41,7 @@ import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
 import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
-import Styles from './Compose.styles';
+import Styles, { BOTTOM_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
 
@@ -623,118 +618,106 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
       >
         <KeyboardAvoider>
-          <View
-            pointerEvents="box-none"
+          <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <View
+              pointerEvents="box-none"
+              style={[
+                {
+                  flex: 1,
+                  paddingBottom: 40,
+                  alignItems: 'center',
+                },
+              ]}
+            >
+              <Animated.View
+                style={[
+                  Styles.gridPreviewBackground,
+                  {
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: POSTCARD_HEIGHT + 16,
+                  },
+                ]}
+                pointerEvents={this.state.writing ? undefined : 'none'}
+              >
+                <EditablePostcard
+                  ref={this.editableRef}
+                  recipient={this.props.recipient}
+                  design={this.state.design}
+                  flip={this.state.flip}
+                  onChangeText={this.changeText}
+                  horizontal={this.state.horizontal}
+                  onLoad={() => {
+                    this.setState({ loading: null });
+                  }}
+                  active
+                  width={POSTCARD_WIDTH}
+                  height={POSTCARD_HEIGHT}
+                />
+              </Animated.View>
+            </View>
+          </ScrollView>
+          <Animated.View
             style={[
+              Styles.gridOptionsBackground,
               {
-                flex: 1,
-                paddingBottom: 50,
-                alignItems: 'center',
+                position: 'absolute',
+                bottom: 0,
+                height: this.state.flip.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [BOTTOM_HEIGHT, 0],
+                }),
               },
             ]}
           >
-            <Animated.View
-              style={[
-                Styles.gridPreviewBackground,
-                {
-                  alignItems: 'center',
-                  transform: [
-                    {
-                      scale: this.state.keyboardOpacity.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1, 1.25],
-                      }),
-                    },
-                  ],
-                  left: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, (WINDOW_WIDTH - 24) / 8],
-                  }),
-                  top: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, (((WINDOW_HEIGHT - 80) * 2) / 5 - 24) / 8],
-                  }),
-                },
-              ]}
-              pointerEvents={this.state.writing ? undefined : 'none'}
-            >
-              <EditablePostcard
-                ref={this.editableRef}
-                recipient={this.props.recipient}
-                design={this.state.design}
-                flip={this.state.flip}
-                onChangeText={this.changeText}
-                horizontal={this.state.horizontal}
-                onLoad={() => {
-                  this.setState({ loading: null });
+            {this.renderSubcategorySelector()}
+            {this.state.mediaGranted && (
+              <FlatList
+                data={
+                  this.props.route.params.category.subcategories[
+                    this.state.subcategory
+                  ]
+                }
+                renderItem={({ item }) => this.renderItem(item)}
+                keyExtractor={(item: PostcardDesign, index: number) => {
+                  return item.image.uri + index.toString();
                 }}
-                active
-                width={POSTCARD_WIDTH}
-                height={POSTCARD_HEIGHT}
+                numColumns={this.state.renderMethod === 'grid' ? 3 : undefined}
+                contentContainerStyle={Styles.gridBackground}
+                key={this.state.renderMethod}
+                onEndReached={this.loadMoreImages}
+                ListEmptyComponent={emptyLoading}
               />
-            </Animated.View>
-            <Animated.View
-              style={[
-                Styles.gridOptionsBackground,
-                {
-                  top: this.state.flip.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ['0%', '100%'],
-                  }),
-                },
-              ]}
-            >
-              {this.renderSubcategorySelector()}
-              {this.state.mediaGranted && (
-                <FlatList
-                  data={
-                    this.props.route.params.category.subcategories[
-                      this.state.subcategory
-                    ]
-                  }
-                  renderItem={({ item }) => this.renderItem(item)}
-                  keyExtractor={(item: PostcardDesign, index: number) => {
-                    return item.image.uri + index.toString();
+            )}
+            {this.props.route.params.category.name === 'personal' &&
+              !this.state.mediaGranted && (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
-                  numColumns={
-                    this.state.renderMethod === 'grid' ? 3 : undefined
-                  }
-                  contentContainerStyle={Styles.gridBackground}
-                  key={this.state.renderMethod}
-                  onEndReached={this.loadMoreImages}
-                  ListEmptyComponent={emptyLoading}
-                />
-              )}
-              {this.props.route.params.category.name === 'personal' &&
-                !this.state.mediaGranted && (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
+                >
+                  <Text
+                    style={[
+                      Typography.FONT_REGULAR,
+                      {
+                        fontSize: 18,
+                        paddingHorizontal: 10,
+                        color: 'white',
+                        textAlign: 'center',
+                      },
+                    ]}
                   >
-                    <Text
-                      style={[
-                        Typography.FONT_REGULAR,
-                        {
-                          fontSize: 18,
-                          paddingHorizontal: 10,
-                          color: 'white',
-                          textAlign: 'center',
-                        },
-                      ]}
-                    >
-                      {i18n.t('Permission.photos')}
-                    </Text>
-                  </View>
-                )}
-            </Animated.View>
-            <ComposeTools
-              keyboardOpacity={this.state.keyboardOpacity}
-              numLeft={this.state.wordsLeft}
-            />
-          </View>
+                    {i18n.t('Permission.photos')}
+                  </Text>
+                </View>
+              )}
+          </Animated.View>
+          <ComposeTools
+            keyboardOpacity={this.state.keyboardOpacity}
+            numLeft={this.state.wordsLeft}
+          />
         </KeyboardAvoider>
       </TouchableOpacity>
     );

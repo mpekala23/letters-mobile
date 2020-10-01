@@ -15,7 +15,6 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import { getContacts, getUser, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import * as Segment from 'expo-analytics-segment';
-import { differenceInHours } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
@@ -100,17 +99,9 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     if (this.props.existingContacts.length <= 0) {
       this.props.navigation.replace(Screens.ContactInfo, {});
     }
-    if (
-      !this.props.lastUpdatedCategories ||
-      differenceInHours(
-        new Date(),
-        new Date(this.props.lastUpdatedCategories)
-      ) > 6
-    ) {
-      getCategories().catch((err) => {
-        dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-      });
-    }
+    getCategories().catch(() => {
+      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    });
   }
 
   async doRefresh() {

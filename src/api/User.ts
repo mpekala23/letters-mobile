@@ -288,20 +288,19 @@ export async function loginWithToken(): Promise<User> {
     Segment.identify(userData.email);
     Segment.track('Login Success');
     store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
-    try {
-      Promise.all([getCategories(), getUserReferrals()]);
-    } catch (err) {
+    getCategories().catch((err) => {
       Sentry.captureException(err);
-    }
+    });
+    getUserReferrals().catch((err) => {
+      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+      Sentry.captureException(err);
+    });
     await Promise.all([getContacts(), getMail()]);
     store.dispatch(loginUser(userData));
     await loadDraft();
     const pushToken = await getPushToken();
     uploadPushToken(pushToken).catch(() => {
       dropdownError({ message: i18n.t('Permission.notifs') });
-    });
-    getCategories().catch(() => {
-      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
     });
     return userData;
   } catch (err) {
@@ -341,6 +340,13 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   store.dispatch(
     authenticateUser(userData, body.data.token, body.data.remember)
   );
+  getCategories().catch((err) => {
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    Sentry.captureException(err);
+  });
+  getUserReferrals().catch((err) => {
+    Sentry.captureException(err);
+  });
   try {
     await Promise.all([getContacts(), getMail()]);
     await loadDraft();
@@ -349,12 +355,6 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
   store.dispatch(loginUser(userData));
-  try {
-    Promise.all([getCategories(), getUserReferrals()]);
-  } catch (err) {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-    Sentry.captureException(err);
-  }
   const pushToken = await getPushToken();
   uploadPushToken(pushToken).catch(() => {
     dropdownError({ message: i18n.t('Permission.notifs') });

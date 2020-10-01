@@ -17,7 +17,7 @@ import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addBusinessDays } from 'date-fns';
+import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
 
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
@@ -440,7 +440,8 @@ export async function getSubcategoriesById(
   categoryId: number
 ): Promise<Record<string, PostcardDesign[]>> {
   const body = await fetchAuthenticated(
-    url.resolve(API_URL, `/categories/${categoryId}/designs`)
+    url.resolve(API_URL, `categories/${categoryId}/designs`),
+    { method: 'GET' }
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;
@@ -458,6 +459,16 @@ export async function getSubcategoriesById(
 }
 
 export async function getCategories(): Promise<Category[]> {
+  const categoryState = store.getState().category;
+  if (
+    categoryState.lastUpdated &&
+    differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
+    categoryState.categories.length
+  ) {
+    // if categories are loaded into the store and were refreshed less than
+    // an hour ago, don't bother making this call
+    return categoryState.categories;
+  }
   const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as RawCategory[];
@@ -470,6 +481,11 @@ export async function getCategories(): Promise<Category[]> {
   const personalIx = categories.findIndex(
     (cat: Category) => cat.name === 'personal'
   );
+  if (personalIx < 0 || !categories.length) {
+    store.dispatch(setCategories([]));
+    store.dispatch(setLastUpdated(null));
+    return [];
+  }
   const personalCategory = categories.splice(personalIx, 1);
   categories.unshift(personalCategory[0]);
   store.dispatch(setCategories(categories));
