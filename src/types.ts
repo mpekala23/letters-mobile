@@ -40,6 +40,8 @@ export interface PostcardDesign {
   name?: string;
   author?: string;
   custom?: boolean;
+  designer?: string;
+  contentResearcher?: string;
 }
 
 interface LetterSpecific {
