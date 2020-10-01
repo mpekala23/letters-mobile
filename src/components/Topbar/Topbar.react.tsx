@@ -9,8 +9,9 @@ import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { WINDOW_WIDTH } from '@utils';
 import { Screens } from '@utils/Screens';
+import { BAR_HEIGHT } from '@utils/Constants';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
-import Styles, { BAR_HEIGHT } from './Topbar.styles';
+import Styles from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 

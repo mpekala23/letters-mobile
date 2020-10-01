@@ -19,11 +19,13 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
   return (
     <Animated.View
       style={{
+        justifyContent: 'center',
+        alignItems: 'center',
         opacity: props.keyboardOpacity,
         position: 'absolute',
         bottom: 0,
         width: WINDOW_WIDTH,
-        paddingVertical: 6,
+        height: 40,
       }}
     >
       <TouchableOpacity
@@ -37,6 +39,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               {
                 color:
                   props.numLeft >= 0 ? Colors.GRAY_500 : Colors.AMEELIO_RED,
+                fontSize: 12,
               },
             ]}
           >

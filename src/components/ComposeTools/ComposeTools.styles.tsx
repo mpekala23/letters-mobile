@@ -4,8 +4,8 @@ import { Colors } from '@styles';
 export default StyleSheet.create({
   keyboardButtonContainer: {
     width: '100%',
-    height: 50,
-    borderTopWidth: 0.3,
+    height: 40,
+    borderTopWidth: 0.34,
     borderTopColor: Colors.GRAY_MEDIUM,
     flexDirection: 'row',
     justifyContent: 'space-between',

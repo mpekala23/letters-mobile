@@ -16,7 +16,7 @@ export interface PlacedSticker {
     x: number;
     y: number;
   };
-  rotation: number;
+  rotation: string;
   scale: number;
   id: number;
 }

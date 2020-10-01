@@ -1,23 +1,15 @@
 import {
   Notif,
-  HANDLE_NOTIF,
-  SET_CURRENT_NOTIF,
+  SET_UNRESPONDED_NOTIFS,
   FutureNotif,
   SET_FUTURE_NOTIFS,
   NotifActionTypes,
 } from './NotifTypes';
 
-export function handleNotif(): NotifActionTypes {
+export function setUnrespondedNotifs(notifs: Notif[]): NotifActionTypes {
   return {
-    type: HANDLE_NOTIF,
-    payload: null,
-  };
-}
-
-export function setCurrentNotif(notif: Notif): NotifActionTypes {
-  return {
-    type: SET_CURRENT_NOTIF,
-    payload: notif,
+    type: SET_UNRESPONDED_NOTIFS,
+    payload: notifs,
   };
 }
 

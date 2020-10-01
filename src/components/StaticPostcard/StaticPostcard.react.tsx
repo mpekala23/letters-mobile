@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { Draft, MailTypes, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
@@ -15,6 +15,7 @@ interface Props {
   recipient: Contact;
   width: number;
   height: number;
+  style?: ViewStyle;
 }
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
@@ -22,7 +23,11 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
 
   return (
     <View
-      style={[Styles.background, { width: props.width, height: props.height }]}
+      style={[
+        Styles.background,
+        { width: props.width, height: props.height },
+        props.style,
+      ]}
     >
       {props.front ? (
         <View
@@ -98,6 +103,10 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
       )}
     </View>
   );
+};
+
+StaticPostcard.defaultProps = {
+  style: {},
 };
 
 export default StaticPostcard;

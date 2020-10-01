@@ -5,6 +5,7 @@ import LettersFilledIcon from '@assets/components/Card/LettersFilled';
 import i18n from '@i18n';
 import CardStyles from './Card.styles';
 import Icon from '../Icon/Icon.react';
+import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
   letterCount: number;
@@ -39,7 +40,7 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
       <Text style={[Typography.FONT_MEDIUM, CardStyles.cardData]}>
         Memory Lane
       </Text>
-      <Text
+      <AdjustableText
         style={
           props.letterCount === 0
             ? [
@@ -53,9 +54,10 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
               ]
             : [Typography.FONT_SEMIBOLD, CardStyles.cardTitle]
         }
+        numberOfLines={1}
       >
         {cardMessage}
-      </Text>
+      </AdjustableText>
     </TouchableOpacity>
   );
 };

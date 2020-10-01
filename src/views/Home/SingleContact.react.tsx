@@ -20,6 +20,7 @@ import {
   Draft,
   Contact,
   TrackingEvent,
+  Category,
 } from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
@@ -45,8 +46,6 @@ import {
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
-import { Notif, NotifActionTypes } from '@store/Notif/NotifTypes';
-import { handleNotif } from '@store/Notif/NotifiActions';
 import * as Segment from 'expo-analytics-segment';
 import { differenceInBusinessDays } from 'date-fns';
 import { popupAlert } from '@components/Alert/Alert.react';
@@ -71,9 +70,8 @@ interface Props {
   setActiveLetter: (mail: Mail) => void;
   setComposing: (draft: Draft) => void;
   setActiveContact: (contact: Contact) => void;
-  currentNotif: Notif | null;
-  handleNotif: () => void;
   composing: Draft;
+  categories: Category[];
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -82,10 +80,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     this.state = {
       refreshing: false,
     };
-  }
-
-  async componentDidMount() {
-    if (this.props.currentNotif) this.props.handleNotif();
   }
 
   render() {
@@ -332,8 +326,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                   }
                                 );
                               }
-                              const categories = await getCategories();
-                              const category = categories.find(
+                              if (!this.props.categories.length) {
+                                await getCategories();
+                              }
+                              const category = this.props.categories.find(
                                 (testCategory) =>
                                   this.props.composing.type ===
                                     MailTypes.Postcard &&
@@ -430,16 +426,15 @@ const mapStateToProps = (state: AppState) => ({
   existingMail: state.mail.existing[state.contact.active.id],
   existingContacts: state.contact.existing,
   userState: state.user,
-  currentNotif: state.notif.currentNotif,
   composing: state.mail.composing,
+  categories: state.category.categories,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<MailActionTypes | ContactActionTypes | NotifActionTypes>
+  dispatch: Dispatch<MailActionTypes | ContactActionTypes>
 ) => ({
   setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
   setActiveLetter: (mail: Mail) => dispatch(setActiveLetter(mail)),
   setComposing: (draft: Draft) => dispatch(setComposing(draft)),
-  handleNotif: () => dispatch(handleNotif()),
 });
 const SingleContactScreen = connect(
   mapStateToProps,

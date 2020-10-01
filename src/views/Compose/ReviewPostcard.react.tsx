@@ -1,5 +1,11 @@
 import React, { Dispatch } from 'react';
-import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Keyboard,
+  Text,
+  ScrollView,
+} from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -144,44 +150,41 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 
   render() {
     return (
-      <TouchableOpacity
-        activeOpacity={1.0}
-        style={Styles.gridTrueBackground}
-        onPress={Keyboard.dismiss}
-      >
-        <View style={Styles.gridPreviewBackground}>
-          <StaticPostcard
-            front
-            composing={this.props.composing}
-            recipient={this.props.recipient}
-            width={WINDOW_WIDTH - 32}
-            height={POSTCARD_HEIGHT}
-          />
-        </View>
-        <View style={Styles.gridPreviewBackground}>
-          <StaticPostcard
-            front={false}
-            composing={this.props.composing}
-            recipient={this.props.recipient}
-            width={POSTCARD_WIDTH}
-            height={POSTCARD_HEIGHT}
-          />
-        </View>
-        <View style={{ flex: 1 }} />
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              fontSize: 16,
-              color: Colors.GRAY_MEDIUM,
-              textAlign: 'center',
-              margin: 10,
-            },
-          ]}
-        >
-          {i18n.t('Compose.warningCantCancel')}
-        </Text>
-      </TouchableOpacity>
+      <View style={Styles.screenBackground}>
+        <ScrollView style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={1.0} style={{ paddingVertical: 16 }}>
+            <StaticPostcard
+              front
+              composing={this.props.composing}
+              recipient={this.props.recipient}
+              width={POSTCARD_WIDTH}
+              height={POSTCARD_HEIGHT}
+              style={{ marginBottom: 16 }}
+            />
+            <StaticPostcard
+              front={false}
+              composing={this.props.composing}
+              recipient={this.props.recipient}
+              width={POSTCARD_WIDTH}
+              height={POSTCARD_HEIGHT}
+            />
+            <View style={{ flex: 1 }} />
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  fontSize: 16,
+                  color: Colors.GRAY_MEDIUM,
+                  textAlign: 'center',
+                  margin: 10,
+                },
+              ]}
+            >
+              {i18n.t('Compose.warningCantCancel')}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     );
   }
 }

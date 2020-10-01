@@ -14,7 +14,7 @@ interface Props {
   sticker: Sticker;
   position: { x: number; y: number };
   updatePosition: (dx: number, dy: number) => void;
-  updateRotation: (rotation: number) => void;
+  updateRotation: (rotation: string) => void;
   updateScale: (scale: number) => void;
   hoverOver: (x: number, y: number) => void;
   setDragging: (val: boolean) => void;
@@ -100,7 +100,7 @@ export default class StickerComponent extends React.Component<Props> {
           this.lastRotation += e.nativeEvent.rotation;
           this.rotation.setOffset(this.lastRotation);
           this.rotation.setValue(0);
-          this.props.updateRotation(this.lastRotation);
+          this.props.updateRotation(`${this.lastRotation.toString()}rad`);
         }}
         simultaneousHandlers={this.pinchRef}
       >
@@ -136,7 +136,15 @@ export default class StickerComponent extends React.Component<Props> {
           >
             <Animated.View
               style={{
-                transform: [{ scale: this.scale }, { rotateZ: this.rotation }],
+                transform: [
+                  { scale: this.scale },
+                  {
+                    rotateZ: this.rotation.interpolate({
+                      inputRange: [0, 3.1415],
+                      outputRange: ['0rad', '3.1415rad'],
+                    }),
+                  },
+                ],
               }}
               {...this.panResponder.panHandlers}
             >

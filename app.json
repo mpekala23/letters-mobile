@@ -3,7 +3,6 @@
     "name": "Ameelio",
     "slug": "Ameelio",
     "privacy": "public",
-    "sdkVersion": "38.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.1.1",
     "orientation": "portrait",

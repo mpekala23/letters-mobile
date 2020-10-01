@@ -44,7 +44,6 @@ import {
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate, WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
-import { Notif } from '@store/Notif/NotifTypes';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -111,7 +110,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;
-  currentNotif: Notif | null;
   userState: UserState;
 }
 
@@ -370,7 +368,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
-  currentNotif: state.notif.currentNotif,
   userState: state.user,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);
