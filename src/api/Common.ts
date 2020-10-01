@@ -11,6 +11,8 @@ import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
 import { setZipcode } from '@store/Zip/ZipActions';
+import * as FileSystem from 'expo-file-system';
+import { FileSystemUploadType } from 'expo-file-system';
 
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
@@ -125,7 +127,10 @@ export async function uploadImage(
 ): Promise<Image> {
   const data = new FormData();
 
-  const uri = Platform.OS === 'android' ? `file://${image.uri}` : image.uri;
+  const uri =
+    Platform.OS === 'android'
+      ? `file://${image.uri}`
+      : image.uri.replace('file://', '/private');
 
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),

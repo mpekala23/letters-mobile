@@ -1,5 +1,12 @@
 import React, { RefObject } from 'react';
-import { Animated, TouchableOpacity, View, Keyboard, Text } from 'react-native';
+import {
+  Animated,
+  TouchableOpacity,
+  View,
+  Keyboard,
+  Text,
+  Platform,
+} from 'react-native';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH } from '@utils';
 import ImageIcon from '@assets/views/Compose/Image';
@@ -23,7 +30,7 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
         alignItems: 'center',
         opacity: props.keyboardOpacity,
         position: 'absolute',
-        bottom: 0,
+        bottom: Platform.OS === 'ios' ? 16 : 0,
         width: WINDOW_WIDTH,
         height: 40,
       }}

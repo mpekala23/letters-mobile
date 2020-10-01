@@ -301,6 +301,7 @@ class DynamicPostcard extends React.Component<Props, State> {
               style={{
                 flex: 1,
                 width: '100%',
+                marginLeft: 8,
                 height: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',

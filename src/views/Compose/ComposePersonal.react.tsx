@@ -220,6 +220,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   onNavigationBlur = () => {
     setBackOverride(undefined);
+    setProfileOverride(undefined);
   };
 
   onKeyboardOpen(): void {
@@ -712,88 +713,91 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           onPress={Keyboard.dismiss}
         >
           <KeyboardAvoider>
-            <ScrollView
-              style={{
-                paddingHorizontal: 16,
-              }}
-              showsVerticalScrollIndicator={false}
-            >
-              <Animated.View
+            <View style={{ flex: 1 }}>
+              <ScrollView
                 style={{
-                  paddingTop:
-                    this.state.subscreen === 'Design'
-                      ? this.state.designState.bottomSlide.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [
-                            (WINDOW_HEIGHT -
-                              DESIGN_BUTTONS_HEIGHT -
-                              BAR_HEIGHT -
-                              POSTCARD_HEIGHT -
-                              STATUS_BAR_HEIGHT) /
-                              2,
-                            (WINDOW_HEIGHT -
-                              BOTTOM_HEIGHT -
-                              POSTCARD_HEIGHT -
-                              BAR_HEIGHT -
-                              STATUS_BAR_HEIGHT) /
-                              2,
-                          ],
-                        })
-                      : this.state.textState.keyboardOpacity.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [
-                            (WINDOW_HEIGHT -
-                              DESIGN_BUTTONS_HEIGHT -
-                              BAR_HEIGHT -
-                              POSTCARD_HEIGHT -
-                              STATUS_BAR_HEIGHT) /
-                              2,
-                            Math.min(
+                  paddingHorizontal: 16,
+                }}
+                showsVerticalScrollIndicator={false}
+                scrollEnabled={this.state.subscreen === 'Text'}
+              >
+                <Animated.View
+                  style={{
+                    paddingTop:
+                      this.state.subscreen === 'Design'
+                        ? this.state.designState.bottomSlide.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [
                               (WINDOW_HEIGHT -
                                 DESIGN_BUTTONS_HEIGHT -
                                 BAR_HEIGHT -
                                 POSTCARD_HEIGHT -
                                 STATUS_BAR_HEIGHT) /
                                 2,
-                              16
-                            ),
-                          ],
-                        }),
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}
-              >
-                <DynamicPostcard
-                  ref={this.postcardRef}
-                  layout={this.state.designState.layout}
-                  activePosition={this.state.designState.activePosition}
-                  highlightActive={
-                    this.state.designState.bottomDetails === 'design'
-                  }
-                  commonLayout={this.state.designState.commonLayout}
-                  onImageAdd={(position: number) => {
-                    this.setDesignState({ activePosition: position });
-                    this.openBottom('design');
+                              (WINDOW_HEIGHT -
+                                BOTTOM_HEIGHT -
+                                POSTCARD_HEIGHT -
+                                BAR_HEIGHT -
+                                STATUS_BAR_HEIGHT) /
+                                2,
+                            ],
+                          })
+                        : this.state.textState.keyboardOpacity.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [
+                              (WINDOW_HEIGHT -
+                                DESIGN_BUTTONS_HEIGHT -
+                                BAR_HEIGHT -
+                                POSTCARD_HEIGHT -
+                                STATUS_BAR_HEIGHT) /
+                                2,
+                              Math.min(
+                                (WINDOW_HEIGHT -
+                                  DESIGN_BUTTONS_HEIGHT -
+                                  BAR_HEIGHT -
+                                  POSTCARD_HEIGHT -
+                                  STATUS_BAR_HEIGHT) /
+                                  2,
+                                16
+                              ),
+                            ],
+                          }),
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
                   }}
-                  flip={this.state.designState.flip}
-                  onChangeText={(text) => {
-                    this.props.setContent(text);
-                    const numWords = getNumWords(text);
-                    this.setTextState({ wordsLeft: 100 - numWords });
-                  }}
-                  recipient={this.props.recipient}
-                  width={POSTCARD_WIDTH}
-                  height={POSTCARD_HEIGHT}
-                  bottomDetails={this.state.designState.bottomDetails}
-                />
-              </Animated.View>
-            </ScrollView>
-            <ComposeTools
-              keyboardOpacity={this.state.textState.keyboardOpacity}
-              numLeft={this.state.textState.wordsLeft}
-            />
-            {this.renderDesignButtons()}
-            {this.renderBottom()}
+                >
+                  <DynamicPostcard
+                    ref={this.postcardRef}
+                    layout={this.state.designState.layout}
+                    activePosition={this.state.designState.activePosition}
+                    highlightActive={
+                      this.state.designState.bottomDetails === 'design'
+                    }
+                    commonLayout={this.state.designState.commonLayout}
+                    onImageAdd={(position: number) => {
+                      this.setDesignState({ activePosition: position });
+                      this.openBottom('design');
+                    }}
+                    flip={this.state.designState.flip}
+                    onChangeText={(text) => {
+                      this.props.setContent(text);
+                      const numWords = getNumWords(text);
+                      this.setTextState({ wordsLeft: 100 - numWords });
+                    }}
+                    recipient={this.props.recipient}
+                    width={POSTCARD_WIDTH}
+                    height={POSTCARD_HEIGHT}
+                    bottomDetails={this.state.designState.bottomDetails}
+                  />
+                </Animated.View>
+              </ScrollView>
+              <ComposeTools
+                keyboardOpacity={this.state.textState.keyboardOpacity}
+                numLeft={this.state.textState.wordsLeft}
+              />
+              {this.renderDesignButtons()}
+              {this.renderBottom()}
+            </View>
           </KeyboardAvoider>
         </TouchableOpacity>
       </>
