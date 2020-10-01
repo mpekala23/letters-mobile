@@ -17,12 +17,12 @@ interface Props {
   recipient: Contact;
   horizontal?: boolean;
   onLoad?: () => void;
+  width: number;
+  height: number;
 }
 
 interface State {
   rotate: Animated.Value;
-  width: number;
-  height: number;
 }
 
 class EditablePostcard extends React.Component<Props, State> {
@@ -37,8 +37,6 @@ class EditablePostcard extends React.Component<Props, State> {
     super(props);
     this.state = {
       rotate: new Animated.Value(0),
-      width: 200,
-      height: 200,
     };
     this.focus = this.focus.bind(this);
     this.set = this.set.bind(this);
@@ -70,44 +68,17 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const designWidth = this.props.design.image.width;
-    const designHeight = this.props.design.image.height;
-    const designIsHorizontal = (): boolean => {
-      if (!designWidth || !designHeight) {
-        return true;
-      }
-      if (designWidth > designHeight) {
-        return true;
-      }
-      return false;
-    };
-    let image: JSX.Element;
-    if (designIsHorizontal()) {
-      image = (
-        <AsyncImage
-          viewStyle={{
-            width: this.state.width,
-            height: this.state.height,
-          }}
-          source={this.props.design.thumbnail || this.props.design.image}
-          onLoad={this.props.onLoad}
-          download={!!this.props.design.thumbnail}
-        />
-      );
-    } else {
-      image = (
-        <AsyncImage
-          viewStyle={{
-            width: this.state.height,
-            height: this.state.width,
-            transform: [{ rotateZ: '270deg' }],
-          }}
-          source={this.props.design.thumbnail || this.props.design.image}
-          onLoad={this.props.onLoad}
-          download={!!this.props.design.thumbnail}
-        />
-      );
-    }
+    const image = (
+      <AsyncImage
+        viewStyle={{
+          width: '100%',
+          height: '100%',
+        }}
+        source={this.props.design.thumbnail || this.props.design.image}
+        onLoad={this.props.onLoad}
+        download={!!this.props.design.thumbnail}
+      />
+    );
 
     return (
       <Animated.View
@@ -117,15 +88,9 @@ class EditablePostcard extends React.Component<Props, State> {
             transform: this.props.flip
               ? [
                   {
-                    scale: this.state.rotate.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 0.65],
-                    }),
-                  },
-                  {
                     rotateZ: this.state.rotate.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [0, 3.1415926 / 2],
+                      outputRange: ['0rad', `${(3.1415926 / 2).toString()}rad`],
                     }),
                   },
                   {
@@ -137,15 +102,11 @@ class EditablePostcard extends React.Component<Props, State> {
                 ]
               : undefined,
           },
+          {
+            width: this.props.width,
+            height: this.props.height,
+          },
         ]}
-        onLayout={(e: {
-          nativeEvent: { layout: { width: number; height: number } };
-        }) => {
-          this.setState({
-            width: e.nativeEvent.layout.width,
-            height: e.nativeEvent.layout.height,
-          });
-        }}
       >
         <Animated.View
           style={{
@@ -173,9 +134,11 @@ class EditablePostcard extends React.Component<Props, State> {
                 alignItems: 'center',
               }}
             >
-              <Text style={[Typography.FONT_REGULAR, { color: 'black' }]}>
-                {i18n.t('Compose.noDesignSelected')}
-              </Text>
+              <View style={{ width: '60%' }}>
+                <Text style={[Typography.FONT_REGULAR, { color: 'black' }]}>
+                  {i18n.t('Compose.noDesignSelected')}
+                </Text>
+              </View>
             </View>
           )}
         </Animated.View>

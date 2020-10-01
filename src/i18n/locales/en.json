@@ -15,6 +15,7 @@
     "cantRefreshLetters": "Unable to refresh your letters",
     "cantRefreshFacilities": "Unable to refresh your facilities",
     "cantRefreshCategories": "Unable to refresh postcard categories",
+    "cantRefreshReferrals": "Unable to refresh your referrals",
     "cantLoadDesigns": "Unable to load the designs",
     "cantLoadMail": "Unable to load this piece of mail",
     "timedOut": "The request timed out",
@@ -75,7 +76,10 @@
     "yourLovedOnes": "Your loved ones",
     "miles": "miles",
     "youDoNotHaveAnyContactsYet": "You do not have any contacts yet. Add your first contact using the button below.",
-    "addContact": "Add contact"
+    "addContact": "Add contact",
+    "referralCardTitle": "Spread the Word",
+    "referralCardSubtitle": "Over 1,500 people shared",
+    "referralCardCta": "Help others"
   },
   "CreditsCard": {
     "letter": "credit",
@@ -160,7 +164,7 @@
     "youDoNotHaveLettersYet": "You do not have any letters yet!",
     "goSendYourFirstLetter": "Go send your first letter."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Heard from an Ameelio Ambassador",
     "recommendation": "Recommendation from Friends or Family",
     "lovedOne": "Incarcerated Loved-One",
@@ -224,6 +228,7 @@
   "UpdateContactScreen": {
     "firstName": "First name",
     "lastName": "Last name",
+    "inmateNumber": "Inmate Number",
     "facilityName": "Facility Name",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
@@ -319,7 +324,9 @@
     "mustUsePhysical": "You must use a physical device to receive push notifications",
     "okay": "Okay",
     "noDesignSelected": "No design selected",
-    "selectADesign": "Select a design to continue."
+    "selectADesign": "Select a design to continue.",
+    "imagesNotFilled": "Images not filled",
+    "fillAllImages": "You must choose an image for each slot in the layout to continue"
   },
   "Compose": {
     "chooseAnOption": "Choose an option",
@@ -350,7 +357,14 @@
     "done": "Done",
     "noDesignSelected": "No design selected. Tap below to get started.",
     "iWouldLikeToSend": "I would like to send something:",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "yourOwnLettersAndPhotos": "Your own letters and photos.",
+    "dueToTDCJ": "Due to a TDCJ policy, loved ones in Texas state prisons are not allowed to receive postcards. Only",
+    "willBeAccepted": "letters will be accepted.",
+    "stickers": "Stickers",
+    "layouts": "Layouts"
+  },
+  "ComposeTools": {
+    "wordsLeft": "words left"
   },
   "Notifs": {
     "happy": "Happy",
@@ -386,6 +400,7 @@
     "postcardPreview": "Photo Preview",
     "letterPreview": "Letter Preview",
     "spreadTheWord": "Spread the Word",
+    "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
@@ -394,8 +409,18 @@
     "inmateLocator": "Inmate Locator"
   },
   "Sharing": {
-    "message": "Hey! I've been using Ameelio to share memories, special moments, and keep in contact with my incarcerated loved ones. All free of charge. You can download the app here: www.ameelio.org",
+    "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
     "title": "Ameelio: Free Photos and Letters to Prison",
     "subjectLine": "Send free letters and photos to prison!"
+  },
+  "ReferralDashboardScreen": {
+    "helpNowHeader": "Help others now!",
+    "helpNowBody": "Share your unique link to help more families connect with their loved ones for free.",
+    "shareCta": "Share with others",
+    "familesHelped": "Families You Helped",
+    "mailSent": "Mail Sent",
+    "moneySaved": "Money Saved",
+    "thankYou": "Thanks to you, the community is growing!",
+    "nullStateThankYou": "You'll see your impact here when people use your ambassador link."
   }
 }

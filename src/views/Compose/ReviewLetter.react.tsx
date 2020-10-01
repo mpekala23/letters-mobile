@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import { GrayBar } from '@components';
+import { View, Text, ScrollView } from 'react-native';
+import { GrayBar, DisplayImage } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
@@ -12,11 +12,8 @@ import { createMail } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import Notifs from '@notifications';
-import { NotifTypes } from '@store/Notif/NotifTypes';
-import { hoursTill8Tomorrow } from '@utils';
+import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
-import { deleteDraft } from '@api/User';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './Compose.styles';
 
@@ -79,26 +76,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         facilityCity: this.props.activeContact.facility?.city,
         relationship: this.props.activeContact.relationship,
       });
-      Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-      Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
-      Notifs.scheduleNotificationInDays(
-        {
-          title: `${i18n.t(
-            'Notifs.happy'
-          )} ${new Date().toDateString()}! ${i18n.t(
-            'Notifs.readyToSendAnother'
-          )} ${this.props.activeContact.firstName}?`,
-          body: `${i18n.t('Notifs.clickHereToBegin')}`,
-          data: {
-            type: NotifTypes.Drought,
-            data: {
-              contactId: this.props.activeContact.id,
-            },
-          },
-        },
-        hoursTill8Tomorrow() / 24 + 7
-      );
-      deleteDraft();
+      cleanupAfterSend(this.props.activeContact);
       this.props.navigation.reset({
         index: 0,
         routes: [
@@ -144,18 +122,9 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       this.props.navigation.goBack();
       return null;
     }
-    const { image } = this.props.composing;
-    let width = 275;
-    let height = 275;
-    if (image && image.width && image.height) {
-      if (image.width > image.height) {
-        height = (image.height / image.width) * width;
-      } else {
-        width = (image.width / image.height) * height;
-      }
-    }
+
     return (
-      <View style={Styles.screenBackground}>
+      <View style={[Styles.screenBackground, { paddingTop: 16 }]}>
         <View style={{ flex: 1 }}>
           <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 20 }]}>
             {i18n.t('Compose.preview')}
@@ -170,22 +139,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            <View style={{ flex: 1 }}>
-              {this.props.composing.image && (
-                <Image
-                  source={this.props.composing.image}
-                  style={{
-                    height,
-                    width,
-                    borderRadius: 10,
-                    aspectRatio:
-                      image && image.width && image.height
-                        ? image.width / image.height
-                        : 1,
-                  }}
-                />
-              )}
-            </View>
+            <DisplayImage images={this.props.composing.images} />
           </ScrollView>
         </View>
         <Text

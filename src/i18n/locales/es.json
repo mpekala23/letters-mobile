@@ -15,6 +15,7 @@
     "cantRefreshLetters": "No se pueden actualizar tus cartas",
     "cantRefreshFacilities": "No se pueden actualizar tus presidios",
     "cantRefreshCategories": "No se pueden actualizar las categorias",
+    "cantRefreshReferrals": "No se pueden actualizar tus métricas de impacto",
     "cantLoadDesigns": "No se puede cargar los diseños de las tarjetas postales",
     "cantLoadMail": "No puedo cargar este correo",
     "timedOut": "Se ha agotado el tiempo de espera de la solicitud",
@@ -75,7 +76,10 @@
     "yourLovedOnes": "Sus seres queridos",
     "miles": "millas",
     "youDoNotHaveAnyContactsYet": "Todavía no tienes ningún contacto. Agregar tu primer contacto utilizando el botón abajo.",
-    "addContact": "Agregar contacto"
+    "addContact": "Agregar contacto",
+    "referralCardTitle": "Comparter con otros",
+    "referralCardSubtitle": "Más de 1.500 personas han compartido",
+    "referralCardCta": "Ayude a otros"
   },
   "CreditsCard": {
     "letter": "crédito",
@@ -160,7 +164,7 @@
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
   },
-  "Referers": {
+  "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
     "lovedOne": "Ser Querido Encarcelado",
@@ -224,6 +228,7 @@
   "UpdateContactScreen": {
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "inmateNumber": "Número de preso",
     "facilityName": "Nombre del Presidio",
     "facilityAddress": "Dirección del Presidio",
     "facilityCity": "Ciudad del Presidio",
@@ -319,7 +324,9 @@
     "mustUsePhysical": "Tienes que usar un dispositivo físico para recibir notificaciones push",
     "okay": "Okay",
     "noDesignSelected": "Ningún diseño seleccionado",
-    "selectADesign": "Seleccione una diseño para continuar."
+    "selectADesign": "Seleccione imágenes para todos los espacios.",
+    "imagesNotFilled": "Algunos espacios están incompletos",
+    "fillAllImages": "Debes elegir una imagen para cada espacio para continuar."
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",
@@ -346,14 +353,21 @@
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
-    "tapToAddMessage": "Tap to add a message.",
-    "done": "Done",
-    "noDesignSelected": "No design selected. Tap below to get started.",
-    "iWouldLikeToSend": "I would like to send something:",
-    "registerAccount": "Register Account",
-    "enterBasic": "Enter Basic Information",
-    "weWillOnly": "We will only use your address information as the return address for the mailed letter.",
-    "yourOwnLettersAndPhotos": "Your own letters and photos."
+    "tapToAddMessage": "Haz clic para añadir un mensaje.",
+    "done": "Listo",
+    "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
+    "iWouldLikeToSend": "Me gustaría enviar un mensaje:",
+    "registerAccount": "Crea una cuenta",
+    "enterBasic": "Llene información básica",
+    "dueToTDCJ": "Debido a una política de TDCJ, seres queridos en prisiones estatales de Tejas no son permitidos recibir postales. Solo",
+    "willBeAccepted": "cartas serán aceptadas.",
+    "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
+    "yourOwnLettersAndPhotos": "Sus propios cartas y fotos",
+    "stickers": "Stickers",
+    "layouts": "Layouts"
+  },
+  "ComposeTools": {
+    "wordsLeft": "palabras"
   },
   "Notifs": {
     "happy": "Feliz",
@@ -390,6 +404,7 @@
     "postcardPreview": "Vista previa de la postal",
     "letterPreview": "Vista previa de la carta",
     "spreadTheWord": "Correr la voz",
+    "referralDashboard": "Tu impacto",
     "reviewContact": "Revisar contacto",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
@@ -398,8 +413,18 @@
     "inmateLocator": " Localizador de Presos"
   },
   "Sharing": {
-    "message": "¡Oye! He estado usando Ameelio para compartir recuerdos, momentos especiales y mantenerme en contacto con mis seres queridos encarcelados. Todo gratis. Puede descargar la app aquí: www.ameelio.org",
+    "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
     "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
     "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
+  },
+  "ReferralDashboardScreen": {
+    "helpNowHeader": "Ayude a otros ahor!",
+    "helpNowBody": "Comparta su link único para ayudar a más familias a conectarse con sus seres queridos de forma gratuita.",
+    "shareCta": "Comparte con otros",
+    "familesHelped": "Familias Ayudadas",
+    "mailSent": "Ameelios Enviados",
+    "moneySaved": "Dinero Ahorrado",
+    "thankYou": "¡Gracias a ti, la comunidad está creciendo!",
+    "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
   }
 }

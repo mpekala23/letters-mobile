@@ -1,10 +1,20 @@
 import { StyleSheet } from 'react-native';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+import {
+  BAR_HEIGHT,
+  POSTCARD_HEIGHT,
+  STATUS_BAR_HEIGHT,
+} from '@utils/Constants';
+
+export const BOTTOM_HEIGHT =
+  WINDOW_HEIGHT - POSTCARD_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - 16;
+export const DESIGN_BUTTONS_HEIGHT = 200;
+export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
 
 export default StyleSheet.create({
   screenBackground: {
-    padding: 16,
     flex: 1,
+    paddingHorizontal: 16,
     flexDirection: 'column',
     backgroundColor: 'white',
   },
@@ -24,12 +34,12 @@ export default StyleSheet.create({
   },
   gridPreviewBackground: {
     width: WINDOW_WIDTH,
-    height: ((WINDOW_HEIGHT - 80) * 2) / 5,
-    padding: 12,
+    height: POSTCARD_HEIGHT + 32,
+    padding: 16,
   },
   gridOptionsBackground: {
     width: '100%',
-    height: ((WINDOW_HEIGHT - 80) * 3) / 5,
+    height: BOTTOM_HEIGHT,
     backgroundColor: '#323334',
   },
   subcategorySelectorBackground: {
@@ -37,13 +47,13 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
+    paddingTop: 4,
   },
   subcategory: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingBottom: 4,
     borderBottomWidth: 4,
   },
   subcategoryText: {
@@ -51,9 +61,22 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   gridBackground: {
-    paddingVertical: 4,
-    paddingHorizontal: 4,
-    paddingBottom: 26,
+    padding: 4,
   },
   gridDesignBackground: {},
+  designButtons: {
+    position: 'absolute',
+    height:
+      WINDOW_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - POSTCARD_HEIGHT - 32,
+    width: WINDOW_WIDTH,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    justifyContent: 'flex-end',
+  },
+  bottom: {
+    position: 'absolute',
+    height: BOTTOM_HEIGHT,
+    width: WINDOW_WIDTH,
+    backgroundColor: '#323334',
+  },
 });

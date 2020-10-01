@@ -5,6 +5,8 @@ const userSize = 46;
 const contactSize = 80;
 const singleContactSize = 130;
 const avatarSize = 30;
+const referrerSize = 90;
+
 export default StyleSheet.create({
   contactBackground: {
     alignItems: 'center',
@@ -68,5 +70,20 @@ export default StyleSheet.create({
   avatarPic: {
     width: avatarSize,
     height: avatarSize,
+  },
+  referralDashPic: {
+    width: referrerSize,
+    height: referrerSize,
+  },
+  referralDashBackground: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: referrerSize,
+    height: referrerSize,
+    borderRadius: referrerSize / 2,
+    overflow: 'hidden',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
+    borderWidth: 6,
+    borderColor: 'white',
   },
 });

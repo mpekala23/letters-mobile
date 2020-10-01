@@ -9,7 +9,7 @@ import * as Segment from 'expo-analytics-segment';
 import Icon from '../Icon/Icon.react';
 import Button from '../Button/Button.react';
 
-const DEFAULT_CLOSED_HEIGHT = 60;
+const DEFAULT_CLOSED_HEIGHT = 48;
 const DEFAULT_OPEN_HEIGHT = 150;
 const ANIM_DURATION = 250;
 

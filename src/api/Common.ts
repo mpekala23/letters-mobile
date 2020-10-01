@@ -97,6 +97,7 @@ export async function fetchAuthenticated(
       state: tokenBody.data.state,
       credit: tokenBody.data.credit,
       joined: tokenBody.data.created_at,
+      referralCode: tokenBody.data.referral_link,
     };
     store.dispatch(
       authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)
@@ -124,7 +125,10 @@ export async function uploadImage(
 ): Promise<Image> {
   const data = new FormData();
 
-  const uri = Platform.OS === 'android' ? `file://${image.uri}` : image.uri;
+  const uri =
+    Platform.OS === 'android'
+      ? `file://${image.uri}`
+      : image.uri.replace('file://', '/private');
 
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),

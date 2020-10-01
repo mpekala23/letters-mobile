@@ -12,6 +12,7 @@ import {
   ChooseOptionScreen,
   ContactInfoScreen,
   ComposeLetterScreen,
+  ComposePersonalScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
@@ -24,6 +25,7 @@ import {
   MemoryLaneScreen,
   MailDetailsScreen,
   PrivacyScreen,
+  ReferralDashboardScreen,
   ReferFriendsScreen,
   RegisterCredsScreen,
   RegisterPersonalScreen,
@@ -41,8 +43,7 @@ import {
 } from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
-import { navigationRef, navigate } from '@notifications';
-import { Notif } from '@store/Notif/NotifTypes';
+import { navigationRef, navigate, WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
 import Topbar, {
   setTitle,
   topbarRef,
@@ -51,7 +52,7 @@ import Topbar, {
 } from '@components/Topbar/Topbar.react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
+
 import i18n from '@i18n';
 import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
 
@@ -76,6 +77,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
+  ComposePersonal: { title: i18n.t('Screens.compose'), profile: false },
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
@@ -85,6 +87,10 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
   MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
   MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  ReferralDashboardScreen: {
+    title: i18n.t('Screens.referralDashboard'),
+    profile: true,
+  },
   ReferFriends: { title: i18n.t('Screens.spreadTheWord'), profile: false },
   ReviewLetter: { title: i18n.t('Screens.lastStep'), profile: false },
   ReviewPostcard: {
@@ -104,7 +110,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;
-  currentNotif: Notif | null;
   userState: UserState;
 }
 
@@ -235,6 +240,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={ComposeLetterScreen}
         />
         <Stack.Screen
+          name={Screens.ComposePersonal}
+          component={ComposePersonalScreen}
+        />
+        <Stack.Screen
           name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
         />
@@ -265,6 +274,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ReferFriends}
           component={ReferFriendsScreen}
+        />
+        <Stack.Screen
+          name={Screens.ReferralDashboard}
+          component={ReferralDashboardScreen}
         />
         <Stack.Screen
           name={Screens.ReviewContact}
@@ -355,7 +368,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
-  currentNotif: state.notif.currentNotif,
   userState: state.user,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);

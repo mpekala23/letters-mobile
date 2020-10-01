@@ -34,7 +34,6 @@ export interface Props {
 
 export interface State {
   remember: boolean;
-  inputting: boolean;
 }
 
 class LoginScreen extends React.Component<Props, State> {
@@ -46,7 +45,6 @@ class LoginScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       remember: true,
-      inputting: false,
     };
     this.emailRef = createRef();
     this.passwordRef = createRef();
@@ -117,16 +115,14 @@ class LoginScreen extends React.Component<Props, State> {
         <KeyboardAvoider
           style={{ flexDirection: 'column', justifyContent: 'center' }}
         >
-          <View
+          <TouchableOpacity
+            activeOpacity={1.0}
             style={{
               flex: 1,
               justifyContent: 'center',
             }}
           >
-            <ScrollView
-              keyboardShouldPersistTaps="handled"
-              scrollEnabled={this.state.inputting}
-            >
+            <ScrollView keyboardShouldPersistTaps="handled">
               <View style={{ width: '100%', height: 60 }} />
               <View style={Styles.loginBackground}>
                 <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 26 }]}>
@@ -139,24 +135,12 @@ class LoginScreen extends React.Component<Props, State> {
                   ref={this.emailRef}
                   parentStyle={Styles.fullWidth}
                   placeholder={i18n.t('LoginScreen.emailAddress')}
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   nextInput={this.passwordRef}
                 />
                 <Input
                   ref={this.passwordRef}
                   parentStyle={Styles.fullWidth}
                   placeholder={i18n.t('LoginScreen.password')}
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   secure
                 />
                 {null && (
@@ -237,7 +221,7 @@ class LoginScreen extends React.Component<Props, State> {
                 <View style={{ width: '100%', height: 100 }} />
               </View>
             </ScrollView>
-          </View>
+          </TouchableOpacity>
         </KeyboardAvoider>
       </TouchableOpacity>
     );

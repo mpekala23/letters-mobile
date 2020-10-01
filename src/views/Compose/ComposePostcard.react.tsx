@@ -9,6 +9,7 @@ import {
   EmitterSubscription,
   Platform,
   Image as ImageComponent,
+  ScrollView,
 } from 'react-native';
 import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
 import {
@@ -20,7 +21,7 @@ import {
   MailTypes,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, WINDOW_HEIGHT, takeImage, capitalize } from '@utils';
+import { WINDOW_WIDTH, takeImage, capitalize, getNumWords } from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -39,7 +40,8 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
-import Styles from './Compose.styles';
+import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
+import Styles, { BOTTOM_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
 
@@ -48,7 +50,7 @@ type ComposePostcardScreenNavigationProp = StackNavigationProp<
   'ComposePostcard'
 >;
 
-export interface Props {
+interface Props {
   navigation: ComposePostcardScreenNavigationProp;
   route: {
     params: {
@@ -70,7 +72,7 @@ interface State {
   writing: boolean;
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
-  charsLeft: number;
+  wordsLeft: number;
   valid: boolean;
   mediaGranted: boolean;
   renderMethod: 'grid' | 'bars';
@@ -104,7 +106,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       writing: false,
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
-      charsLeft: 300,
+      wordsLeft: 100,
       valid: true,
       mediaGranted: true,
       renderMethod: 'grid',
@@ -120,7 +122,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.renderGridItem = this.renderGridItem.bind(this);
     this.renderBarItem = this.renderBarItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
-    this.updateCharsLeft = this.updateCharsLeft.bind(this);
+    this.updateWordsLeft = this.updateWordsLeft.bind(this);
     this.changeText = this.changeText.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
@@ -307,13 +309,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     return false;
   };
 
-  updateCharsLeft(value: string): void {
-    this.setState({ charsLeft: 300 - value.length });
-    this.setValid(300 - value.length >= 0);
+  updateWordsLeft(value: string): void {
+    const numWords = getNumWords(value);
+    this.setState({ wordsLeft: 100 - numWords });
+    this.setValid(100 - numWords >= 0);
   }
 
   changeText(value: string): void {
-    this.updateCharsLeft(value);
+    this.updateWordsLeft(value);
     this.props.setContent(value);
     saveDraft(this.props.composing);
   }
@@ -385,6 +388,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       type: 'postcard',
       category: this.props.route.params.category.name,
       subcategory: this.state.design.subcategoryName,
+      contentResearcher: this.state.design.contentResearcher,
+      designer: this.state.design.designer,
       step: 'image',
     });
     if (!this.state.design.image.uri.length) {
@@ -453,10 +458,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       type: 'postcard',
       category: this.props.route.params.category.name,
       subcategory: this.state.design.subcategoryName,
+      contentResearcher: this.state.design.contentResearcher,
+      designer: this.state.design.designer,
       step: 'draft',
     });
     this.props.navigation.navigate(Screens.ReviewPostcard, {
-      horizontal: this.designIsHorizontal(),
       category: this.props.route.params.category.name,
     });
   }
@@ -616,59 +622,58 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         onPress={Keyboard.dismiss}
       >
         <KeyboardAvoider>
-          <View
-            pointerEvents="box-none"
-            style={[
-              {
-                flex: 1,
-                paddingBottom: 50,
-              },
-            ]}
-          >
-            <Animated.View
-              style={[
-                Styles.gridPreviewBackground,
-                {
-                  transform: [
-                    {
-                      scale: this.state.keyboardOpacity.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1, 1.25],
-                      }),
-                    },
-                  ],
-                  left: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, (WINDOW_WIDTH - 24) / 8],
-                  }),
-                  top: this.state.keyboardOpacity.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, (((WINDOW_HEIGHT - 80) * 2) / 5 - 24) / 8],
-                  }),
-                },
-              ]}
-              pointerEvents={this.state.writing ? undefined : 'none'}
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              style={{ flex: 1 }}
+              showsVerticalScrollIndicator={false}
             >
-              <EditablePostcard
-                ref={this.editableRef}
-                recipient={this.props.recipient}
-                design={this.state.design}
-                flip={this.state.flip}
-                onChangeText={this.changeText}
-                horizontal={this.state.horizontal}
-                onLoad={() => {
-                  this.setState({ loading: null });
-                }}
-                active
-              />
-            </Animated.View>
+              <View
+                pointerEvents="box-none"
+                style={[
+                  {
+                    flex: 1,
+                    paddingBottom: 40,
+                    alignItems: 'center',
+                  },
+                ]}
+              >
+                <Animated.View
+                  style={[
+                    Styles.gridPreviewBackground,
+                    {
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: POSTCARD_HEIGHT + 16,
+                    },
+                  ]}
+                  pointerEvents={this.state.writing ? undefined : 'none'}
+                >
+                  <EditablePostcard
+                    ref={this.editableRef}
+                    recipient={this.props.recipient}
+                    design={this.state.design}
+                    flip={this.state.flip}
+                    onChangeText={this.changeText}
+                    horizontal={this.state.horizontal}
+                    onLoad={() => {
+                      this.setState({ loading: null });
+                    }}
+                    active
+                    width={POSTCARD_WIDTH}
+                    height={POSTCARD_HEIGHT}
+                  />
+                </Animated.View>
+              </View>
+            </ScrollView>
             <Animated.View
               style={[
                 Styles.gridOptionsBackground,
                 {
-                  top: this.state.flip.interpolate({
+                  position: 'absolute',
+                  bottom: 0,
+                  height: this.state.flip.interpolate({
                     inputRange: [0, 1],
-                    outputRange: ['0%', '100%'],
+                    outputRange: [BOTTOM_HEIGHT, 0],
                   }),
                 },
               ]}
@@ -721,7 +726,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
             </Animated.View>
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
-              numLeft={this.state.charsLeft}
+              numLeft={this.state.wordsLeft}
             />
           </View>
         </KeyboardAvoider>

@@ -1,9 +1,10 @@
-import { Image } from 'types';
+import { Image, UserReferralsInfo } from 'types';
 
 export const AUTHENTICATE_USER = 'user/authenticate_user';
 export const LOGIN_USER = 'user/login_user';
 export const LOGOUT_USER = 'user/logout_user';
 export const SET_USER = 'user/set_user';
+export const SET_USER_REFERRALS = 'user/set_user_referrals';
 
 // state types
 export interface UserRegisterInfo {
@@ -41,6 +42,7 @@ export interface User {
   photo?: Image;
   credit: number;
   joined: Date;
+  referralCode: string;
 }
 
 export interface AuthInfo {
@@ -54,6 +56,7 @@ export interface AuthInfo {
 export interface UserState {
   authInfo: AuthInfo;
   user: User;
+  userReferrals: UserReferralsInfo;
 }
 
 interface AuthenticateUserAction {
@@ -82,8 +85,19 @@ interface SetUserAction {
   payload: User;
 }
 
+interface SetUserAction {
+  type: typeof SET_USER;
+  payload: User;
+}
+
+interface SetUserReferralsAction {
+  type: typeof SET_USER_REFERRALS;
+  payload: UserReferralsInfo;
+}
+
 export type UserActionTypes =
   | AuthenticateUserAction
   | LoginUserAction
   | LogoutUserAction
-  | SetUserAction;
+  | SetUserAction
+  | SetUserReferralsAction;

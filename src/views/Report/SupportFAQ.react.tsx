@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Typography } from '@styles';
 import { ListItem } from '@components';
-import { AppStackParamList } from '@utils/Screens';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
@@ -67,7 +67,7 @@ const SupportFAQScreen: React.FC<Props> = (props: Props) => {
           <ListItem
             key={item.text}
             onPress={() => {
-              props.navigation.navigate('SupportFAQDetail', {
+              props.navigation.navigate(Screens.SupportFAQDetail, {
                 issue: item.issue,
               });
               Segment.trackWithProperties(

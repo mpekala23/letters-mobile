@@ -12,7 +12,10 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { getCategories } from '@api';
 import { FlatList } from 'react-native-gesture-handler';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import {
+  dropdownError,
+  dropdownWarning,
+} from '@components/Dropdown/Dropdown.react';
 import Loading from '@assets/common/loading.gif';
 import Styles from './Compose.styles';
 
@@ -26,6 +29,7 @@ interface Props {
   recipientId: number;
   setComposing: (draft: Draft) => void;
   categories: Category[];
+  isTexas: boolean;
 }
 
 interface State {
@@ -33,6 +37,8 @@ interface State {
 }
 
 class ChooseCategoryScreenBase extends React.Component<Props, State> {
+  private unsubscribeFocus: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -40,12 +46,40 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
     };
     this.renderCategory = this.renderCategory.bind(this);
     this.refreshCategories = this.refreshCategories.bind(this);
+    this.onNavigationFocus = this.onNavigationFocus.bind(this);
+
+    this.unsubscribeFocus = this.props.navigation.addListener(
+      'focus',
+      this.onNavigationFocus
+    );
   }
 
   componentDidMount() {
     if (this.props.categories.length === 0) {
-      getCategories();
+      this.refreshCategories();
     }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  onNavigationFocus() {
+    if (this.props.isTexas)
+      dropdownWarning({
+        message: (
+          <Text>
+            <Text style={Typography.FONT_MEDIUM}>
+              {i18n.t('Compose.dueToTDCJ')}
+            </Text>
+            <Text style={Typography.FONT_BOLD}> Personal </Text>
+            <Text style={Typography.FONT_MEDIUM}>
+              {i18n.t('Compose.willBeAccepted')}
+            </Text>
+          </Text>
+        ),
+        persist: true,
+      });
   }
 
   async refreshCategories() {
@@ -93,7 +127,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               style={{ flex: 1 }}
               data={this.props.categories.slice(1)}
               ListHeaderComponent={
-                this.props.categories.length > 0 ? (
+                this.props.categories.length ? (
                   <CategoryCard
                     category={this.props.categories[0]}
                     navigate={
@@ -134,6 +168,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   recipientId: state.contact.active.id,
+  isTexas: state.contact.active.facility.state === 'Texas',
   categories: state.category.categories,
 });
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {

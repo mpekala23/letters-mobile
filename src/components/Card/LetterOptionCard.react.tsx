@@ -7,6 +7,7 @@ import { MailTypes } from 'types';
 import { Typography } from '@styles';
 import Icon from '../Icon/Icon.react';
 import CardStyles from './Card.styles';
+import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
   type: MailTypes;
@@ -34,11 +35,14 @@ const LetterOptionCard: React.FC<Props> = (props: Props) => {
           ? i18n.t('LetterTypes.postCardsTitle')
           : i18n.t('LetterTypes.lettersTitle')}
       </Text>
-      <Text style={[CardStyles.cardData, { maxWidth: '65%' }]}>
+      <AdjustableText
+        style={[CardStyles.cardData, { maxWidth: '65%' }]}
+        numberOfLines={2}
+      >
         {props.type === MailTypes.Postcard
           ? i18n.t('LetterTypes.postCardsDesc')
           : i18n.t('LetterTypes.lettersDesc')}
-      </Text>
+      </AdjustableText>
     </TouchableOpacity>
   );
 };

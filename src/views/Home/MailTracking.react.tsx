@@ -1,8 +1,15 @@
 import React, { Dispatch } from 'react';
-import { Linking, Text, ScrollView, View, Image, Animated } from 'react-native';
+import { Linking, Text, ScrollView, View, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Button, LetterTracker, GrayBar, Icon, ProfilePic } from '@components';
+import {
+  Button,
+  LetterTracker,
+  GrayBar,
+  Icon,
+  ProfilePic,
+  DisplayImage,
+} from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -16,8 +23,6 @@ import {
 } from 'types';
 import { format, addBusinessDays } from 'date-fns';
 import i18n from '@i18n';
-import { NotifActionTypes, Notif } from '@store/Notif/NotifTypes';
-import { handleNotif } from '@store/Notif/NotifiActions';
 import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
 import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
 import * as Segment from 'expo-analytics-segment';
@@ -35,8 +40,6 @@ interface Props {
   navigation: MailTrackingScreenNavigationProp;
   mail: Mail | null;
   contact: Contact;
-  currentNotif: Notif | null;
-  handleNotif: () => void;
   user: User;
 }
 
@@ -52,10 +55,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
-    if (this.props.currentNotif) this.props.handleNotif();
-  }
-
   render() {
     const { mail, user, contact } = this.props;
 
@@ -67,6 +66,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           return (WINDOW_WIDTH / 8) * 1;
         case MailStatus.InTransit:
           return (WINDOW_WIDTH / 8) * 2;
+        case MailStatus.InLocalArea:
+          return (WINDOW_WIDTH / 8) * 2.75;
         case MailStatus.ProcessedForDelivery:
           return (WINDOW_WIDTH / 8) * 3.5;
         case MailStatus.Delivered:
@@ -336,37 +337,14 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
           <Text style={{ fontSize: 15 }}>{mail.content}</Text>
-          {mail.type === MailTypes.Letter && mail.image?.uri ? (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    mail.image.width && mail.image.height
-                      ? (mail.image.width / mail.image.height) * 275
-                      : 275,
-                },
-              ]}
-              source={mail.image}
-              testID="memoryLaneImage"
-            />
-          ) : null}
+          {mail.type === MailTypes.Letter && (
+            <DisplayImage images={mail.images} heightLetter={160} />
+          )}
           {mail.type === MailTypes.Postcard && (
-            <Image
-              style={[
-                Styles.trackingPhoto,
-                {
-                  height: 275,
-                  width:
-                    mail.design.image.width && mail.design.image.height
-                      ? (mail.design.image.width / mail.design.image.height) *
-                        275
-                      : 275,
-                },
-              ]}
-              source={mail.design.image}
-              testID="memoryLaneImage"
+            <DisplayImage
+              images={[mail.design.image]}
+              isPostcard
+              paddingPostcard={20}
             />
           )}
           <View style={{ height: 40 }} />
@@ -379,15 +357,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
   mail: state.mail.active,
-  currentNotif: state.notif.currentNotif,
   user: state.user.user,
 });
-const mapDispatchToProps = (dispatch: Dispatch<NotifActionTypes>) => ({
-  handleNotif: () => dispatch(handleNotif()),
-});
-const MailTrackingScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MailTrackingScreenBase);
+const MailTrackingScreen = connect(mapStateToProps)(MailTrackingScreenBase);
 
 export default MailTrackingScreen;

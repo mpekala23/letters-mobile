@@ -26,6 +26,8 @@ export const SELECT = 'rgb(180, 180, 210)';
 
 export const DROPDOWN_SUCCESS_BACKGROUND = '#F0FAF3';
 export const DROPDOWN_SUCCESS_TEXT = '#09863D';
+export const DROPDOWN_WARNING_BACKGROUND = '#FFECBD';
+export const DROPDOWN_WARNING_TEXT = '#826C38';
 export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
 export const DROPDOWN_ERROR_TEXT = '#762B2B';
 

@@ -5,6 +5,26 @@ export interface Image {
   height?: number;
 }
 
+export interface Sticker {
+  component: JSX.Element;
+  name: string;
+}
+
+export interface PlacedSticker {
+  sticker: Sticker;
+  position: {
+    x: number;
+    y: number;
+  };
+  rotation: string;
+  scale: number;
+  id: number;
+}
+
+export type Subscription = {
+  remove: () => void;
+};
+
 // Letters and Postcards (Commmon)
 export enum MailTypes {
   Letter = 'letter',
@@ -20,11 +40,13 @@ export interface PostcardDesign {
   name?: string;
   author?: string;
   custom?: boolean;
+  designer?: string;
+  contentResearcher?: string;
 }
 
 interface LetterSpecific {
   type: MailTypes.Letter;
-  image?: Image;
+  images: Image[];
 }
 
 interface PostcardSpecific {
@@ -50,6 +72,12 @@ export interface Category {
   image: Image;
   blurb: string;
   subcategories: Record<string, PostcardDesign[]>;
+}
+
+export interface Layout {
+  id: number;
+  designs: Record<number, PostcardDesign | null>;
+  svg: string;
 }
 
 // Letters and Postcards (Draft)
@@ -158,12 +186,32 @@ export interface TrackingEvent {
   date: Date;
 }
 
+export interface FamilyConnection {
+  contactImage: string;
+  contactFirstName: string;
+  contactLastName: string;
+  userFirstName: string;
+  userLastName: string;
+  userImage: string;
+  city: string;
+  state: string;
+}
+
+export interface UserReferralsInfo {
+  families: FamilyConnection[];
+  numReferrals: number;
+  numLivesImpacted: number;
+  numMailSent: number;
+}
+
 // Miscelaneous
 export enum ProfilePicTypes {
   Topbar = 'Topbar',
   Contact = 'Contact',
   SingleContact = 'SingleContact',
   Avatar = 'Avatar',
+  ReferralDashboard = 'ReferralDashboard',
+  ReferralDashboardConnection = 'ReferralDashboardConnection',
 }
 
 export enum Storage {
@@ -171,6 +219,7 @@ export enum Storage {
   DraftType = 'Ameelio-DraftType',
   DraftContent = 'Ameelio-DraftContent',
   DraftRecipientId = 'Ameelio-DraftRecipientId',
+  DraftImages = 'Ameelio-DraftImages',
   DraftCategoryId = 'Ameelio-DraftCategoryId',
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
@@ -186,3 +235,5 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';

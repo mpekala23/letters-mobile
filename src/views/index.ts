@@ -3,6 +3,7 @@ import BeginScreen from './Onboarding/Begin.react';
 import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
 import ComposeLetterScreen from './Compose/ComposeLetter.react';
+import ComposePersonalScreen from './Compose/ComposePersonal.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
@@ -16,6 +17,7 @@ import MailDetailsScreen from './MemoryLane/MailDetails.react';
 import MailTrackingScreen from './Home/MailTracking.react';
 import MemoryLaneScreen from './MemoryLane/MemoryLane.react';
 import PrivacyScreen from './Login/Privacy.react';
+import ReferralDashboardScreen from './Referrals/ReferralDashboard.react';
 import ReferFriendsScreen from './Compose/ReferFriends.react';
 import RegisterCredsScreen from './Onboarding/RegisterCreds.react';
 import RegisterPersonalScreen from './Onboarding/RegisterPersonal.react';
@@ -37,6 +39,7 @@ export {
   ChooseCategoryScreen,
   ChooseOptionScreen,
   ComposeLetterScreen,
+  ComposePersonalScreen,
   ComposePostcardScreen,
   ContactInfoScreen,
   ContactSelectorScreen,
@@ -50,6 +53,7 @@ export {
   MailTrackingScreen,
   MemoryLaneScreen,
   PrivacyScreen,
+  ReferralDashboardScreen,
   ReferFriendsScreen,
   RegisterCredsScreen,
   RegisterPersonalScreen,

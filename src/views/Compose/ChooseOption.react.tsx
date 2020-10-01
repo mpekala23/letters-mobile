@@ -58,7 +58,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
               image: { uri: '' },
             },
           });
-          props.navigation.navigate(Screens.ComposePostcard, {
+          props.navigation.navigate(Screens.ComposePersonal, {
             category: {
               name: 'personal',
               id: -1,
@@ -79,6 +79,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             type: MailTypes.Letter,
             recipientId: props.recipientId,
             content: '',
+            images: [],
           });
           props.navigation.navigate(Screens.ComposeLetter);
         }}

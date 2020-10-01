@@ -1,3 +1,4 @@
+import { UserReferralsInfo } from 'types';
 import {
   User,
   LOGIN_USER,
@@ -5,6 +6,7 @@ import {
   SET_USER,
   UserActionTypes,
   AUTHENTICATE_USER,
+  SET_USER_REFERRALS,
 } from './UserTypes';
 
 /** Authenticates a user */
@@ -46,5 +48,15 @@ export function setUser(user: User): UserActionTypes {
   return {
     type: SET_USER,
     payload: user,
+  };
+}
+
+/** Updates user referral  */
+export function setUserReferrals(
+  userReferrals: UserReferralsInfo
+): UserActionTypes {
+  return {
+    type: SET_USER_REFERRALS,
+    payload: userReferrals,
   };
 }

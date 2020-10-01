@@ -1,9 +1,17 @@
 import React, { RefObject } from 'react';
-import { Animated, TouchableOpacity, View, Keyboard, Text } from 'react-native';
+import {
+  Animated,
+  TouchableOpacity,
+  View,
+  Keyboard,
+  Text,
+  Platform,
+} from 'react-native';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH } from '@utils';
 import ImageIcon from '@assets/views/Compose/Image';
 import CheckIcon from '@assets/views/Compose/Check';
+import i18n from '@i18n';
 import Icon from '../Icon/Icon.react';
 import Styles from './ComposeTools.styles';
 import PicUpload from '../PicUpload/PicUpload.react';
@@ -18,11 +26,13 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
   return (
     <Animated.View
       style={{
+        justifyContent: 'center',
+        alignItems: 'center',
         opacity: props.keyboardOpacity,
         position: 'absolute',
-        bottom: 0,
+        bottom: Platform.OS === 'ios' ? 16 : 0,
         width: WINDOW_WIDTH,
-        paddingVertical: 6,
+        height: 40,
       }}
     >
       <TouchableOpacity
@@ -36,10 +46,11 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
               {
                 color:
                   props.numLeft >= 0 ? Colors.GRAY_500 : Colors.AMEELIO_RED,
+                fontSize: 12,
               },
             ]}
           >
-            {props.numLeft} left
+            {props.numLeft} {i18n.t('ComposeTools.wordsLeft')}
           </Text>
         </View>
         {props.picRef ? (

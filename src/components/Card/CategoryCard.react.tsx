@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Text, TouchableOpacity, ViewStyle, View } from 'react-native';
+import { TouchableOpacity, ViewStyle, View } from 'react-native';
 import { Category, Draft, MailTypes } from 'types';
 import { Typography, Colors } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
@@ -11,6 +11,7 @@ import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { Screens } from '@utils/Screens';
 import CardStyles from './Card.styles';
+import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
   category: Category;
@@ -54,6 +55,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
         <AsyncImage
           download
           source={props.category.image}
+          autorotate={false}
           viewStyle={{
             width: '100%',
             height: 132,
@@ -64,12 +66,18 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <View style={{ flex: 1, padding: 16, justifyContent: 'center' }}>
-          <Text style={[Typography.FONT_SEMIBOLD, CardStyles.categoryTitle]}>
+          <AdjustableText
+            style={[Typography.FONT_SEMIBOLD, CardStyles.categoryTitle]}
+            numberOfLines={1}
+          >
             {capitalize(props.category.name)}
-          </Text>
-          <Text style={[Typography.FONT_REGULAR, CardStyles.categoryBlurb]}>
+          </AdjustableText>
+          <AdjustableText
+            style={[Typography.FONT_REGULAR, CardStyles.categoryBlurb]}
+            numberOfLines={1}
+          >
             {props.category.blurb}
-          </Text>
+          </AdjustableText>
         </View>
       </TouchableOpacity>
     </View>

@@ -1,17 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 
-export const INPUT_HEIGHT = 50;
-export const DROP_HEIGHT = 250;
-export const OPTION_HEIGHT = 50;
-export const NUM_OPTIONS = 4;
 export const VERTICAL_MARGIN = 5;
 
 export default StyleSheet.create({
   parentStyle: {
     width: '100%',
     marginBottom: VERTICAL_MARGIN * 2,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.BLACK_200,
     borderRadius: 8,
     overflow: 'hidden',
   },
@@ -23,44 +19,32 @@ export default StyleSheet.create({
     width: '100%',
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: 'rgba(0,0,0,0)',
+    borderColor: Colors.BLACK_200,
     paddingHorizontal: 10,
     fontSize: 16,
     color: 'black',
-    textAlignVertical: 'center',
+    paddingVertical: 8,
+  },
+  baseInputAndroidPadding: {
+    paddingTop: 10,
+    paddingBottom: 6,
   },
   inputStyleFocused: {
     color: Colors.AMEELIO_BLACK,
   },
   validStyle: {
-    backgroundColor: '#F0FAF3',
-    borderColor: '#9EE2B8',
+    backgroundColor: Colors.GREEN_100,
+    borderColor: Colors.GREEN_300,
     color: 'black',
   },
   invalidStyle: {
-    color: '#9A9A9A',
-    borderColor: '#FF9E9E',
-    backgroundColor: '#FFF5F5',
+    color: Colors.GRAY_MEDIUM,
+    borderColor: Colors.PINK_400,
+    backgroundColor: Colors.PINK_100,
   },
   disabledInputStyle: {
     opacity: 0.7,
-    color: '#9A9A9A',
-  },
-  optionBackground: {
-    width: '100%',
-    zIndex: 5,
-  },
-  optionScroll: {
-    width: '100%',
-    flex: 1,
-  },
-  optionContainer: {
-    width: '100%',
-    height: OPTION_HEIGHT,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderColor: Colors.GRAY_500,
-    paddingHorizontal: 10,
+    color: Colors.GRAY_MEDIUM,
   },
   secureButtonsContainer: {
     position: 'absolute',

@@ -11,15 +11,15 @@ import {
   MailStatus,
   Category,
   PostcardDesign,
+  Image,
 } from 'types';
 import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
-import { addBusinessDays } from 'date-fns';
-import { estimateDelivery } from '@utils';
+import { addBusinessDays, differenceInHours } from 'date-fns';
+import { estimateDelivery, getImageDims } from '@utils';
 
-import { Image as ImageComponent } from 'react-native';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import {
   getZipcode,
@@ -102,24 +102,24 @@ export function mapTrackingEventsToMailStatus(
 async function cleanMail(mail: RawMail): Promise<Mail> {
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const image =
-    mail.images.length > 0
-      ? {
-          uri: mail.images[0].img_src,
-        }
-      : undefined;
-  const design =
-    mail.images.length > 0
-      ? {
-          image: {
-            uri: mail.images[0].img_src,
-          },
-        }
-      : {
-          image: {
-            uri: '',
-          },
-        };
+  let images: Image[] = [];
+  if (mail.images.length) {
+    try {
+      images = await Promise.all(
+        mail.images.map(async (rawImage) => {
+          const dimensions = await getImageDims(rawImage.img_src);
+          return {
+            uri: rawImage.img_src,
+            ...dimensions,
+          };
+        })
+      );
+    } catch {
+      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
+    }
+  }
+  const design = { image: images.length ? images[0] : { uri: '' } };
+
   const dateCreated = new Date(mail.created_at);
   let status: MailStatus;
   let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
@@ -152,7 +152,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       status,
       dateCreated,
       expectedDelivery,
-      image,
+      images,
       trackingEvents,
     };
   }
@@ -186,25 +186,23 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   }
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
-  const image =
-    mail.images.length > 0
-      ? {
-          uri: mail.images[0].img_src,
-        }
-      : undefined;
-  const design =
-    mail.images.length > 0
-      ? {
-          image: {
-            uri: mail.images[0].img_src,
-          },
-          blurb: '',
-        }
-      : {
-          image: {
-            uri: '',
-          },
-        };
+  let images: Image[] = [];
+  if (mail.images.length) {
+    try {
+      images = await Promise.all(
+        mail.images.map(async (rawImage) => {
+          const dimensions = await getImageDims(rawImage.img_src);
+          return {
+            uri: rawImage.img_src,
+            ...dimensions,
+          };
+        })
+      );
+    } catch {
+      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
+    }
+  }
+  const design = { image: images.length ? images[0] : { uri: '' } };
   const dateCreated = new Date(mail.created_at);
   const lastLobUpdate = new Date(mail.last_lob_status_update);
 
@@ -232,7 +230,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       status,
       dateCreated,
       expectedDelivery,
-      image,
+      images,
     };
   }
   return {
@@ -247,7 +245,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   };
 }
 
-export async function getMail(page = 1): Promise<Record<number, Mail[]>> {
+export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
   const params = new URLSearchParams({ page: page.toString() });
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `letters?${params}`),
@@ -257,7 +255,7 @@ export async function getMail(page = 1): Promise<Record<number, Mail[]>> {
   );
   const data = body.data as { current_page: number; data: RawMail[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
-  const newExisting: Record<number, Mail[]> = {};
+  const newExisting: Record<string, Mail[]> = {};
   await Promise.all(
     data.data.map(async (raw) => {
       try {
@@ -327,11 +325,16 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
-  } else if (prepDraft.image) {
+  } else if (prepDraft.images.length) {
     try {
-      prepDraft.image = await uploadImage(prepDraft.image, 'letter');
+      const uris = await Promise.all(
+        prepDraft.images.map(async (image) => {
+          const resultImage = await uploadImage(image, 'letter');
+          return resultImage.uri;
+        })
+      );
       imageExtension = {
-        s3_img_urls: [prepDraft.image?.uri],
+        s3_img_urls: uris,
       };
     } catch (err) {
       const uploadError: ApiResponse = {
@@ -399,6 +402,8 @@ interface RawDesign {
   type: MailTypes;
   back: null;
   subcategory_id: number;
+  designer?: string;
+  content_researcher?: string;
 }
 
 async function cleanDesign(
@@ -406,19 +411,6 @@ async function cleanDesign(
   categoryId?: number,
   subcategoryName?: string
 ): Promise<PostcardDesign> {
-  const getImageDims = (
-    uri: string
-  ): Promise<{ width: number; height: number }> => {
-    return new Promise((res, rej) => {
-      ImageComponent.getSize(
-        uri,
-        (width, height) => {
-          res({ width, height });
-        },
-        rej
-      );
-    });
-  };
   try {
     const imageDims = await getImageDims(raw.front_img_src);
     const thumbnailDims = await getImageDims(raw.thumbnail_src);
@@ -432,6 +424,8 @@ async function cleanDesign(
       id: raw.id,
       categoryId,
       subcategoryName,
+      contentResearcher: raw.content_researcher,
+      designer: raw.designer,
     };
   } catch (err) {
     return {
@@ -443,6 +437,8 @@ async function cleanDesign(
       id: raw.id,
       categoryId,
       subcategoryName,
+      contentResearcher: raw.content_researcher,
+      designer: raw.designer,
     };
   }
 }
@@ -451,7 +447,8 @@ export async function getSubcategoriesById(
   categoryId: number
 ): Promise<Record<string, PostcardDesign[]>> {
   const body = await fetchAuthenticated(
-    url.resolve(API_URL, `designs/${categoryId}`)
+    url.resolve(API_URL, `categories/${categoryId}/designs`),
+    { method: 'GET' }
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;
@@ -469,6 +466,16 @@ export async function getSubcategoriesById(
 }
 
 export async function getCategories(): Promise<Category[]> {
+  const categoryState = store.getState().category;
+  if (
+    categoryState.lastUpdated &&
+    differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
+    categoryState.categories.length
+  ) {
+    // if categories are loaded into the store and were refreshed less than
+    // an hour ago, don't bother making this call
+    return categoryState.categories;
+  }
   const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as RawCategory[];
@@ -481,6 +488,11 @@ export async function getCategories(): Promise<Category[]> {
   const personalIx = categories.findIndex(
     (cat: Category) => cat.name === 'personal'
   );
+  if (personalIx < 0 || !categories.length) {
+    store.dispatch(setCategories([]));
+    store.dispatch(setLastUpdated(null));
+    return [];
+  }
   const personalCategory = categories.splice(personalIx, 1);
   categories.unshift(personalCategory[0]);
   store.dispatch(setCategories(categories));

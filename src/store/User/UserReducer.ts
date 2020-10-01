@@ -5,6 +5,7 @@ import {
   LOGOUT_USER,
   SET_USER,
   AUTHENTICATE_USER,
+  SET_USER_REFERRALS,
 } from './UserTypes';
 
 const initialState: UserState = {
@@ -27,6 +28,13 @@ const initialState: UserState = {
     state: '',
     credit: 0,
     joined: new Date(Date.now()),
+    referralCode: '',
+  },
+  userReferrals: {
+    families: [],
+    numReferrals: 0,
+    numLivesImpacted: 0,
+    numMailSent: 0,
   },
 };
 
@@ -38,6 +46,7 @@ export default function UserReducer(
   switch (action.type) {
     case AUTHENTICATE_USER:
       return {
+        ...currentState,
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: true,
@@ -49,6 +58,7 @@ export default function UserReducer(
       };
     case LOGIN_USER:
       return {
+        ...currentState,
         authInfo: {
           ...currentState.authInfo,
           isLoadingToken: false,
@@ -59,6 +69,12 @@ export default function UserReducer(
       };
     case LOGOUT_USER:
       return {
+        userReferrals: {
+          families: [],
+          numReferrals: 0,
+          numLivesImpacted: 0,
+          numMailSent: 0,
+        },
         authInfo: {
           isLoadingToken: false,
           isLoggedIn: false,
@@ -78,11 +94,17 @@ export default function UserReducer(
           state: '',
           credit: 0,
           joined: new Date(Date.now()),
+          referralCode: '',
         },
       };
     case SET_USER:
       currentState.user = action.payload;
       return currentState;
+    case SET_USER_REFERRALS:
+      return {
+        ...state,
+        userReferrals: action.payload,
+      };
     default:
       return state;
   }

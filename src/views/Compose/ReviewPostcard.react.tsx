@@ -1,5 +1,11 @@
 import React, { Dispatch } from 'react';
-import { TouchableOpacity, View, Keyboard, Text } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Keyboard,
+  Text,
+  ScrollView,
+} from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -7,17 +13,19 @@ import { Draft, Contact, MailTypes } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
-import { hoursTill8Tomorrow } from '@utils';
+import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
-import { deleteDraft } from '@api/User';
-import Notifs from '@notifications';
-import { NotifTypes } from '@store/Notif/NotifTypes';
 import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { Typography, Colors } from '@styles';
+import {
+  POSTCARD_HEIGHT,
+  POSTCARD_WIDTH,
+  WINDOW_WIDTH,
+} from '@utils/Constants';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
@@ -90,28 +98,15 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         option:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.name,
+        contentResearcher:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.contentResearcher,
+        designer:
+          this.props.composing.type === MailTypes.Postcard &&
+          this.props.composing.design.designer,
       });
       this.props.clearComposing();
-      Notifs.cancelAllNotificationsByType(NotifTypes.NoFirstLetter);
-      Notifs.cancelAllNotificationsByType(NotifTypes.Drought);
-      Notifs.scheduleNotificationInDays(
-        {
-          title: `${i18n.t(
-            'Notifs.happy'
-          )} ${new Date().toDateString()}! ${i18n.t(
-            'Notifs.readyToSendAnother'
-          )} ${this.props.recipient.firstName}?`,
-          body: `${i18n.t('Notifs.clickHereToBegin')}`,
-          data: {
-            type: NotifTypes.Drought,
-            data: {
-              contactId: this.props.recipient.id,
-            },
-          },
-        },
-        hoursTill8Tomorrow() / 24 + 7
-      );
-      deleteDraft();
+      cleanupAfterSend(this.props.recipient);
       this.props.navigation.reset({
         index: 0,
         routes: [
@@ -161,41 +156,41 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 
   render() {
     return (
-      <TouchableOpacity
-        activeOpacity={1.0}
-        style={Styles.gridTrueBackground}
-        onPress={Keyboard.dismiss}
-      >
-        <View style={Styles.gridPreviewBackground}>
-          <StaticPostcard
-            front
-            composing={this.props.composing}
-            recipient={this.props.recipient}
-            horizontal={this.props.route.params.horizontal}
-          />
-        </View>
-        <View style={Styles.gridPreviewBackground}>
-          <StaticPostcard
-            front={false}
-            composing={this.props.composing}
-            recipient={this.props.recipient}
-          />
-        </View>
-        <View style={{ flex: 1 }} />
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              fontSize: 16,
-              color: Colors.GRAY_MEDIUM,
-              textAlign: 'center',
-              margin: 10,
-            },
-          ]}
-        >
-          {i18n.t('Compose.warningCantCancel')}
-        </Text>
-      </TouchableOpacity>
+      <View style={Styles.screenBackground}>
+        <ScrollView style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={1.0} style={{ paddingVertical: 16 }}>
+            <StaticPostcard
+              front
+              composing={this.props.composing}
+              recipient={this.props.recipient}
+              width={POSTCARD_WIDTH}
+              height={POSTCARD_HEIGHT}
+              style={{ marginBottom: 16 }}
+            />
+            <StaticPostcard
+              front={false}
+              composing={this.props.composing}
+              recipient={this.props.recipient}
+              width={POSTCARD_WIDTH}
+              height={POSTCARD_HEIGHT}
+            />
+            <View style={{ flex: 1 }} />
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  fontSize: 16,
+                  color: Colors.GRAY_MEDIUM,
+                  textAlign: 'center',
+                  margin: 10,
+                },
+              ]}
+            >
+              {i18n.t('Compose.warningCantCancel')}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     );
   }
 }
