@@ -125,7 +125,10 @@ export async function uploadImage(
 ): Promise<Image> {
   const data = new FormData();
 
-  const uri = Platform.OS === 'android' ? `file://${image.uri}` : image.uri;
+  const uri =
+    Platform.OS === 'android'
+      ? `file://${image.uri}`
+      : image.uri.replace('file://', '/private');
 
   const photo = {
     name: store.getState().user.user.id.toString() + Date.now().toString(),

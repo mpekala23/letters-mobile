@@ -124,7 +124,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
     }
 
     return (
-      <View style={Styles.screenBackground}>
+      <View style={[Styles.screenBackground, { paddingTop: 16 }]}>
         <View style={{ flex: 1 }}>
           <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 20 }]}>
             {i18n.t('Compose.preview')}

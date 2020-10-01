@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, Platform } from 'react-native';
+import { Text, View, Platform, ScrollView } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -41,32 +41,44 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   const { mailType } = props.route.params;
   return (
     <KeyboardAvoider style={Styles.trueBackground}>
-      <View
+      <ScrollView
         style={{
           flex: 1,
+        }}
+        contentContainerStyle={{
+          flexGrow: 1,
           alignItems: 'center',
           flexDirection: 'column',
-          justifyContent: 'space-around',
+          justifyContent: 'center',
+          padding: 16,
         }}
       >
-        {Platform.OS === 'ios' ? (
-          <LottieView
-            source={DeliveryMan}
-            style={{ maxHeight: 150 }}
-            loop
-            autoPlay
-          />
-        ) : (
-          <Icon svg={Truck} />
-        )}
-
         <View
           style={{
-            flex: 0,
             flexDirection: 'column',
-            marginTop: Platform.OS === 'ios' ? 150 : 16,
+            width: '100%',
+            marginTop: Platform.OS === 'ios' ? 0 : 16,
           }}
         >
+          <View
+            style={{
+              width: '100%',
+              height: 150,
+              alignItems: 'center',
+              marginBottom: 16,
+            }}
+          >
+            {Platform.OS === 'ios' ? (
+              <LottieView
+                source={DeliveryMan}
+                style={{ maxHeight: 150 }}
+                loop
+                autoPlay
+              />
+            ) : (
+              <Icon svg={Truck} />
+            )}
+          </View>
           <Text
             style={[
               Typography.FONT_SEMIBOLD,
@@ -112,7 +124,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
             containerStyle={{ width: '100%' }}
           />
         </View>
-      </View>
+      </ScrollView>
     </KeyboardAvoider>
   );
 };

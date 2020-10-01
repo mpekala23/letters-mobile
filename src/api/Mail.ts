@@ -329,7 +329,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     try {
       const uris = await Promise.all(
         prepDraft.images.map(async (image) => {
-          return (await uploadImage(image, 'letter')).uri;
+          const resultImage = await uploadImage(image, 'letter');
+          return resultImage.uri;
         })
       );
       imageExtension = {

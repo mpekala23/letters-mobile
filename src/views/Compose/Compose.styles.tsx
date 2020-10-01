@@ -67,7 +67,7 @@ export default StyleSheet.create({
   designButtons: {
     position: 'absolute',
     height:
-      WINDOW_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - POSTCARD_HEIGHT - 96,
+      WINDOW_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - POSTCARD_HEIGHT - 32,
     width: WINDOW_WIDTH,
     paddingHorizontal: 16,
     paddingVertical: 12,
