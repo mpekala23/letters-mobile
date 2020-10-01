@@ -67,21 +67,21 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       );
       if (ix < 0) return;
       const notif = this.props.unrespondedNotifs[ix];
-      let contact: Contact | undefined;
-      if (notif.data && notif.data.contactId) {
-        contact = this.props.existingContacts.find((testContact) => {
-          return notif.data && testContact.id === notif.data.contactId;
-        });
-      }
+      const contact =
+        notif.data && notif.data.contactId
+          ? this.props.existingContacts.find((testContact) => {
+              return notif.data && testContact.id === notif.data.contactId;
+            })
+          : undefined;
       if (contact) {
         this.props.setActiveContact(contact);
       }
-      let mail: Mail | undefined;
-      if (contact && notif.data && notif.data.letterId) {
-        mail = this.props.existingMail[contact.id].find(
-          (testMail) => notif.data && testMail.id === notif.data.letterId
-        );
-      }
+      const mail =
+        contact && notif.data && notif.data.letterId
+          ? this.props.existingMail[contact.id].find(
+              (testMail) => notif.data && testMail.id === notif.data.letterId
+            )
+          : undefined;
       if (mail) {
         this.props.setActiveMail(mail);
       }
