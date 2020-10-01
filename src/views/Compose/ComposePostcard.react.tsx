@@ -388,6 +388,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       type: 'postcard',
       category: this.props.route.params.category.name,
       subcategory: this.state.design.subcategoryName,
+      contentResearcher: this.state.design.contentResearcher,
+      designer: this.state.design.designer,
       step: 'image',
     });
     if (!this.state.design.image.uri.length) {
@@ -456,6 +458,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       type: 'postcard',
       category: this.props.route.params.category.name,
       subcategory: this.state.design.subcategoryName,
+      contentResearcher: this.state.design.contentResearcher,
+      designer: this.state.design.designer,
       step: 'draft',
     });
     this.props.navigation.navigate(Screens.ReviewPostcard, {

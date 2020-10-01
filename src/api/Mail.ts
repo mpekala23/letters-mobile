@@ -401,6 +401,8 @@ interface RawDesign {
   type: MailTypes;
   back: null;
   subcategory_id: number;
+  designer?: string;
+  content_researcher?: string;
 }
 
 async function cleanDesign(
@@ -421,6 +423,8 @@ async function cleanDesign(
       id: raw.id,
       categoryId,
       subcategoryName,
+      contentResearcher: raw.content_researcher,
+      designer: raw.designer,
     };
   } catch (err) {
     return {
@@ -432,6 +436,8 @@ async function cleanDesign(
       id: raw.id,
       categoryId,
       subcategoryName,
+      contentResearcher: raw.content_researcher,
+      designer: raw.designer,
     };
   }
 }
