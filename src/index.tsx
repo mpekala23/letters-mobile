@@ -52,7 +52,7 @@ export default class App extends React.Component<null, State> {
       Sentry.init({
         dsn:
           'https://15e7f78b44064e1eb57afb5c8a239122@o434922.ingest.sentry.io/5392541',
-        release: process.env.APP_RELEASE || '1.0.11',
+        release: process.env.APP_VERSION || '1.2.0',
       });
     }
 

@@ -11,7 +11,7 @@ export default ({ config }) => {
             project: process.env.SENTRY_PROJECT,
             authToken: process.env.SENTRY_AUTH_TOKEN,
             setCommits: true,
-            release: process.env.APP_RELEASE,
+            release: process.env.APP_VERSION,
           },
         },
       ],
