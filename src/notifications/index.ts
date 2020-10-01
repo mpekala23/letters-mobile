@@ -394,7 +394,10 @@ function notifResponse(event: NotificationResponse): void {
       });
       resetNavigation({
         index: 0,
-        routes: [{ name: Screens.ContactSelector }],
+        routes: [
+          { name: Screens.ContactSelector },
+          { name: Screens.ReferralDashboard },
+        ],
       });
       break;
     case NotifTypes.SpecialEvent:
