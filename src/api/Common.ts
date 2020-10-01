@@ -11,8 +11,6 @@ import { Image, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
 import { setZipcode } from '@store/Zip/ZipActions';
-import * as FileSystem from 'expo-file-system';
-import { FileSystemUploadType } from 'expo-file-system';
 
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
