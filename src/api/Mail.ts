@@ -23,7 +23,7 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims } from '@utils';
+import { estimateDelivery, getImageDims, sleep } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import {

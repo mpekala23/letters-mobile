@@ -50,6 +50,7 @@ import * as Segment from 'expo-analytics-segment';
 import { differenceInBusinessDays } from 'date-fns';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { deleteDraft } from '@api/User';
+import { sleep } from '@utils';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -112,7 +113,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     status={item.status}
                     date={item.dateCreated}
                     description={item.content}
-                    onPress={() => {
+                    onPress={async () => {
+                      await sleep(0);
+                      this.props.setActiveMail(item);
                       Segment.track('Contact View - Click on Letter Tracking');
                       getTrackingEvents(item.id).catch((err) => {
                         Segment.trackWithProperties(
@@ -143,7 +146,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   status={item.status}
                   date={item.dateCreated}
                   description={item.content}
-                  onPress={() => {
+                  onPress={async () => {
+                    await sleep(0);
                     this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');
                     getTrackingEvents(item.id).catch((err) => {
