@@ -6,6 +6,7 @@ import {
   SET_USER,
   AUTHENTICATE_USER,
   SET_USER_REFERRALS,
+  SET_LOADING_STATUS,
 } from './UserTypes';
 
 const initialState: UserState = {
@@ -13,6 +14,7 @@ const initialState: UserState = {
     isLoadingToken: true,
     isLoggedIn: false,
     isLoaded: false,
+    loadingStatus: 0,
     apiToken: '',
     rememberToken: '',
   },
@@ -51,6 +53,7 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: true,
           isLoaded: false,
+          loadingStatus: currentState.authInfo.loadingStatus,
           apiToken: action.payload.token,
           rememberToken: action.payload.remember,
         },
@@ -79,6 +82,7 @@ export default function UserReducer(
           isLoadingToken: false,
           isLoggedIn: false,
           isLoaded: false,
+          loadingStatus: 0,
           apiToken: '',
           rememberToken: '',
         },
@@ -105,6 +109,9 @@ export default function UserReducer(
         ...state,
         userReferrals: action.payload,
       };
+    case SET_LOADING_STATUS:
+      currentState.authInfo.loadingStatus = action.payload;
+      return currentState;
     default:
       return state;
   }

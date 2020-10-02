@@ -5,6 +5,7 @@ export const LOGIN_USER = 'user/login_user';
 export const LOGOUT_USER = 'user/logout_user';
 export const SET_USER = 'user/set_user';
 export const SET_USER_REFERRALS = 'user/set_user_referrals';
+export const SET_LOADING_STATUS = 'user/set_loading_status';
 
 // state types
 export interface UserRegisterInfo {
@@ -49,6 +50,7 @@ export interface AuthInfo {
   isLoadingToken: boolean;
   isLoggedIn: boolean;
   isLoaded: boolean;
+  loadingStatus: number;
   apiToken: string;
   rememberToken: string;
 }
@@ -95,9 +97,15 @@ interface SetUserReferralsAction {
   payload: UserReferralsInfo;
 }
 
+interface SetLoadingStatusAction {
+  type: typeof SET_LOADING_STATUS;
+  payload: number;
+}
+
 export type UserActionTypes =
   | AuthenticateUserAction
   | LoginUserAction
   | LogoutUserAction
   | SetUserAction
-  | SetUserReferralsAction;
+  | SetUserReferralsAction
+  | SetLoadingStatusAction;

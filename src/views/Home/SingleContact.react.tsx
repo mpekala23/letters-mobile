@@ -27,7 +27,7 @@ import LetterStatusCard from '@components/Card/LetterStatusCard.react';
 import MemoryLaneCountCard from '@components/Card/MemoryLaneCountCard.react';
 import i18n from '@i18n';
 import {
-  setActive as setActiveLetter,
+  setActive as setActiveMail,
   setComposing,
 } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
@@ -67,7 +67,7 @@ interface Props {
   existingMail: Mail[];
   existingContacts: Contact[];
   userState: UserState;
-  setActiveLetter: (mail: Mail) => void;
+  setActiveMail: (mail: Mail | null) => void;
   setComposing: (draft: Draft) => void;
   setActiveContact: (contact: Contact) => void;
   composing: Draft;
@@ -112,12 +112,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     status={item.status}
                     date={item.dateCreated}
                     description={item.content}
-                    onPress={async () => {
+                    onPress={() => {
                       Segment.track('Contact View - Click on Letter Tracking');
-                      try {
-                        await getTrackingEvents(item.id);
-                        this.props.navigation.navigate(Screens.MailTracking);
-                      } catch (err) {
+                      getTrackingEvents(item.id).catch((err) => {
                         Segment.trackWithProperties(
                           'Letter Tracking - Loading Error',
                           { error: err }
@@ -125,7 +122,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                         dropdownError({
                           message: i18n.t('Error.cantLoadMail'),
                         });
-                      }
+                      });
+                      this.props.navigation.navigate(Screens.MailTracking);
                     }}
                     key={item.id}
                   />
@@ -145,12 +143,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   status={item.status}
                   date={item.dateCreated}
                   description={item.content}
-                  onPress={async () => {
+                  onPress={() => {
+                    this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');
-                    try {
-                      await getTrackingEvents(item.id);
-                      this.props.navigation.navigate(Screens.MailTracking);
-                    } catch (err) {
+                    getTrackingEvents(item.id).catch((err) => {
                       Segment.trackWithProperties(
                         'Letter Tracking - Loading Error',
                         { error: err }
@@ -158,7 +154,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                       dropdownError({
                         message: i18n.t('Error.cantLoadMail'),
                       });
-                    }
+                    });
+                    this.props.navigation.navigate(Screens.MailTracking);
                   }}
                   key={item.id}
                 />
@@ -433,7 +430,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch<MailActionTypes | ContactActionTypes>
 ) => ({
   setActiveContact: (contact: Contact) => dispatch(setActiveContact(contact)),
-  setActiveLetter: (mail: Mail) => dispatch(setActiveLetter(mail)),
+  setActiveMail: (mail: Mail | null) => dispatch(setActiveMail(mail)),
   setComposing: (draft: Draft) => dispatch(setComposing(draft)),
 });
 const SingleContactScreen = connect(

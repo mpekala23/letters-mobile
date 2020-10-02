@@ -107,10 +107,10 @@ class DynamicPostcard extends React.Component<Props, State> {
             borderColor:
               position === this.props.activePosition &&
               this.props.highlightActive
-                ? Colors.BLUE_300
-                : 'transparent',
-            borderWidth: border ? 2 : 0,
-            borderRadius: border ? 2 : 0,
+                ? Colors.AMEELIO_YELLOW
+                : 'white',
+            borderWidth: border ? 4 : 0,
+            borderRadius: border ? 4 : 0,
           },
         ]}
         onPress={() => this.props.onImageAdd(position)}

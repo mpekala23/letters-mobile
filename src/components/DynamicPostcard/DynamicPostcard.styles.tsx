@@ -47,39 +47,39 @@ export default StyleSheet.create({
   leftFull: {
     flex: 1,
     padding: LAYOUT_PADDING,
-    paddingRight: LAYOUT_PADDING / 2,
+    paddingRight: 0,
   },
   rightFull: {
     flex: 1,
     padding: LAYOUT_PADDING,
-    paddingLeft: LAYOUT_PADDING / 2,
+    paddingLeft: 0,
   },
   rightTop: {
     flex: 1,
-    paddingBottom: LAYOUT_PADDING / 2,
+    paddingBottom: 0,
   },
   rightBottom: {
     flex: 1,
-    paddingTop: LAYOUT_PADDING / 2,
+    paddingTop: 0,
   },
   leftTop: {
     flex: 1,
-    paddingBottom: LAYOUT_PADDING / 2,
+    paddingBottom: 0,
   },
   leftBottom: {
     flex: 1,
-    paddingTop: LAYOUT_PADDING / 2,
+    paddingTop: 0,
   },
   rightContainer: {
     flex: 1,
     padding: LAYOUT_PADDING,
-    paddingLeft: LAYOUT_PADDING / 2,
+    paddingLeft: 0,
     flexDirection: 'column',
   },
   leftContainer: {
     flex: 1,
     padding: LAYOUT_PADDING,
-    paddingRight: LAYOUT_PADDING / 2,
+    paddingRight: 0,
     flexDirection: 'column',
   },
 });
