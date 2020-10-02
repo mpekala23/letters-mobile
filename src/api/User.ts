@@ -132,7 +132,17 @@ export async function loadDraft(): Promise<Draft> {
     const draftType = await getItemAsync(Storage.DraftType);
     const draftContent = await getItemAsync(Storage.DraftContent);
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
-    if (!draftType || !draftRecipientId) throw Error('No draft saved');
+    if (!draftType || !draftRecipientId) {
+      await deleteDraft();
+      const draft: Draft = {
+        type: MailTypes.Letter,
+        recipientId: -1,
+        content: '',
+        images: [],
+      };
+      store.dispatch(setComposing(draft));
+      return draft;
+    }
     if (draftType === MailTypes.Letter) {
       const draftImages = await getItemAsync(Storage.DraftImages);
       const draft: Draft = {
