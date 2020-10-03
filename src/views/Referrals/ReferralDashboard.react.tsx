@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, RefreshControl } from 'react-native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
@@ -31,17 +31,6 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
 }: Props) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const renderItem = (item: FamilyConnection, index: number) => {
-    return (
-      <View
-        style={{ marginTop: 16 }}
-        key={`${item.userFirstName}-${item.contactFirstName}-${item.state}-${index}`}
-      >
-        <ReferralConnectionCard familyConnection={item} />
-      </View>
-    );
-  };
-
   const doRefresh = async () => {
     setRefreshing(true);
     try {
@@ -52,6 +41,21 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
       });
     }
     setRefreshing(false);
+  };
+
+  useEffect(() => {
+    doRefresh();
+  }, []);
+
+  const renderItem = (item: FamilyConnection, index: number) => {
+    return (
+      <View
+        style={{ marginTop: 16 }}
+        key={`${item.userFirstName}-${item.contactFirstName}-${item.state}-${index}`}
+      >
+        <ReferralConnectionCard familyConnection={item} />
+      </View>
+    );
   };
 
   return (

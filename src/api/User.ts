@@ -20,10 +20,11 @@ import {
   setUser,
   authenticateUser,
   setUserReferrals,
+  setLoadingStatus,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
 import i18n from '@i18n';
-import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
+import { STATE_TO_ABBREV, ABBREV_TO_STATE, sleep } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
@@ -132,7 +133,17 @@ export async function loadDraft(): Promise<Draft> {
     const draftType = await getItemAsync(Storage.DraftType);
     const draftContent = await getItemAsync(Storage.DraftContent);
     const draftRecipientId = await getItemAsync(Storage.DraftRecipientId);
-    if (!draftType || !draftRecipientId) throw Error('No draft saved');
+    if (!draftType || !draftRecipientId) {
+      await deleteDraft();
+      const draft: Draft = {
+        type: MailTypes.Letter,
+        recipientId: -1,
+        content: '',
+        images: [],
+      };
+      store.dispatch(setComposing(draft));
+      return draft;
+    }
     if (draftType === MailTypes.Letter) {
       const draftImages = await getItemAsync(Storage.DraftImages);
       const draft: Draft = {
@@ -267,11 +278,13 @@ export async function uploadPushToken(token: string): Promise<void> {
 }
 
 export async function loginWithToken(): Promise<User> {
+  store.dispatch(setLoadingStatus(0));
   try {
     const rememberToken = await getItemAsync(Storage.RememberToken);
     if (!rememberToken) {
       throw Error('Cannot load token');
     }
+    store.dispatch(setLoadingStatus(10));
     const response = await fetchTimeout(url.resolve(API_URL, 'login/token'), {
       method: 'POST',
       headers: {
@@ -282,7 +295,9 @@ export async function loginWithToken(): Promise<User> {
         token: rememberToken,
       }),
     });
+    store.dispatch(setLoadingStatus(40));
     const body = await response.json();
+    store.dispatch(setLoadingStatus(50));
     if (body.status !== 'OK') throw body;
     const userData = cleanUser(body.data as RawUser);
     Segment.identify(userData.email);
@@ -295,8 +310,12 @@ export async function loginWithToken(): Promise<User> {
       dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
       Sentry.captureException(err);
     });
+    store.dispatch(setLoadingStatus(60));
     await Promise.all([getContacts(), getMail()]);
-    store.dispatch(loginUser(userData));
+    store.dispatch(setLoadingStatus(100));
+    sleep(300).then(() => {
+      store.dispatch(loginUser(userData));
+    });
     await loadDraft();
     const pushToken = await getPushToken();
     uploadPushToken(pushToken).catch(() => {
@@ -311,6 +330,7 @@ export async function loginWithToken(): Promise<User> {
 }
 
 export async function login(cred: UserLoginInfo): Promise<User> {
+  store.dispatch(setLoadingStatus(0));
   const response = await fetchTimeout(url.resolve(API_URL, 'login'), {
     method: 'POST',
     headers: {
@@ -324,6 +344,11 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   const body = await response.json();
   if (body.status !== 'OK') throw body;
+  const userData = cleanUser(body.data as RawUser);
+  store.dispatch(
+    authenticateUser(userData, body.data.token, body.data.remember)
+  );
+  store.dispatch(setLoadingStatus(30));
   if (cred.remember) {
     try {
       await saveToken(body.data.remember);
@@ -334,12 +359,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     }
   }
-  const userData = cleanUser(body.data as RawUser);
+  store.dispatch(setLoadingStatus(50));
   Segment.identify(userData.email);
   Segment.track('Login Success');
-  store.dispatch(
-    authenticateUser(userData, body.data.token, body.data.remember)
-  );
   getCategories().catch((err) => {
     dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
     Sentry.captureException(err);
@@ -347,6 +369,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   getUserReferrals().catch((err) => {
     Sentry.captureException(err);
   });
+  store.dispatch(setLoadingStatus(60));
   try {
     await Promise.all([getContacts(), getMail()]);
     await loadDraft();
@@ -354,7 +377,10 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
   }
-  store.dispatch(loginUser(userData));
+  store.dispatch(setLoadingStatus(100));
+  sleep(300).then(() => {
+    store.dispatch(loginUser(userData));
+  });
   const pushToken = await getPushToken();
   uploadPushToken(pushToken).catch(() => {
     dropdownError({ message: i18n.t('Permission.notifs') });

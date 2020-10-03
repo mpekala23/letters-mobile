@@ -723,6 +723,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
               >
                 <Animated.View
                   style={{
+                    paddingBottom: 56,
                     paddingTop:
                       this.state.subscreen === 'Design'
                         ? this.state.designState.bottomSlide.interpolate({

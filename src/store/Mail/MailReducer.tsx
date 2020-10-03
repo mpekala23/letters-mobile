@@ -1,4 +1,4 @@
-import { MailTypes, MailStatus } from 'types';
+import { MailTypes } from 'types';
 import {
   SET_COMPOSING,
   SET_RECIPIENT_ID,
@@ -24,16 +24,7 @@ const initialState: MailState = {
     content: '',
     images: [],
   },
-  active: {
-    id: -1,
-    type: MailTypes.Letter,
-    recipientId: -1,
-    content: '',
-    images: [],
-    status: MailStatus.Created,
-    dateCreated: new Date(),
-    expectedDelivery: new Date(),
-  },
+  active: null,
   existing: {},
 };
 

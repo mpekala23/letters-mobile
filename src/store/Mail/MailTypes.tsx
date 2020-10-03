@@ -60,7 +60,7 @@ interface AddMailAction {
 
 interface SetActiveAction {
   type: typeof SET_ACTIVE;
-  payload: Mail;
+  payload: Mail | null;
 }
 
 interface SetStatusAction {

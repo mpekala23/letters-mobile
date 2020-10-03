@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image as ImageComponent } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { TrackingEvent, MailStatus } from 'types';
 import { format } from 'date-fns';
 import { estimateDelivery } from '@utils';
+import Loading from '@assets/common/loading.gif';
 
 export interface Props {
   trackingEvent?: TrackingEvent;
@@ -69,38 +70,51 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
         justifyContent: 'center',
       }}
     >
-      <View
-        style={{
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          marginRight: 16,
-          width: 112,
-        }}
-      >
-        <Text
-          style={[
-            Typography.FONT_SEMIBOLD,
-            {
-              fontSize: 16,
-              paddingBottom: 8,
-            },
-          ]}
-          testID="dateFormatted"
-        >
-          {genDate()}
-        </Text>
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              color: Colors.GRAY_DARKER,
-              fontSize: 16,
-            },
-          ]}
-        >
-          {genTimestamp()}
-        </Text>
-      </View>
+      {trackingEvent ? (
+        <>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              marginRight: 16,
+              width: 112,
+            }}
+          >
+            <Text
+              style={[
+                Typography.FONT_SEMIBOLD,
+                {
+                  fontSize: 16,
+                  paddingBottom: 8,
+                },
+              ]}
+              testID="dateFormatted"
+            >
+              {genDate()}
+            </Text>
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                {
+                  color: Colors.GRAY_DARKER,
+                  fontSize: 16,
+                },
+              ]}
+            >
+              {genTimestamp()}
+            </Text>
+          </View>
+        </>
+      ) : (
+        <View
+          style={{
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            marginRight: 16,
+            width: 112,
+          }}
+        />
+      )}
       <View>
         <View
           style={{

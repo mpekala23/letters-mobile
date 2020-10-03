@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { Linking, Text, ScrollView, View, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -29,6 +29,7 @@ import * as Segment from 'expo-analytics-segment';
 import { User } from '@store/User/UserTypes';
 import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
 import { differenceInBusinessDays } from 'date-fns/esm';
+
 import Styles from './MailTracking.styles';
 
 type MailTrackingScreenNavigationProp = StackNavigationProp<
