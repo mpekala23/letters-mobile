@@ -13,14 +13,19 @@ import {
   PostcardDesign,
   Image,
 } from 'types';
-import { addMail, setExistingMail, setActive } from '@store/Mail/MailActions';
+import {
+  addMail,
+  setExistingMail,
+  setActive,
+  setContactsMail,
+} from '@store/Mail/MailActions';
 import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims } from '@utils';
-
+import { estimateDelivery, getImageDims, sleep } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
+import * as Sentry from 'sentry-expo';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -288,7 +293,12 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
 
 export async function getTrackingEvents(id: number | undefined): Promise<Mail> {
   const mail = await getSingleMail(id);
+  const contactId = store.getState().contact.active.id;
+  const currentMail = [...store.getState().mail.existing[contactId]];
+  const ix = currentMail.findIndex((testMail) => testMail.id === id);
+  currentMail[ix] = mail;
   store.dispatch(setActive(mail));
+  store.dispatch(setContactsMail(contactId, currentMail));
   return mail;
 }
 
@@ -466,36 +476,41 @@ export async function getSubcategoriesById(
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const categoryState = store.getState().category;
-  if (
-    categoryState.lastUpdated &&
-    differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
-    categoryState.categories.length
-  ) {
-    // if categories are loaded into the store and were refreshed less than
-    // an hour ago, don't bother making this call
-    return categoryState.categories;
+  try {
+    const categoryState = store.getState().category;
+    if (
+      categoryState.lastUpdated &&
+      differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
+      categoryState.categories.length
+    ) {
+      // if categories are loaded into the store and were refreshed less than
+      // an hour ago, don't bother making this call
+      return categoryState.categories;
+    }
+    const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
+    if (body.status !== 'OK' || !body.data) throw body;
+    const data = body.data as RawCategory[];
+    const categories: Category[] = await Promise.all(
+      data.map(async (raw: RawCategory) => {
+        const subcategories = await getSubcategoriesById(raw.id);
+        return cleanCategory(raw, subcategories);
+      })
+    );
+    const personalIx = categories.findIndex(
+      (cat: Category) => cat.name === 'personal'
+    );
+    if (personalIx < 0 || !categories.length) {
+      store.dispatch(setCategories([]));
+      store.dispatch(setLastUpdated(null));
+      return [];
+    }
+    const personalCategory = categories.splice(personalIx, 1);
+    categories.unshift(personalCategory[0]);
+    store.dispatch(setCategories(categories));
+    store.dispatch(setLastUpdated(new Date().toISOString()));
+    return categories;
+  } catch (err) {
+    Sentry.captureException(err);
+    throw err;
   }
-  const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
-  if (body.status !== 'OK' || !body.data) throw body;
-  const data = body.data as RawCategory[];
-  const categories: Category[] = await Promise.all(
-    data.map(async (raw: RawCategory) => {
-      const subcategories = await getSubcategoriesById(raw.id);
-      return cleanCategory(raw, subcategories);
-    })
-  );
-  const personalIx = categories.findIndex(
-    (cat: Category) => cat.name === 'personal'
-  );
-  if (personalIx < 0 || !categories.length) {
-    store.dispatch(setCategories([]));
-    store.dispatch(setLastUpdated(null));
-    return [];
-  }
-  const personalCategory = categories.splice(personalIx, 1);
-  categories.unshift(personalCategory[0]);
-  store.dispatch(setCategories(categories));
-  store.dispatch(setLastUpdated(new Date().toISOString()));
-  return categories;
 }

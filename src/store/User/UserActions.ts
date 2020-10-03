@@ -7,9 +7,9 @@ import {
   UserActionTypes,
   AUTHENTICATE_USER,
   SET_USER_REFERRALS,
+  SET_LOADING_STATUS,
 } from './UserTypes';
 
-/** Authenticates a user */
 export function authenticateUser(
   user: User,
   token: string,
@@ -25,7 +25,6 @@ export function authenticateUser(
   };
 }
 
-/** Logs in a user, meaning they are authenitcated and loaded */
 export function loginUser(user: User): UserActionTypes {
   return {
     type: LOGIN_USER,
@@ -35,7 +34,6 @@ export function loginUser(user: User): UserActionTypes {
   };
 }
 
-/** Logs out a user  */
 export function logoutUser(): UserActionTypes {
   return {
     type: LOGOUT_USER,
@@ -43,7 +41,6 @@ export function logoutUser(): UserActionTypes {
   };
 }
 
-/** Updates user profile  */
 export function setUser(user: User): UserActionTypes {
   return {
     type: SET_USER,
@@ -51,12 +48,18 @@ export function setUser(user: User): UserActionTypes {
   };
 }
 
-/** Updates user referral  */
 export function setUserReferrals(
   userReferrals: UserReferralsInfo
 ): UserActionTypes {
   return {
     type: SET_USER_REFERRALS,
     payload: userReferrals,
+  };
+}
+
+export function setLoadingStatus(loadingStatus: number): UserActionTypes {
+  return {
+    type: SET_LOADING_STATUS,
+    payload: loadingStatus,
   };
 }

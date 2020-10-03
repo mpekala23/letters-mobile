@@ -79,6 +79,7 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
           viewStyle={mapProfileTypeToStyle(props.type).image}
           source={{ uri: props.imageUri }}
           accessibilityLabel="Profile Picture"
+          autorotate={false}
         />
       );
   }

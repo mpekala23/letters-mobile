@@ -65,7 +65,7 @@ export function addMail(mail: Mail): MailActionTypes {
   };
 }
 
-export function setActive(mail: Mail): MailActionTypes {
+export function setActive(mail: Mail | null): MailActionTypes {
   return {
     type: SET_ACTIVE,
     payload: mail,
