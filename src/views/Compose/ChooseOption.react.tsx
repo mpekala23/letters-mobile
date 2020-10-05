@@ -1,17 +1,15 @@
 import React, { Dispatch } from 'react';
-import { Text, View } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { MailTypes, Draft } from 'types';
-import { Colors, Typography } from '@styles';
+import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { STATE_TO_ABBREV } from '@utils';
 import i18n from '@i18n';
-import { User } from '@store/User/UserTypes';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './Compose.styles';
 
@@ -22,27 +20,15 @@ type ChooseOptionsScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: ChooseOptionsScreenNavigationProp;
-  user: User;
   recipientId: number;
   setComposing: (draft: Draft) => void;
 }
 
 const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
-  const { user } = props;
   return (
-    <View style={Styles.screenBackground}>
+    <ScrollView style={Styles.screenBackground}>
       <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
         {i18n.t('Compose.chooseAnOption')}
-      </Text>
-      <Text
-        style={[
-          Typography.FONT_REGULAR,
-          { fontSize: 14, color: Colors.GRAY_500, paddingBottom: 10 },
-        ]}
-      >
-        {i18n.t('Compose.psYourLovedOneWillRespondTo')} {user.address1}
-        {user.address2 ? ` ${user.address2}` : ''}, {user.city},{' '}
-        {STATE_TO_ABBREV[user.state]} {user.postal}.
       </Text>
       <LetterOptionCard
         type={MailTypes.Postcard}
@@ -84,12 +70,11 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
           props.navigation.navigate(Screens.ComposeLetter);
         }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.user.user,
   recipientId: state.contact.active.id,
 });
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {

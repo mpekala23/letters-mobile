@@ -142,6 +142,6 @@ export default StyleSheet.create({
   },
   categoryBlurb: {
     color: Colors.GRAY_DARKER,
-    fontSize: 12,
+    fontSize: 14,
   },
 });
