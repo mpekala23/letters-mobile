@@ -133,13 +133,19 @@ export interface Facility {
 export interface ContactPersonal {
   firstName: string;
   lastName: string;
-  inmateNumber: string;
+  // inmateNumber: string;
   relationship: string;
   image?: Image;
 }
 
 export interface ContactFacility {
   facility: Facility;
+  // dorm?: string;
+  // unit?: string;
+}
+
+export interface ContactInmateInfo {
+  inmateNumber: string;
   dorm?: string;
   unit?: string;
 }
@@ -148,7 +154,10 @@ interface ContactCreated {
   id: number;
 }
 
-export interface ContactDraft extends ContactPersonal, ContactFacility {}
+export interface ContactDraft
+  extends ContactPersonal,
+    ContactFacility,
+    ContactInmateInfo {}
 
 export interface Contact extends ContactDraft, ContactCreated {}
 

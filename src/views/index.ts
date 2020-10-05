@@ -6,6 +6,7 @@ import ComposeLetterScreen from './Compose/ComposeLetter.react';
 import ComposePersonalScreen from './Compose/ComposePersonal.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
+import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import InmateLocatorScreen from './AddContact/InmateLocator.react';
@@ -42,6 +43,7 @@ export {
   ComposePersonalScreen,
   ComposePostcardScreen,
   ContactInfoScreen,
+  ContactInmateInfoScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,

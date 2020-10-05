@@ -32,6 +32,7 @@
   },
   "AddManuallyScreen": {
     "facilityName": "Facility Name",
+    "facilityType": "Facility Type",
     "facilityAddress": "Facility Address",
     "facilityCity": "Facility City",
     "facilityState": "Facility State",
@@ -390,6 +391,7 @@
     "addManually": "Add Manually",
     "compose": "Compose",
     "contactInfo": "Contact Info",
+    "contactInmateInfo": "Contact Details",
     "contacts": "Contacts",
     "home": "Home",
     "issues": "Issues",

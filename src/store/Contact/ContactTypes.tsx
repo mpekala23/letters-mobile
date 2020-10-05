@@ -1,8 +1,15 @@
-import { ContactDraft, Contact, ContactPersonal, ContactFacility } from 'types';
+import {
+  ContactDraft,
+  Contact,
+  ContactPersonal,
+  ContactFacility,
+  ContactInmateInfo,
+} from 'types';
 
 export const SET_ADDING = 'contact/set_adding';
 export const SET_ADDING_PERSONAL = 'contact/set_adding_personal';
 export const SET_ADDING_FACILITY = 'contact/set_adding_facility';
+export const SET_ADDING_INMATE_INFO = 'contact/set_adding_inmate_info';
 export const SET_ACTIVE = 'contact/set_active';
 export const SET_EXISTING = 'contact/set_existing';
 export const UPDATE_CONTACT = 'contact/update_contact';
@@ -22,6 +29,11 @@ interface SetAddingAction {
 interface SetAddingPersonalAction {
   type: typeof SET_ADDING_PERSONAL;
   payload: ContactPersonal;
+}
+
+interface SetAddingInmateInfoAction {
+  type: typeof SET_ADDING_INMATE_INFO;
+  payload: ContactInmateInfo;
 }
 
 interface SetAddingFacilityAction {
@@ -56,4 +68,5 @@ export type ContactActionTypes =
   | SetActiveAction
   | SetExistingAction
   | UpdateContactAction
-  | ClearContactsAction;
+  | ClearContactsAction
+  | SetAddingInmateInfoAction;

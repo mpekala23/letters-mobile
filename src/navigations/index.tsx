@@ -11,6 +11,7 @@ import {
   ChooseCategoryScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
+  ContactInmateInfoScreen,
   ComposeLetterScreen,
   ComposePersonalScreen,
   ComposePostcardScreen,
@@ -82,6 +83,10 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
+  ContactInmateInfo: {
+    title: i18n.t('Screens.contactInmateInfo'),
+    profile: false,
+  },
   InmateLocator: { title: i18n.t('Screens.inmateLocator'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
@@ -270,6 +275,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.AddManually}
           component={AddManuallyScreen}
+        />
+        <Stack.Screen
+          name={Screens.ContactInmateInfo}
+          component={ContactInmateInfoScreen}
         />
         <Stack.Screen
           name={Screens.ReferFriends}

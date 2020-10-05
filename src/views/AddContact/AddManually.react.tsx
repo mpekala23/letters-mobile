@@ -38,6 +38,8 @@ export interface State {
 }
 
 class AddManuallyScreenBase extends React.Component<Props, State> {
+  private facilityTypePicker = createRef<PickerRef>();
+
   private facilityName = createRef<Input>();
 
   private facilityAddress = createRef<Input>();
@@ -96,8 +98,14 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
     Segment.trackWithProperties('Add Contact - Click on Next', {
       page: 'manual',
     });
+    const prisonType = Object.keys(PrisonTypes).find(
+      (key) =>
+        PrisonTypes[key as keyof typeof PrisonTypes] ===
+        this.facilityTypePicker.current?.value
+    );
     if (
       this.facilityName.current &&
+      prisonType &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityPostal.current &&
@@ -106,7 +114,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
     ) {
       const facility: Facility = {
         name: this.facilityName.current.state.value,
-        type: PrisonTypes.Federal,
+        type: prisonType as PrisonTypes,
         address: this.facilityAddress.current.state.value,
         city: this.facilityCity.current.state.value,
         state: this.facilityStatePicker.current.value,
@@ -115,7 +123,10 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
       };
       const contactFacility = { facility };
       this.props.setAddingFacility(contactFacility);
-      this.props.navigation.navigate(Screens.ReviewContact, { manual: true });
+      this.props.navigation.navigate(Screens.ContactInmateInfo, {
+        manual: true,
+        prisonType: facility.type,
+      });
     }
     Keyboard.dismiss();
   }
@@ -132,6 +143,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
   updateValid(): void {
     if (
       this.facilityName.current &&
+      this.facilityTypePicker.current &&
       this.facilityAddress.current &&
       this.facilityCity.current &&
       this.facilityStatePicker.current &&
@@ -140,6 +152,7 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
     ) {
       const result =
         this.facilityName.current.state.valid &&
+        this.facilityTypePicker.current.isValueSelected() &&
         this.facilityAddress.current.state.valid &&
         this.facilityCity.current.state.valid &&
         this.facilityStatePicker.current.isValueSelected() &&
@@ -154,6 +167,8 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
     if (addingFacility) {
       if (this.facilityName.current)
         this.facilityName.current.set(addingFacility.name);
+      if (this.facilityTypePicker.current)
+        this.facilityTypePicker.current.setStoredValue(addingFacility.type);
       if (this.facilityAddress.current)
         this.facilityAddress.current.set(addingFacility.address);
       if (this.facilityCity.current)
@@ -214,6 +229,14 @@ class AddManuallyScreenBase extends React.Component<Props, State> {
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.facilityAddress}
+                />
+                <Picker
+                  ref={this.facilityTypePicker}
+                  items={Object.values(PrisonTypes)}
+                  placeholder={i18n.t('AddManuallyScreen.facilityType')}
+                  onValueChange={() => {
+                    this.updateValid();
+                  }}
                 />
                 <Input
                   ref={this.facilityAddress}

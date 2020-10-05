@@ -32,6 +32,7 @@
   },
   "AddManuallyScreen": {
     "facilityName": "Nombre del presidio",
+    "facilityType": "Tipo del presidio",
     "facilityAddress": "Dirección del presidio",
     "facilityCity": "Ciudad del presidio",
     "facilityState": "Estado del presidio",
@@ -393,6 +394,7 @@
     "addManually": "Agregar",
     "compose": "Redactar",
     "contactInfo": "Contactos",
+    "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
     "firstLetter": "Primera Carta",
     "home": "Inicio",

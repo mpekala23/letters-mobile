@@ -4,6 +4,7 @@ import {
   MailTypes,
   SupportFAQTypes,
   Image,
+  PrisonTypes,
 } from 'types';
 
 export enum Screens {
@@ -28,6 +29,7 @@ export enum Screens {
   ReviewPostcard = 'ReviewPostcard',
   ContactInfo = 'ContactInfo',
   FacilityDirectory = 'FacilityDirectory',
+  ContactInmateInfo = 'ContactInmateInfo',
   AddManually = 'AddManually',
   ReviewContact = 'ReviewContact',
   Issues = 'Issues',
@@ -91,6 +93,7 @@ export type AppStackParamList = {
   ReferralDashboard: undefined;
   ReviewLetter: undefined;
   ReviewPostcard: { category: string };
+  ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
   Setup: undefined;
   SingleContact: undefined;
