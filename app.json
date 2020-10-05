@@ -27,7 +27,8 @@
         "WRITE_EXTERNAL_STORAGE",
         "READ_EXTERNAL_STORAGE"
       ],
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.ameelio.letters_mobile"
     },
     "ios": {
       "buildNumber": "1.2.1",
@@ -35,7 +36,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Ameelio uses the camera to allow users to take photos and attach them to the letters they send to their loved ones. Ameelio also accesses the camera to allow users to take photos for their profile, and the profiles of their loved ones in the app.",
         "NSPhotoLibraryUsageDescription": "Ameelio accesses the photo library to allow users to attach saved photos to the letters they send to their loved ones. Ameelio also accesses the photo library to allow users to upload photos for their profile, and the profiles of their loved ones in the app."
-      }
+      },
+      "appStoreUrl": "https://apps.apple.com/us/app/ameelio/id1526489300"
     }
   }
 }
