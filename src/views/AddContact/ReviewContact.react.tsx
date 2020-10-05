@@ -9,14 +9,9 @@ import {
 import { Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  Button,
-  Input,
-  PicUpload,
-  KeyboardAvoider,
-  Picker,
-  PickerRef,
-} from '@components';
+import { Button, Icon, MailingAddressPreview } from '@components';
+import Stamp from '@assets/views/Compose/Stamp';
+import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
@@ -32,6 +27,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import * as Segment from 'expo-analytics-segment';
+import Styles from './ReviewContact.styles';
 import CommonStyles from './AddContact.styles';
 
 type ReviewContactScreenNavigationProp = StackNavigationProp<
@@ -167,6 +163,16 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
+        <View style={Styles.previewBackground}>
+          <Icon
+            style={{ position: 'absolute', top: 16, right: 16 }}
+            svg={Stamp}
+          />
+          <MailingAddressPreview
+            style={{ paddingHorizontal: 8, paddingTop: 24 }}
+            recipient={this.props.contactState.adding}
+          />
+        </View>
         <View style={CommonStyles.bottomButtonContainer}>
           <Button
             blocking

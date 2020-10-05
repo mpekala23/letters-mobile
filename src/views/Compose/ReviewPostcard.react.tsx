@@ -21,11 +21,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { Typography, Colors } from '@styles';
-import {
-  POSTCARD_HEIGHT,
-  POSTCARD_WIDTH,
-  WINDOW_WIDTH,
-} from '@utils/Constants';
+import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
