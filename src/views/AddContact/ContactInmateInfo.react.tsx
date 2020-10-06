@@ -9,7 +9,14 @@ import {
   View,
 } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { Button, Icon, Input, KeyboardAvoider } from '@components';
+import {
+  Button,
+  Icon,
+  Input,
+  KeyboardAvoider,
+  Picker,
+  PickerRef,
+} from '@components';
 import i18n from '@i18n';
 import {
   setAddingFacility,
@@ -29,7 +36,12 @@ import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 
-import { STATE_TO_ABBREV, STATE_TO_INMATE_DB, Validation } from '@utils';
+import {
+  STATES_DROPDOWN,
+  STATE_TO_ABBREV,
+  STATE_TO_INMATE_DB,
+  Validation,
+} from '@utils';
 import CommonStyles from './AddContact.styles';
 
 type ContactInmateInfoScreenNavigationProp = StackNavigationProp<
@@ -47,6 +59,7 @@ export interface Props {
 
 export interface State {
   valid: boolean;
+  inputting: boolean;
 }
 
 class InmateInfoScreenBase extends React.Component<Props, State> {
@@ -54,15 +67,19 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 
   private inmateNumber = createRef<Input>();
 
+  private facilityName = createRef<Input>();
+
+  private facilityCity = createRef<Input>();
+
+  private facilityAddress = createRef<Input>();
+
+  private facilityStatePicker = createRef<PickerRef>();
+
   private unit = createRef<Input>();
 
   private dorm = createRef<Input>();
 
   private postal = createRef<Input>();
-
-  private facilityName = createRef<Input>();
-
-  private facilityAddress = createRef<Input>();
 
   private unsubscribeFocus: () => void;
 
@@ -72,6 +89,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
+      inputting: false,
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNextPress = this.onNextPress.bind(this);
@@ -118,7 +136,9 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
       this.postal.current &&
       this.facilityName.current &&
-      this.facilityAddress.current
+      this.facilityAddress.current &&
+      (!this.props.route.params.manual ||
+        (this.facilityCity.current && this.facilityStatePicker.current))
     ) {
       const contactInmateInfo: ContactInmateInfo = {
         inmateNumber: this.inmateNumber.current
@@ -130,9 +150,15 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       this.props.setAddingInmateInfo(contactInmateInfo);
       const facility: Facility = {
         ...this.props.contactDraft.facility,
+        city: this.facilityCity.current
+          ? this.facilityCity.current.state.value
+          : this.props.contactDraft.facility.city,
+        state: this.facilityStatePicker.current
+          ? this.facilityStatePicker.current.value
+          : this.props.contactDraft.facility.state,
         name: this.facilityName.current.state.value,
         address: this.facilityAddress.current.state.value,
-        postal: this.facilityAddress.current.state.value,
+        postal: this.postal.current.state.value,
       };
       this.props.setAddingFacility({ facility });
 
@@ -150,6 +176,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       this.inmateNumber.current &&
       this.postal.current &&
       this.facilityName.current &&
+      this.facilityCity.current &&
+      this.facilityStatePicker.current &&
       this.facilityAddress.current
     ) {
       const contactInmateInfo: ContactInmateInfo = {
@@ -162,7 +190,9 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         ...this.props.contactDraft.facility,
         name: this.facilityName.current.state.value,
         address: this.facilityAddress.current.state.value,
-        postal: this.facilityAddress.current.state.value,
+        postal: this.postal.current.state.value,
+        city: this.facilityCity.current.state.value,
+        state: this.facilityStatePicker.current.value,
       };
       this.props.setAddingFacility({ facility });
 
@@ -190,28 +220,32 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
     if (this.facilityName.current)
       this.facilityName.current.set(addingContact.facility.name);
 
+    if (this.facilityCity.current)
+      this.facilityCity.current.set(addingContact.facility.city);
+
     if (this.facilityAddress.current)
       this.facilityAddress.current.set(addingContact.facility.address);
 
+    if (this.facilityStatePicker.current) {
+      this.facilityStatePicker.current.setStoredValue(
+        addingContact.facility.state
+      );
+    }
     if (this.postal.current)
       this.postal.current.set(addingContact.facility.postal);
   }
 
   updateValid() {
-    if (
-      this.inmateNumber.current &&
-      this.postal.current &&
-      this.facilityName.current &&
-      this.facilityAddress.current
-    ) {
-      const result =
-        (this.inmateNumber.current?.state.valid ||
-          this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
-        this.postal.current.state.valid &&
-        this.facilityName.current.state.valid &&
-        this.facilityAddress.current.state.valid;
-      this.setValid(result);
-    }
+    const result =
+      (this.inmateNumber.current?.state.valid ||
+        this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
+      this.postal.current?.state.valid &&
+      this.facilityName.current?.state.valid &&
+      this.facilityAddress.current?.state.valid &&
+      (!this.props.route.params.manual ||
+        (this.facilityCity.current?.state.valid &&
+          this.facilityStatePicker.current?.isValueSelected()));
+    this.setValid(!!result);
   }
 
   render() {
@@ -264,6 +298,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
             <ScrollView
               ref={this.scrollView}
               keyboardShouldPersistTaps="handled"
+              scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
               <TouchableOpacity
@@ -323,8 +358,55 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   ref={this.facilityName}
                   placeholder={i18n.t('AddManuallyScreen.facilityName')}
                   required
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
+                  nextInput={this.postal}
+                />
+                {this.props.route.params.manual && (
+                  <Picker
+                    ref={this.facilityStatePicker}
+                    items={STATES_DROPDOWN}
+                    placeholder={i18n.t('AddManuallyScreen.facilityState')}
+                    onValueChange={() => {
+                      this.updateValid();
+                    }}
+                  />
+                )}
+                {this.props.route.params.manual && (
+                  <Input
+                    ref={this.facilityCity}
+                    parentStyle={CommonStyles.fullWidth}
+                    placeholder={i18n.t('AddManuallyScreen.facilityCity')}
+                    required
+                    validate={Validation.City}
+                    onFocus={() => {
+                      this.setState({ inputting: true });
+                    }}
+                    onBlur={() => {
+                      this.setState({ inputting: false });
+                    }}
+                    onValid={this.updateValid}
+                    onInvalid={() => this.setValid(false)}
+                  />
+                )}
+                <Input
+                  ref={this.facilityAddress}
+                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
+                  required
+                  onFocus={() => {
+                    this.setState({ inputting: true });
+                  }}
+                  onBlur={() => {
+                    this.setState({ inputting: false });
+                  }}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setValid(false)}
                 />
                 <Input
                   ref={this.postal}
@@ -332,14 +414,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   required
                   validate={Validation.Postal}
                   onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
-                />
-                <Input
-                  ref={this.facilityAddress}
-                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
-                  required
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setState({ valid: false })}
+                  onInvalid={() => this.setValid(false)}
+                  nextInput={this.facilityAddress}
                 />
                 {this.props.route.params.prisonType !==
                   PrisonTypes.Juvenile && (
