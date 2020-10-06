@@ -133,15 +133,12 @@ export interface Facility {
 export interface ContactPersonal {
   firstName: string;
   lastName: string;
-  // inmateNumber: string;
   relationship: string;
   image?: Image;
 }
 
 export interface ContactFacility {
   facility: Facility;
-  // dorm?: string;
-  // unit?: string;
 }
 
 export interface ContactInmateInfo {

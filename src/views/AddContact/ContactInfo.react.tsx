@@ -139,24 +139,24 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     }
   }
 
-  setStoreValues = () => {
-    if (
-      this.statePicker.current &&
-      this.firstName.current &&
-      this.lastName.current &&
-      this.relationshipPicker.current
-    ) {
-      const contactPersonal: ContactPersonal = {
-        firstName: this.firstName.current.state.value,
-        lastName: this.lastName.current.state.value,
-        relationship: this.relationshipPicker.current.value,
-      };
-      this.props.setAddingPersonal(contactPersonal);
-      this.props.navigation.setParams({
-        phyState: this.statePicker.current.value,
-      });
-    }
-  };
+  // setStoreValues = () => {
+  //   if (
+  //     this.statePicker.current &&
+  //     this.firstName.current &&
+  //     this.lastName.current &&
+  //     this.relationshipPicker.current
+  //   ) {
+  //     const contactPersonal: ContactPersonal = {
+  //       firstName: this.firstName.current.state.value,
+  //       lastName: this.lastName.current.state.value,
+  //       relationship: this.relationshipPicker.current.value,
+  //     };
+  //     this.props.setAddingPersonal(contactPersonal);
+  //     this.props.navigation.setParams({
+  //       phyState: this.statePicker.current.value,
+  //     });
+  //   }
+  // };
 
   setValid(val: boolean) {
     this.setState({ valid: val });
@@ -314,23 +314,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     {i18n.t('ContactInfoScreen.nameTooLong')}
                   </Text>
                 )}
-                {/* <Input
-                  ref={this.inmateNumber}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
-                  required
-                  validate={Validation.InmateNumber}
-                  onChangeText={() => {
-                    if (this.firstName.current) {
-                      this.firstName.current.doValidate();
-                    }
-                    if (this.lastName.current) {
-                      this.lastName.current.doValidate();
-                    }
-                  }}
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setValid(false)}
-                /> */}
                 <Picker
                   ref={this.relationshipPicker}
                   items={[

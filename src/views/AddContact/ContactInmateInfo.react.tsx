@@ -11,10 +11,19 @@ import {
 import { Colors, Typography } from '@styles';
 import { Button, Icon, Input, KeyboardAvoider } from '@components';
 import i18n from '@i18n';
-import { setAddingInmateInfo } from '@store/Contact/ContactActions';
+import {
+  setAddingFacility,
+  setAddingInmateInfo,
+} from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import Letter from '@assets/views/AddContact/Letter';
-import { ContactDraft, ContactInmateInfo, PrisonTypes } from 'types';
+import {
+  ContactDraft,
+  ContactFacility,
+  ContactInmateInfo,
+  Facility,
+  PrisonTypes,
+} from 'types';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
@@ -33,6 +42,7 @@ export interface Props {
   contactDraft: ContactDraft;
   route: { params: { manual: boolean; prisonType: PrisonTypes } };
   setAddingInmateInfo: (contactInmateInfo: ContactInmateInfo) => void;
+  setAddingFacility: (contactFacility: ContactFacility) => void;
 }
 
 export interface State {
@@ -47,6 +57,12 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
   private unit = createRef<Input>();
 
   private dorm = createRef<Input>();
+
+  private postal = createRef<Input>();
+
+  private facilityName = createRef<Input>();
+
+  private facilityAddress = createRef<Input>();
 
   private unsubscribeFocus: () => void;
 
@@ -83,10 +99,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
   onNavigationFocus() {
     this.loadValuesFromStore();
     setProfileOverride({
-      enabled:
-        this.state.valid ||
-        this.props.route.params.prisonType === PrisonTypes.Juvenile,
-      text: i18n.t('ContactInfoScreen.next'),
+      enabled: this.state.valid,
+      text: i18n.t('ContactInmateInfoScreen.next'),
       action: this.onNextPress,
     });
   }
@@ -100,8 +114,11 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       page: 'inmate info',
     });
     if (
-      this.inmateNumber.current ||
-      this.props.route.params.prisonType === PrisonTypes.Juvenile
+      (this.inmateNumber.current ||
+        this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current
     ) {
       const contactInmateInfo: ContactInmateInfo = {
         inmateNumber: this.inmateNumber.current
@@ -111,6 +128,14 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         dorm: this.dorm.current?.state.value,
       };
       this.props.setAddingInmateInfo(contactInmateInfo);
+      const facility: Facility = {
+        ...this.props.contactDraft.facility,
+        name: this.facilityName.current.state.value,
+        address: this.facilityAddress.current.state.value,
+        postal: this.facilityAddress.current.state.value,
+      };
+      this.props.setAddingFacility({ facility });
+
       this.props.navigation.setParams({
         manual: this.props.route.params.manual,
       });
@@ -121,13 +146,26 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
   }
 
   setStoreValues = () => {
-    if (this.inmateNumber.current) {
+    if (
+      this.inmateNumber.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current
+    ) {
       const contactInmateInfo: ContactInmateInfo = {
         inmateNumber: this.inmateNumber?.current.state.value,
         unit: this.unit.current?.state.value,
         dorm: this.dorm.current?.state.value,
       };
       this.props.setAddingInmateInfo(contactInmateInfo);
+      const facility: Facility = {
+        ...this.props.contactDraft.facility,
+        name: this.facilityName.current.state.value,
+        address: this.facilityAddress.current.state.value,
+        postal: this.facilityAddress.current.state.value,
+      };
+      this.props.setAddingFacility({ facility });
+
       this.props.navigation.setParams({
         manual: this.props.route.params.manual,
       });
@@ -138,7 +176,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
     this.setState({ valid: val });
     setProfileOverride({
       enabled: val,
-      text: i18n.t('ContactInfoScreen.next'),
+      text: i18n.t('ContactInmateInfoScreen.next'),
       action: this.onNextPress,
     });
   }
@@ -148,15 +186,31 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 
     if (this.inmateNumber.current)
       this.inmateNumber.current.set(addingContact.inmateNumber);
+
+    if (this.facilityName.current)
+      this.facilityName.current.set(addingContact.facility.name);
+
+    if (this.facilityAddress.current)
+      this.facilityAddress.current.set(addingContact.facility.address);
+
+    if (this.postal.current)
+      this.postal.current.set(addingContact.facility.postal);
   }
 
   updateValid() {
-    console.log(this.inmateNumber.current);
-    if (this.inmateNumber.current) {
-      const result = this.inmateNumber.current.state.valid;
+    if (
+      this.inmateNumber.current &&
+      this.postal.current &&
+      this.facilityName.current &&
+      this.facilityAddress.current
+    ) {
+      const result =
+        (this.inmateNumber.current?.state.valid ||
+          this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
+        this.postal.current.state.valid &&
+        this.facilityName.current.state.valid &&
+        this.facilityAddress.current.state.valid;
       this.setValid(result);
-    } else if (this.props.route.params.prisonType === PrisonTypes.Juvenile) {
-      this.setValid(true);
     }
   }
 
@@ -179,13 +233,13 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
           }}
         >
           <Text style={{ color: Colors.PINK_500 }}>
-            {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
+            {i18n.t('ContactInmateInfoScreen.tapHereToSearch')}{' '}
             <Text
               style={[Typography.FONT_SEMIBOLD, { color: Colors.PINK_500 }]}
             >
               {state}
             </Text>{' '}
-            {i18n.t('ContactInfoScreen.database')}.
+            {i18n.t('ContactInmateInfoScreen.database')}.
           </Text>
         </Button>
       ) : null;
@@ -218,7 +272,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
               >
                 <View style={{ flexDirection: 'row' }}>
                   <Typography.PageHeader
-                    text={i18n.t('ContactInfoScreen.addContact')}
+                    text={i18n.t('ContactInmateInfoScreen.addDetails')}
                   />
                   <Icon svg={Letter} style={{ margin: 16 }} />
                 </View>
@@ -232,7 +286,9 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                     },
                   ]}
                 >
-                  {i18n.t('ContactInfoScreen.needHelpFindingYourInmateID')}
+                  {i18n.t(
+                    'ContactInmateInfoScreen.needHelpFindingYourInmateID'
+                  )}
                 </Text>
                 <Button
                   link
@@ -250,25 +306,47 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   }}
                 >
                   <Text style={{ color: Colors.PINK_500 }}>
-                    {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
+                    {i18n.t('ContactInmateInfoScreen.tapHereToSearch')}{' '}
                     <Text
                       style={[
                         Typography.FONT_SEMIBOLD,
                         { color: Colors.PINK_500 },
                       ]}
                     >
-                      {i18n.t('ContactInfoScreen.federal')}
+                      {i18n.t('ContactInmateInfoScreen.federal')}
                     </Text>{' '}
-                    {i18n.t('ContactInfoScreen.database')}.
+                    {i18n.t('ContactInmateInfoScreen.database')}.
                   </Text>
                 </Button>
                 {tapHereToSearchStateDatabase}
+                <Input
+                  ref={this.facilityName}
+                  placeholder={i18n.t('AddManuallyScreen.facilityName')}
+                  required
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
+                />
+                <Input
+                  ref={this.postal}
+                  placeholder={i18n.t('ContactInfoScreen.postal')}
+                  required
+                  validate={Validation.Postal}
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
+                />
+                <Input
+                  ref={this.facilityAddress}
+                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
+                  required
+                  onValid={this.updateValid}
+                  onInvalid={() => this.setState({ valid: false })}
+                />
                 {this.props.route.params.prisonType !==
                   PrisonTypes.Juvenile && (
                   <Input
                     ref={this.inmateNumber}
                     parentStyle={CommonStyles.fullWidth}
-                    placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
+                    placeholder={i18n.t('ContactInmateInfoScreen.inmateNumber')}
                     required
                     validate={Validation.InmateNumber}
                     onValid={this.updateValid}
@@ -298,6 +376,8 @@ const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
   return {
     setAddingInmateInfo: (contactInmateInfo: ContactInmateInfo) =>
       dispatch(setAddingInmateInfo(contactInmateInfo)),
+    setAddingFacility: (contactFacility: ContactFacility) =>
+      dispatch(setAddingFacility(contactFacility)),
   };
 };
 const ContactInmateInfoScreen = connect(

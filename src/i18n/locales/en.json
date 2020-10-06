@@ -50,14 +50,9 @@
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
-    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
-    "tapHereToSearch": "Tap here to search the",
-    "database": "database",
-    "federal": "Federal",
     "firstName": "First Name",
     "lastName": "Last Name",
     "nameTooLong": "Oops, your loved one's name is a bit too long! Could you please abbreviate?",
-    "inmateNumber": "Inmate Number",
     "relationshipToInmate": "I am their..",
     "state": "State",
     "postal": "Postal",
@@ -72,6 +67,15 @@
     "other": "Other",
     "back": "Back",
     "next": "Next"
+  },
+  "ContactInmateInfoScreen": {
+    "addDetails": "Add Details",
+    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
+    "tapHereToSearch": "Tap here to search the",
+    "database": "database",
+    "federal": "Federal",
+    "inmateNumber": "Inmate Number",
+    "next": "Next",
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Your loved ones",
