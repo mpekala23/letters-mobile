@@ -311,7 +311,9 @@ export async function loginWithToken(): Promise<User> {
       Sentry.captureException(err);
     });
     store.dispatch(setLoadingStatus(60));
-    await Promise.all([getContacts(), getMail()]);
+    await Promise.all([getContacts(), getMail()]).catch((err) =>
+      Sentry.captureException(err)
+    );
     store.dispatch(setLoadingStatus(100));
     sleep(300).then(() => {
       store.dispatch(loginUser(userData));

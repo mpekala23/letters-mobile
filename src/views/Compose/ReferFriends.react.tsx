@@ -146,7 +146,9 @@ const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
     referralCode: state.user.user.referralCode,
-    numMailSent: state.mail.existing[state.contact.active.id].length,
+    numMailSent: Object.keys(state.mail.existing)
+      .map((key) => state.mail.existing[key].length)
+      .reduce((acc, curr) => acc + curr, 0),
   };
 };
 
