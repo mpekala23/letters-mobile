@@ -30,15 +30,6 @@
     "notifs": "Can't register notifications. Ensure that this is enabled in settings.",
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
-  "AddManuallyScreen": {
-    "facilityName": "Facility Name",
-    "facilityType": "Facility Type",
-    "facilityAddress": "Facility Address",
-    "facilityCity": "Facility City",
-    "facilityState": "Facility State",
-    "facilityPostal": "Facility Postal",
-    "facilityPhone": "Facility Phone (optional)"
-  },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Connect with your incarcerated loved ones, for free.",
     "signUp": "Sign up",
@@ -76,6 +67,13 @@
     "federal": "Federal",
     "inmateNumber": "Inmate Number",
     "next": "Next",
+    "facilityName": "Facility Name",
+    "facilityType": "Facility Type",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "Facility City",
+    "facilityState": "Facility State",
+    "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)"
   },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Your loved ones",
@@ -392,7 +390,6 @@
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
     "register": "Register",
-    "addManually": "Add Manually",
     "compose": "Compose",
     "contactInfo": "Contact Info",
     "contactInmateInfo": "Contact Details",

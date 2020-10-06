@@ -6,24 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Button,
-  Icon,
-  Input,
-  KeyboardAvoider,
-  Picker,
-  PickerRef,
-} from '@components';
-import { Colors, Typography } from '@styles';
+import { Icon, Input, KeyboardAvoider, Picker, PickerRef } from '@components';
+import { Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  LOB_NAME_CHAR_LIMIT,
-  STATE_TO_ABBREV,
-  STATE_TO_INMATE_DB,
-  STATES_DROPDOWN,
-  Validation,
-} from '@utils';
+import { LOB_NAME_CHAR_LIMIT, STATE_TO_ABBREV, STATES_DROPDOWN } from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAddingPersonal } from '@store/Contact/ContactActions';
@@ -138,25 +125,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       });
     }
   }
-
-  // setStoreValues = () => {
-  //   if (
-  //     this.statePicker.current &&
-  //     this.firstName.current &&
-  //     this.lastName.current &&
-  //     this.relationshipPicker.current
-  //   ) {
-  //     const contactPersonal: ContactPersonal = {
-  //       firstName: this.firstName.current.state.value,
-  //       lastName: this.lastName.current.state.value,
-  //       relationship: this.relationshipPicker.current.value,
-  //     };
-  //     this.props.setAddingPersonal(contactPersonal);
-  //     this.props.navigation.setParams({
-  //       phyState: this.statePicker.current.value,
-  //     });
-  //   }
-  // };
 
   setValid(val: boolean) {
     this.setState({ valid: val });

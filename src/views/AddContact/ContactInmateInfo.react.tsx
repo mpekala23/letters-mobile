@@ -75,6 +75,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 
   private facilityStatePicker = createRef<PickerRef>();
 
+  private facilityTypePicker = createRef<PickerRef>();
+
   private unit = createRef<Input>();
 
   private dorm = createRef<Input>();
@@ -131,6 +133,11 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
     Segment.trackWithProperties('Add Contact - Click on Next', {
       page: 'inmate info',
     });
+    const prisonType = Object.keys(PrisonTypes).find(
+      (key) =>
+        PrisonTypes[key as keyof typeof PrisonTypes] ===
+        this.facilityTypePicker.current?.value
+    );
     if (
       (this.inmateNumber.current ||
         this.props.route.params.prisonType === PrisonTypes.Juvenile) &&
@@ -138,7 +145,9 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityAddress.current &&
       (!this.props.route.params.manual ||
-        (this.facilityCity.current && this.facilityStatePicker.current))
+        (this.facilityCity.current &&
+          this.facilityStatePicker.current &&
+          prisonType))
     ) {
       const contactInmateInfo: ContactInmateInfo = {
         inmateNumber: this.inmateNumber.current
@@ -159,6 +168,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         name: this.facilityName.current.state.value,
         address: this.facilityAddress.current.state.value,
         postal: this.postal.current.state.value,
+        type: prisonType as PrisonTypes,
       };
       this.props.setAddingFacility({ facility });
 
@@ -178,7 +188,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       this.facilityName.current &&
       this.facilityCity.current &&
       this.facilityStatePicker.current &&
-      this.facilityAddress.current
+      this.facilityAddress.current &&
+      this.facilityTypePicker.current
     ) {
       const contactInmateInfo: ContactInmateInfo = {
         inmateNumber: this.inmateNumber?.current.state.value,
@@ -186,6 +197,12 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         dorm: this.dorm.current?.state.value,
       };
       this.props.setAddingInmateInfo(contactInmateInfo);
+
+      const prisonType = Object.keys(PrisonTypes).find(
+        (key) =>
+          PrisonTypes[key as keyof typeof PrisonTypes] ===
+          this.facilityTypePicker.current?.value
+      );
       const facility: Facility = {
         ...this.props.contactDraft.facility,
         name: this.facilityName.current.state.value,
@@ -193,6 +210,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         postal: this.postal.current.state.value,
         city: this.facilityCity.current.state.value,
         state: this.facilityStatePicker.current.value,
+        type: prisonType ? (prisonType as PrisonTypes) : PrisonTypes.Fallback,
       };
       this.props.setAddingFacility({ facility });
 
@@ -231,8 +249,17 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
         addingContact.facility.state
       );
     }
+
     if (this.postal.current)
       this.postal.current.set(addingContact.facility.postal);
+
+    if (this.facilityTypePicker.current) {
+      this.facilityTypePicker.current.setStoredValue(
+        PrisonTypes[
+          (addingContact.facility.type as unknown) as keyof typeof PrisonTypes
+        ]
+      );
+    }
   }
 
   updateValid() {
@@ -244,7 +271,8 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
       this.facilityAddress.current?.state.valid &&
       (!this.props.route.params.manual ||
         (this.facilityCity.current?.state.valid &&
-          this.facilityStatePicker.current?.isValueSelected()));
+          this.facilityStatePicker.current?.isValueSelected() &&
+          this.facilityTypePicker.current?.isValueSelected()));
     this.setValid(!!result);
   }
 
@@ -356,7 +384,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                 {tapHereToSearchStateDatabase}
                 <Input
                   ref={this.facilityName}
-                  placeholder={i18n.t('AddManuallyScreen.facilityName')}
+                  placeholder={i18n.t('ContactInmateInfoScreen.facilityName')}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });
@@ -370,9 +398,21 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                 />
                 {this.props.route.params.manual && (
                   <Picker
+                    ref={this.facilityTypePicker}
+                    items={Object.values(PrisonTypes)}
+                    placeholder={i18n.t('ContactInmateInfoScreen.facilityType')}
+                    onValueChange={(val) => {
+                      this.updateValid();
+                    }}
+                  />
+                )}
+                {this.props.route.params.manual && (
+                  <Picker
                     ref={this.facilityStatePicker}
                     items={STATES_DROPDOWN}
-                    placeholder={i18n.t('AddManuallyScreen.facilityState')}
+                    placeholder={i18n.t(
+                      'ContactInmateInfoScreen.facilityState'
+                    )}
                     onValueChange={() => {
                       this.updateValid();
                     }}
@@ -382,7 +422,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   <Input
                     ref={this.facilityCity}
                     parentStyle={CommonStyles.fullWidth}
-                    placeholder={i18n.t('AddManuallyScreen.facilityCity')}
+                    placeholder={i18n.t('ContactInmateInfoScreen.facilityCity')}
                     required
                     validate={Validation.City}
                     onFocus={() => {
@@ -397,7 +437,9 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                 )}
                 <Input
                   ref={this.facilityAddress}
-                  placeholder={i18n.t('AddManuallyScreen.facilityAddress')}
+                  placeholder={i18n.t(
+                    'ContactInmateInfoScreen.facilityAddress'
+                  )}
                   required
                   onFocus={() => {
                     this.setState({ inputting: true });

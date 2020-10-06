@@ -6,7 +6,6 @@ import {
   StackCardInterpolatedStyle,
 } from '@react-navigation/stack';
 import {
-  AddManuallyScreen,
   BeginScreen,
   ChooseCategoryScreen,
   ChooseOptionScreen,
@@ -74,7 +73,6 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
   RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
   RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
-  AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
@@ -271,10 +269,6 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.FacilityDirectory}
           component={FacilityDirectoryScreen}
-        />
-        <Stack.Screen
-          name={Screens.AddManually}
-          component={AddManuallyScreen}
         />
         <Stack.Screen
           name={Screens.ContactInmateInfo}

@@ -1,4 +1,3 @@
-import AddManuallyScreen from './AddContact/AddManually.react';
 import BeginScreen from './Onboarding/Begin.react';
 import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
@@ -35,7 +34,6 @@ import UpdateContactScreen from './Update/UpdateContact.react';
 import UpdateProfileScreen from './Update/UpdateProfile.react';
 
 export {
-  AddManuallyScreen,
   BeginScreen,
   ChooseCategoryScreen,
   ChooseOptionScreen,

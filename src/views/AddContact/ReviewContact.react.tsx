@@ -1,28 +1,19 @@
-import React, { createRef, Dispatch } from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
-import { Typography } from '@styles';
+import React, { Dispatch } from 'react';
+import { View, TouchableOpacity, Keyboard } from 'react-native';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Icon, MailingAddressPreview } from '@components';
 import Stamp from '@assets/views/Compose/Stamp';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
-import { STATES_DROPDOWN, Validation } from '@utils';
 import { AppState } from '@store/types';
 import store from '@store';
 import { ContactActionTypes, ContactState } from '@store/Contact/ContactTypes';
-import { ContactDraft, Facility, Image, Contact } from 'types';
+import { ContactDraft, Image, Contact } from 'types';
 import { addContact } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setAdding, setActive } from '@store/Contact/ContactActions';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
-import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
@@ -163,7 +154,12 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
         onPress={() => Keyboard.dismiss()}
         activeOpacity={1.0}
       >
-        <View style={Styles.previewBackground}>
+        <View
+          style={[
+            Styles.previewBackground,
+            { height: POSTCARD_HEIGHT, width: POSTCARD_WIDTH },
+          ]}
+        >
           <Icon
             style={{ position: 'absolute', top: 16, right: 16 }}
             svg={Stamp}

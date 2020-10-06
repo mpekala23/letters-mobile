@@ -128,8 +128,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           this.props.navigation.navigate(Screens.SingleContact);
         }}
         userPostal={this.props.userPostal}
-        contactPostal={item.facility?.postal}
-        key={item.inmateNumber}
+        contactPostal={item.facility.postal}
+        key={`${item.inmateNumber}-${item.lastName}-${item.lastName}`}
       />
     );
   };
