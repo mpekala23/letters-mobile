@@ -106,10 +106,10 @@
     "smartCommunications": "Smart Communications"
   },
   "IntroContactScreen": {
-    "welcomePre": "Welcome,",
-    "welcomePost": "Time to locate your loved one.",
-    "body": "Add contact and join the 14,000+ others in the Ameelio community.",
-    "continueButton": "Add your loved one"
+    "welcomePre": "Bievenido,",
+    "welcomePost": "Es hora de localizar a tu ser querido.",
+    "body": "Agrega un contacto y únete a los más de 14,000 en la comunidad de Ameelio.",
+    "continueButton": "Iniciar"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetterPrefix": "¿",

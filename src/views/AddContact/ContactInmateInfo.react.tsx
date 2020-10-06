@@ -59,7 +59,6 @@ export interface Props {
 
 export interface State {
   valid: boolean;
-  inputting: boolean;
 }
 
 class InmateInfoScreenBase extends React.Component<Props, State> {
@@ -91,7 +90,6 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
-      inputting: false,
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNextPress = this.onNextPress.bind(this);
@@ -326,7 +324,6 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
             <ScrollView
               ref={this.scrollView}
               keyboardShouldPersistTaps="handled"
-              scrollEnabled={this.state.inputting}
               style={{ width: '100%' }}
             >
               <TouchableOpacity
@@ -386,12 +383,6 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   ref={this.facilityName}
                   placeholder={i18n.t('ContactInmateInfoScreen.facilityName')}
                   required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                   nextInput={this.postal}
@@ -401,7 +392,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                     ref={this.facilityTypePicker}
                     items={Object.values(PrisonTypes)}
                     placeholder={i18n.t('ContactInmateInfoScreen.facilityType')}
-                    onValueChange={(val) => {
+                    onValueChange={() => {
                       this.updateValid();
                     }}
                   />
@@ -425,12 +416,6 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                     placeholder={i18n.t('ContactInmateInfoScreen.facilityCity')}
                     required
                     validate={Validation.City}
-                    onFocus={() => {
-                      this.setState({ inputting: true });
-                    }}
-                    onBlur={() => {
-                      this.setState({ inputting: false });
-                    }}
                     onValid={this.updateValid}
                     onInvalid={() => this.setValid(false)}
                   />
@@ -441,12 +426,6 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                     'ContactInmateInfoScreen.facilityAddress'
                   )}
                   required
-                  onFocus={() => {
-                    this.setState({ inputting: true });
-                  }}
-                  onBlur={() => {
-                    this.setState({ inputting: false });
-                  }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
                 />

@@ -84,7 +84,6 @@ class Topbar extends React.Component<Props, State> {
               if (
                 route === Screens.ContactInfo ||
                 route === Screens.FacilityDirectory ||
-                route === Screens.AddManually ||
                 route === Screens.ContactInmateInfo ||
                 route === Screens.ReviewContact
               ) {
@@ -93,8 +92,6 @@ class Topbar extends React.Component<Props, State> {
                   logName = 'info';
                 } else if (route === Screens.FacilityDirectory) {
                   logName = 'facility';
-                } else if (route === Screens.AddManually) {
-                  logName = 'manual';
                 } else if (route === Screens.ContactInmateInfo) {
                   logName = 'inmate info';
                 } else {
