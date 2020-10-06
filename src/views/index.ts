@@ -10,6 +10,7 @@ import ContactSelectorScreen from './Home/ContactSelector.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import InmateLocatorScreen from './AddContact/InmateLocator.react';
 import IssuesScreen from './Report/Issues.react';
+import IntroContactScreen from './AddContact/IntroContact.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
 import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
 import LoginScreen from './Login/Login.react';
@@ -45,6 +46,7 @@ export {
   ContactSelectorScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
+  IntroContactScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,

@@ -17,6 +17,7 @@ import {
   ContactSelectorScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
+  IntroContactScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -85,6 +86,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
     title: i18n.t('Screens.contactInmateInfo'),
     profile: false,
   },
+  IntroContact: { title: i18n.t('Screens.introContact'), profile: false },
   InmateLocator: { title: i18n.t('Screens.inmateLocator'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
@@ -285,6 +287,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ReviewContact}
           component={ReviewContactScreen}
+        />
+        <Stack.Screen
+          name={Screens.IntroContact}
+          component={IntroContactScreen}
         />
         <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
         <Stack.Screen

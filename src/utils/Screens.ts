@@ -30,8 +30,8 @@ export enum Screens {
   ContactInfo = 'ContactInfo',
   FacilityDirectory = 'FacilityDirectory',
   ContactInmateInfo = 'ContactInmateInfo',
-  AddManually = 'AddManually',
   ReviewContact = 'ReviewContact',
+  IntroContact = 'IntroContact',
   Issues = 'Issues',
   IssuesDetail = 'IssuesDetail',
   IssuesDetailSecondary = 'IssuesDetailSecondary',
@@ -71,7 +71,6 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  AddManually: { phyState: string };
   ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
@@ -81,6 +80,7 @@ export type AppStackParamList = {
   ContactSelector: undefined;
   FacilityDirectory: { phyState: string };
   InmateLocator: { uri: string };
+  IntroContact: undefined;
   Issues: undefined;
   IssuesDetail: { issue: DeliveryReportTypes } | undefined;
   IssuesDetailSecondary: { issue: DeliveryReportTypes } | undefined;

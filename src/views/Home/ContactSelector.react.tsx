@@ -24,7 +24,7 @@ import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'ContactSelector'
+  Screens.ContactSelector
 >;
 
 interface State {
@@ -96,8 +96,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
   }
 
   async onNavigationFocus() {
-    if (this.props.existingContacts.length <= 0) {
-      this.props.navigation.replace(Screens.ContactInfo, {});
+    if (this.props.existingContacts.length === 0) {
+      this.props.navigation.replace(Screens.IntroContact);
     }
     getCategories().catch(() => {
       dropdownError({ message: i18n.t('Error.cantRefreshCategories') });

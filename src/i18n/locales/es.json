@@ -105,6 +105,12 @@
     "statePrison": "State Prison",
     "smartCommunications": "Smart Communications"
   },
+  "IntroContactScreen": {
+    "welcomePre": "Welcome,",
+    "welcomePost": "Time to locate your loved one.",
+    "body": "Add contact and join the 14,000+ others in the Ameelio community.",
+    "continueButton": "Add your loved one"
+  },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetterPrefix": "¿",
     "hasYourLovedOneReceivedLetter": " ha recibido tu carta?",
@@ -413,7 +419,8 @@
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Vista previa",
-    "inmateLocator": " Localizador de Presos"
+    "inmateLocator": " Localizador de Presos",
+    "introContact": "Bienvenido"
   },
   "Sharing": {
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
