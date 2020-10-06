@@ -43,6 +43,7 @@ import {
   getTrackingEvents,
   getCategories,
 } from '@api';
+import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
 import { AppState } from '@store/types';
@@ -118,6 +119,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                       this.props.setActiveMail(item);
                       Segment.track('Contact View - Click on Letter Tracking');
                       getTrackingEvents(item.id).catch((err) => {
+                        Sentry.captureException(err);
                         Segment.trackWithProperties(
                           'Letter Tracking - Loading Error',
                           { error: err }
@@ -151,6 +153,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');
                     getTrackingEvents(item.id).catch((err) => {
+                      Sentry.captureException(err);
                       Segment.trackWithProperties(
                         'Letter Tracking - Loading Error',
                         { error: err }
@@ -193,6 +196,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             await getContact(this.props.activeContact.id);
             await getUser();
           } catch (err) {
+            Sentry.captureException(err);
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
           }
           this.setState({ refreshing: false });
