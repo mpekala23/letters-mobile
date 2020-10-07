@@ -13,7 +13,7 @@ import PostcardLottie from '@assets/views/ReferFriends/Postcard.json';
 
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
-import { format } from 'date-fns';
+import { differenceInBusinessDays, format } from 'date-fns';
 import { Contact, MailTypes } from 'types';
 import { onNativeShare, estimateDelivery, requestReview } from '@utils';
 
@@ -30,6 +30,7 @@ export interface Props {
   contact: Contact;
   referralCode: string;
   numMailSent: number;
+  joined: Date;
   route: {
     params: { mailType: MailTypes };
   };
@@ -37,7 +38,11 @@ export interface Props {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   useEffect(() => {
-    if (props.numMailSent % 3 === 0) {
+    if (
+      props.numMailSent >= 6 &&
+      props.numMailSent % 3 === 0 &&
+      Math.abs(differenceInBusinessDays(props.joined, new Date())) > 7
+    ) {
       requestReview();
     }
     setProfileOverride(undefined);
@@ -149,6 +154,7 @@ const mapStateToProps = (state: AppState) => {
     numMailSent: Object.keys(state.mail.existing)
       .map((key) => state.mail.existing[key].length)
       .reduce((acc, curr) => acc + curr, 0),
+    joined: state.user.user.joined,
   };
 };
 
