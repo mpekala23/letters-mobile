@@ -18,7 +18,7 @@ export default function NotifReducer(
   switch (action.type) {
     case SET_UNRESPONDED_NOTIFS:
       currentState.unrespondedNotifs = action.payload;
-      return currentState;
+      return { ...currentState };
     case SET_FUTURE_NOTIFS:
       currentState.futureNotifs = action.payload;
       return currentState;

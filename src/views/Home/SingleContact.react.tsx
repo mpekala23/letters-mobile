@@ -196,7 +196,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 this.props.activeContact.mailPage
               );
             }
-            await getUser();
           } catch (err) {
             Sentry.captureException(err);
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });

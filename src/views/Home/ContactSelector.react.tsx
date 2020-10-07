@@ -12,7 +12,7 @@ import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
-import { getContacts, getUser, getCategories } from '@api';
+import { getUser, getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -27,10 +27,6 @@ type ContactSelectorScreenNavigationProp = StackNavigationProp<
   'ContactSelector'
 >;
 
-interface State {
-  refreshing: boolean;
-}
-
 interface Props {
   existingContacts: Contact[];
   existingMail: Record<string, Mail[]>;
@@ -44,14 +40,11 @@ interface Props {
   setActiveMail: (mail: Mail) => void;
 }
 
-class ContactSelectorScreenBase extends React.Component<Props, State> {
+class ContactSelectorScreenBase extends React.Component<Props> {
   private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      refreshing: false,
-    };
     this.doRefresh = this.doRefresh.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
@@ -105,16 +98,15 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     });
   }
 
-  async doRefresh() {
-    if (this.props.userId === -1) return;
+  doRefresh = () => {
+    /* if (this.props.userId === -1) return;
     this.setState({ refreshing: true });
     try {
-      await getUser();
     } catch (e) {
       dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
     }
-    this.setState({ refreshing: false });
-  }
+    this.setState({ refreshing: false }); */
+  };
 
   renderItem = ({ item }: { item: Contact }): JSX.Element => {
     return (
@@ -220,8 +212,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
           ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}
           showsVerticalScrollIndicator={false}
-          onRefresh={this.doRefresh}
-          refreshing={this.state.refreshing}
         />
       </KeyboardAvoider>
     );
