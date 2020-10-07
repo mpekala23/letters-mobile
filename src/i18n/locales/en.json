@@ -220,6 +220,7 @@
   },
   "SingleContactScreen": {
     "received": "received",
+    "sent": "sent",
     "lastHeardFromYou": "last heard from you",
     "lettersTraveled": "letters traveled",
     "sendLetter": "Send",
@@ -310,7 +311,7 @@
   },
   "LetterTypes": {
     "postCardsTitle": "Photos",
-    "postCardsDesc": "Glossy photo & short caption",
+    "postCardsDesc": "Glossy photo & 100-word caption",
     "lettersTitle": "Letters",
     "lettersDesc": "2,000 words & photo on regular paper"
   },

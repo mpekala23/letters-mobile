@@ -27,4 +27,12 @@ export default StyleSheet.create({
   baseText: {
     fontSize: 18,
   },
+  buttonContainer: {
+    position: 'absolute',
+    width: '100%',
+    padding: 24,
+    flex: 1,
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
 });

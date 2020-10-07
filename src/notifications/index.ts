@@ -257,13 +257,15 @@ function notifResponse(event: NotificationResponse): void {
   if (!notif) return;
   const state = store.getState();
 
-  const newUnresponded = state.notif.unrespondedNotifs.filter((testNotif) => {
-    return (
-      testNotif.type !== notif.type ||
-      testNotif.title !== notif.title ||
-      testNotif.body !== notif.body
-    );
-  });
+  const newUnresponded = state.notif.unrespondedNotifs
+    ? state.notif.unrespondedNotifs.filter((testNotif) => {
+        return (
+          testNotif.type !== notif.type ||
+          testNotif.title !== notif.title ||
+          testNotif.body !== notif.body
+        );
+      })
+    : [];
   store.dispatch(setUnrespondedNotifs(newUnresponded));
 
   let contact: Contact | undefined;

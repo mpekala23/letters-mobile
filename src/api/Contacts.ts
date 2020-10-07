@@ -10,6 +10,7 @@ import {
   setExisting as setExistingContacts,
   setActive as setActiveContact,
 } from '@store/Contact/ContactActions';
+import * as Sentry from 'sentry-expo';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
 import { fetchAuthenticated, API_URL, uploadImage } from './Common';
@@ -33,7 +34,12 @@ interface RawContact {
   profile_img_path?: string;
 }
 
-function cleanContact(data: RawContact): Contact {
+function cleanContact(
+  data: RawContact,
+  totalSent = 0,
+  mailPage = 1,
+  hasNextPage = true
+): Contact {
   const dormExtension = data.dorm ? { dorm: data.dorm } : {};
   const unitExtension = data.unit ? { unit: data.unit } : {};
   const imageExtension =
@@ -59,6 +65,9 @@ function cleanContact(data: RawContact): Contact {
       postal: data.facility_postal,
       phone: data.facility_phone,
     },
+    totalSent: 0,
+    mailPage: 1,
+    hasNextPage: true,
     ...dormExtension,
     ...unitExtension,
     ...imageExtension,
@@ -105,6 +114,7 @@ export async function addContact(contactDraft: ContactDraft): Promise<Contact> {
       newPhoto = await uploadImage(contactDraft.image, 'avatar');
       photoExtension = { s3_img_url: newPhoto.uri };
     } catch (err) {
+      Sentry.captureException(err);
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
@@ -164,6 +174,7 @@ export async function updateContact(data: Contact): Promise<Contact[]> {
     try {
       newPhoto = await uploadImage(newPhoto, 'avatar');
     } catch (err) {
+      Sentry.captureException(err);
       newPhoto = undefined;
       dropdownError({ message: 'Error.unableToUploadContactPicture' });
     }

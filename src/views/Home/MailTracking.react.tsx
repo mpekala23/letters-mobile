@@ -21,7 +21,7 @@ import {
   Contact,
   ProfilePicTypes,
 } from 'types';
-import { format, addBusinessDays } from 'date-fns';
+import { format } from 'date-fns';
 import i18n from '@i18n';
 import ReturnedToSender from '@assets/views/MailTracking/ReturnedToSender';
 import DeliveryTruck from '@assets/views/MailTracking/DeliveryTruck';
@@ -56,9 +56,12 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
   }
 
+  componentDidUpdate() {
+    if (!this.props.mail) this.props.navigation.pop();
+  }
+
   render() {
     const { mail, user, contact } = this.props;
-
     const getTruckStoppingPoint = (): number => {
       switch (mail?.status) {
         case MailStatus.Created:
@@ -95,15 +98,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
 
     if (!mail) {
-      this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
-    const deliveryDate = format(
-      mail.expectedDelivery
-        ? mail.expectedDelivery
-        : addBusinessDays(new Date(), 6),
-      'MMM dd'
-    );
 
     const genDeliveryTruckCard = (): JSX.Element => {
       startAnimation();
@@ -141,7 +137,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                   style={[Typography.FONT_SEMIBOLD, { fontSize: 16 }]}
                   testID="deliveryDate"
                 >
-                  {deliveryDate}
+                  {format(new Date(mail.expectedDelivery), 'MM/dd')}
                 </Text>
               </View>
             </View>
@@ -154,7 +150,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 {user.city}
               </Text>
               <Text style={[Styles.endpointDate]}>
-                {format(mail.dateCreated, 'MM/dd')}
+                {format(new Date(mail.dateCreated), 'MM/dd')}
               </Text>
             </View>
 
@@ -165,7 +161,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 {contact.facility.name}
               </Text>
               <Text style={[{ textAlign: 'right' }, Styles.endpointDate]}>
-                {format(mail.expectedDelivery, 'MM/dd')}
+                {format(new Date(mail.expectedDelivery), 'MM/dd')}
               </Text>
             </View>
           </View>
@@ -218,7 +214,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         id: -1,
         name: 'Created',
         location: { city: user.city, zip: user.postal, state: user.state },
-        date: mail.dateCreated,
+        date: new Date(mail.dateCreated),
       };
 
       const mailedTrack = chronologicalEvents.find(
