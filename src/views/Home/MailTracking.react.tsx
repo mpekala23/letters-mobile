@@ -56,6 +56,10 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
   }
 
+  componentDidUpdate() {
+    if (!this.props.mail) this.props.navigation.pop();
+  }
+
   render() {
     const { mail, user, contact } = this.props;
 
@@ -95,9 +99,9 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     };
 
     if (!mail) {
-      this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
+
     const deliveryDate = format(
       mail.expectedDelivery
         ? mail.expectedDelivery

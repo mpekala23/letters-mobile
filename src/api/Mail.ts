@@ -174,7 +174,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   };
 }
 
-export async function getSingleMail(id: number | undefined): Promise<Mail> {
+export async function getSingleMail(id: number): Promise<Mail> {
   const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
     method: 'GET',
   });
@@ -291,7 +291,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
   return newExisting;
 }
 
-export async function getTrackingEvents(id: number | undefined): Promise<Mail> {
+export async function getTrackingEvents(id: number): Promise<Mail> {
   const mail = await getSingleMail(id);
   const contactId = store.getState().contact.active.id;
   const currentMail = [...store.getState().mail.existing[contactId]];

@@ -311,7 +311,7 @@ export async function loginWithToken(): Promise<User> {
       Sentry.captureException(err);
     });
     store.dispatch(setLoadingStatus(60));
-    await Promise.all([getContacts(), getMail()]);
+    Promise.all([getContacts(), getMail()]);
     store.dispatch(setLoadingStatus(100));
     sleep(300).then(() => {
       store.dispatch(loginUser(userData));
@@ -376,6 +376,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   } catch (err) {
     Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
+    store.dispatch(logoutUser());
   }
   store.dispatch(setLoadingStatus(100));
   sleep(300).then(() => {

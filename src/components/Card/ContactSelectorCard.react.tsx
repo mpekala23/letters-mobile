@@ -29,6 +29,10 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
     ? props.mail.filter((mail) => mail.status === MailStatus.Delivered)
     : [];
 
+  const sentLetters = props.mail
+    ? props.mail.filter((mail) => mail.status !== MailStatus.Draft)
+    : [];
+
   useEffect(() => {
     const updateLettersTravelled = async (): Promise<void> => {
       try {
@@ -65,9 +69,8 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
             style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
             numberOfLines={1}
           >
-            <Emoji name="love_letter" />{' '}
-            {i18n.t('SingleContactScreen.received')}:{' '}
-            {props.mail ? deliveredLetters.length : 0}
+            <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.sent')}:{' '}
+            {props.mail ? sentLetters.length : 0}
           </AdjustableText>
           {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
             <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>

@@ -220,6 +220,7 @@
   },
   "SingleContactScreen": {
     "received": "received",
+    "sent": "sent",
     "lastHeardFromYou": "last heard from you",
     "lettersTraveled": "letters traveled",
     "sendLetter": "Send",

@@ -114,7 +114,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     date={item.dateCreated}
                     description={item.content}
                     onPress={async () => {
-                      await sleep(0);
                       this.props.setActiveMail(item);
                       Segment.track('Contact View - Click on Letter Tracking');
                       getTrackingEvents(item.id).catch((err) => {
@@ -147,7 +146,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   date={item.dateCreated}
                   description={item.content}
                   onPress={async () => {
-                    await sleep(0);
                     this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');
                     getTrackingEvents(item.id).catch((err) => {
@@ -425,6 +423,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
   existingMail: state.mail.existing[state.contact.active.id],
+  allMail: state.mail.existing,
   existingContacts: state.contact.existing,
   userState: state.user,
   composing: state.mail.composing,
