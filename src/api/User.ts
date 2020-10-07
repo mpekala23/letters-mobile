@@ -90,20 +90,24 @@ export async function deleteToken(): Promise<void> {
 }
 
 export async function deleteDraft(): Promise<void> {
-  await deleteItemAsync(Storage.DraftType);
-  await deleteItemAsync(Storage.DraftContent);
-  await deleteItemAsync(Storage.DraftRecipientId);
-  await deleteItemAsync(Storage.DraftImages);
-  await deleteItemAsync(Storage.DraftDesignUri);
-  await deleteItemAsync(Storage.DraftCategoryId);
-  await deleteItemAsync(Storage.DraftSubcategoryName);
+  Promise.all([
+    Storage.DraftType,
+    deleteItemAsync(Storage.DraftContent),
+    deleteItemAsync(Storage.DraftRecipientId),
+    deleteItemAsync(Storage.DraftImages),
+    deleteItemAsync(Storage.DraftDesignUri),
+    deleteItemAsync(Storage.DraftCategoryId),
+    deleteItemAsync(Storage.DraftSubcategoryName),
+  ]);
 }
 
 export async function saveDraft(draft: Draft): Promise<void> {
-  await deleteDraft();
-  await setItemAsync(Storage.DraftType, draft.type);
-  await setItemAsync(Storage.DraftContent, draft.content);
-  await setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString());
+  Promise.all([
+    deleteDraft(),
+    setItemAsync(Storage.DraftType, draft.type),
+    setItemAsync(Storage.DraftContent, draft.content),
+    setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString()),
+  ]);
   if (draft.type === MailTypes.Letter) {
     await setItemAsync(Storage.DraftImages, JSON.stringify(draft.images));
   } else if (
@@ -112,19 +116,17 @@ export async function saveDraft(draft: Draft): Promise<void> {
     draft.design.categoryId &&
     draft.design.subcategoryName
   ) {
-    await setItemAsync(Storage.DraftDesignUri, draft.design.image.uri);
-    await setItemAsync(
-      Storage.DraftCategoryId,
-      draft.design.categoryId.toString()
-    );
-    await setItemAsync(
-      Storage.DraftSubcategoryName,
-      draft.design.subcategoryName
-    );
+    Promise.all([
+      setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
+      setItemAsync(Storage.DraftCategoryId, draft.design.categoryId.toString()),
+      setItemAsync(Storage.DraftSubcategoryName, draft.design.subcategoryName),
+    ]);
   } else {
-    await deleteItemAsync(Storage.DraftDesignUri);
-    await deleteItemAsync(Storage.DraftCategoryId);
-    await deleteItemAsync(Storage.DraftSubcategoryName);
+    Promise.all([
+      deleteItemAsync(Storage.DraftDesignUri),
+      deleteItemAsync(Storage.DraftCategoryId),
+      deleteItemAsync(Storage.DraftSubcategoryName),
+    ]);
   }
 }
 
@@ -318,7 +320,7 @@ export async function loginWithToken(): Promise<User> {
     sleep(300).then(() => {
       store.dispatch(loginUser(userData));
     });
-    await loadDraft();
+    loadDraft();
     const pushToken = await getPushToken();
     uploadPushToken(pushToken).catch(() => {
       dropdownError({ message: i18n.t('Permission.notifs') });
@@ -371,10 +373,13 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   getUserReferrals().catch((err) => {
     Sentry.captureException(err);
   });
+  getMail().catch((err) => {
+    Sentry.captureException(err);
+  });
+  loadDraft();
   store.dispatch(setLoadingStatus(60));
   try {
-    await Promise.all([getContacts(), getMail()]);
-    await loadDraft();
+    await getContacts();
   } catch (err) {
     Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
