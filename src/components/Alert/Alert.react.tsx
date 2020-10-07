@@ -46,7 +46,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
     if (info) this.setState({ current: info });
     Animated.timing(this.state.opacity, {
       toValue: info ? 1.0 : 0.0,
-      duration: info ? 0 : 80,
+      duration: 100,
       useNativeDriver: true,
     }).start(() => {
       this.setState({ current: info });
@@ -57,7 +57,12 @@ class Alert extends React.Component<Record<string, unknown>, State> {
     if (!this.state.current) return <View />;
     return (
       <Animated.View
-        style={[Styles.trueBackground, { opacity: this.state.opacity }]}
+        style={[
+          Styles.trueBackground,
+          {
+            opacity: this.state.opacity,
+          },
+        ]}
       >
         <TouchableOpacity
           style={Styles.trueBackground}
@@ -67,7 +72,12 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           }}
           activeOpacity={1.0}
         >
-          <View style={Styles.alertBackground}>
+          <Animated.View
+            style={[
+              Styles.alertBackground,
+              { transform: [{ scale: this.state.opacity }] },
+            ]}
+          >
             <Text
               style={[
                 Typography.FONT_SEMIBOLD,
@@ -114,7 +124,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                   />
                 );
               })}
-          </View>
+          </Animated.View>
         </TouchableOpacity>
       </Animated.View>
     );

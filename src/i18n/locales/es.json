@@ -427,5 +427,11 @@
     "moneySaved": "Dinero Ahorrado",
     "thankYou": "¡Gracias a ti, la comunidad está creciendo!",
     "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
+  },
+  "ReviewApp": {
+    "title": "Enjoying Ameelio?",
+    "message": "Help us out by leaving a review!",
+    "takeMeToPlayStore": "Take me to the Play Store",
+    "noThanks": "No thanks"
   }
 }
