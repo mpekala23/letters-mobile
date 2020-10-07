@@ -20,6 +20,7 @@ import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
+import { requestReview } from '@utils';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
