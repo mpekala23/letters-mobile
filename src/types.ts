@@ -97,8 +97,8 @@ export type Draft = DraftLetter | DraftPostcard;
 interface MailInfo extends DraftInfo {
   id: number;
   status: MailStatus;
-  dateCreated: Date;
-  expectedDelivery: Date;
+  dateCreated: string;
+  expectedDelivery: string;
   trackingEvents?: TrackingEvent[];
 }
 
@@ -146,6 +146,9 @@ export interface ContactFacility {
 
 interface ContactCreated {
   id: number;
+  totalSent: number;
+  mailPage: number;
+  hasNextPage: boolean;
 }
 
 export interface ContactDraft extends ContactPersonal, ContactFacility {}

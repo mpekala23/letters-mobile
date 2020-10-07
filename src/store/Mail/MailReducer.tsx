@@ -89,6 +89,7 @@ export default function LetterReducer(
           break;
         }
       }
+      currentState.existing = { ...currentState.existing };
       return currentState;
     case SET_DATE_CREATED:
       if (!(action.payload.contactId in currentState.existing))
@@ -102,11 +103,13 @@ export default function LetterReducer(
           currentState.existing[action.payload.contactId][ix].id ===
           action.payload.mailId
         ) {
-          currentState.existing[action.payload.contactId][ix].dateCreated =
-            action.payload.dateCreated;
+          currentState.existing[action.payload.contactId][
+            ix
+          ].dateCreated = action.payload.dateCreated.toISOString();
           break;
         }
       }
+      currentState.existing = { ...currentState.existing };
       return currentState;
     case SET_EXPECTED_DELIVERY:
       if (!(action.payload.contactId in currentState.existing))
@@ -120,14 +123,17 @@ export default function LetterReducer(
           currentState.existing[action.payload.contactId][ix].id ===
           action.payload.mailId
         ) {
-          currentState.existing[action.payload.contactId][ix].expectedDelivery =
-            action.payload.expectedDelivery;
+          currentState.existing[action.payload.contactId][
+            ix
+          ].expectedDelivery = action.payload.expectedDelivery.toISOString();
           break;
         }
       }
+      currentState.existing = { ...currentState.existing };
       return currentState;
     case SET_CONTACTS_MAIL:
       currentState.existing[action.payload.contactId] = action.payload.mail;
+      currentState.existing = { ...currentState.existing };
       return currentState;
     case SET_EXISTING_MAIL:
       currentState.existing = action.payload;

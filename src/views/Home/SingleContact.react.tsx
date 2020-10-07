@@ -37,11 +37,11 @@ import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
-  getMail,
   getContact,
   getUser,
   getTrackingEvents,
   getCategories,
+  getMailByContact,
 } from '@api';
 import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -51,7 +51,6 @@ import * as Segment from 'expo-analytics-segment';
 import { differenceInBusinessDays } from 'date-fns';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { deleteDraft } from '@api/User';
-import { sleep } from '@utils';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -112,10 +111,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                 return (
                   <LetterStatusCard
                     status={item.status}
-                    date={item.dateCreated}
+                    date={new Date(item.dateCreated)}
                     description={item.content}
                     onPress={async () => {
-                      await sleep(0);
                       this.props.setActiveMail(item);
                       Segment.track('Contact View - Click on Letter Tracking');
                       getTrackingEvents(item.id).catch((err) => {
@@ -139,17 +137,16 @@ class SingleContactScreenBase extends React.Component<Props, State> {
             if (
               item.status !== MailStatus.Draft &&
               differenceInBusinessDays(
-                item.dateCreated ? item.dateCreated : new Date(),
+                item.dateCreated ? new Date(item.dateCreated) : new Date(),
                 new Date()
               ) <= 11
             )
               return (
                 <LetterStatusCard
                   status={item.status}
-                  date={item.dateCreated}
+                  date={new Date(item.dateCreated)}
                   description={item.content}
                   onPress={async () => {
-                    await sleep(0);
                     this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');
                     getTrackingEvents(item.id).catch((err) => {
@@ -191,13 +188,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         refreshing={this.state.refreshing}
         onRefresh={async () => {
           this.setState({ refreshing: true });
-          await Promise.all([
-            getMail(),
-            getContact(this.props.activeContact.id),
-          ]).catch((err) => {
+          try {
+            await getContact(this.props.activeContact.id);
+            if (this.props.activeContact.hasNextPage) {
+              await getMailByContact(
+                this.props.activeContact,
+                this.props.activeContact.mailPage
+              );
+            }
+          } catch (err) {
             Sentry.captureException(err);
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
-          });
+          }
           this.setState({ refreshing: false });
         }}
       />
@@ -428,6 +430,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
   existingMail: state.mail.existing[state.contact.active.id],
+  allMail: state.mail.existing,
   existingContacts: state.contact.existing,
   userState: state.user,
   composing: state.mail.composing,

@@ -20,7 +20,7 @@ export default function ZipReducer(
       return currentState;
     case SET_ZIPCODE:
       currentState.zips[action.payload.zip] = action.payload.info;
-      return currentState;
+      return { ...currentState };
     default:
       return currentState;
   }

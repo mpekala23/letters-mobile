@@ -14,6 +14,7 @@ import AdjustableText from '../Text/AdjustableText.react';
 interface Props {
   firstName: string;
   lastName: string;
+  numSent: number;
   imageUri?: string;
   mail?: Mail[];
   onPress: () => void;
@@ -61,22 +62,27 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
         </View>
         <View style={{ paddingLeft: 18, flex: 1 }}>
           <Text style={[Typography.BASE_TITLE]}>{props.firstName}</Text>
-          <AdjustableText
-            style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
-            numberOfLines={1}
-          >
-            <Emoji name="love_letter" />{' '}
-            {i18n.t('SingleContactScreen.received')}:{' '}
-            {props.mail ? deliveredLetters.length : 0}
-          </AdjustableText>
-          {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
-            <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
-              <Emoji name="calendar" />
-              {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {format(props.mail[0].dateCreated, 'MMM dd')}
-            </Text>
+          {false && (
+            <AdjustableText
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+              numberOfLines={1}
+            >
+              <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.sent')}:{' '}
+              {props.numSent}
+            </AdjustableText>
           )}
-          {lettersTravelled > 0 && (
+          {props.mail &&
+            props.mail.length > 0 &&
+            props.mail[0].dateCreated &&
+            false && (
+              <Text
+                style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+              >
+                <Emoji name="calendar" />
+                {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
+              </Text>
+            )}
+          {false && lettersTravelled > 0 && (
             <Text
               style={[
                 Typography.FONT_REGULAR,

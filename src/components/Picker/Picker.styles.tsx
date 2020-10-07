@@ -26,6 +26,7 @@ export const pickerStyles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     paddingVertical: 8,
+    color: 'black',
   },
   inputAndroid: {
     paddingHorizontal: 10,
@@ -33,6 +34,7 @@ export const pickerStyles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     paddingTop: 10,
     paddingBottom: 6,
+    color: 'black',
   },
   placeholder: {
     color: '#C7C7CD',

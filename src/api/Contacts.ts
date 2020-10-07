@@ -34,7 +34,12 @@ interface RawContact {
   profile_img_path?: string;
 }
 
-function cleanContact(data: RawContact): Contact {
+function cleanContact(
+  data: RawContact,
+  totalSent = 0,
+  mailPage = 1,
+  hasNextPage = true
+): Contact {
   const dormExtension = data.dorm ? { dorm: data.dorm } : {};
   const unitExtension = data.unit ? { unit: data.unit } : {};
   const imageExtension =
@@ -60,6 +65,9 @@ function cleanContact(data: RawContact): Contact {
       postal: data.facility_postal,
       phone: data.facility_phone,
     },
+    totalSent: 0,
+    mailPage: 1,
+    hasNextPage: true,
     ...dormExtension,
     ...unitExtension,
     ...imageExtension,

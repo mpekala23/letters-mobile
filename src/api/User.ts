@@ -37,7 +37,7 @@ import {
   ApiResponse,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail, getSubcategoriesById, getCategories } from './Mail';
+import { getMail, getSubcategoriesById, getCategories, initMail } from './Mail';
 
 interface RawUser {
   id: number;
@@ -313,18 +313,30 @@ export async function loginWithToken(): Promise<User> {
       Sentry.captureException(err);
     });
     store.dispatch(setLoadingStatus(60));
-    Promise.all([getContacts(), getMail()]).catch((err) =>
-      Sentry.captureException(err)
-    );
+    try {
+      const contacts = await getContacts();
+      initMail(contacts).catch((err) => {
+        Sentry.captureException(err);
+      });
+    } catch (err) {
+      Sentry.captureException(err);
+      dropdownError({ message: i18n.t('Error.loadingUser') });
+      store.dispatch(logoutUser());
+    }
     store.dispatch(setLoadingStatus(100));
     sleep(300).then(() => {
       store.dispatch(loginUser(userData));
     });
     loadDraft();
-    const pushToken = await getPushToken();
-    uploadPushToken(pushToken).catch(() => {
-      dropdownError({ message: i18n.t('Permission.notifs') });
-    });
+    getPushToken()
+      .then((pushToken) => {
+        uploadPushToken(pushToken).catch(() => {
+          dropdownError({ message: i18n.t('Permission.notifs') });
+        });
+      })
+      .catch((err) => {
+        Sentry.captureException(err);
+      });
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -354,14 +366,12 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   );
   store.dispatch(setLoadingStatus(30));
   if (cred.remember) {
-    try {
-      await saveToken(body.data.remember);
-    } catch (err) {
+    saveToken(body.data.remember).catch((err) => {
       Sentry.captureException(err);
       dropdownError({
         message: i18n.t('Error.unsavedToken'),
       });
-    }
+    });
   }
   store.dispatch(setLoadingStatus(50));
   Segment.identify(userData.email);
@@ -373,25 +383,31 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   getUserReferrals().catch((err) => {
     Sentry.captureException(err);
   });
-  getMail().catch((err) => {
-    Sentry.captureException(err);
-  });
   loadDraft();
   store.dispatch(setLoadingStatus(60));
   try {
-    await getContacts();
+    const contacts = await getContacts();
+    initMail(contacts).catch((err) => {
+      Sentry.captureException(err);
+    });
   } catch (err) {
     Sentry.captureException(err);
     dropdownError({ message: i18n.t('Error.loadingUser') });
+    store.dispatch(logoutUser());
   }
   store.dispatch(setLoadingStatus(100));
   sleep(300).then(() => {
     store.dispatch(loginUser(userData));
   });
-  const pushToken = await getPushToken();
-  uploadPushToken(pushToken).catch(() => {
-    dropdownError({ message: i18n.t('Permission.notifs') });
-  });
+  getPushToken()
+    .then((pushToken) => {
+      uploadPushToken(pushToken).catch(() => {
+        dropdownError({ message: i18n.t('Permission.notifs') });
+      });
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+    });
   return userData;
 }
 

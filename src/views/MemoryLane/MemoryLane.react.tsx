@@ -39,7 +39,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
             type={item.type}
             key={item.id}
             text={item.content}
-            date={item.dateCreated}
+            date={new Date(item.dateCreated)}
             imageUri={imageUri}
             onPress={() => {
               props.setActiveMail(item);

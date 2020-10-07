@@ -12,6 +12,7 @@ import {
   Category,
   PostcardDesign,
   Image,
+  Contact,
 } from 'types';
 import {
   addMail,
@@ -26,6 +27,7 @@ import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims, sleep } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
+import { updateContact } from '@store/Contact/ContactActions';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -125,9 +127,12 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
 
-  const dateCreated = new Date(mail.created_at);
+  const dateCreated = new Date(mail.created_at).toISOString();
   let status: MailStatus;
-  let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
+  let expectedDelivery = addBusinessDays(
+    new Date(mail.created_at),
+    6
+  ).toISOString();
   const trackingEvents = !mail.tracking_events
     ? []
     : await Promise.all(
@@ -143,7 +148,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       expectedDelivery = estimateDelivery(
         trackingEvents[trackingEvents.length - 1].date,
         status
-      );
+      ).toISOString();
     }
   }
 
@@ -174,7 +179,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   };
 }
 
-export async function getSingleMail(id: number | undefined): Promise<Mail> {
+export async function getSingleMail(id: number): Promise<Mail> {
   const body = await fetchAuthenticated(url.resolve(API_URL, `letter/${id}`), {
     method: 'GET',
   });
@@ -208,7 +213,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     }
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
-  const dateCreated = new Date(mail.created_at);
+  const dateCreated = new Date(mail.created_at).toISOString();
 
   let status;
   if (!mail.sent) {
@@ -219,7 +224,10 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       : cleanLobStatus(mail.lob_status);
   }
 
-  const expectedDelivery = estimateDelivery(new Date(mail.created_at), status);
+  const expectedDelivery = estimateDelivery(
+    new Date(mail.created_at),
+    status
+  ).toISOString();
   if (type === MailTypes.Letter) {
     return {
       type,
@@ -242,6 +250,63 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     expectedDelivery,
     design,
   };
+}
+
+export async function getMailByContact(
+  contact: Contact,
+  page = 1
+): Promise<Mail[]> {
+  const params = new URLSearchParams({ page: page.toString() });
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `contact/${contact.id}/letters?${params}`),
+    {
+      method: 'GET',
+    }
+  );
+  const data = body.data as {
+    current_page: number;
+    data: RawMail[];
+    first_page_url: string;
+    from: number;
+    last_page: 1;
+    last_page_url: string;
+    next_page_url: string | null;
+    to: number;
+    total: number;
+  };
+  if (body.status !== 'OK' || !data || !data.data) throw body;
+  // update the mail
+  const clean = await Promise.all(
+    data.data.map((raw) => {
+      return cleanMassMail(raw);
+    })
+  );
+  const existingMail = store.getState().mail.existing[contact.id];
+  const existingArray = existingMail || [];
+  const newMail = [...existingArray, ...clean];
+  store.dispatch(setContactsMail(contact.id, newMail));
+  // update the info in the contact
+  const updatedContact = { ...contact };
+  updatedContact.totalSent = data.total;
+  updatedContact.mailPage = data.current_page + 1;
+  updatedContact.hasNextPage = !!data.next_page_url;
+  store.dispatch(updateContact(updatedContact));
+  return clean;
+}
+
+export async function initMail(seedContacts?: Contact[]): Promise<void> {
+  const contacts =
+    seedContacts?.slice(0, 10) || store.getState().contact.existing;
+  await Promise.all(
+    contacts.map(async (contact) => {
+      try {
+        const pageOneMail = await getMailByContact(contact, 1);
+        store.dispatch(setContactsMail(contact.id, pageOneMail));
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    })
+  );
 }
 
 export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
@@ -286,7 +351,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
   return newExisting;
 }
 
-export async function getTrackingEvents(id: number | undefined): Promise<Mail> {
+export async function getTrackingEvents(id: number): Promise<Mail> {
   const mail = await getSingleMail(id);
   const contactId = store.getState().contact.active.id;
   const currentMail = [...store.getState().mail.existing[contactId]];
