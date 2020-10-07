@@ -128,7 +128,6 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const dateCreated = new Date(mail.created_at);
   let status: MailStatus;
   let expectedDelivery = addBusinessDays(new Date(mail.created_at), 6);
-
   const trackingEvents = !mail.tracking_events
     ? []
     : await Promise.all(
@@ -147,6 +146,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       );
     }
   }
+
   if (mail.delivered) status = MailStatus.Delivered;
   if (type === MailTypes.Letter) {
     return {
@@ -209,7 +209,6 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
   const dateCreated = new Date(mail.created_at);
-  const lastLobUpdate = new Date(mail.last_lob_status_update);
 
   let status;
   if (!mail.sent) {
@@ -220,12 +219,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       : cleanLobStatus(mail.lob_status);
   }
 
-  const expectedDelivery = estimateDelivery(
-    status === MailStatus.ProcessedForDelivery
-      ? lastLobUpdate
-      : new Date(mail.created_at),
-    status
-  );
+  const expectedDelivery = estimateDelivery(new Date(mail.created_at), status);
   if (type === MailTypes.Letter) {
     return {
       type,
@@ -283,6 +277,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
           newExisting[clean.recipientId] = [clean];
         }
       } catch (e) {
+        Sentry.captureException(e);
         throw Error(e.message);
       }
     })
@@ -326,6 +321,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
         s3_img_urls: [prepDraft.design.image.uri],
       };
     } catch (err) {
+      Sentry.captureException(err);
       const uploadError: ApiResponse = {
         status: 'ERROR',
         message:
@@ -347,6 +343,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
         s3_img_urls: uris,
       };
     } catch (err) {
+      Sentry.captureException(err);
       const uploadError: ApiResponse = {
         status: 'ERROR',
         message:

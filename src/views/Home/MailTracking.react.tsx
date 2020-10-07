@@ -58,7 +58,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 
   render() {
     const { mail, user, contact } = this.props;
-
     const getTruckStoppingPoint = (): number => {
       switch (mail?.status) {
         case MailStatus.Created:
@@ -98,12 +97,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       this.props.navigation.navigate(Screens.SingleContact);
       return <View />;
     }
-    const deliveryDate = format(
-      mail.expectedDelivery
-        ? mail.expectedDelivery
-        : addBusinessDays(new Date(), 6),
-      'MMM dd'
-    );
 
     const genDeliveryTruckCard = (): JSX.Element => {
       startAnimation();
@@ -141,7 +134,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                   style={[Typography.FONT_SEMIBOLD, { fontSize: 16 }]}
                   testID="deliveryDate"
                 >
-                  {deliveryDate}
+                  {format(mail.expectedDelivery, 'MM/dd')}
                 </Text>
               </View>
             </View>
