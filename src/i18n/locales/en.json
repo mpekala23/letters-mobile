@@ -25,7 +25,7 @@
     "letterTooLong": "Your letter cannot exceed 16,000 characters.",
     "uploadImageTimeout": "The request timed out while uploading the image. Ensure you are connected to the internet and try again.",
     "cantSendMailModalTitle": "Oops. Something went wrong.",
-    "cantSendMailModalBody": "But don’t worry! Your letter draft is safe and sound. Our support team will help you fix the problem.",
+    "cantSendMailModalBody": "But don’t worry! Your draft is safe and sound. Our support team will help you fix the problem.",
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks"
   },

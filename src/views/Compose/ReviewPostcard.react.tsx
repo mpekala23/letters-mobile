@@ -5,6 +5,7 @@ import {
   Keyboard,
   Text,
   ScrollView,
+  Linking,
 } from 'react-native';
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -22,6 +23,7 @@ import { clearComposing } from '@store/Mail/MailActions';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import { Typography, Colors } from '@styles';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
@@ -143,6 +145,22 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           message: i18n.t('Compose.letterMustHaveContent'),
         });
       } else {
+        popupAlert({
+          title: i18n.t('Error.cantSendMailModalTitle'),
+          message: i18n.t('Error.cantSendMailModalBody'),
+          buttons: [
+            {
+              text: i18n.t('Error.reachOutToSupport'),
+              onPress: async () => {
+                await Linking.openURL('https://m.me/teamameelio');
+              },
+            },
+            {
+              text: i18n.t('Error.noThanks'),
+              reverse: true,
+            },
+          ],
+        });
         dropdownError({
           message: i18n.t('Error.requestIncomplete'),
         });
