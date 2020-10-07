@@ -4,35 +4,34 @@ import { Colors } from '@styles';
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
-    padding: 24,
   },
-  header: {
-    alignSelf: 'flex-start',
+  page: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
-  ameelioLogo: {
-    fontSize: 26,
-    paddingTop: 4,
-    paddingLeft: 4,
-    color: Colors.AMEELIO_BLUE,
-  },
-  titleText: {
-    width: '100%',
-    fontSize: 20,
-    alignSelf: 'flex-start',
+  padded: {
+    padding: 32,
   },
   baseText: {
     fontSize: 18,
   },
   buttonContainer: {
-    position: 'absolute',
     width: '100%',
     padding: 24,
-    flex: 1,
-    height: '100%',
     justifyContent: 'flex-end',
+  },
+  swipePositionBackground: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 16,
+  },
+  swipeCircle: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    marginHorizontal: 4,
   },
 });
