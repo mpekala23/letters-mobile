@@ -191,14 +191,13 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         refreshing={this.state.refreshing}
         onRefresh={async () => {
           this.setState({ refreshing: true });
-          try {
-            await getMail();
-            await getContact(this.props.activeContact.id);
-            await getUser();
-          } catch (err) {
+          await Promise.all([
+            getMail(),
+            getContact(this.props.activeContact.id),
+          ]).catch((err) => {
             Sentry.captureException(err);
             dropdownError({ message: i18n.t('Error.cantRefreshLetters') });
-          }
+          });
           this.setState({ refreshing: false });
         }}
       />
