@@ -39,20 +39,11 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
         >
           {i18n.t('BeginScreen.connectWithYourLovedOnes')}
         </Text>
-        <View style={{ paddingBottom: 80, paddingTop: 18 }}>
+        <View style={{ paddingBottom: 80, paddingTop: 16 }}>
           <Icon svg={LovedOnes} />
         </View>
       </View>
-      <View
-        style={{
-          position: 'absolute',
-          width: '100%',
-          padding: 24,
-          flex: 1,
-          height: '100%',
-          justifyContent: 'flex-end',
-        }}
-      >
+      <View style={Styles.buttonContainer}>
         <Button
           onPress={() => {
             props.navigation.navigate(Screens.RegisterCreds);

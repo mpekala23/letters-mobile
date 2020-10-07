@@ -82,7 +82,6 @@ class ContactSelectorScreenBase extends React.Component<Props> {
       this.props.setUnrespondedNotifs([]);
       this.props.navigation.navigate(Screens.Issues);
     }
-    this.doRefresh();
   }
 
   componentWillUnmount() {
