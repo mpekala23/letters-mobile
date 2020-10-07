@@ -24,7 +24,7 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims, sleep } from '@utils';
+import { estimateDelivery, getImageDims } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import { updateContact } from '@store/Contact/ContactActions';
@@ -284,7 +284,7 @@ export async function getMailByContact(
   const existingMail = store.getState().mail.existing[contact.id];
   const existingArray = existingMail || [];
   const newMail = [...existingArray, ...clean];
-  store.dispatch(setContactsMail(contact.id, newMail));
+  store.dispatch(setContactsMail(contact.id, page === 1 ? clean : newMail));
   // update the info in the contact
   const updatedContact = { ...contact };
   updatedContact.totalSent = data.total;
