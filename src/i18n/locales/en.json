@@ -423,5 +423,11 @@
     "moneySaved": "Money Saved",
     "thankYou": "Thanks to you, the community is growing!",
     "nullStateThankYou": "You'll see your impact here when people use your ambassador link."
+  },
+  "ReviewApp": {
+    "title": "Enjoying Ameelio?",
+    "message": "Help us out by leaving a review!",
+    "takeMeToPlayStore": "Take me to the Play Store",
+    "noThanks": "No thanks"
   }
 }

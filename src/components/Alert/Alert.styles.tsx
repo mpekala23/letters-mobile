@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils';
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils/Constants';
 
 export const GRAY_BACK = 'rgba(0,0,0,0.25)';
 
