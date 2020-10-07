@@ -23,7 +23,11 @@
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "letterTooLong": "Su carta no puede exceder los 16,000 caracteres.",
-    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo."
+    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
+    "cantSendMailModalTitle": "¡Ups! Algo salió mal.",
+    "cantSendMailModalBody": "¡Pero no te preocupes! El borrador de tu carta fue salvo. Nuestro equipo de soporte te ayudará a solucionar el problema.",
+    "reachOutToSupport": "Contactar al soporte",
+    "noThanks": "No gracias"
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
