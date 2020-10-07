@@ -162,6 +162,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
         phone: this.facilityPhone.current.state.value,
       };
       const contact: Contact = {
+        ...this.props.contact,
         id: this.props.contact.id,
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,

@@ -89,6 +89,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
       this.props.setUnrespondedNotifs([]);
       this.props.navigation.navigate(Screens.Issues);
     }
+    this.doRefresh();
   }
 
   componentWillUnmount() {
@@ -108,7 +109,6 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     if (this.props.userId === -1) return;
     this.setState({ refreshing: true });
     try {
-      await getContacts();
       await getUser();
     } catch (e) {
       dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
@@ -122,6 +122,7 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         firstName={item.firstName}
         lastName={item.lastName}
         imageUri={item.image?.uri}
+        numSent={item.totalSent}
         mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);

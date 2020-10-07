@@ -8,12 +8,14 @@ import i18n from '@i18n';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import LottieView from 'lottie-react-native';
-import DeliveryMan from '@assets/views/ReferFriends/DeliveryMan.json';
+import LetterLottie from '@assets/views/ReferFriends/Mailbox.json';
+import PostcardLottie from '@assets/views/ReferFriends/Postcard.json';
+
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { format } from 'date-fns';
 import { Contact, MailTypes } from 'types';
-import { onNativeShare, estimateDelivery } from '@utils';
+import { onNativeShare, estimateDelivery, requestReview } from '@utils';
 
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import Styles from './ReferFriends.style';
@@ -27,6 +29,7 @@ export interface Props {
   navigation: ReferFriendsScreenNavigationProp;
   contact: Contact;
   referralCode: string;
+  numMailSent: number;
   route: {
     params: { mailType: MailTypes };
   };
@@ -34,8 +37,27 @@ export interface Props {
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   useEffect(() => {
+    if (props.numMailSent % 3 === 0) {
+      requestReview();
+    }
     setProfileOverride(undefined);
   }, []);
+
+  const genLottieView = () => {
+    const LottieAsset =
+      props.route.params.mailType === MailTypes.Postcard
+        ? PostcardLottie
+        : LetterLottie;
+    return (
+      <LottieView
+        source={LottieAsset}
+        style={{ maxHeight: 150 }}
+        loop
+        autoPlay
+      />
+    );
+  };
+
   const { contact } = props;
   const sixDaysFromNow = estimateDelivery(new Date());
   const { mailType } = props.route.params;
@@ -68,16 +90,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
               marginBottom: 16,
             }}
           >
-            {Platform.OS === 'ios' ? (
-              <LottieView
-                source={DeliveryMan}
-                style={{ maxHeight: 150 }}
-                loop
-                autoPlay
-              />
-            ) : (
-              <Icon svg={Truck} />
-            )}
+            {Platform.OS === 'ios' ? genLottieView() : <Icon svg={Truck} />}
           </View>
           <Text
             style={[
@@ -133,6 +146,9 @@ const mapStateToProps = (state: AppState) => {
   return {
     contact: state.contact.active,
     referralCode: state.user.user.referralCode,
+    numMailSent: Object.keys(state.mail.existing)
+      .map((key) => state.mail.existing[key].length)
+      .reduce((acc, curr) => acc + curr, 0),
   };
 };
 

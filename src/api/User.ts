@@ -37,7 +37,7 @@ import {
   ApiResponse,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail, getSubcategoriesById, getCategories } from './Mail';
+import { getMail, getSubcategoriesById, getCategories, initMail } from './Mail';
 
 interface RawUser {
   id: number;
@@ -311,7 +311,15 @@ export async function loginWithToken(): Promise<User> {
       Sentry.captureException(err);
     });
     store.dispatch(setLoadingStatus(60));
-    Promise.all([getContacts(), getMail()]);
+    const initData = async () => {
+      try {
+        const contacts = await getContacts();
+        await initMail(contacts);
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    };
+    initData();
     store.dispatch(setLoadingStatus(100));
     sleep(300).then(() => {
       store.dispatch(loginUser(userData));
@@ -371,7 +379,15 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   store.dispatch(setLoadingStatus(60));
   try {
-    await Promise.all([getContacts(), getMail()]);
+    const initData = async () => {
+      try {
+        const contacts = await getContacts();
+        await initMail(contacts);
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    };
+    await initData();
     await loadDraft();
   } catch (err) {
     Sentry.captureException(err);

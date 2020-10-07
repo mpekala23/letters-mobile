@@ -42,6 +42,9 @@ const initialState: ContactState = {
       postal: '',
       phone: '',
     },
+    totalSent: 0,
+    mailPage: 1,
+    hasNextPage: false,
   },
   existing: [],
 };

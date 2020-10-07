@@ -11,6 +11,7 @@ import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
 import { createRef } from 'react';
 import { NavigationContainerRef } from '@react-navigation/native';
+import * as StoreReview from 'expo-store-review';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -342,4 +343,10 @@ export function distance(
 
 export function getAspectRatio(image: Image): number {
   return image.width && image.height ? image.width / image.height : 1;
+}
+
+export async function requestReview(): Promise<void> {
+  if (await StoreReview.hasAction()) {
+    StoreReview.requestReview();
+  }
 }

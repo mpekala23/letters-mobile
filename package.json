@@ -85,7 +85,8 @@
     "redux-persist-expo-securestore": "^2.0.0",
     "sentry-expo": "^2.1.2",
     "url": "^0.11.0",
-    "utf-8-validate": "^5.0.2"
+    "utf-8-validate": "^5.0.2",
+    "expo-store-review": "~2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

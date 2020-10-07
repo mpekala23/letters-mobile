@@ -14,6 +14,7 @@ import AdjustableText from '../Text/AdjustableText.react';
 interface Props {
   firstName: string;
   lastName: string;
+  numSent: number;
   imageUri?: string;
   mail?: Mail[];
   onPress: () => void;
@@ -27,10 +28,6 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 
   const deliveredLetters = props.mail
     ? props.mail.filter((mail) => mail.status === MailStatus.Delivered)
-    : [];
-
-  const sentLetters = props.mail
-    ? props.mail.filter((mail) => mail.status !== MailStatus.Draft)
     : [];
 
   useEffect(() => {
@@ -70,13 +67,13 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
             numberOfLines={1}
           >
             <Emoji name="love_letter" /> {i18n.t('SingleContactScreen.sent')}:{' '}
-            {props.mail ? sentLetters.length : 0}
+            {props.numSent}
           </AdjustableText>
           {props.mail && props.mail.length > 0 && props.mail[0].dateCreated && (
             <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
               <Emoji name="calendar" />
               {i18n.t('SingleContactScreen.lastHeardFromYou')}:{' '}
-              {format(props.mail[0].dateCreated, 'MMM dd')}
+              {format(new Date(props.mail[0].dateCreated), 'MMM dd')}
             </Text>
           )}
           {lettersTravelled > 0 && (
