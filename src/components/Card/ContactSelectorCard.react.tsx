@@ -47,7 +47,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 
   return (
     <TouchableOpacity
-      style={[CardStyles.cardBase, CardStyles.shadow, props.style]}
+      style={CardStyles.contactSelectorCardBackground}
       onPress={props.onPress}
       testID="ContactSelectorCard"
     >

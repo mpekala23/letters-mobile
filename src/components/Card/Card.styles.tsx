@@ -144,4 +144,5 @@ export default StyleSheet.create({
     color: Colors.GRAY_DARKER,
     fontSize: 14,
   },
+  contactSelectorCardBackground: {},
 });
