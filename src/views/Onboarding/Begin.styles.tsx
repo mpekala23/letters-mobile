@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
+import { WINDOW_HEIGHT } from '@utils/Constants';
 
 export default StyleSheet.create({
   trueBackground: {
@@ -7,8 +8,8 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   page: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    width: '100%',
+    height: '100%',
   },
   padded: {
     padding: 32,
@@ -33,5 +34,16 @@ export default StyleSheet.create({
     height: 16,
     borderRadius: 8,
     marginHorizontal: 4,
+  },
+  screenTitle: {
+    fontSize: 21,
+    padding: 32,
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  screenImage: {
+    width: '100%',
+    height: WINDOW_HEIGHT * 0.5,
+    resizeMode: 'contain',
   },
 });

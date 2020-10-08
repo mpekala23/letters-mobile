@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View, Image as ImageComponent } from 'react-native';
+import { Text, View, Image as ImageComponent, ViewStyle } from 'react-native';
 import i18n from '@i18n';
-import { Icon, Button, AdjustableText } from '@components';
-import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';
+import { Button } from '@components';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import LovedOnes from '@assets/views/Onboarding/LovedOnes';
 import Screen1Background from '@assets/views/Begin/Screen1Background.png';
 import Screen1EnglishTag from '@assets/views/Begin/Screen1EnglishTag.png';
 import Screen2Image from '@assets/views/Begin/Screen2Image.png';
@@ -24,6 +22,13 @@ type BeginScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   navigation: BeginScreenNavigationProp;
+}
+
+function getBallStyle(index: number, position: number): ViewStyle[] {
+  return [
+    Styles.swipeCircle,
+    { backgroundColor: index === position ? '#414141' : '#C4C4C4' },
+  ];
 }
 
 const BeginScreen: React.FC<Props> = (props: Props) => {
@@ -46,7 +51,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
               resizeMode: 'cover',
             }}
           />
-          <View style={[Styles.padded, { flex: 1 }]}>
+          <View style={[Styles.padded, { flex: 1, width: '100%' }]}>
             <ImageComponent
               source={Screen1EnglishTag}
               style={{
@@ -57,116 +62,30 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
             />
           </View>
         </View>
-        <View
-          style={[
-            Styles.page,
-            { justifyContent: 'center', alignItems: 'center' },
-          ]}
-        >
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 21,
-                padding: 32,
-                alignItems: 'center',
-                textAlign: 'center',
-              },
-            ]}
-          >
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
             {i18n.t('BeginScreen.sendEverything')}
           </Text>
-          <ImageComponent
-            source={Screen2Image}
-            style={{
-              width: '100%',
-              height: WINDOW_HEIGHT * 0.5,
-              resizeMode: 'contain',
-            }}
-          />
+          <ImageComponent source={Screen2Image} style={Styles.screenImage} />
         </View>
-        <View
-          style={[
-            Styles.page,
-            { justifyContent: 'center', alignItems: 'center' },
-          ]}
-        >
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 21,
-                padding: 32,
-                alignItems: 'center',
-                textAlign: 'center',
-              },
-            ]}
-          >
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
             {i18n.t('BeginScreen.theyllReceive')}
           </Text>
-          <ImageComponent
-            source={Screen3Image}
-            style={{
-              width: '100%',
-              height: WINDOW_HEIGHT * 0.5,
-              resizeMode: 'contain',
-            }}
-          />
+          <ImageComponent source={Screen3Image} style={Styles.screenImage} />
         </View>
-        <View
-          style={[
-            Styles.page,
-            { justifyContent: 'center', alignItems: 'center' },
-          ]}
-        >
-          <Text
-            style={[
-              Typography.FONT_BOLD,
-              {
-                fontSize: 21,
-                padding: 32,
-                alignItems: 'center',
-                textAlign: 'center',
-              },
-            ]}
-          >
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
             {i18n.t('BeginScreen.joinOurCommunity')}
           </Text>
-          <ImageComponent
-            source={Screen4Image}
-            style={{
-              width: '100%',
-              height: WINDOW_HEIGHT * 0.5,
-              resizeMode: 'contain',
-            }}
-          />
+          <ImageComponent source={Screen4Image} style={Styles.screenImage} />
         </View>
       </ViewPager>
       <View style={Styles.swipePositionBackground}>
-        <View
-          style={[
-            Styles.swipeCircle,
-            { backgroundColor: swipePosition === 0 ? '#414141' : '#C4C4C4' },
-          ]}
-        />
-        <View
-          style={[
-            Styles.swipeCircle,
-            { backgroundColor: swipePosition === 1 ? '#414141' : '#C4C4C4' },
-          ]}
-        />
-        <View
-          style={[
-            Styles.swipeCircle,
-            { backgroundColor: swipePosition === 2 ? '#414141' : '#C4C4C4' },
-          ]}
-        />
-        <View
-          style={[
-            Styles.swipeCircle,
-            { backgroundColor: swipePosition === 3 ? '#414141' : '#C4C4C4' },
-          ]}
-        />
+        <View style={getBallStyle(0, swipePosition)} key={0} />
+        <View style={getBallStyle(1, swipePosition)} key={1} />
+        <View style={getBallStyle(2, swipePosition)} key={2} />
+        <View style={getBallStyle(3, swipePosition)} key={3} />
       </View>
       <View style={Styles.buttonContainer}>
         <Button
