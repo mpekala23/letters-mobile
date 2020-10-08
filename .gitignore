@@ -69,6 +69,7 @@ buck-out/
 # Expo
 .expo/*
 web-build/
+debug.log
 
 # Coverage report artifacts
 /coverage
