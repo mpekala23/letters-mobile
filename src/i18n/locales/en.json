@@ -83,7 +83,10 @@
     "addContact": "Add contact",
     "referralCardTitle": "Spread the Word",
     "referralCardSubtitle": "Over 1,500 people shared",
-    "referralCardCta": "Help others"
+    "referralCardCta": "Help others",
+    "letter": "letter",
+    "letters": "letters",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "credit",

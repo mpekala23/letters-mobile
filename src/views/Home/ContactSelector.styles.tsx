@@ -1,5 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
+import { WINDOW_WIDTH } from '@utils/Constants';
+
+export const BACKGROUND_COLORS = [
+  Colors.BLUE_400,
+  Colors.GREEN_400,
+  Colors.PINK_400,
+  Colors.AMEELIO_RED,
+  Colors.AMEELIO_YELLOW,
+];
 
 export default StyleSheet.create({
   trueBackground: {
@@ -33,15 +42,18 @@ export default StyleSheet.create({
   },
   addContactButton: {
     alignSelf: 'center',
-    marginVertical: 16,
+    marginTop: 8,
+    marginBottom: 16,
     paddingHorizontal: 16,
     paddingVertical: 4,
   },
   referralCardBackground: {
+    width: WINDOW_WIDTH - 32,
     paddingVertical: 16,
     height: 150,
     overflow: 'hidden',
-    borderRadius: 10,
+    borderRadius: 8,
+    marginBottom: 8,
   },
   referralCardBackgroundIllustration: {
     position: 'absolute',
