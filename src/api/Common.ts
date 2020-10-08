@@ -50,7 +50,6 @@ export async function fetchAuthenticated(
   options: Record<string, unknown> = {},
   timeout = 15000
 ): Promise<ApiResponse> {
-  console.log(fetchUrl);
   const requestOptions = {
     ...options,
     headers: {
