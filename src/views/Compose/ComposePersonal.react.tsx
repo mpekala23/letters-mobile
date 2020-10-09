@@ -27,6 +27,8 @@ import {
   Image,
   Sticker,
   ComposeBottomDetails,
+  MailTypes,
+  PlacedSticker,
 } from 'types';
 import {
   setBackOverride,
@@ -39,6 +41,7 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
+import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
@@ -82,8 +85,8 @@ interface State {
     bottomDetails: ComposeBottomDetails | null;
     bottomSlide: Animated.Value;
     layout: Layout;
+    stickers: PlacedSticker[];
     commonLayout: Layout;
-    design: PostcardDesign;
     flip: Animated.Value;
     animatingFlip: boolean;
     horizontal: boolean;
@@ -119,9 +122,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       designState: {
         bottomDetails: null,
         bottomSlide: new Animated.Value(0),
-        layout: { ...LAYOUTS[0] },
+        layout:
+          props.composing.type === MailTypes.Postcard &&
+          props.composing.design.layout
+            ? props.composing.design.layout
+            : { ...LAYOUTS[0] },
+        stickers: [],
         commonLayout: { ...COMMON_LAYOUT },
-        design: { image: { uri: '' } },
         flip: new Animated.Value(0),
         animatingFlip: false,
         horizontal: true,
@@ -243,6 +250,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     bottomDetails?: ComposeBottomDetails | null;
     bottomSlide?: Animated.Value;
     layout?: Layout;
+    stickers?: PlacedSticker[];
     commonLayout?: Layout;
     design?: PostcardDesign;
     flip?: Animated.Value;
@@ -354,6 +362,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
             image: snapshot,
             custom: true,
           });
+          saveDraft(this.props.composing, this.state.designState.layout);
         }
       });
     }
@@ -558,6 +567,12 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
             }
           });
           this.setDesignState({ layout: newLayout });
+          if (this.props.composing.type === MailTypes.Postcard) {
+            this.props.setDesign({
+              ...this.props.composing.design,
+              layout: newLayout,
+            });
+          }
         }}
       >
         <Icon svg={layout.svg} />
@@ -770,6 +785,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   <DynamicPostcard
                     ref={this.postcardRef}
                     layout={this.state.designState.layout}
+                    stickers={this.state.designState.stickers}
                     activePosition={this.state.designState.activePosition}
                     highlightActive={
                       this.state.designState.bottomDetails === 'design'
@@ -782,6 +798,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     flip={this.state.designState.flip}
                     onChangeText={(text) => {
                       this.props.setContent(text);
+                      saveDraft(
+                        this.props.composing,
+                        this.state.designState.layout
+                      );
                       const numWords = getNumWords(text);
                       this.setTextState({ wordsLeft: 100 - numWords });
                     }}
@@ -789,6 +809,14 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     width={POSTCARD_WIDTH}
                     height={POSTCARD_HEIGHT}
                     bottomDetails={this.state.designState.bottomDetails}
+                    updateStickers={(stickers) => {
+                      this.setDesignState({ stickers });
+                      if (this.props.composing.type === MailTypes.Postcard)
+                        this.props.setDesign({
+                          ...this.props.composing.design,
+                          stickers,
+                        });
+                    }}
                   />
                 </Animated.View>
               </ScrollView>

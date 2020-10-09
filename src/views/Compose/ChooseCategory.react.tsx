@@ -80,6 +80,9 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
         ),
         persist: true,
       });
+    if (this.props.categories.length === 0) {
+      this.refreshCategories();
+    }
   }
 
   async refreshCategories() {

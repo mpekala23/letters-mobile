@@ -42,6 +42,8 @@ export interface PostcardDesign {
   custom?: boolean;
   designer?: string;
   contentResearcher?: string;
+  layout?: Layout;
+  stickers?: PlacedSticker[];
 }
 
 interface LetterSpecific {
@@ -226,6 +228,7 @@ export enum Storage {
   DraftCategoryId = 'Ameelio-DraftCategoryId',
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
+  DraftLayout = 'Ameelio-DraftLayout',
 }
 
 export type TopbarBackAction = {
