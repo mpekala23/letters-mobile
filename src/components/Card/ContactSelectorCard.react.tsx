@@ -4,7 +4,7 @@ import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
 import { ProfilePicTypes, Mail, MailStatus } from 'types';
-import { format } from 'date-fns';
+import { differenceInDays, format, formatDistance, subDays } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { capitalize, haversine } from '@utils';
 import CardStyles from './Card.styles';
@@ -45,6 +45,25 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
     updateLettersTravelled();
   }, [props.mail, props.userPostal, props.contactPostal]);
 
+  const daysSinceLast =
+    props.mail && props.mail.length
+      ? Math.abs(
+          differenceInDays(new Date(props.mail[0].dateCreated), new Date())
+        )
+      : null;
+
+  let heardString;
+  if (daysSinceLast && daysSinceLast <= 21) {
+    heardString = formatDistance(
+      subDays(new Date(), daysSinceLast),
+      new Date()
+    );
+  } else if (props.mail && props.mail.length) {
+    heardString = format(new Date(props.mail[0].dateCreated), 'MMM d');
+  } else {
+    heardString = 'N/A';
+  }
+
   return (
     <TouchableOpacity
       style={[CardStyles.shadow, CardStyles.contactSelectorCardBackground]}
@@ -81,10 +100,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
         >
           <Emoji name="calendar" />
-          {i18n.t('ContactSelectorScreen.lastHeard')}:{' '}
-          {props.mail && props.mail.length
-            ? format(new Date(props.mail[0].dateCreated), 'MMM d')
-            : 'N/A'}
+          {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
         </AdjustableText>
         <AdjustableText
           style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
