@@ -23,7 +23,11 @@
     "unableToUploadProfilePicture": "No se puede subir la nueva imagen de perfil. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "unableToUploadLetterPhoto": "No se puede subir la imagen adjuntada. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "letterTooLong": "Su carta no puede exceder los 16,000 caracteres.",
-    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo."
+    "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
+    "cantSendMailModalTitle": "¡Ups! Algo salió mal.",
+    "cantSendMailModalBody": "¡Pero no te preocupes! El borrador fue salvo. Nuestro equipo de soporte te ayudará a solucionar el problema.",
+    "reachOutToSupport": "Contactar al soporte",
+    "noThanks": "No gracias"
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -82,7 +86,10 @@
     "addContact": "Agregar contacto",
     "referralCardTitle": "Comparter con otros",
     "referralCardSubtitle": "Más de 1.500 personas han compartido",
-    "referralCardCta": "Ayude a otros"
+    "referralCardCta": "Ayude a otros",
+    "letter": "carta",
+    "letters": "cartas",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "crédito",
@@ -229,6 +236,7 @@
   },
   "SingleContactScreen": {
     "received": "recibido",
+    "sent": "expedido",
     "lastHeardFromYou": "lo último sabido de ti",
     "lettersTraveled": "cartas enviadas",
     "sendLetter": "Enviar carta",
@@ -436,5 +444,11 @@
     "moneySaved": "Dinero Ahorrado",
     "thankYou": "¡Gracias a ti, la comunidad está creciendo!",
     "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
+  },
+  "ReviewApp": {
+    "title": "Enjoying Ameelio?",
+    "message": "Help us out by leaving a review!",
+    "takeMeToPlayStore": "Take me to the Play Store",
+    "noThanks": "No thanks"
   }
 }

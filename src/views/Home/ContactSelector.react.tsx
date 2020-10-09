@@ -12,7 +12,7 @@ import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
-import { getContacts, getUser, getCategories } from '@api';
+import { getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -20,16 +20,12 @@ import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import Styles from './ContactSelector.styles';
+import Styles, { BACKGROUND_COLORS } from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   Screens.ContactSelector
 >;
-
-interface State {
-  refreshing: boolean;
-}
 
 interface Props {
   existingContacts: Contact[];
@@ -44,20 +40,18 @@ interface Props {
   setActiveMail: (mail: Mail) => void;
 }
 
-class ContactSelectorScreenBase extends React.Component<Props, State> {
+class ContactSelectorScreenBase extends React.Component<Props> {
   private unsubscribeFocus: () => void;
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      refreshing: false,
-    };
     this.doRefresh = this.doRefresh.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
+    this.renderReferralCard = this.renderReferralCard.bind(this);
   }
 
   componentDidMount() {
@@ -104,24 +98,29 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     });
   }
 
-  async doRefresh() {
-    if (this.props.userId === -1) return;
+  doRefresh = () => {
+    /* if (this.props.userId === -1) return;
     this.setState({ refreshing: true });
     try {
-      await getContacts();
-      await getUser();
     } catch (e) {
       dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
     }
-    this.setState({ refreshing: false });
-  }
+    this.setState({ refreshing: false }); */
+  };
 
-  renderItem = ({ item }: { item: Contact }): JSX.Element => {
+  renderItem = ({
+    item,
+    index,
+  }: {
+    item: Contact;
+    index: number;
+  }): JSX.Element => {
     return (
       <ContactSelectorCard
         firstName={item.firstName}
         lastName={item.lastName}
         imageUri={item.image?.uri}
+        numSent={item.totalSent}
         mail={this.props.existingMail[item.id]}
         onPress={() => {
           this.props.setActiveContact(item);
@@ -129,7 +128,8 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
         }}
         userPostal={this.props.userPostal}
         contactPostal={item.facility.postal}
-        key={`${item.inmateNumber}-${item.lastName}-${item.lastName}`}
+        key={`${item.inmateNumber}-${item.lastName}-${item.lastName}-${item.id}`}
+        backgroundColor={BACKGROUND_COLORS[index % BACKGROUND_COLORS.length]}
       />
     );
   };
@@ -167,60 +167,70 @@ class ContactSelectorScreenBase extends React.Component<Props, State> {
     );
   }
 
+  renderReferralCard(): JSX.Element {
+    return (
+      <View style={Styles.referralCardBackground}>
+        <LinearGradient
+          colors={['#032658', '#0748A6']}
+          style={Styles.referralCardBgGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+        />
+        <Icon
+          svg={CardBackground}
+          style={Styles.referralCardBackgroundIllustration}
+        />
+        <View style={Styles.referralCardDesc}>
+          <Text style={[Styles.referralCardTitle, Typography.FONT_BOLD]}>
+            {i18n.t('ContactSelectorScreen.referralCardTitle')}
+          </Text>
+          <Text style={[Styles.referralCardSubtitle]}>
+            {i18n.t('ContactSelectorScreen.referralCardSubtitle')}
+          </Text>
+          <Button
+            buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
+            onPress={async () => {
+              this.props.navigation.navigate(Screens.ReferralDashboard);
+              Segment.track('Contact Selector - Click on Referral Card');
+            }}
+            reverse
+            containerStyle={Styles.referralCardCta}
+            textStyle={[Typography.FONT_BOLD]}
+          />
+        </View>
+      </View>
+    );
+  }
+
   render() {
     return (
       <KeyboardAvoider style={Styles.trueBackground}>
-        <View style={[Styles.referralCardBackground]}>
-          <LinearGradient
-            colors={['#032658', '#0748A6']}
-            style={Styles.referralCardBgGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-          />
-          <Icon
-            svg={CardBackground}
-            style={Styles.referralCardBackgroundIllustration}
-          />
-          <View style={Styles.referralCardDesc}>
-            <Text style={[Styles.referralCardTitle, Typography.FONT_BOLD]}>
-              {i18n.t('ContactSelectorScreen.referralCardTitle')}
-            </Text>
-            <Text style={[Styles.referralCardSubtitle]}>
-              {i18n.t('ContactSelectorScreen.referralCardSubtitle')}
-            </Text>
-            <Button
-              buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
-              onPress={async () => {
-                this.props.navigation.navigate(Screens.ReferralDashboard);
-                Segment.track('Contact Selector - Click on Referral Card');
-              }}
-              reverse
-              containerStyle={Styles.referralCardCta}
-              textStyle={[Typography.FONT_BOLD]}
-            />
-          </View>
-        </View>
         <Text
           style={[
             Typography.FONT_SEMIBOLD,
             {
               color: Colors.GRAY_500,
               fontSize: 20,
-              paddingVertical: 16,
+              paddingVertical: 8,
             },
           ]}
         >
           {i18n.t('ContactSelectorScreen.yourLovedOnes')}
         </Text>
         <FlatList
+          key={`Flatlist${this.props.existingContacts.length}`}
           data={this.props.existingContacts}
           renderItem={this.renderItem}
+          contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+          numColumns={this.props.existingContacts.length > 1 ? 2 : 1}
+          ListHeaderComponent={this.renderReferralCard}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}
           showsVerticalScrollIndicator={false}
-          onRefresh={this.doRefresh}
-          refreshing={this.state.refreshing}
         />
       </KeyboardAvoider>
     );

@@ -1,13 +1,18 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Image as ImageComponent, ViewStyle } from 'react-native';
 import i18n from '@i18n';
-import { Icon, Button } from '@components';
-import LogoSmallGrey from '@assets/views/Onboarding/LogoSmallGrey';
+import { Button } from '@components';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import LovedOnes from '@assets/views/Onboarding/LovedOnes';
+import Screen1Background from '@assets/views/Begin/Screen1Background.png';
+import Screen1EnglishTag from '@assets/views/Begin/Screen1EnglishTag.png';
+import Screen2Image from '@assets/views/Begin/Screen2Image.png';
+import Screen3Image from '@assets/views/Begin/Screen3Image.png';
+import Screen4Image from '@assets/views/Begin/Screen4Image.png';
 import * as Segment from 'expo-analytics-segment';
+import ViewPager from '@react-native-community/viewpager';
+import { WINDOW_HEIGHT } from '@utils';
 import Styles from './Begin.styles';
 
 type BeginScreenNavigationProp = StackNavigationProp<
@@ -19,21 +24,70 @@ interface Props {
   navigation: BeginScreenNavigationProp;
 }
 
+function getBallStyle(index: number, position: number): ViewStyle[] {
+  return [
+    Styles.swipeCircle,
+    { backgroundColor: index === position ? '#414141' : '#C4C4C4' },
+  ];
+}
+
 const BeginScreen: React.FC<Props> = (props: Props) => {
+  const [swipePosition, setSwipePosition] = useState(0);
+
   return (
-    <View accessible={false} style={Styles.trueBackground}>
-      <View accessible accessibilityLabel="Ameelio Logo" style={Styles.header}>
-        <Icon svg={LogoSmallGrey} />
-      </View>
-      <Text
-        style={[Typography.FONT_SEMIBOLD, Styles.titleText, { marginTop: 40 }]}
+    <View style={Styles.trueBackground}>
+      <ViewPager
+        style={{ flex: 1 }}
+        onPageSelected={(e) => {
+          setSwipePosition(e.nativeEvent.position);
+        }}
       >
-        {i18n.t('BeginScreen.connectWithYourLovedOnes')}
-      </Text>
-      <View style={{ paddingBottom: 80, paddingTop: 18 }}>
-        <Icon svg={LovedOnes} />
+        <View style={Styles.page}>
+          <ImageComponent
+            source={Screen1Background}
+            style={{
+              width: '100%',
+              height: WINDOW_HEIGHT * 0.5,
+              resizeMode: 'cover',
+            }}
+          />
+          <View style={[Styles.padded, { flex: 1, width: '100%' }]}>
+            <ImageComponent
+              source={Screen1EnglishTag}
+              style={{
+                width: '100%',
+                height: '100%',
+                resizeMode: 'contain',
+              }}
+            />
+          </View>
+        </View>
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
+            {i18n.t('BeginScreen.sendEverything')}
+          </Text>
+          <ImageComponent source={Screen2Image} style={Styles.screenImage} />
+        </View>
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
+            {i18n.t('BeginScreen.theyllReceive')}
+          </Text>
+          <ImageComponent source={Screen3Image} style={Styles.screenImage} />
+        </View>
+        <View style={[Styles.page]}>
+          <Text style={[Typography.FONT_BOLD, Styles.screenTitle]}>
+            {i18n.t('BeginScreen.joinOurCommunity')}
+          </Text>
+          <ImageComponent source={Screen4Image} style={Styles.screenImage} />
+        </View>
+      </ViewPager>
+      <View style={Styles.swipePositionBackground}>
+        <View style={getBallStyle(0, swipePosition)} key={0} />
+        <View style={getBallStyle(1, swipePosition)} key={1} />
+        <View style={getBallStyle(2, swipePosition)} key={2} />
+        <View style={getBallStyle(3, swipePosition)} key={3} />
       </View>
-      <View style={{ position: 'absolute', bottom: 24, width: '100%' }}>
+      <View style={Styles.buttonContainer}>
         <Button
           onPress={() => {
             props.navigation.navigate(Screens.RegisterCreds);
@@ -50,11 +104,11 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
           }}
           buttonText={i18n.t('BeginScreen.logIn')}
           reverse
-          textStyle={
-            (Typography.FONT_SEMIBOLD,
+          textStyle={[
+            Typography.FONT_SEMIBOLD,
             Styles.baseText,
-            { color: Colors.PINK_500 })
-          }
+            { color: Colors.PINK_500 },
+          ]}
           containerStyle={{ height: 47 }}
         />
       </View>

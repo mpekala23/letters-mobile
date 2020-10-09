@@ -1,4 +1,9 @@
-import { Share, Image as ImageComponent } from 'react-native';
+import {
+  Share,
+  Image as ImageComponent,
+  Linking,
+  Platform,
+} from 'react-native';
 import * as EmailValidator from 'email-validator';
 import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
@@ -11,6 +16,8 @@ import { addBusinessDays } from 'date-fns';
 import Constants from 'expo-constants';
 import { createRef } from 'react';
 import { NavigationContainerRef } from '@react-navigation/native';
+import * as StoreReview from 'expo-store-review';
+import { popupAlert } from '@components/Alert/Alert.react';
 import {
   ABBREV_TO_STATE,
   STATE_TO_ABBREV,
@@ -341,4 +348,30 @@ export function distance(
 
 export function getAspectRatio(image: Image): number {
   return image.width && image.height ? image.width / image.height : 1;
+}
+
+export async function requestReview(): Promise<void> {
+  if (Platform.OS === 'ios') {
+    if (await StoreReview.hasAction()) {
+      await StoreReview.requestReview();
+    }
+  } else {
+    popupAlert({
+      title: i18n.t('ReviewApp.title'),
+      message: i18n.t('ReviewApp.message'),
+      buttons: [
+        {
+          text: i18n.t('ReviewApp.takeMeToPlayStore'),
+          onPress: () => {
+            const url = StoreReview.storeUrl();
+            Linking.openURL(url || '');
+          },
+        },
+        {
+          text: i18n.t('ReviewApp.noThanks'),
+          reverse: true,
+        },
+      ],
+    });
+  }
 }

@@ -23,7 +23,7 @@ interface Props {
 const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
   const { mail } = props;
   const mailDate = format(
-    mail.dateCreated ? mail.dateCreated : new Date(),
+    mail.dateCreated ? new Date(mail.dateCreated) : new Date(),
     'MMM dd, yyyy'
   );
 
@@ -63,8 +63,8 @@ const blankMail: Mail = {
   type: MailTypes.Letter,
   recipientId: -1,
   status: MailStatus.Created,
-  dateCreated: new Date(),
-  expectedDelivery: new Date(),
+  dateCreated: new Date().toISOString(),
+  expectedDelivery: new Date().toISOString(),
   content: '',
   images: [],
 };

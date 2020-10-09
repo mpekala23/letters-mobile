@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { View, StatusBar, Platform } from 'react-native';
-import { STATUS_BAR_HEIGHT } from '@utils';
+import { STATUS_BAR_HEIGHT } from '@utils/Constants';
 
 class Statusbar extends React.Component<
   Record<string, unknown>,

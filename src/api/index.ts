@@ -16,6 +16,8 @@ import {
   getSingleMail,
   getTrackingEvents,
   getCategories,
+  getMailByContact,
+  initMail,
 } from './Mail';
 
 import {
@@ -42,8 +44,10 @@ export {
   getContacts,
   getFacility,
   getFacilities,
+  getMailByContact,
   createMail,
   getMail,
+  initMail,
   getSingleMail,
   getTrackingEvents,
   getCategories,
