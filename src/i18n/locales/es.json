@@ -34,14 +34,6 @@
     "notifs": "No se pueden mostrar notificaciones. Asegúrese de que está habilitado en la configuración.",
     "camera": "No puede tomar una foto. Asegúrese de que está habilitado en la configuración."
   },
-  "AddManuallyScreen": {
-    "facilityName": "Nombre del presidio",
-    "facilityAddress": "Dirección del presidio",
-    "facilityCity": "Ciudad del presidio",
-    "facilityState": "Estado del presidio",
-    "facilityPostal": "C.P. del presidio",
-    "facilityPhone": "Número de teléfono del presidio (opcional)"
-  },
   "BeginScreen": {
     "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados gratis.",
     "signUp": "Registrarte",
@@ -53,14 +45,9 @@
   },
   "ContactInfoScreen": {
     "addContact": "Agregar contacto",
-    "needHelpFindingYourInmateID": "¿Necesita ayuda para encontrar el número de preso de su ser querido?",
-    "tapHereToSearch": "Haga click aquí para buscar",
-    "database": "la base de datos",
-    "federal": "Federal",
     "firstName": "Nombre",
     "lastName": "Apellido",
     "nameTooLong": "¡Ay, el nombre de su ser querido es un poco largo! ¿Podría abreviar?",
-    "inmateNumber": "Número de preso",
     "relationshipToInmate": "Yo soy su",
     "state": "Estado",
     "postal": "Postal",
@@ -76,6 +63,22 @@
     "back": "Volver",
     "next": "Siguiente"
   },
+  "ContactInmateInfoScreen": {
+    "addDetails": "Agregar detalles",
+    "needHelpFindingYourInmateID": "¿Necesita ayuda para encontrar el número de preso de su ser querido?",
+    "tapHereToSearch": "Haga click aquí para buscar",
+    "database": "la base de datos",
+    "federal": "Federal",
+    "next": "Siguiente",
+    "inmateNumber": "Número de preso",
+    "facilityName": "Nombre del presidio",
+    "facilityType": "Tipo del presidio",
+    "facilityAddress": "Dirección del presidio",
+    "facilityCity": "Ciudad del presidio",
+    "facilityState": "Estado del presidio",
+    "facilityPostal": "C.P. del presidio",
+    "facilityPhone": "Número de teléfono del presidio (opcional)"
+  },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Sus seres queridos",
     "miles": "millas",
@@ -83,7 +86,10 @@
     "addContact": "Agregar contacto",
     "referralCardTitle": "Comparter con otros",
     "referralCardSubtitle": "Más de 1.500 personas han compartido",
-    "referralCardCta": "Ayude a otros"
+    "referralCardCta": "Ayude a otros",
+    "letter": "carta",
+    "letters": "cartas",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "crédito",
@@ -105,6 +111,12 @@
     "PennsylvaniaHint3": "en el directorio de presidio.",
     "statePrison": "State Prison",
     "smartCommunications": "Smart Communications"
+  },
+  "IntroContactScreen": {
+    "welcomePre": "Bievenido,",
+    "welcomePost": "Es hora de localizar a tu ser querido.",
+    "body": "Agrega un contacto y únete a los más de 14,000 en la comunidad de Ameelio.",
+    "continueButton": "Iniciar"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetterPrefix": "¿",
@@ -395,9 +407,9 @@
     "termsOfService": "los Términos del servicio",
     "privacyPolicy": "Política de Privacidad",
     "register": "Regístrate",
-    "addManually": "Agregar",
     "compose": "Redactar",
     "contactInfo": "Contactos",
+    "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
     "firstLetter": "Primera Carta",
     "home": "Inicio",
@@ -415,7 +427,8 @@
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Vista previa",
-    "inmateLocator": " Localizador de Presos"
+    "inmateLocator": " Localizador de Presos",
+    "introContact": "Bienvenido"
   },
   "Sharing": {
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
