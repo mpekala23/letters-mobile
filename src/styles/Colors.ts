@@ -57,3 +57,11 @@ export const GREEN_300 = '#9EE2B8';
 export const GREEN_400 = '#43BF75';
 export const GREEN_500 = '#21A453';
 export const GREEN_600 = '#09863D';
+
+export const CONTACT_BACKGROUND_COLORS = [
+  BLUE_400,
+  GREEN_400,
+  PINK_400,
+  AMEELIO_RED,
+  AMEELIO_YELLOW,
+];

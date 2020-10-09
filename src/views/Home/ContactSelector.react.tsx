@@ -20,7 +20,7 @@ import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import Styles, { BACKGROUND_COLORS } from './ContactSelector.styles';
+import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -45,13 +45,13 @@ class ContactSelectorScreenBase extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.doRefresh = this.doRefresh.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
     this.renderReferralCard = this.renderReferralCard.bind(this);
+    this.renderListHeader = this.renderListHeader.bind(this);
   }
 
   componentDidMount() {
@@ -98,23 +98,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
     });
   }
 
-  doRefresh = () => {
-    /* if (this.props.userId === -1) return;
-    this.setState({ refreshing: true });
-    try {
-    } catch (e) {
-      dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
-    }
-    this.setState({ refreshing: false }); */
-  };
-
-  renderItem = ({
-    item,
-    index,
-  }: {
-    item: Contact;
-    index: number;
-  }): JSX.Element => {
+  renderItem = ({ item }: { item: Contact; index: number }): JSX.Element => {
     return (
       <ContactSelectorCard
         firstName={item.firstName}
@@ -129,7 +113,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
         userPostal={this.props.userPostal}
         contactPostal={item.facility.postal}
         key={`${item.inmateNumber}-${item.lastName}-${item.lastName}-${item.id}`}
-        backgroundColor={BACKGROUND_COLORS[index % BACKGROUND_COLORS.length]}
+        backgroundColor={item.backgroundColor}
       />
     );
   };
@@ -202,21 +186,30 @@ class ContactSelectorScreenBase extends React.Component<Props> {
     );
   }
 
-  render() {
+  renderListHeader() {
     return (
-      <KeyboardAvoider style={Styles.trueBackground}>
+      <View>
+        {this.renderReferralCard()}
         <Text
           style={[
             Typography.FONT_SEMIBOLD,
             {
               color: Colors.GRAY_500,
               fontSize: 20,
-              paddingVertical: 8,
+              paddingTop: 8,
+              paddingBottom: 4,
             },
           ]}
         >
           {i18n.t('ContactSelectorScreen.yourLovedOnes')}
         </Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <KeyboardAvoider style={Styles.trueBackground}>
         <FlatList
           key={`Flatlist${this.props.existingContacts.length}`}
           data={this.props.existingContacts}
@@ -226,7 +219,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
             justifyContent: 'space-between',
           }}
           numColumns={this.props.existingContacts.length > 1 ? 2 : 1}
-          ListHeaderComponent={this.renderReferralCard}
+          ListHeaderComponent={this.renderListHeader}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}

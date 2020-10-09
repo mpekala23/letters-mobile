@@ -73,8 +73,13 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           padding: 16,
         }}
       >
-        <AdjustableText numberOfLines={1} style={[Typography.BASE_TITLE]}>
-          {capitalize(props.firstName)} {capitalize(props.lastName)}
+        <AdjustableText
+          numberOfLines={2}
+          style={[Typography.BASE_TITLE, { textAlign: 'center', fontSize: 21 }]}
+        >
+          {capitalize(props.firstName)}
+          {`\n`}
+          {capitalize(props.lastName)}
         </AdjustableText>
         <AdjustableText
           numberOfLines={1}
