@@ -96,13 +96,13 @@
     "lastHeard": "Last heard"
   },
   "CreditsCard": {
-    "letter": "credit",
-    "letters": "credits",
+    "letter": "Ameelio",
+    "letters": "Ameelios",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your credits for the week",
-    "creditsResetDaily": "Your credits reset weekly.",
-    "comeBackOnMondayForMore": "Your credits reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your Ameelios for the week",
+    "creditsResetDaily": "Your Ameelios reset weekly.",
+    "comeBackOnMondayForMore": "Your Ameelios reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -370,7 +370,7 @@
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new draft",
     "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new draft.",
-    "notEnoughCredits": "Not enough kites",
+    "notEnoughCredits": "Not enough Ameelios",
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
     "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",

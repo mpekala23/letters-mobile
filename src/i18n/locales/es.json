@@ -92,13 +92,13 @@
     "lastHeard": "Last heard"
   },
   "CreditsCard": {
-    "letter": "crédito",
-    "letters": "créditos",
+    "letter": "Ameelio",
+    "letters": "Ameelios",
     "leftThisWeek": "te quedan esta semana",
     "sendMore": "Enviar",
-    "youUsedAllYourLetters": "Usaste todas tus créditos para la semana",
-    "creditsResetDaily": "Sus créditos se restablecen semanalmente.",
-    "comeBackOnMondayForMore": "Sus cartas se restablecen semanalmente, el lunes a las 4:00AM EST."
+    "youUsedAllYourLetters": "Usaste todas tus Ameelios para la semana",
+    "creditsResetDaily": "Sus Ameelios se restablecen semanalmente.",
+    "comeBackOnMondayForMore": "Sus Ameelios se restablecen semanalmente, el lunes a las 4:00AM EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Directorio del presidio",
@@ -366,7 +366,7 @@
     "continueWriting": "Continúe escribiendo",
     "startNewLetter": "Empezar nuevo borrador",
     "draftContactDeleted": "Empezar nuevo borrador",
-    "notEnoughCredits": "No hay suficientes créditos",
+    "notEnoughCredits": "No hay suficientes Ameelios",
     "autosaved": "Autoguardado",
     "firstLetterGhostTextSalutation": "Hola",
     "firstLetterGhostTextBody": "espero que estes bien. Estoy probando este nuevo servicio para ver si funciona.",
