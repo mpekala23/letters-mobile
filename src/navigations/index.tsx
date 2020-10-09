@@ -6,17 +6,18 @@ import {
   StackCardInterpolatedStyle,
 } from '@react-navigation/stack';
 import {
-  AddManuallyScreen,
   BeginScreen,
   ChooseCategoryScreen,
   ChooseOptionScreen,
   ContactInfoScreen,
+  ContactInmateInfoScreen,
   ComposeLetterScreen,
   ComposePersonalScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
+  IntroContactScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -73,7 +74,6 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
   RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
   RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
-  AddManually: { title: i18n.t('Screens.addManually'), profile: false },
   ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
   ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
   ComposeLetter: { title: i18n.t('Screens.compose'), profile: false },
@@ -82,6 +82,11 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
   FacilityDirectory: { title: '', profile: false },
+  ContactInmateInfo: {
+    title: i18n.t('Screens.contactInmateInfo'),
+    profile: false,
+  },
+  IntroContact: { title: i18n.t('Screens.introContact'), profile: false },
   InmateLocator: { title: i18n.t('Screens.inmateLocator'), profile: false },
   Issues: { title: i18n.t('Screens.issues'), profile: false },
   MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
@@ -268,8 +273,8 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           component={FacilityDirectoryScreen}
         />
         <Stack.Screen
-          name={Screens.AddManually}
-          component={AddManuallyScreen}
+          name={Screens.ContactInmateInfo}
+          component={ContactInmateInfoScreen}
         />
         <Stack.Screen
           name={Screens.ReferFriends}
@@ -282,6 +287,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ReviewContact}
           component={ReviewContactScreen}
+        />
+        <Stack.Screen
+          name={Screens.IntroContact}
+          component={IntroContactScreen}
         />
         <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
         <Stack.Screen

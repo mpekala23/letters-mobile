@@ -24,7 +24,7 @@ import Styles, { BACKGROUND_COLORS } from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'ContactSelector'
+  Screens.ContactSelector
 >;
 
 interface Props {
@@ -90,8 +90,8 @@ class ContactSelectorScreenBase extends React.Component<Props> {
   }
 
   async onNavigationFocus() {
-    if (this.props.existingContacts.length <= 0) {
-      this.props.navigation.replace(Screens.ContactInfo, {});
+    if (this.props.existingContacts.length === 0) {
+      this.props.navigation.replace(Screens.IntroContact);
     }
     getCategories().catch(() => {
       dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
@@ -127,8 +127,8 @@ class ContactSelectorScreenBase extends React.Component<Props> {
           this.props.navigation.navigate(Screens.SingleContact);
         }}
         userPostal={this.props.userPostal}
-        contactPostal={item.facility?.postal}
-        key={item.inmateNumber}
+        contactPostal={item.facility.postal}
+        key={`${item.inmateNumber}-${item.lastName}-${item.lastName}-${item.id}`}
         backgroundColor={BACKGROUND_COLORS[index % BACKGROUND_COLORS.length]}
       />
     );

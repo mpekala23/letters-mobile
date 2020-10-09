@@ -6,24 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Button,
-  Icon,
-  Input,
-  KeyboardAvoider,
-  Picker,
-  PickerRef,
-} from '@components';
-import { Colors, Typography } from '@styles';
+import { Icon, Input, KeyboardAvoider, Picker, PickerRef } from '@components';
+import { Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  LOB_NAME_CHAR_LIMIT,
-  STATE_TO_ABBREV,
-  STATE_TO_INMATE_DB,
-  STATES_DROPDOWN,
-  Validation,
-} from '@utils';
+import { LOB_NAME_CHAR_LIMIT, STATE_TO_ABBREV, STATES_DROPDOWN } from '@utils';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAddingPersonal } from '@store/Contact/ContactActions';
@@ -39,7 +26,7 @@ import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'ContactInfo'
+  Screens.ContactInfo
 >;
 
 export interface Props {
@@ -53,7 +40,6 @@ export interface Props {
 
 export interface State {
   valid: boolean;
-  stateToSearch: string;
 }
 
 class ContactInfoScreenBase extends React.Component<Props, State> {
@@ -77,7 +63,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     super(props);
     this.state = {
       valid: false,
-      stateToSearch: '',
     };
     this.updateValid = this.updateValid.bind(this);
     this.onNextPress = this.onNextPress.bind(this);
@@ -124,13 +109,11 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
-      this.inmateNumber.current &&
       this.relationshipPicker.current
     ) {
       const contactPersonal: ContactPersonal = {
         firstName: this.firstName.current.state.value,
         lastName: this.lastName.current.state.value,
-        inmateNumber: this.inmateNumber.current.state.value,
         relationship: this.relationshipPicker.current.value,
       };
       this.props.setAddingPersonal(contactPersonal);
@@ -142,27 +125,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       });
     }
   }
-
-  setStoreValues = () => {
-    if (
-      this.statePicker.current &&
-      this.firstName.current &&
-      this.lastName.current &&
-      this.inmateNumber.current &&
-      this.relationshipPicker.current
-    ) {
-      const contactPersonal: ContactPersonal = {
-        firstName: this.firstName.current.state.value,
-        lastName: this.lastName.current.state.value,
-        inmateNumber: this.inmateNumber.current.state.value,
-        relationship: this.relationshipPicker.current.value,
-      };
-      this.props.setAddingPersonal(contactPersonal);
-      this.props.navigation.setParams({
-        phyState: this.statePicker.current.value,
-      });
-    }
-  };
 
   setValid(val: boolean) {
     this.setState({ valid: val });
@@ -183,8 +145,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
         this.firstName.current.setState({ dirty: false });
       if (this.lastName.current)
         this.lastName.current.setState({ dirty: false });
-      if (this.inmateNumber.current)
-        this.inmateNumber.current.setState({ dirty: false });
     }
 
     this.props.navigation.setParams({ addFromSelector: false });
@@ -196,14 +156,11 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
           : addingContact.facility.state,
         !addingFromSelector
       );
-      this.setState({ stateToSearch: this.statePicker.current.value });
     }
     if (this.firstName.current)
       this.firstName.current.set(addingContact.firstName);
     if (this.lastName.current)
       this.lastName.current.set(addingContact.lastName);
-    if (this.inmateNumber.current)
-      this.inmateNumber.current.set(addingContact.inmateNumber);
     if (this.relationshipPicker.current) {
       this.relationshipPicker.current.setStoredValue(
         addingContact.relationship,
@@ -217,14 +174,12 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       this.statePicker.current &&
       this.firstName.current &&
       this.lastName.current &&
-      this.inmateNumber.current &&
       this.relationshipPicker.current
     ) {
       const result =
         this.statePicker.current.isValueSelected() &&
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.inmateNumber.current.state.valid &&
         this.relationshipPicker.current.isValueSelected();
       this.setValid(result);
     }
@@ -238,8 +193,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
     ) {
       return (
         this.firstName.current.state.value.length +
-          this.lastName.current.state.value.length +
-          this.inmateNumber.current.state.value.length >
+          this.lastName.current.state.value.length >
         LOB_NAME_CHAR_LIMIT
       );
     }
@@ -247,34 +201,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   render() {
-    const inmateDatabaseLink =
-      STATE_TO_INMATE_DB[STATE_TO_ABBREV[this.state.stateToSearch]]?.link;
-    const tapHereToSearchStateDatabase =
-      inmateDatabaseLink && inmateDatabaseLink !== '' ? (
-        <Button
-          link
-          containerStyle={{ marginBottom: 20, alignSelf: 'flex-start' }}
-          onPress={() => {
-            Segment.trackWithProperties('Add Contact - Click on State Search', {
-              State: this.state.stateToSearch,
-            });
-            this.setStoreValues();
-            this.props.navigation.navigate('InmateLocator', {
-              uri: inmateDatabaseLink,
-            });
-          }}
-        >
-          <Text style={{ color: Colors.PINK_500 }}>
-            {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-            <Text
-              style={[Typography.FONT_SEMIBOLD, { color: Colors.PINK_500 }]}
-            >
-              {this.state.stateToSearch}
-            </Text>{' '}
-            {i18n.t('ContactInfoScreen.database')}.
-          </Text>
-        </Button>
-      ) : null;
     return (
       <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'white' }}
@@ -307,53 +233,11 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   />
                   <Icon svg={Letter} style={{ margin: 16 }} />
                 </View>
-                <Text
-                  style={[
-                    Typography.FONT_MEDIUM,
-                    {
-                      color: Colors.GRAY_500,
-                      marginTop: 8,
-                      fontSize: 15,
-                    },
-                  ]}
-                >
-                  {i18n.t('ContactInfoScreen.needHelpFindingYourInmateID')}
-                </Text>
-                <Button
-                  link
-                  containerStyle={{
-                    marginTop: 12,
-                    marginBottom: 12,
-                    alignSelf: 'flex-start',
-                  }}
-                  onPress={() => {
-                    Segment.track('Add Contact - Click on Federal Search');
-                    this.setStoreValues();
-                    this.props.navigation.navigate('InmateLocator', {
-                      uri: 'https://www.bop.gov/mobile/find_inmate/byname.jsp',
-                    });
-                  }}
-                >
-                  <Text style={{ color: Colors.PINK_500 }}>
-                    {i18n.t('ContactInfoScreen.tapHereToSearch')}{' '}
-                    <Text
-                      style={[
-                        Typography.FONT_SEMIBOLD,
-                        { color: Colors.PINK_500 },
-                      ]}
-                    >
-                      {i18n.t('ContactInfoScreen.federal')}
-                    </Text>{' '}
-                    {i18n.t('ContactInfoScreen.database')}.
-                  </Text>
-                </Button>
-                {tapHereToSearchStateDatabase}
                 <Picker
                   ref={this.statePicker}
                   items={STATES_DROPDOWN}
                   placeholder={i18n.t('ContactInfoScreen.state')}
                   onValueChange={(v) => {
-                    this.setState({ stateToSearch: v });
                     this.updateValid();
                     const abbrev = STATE_TO_ABBREV[v];
                     if (abbrev)
@@ -391,7 +275,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                   }}
                   onValid={this.updateValid}
                   onInvalid={() => this.setValid(false)}
-                  nextInput={this.inmateNumber}
                   isInvalidInput={this.isExceedsNameCharLimit}
                 />
                 {this.isExceedsNameCharLimit() && (
@@ -399,23 +282,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
                     {i18n.t('ContactInfoScreen.nameTooLong')}
                   </Text>
                 )}
-                <Input
-                  ref={this.inmateNumber}
-                  parentStyle={CommonStyles.fullWidth}
-                  placeholder={i18n.t('ContactInfoScreen.inmateNumber')}
-                  required
-                  validate={Validation.InmateNumber}
-                  onChangeText={() => {
-                    if (this.firstName.current) {
-                      this.firstName.current.doValidate();
-                    }
-                    if (this.lastName.current) {
-                      this.lastName.current.doValidate();
-                    }
-                  }}
-                  onValid={this.updateValid}
-                  onInvalid={() => this.setValid(false)}
-                />
                 <Picker
                   ref={this.relationshipPicker}
                   items={[
