@@ -73,7 +73,7 @@ export type AppStackParamList = {
   ChooseCategory: undefined;
   ChooseOption: undefined;
   ComposeLetter: undefined;
-  ComposePersonal: { category: Category };
+  ComposePersonal: { category: Category } | undefined;
   ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
