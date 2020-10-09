@@ -29,6 +29,7 @@ import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import {
   uploadImage,
   fetchTimeout,
@@ -37,7 +38,7 @@ import {
   ApiResponse,
 } from './Common';
 import { getContacts } from './Contacts';
-import { getMail, getSubcategoriesById, getCategories, initMail } from './Mail';
+import { getSubcategoriesById, getCategories, initMail } from './Mail';
 
 interface RawUser {
   id: number;
@@ -91,42 +92,47 @@ export async function deleteToken(): Promise<void> {
 
 export async function deleteDraft(): Promise<void> {
   Promise.all([
-    Storage.DraftType,
+    deleteItemAsync(Storage.DraftType),
     deleteItemAsync(Storage.DraftContent),
     deleteItemAsync(Storage.DraftRecipientId),
     deleteItemAsync(Storage.DraftImages),
     deleteItemAsync(Storage.DraftDesignUri),
     deleteItemAsync(Storage.DraftCategoryId),
     deleteItemAsync(Storage.DraftSubcategoryName),
+    deleteItemAsync(Storage.DraftLayout),
   ]);
 }
 
 export async function saveDraft(draft: Draft): Promise<void> {
+  await deleteDraft();
   Promise.all([
-    deleteDraft(),
     setItemAsync(Storage.DraftType, draft.type),
     setItemAsync(Storage.DraftContent, draft.content),
     setItemAsync(Storage.DraftRecipientId, draft.recipientId.toString()),
   ]);
   if (draft.type === MailTypes.Letter) {
     await setItemAsync(Storage.DraftImages, JSON.stringify(draft.images));
-  } else if (
-    draft.type === MailTypes.Postcard &&
-    draft.design.image.uri &&
-    draft.design.categoryId &&
-    draft.design.subcategoryName
-  ) {
-    Promise.all([
-      setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
-      setItemAsync(Storage.DraftCategoryId, draft.design.categoryId.toString()),
-      setItemAsync(Storage.DraftSubcategoryName, draft.design.subcategoryName),
-    ]);
   } else {
-    Promise.all([
-      deleteItemAsync(Storage.DraftDesignUri),
-      deleteItemAsync(Storage.DraftCategoryId),
-      deleteItemAsync(Storage.DraftSubcategoryName),
-    ]);
+    setItemAsync(
+      Storage.DraftCategoryId,
+      draft.design.categoryId
+        ? draft.design.categoryId.toString()
+        : PERSONAL_OVERRIDE_ID.toString()
+    );
+    if (draft.design.layout) {
+      // personal postcard
+      Promise.all([
+        setItemAsync(Storage.DraftLayout, JSON.stringify(draft.design.layout)),
+      ]);
+    } else if (draft.design.image.uri && draft.design.subcategoryName) {
+      Promise.all([
+        setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
+        setItemAsync(
+          Storage.DraftSubcategoryName,
+          draft.design.subcategoryName
+        ),
+      ]);
+    }
   }
 }
 
@@ -160,18 +166,41 @@ export async function loadDraft(): Promise<Draft> {
     if (draftType === MailTypes.Postcard) {
       const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
       const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
-      const draftSubcategoryName = await getItemAsync(
+      let draftSubcategoryName = await getItemAsync(
         Storage.DraftSubcategoryName
       );
-      if (!draftDesignUri || !draftCategoryId || !draftSubcategoryName)
-        throw Error('Unable to load postcard design');
+      if (
+        !draftCategoryId ||
+        draftCategoryId === PERSONAL_OVERRIDE_ID.toString()
+      ) {
+        // either this is a personal postcard, or there is no categoryId and we assume it is
+        const draftLayout = await getItemAsync(Storage.DraftLayout);
+        const draft: Draft = {
+          type: MailTypes.Postcard,
+          recipientId: parseInt(draftRecipientId, 10),
+          content: draftContent || '',
+          design: {
+            image: { uri: '' },
+            layout: draftLayout ? JSON.parse(draftLayout) : undefined,
+            custom: true,
+            categoryId: PERSONAL_OVERRIDE_ID,
+          },
+        };
+        store.dispatch(setComposing(draft));
+        return draft;
+      }
       const subcategories = await getSubcategoriesById(
         parseInt(draftCategoryId, 10)
       );
-      const findDesign = subcategories[draftSubcategoryName].find(
+      if (!draftSubcategoryName) {
+        [draftSubcategoryName] = Object.keys(subcategories);
+      }
+      let findDesign = subcategories[draftSubcategoryName].find(
         (testDesign: PostcardDesign) => testDesign.image.uri === draftDesignUri
       );
-      if (!findDesign) throw Error('Unable to load postcard design');
+      if (!findDesign) {
+        [findDesign] = subcategories[draftSubcategoryName];
+      }
       const draft: Draft = {
         type: MailTypes.Postcard,
         recipientId: parseInt(draftRecipientId, 10),

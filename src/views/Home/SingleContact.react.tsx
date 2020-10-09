@@ -289,7 +289,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
-                    this.props.composing.design.image.uri.length)
+                    (this.props.composing.design.image.uri.length ||
+                      this.props.composing.design.layout ||
+                      this.props.composing.design.stickers))
                 ) {
                   popupAlert({
                     title: i18n.t('Compose.letterInProgress'),
@@ -320,16 +322,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                   'Library'
                               ) {
                                 this.props.navigation.navigate(
-                                  Screens.ComposePostcard,
-                                  {
-                                    category: {
-                                      name: 'personal',
-                                      id: -1,
-                                      image: { uri: '' },
-                                      blurb: '',
-                                      subcategories: {},
-                                    },
-                                  }
+                                  Screens.ComposePersonal
                                 );
                               }
                               if (!this.props.categories.length) {
@@ -351,10 +344,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               );
                             }
                           } else {
+                            await deleteDraft();
                             dropdownError({
                               message: i18n.t('Compose.draftContactDeleted'),
                             });
-                            await deleteDraft();
                             this.props.navigation.navigate(
                               Screens.ChooseCategory
                             );

@@ -7,8 +7,6 @@ import {
   RotationGestureHandler,
 } from 'react-native-gesture-handler';
 import Styles, { STICKER_SIZE } from './StickerComponent.styles';
-import Icon from '../Icon/Icon.react';
-import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 interface Props {
   sticker: Sticker;
