@@ -1,8 +1,8 @@
 import React, { Dispatch } from 'react';
-import { Text, View, Image as ImageComponent } from 'react-native';
-import { CategoryCard } from '@components';
+import { Text, View, Image as ImageComponent, Linking } from 'react-native';
+import { Button, CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '@utils/Screens';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { Draft, Category } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
@@ -17,6 +17,7 @@ import {
   dropdownWarning,
 } from '@components/Dropdown/Dropdown.react';
 import Loading from '@assets/common/loading.gif';
+import * as Sentry from 'sentry-expo';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -81,6 +82,9 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
         persist: true,
       });
     if (this.props.categories.length === 0) {
+      Sentry.captureMessage(
+        'Choose category reached without loaded categories'
+      );
       this.refreshCategories();
     }
   }
@@ -93,6 +97,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
           refreshing: false,
         });
       } catch (err) {
+        Sentry.captureException(err);
         dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
       }
     });
@@ -160,6 +165,30 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               style={{
                 width: 40,
                 height: 40,
+                marginBottom: 8,
+              }}
+            />
+            <Text
+              style={[
+                Typography.FONT_REGULAR,
+                { marginVertical: 32, fontSize: 18, textAlign: 'center' },
+              ]}
+            >
+              {i18n.t('Compose.havingTroubleWithCategories')}
+            </Text>
+            <Button
+              buttonText={i18n.t('Compose.sendPersonalLettersOrPhotos')}
+              containerStyle={{ width: '100%' }}
+              onPress={() => {
+                this.props.navigation.navigate(Screens.ChooseOption);
+              }}
+            />
+            <Button
+              buttonText={i18n.t('Compose.reachOutToSupport')}
+              containerStyle={{ width: '100%' }}
+              reverse
+              onPress={async () => {
+                await Linking.openURL('https://m.me/teamameelio');
               }}
             />
           </View>

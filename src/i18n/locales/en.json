@@ -366,7 +366,10 @@
     "dueToTDCJ": "Due to a TDCJ policy, loved ones in Texas state prisons are not allowed to receive postcards. Only",
     "willBeAccepted": "letters will be accepted.",
     "stickers": "Stickers",
-    "layouts": "Layouts"
+    "layouts": "Layouts",
+    "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
+    "sendPersonalLettersOrPhotos": "Send personal letters or photos",
+    "reachOutToSupport":"Reach out to support"
   },
   "ComposeTools": {
     "wordsLeft": "words left"

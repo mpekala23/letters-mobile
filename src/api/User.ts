@@ -13,7 +13,6 @@ import {
   PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
-  Layout,
 } from 'types';
 import {
   loginUser,
@@ -30,6 +29,7 @@ import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import {
   uploadImage,
   fetchTimeout,
@@ -103,7 +103,7 @@ export async function deleteDraft(): Promise<void> {
   ]);
 }
 
-export async function saveDraft(draft: Draft, layout?: Layout): Promise<void> {
+export async function saveDraft(draft: Draft): Promise<void> {
   await deleteDraft();
   Promise.all([
     setItemAsync(Storage.DraftType, draft.type),
@@ -115,11 +115,15 @@ export async function saveDraft(draft: Draft, layout?: Layout): Promise<void> {
   } else {
     setItemAsync(
       Storage.DraftCategoryId,
-      draft.design.categoryId ? draft.design.categoryId.toString() : '5'
+      draft.design.categoryId
+        ? draft.design.categoryId.toString()
+        : PERSONAL_OVERRIDE_ID.toString()
     );
-    if (layout) {
+    if (draft.design.layout) {
       // personal postcard
-      Promise.all([setItemAsync(Storage.DraftLayout, JSON.stringify(layout))]);
+      Promise.all([
+        setItemAsync(Storage.DraftLayout, JSON.stringify(draft.design.layout)),
+      ]);
     } else if (draft.design.image.uri && draft.design.subcategoryName) {
       Promise.all([
         setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
@@ -165,8 +169,11 @@ export async function loadDraft(): Promise<Draft> {
       let draftSubcategoryName = await getItemAsync(
         Storage.DraftSubcategoryName
       );
-      if (!draftCategoryId || draftCategoryId === '5') {
-        // either this is a personal postcard, or we assume it is
+      if (
+        !draftCategoryId ||
+        draftCategoryId === PERSONAL_OVERRIDE_ID.toString()
+      ) {
+        // either this is a personal postcard, or there is no categoryId and we assume it is
         const draftLayout = await getItemAsync(Storage.DraftLayout);
         const draft: Draft = {
           type: MailTypes.Postcard,
@@ -176,6 +183,7 @@ export async function loadDraft(): Promise<Draft> {
             image: { uri: '' },
             layout: draftLayout ? JSON.parse(draftLayout) : undefined,
             custom: true,
+            categoryId: PERSONAL_OVERRIDE_ID,
           },
         };
         store.dispatch(setComposing(draft));

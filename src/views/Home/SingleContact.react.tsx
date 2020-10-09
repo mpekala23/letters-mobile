@@ -344,10 +344,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               );
                             }
                           } else {
+                            await deleteDraft();
                             dropdownError({
                               message: i18n.t('Compose.draftContactDeleted'),
                             });
-                            await deleteDraft();
                             this.props.navigation.navigate(
                               Screens.ChooseCategory
                             );
