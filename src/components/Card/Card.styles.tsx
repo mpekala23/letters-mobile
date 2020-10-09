@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
+import { WINDOW_WIDTH } from '@utils';
 
 export default StyleSheet.create({
   shadow: {
@@ -143,5 +144,22 @@ export default StyleSheet.create({
   categoryBlurb: {
     color: Colors.GRAY_DARKER,
     fontSize: 14,
+  },
+  contactSelectorCardBackground: {
+    width: (WINDOW_WIDTH - 48) / 2,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginVertical: 8,
+    marginHorizontal: 8,
+  },
+  contactSelectorColor: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: 64,
   },
 });

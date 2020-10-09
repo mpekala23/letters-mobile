@@ -83,7 +83,10 @@
     "addContact": "Agregar contacto",
     "referralCardTitle": "Comparter con otros",
     "referralCardSubtitle": "Más de 1.500 personas han compartido",
-    "referralCardCta": "Ayude a otros"
+    "referralCardCta": "Ayude a otros",
+    "letter": "carta",
+    "letters": "cartas",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "crédito",
