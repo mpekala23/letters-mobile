@@ -1,38 +1,49 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
+import { WINDOW_HEIGHT } from '@utils/Constants';
 
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
-    padding: 24,
   },
-  header: {
-    alignSelf: 'flex-start',
-  },
-  ameelioLogo: {
-    fontSize: 26,
-    paddingTop: 4,
-    paddingLeft: 4,
-    color: Colors.AMEELIO_BLUE,
-  },
-  titleText: {
+  page: {
     width: '100%',
-    fontSize: 20,
-    alignSelf: 'flex-start',
+    height: '100%',
+  },
+  padded: {
+    padding: 32,
   },
   baseText: {
     fontSize: 18,
   },
   buttonContainer: {
-    position: 'absolute',
     width: '100%',
     padding: 24,
-    flex: 1,
-    height: '100%',
     justifyContent: 'flex-end',
+  },
+  swipePositionBackground: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 16,
+  },
+  swipeCircle: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    marginHorizontal: 4,
+  },
+  screenTitle: {
+    fontSize: 21,
+    padding: 32,
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  screenImage: {
+    width: '100%',
+    height: WINDOW_HEIGHT * 0.5,
+    resizeMode: 'contain',
   },
 });
