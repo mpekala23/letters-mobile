@@ -35,7 +35,7 @@ interface RawContact {
   profile_img_path?: string;
 }
 
-function cleanContact(data: RawContact, colorIndex: string | number): Contact {
+function cleanContact(data: RawContact, color: string): Contact {
   const dormExtension = data.dorm ? { dorm: data.dorm } : {};
   const unitExtension = data.unit ? { unit: data.unit } : {};
   const imageExtension =
@@ -64,12 +64,7 @@ function cleanContact(data: RawContact, colorIndex: string | number): Contact {
     totalSent: 0,
     mailPage: 1,
     hasNextPage: true,
-    backgroundColor:
-      typeof colorIndex === 'string'
-        ? colorIndex
-        : CONTACT_BACKGROUND_COLORS[
-            colorIndex % CONTACT_BACKGROUND_COLORS.length
-          ],
+    backgroundColor: color,
     ...dormExtension,
     ...unitExtension,
     ...imageExtension,
@@ -87,7 +82,10 @@ export async function getContacts(page = 1): Promise<Contact[]> {
   const data = body.data as { data: RawContact[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
   const existingContacts = data.data.map((contact, index) =>
-    cleanContact(contact, index)
+    cleanContact(
+      contact,
+      CONTACT_BACKGROUND_COLORS[index % CONTACT_BACKGROUND_COLORS.length]
+    )
   );
   store.dispatch(setExistingContacts(existingContacts));
   return existingContacts;
@@ -145,7 +143,10 @@ export async function addContact(contactDraft: ContactDraft): Promise<Contact> {
   const data = body.data as RawContact;
   const newContact = cleanContact(
     data,
-    store.getState().contact.existing.length
+    CONTACT_BACKGROUND_COLORS[
+      store.getState().contact.existing.length %
+        CONTACT_BACKGROUND_COLORS.length
+    ]
   );
   const { existing } = store.getState().contact;
   existing.unshift(newContact);
