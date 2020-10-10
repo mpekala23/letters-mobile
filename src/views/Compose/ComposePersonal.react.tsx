@@ -27,6 +27,8 @@ import {
   Image,
   Sticker,
   ComposeBottomDetails,
+  MailTypes,
+  PlacedSticker,
 } from 'types';
 import {
   setBackOverride,
@@ -39,6 +41,7 @@ import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
+import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
@@ -56,7 +59,12 @@ import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
 import STICKERS from '@assets/stickers';
-import { POSTCARD_HEIGHT, POSTCARD_WIDTH, BAR_HEIGHT } from '@utils/Constants';
+import {
+  POSTCARD_HEIGHT,
+  POSTCARD_WIDTH,
+  BAR_HEIGHT,
+  PERSONAL_OVERRIDE_ID,
+} from '@utils/Constants';
 import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -82,8 +90,8 @@ interface State {
     bottomDetails: ComposeBottomDetails | null;
     bottomSlide: Animated.Value;
     layout: Layout;
+    stickers: PlacedSticker[];
     commonLayout: Layout;
-    design: PostcardDesign;
     flip: Animated.Value;
     animatingFlip: boolean;
     horizontal: boolean;
@@ -119,9 +127,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       designState: {
         bottomDetails: null,
         bottomSlide: new Animated.Value(0),
-        layout: { ...LAYOUTS[0] },
+        layout:
+          props.composing.type === MailTypes.Postcard &&
+          props.composing.design.layout
+            ? props.composing.design.layout
+            : { ...LAYOUTS[0] },
+        stickers: [],
         commonLayout: { ...COMMON_LAYOUT },
-        design: { image: { uri: '' } },
         flip: new Animated.Value(0),
         animatingFlip: false,
         horizontal: true,
@@ -150,6 +162,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.backWriting = this.backWriting.bind(this);
     this.doneWriting = this.doneWriting.bind(this);
     this.renderStickerItem = this.renderStickerItem.bind(this);
+    this.updateComposing = this.updateComposing.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
@@ -177,6 +190,18 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   async onNavigationFocus() {
+    const { content } = this.props.composing;
+    if (this.postcardRef.current) {
+      if (!this.props.hasSentMail && !content) {
+        this.postcardRef.current.set(
+          `${i18n.t('Compose.firstLetterGhostTextSalutation')} ${
+            this.props.recipient.firstName
+          }, ${i18n.t('Compose.firstLetterGhostTextBody')}`
+        );
+      } else {
+        this.postcardRef.current.set(content);
+      }
+    }
     if (!this.state.designState.library.length) {
       let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
       if (finalStatus !== 'granted') {
@@ -239,29 +264,35 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     }).start();
   }
 
-  setDesignState(newState: {
-    bottomDetails?: ComposeBottomDetails | null;
-    bottomSlide?: Animated.Value;
-    layout?: Layout;
-    commonLayout?: Layout;
-    design?: PostcardDesign;
-    flip?: Animated.Value;
-    animatingFlip?: boolean;
-    horizontal?: boolean;
-    mediaGranted?: boolean;
-    endCursor?: string;
-    hasNextPage?: boolean;
-    library?: PostcardDesign[];
-    activePosition?: number;
-    snapshot?: Image | null;
-  }) {
-    this.setState((prevState) => ({
-      ...prevState,
-      designState: {
-        ...prevState.designState,
-        ...newState,
-      },
-    }));
+  setDesignState(
+    newState: {
+      bottomDetails?: ComposeBottomDetails | null;
+      bottomSlide?: Animated.Value;
+      layout?: Layout;
+      stickers?: PlacedSticker[];
+      commonLayout?: Layout;
+      flip?: Animated.Value;
+      animatingFlip?: boolean;
+      horizontal?: boolean;
+      mediaGranted?: boolean;
+      endCursor?: string;
+      hasNextPage?: boolean;
+      library?: PostcardDesign[];
+      activePosition?: number;
+      snapshot?: Image | null;
+    },
+    callback?: () => void
+  ) {
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        designState: {
+          ...prevState.designState,
+          ...newState,
+        },
+      }),
+      callback
+    );
   }
 
   setTextState(newState: {
@@ -333,6 +364,19 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     return keys.every((key) => layout.designs[parseInt(key, 10)]);
   }
 
+  updateComposing() {
+    this.props.setDesign({
+      image:
+        this.props.composing.type === MailTypes.Postcard
+          ? this.props.composing.design.image
+          : { uri: '' },
+      custom: true,
+      layout: this.state.designState.layout,
+      categoryId: PERSONAL_OVERRIDE_ID,
+    });
+    saveDraft(this.props.composing);
+  }
+
   startWriting() {
     if (!this.designsAreFilled()) {
       popupAlert({
@@ -353,7 +397,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           this.props.setDesign({
             image: snapshot,
             custom: true,
+            layout: this.state.designState.layout,
+            categoryId: PERSONAL_OVERRIDE_ID,
           });
+          saveDraft(this.props.composing);
         }
       });
     }
@@ -521,10 +568,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           const { activePosition } = this.state.designState;
           layout.designs[activePosition] = design;
           commonLayout.designs[activePosition] = design;
-          this.setDesignState({
-            layout,
-            commonLayout,
-          });
+          this.setDesignState(
+            {
+              layout,
+              commonLayout,
+            },
+            this.updateComposing
+          );
         }}
       >
         <AsyncImage
@@ -557,7 +607,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
               newLayout.designs[nKey] = commonLayout.designs[nKey];
             }
           });
-          this.setDesignState({ layout: newLayout });
+          this.setDesignState({ layout: newLayout }, this.updateComposing);
         }}
       >
         <Icon svg={layout.svg} />
@@ -770,6 +820,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   <DynamicPostcard
                     ref={this.postcardRef}
                     layout={this.state.designState.layout}
+                    stickers={this.state.designState.stickers}
                     activePosition={this.state.designState.activePosition}
                     highlightActive={
                       this.state.designState.bottomDetails === 'design'
@@ -782,6 +833,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     flip={this.state.designState.flip}
                     onChangeText={(text) => {
                       this.props.setContent(text);
+                      saveDraft(this.props.composing);
                       const numWords = getNumWords(text);
                       this.setTextState({ wordsLeft: 100 - numWords });
                     }}
@@ -789,6 +841,14 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     width={POSTCARD_WIDTH}
                     height={POSTCARD_HEIGHT}
                     bottomDetails={this.state.designState.bottomDetails}
+                    updateStickers={(stickers) => {
+                      this.setDesignState({ stickers });
+                      if (this.props.composing.type === MailTypes.Postcard)
+                        this.props.setDesign({
+                          ...this.props.composing.design,
+                          stickers,
+                        });
+                    }}
                   />
                 </Animated.View>
               </ScrollView>

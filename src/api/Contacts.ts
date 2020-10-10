@@ -13,6 +13,7 @@ import {
 import * as Sentry from 'sentry-expo';
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE } from '@utils';
+import { CONTACT_BACKGROUND_COLORS } from '@styles/Colors';
 import { fetchAuthenticated, API_URL, uploadImage } from './Common';
 
 interface RawContact {
@@ -34,12 +35,7 @@ interface RawContact {
   profile_img_path?: string;
 }
 
-function cleanContact(
-  data: RawContact,
-  totalSent = 0,
-  mailPage = 1,
-  hasNextPage = true
-): Contact {
+function cleanContact(data: RawContact, color: string): Contact {
   const dormExtension = data.dorm ? { dorm: data.dorm } : {};
   const unitExtension = data.unit ? { unit: data.unit } : {};
   const imageExtension =
@@ -68,6 +64,7 @@ function cleanContact(
     totalSent: 0,
     mailPage: 1,
     hasNextPage: true,
+    backgroundColor: color,
     ...dormExtension,
     ...unitExtension,
     ...imageExtension,
@@ -84,19 +81,25 @@ export async function getContacts(page = 1): Promise<Contact[]> {
   );
   const data = body.data as { data: RawContact[] };
   if (body.status !== 'OK' || !data || !data.data) throw body;
-  const existingContacts = data.data.map((contact: RawContact) =>
-    cleanContact(contact)
+  const existingContacts = data.data.map((contact, index) =>
+    cleanContact(
+      contact,
+      CONTACT_BACKGROUND_COLORS[index % CONTACT_BACKGROUND_COLORS.length]
+    )
   );
   store.dispatch(setExistingContacts(existingContacts));
   return existingContacts;
 }
 
-export async function getContact(id: number): Promise<Contact> {
-  const body = await fetchAuthenticated(url.resolve(API_URL, `contact/${id}`), {
-    method: 'GET',
-  });
+export async function getContact(contact: Contact): Promise<Contact> {
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `contact/${contact.id}`),
+    {
+      method: 'GET',
+    }
+  );
   if (body.status !== 'OK' || !body.data) throw body;
-  return cleanContact(body.data as RawContact);
+  return cleanContact(body.data as RawContact, contact.backgroundColor);
 }
 
 export async function addContact(contactDraft: ContactDraft): Promise<Contact> {
@@ -138,7 +141,13 @@ export async function addContact(contactDraft: ContactDraft): Promise<Contact> {
   });
   if (body.status !== 'OK') throw body;
   const data = body.data as RawContact;
-  const newContact = cleanContact(data);
+  const newContact = cleanContact(
+    data,
+    CONTACT_BACKGROUND_COLORS[
+      store.getState().contact.existing.length %
+        CONTACT_BACKGROUND_COLORS.length
+    ]
+  );
   const { existing } = store.getState().contact;
   existing.unshift(newContact);
   store.dispatch(setExistingContacts(existing));

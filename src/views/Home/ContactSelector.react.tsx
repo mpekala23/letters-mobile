@@ -12,7 +12,7 @@ import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
-import { getUser, getCategories } from '@api';
+import { getCategories } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -20,12 +20,11 @@ import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { requestReview } from '@utils';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'ContactSelector'
+  Screens.ContactSelector
 >;
 
 interface Props {
@@ -46,12 +45,13 @@ class ContactSelectorScreenBase extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.doRefresh = this.doRefresh.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
     this.unsubscribeFocus = props.navigation.addListener(
       'focus',
       this.onNavigationFocus
     );
+    this.renderReferralCard = this.renderReferralCard.bind(this);
+    this.renderListHeader = this.renderListHeader.bind(this);
   }
 
   componentDidMount() {
@@ -90,25 +90,15 @@ class ContactSelectorScreenBase extends React.Component<Props> {
   }
 
   async onNavigationFocus() {
-    if (this.props.existingContacts.length <= 0) {
-      this.props.navigation.replace(Screens.ContactInfo, {});
+    if (this.props.existingContacts.length === 0) {
+      this.props.navigation.replace(Screens.IntroContact);
     }
     getCategories().catch(() => {
       dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
     });
   }
 
-  doRefresh = () => {
-    /* if (this.props.userId === -1) return;
-    this.setState({ refreshing: true });
-    try {
-    } catch (e) {
-      dropdownError({ message: i18n.t('Error.cantRefreshContacts') });
-    }
-    this.setState({ refreshing: false }); */
-  };
-
-  renderItem = ({ item }: { item: Contact }): JSX.Element => {
+  renderItem = ({ item }: { item: Contact; index: number }): JSX.Element => {
     return (
       <ContactSelectorCard
         firstName={item.firstName}
@@ -121,8 +111,9 @@ class ContactSelectorScreenBase extends React.Component<Props> {
           this.props.navigation.navigate(Screens.SingleContact);
         }}
         userPostal={this.props.userPostal}
-        contactPostal={item.facility?.postal}
-        key={item.inmateNumber}
+        contactPostal={item.facility.postal}
+        key={`${item.inmateNumber}-${item.lastName}-${item.lastName}-${item.id}`}
+        backgroundColor={item.backgroundColor}
       />
     );
   };
@@ -160,54 +151,75 @@ class ContactSelectorScreenBase extends React.Component<Props> {
     );
   }
 
-  render() {
+  renderReferralCard(): JSX.Element {
     return (
-      <KeyboardAvoider style={Styles.trueBackground}>
-        <View style={[Styles.referralCardBackground]}>
-          <LinearGradient
-            colors={['#032658', '#0748A6']}
-            style={Styles.referralCardBgGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
+      <View style={Styles.referralCardBackground}>
+        <LinearGradient
+          colors={['#032658', '#0748A6']}
+          style={Styles.referralCardBgGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+        />
+        <Icon
+          svg={CardBackground}
+          style={Styles.referralCardBackgroundIllustration}
+        />
+        <View style={Styles.referralCardDesc}>
+          <Text style={[Styles.referralCardTitle, Typography.FONT_BOLD]}>
+            {i18n.t('ContactSelectorScreen.referralCardTitle')}
+          </Text>
+          <Text style={[Styles.referralCardSubtitle]}>
+            {i18n.t('ContactSelectorScreen.referralCardSubtitle')}
+          </Text>
+          <Button
+            buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
+            onPress={async () => {
+              this.props.navigation.navigate(Screens.ReferralDashboard);
+              Segment.track('Contact Selector - Click on Referral Card');
+            }}
+            reverse
+            containerStyle={Styles.referralCardCta}
+            textStyle={[Typography.FONT_BOLD]}
           />
-          <Icon
-            svg={CardBackground}
-            style={Styles.referralCardBackgroundIllustration}
-          />
-          <View style={Styles.referralCardDesc}>
-            <Text style={[Styles.referralCardTitle, Typography.FONT_BOLD]}>
-              {i18n.t('ContactSelectorScreen.referralCardTitle')}
-            </Text>
-            <Text style={[Styles.referralCardSubtitle]}>
-              {i18n.t('ContactSelectorScreen.referralCardSubtitle')}
-            </Text>
-            <Button
-              buttonText={i18n.t('ContactSelectorScreen.referralCardCta')}
-              onPress={async () => {
-                this.props.navigation.navigate(Screens.ReferralDashboard);
-                Segment.track('Contact Selector - Click on Referral Card');
-              }}
-              reverse
-              containerStyle={Styles.referralCardCta}
-              textStyle={[Typography.FONT_BOLD]}
-            />
-          </View>
         </View>
+      </View>
+    );
+  }
+
+  renderListHeader() {
+    return (
+      <View>
+        {this.renderReferralCard()}
         <Text
           style={[
             Typography.FONT_SEMIBOLD,
             {
               color: Colors.GRAY_500,
               fontSize: 20,
-              paddingVertical: 16,
+              paddingTop: 8,
+              paddingBottom: 4,
             },
           ]}
         >
           {i18n.t('ContactSelectorScreen.yourLovedOnes')}
         </Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <KeyboardAvoider style={Styles.trueBackground}>
         <FlatList
+          key={`Flatlist${this.props.existingContacts.length}`}
           data={this.props.existingContacts}
           renderItem={this.renderItem}
+          contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+          numColumns={this.props.existingContacts.length > 1 ? 2 : 1}
+          ListHeaderComponent={this.renderListHeader}
           ListEmptyComponent={ContactSelectorScreenBase.renderInitialMessage}
           ListFooterComponent={this.renderAddContactButton}
           keyExtractor={(item) => item.inmateNumber.toString()}

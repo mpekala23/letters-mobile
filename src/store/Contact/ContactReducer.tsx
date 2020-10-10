@@ -5,6 +5,7 @@ import {
   SET_ADDING,
   SET_ADDING_PERSONAL,
   SET_ADDING_FACILITY,
+  SET_ADDING_INMATE_INFO,
   SET_ACTIVE,
   SET_EXISTING,
   UPDATE_CONTACT,
@@ -42,6 +43,7 @@ const initialState: ContactState = {
       postal: '',
       phone: '',
     },
+    backgroundColor: '',
     totalSent: 0,
     mailPage: 1,
     hasNextPage: false,
@@ -63,6 +65,9 @@ export default function ContactReducer(
       currentState.adding = { ...currentState.adding, ...action.payload };
       return currentState;
     case SET_ADDING_FACILITY:
+      currentState.adding = { ...currentState.adding, ...action.payload };
+      return currentState;
+    case SET_ADDING_INMATE_INFO:
       currentState.adding = { ...currentState.adding, ...action.payload };
       return currentState;
     case SET_ACTIVE:

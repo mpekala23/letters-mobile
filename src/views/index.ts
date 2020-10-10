@@ -1,4 +1,3 @@
-import AddManuallyScreen from './AddContact/AddManually.react';
 import BeginScreen from './Onboarding/Begin.react';
 import ChooseCategoryScreen from './Compose/ChooseCategory.react';
 import ChooseOptionScreen from './Compose/ChooseOption.react';
@@ -6,10 +5,12 @@ import ComposeLetterScreen from './Compose/ComposeLetter.react';
 import ComposePersonalScreen from './Compose/ComposePersonal.react';
 import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
+import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import InmateLocatorScreen from './AddContact/InmateLocator.react';
 import IssuesScreen from './Report/Issues.react';
+import IntroContactScreen from './AddContact/IntroContact.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
 import IssuesDetailSecondaryScreen from './Report/IssuesDetailSecondary.react';
 import LoginScreen from './Login/Login.react';
@@ -34,7 +35,6 @@ import UpdateContactScreen from './Update/UpdateContact.react';
 import UpdateProfileScreen from './Update/UpdateProfile.react';
 
 export {
-  AddManuallyScreen,
   BeginScreen,
   ChooseCategoryScreen,
   ChooseOptionScreen,
@@ -42,9 +42,11 @@ export {
   ComposePersonalScreen,
   ComposePostcardScreen,
   ContactInfoScreen,
+  ContactInmateInfoScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
+  IntroContactScreen,
   IssuesScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,

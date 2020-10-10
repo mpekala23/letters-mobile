@@ -31,6 +31,7 @@ const pixelHeight = DESIRED_ACTUAL_PIXEL_HEIGHT / pixelRatio;
 
 interface Props {
   layout: Layout;
+  stickers: PlacedSticker[];
   commonLayout: Layout;
   flip?: Animated.Value;
   onChangeText: (text: string) => void;
@@ -42,13 +43,10 @@ interface Props {
   activePosition: number;
   highlightActive: boolean;
   bottomDetails: ComposeBottomDetails | null;
+  updateStickers: (stickers: PlacedSticker[]) => void;
 }
 
-interface State {
-  placedStickers: PlacedSticker[];
-}
-
-class DynamicPostcard extends React.Component<Props, State> {
+class DynamicPostcard extends React.Component<Props> {
   private inputRef = createRef<Input>();
 
   private viewShotRef = createRef<View>();
@@ -59,15 +57,12 @@ class DynamicPostcard extends React.Component<Props, State> {
     super(props);
     this.focus = this.focus.bind(this);
     this.set = this.set.bind(this);
-    this.state = {
-      placedStickers: [],
-    };
   }
 
   async getSnapshot(): Promise<Image> {
     Segment.trackWithProperties('Compose - Complete Postcard Front', {
       layout: this.props.layout.id,
-      stickers: this.state.placedStickers.map(
+      stickers: this.props.stickers.map(
         (placedSticker) => placedSticker.sticker.name
       ),
     });
@@ -217,7 +212,7 @@ class DynamicPostcard extends React.Component<Props, State> {
               }}
             >
               {this.renderImages()}
-              {this.state.placedStickers.map((placedSticker) => {
+              {this.props.stickers.map((placedSticker) => {
                 const growBy = pixelWidth / this.props.width;
                 return (
                   <View
@@ -250,7 +245,7 @@ class DynamicPostcard extends React.Component<Props, State> {
               ref={this.stickerManagerRef}
               active={this.props.bottomDetails === 'stickers'}
               updateStickers={(placedStickers) => {
-                this.setState({ placedStickers });
+                this.props.updateStickers(placedStickers);
               }}
               width={this.props.width}
               height={this.props.height}

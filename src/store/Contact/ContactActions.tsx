@@ -1,4 +1,10 @@
-import { Contact, ContactDraft, ContactPersonal, ContactFacility } from 'types';
+import {
+  Contact,
+  ContactDraft,
+  ContactPersonal,
+  ContactFacility,
+  ContactInmateInfo,
+} from 'types';
 import {
   SET_ADDING,
   SET_ADDING_PERSONAL,
@@ -7,6 +13,7 @@ import {
   SET_EXISTING,
   UPDATE_CONTACT,
   CLEAR_CONTACTS,
+  SET_ADDING_INMATE_INFO,
   ContactActionTypes,
 } from './ContactTypes';
 
@@ -32,6 +39,15 @@ export function setAddingFacility(
   return {
     type: SET_ADDING_FACILITY,
     payload: contactFacility,
+  };
+}
+
+export function setAddingInmateInfo(
+  contactInmateInfo: ContactInmateInfo
+): ContactActionTypes {
+  return {
+    type: SET_ADDING_INMATE_INFO,
+    payload: contactInmateInfo,
   };
 }
 

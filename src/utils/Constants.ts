@@ -12,3 +12,4 @@ export const BAR_HEIGHT = 80;
 // Compose constants
 export const POSTCARD_WIDTH = WINDOW_WIDTH - 32;
 export const POSTCARD_HEIGHT = POSTCARD_WIDTH * (2 / 3);
+export const PERSONAL_OVERRIDE_ID = -6;

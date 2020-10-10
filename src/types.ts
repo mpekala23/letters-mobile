@@ -42,6 +42,8 @@ export interface PostcardDesign {
   custom?: boolean;
   designer?: string;
   contentResearcher?: string;
+  layout?: Layout;
+  stickers?: PlacedSticker[];
 }
 
 interface LetterSpecific {
@@ -133,13 +135,16 @@ export interface Facility {
 export interface ContactPersonal {
   firstName: string;
   lastName: string;
-  inmateNumber: string;
   relationship: string;
   image?: Image;
 }
 
 export interface ContactFacility {
   facility: Facility;
+}
+
+export interface ContactInmateInfo {
+  inmateNumber: string;
   dorm?: string;
   unit?: string;
 }
@@ -149,9 +154,13 @@ interface ContactCreated {
   totalSent: number;
   mailPage: number;
   hasNextPage: boolean;
+  backgroundColor: string;
 }
 
-export interface ContactDraft extends ContactPersonal, ContactFacility {}
+export interface ContactDraft
+  extends ContactPersonal,
+    ContactFacility,
+    ContactInmateInfo {}
 
 export interface Contact extends ContactDraft, ContactCreated {}
 
@@ -226,6 +235,7 @@ export enum Storage {
   DraftCategoryId = 'Ameelio-DraftCategoryId',
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
+  DraftLayout = 'Ameelio-DraftLayout',
 }
 
 export type TopbarBackAction = {

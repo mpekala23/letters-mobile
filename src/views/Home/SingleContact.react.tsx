@@ -189,7 +189,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         onRefresh={async () => {
           this.setState({ refreshing: true });
           try {
-            await getContact(this.props.activeContact.id);
+            await getContact(this.props.activeContact);
             if (this.props.activeContact.hasNextPage) {
               await getMailByContact(
                 this.props.activeContact,
@@ -213,7 +213,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         >
           <View style={Styles.profileCard}>
             <LinearGradient
-              colors={['#ADD3FF', '#FFC9C9']}
+              colors={[
+                this.props.activeContact.backgroundColor,
+                this.props.activeContact.backgroundColor,
+              ]}
               style={Styles.profileCardHeader}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
@@ -289,7 +292,9 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
-                    this.props.composing.design.image.uri.length)
+                    (this.props.composing.design.image.uri.length ||
+                      this.props.composing.design.layout ||
+                      this.props.composing.design.stickers))
                 ) {
                   popupAlert({
                     title: i18n.t('Compose.letterInProgress'),
@@ -320,16 +325,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                                   'Library'
                               ) {
                                 this.props.navigation.navigate(
-                                  Screens.ComposePostcard,
-                                  {
-                                    category: {
-                                      name: 'personal',
-                                      id: -1,
-                                      image: { uri: '' },
-                                      blurb: '',
-                                      subcategories: {},
-                                    },
-                                  }
+                                  Screens.ComposePersonal
                                 );
                               }
                               if (!this.props.categories.length) {
@@ -351,10 +347,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               );
                             }
                           } else {
+                            await deleteDraft();
                             dropdownError({
                               message: i18n.t('Compose.draftContactDeleted'),
                             });
-                            await deleteDraft();
                             this.props.navigation.navigate(
                               Screens.ChooseCategory
                             );

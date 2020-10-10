@@ -11,6 +11,7 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -42,6 +43,8 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             content: '',
             design: {
               image: { uri: '' },
+              custom: true,
+              categoryId: PERSONAL_OVERRIDE_ID,
             },
           });
           props.navigation.navigate(Screens.ComposePersonal, {

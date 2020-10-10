@@ -34,16 +34,12 @@
     "notifs": "Can't register notifications. Ensure that this is enabled in settings.",
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
-  "AddManuallyScreen": {
-    "facilityName": "Facility Name",
-    "facilityAddress": "Facility Address",
-    "facilityCity": "Facility City",
-    "facilityState": "Facility State",
-    "facilityPostal": "Facility Postal",
-    "facilityPhone": "Facility Phone (optional)"
-  },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Connect with your incarcerated loved ones, for free.",
+    "connectWithYour": "Connect with your incarcerated loved ones, ",
+    "forFree": "for free.",
+    "sendEverything": "Send everything from a letter, photos, to art and games",
+    "theyllReceive": "They'll receive memories they can hold on to",
+    "joinOurCommunity": "Join our community of 14,000+ families in this journey",
     "signUp": "Sign up",
     "logIn": "Log in"
   },
@@ -53,14 +49,9 @@
   },
   "ContactInfoScreen": {
     "addContact": "Add Contact",
-    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
-    "tapHereToSearch": "Tap here to search the",
-    "database": "database",
-    "federal": "Federal",
     "firstName": "First Name",
     "lastName": "Last Name",
     "nameTooLong": "Oops, your loved one's name is a bit too long! Could you please abbreviate?",
-    "inmateNumber": "Inmate Number",
     "relationshipToInmate": "I am their..",
     "state": "State",
     "postal": "Postal",
@@ -76,6 +67,22 @@
     "back": "Back",
     "next": "Next"
   },
+  "ContactInmateInfoScreen": {
+    "addDetails": "Add Details",
+    "needHelpFindingYourInmateID": "Need help finding your loved one's inmate ID?",
+    "tapHereToSearch": "Tap here to search the",
+    "database": "database",
+    "federal": "Federal",
+    "inmateNumber": "Inmate Number",
+    "next": "Next",
+    "facilityName": "Facility Name",
+    "facilityType": "Facility Type",
+    "facilityAddress": "Facility Address",
+    "facilityCity": "Facility City",
+    "facilityState": "Facility State",
+    "facilityPostal": "Facility Postal",
+    "facilityPhone": "Facility Phone (optional)"
+  },
   "ContactSelectorScreen": {
     "yourLovedOnes": "Your loved ones",
     "miles": "miles",
@@ -83,16 +90,19 @@
     "addContact": "Add contact",
     "referralCardTitle": "Spread the Word",
     "referralCardSubtitle": "Over 1,500 people shared",
-    "referralCardCta": "Help others"
+    "referralCardCta": "Help others",
+    "letter": "letter",
+    "letters": "letters",
+    "lastHeard": "Last heard",
   },
   "CreditsCard": {
-    "letter": "credit",
-    "letters": "credits",
+    "letter": "Ameelio",
+    "letters": "Ameelios",
     "leftThisWeek": "left this week",
     "sendMore": "Send more",
-    "youUsedAllYourLetters": "You used all your credits for the week",
-    "creditsResetDaily": "Your credits reset weekly.",
-    "comeBackOnMondayForMore": "Your credits reset on Mondays at 4am EST."
+    "youUsedAllYourLetters": "You used all your Ameelios for the week",
+    "creditsResetDaily": "Your Ameelios reset weekly.",
+    "comeBackOnMondayForMore": "Your Ameelios reset on Mondays at 4am EST."
   },
   "FacilityDirectoryScreen": {
     "facilityDirectory": "Facility Directory",
@@ -105,6 +115,12 @@
     "PennsylvaniaHint3": "in the facility directory.",
     "statePrison": "State Prison",
     "smartCommunications": "Smart Communications"
+  },
+  "IntroContactScreen": {
+    "welcomePre": "Welcome,",
+    "welcomePost": "Time to locate your loved one.",
+    "body": "Add your first contact and join 15,000+ others families in the Ameelio community.",
+    "continueButton": "Get started"
   },
   "IssuesScreen": {
     "hasYourLovedOneReceivedLetterPrefix": "Has ",
@@ -354,7 +370,7 @@
     "continueWriting": "Continue writing",
     "startNewLetter": "Start new draft",
     "draftContactDeleted": "The contact that your saved draft was addressed to has been deleted. You'll have to start a new draft.",
-    "notEnoughCredits": "Not enough kites",
+    "notEnoughCredits": "Not enough Ameelios",
     "autosaved": "Autosaved",
     "firstLetterGhostTextSalutation": "Hey",
     "firstLetterGhostTextBody": "hope you're good. I am trying out this new service to see if it works.",
@@ -366,7 +382,10 @@
     "dueToTDCJ": "Due to a TDCJ policy, loved ones in Texas state prisons are not allowed to receive postcards. Only",
     "willBeAccepted": "letters will be accepted.",
     "stickers": "Stickers",
-    "layouts": "Layouts"
+    "layouts": "Layouts",
+    "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
+    "sendPersonalLettersOrPhotos": "Send personal letters or photos",
+    "reachOutToSupport":"Reach out to support"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
@@ -392,9 +411,9 @@
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
     "register": "Register",
-    "addManually": "Add Manually",
     "compose": "Compose",
     "contactInfo": "Contact Info",
+    "contactInmateInfo": "Contact Details",
     "contacts": "Contacts",
     "home": "Home",
     "issues": "Issues",
@@ -411,7 +430,8 @@
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
     "reviewPostcard": "Preview",
-    "inmateLocator": "Inmate Locator"
+    "inmateLocator": "Inmate Locator",
+    "introContact": "Welcome"
   },
   "Sharing": {
     "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
