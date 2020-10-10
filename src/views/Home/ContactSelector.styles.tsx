@@ -2,14 +2,6 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 import { WINDOW_WIDTH } from '@utils/Constants';
 
-export const BACKGROUND_COLORS = [
-  Colors.BLUE_400,
-  Colors.GREEN_400,
-  Colors.PINK_400,
-  Colors.AMEELIO_RED,
-  Colors.AMEELIO_YELLOW,
-];
-
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,

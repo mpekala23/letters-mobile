@@ -154,6 +154,7 @@ interface ContactCreated {
   totalSent: number;
   mailPage: number;
   hasNextPage: boolean;
+  backgroundColor: string;
 }
 
 export interface ContactDraft

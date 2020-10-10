@@ -43,6 +43,7 @@ const initialState: ContactState = {
       postal: '',
       phone: '',
     },
+    backgroundColor: '',
     totalSent: 0,
     mailPage: 1,
     hasNextPage: false,

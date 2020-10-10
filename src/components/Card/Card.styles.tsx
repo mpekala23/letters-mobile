@@ -6,7 +6,7 @@ export default StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 4,
       height: 4,
     },
     shadowOpacity: 0.2,

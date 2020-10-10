@@ -189,7 +189,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         onRefresh={async () => {
           this.setState({ refreshing: true });
           try {
-            await getContact(this.props.activeContact.id);
+            await getContact(this.props.activeContact);
             if (this.props.activeContact.hasNextPage) {
               await getMailByContact(
                 this.props.activeContact,
@@ -213,7 +213,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         >
           <View style={Styles.profileCard}>
             <LinearGradient
-              colors={['#ADD3FF', '#FFC9C9']}
+              colors={[
+                this.props.activeContact.backgroundColor,
+                this.props.activeContact.backgroundColor,
+              ]}
               style={Styles.profileCardHeader}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
