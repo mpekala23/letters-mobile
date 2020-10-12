@@ -11,9 +11,7 @@ interface Props {
   onAddColor: () => void;
   onAddFont: () => void;
   finishWriting: () => void;
-  keyboardOpacity: Animated.Value;
-  flip: Animated.Value;
-  textSubscreenFocused: boolean;
+  slide: Animated.Value;
 }
 
 const TextButtons: React.FC<Props> = ({
@@ -21,24 +19,17 @@ const TextButtons: React.FC<Props> = ({
   onAddColor,
   onAddFont,
   finishWriting,
-  keyboardOpacity,
-  flip,
-  textSubscreenFocused,
+  slide,
 }: Props) => {
   return (
     <Animated.View
       style={[
         Styles.textButtons,
         {
-          bottom: textSubscreenFocused
-            ? flip.interpolate({
-                inputRange: [0, 1],
-                outputRange: [-2 * DESIGN_BUTTONS_HEIGHT, 0],
-              })
-            : keyboardOpacity.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, -2 * DESIGN_BUTTONS_HEIGHT],
-              }),
+          bottom: slide.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-2 * DESIGN_BUTTONS_HEIGHT, 0],
+          }),
           overflow: 'hidden',
         },
       ]}

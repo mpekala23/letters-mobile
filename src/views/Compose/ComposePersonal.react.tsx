@@ -15,6 +15,7 @@ import {
   ComposeTools,
   ComposeDesignButtons,
   ComposeTextButtons,
+  ComposeTextBottom,
 } from '@components';
 import {
   PostcardDesign,
@@ -22,9 +23,10 @@ import {
   Layout,
   Draft,
   Image,
-  ComposeBottomDetails,
+  DesignBottomDetails,
   MailTypes,
   PlacedSticker,
+  TextBottomDetails,
 } from 'types';
 import {
   setBackOverride,
@@ -40,7 +42,7 @@ import { connect } from 'react-redux';
 import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import * as Segment from 'expo-analytics-segment';
-import { WINDOW_HEIGHT, STATUS_BAR_HEIGHT, getNumWords } from '@utils';
+import { WINDOW_HEIGHT, STATUS_BAR_HEIGHT, getNumWords, sleep } from '@utils';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
 import {
@@ -73,7 +75,7 @@ interface Props {
 interface State {
   subscreen: 'Design' | 'Text';
   designState: {
-    bottomDetails: ComposeBottomDetails | null;
+    bottomDetails: DesignBottomDetails | null;
     bottomSlide: Animated.Value;
     layout: Layout;
     stickers: PlacedSticker[];
@@ -89,9 +91,13 @@ interface State {
     snapshot: Image | null;
   };
   textState: {
+    bottomDetails: TextBottomDetails | null;
     wordsLeft: number;
     valid: boolean;
     keyboardOpacity: Animated.Value;
+    bottomSlide: Animated.Value;
+    buttonSlide: Animated.Value;
+    writing: boolean;
   };
 }
 
@@ -131,9 +137,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         snapshot: null,
       },
       textState: {
+        bottomDetails: null,
         wordsLeft: 100,
         valid: true,
         keyboardOpacity: new Animated.Value(0),
+        bottomSlide: new Animated.Value(0),
+        buttonSlide: new Animated.Value(0),
+        writing: false,
       },
     };
 
@@ -141,8 +151,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
-    this.openBottom = this.openBottom.bind(this);
-    this.closeBottom = this.closeBottom.bind(this);
+    this.openDesignBottom = this.openDesignBottom.bind(this);
+    this.closeDesignBottom = this.closeDesignBottom.bind(this);
+    this.openTextBottom = this.openTextBottom.bind(this);
+    this.closeTextBottom = this.closeTextBottom.bind(this);
     this.loadMoreImages = this.loadMoreImages.bind(this);
     this.startWriting = this.startWriting.bind(this);
     this.backWriting = this.backWriting.bind(this);
@@ -234,16 +246,30 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   };
 
   onKeyboardOpen(): void {
-    Animated.timing(this.state.textState.keyboardOpacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    this.setTextState({ writing: true }, () => {
+      this.state.textState.bottomSlide.setValue(0);
+      Animated.timing(this.state.textState.keyboardOpacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+      Animated.timing(this.state.textState.buttonSlide, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+    });
   }
 
   onKeyboardClose(): void {
+    this.setTextState({ writing: false });
     Animated.timing(this.state.textState.keyboardOpacity, {
       toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.textState.buttonSlide, {
+      toValue: 1,
       duration: 200,
       useNativeDriver: false,
     }).start();
@@ -251,7 +277,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   setDesignState(
     newState: {
-      bottomDetails?: ComposeBottomDetails | null;
+      bottomDetails?: DesignBottomDetails | null;
       bottomSlide?: Animated.Value;
       layout?: Layout;
       stickers?: PlacedSticker[];
@@ -280,21 +306,29 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     );
   }
 
-  setTextState(newState: {
-    wordsLeft?: number;
-    valid?: boolean;
-    keyboardOpacity?: Animated.Value;
-  }) {
-    this.setState((prevState) => ({
-      ...prevState,
-      textState: {
-        ...prevState.textState,
-        ...newState,
-      },
-    }));
+  setTextState(
+    newState: {
+      bottomDetails?: TextBottomDetails | null;
+      wordsLeft?: number;
+      valid?: boolean;
+      keyboardOpacity?: Animated.Value;
+      writing?: boolean;
+    },
+    callback?: () => void
+  ) {
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        textState: {
+          ...prevState.textState,
+          ...newState,
+        },
+      }),
+      callback
+    );
   }
 
-  openBottom(details: ComposeBottomDetails) {
+  openDesignBottom(details: DesignBottomDetails) {
     this.setDesignState({ bottomDetails: details });
     Animated.timing(this.state.designState.bottomSlide, {
       toValue: 1,
@@ -303,12 +337,29 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     }).start();
   }
 
-  closeBottom() {
+  closeDesignBottom() {
     Animated.timing(this.state.designState.bottomSlide, {
       toValue: 0,
       duration: SLIDE_DURATION,
       useNativeDriver: false,
     }).start(() => this.setDesignState({ bottomDetails: null }));
+  }
+
+  openTextBottom(details: TextBottomDetails) {
+    this.setTextState({ bottomDetails: details });
+    Animated.timing(this.state.textState.bottomSlide, {
+      toValue: 1,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start();
+  }
+
+  closeTextBottom() {
+    Animated.timing(this.state.textState.bottomSlide, {
+      toValue: 0,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start(() => this.setTextState({ bottomDetails: null }));
   }
 
   async loadMoreImages(): Promise<void> {
@@ -398,6 +449,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       this.setState({ subscreen: 'Text' });
       this.setDesignState({ animatingFlip: false });
     });
+    Animated.timing(this.state.textState.buttonSlide, {
+      toValue: 1,
+      duration: FLIP_DURATION,
+      useNativeDriver: false,
+    }).start();
     setBackOverride({
       action: this.backWriting,
     });
@@ -417,6 +473,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       this.setState({ subscreen: 'Design' });
       this.setDesignState({ animatingFlip: false });
     });
+    Animated.timing(this.state.textState.buttonSlide, {
+      toValue: 0,
+      duration: FLIP_DURATION,
+      useNativeDriver: false,
+    }).start();
     this.setDesignState({ animatingFlip: true });
     setBackOverride(undefined);
     setProfileOverride(undefined);
@@ -440,6 +501,62 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   render() {
+    let dynamicTop;
+    if (this.state.subscreen === 'Design') {
+      dynamicTop = this.state.designState.bottomSlide.interpolate({
+        inputRange: [0, 1],
+        outputRange: [
+          (WINDOW_HEIGHT -
+            DESIGN_BUTTONS_HEIGHT -
+            BAR_HEIGHT -
+            POSTCARD_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+          (WINDOW_HEIGHT -
+            BOTTOM_HEIGHT -
+            POSTCARD_HEIGHT -
+            BAR_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+        ],
+      });
+    } else if (!this.state.textState.writing) {
+      dynamicTop = this.state.textState.bottomSlide.interpolate({
+        inputRange: [0, 1],
+        outputRange: [
+          (WINDOW_HEIGHT -
+            DESIGN_BUTTONS_HEIGHT -
+            BAR_HEIGHT -
+            POSTCARD_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+          (WINDOW_HEIGHT -
+            BOTTOM_HEIGHT -
+            POSTCARD_HEIGHT -
+            BAR_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+        ],
+      });
+    } else {
+      dynamicTop = this.state.textState.keyboardOpacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [
+          (WINDOW_HEIGHT -
+            DESIGN_BUTTONS_HEIGHT -
+            BAR_HEIGHT -
+            POSTCARD_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+          (WINDOW_HEIGHT -
+            BOTTOM_HEIGHT -
+            POSTCARD_HEIGHT -
+            BAR_HEIGHT -
+            STATUS_BAR_HEIGHT) /
+            2,
+        ],
+      });
+    }
     return (
       <>
         <TouchableOpacity
@@ -459,45 +576,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 <Animated.View
                   style={{
                     paddingBottom: 56,
-                    paddingTop:
-                      this.state.subscreen === 'Design'
-                        ? this.state.designState.bottomSlide.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [
-                              (WINDOW_HEIGHT -
-                                DESIGN_BUTTONS_HEIGHT -
-                                BAR_HEIGHT -
-                                POSTCARD_HEIGHT -
-                                STATUS_BAR_HEIGHT) /
-                                2,
-                              (WINDOW_HEIGHT -
-                                BOTTOM_HEIGHT -
-                                POSTCARD_HEIGHT -
-                                BAR_HEIGHT -
-                                STATUS_BAR_HEIGHT) /
-                                2,
-                            ],
-                          })
-                        : this.state.textState.keyboardOpacity.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [
-                              (WINDOW_HEIGHT -
-                                DESIGN_BUTTONS_HEIGHT -
-                                BAR_HEIGHT -
-                                POSTCARD_HEIGHT -
-                                STATUS_BAR_HEIGHT) /
-                                2,
-                              Math.min(
-                                (WINDOW_HEIGHT -
-                                  DESIGN_BUTTONS_HEIGHT -
-                                  BAR_HEIGHT -
-                                  POSTCARD_HEIGHT -
-                                  STATUS_BAR_HEIGHT) /
-                                  2,
-                                16
-                              ),
-                            ],
-                          }),
+                    paddingTop: dynamicTop,
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                   }}
@@ -513,7 +592,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     commonLayout={this.state.designState.commonLayout}
                     onImageAdd={(position: number) => {
                       this.setDesignState({ activePosition: position });
-                      this.openBottom('design');
+                      this.openDesignBottom('design');
                     }}
                     flip={this.state.designState.flip}
                     onChangeText={(text) => {
@@ -541,27 +620,38 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 keyboardOpacity={this.state.textState.keyboardOpacity}
                 numLeft={this.state.textState.wordsLeft}
               />
-              {this.state.subscreen !== 'Design' &&
-              !this.state.designState.animatingFlip ? (
-                <View />
-              ) : (
+              {(this.state.subscreen === 'Design' ||
+                this.state.designState.animatingFlip) && (
                 <ComposeDesignButtons
-                  onAddLayout={() => this.openBottom('layout')}
-                  onAddPhoto={() => this.openBottom('design')}
-                  onAddStickers={() => this.openBottom('stickers')}
+                  onAddLayout={() => this.openDesignBottom('layout')}
+                  onAddPhoto={() => this.openDesignBottom('design')}
+                  onAddStickers={() => this.openDesignBottom('stickers')}
                   startWriting={this.startWriting}
                   flip={this.state.designState.flip}
                 />
               )}
-              <ComposeTextButtons
-                keyboardOpacity={this.state.textState.keyboardOpacity}
-                flip={this.state.designState.flip}
-                textSubscreenFocused={this.state.subscreen === 'Text'}
-              />
+              {(this.state.subscreen === 'Text' ||
+                this.state.designState.animatingFlip) &&
+                !this.state.textState.writing && (
+                  <ComposeTextButtons
+                    onAddColor={() => this.openTextBottom('color')}
+                    onAddFont={() => this.openTextBottom('font')}
+                    onAddText={() => {
+                      this.setTextState({ writing: true }, () => {
+                        this.state.textState.bottomSlide.setValue(0);
+                        if (this.postcardRef.current) {
+                          this.postcardRef.current.focus();
+                        }
+                      });
+                    }}
+                    slide={this.state.textState.buttonSlide}
+                    finishWriting={this.doneWriting}
+                  />
+                )}
               <ComposeDesignBottom
                 bottomSlide={this.state.designState.bottomSlide}
                 details={this.state.designState.bottomDetails}
-                onClose={this.closeBottom}
+                onClose={this.closeDesignBottom}
                 onLayoutSelected={(layout) => {
                   const keys = Object.keys(layout.designs);
                   const oldLayout = this.state.designState.layout;
@@ -589,7 +679,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   if (this.postcardRef.current) {
                     this.postcardRef.current.addSticker(sticker);
                   }
-                  this.closeBottom();
+                  this.closeDesignBottom();
                 }}
                 library={this.state.designState.library}
                 onDesignSelected={(design: PostcardDesign) => {
@@ -607,6 +697,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   );
                 }}
                 loadMoreImages={this.loadMoreImages}
+              />
+              <ComposeTextBottom
+                bottomSlide={this.state.textState.bottomSlide}
+                details={this.state.textState.bottomDetails}
+                onClose={this.closeTextBottom}
               />
             </View>
           </KeyboardAvoider>

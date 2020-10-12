@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
-import LayoutButton from '@assets/components/PostcardTools/LayoutButton';
-import PhotoButton from '@assets/components/PostcardTools/PhotoButton';
-import StickerButton from '@assets/components/PostcardTools/StickerButton';
+import LayoutButton from '@assets/components/DesignTools/LayoutButton';
+import PhotoButton from '@assets/components/DesignTools/PhotoButton';
+import StickerButton from '@assets/components/DesignTools/StickerButton';
 import Styles from './DesignTools.styles';
 import Icon from '../../Icon/Icon.react';
 

@@ -10,7 +10,7 @@ import {
   View,
   Image as ImageComponent,
 } from 'react-native';
-import { ComposeBottomDetails, Layout, PostcardDesign, Sticker } from 'types';
+import { DesignBottomDetails, Layout, PostcardDesign, Sticker } from 'types';
 import { takeImage } from '@utils';
 import { LAYOUTS } from '@utils/Layouts';
 import STICKERS from '@assets/stickers';
@@ -23,7 +23,7 @@ import Styles from './DesignBottom.styles';
 
 interface Props {
   bottomSlide: Animated.Value;
-  details: ComposeBottomDetails | null;
+  details: DesignBottomDetails | null;
   onClose: () => void;
   onLayoutSelected: (layout: Layout) => void;
   onStickerSelected: (sticker: Sticker) => void;

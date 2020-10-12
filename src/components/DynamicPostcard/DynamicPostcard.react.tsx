@@ -6,7 +6,7 @@ import {
   Layout,
   Sticker,
   PlacedSticker,
-  ComposeBottomDetails,
+  DesignBottomDetails,
 } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
@@ -42,7 +42,7 @@ interface Props {
   onImageAdd: (position: number) => void;
   activePosition: number;
   highlightActive: boolean;
-  bottomDetails: ComposeBottomDetails | null;
+  bottomDetails: DesignBottomDetails | null;
   updateStickers: (stickers: PlacedSticker[]) => void;
 }
 

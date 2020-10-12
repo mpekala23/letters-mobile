@@ -8,6 +8,7 @@ import CreditsCard from './Card/CreditsCard.react';
 import ComposeDesignBottom from './Compose/DesignBottom/DesignBottom.react';
 import ComposeDesignButtons from './Compose/DesignButtons/DesignButtons.react';
 import ComposeHeader from './Compose/Header/Header.react';
+import ComposeTextBottom from './Compose/TextBottom/TextBottom.react';
 import ComposeTextButtons from './Compose/TextButtons/TextButtons.react';
 import ComposeTools from './Compose/Tools/Tools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
@@ -46,6 +47,7 @@ export {
   ComposeDesignBottom,
   ComposeDesignButtons,
   ComposeHeader,
+  ComposeTextBottom,
   ComposeTextButtons,
   ComposeTools,
   DeliveryStatusCard,

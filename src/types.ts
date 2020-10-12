@@ -249,4 +249,6 @@ export type TopbarRouteAction = {
   blocking?: boolean;
 };
 
-export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
+export type DesignBottomDetails = 'layout' | 'design' | 'stickers';
+
+export type TextBottomDetails = 'color' | 'font';

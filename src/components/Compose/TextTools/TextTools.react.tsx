@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
-import LayoutButton from '@assets/components/PostcardTools/LayoutButton';
-import PhotoButton from '@assets/components/PostcardTools/PhotoButton';
-import StickerButton from '@assets/components/PostcardTools/StickerButton';
+import ColorIcon from '@assets/components/TextTools/AddColor';
+import FontIcon from '@assets/components/TextTools/AddFont';
+import TextIcon from '@assets/components/TextTools/AddText';
 import Styles from './TextTools.styles';
 import Icon from '../../Icon/Icon.react';
 
@@ -17,16 +17,16 @@ const TextTools: React.FC<Props> = (props: Props) => {
   return (
     <View style={[Styles.toolsBackground, props.style]}>
       <TouchableOpacity style={Styles.toolButton} onPress={props.onAddText}>
-        <Icon svg={LayoutButton} />
-        <Text>Add layout</Text>
+        <Icon svg={TextIcon} />
+        <Text>Add text</Text>
       </TouchableOpacity>
       <TouchableOpacity style={Styles.toolButton} onPress={props.onAddColor}>
-        <Icon svg={PhotoButton} />
-        <Text>Add photo</Text>
+        <Icon svg={ColorIcon} style={{ top: -4 }} />
+        <Text>Pick color</Text>
       </TouchableOpacity>
       <TouchableOpacity style={Styles.toolButton} onPress={props.onAddFont}>
-        <Icon svg={StickerButton} />
-        <Text>Add stickers</Text>
+        <Icon svg={FontIcon} />
+        <Text>Pick font</Text>
       </TouchableOpacity>
     </View>
   );
