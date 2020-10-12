@@ -1,23 +1,20 @@
 import React, { createRef, Dispatch } from 'react';
 import {
-  Text,
   View,
-  FlatList,
   TouchableOpacity,
   Animated,
   Keyboard,
   EmitterSubscription,
   Platform,
-  Image as ImageComponent,
   ScrollView,
 } from 'react-native';
 import {
   KeyboardAvoider,
-  Button,
-  PostcardTools,
-  Icon,
+  ComposeDesignBottom,
   DynamicPostcard,
   ComposeTools,
+  ComposeDesignButtons,
+  ComposeTextButtons,
 } from '@components';
 import {
   PostcardDesign,
@@ -25,7 +22,6 @@ import {
   Layout,
   Draft,
   Image,
-  Sticker,
   ComposeBottomDetails,
   MailTypes,
   PlacedSticker,
@@ -43,29 +39,19 @@ import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
-import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
-import Loading from '@assets/common/loading.gif';
-import {
-  WINDOW_WIDTH,
-  takeImage,
-  capitalize,
-  WINDOW_HEIGHT,
-  STATUS_BAR_HEIGHT,
-  getNumWords,
-} from '@utils';
-import { Typography, Colors } from '@styles';
-import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { WINDOW_HEIGHT, STATUS_BAR_HEIGHT, getNumWords } from '@utils';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
-import STICKERS from '@assets/stickers';
 import {
   POSTCARD_HEIGHT,
   POSTCARD_WIDTH,
   BAR_HEIGHT,
   PERSONAL_OVERRIDE_ID,
+  DESIGN_BUTTONS_HEIGHT,
+  BOTTOM_HEIGHT,
 } from '@utils/Constants';
-import Styles, { BOTTOM_HEIGHT, DESIGN_BUTTONS_HEIGHT } from './Compose.styles';
+import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
 const SLIDE_DURATION = 300;
@@ -161,7 +147,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.startWriting = this.startWriting.bind(this);
     this.backWriting = this.backWriting.bind(this);
     this.doneWriting = this.doneWriting.bind(this);
-    this.renderStickerItem = this.renderStickerItem.bind(this);
     this.updateComposing = this.updateComposing.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
@@ -412,9 +397,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     }).start(() => {
       this.setState({ subscreen: 'Text' });
       this.setDesignState({ animatingFlip: false });
-      if (this.postcardRef.current) {
-        this.postcardRef.current.focus();
-      }
     });
     setBackOverride({
       action: this.backWriting,
@@ -456,303 +438,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       category: 'New personal compose',
     });
   }
-
-  renderDesignButtons = (): JSX.Element => {
-    const middle =
-      this.state.subscreen !== 'Design' &&
-      !this.state.designState.animatingFlip ? (
-        <View />
-      ) : (
-        <>
-          <PostcardTools
-            onAddLayout={() => this.openBottom('layout')}
-            onAddPhoto={() => this.openBottom('design')}
-            onAddStickers={() => this.openBottom('stickers')}
-            style={{ paddingBottom: 16 }}
-          />
-          <Button
-            onPress={this.startWriting}
-            buttonText={i18n.t('Compose.next')}
-          />
-        </>
-      );
-    return (
-      <Animated.View
-        style={[
-          Styles.designButtons,
-          {
-            bottom: this.state.designState.flip.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, -2 * DESIGN_BUTTONS_HEIGHT],
-            }),
-            overflow: 'hidden',
-          },
-        ]}
-      >
-        {middle}
-      </Animated.View>
-    );
-  };
-
-  renderSubcategorySelector = (): JSX.Element => {
-    const subcategories = ['Library', 'Take Photo'];
-    return (
-      <View style={[Styles.subcategorySelectorBackground, { marginTop: 16 }]}>
-        {subcategories.map((subcategory) => (
-          <TouchableOpacity
-            style={[
-              Styles.subcategory,
-              {
-                borderBottomColor:
-                  subcategory === 'Library' ? 'white' : '#505050',
-              },
-            ]}
-            onPress={async () => {
-              Segment.trackWithProperties(
-                'Compose - Click on Subcategory Option',
-                { subcategory }
-              );
-              if (subcategory === 'Take Photo') {
-                try {
-                  const image = await takeImage({
-                    aspect: [6, 4],
-                    allowsEditing: true,
-                  });
-                  if (image) {
-                    const layout = { ...this.state.designState.layout };
-                    const commonLayout = { ...this.state.designState.layout };
-                    const { activePosition } = this.state.designState;
-                    layout.designs[activePosition] = { image };
-                    commonLayout.designs[activePosition] = { image };
-                    this.setDesignState({
-                      layout,
-                      commonLayout,
-                    });
-                  }
-                } catch (err) {
-                  dropdownError({ message: i18n.t('Permission.camera') });
-                }
-              }
-            }}
-            key={subcategory}
-          >
-            <Text
-              style={[
-                Typography.FONT_MEDIUM,
-                Styles.subcategoryText,
-                {
-                  color:
-                    subcategory === 'Library' ? 'white' : Colors.GRAY_MEDIUM,
-                },
-              ]}
-            >
-              {capitalize(subcategory)}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  };
-
-  renderGridItem(design: PostcardDesign): JSX.Element {
-    return (
-      <TouchableOpacity
-        style={{
-          width: (WINDOW_WIDTH - 32) / 3,
-          height: (WINDOW_WIDTH - 32) / 3,
-          margin: 4,
-        }}
-        onPress={() => {
-          const layout = { ...this.state.designState.layout };
-          const commonLayout = { ...this.state.designState.layout };
-          const { activePosition } = this.state.designState;
-          layout.designs[activePosition] = design;
-          commonLayout.designs[activePosition] = design;
-          this.setDesignState(
-            {
-              layout,
-              commonLayout,
-            },
-            this.updateComposing
-          );
-        }}
-      >
-        <AsyncImage
-          source={design.thumbnail ? design.thumbnail : design.image}
-          imageStyle={{ flex: 1, aspectRatio: 1 }}
-          autorotate={false}
-        />
-      </TouchableOpacity>
-    );
-  }
-
-  renderLayoutItem(layout: Layout): JSX.Element {
-    return (
-      <TouchableOpacity
-        style={{
-          width: (WINDOW_WIDTH - 32) / 2,
-          height: WINDOW_HEIGHT * 0.2 - 16,
-          margin: 4,
-        }}
-        onPress={() => {
-          const keys = Object.keys(layout.designs);
-          const oldLayout = this.state.designState.layout;
-          const { commonLayout } = this.state.designState;
-          const newLayout = { ...layout };
-          keys.forEach((key) => {
-            const nKey = parseInt(key, 10);
-            if (Object.prototype.hasOwnProperty.call(oldLayout.designs, nKey)) {
-              newLayout.designs[nKey] = oldLayout.designs[nKey];
-            } else {
-              newLayout.designs[nKey] = commonLayout.designs[nKey];
-            }
-          });
-          this.setDesignState({ layout: newLayout }, this.updateComposing);
-        }}
-      >
-        <Icon svg={layout.svg} />
-      </TouchableOpacity>
-    );
-  }
-
-  renderStickerItem(sticker: Sticker) {
-    return (
-      <TouchableOpacity
-        style={{
-          width: (WINDOW_WIDTH - 64) / 3,
-          height: WINDOW_HEIGHT * 0.2 - 16,
-          margin: 4,
-          borderRadius: 8,
-        }}
-        onPress={() => {
-          if (this.postcardRef.current) {
-            this.postcardRef.current.addSticker(sticker);
-          }
-          this.closeBottom();
-        }}
-      >
-        {sticker.component}
-      </TouchableOpacity>
-    );
-  }
-
-  renderBottomContent = (): JSX.Element => {
-    const emptyLoading = (
-      <View
-        style={{
-          flex: 1,
-          height: 300,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
-      </View>
-    );
-    if (this.state.designState.bottomDetails === 'layout') {
-      return (
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            paddingTop: 4,
-          }}
-        >
-          <Text
-            style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
-          >
-            {i18n.t('Compose.layouts')}
-          </Text>
-          <FlatList
-            data={LAYOUTS}
-            renderItem={({ item }) => this.renderLayoutItem(item)}
-            keyExtractor={(item: Layout) => {
-              return item.id.toString();
-            }}
-            numColumns={2}
-            contentContainerStyle={Styles.gridBackground}
-          />
-        </View>
-      );
-    }
-    if (this.state.designState.bottomDetails === 'stickers') {
-      return (
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            paddingTop: 4,
-          }}
-        >
-          <Text
-            style={[Typography.FONT_REGULAR, { color: 'white', fontSize: 18 }]}
-          >
-            {i18n.t('Compose.stickers')}
-          </Text>
-          <FlatList
-            data={STICKERS}
-            renderItem={({ item }) => this.renderStickerItem(item)}
-            keyExtractor={(item: Sticker) => {
-              return item.name;
-            }}
-            numColumns={3}
-            contentContainerStyle={Styles.gridBackground}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
-      );
-    }
-    return (
-      <>
-        {this.renderSubcategorySelector()}
-        <FlatList
-          data={this.state.designState.library}
-          renderItem={({ item }) => this.renderGridItem(item)}
-          keyExtractor={(item: PostcardDesign, index: number) => {
-            return `${item.image.uri} ${index.toString()}`;
-          }}
-          numColumns={3}
-          contentContainerStyle={Styles.gridBackground}
-          onEndReached={this.loadMoreImages}
-          ListEmptyComponent={emptyLoading}
-        />
-      </>
-    );
-  };
-
-  renderBottom = (): JSX.Element => {
-    return (
-      <Animated.View
-        style={[
-          Styles.bottom,
-          {
-            bottom: this.state.designState.bottomSlide.interpolate({
-              inputRange: [0, 1],
-              outputRange: [-BOTTOM_HEIGHT, 0],
-            }),
-          },
-        ]}
-      >
-        {this.renderBottomContent()}
-        <TouchableOpacity
-          style={{ position: 'absolute', top: 4, right: 8 }}
-          onPress={this.closeBottom}
-        >
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              {
-                color: 'white',
-                fontSize: 18,
-              },
-            ]}
-          >
-            {i18n.t('Compose.done')}
-          </Text>
-        </TouchableOpacity>
-      </Animated.View>
-    );
-  };
 
   render() {
     return (
@@ -856,8 +541,73 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 keyboardOpacity={this.state.textState.keyboardOpacity}
                 numLeft={this.state.textState.wordsLeft}
               />
-              {this.renderDesignButtons()}
-              {this.renderBottom()}
+              {this.state.subscreen !== 'Design' &&
+              !this.state.designState.animatingFlip ? (
+                <View />
+              ) : (
+                <ComposeDesignButtons
+                  onAddLayout={() => this.openBottom('layout')}
+                  onAddPhoto={() => this.openBottom('design')}
+                  onAddStickers={() => this.openBottom('stickers')}
+                  startWriting={this.startWriting}
+                  flip={this.state.designState.flip}
+                />
+              )}
+              <ComposeTextButtons
+                keyboardOpacity={this.state.textState.keyboardOpacity}
+                flip={this.state.designState.flip}
+                textSubscreenFocused={this.state.subscreen === 'Text'}
+              />
+              <ComposeDesignBottom
+                bottomSlide={this.state.designState.bottomSlide}
+                details={this.state.designState.bottomDetails}
+                onClose={this.closeBottom}
+                onLayoutSelected={(layout) => {
+                  const keys = Object.keys(layout.designs);
+                  const oldLayout = this.state.designState.layout;
+                  const { commonLayout } = this.state.designState;
+                  const newLayout = { ...layout };
+                  keys.forEach((key) => {
+                    const nKey = parseInt(key, 10);
+                    if (
+                      Object.prototype.hasOwnProperty.call(
+                        oldLayout.designs,
+                        nKey
+                      )
+                    ) {
+                      newLayout.designs[nKey] = oldLayout.designs[nKey];
+                    } else {
+                      newLayout.designs[nKey] = commonLayout.designs[nKey];
+                    }
+                  });
+                  this.setDesignState(
+                    { layout: newLayout },
+                    this.updateComposing
+                  );
+                }}
+                onStickerSelected={(sticker) => {
+                  if (this.postcardRef.current) {
+                    this.postcardRef.current.addSticker(sticker);
+                  }
+                  this.closeBottom();
+                }}
+                library={this.state.designState.library}
+                onDesignSelected={(design: PostcardDesign) => {
+                  const layout = { ...this.state.designState.layout };
+                  const commonLayout = { ...this.state.designState.layout };
+                  const { activePosition } = this.state.designState;
+                  layout.designs[activePosition] = design;
+                  commonLayout.designs[activePosition] = design;
+                  this.setDesignState(
+                    {
+                      layout,
+                      commonLayout,
+                    },
+                    this.updateComposing
+                  );
+                }}
+                loadMoreImages={this.loadMoreImages}
+              />
             </View>
           </KeyboardAvoider>
         </TouchableOpacity>

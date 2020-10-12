@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import LayoutButton from '@assets/components/PostcardTools/LayoutButton';
 import PhotoButton from '@assets/components/PostcardTools/PhotoButton';
 import StickerButton from '@assets/components/PostcardTools/StickerButton';
-import Styles from './PostcardTools.styles';
-import Icon from '../Icon/Icon.react';
+import Styles from './DesignTools.styles';
+import Icon from '../../Icon/Icon.react';
 
 interface Props {
   onAddLayout?: () => void;
@@ -13,7 +13,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-const PostcardTools: React.FC<Props> = (props: Props) => {
+const DesignTools: React.FC<Props> = (props: Props) => {
   return (
     <View style={[Styles.toolsBackground, props.style]}>
       {props.onAddLayout && (
@@ -41,11 +41,11 @@ const PostcardTools: React.FC<Props> = (props: Props) => {
   );
 };
 
-PostcardTools.defaultProps = {
+DesignTools.defaultProps = {
   onAddLayout: undefined,
   onAddPhoto: undefined,
   onAddStickers: undefined,
   style: {},
 };
 
-export default PostcardTools;
+export default DesignTools;

@@ -89,7 +89,7 @@
     "referralCardCta": "Ayude a otros",
     "letter": "carta",
     "letters": "cartas",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -381,7 +381,11 @@
     "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
     "yourOwnLettersAndPhotos": "Sus propios cartas y fotos",
     "stickers": "Stickers",
-    "layouts": "Layouts"
+    "layouts": "Layouts",
+    "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
+    "sendPersonalLettersOrPhotos": "Send personal letters or photos",
+    "reachOutToSupport": "Reach out to support",
+    "library": "Library"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"

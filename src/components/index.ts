@@ -5,8 +5,11 @@ import Button from './Button/Button.react';
 import CategoryCard from './Card/CategoryCard.react';
 import ContactSelectorCard from './Card/ContactSelectorCard.react';
 import CreditsCard from './Card/CreditsCard.react';
-import ComposeHeader from './ComposeHeader/ComposeHeader.react';
-import ComposeTools from './ComposeTools/ComposeTools.react';
+import ComposeDesignBottom from './Compose/DesignBottom/DesignBottom.react';
+import ComposeDesignButtons from './Compose/DesignButtons/DesignButtons.react';
+import ComposeHeader from './Compose/Header/Header.react';
+import ComposeTextButtons from './Compose/TextButtons/TextButtons.react';
+import ComposeTools from './Compose/Tools/Tools.react';
 import DeliveryStatusCard from './Card/DeliveryStatusCard.react';
 import DisplayImage from './DisplayImage/DisplayImage.react';
 import Dropdown from './Dropdown/Dropdown.react';
@@ -25,7 +28,6 @@ import MailingAddressPreview from './MailingAddressPreview/MailingAddressPreview
 import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
-import PostcardTools from './PostcardTools/PostcardTools.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
@@ -41,7 +43,10 @@ export {
   CategoryCard,
   ContactSelectorCard,
   CreditsCard,
+  ComposeDesignBottom,
+  ComposeDesignButtons,
   ComposeHeader,
+  ComposeTextButtons,
   ComposeTools,
   DeliveryStatusCard,
   DisplayImage,
@@ -61,7 +66,6 @@ export {
   MemoryLaneCard,
   Picker,
   PicUpload,
-  PostcardTools,
   PrisonCard,
   ProfilePic,
   StaticPostcard,

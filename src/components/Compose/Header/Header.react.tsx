@@ -6,8 +6,8 @@ import i18n from '@i18n';
 import Shuffle from '@assets/views/Compose/Shuffle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Segment from 'expo-analytics-segment';
-import Icon from '../Icon/Icon.react';
-import Button from '../Button/Button.react';
+import Icon from '../../Icon/Icon.react';
+import Button from '../../Button/Button.react';
 
 const DEFAULT_CLOSED_HEIGHT = 48;
 const DEFAULT_OPEN_HEIGHT = 150;

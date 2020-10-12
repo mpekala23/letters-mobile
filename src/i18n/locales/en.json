@@ -93,7 +93,7 @@
     "referralCardCta": "Help others",
     "letter": "letter",
     "letters": "letters",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -385,7 +385,8 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport":"Reach out to support"
+    "reachOutToSupport": "Reach out to support",
+    "library": "Library"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
