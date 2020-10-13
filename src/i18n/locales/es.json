@@ -30,7 +30,7 @@
     "cantAddContactBody": "¡Pero no te preocupes! Nuestro equipo de soporte te ayudará a solucionar el problema.",
     "reachOutToSupport": "Contactar al soporte",
     "noThanks": "No gracias",
-    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
+    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde"
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -38,9 +38,13 @@
     "camera": "No puede tomar una foto. Asegúrese de que está habilitado en la configuración."
   },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados gratis.",
-    "signUp": "Registrarte",
-    "logIn": "Acceder"
+    "connectWithYour": "Conéctate con tus seres queridos encarcelados",
+    "forFree": "gratis.",
+    "sendEverything": "Envíe toda, desde una carta, fotos, hasta arte y juegos",
+    "theyllReceive": "Recibirán recuerdos a los que puedan aferrarse",
+    "joinOurCommunity": "Únete a nuestra comunidad de más de 15,000 familias en este viaje",
+    "signUp": "Regístrate",
+    "logIn": "Iniciar sesión"
   },
   "Common": {
     "possessivePronoun": "Tu",
@@ -377,14 +381,15 @@
     "done": "Listo",
     "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
     "iWouldLikeToSend": "Me gustaría enviar un mensaje:",
-    "registerAccount": "Crea una cuenta",
-    "enterBasic": "Llene información básica",
     "dueToTDCJ": "Debido a una política de TDCJ, seres queridos en prisiones estatales de Tejas no son permitidos recibir postales. Solo",
     "willBeAccepted": "cartas serán aceptadas.",
     "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
     "yourOwnLettersAndPhotos": "Sus propios cartas y fotos",
     "stickers": "Stickers",
-    "layouts": "Layouts"
+    "layouts": "Layouts",
+    "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales. Verifique su wi-fi e intente cargar nuevamente para usar nuestras postales.",
+    "sendPersonalLettersOrPhotos": "Envíe cartas o fotografías personales",
+    "reachOutToSupport": "Contactar al soporte"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"
@@ -449,9 +454,9 @@
     "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
   },
   "ReviewApp": {
-    "title": "Enjoying Ameelio?",
-    "message": "Help us out by leaving a review!",
-    "takeMeToPlayStore": "Take me to the Play Store",
-    "noThanks": "No thanks"
+    "title": "¿Estás disfrutando de Ameelio?",
+    "message": "¡Ayúdanos dejando un comentario!",
+    "takeMeToPlayStore": "Llévame a Play Store",
+    "noThanks": "No gracias"
   }
 }
