@@ -98,6 +98,7 @@ interface State {
     bottomSlide: Animated.Value;
     buttonSlide: Animated.Value;
     writing: boolean;
+    color: string;
   };
 }
 
@@ -144,6 +145,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         bottomSlide: new Animated.Value(0),
         buttonSlide: new Animated.Value(0),
         writing: false,
+        color: '#000000',
       },
     };
 
@@ -313,6 +315,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       valid?: boolean;
       keyboardOpacity?: Animated.Value;
       writing?: boolean;
+      color?: string;
     },
     callback?: () => void
   ) {
@@ -613,6 +616,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                           stickers,
                         });
                     }}
+                    textColor={this.state.textState.color}
                   />
                 </Animated.View>
               </ScrollView>
@@ -702,6 +706,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 bottomSlide={this.state.textState.bottomSlide}
                 details={this.state.textState.bottomDetails}
                 onClose={this.closeTextBottom}
+                setColor={(color) => this.setTextState({ color })}
               />
             </View>
           </KeyboardAvoider>

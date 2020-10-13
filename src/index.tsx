@@ -27,6 +27,9 @@ const customFonts = {
   'Poppins-SemiBold-Italic': require('./assets/fonts/Poppins-SemiBoldItalic.ttf'),
   'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
   'Poppins-Bold-Italic': require('./assets/fonts/Poppins-BoldItalic.ttf'),
+  'BebasNeue-Regular': require('./assets/fonts/PostcardFonts/BebasNeue-Regular.ttf'),
+  'KumbhSans-Regular': require('./assets/fonts/PostcardFonts/KumbhSans-Regular.ttf'),
+  'NotoSerifJP-Regular': require('./assets/fonts/PostcardFonts/NotoSerifJP-Regular.otf'),
 };
 
 const customTextProps = {

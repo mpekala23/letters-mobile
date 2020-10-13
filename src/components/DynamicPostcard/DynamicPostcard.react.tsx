@@ -44,6 +44,7 @@ interface Props {
   highlightActive: boolean;
   bottomDetails: DesignBottomDetails | null;
   updateStickers: (stickers: PlacedSticker[]) => void;
+  textColor: string;
 }
 
 class DynamicPostcard extends React.Component<Props> {
@@ -278,7 +279,11 @@ class DynamicPostcard extends React.Component<Props> {
             <Input
               numLines={50}
               parentStyle={{ flex: 1 }}
-              inputStyle={{ flex: 1, fontSize: 14 }}
+              inputStyle={{
+                flex: 1,
+                fontSize: 14,
+                color: this.props.textColor,
+              }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
               onChangeText={this.props.onChangeText}
               ref={this.inputRef}

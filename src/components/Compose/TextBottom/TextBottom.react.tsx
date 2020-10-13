@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { BOTTOM_HEIGHT } from '@utils/Constants';
-import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { TextBottomDetails } from 'types';
-import { ColorPicker } from 'react-native-color-picker';
+import { TriangleColorPicker } from 'react-native-color-picker';
 import { hsvToHex } from '@utils';
 import Styles from './TextBottom.styles';
 
@@ -12,22 +12,43 @@ interface Props {
   bottomSlide: Animated.Value;
   details: TextBottomDetails | null;
   onClose: () => void;
+  setColor: (color: string) => void;
+  setFont: (font: string) => void;
 }
 
-function ColorSelector() {
-  const [color, setColor] = useState('#000000');
+function ColorSelector({ setColor }: { setColor: (color: string) => void }) {
   return (
-    <>
-      <View style={{ width: 100, height: 100, backgroundColor: color }} />
-      <ColorPicker
-        onColorChange={(selectedColor) => {
-          setColor(
-            hsvToHex(selectedColor.h / 360, selectedColor.s, selectedColor.v)
-          );
-        }}
-        style={{ flex: 1 }}
-      />
-    </>
+    <TriangleColorPicker
+      defaultColor="#000000"
+      onColorChange={(selectedColor) => {
+        setColor(
+          hsvToHex(selectedColor.h / 360, selectedColor.s, selectedColor.v)
+        );
+      }}
+      style={{ flex: 1 }}
+      hideControls
+    />
+  );
+}
+
+const FONT_OPTIONS = [
+  'BebasNeue-Regular',
+  'KumbhSans-Regular',
+  'NotoSerifJP-Regular',
+];
+
+function FontSelector({ setFont }: { setFont: (font: string) => void }) {
+  return (
+    <FlatList
+      data={FONT_OPTIONS}
+      renderItem={({ item }) => {
+        return (
+          <Text style={{ fontFamily: item, color: 'white' }}>
+            The quick brown fox jumped over the lazy dog.
+          </Text>
+        );
+      }}
+    />
   );
 }
 
@@ -35,10 +56,14 @@ const TextBottom: React.FC<Props> = ({
   bottomSlide,
   details,
   onClose,
+  setColor,
+  setFont,
 }: Props) => {
   let content;
   if (details === 'color') {
-    content = <ColorSelector />;
+    content = <ColorSelector setColor={setColor} />;
+  } else if (details === 'font') {
+    content = <FontSelector setFont={setFont} />;
   }
 
   return (
