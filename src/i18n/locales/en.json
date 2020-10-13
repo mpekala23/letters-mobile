@@ -29,7 +29,8 @@
     "cantAddContactTitle": "Oops. Something went wrong.",
     "cantAddContactBody": "But don’t worry! Our support team will help you fix the problem.",
     "reachOutToSupport": "Reach out to support",
-    "noThanks": "No thanks"
+    "noThanks": "No thanks",
+    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -95,7 +96,7 @@
     "referralCardCta": "Help others",
     "letter": "letter",
     "letters": "letters",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -387,7 +388,7 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport":"Reach out to support"
+    "reachOutToSupport": "Reach out to support"
   },
   "ComposeTools": {
     "wordsLeft": "words left"

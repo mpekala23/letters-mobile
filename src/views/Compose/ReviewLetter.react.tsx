@@ -89,9 +89,25 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       });
     } catch (err) {
       Segment.trackWithProperties('Review - Send Letter Failure', {
-        type: 'letter',
+        Option: 'postcard',
         'Error Type': err,
       });
+      if (
+        err.data &&
+        err.data.content ===
+          'The content may not be greater than 16000 characters.'
+      ) {
+        dropdownError({
+          message: i18n.t('Error.letterTooLong'),
+        });
+        return;
+      }
+      if (err.data && err.data.content === 'The content field is required.') {
+        dropdownError({
+          message: i18n.t('Compose.letterMustHaveContent'),
+        });
+        return;
+      }
       if (err.message === 'Image upload timeout') {
         // timeout that occurred during image upload
         dropdownError({
@@ -102,35 +118,31 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         dropdownError({
           message: i18n.t('Error.requestTimedOut'),
         });
-      } else if (
-        err.data &&
-        err.data.content ===
-          'The content may not be greater than 16000 characters.'
-      ) {
+      } else if (err.message === 'Too Many Attempts.') {
         dropdownError({
-          message: i18n.t('Error.letterTooLong'),
+          message: i18n.t('Error.tooManyAttempts'),
         });
       } else {
-        popupAlert({
-          title: i18n.t('Error.cantSendMailModalTitle'),
-          message: i18n.t('Error.cantSendMailModalBody'),
-          buttons: [
-            {
-              text: i18n.t('Error.reachOutToSupport'),
-              onPress: async () => {
-                await Linking.openURL('https://m.me/teamameelio');
-              },
-            },
-            {
-              text: i18n.t('Error.noThanks'),
-              reverse: true,
-            },
-          ],
-        });
         dropdownError({
           message: i18n.t('Error.requestIncomplete'),
         });
       }
+      popupAlert({
+        title: i18n.t('Error.cantSendMailModalTitle'),
+        message: i18n.t('Error.cantSendMailModalBody'),
+        buttons: [
+          {
+            text: i18n.t('Error.reachOutToSupport'),
+            onPress: async () => {
+              await Linking.openURL('https://m.me/teamameelio');
+            },
+          },
+          {
+            text: i18n.t('Error.noThanks'),
+            reverse: true,
+          },
+        ],
+      });
     }
   }
 

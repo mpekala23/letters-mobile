@@ -29,7 +29,8 @@
     "cantAddContactTitle": "¡Ups! Algo salió mal.",
     "cantAddContactBody": "¡Pero no te preocupes! Nuestro equipo de soporte te ayudará a solucionar el problema.",
     "reachOutToSupport": "Contactar al soporte",
-    "noThanks": "No gracias"
+    "noThanks": "No gracias",
+    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -91,7 +92,7 @@
     "referralCardCta": "Ayude a otros",
     "letter": "carta",
     "letters": "cartas",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
   },
   "CreditsCard": {
     "letter": "Ameelio",
