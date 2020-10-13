@@ -20,6 +20,6 @@ export default StyleSheet.create({
   baseText: {
     textAlign: 'center',
     fontSize: 20,
-    color: Colors.GRAY_DARKER,
+    color: Colors.GRAY_700,
   },
 });

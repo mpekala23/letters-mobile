@@ -3,6 +3,7 @@ import { ContactState } from './Contact/ContactTypes';
 import { FacilityState } from './Facility/FacilityTypes';
 import { MailState } from './Mail/MailTypes';
 import { NotifState } from './Notif/NotifTypes';
+import { PremiumState } from './Premium/PremiumTypes';
 import { UserState } from './User/UserTypes';
 import { ZipState } from './Zip/ZipTypes';
 
@@ -14,4 +15,5 @@ export interface AppState {
   notif: NotifState;
   user: UserState;
   zip: ZipState;
+  premium: PremiumState;
 }

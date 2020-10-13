@@ -164,7 +164,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             Typography.FONT_REGULAR,
             {
               fontSize: 16,
-              color: Colors.GRAY_MEDIUM,
+              color: Colors.GRAY_300,
               textAlign: 'center',
               margin: 10,
             },

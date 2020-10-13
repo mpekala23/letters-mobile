@@ -2,7 +2,6 @@ import React, { Dispatch } from 'react';
 import {
   TouchableOpacity,
   View,
-  Keyboard,
   Text,
   ScrollView,
   Linking,
@@ -194,7 +193,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
                 Typography.FONT_REGULAR,
                 {
                   fontSize: 16,
-                  color: Colors.GRAY_MEDIUM,
+                  color: Colors.GRAY_300,
                   textAlign: 'center',
                   margin: 10,
                 },

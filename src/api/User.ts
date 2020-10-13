@@ -39,6 +39,7 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
+import { getPremiumPacks } from './Premium';
 
 interface RawUser {
   id: number;
@@ -341,6 +342,9 @@ export async function loginWithToken(): Promise<User> {
       dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
       Sentry.captureException(err);
     });
+    getPremiumPacks().catch((err) => {
+      Sentry.captureException(err);
+    });
     store.dispatch(setLoadingStatus(60));
     try {
       const contacts = await getContacts();
@@ -410,6 +414,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
     Sentry.captureException(err);
   });
   getUserReferrals().catch((err) => {
+    Sentry.captureException(err);
+  });
+  getPremiumPacks().catch((err) => {
     Sentry.captureException(err);
   });
   loadDraft();

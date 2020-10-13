@@ -6,7 +6,7 @@ export default StyleSheet.create({
     width: '100%',
     height: 40,
     borderTopWidth: 0.34,
-    borderTopColor: Colors.GRAY_MEDIUM,
+    borderTopColor: Colors.GRAY_300,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

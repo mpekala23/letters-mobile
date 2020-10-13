@@ -84,7 +84,7 @@ class Alert extends React.Component<Record<string, unknown>, State> {
                     {
                       fontSize: 16,
                       textAlign: 'center',
-                      color: Colors.GRAY_500,
+                      color: Colors.GRAY_400,
                     },
                   ]}
                 >

@@ -29,7 +29,7 @@ export default StyleSheet.create({
     elevation: 4,
   },
   contactCardInfo: {
-    color: Colors.GRAY_DARKER,
+    color: Colors.GRAY_700,
     fontSize: 16,
   },
   addContactButton: {

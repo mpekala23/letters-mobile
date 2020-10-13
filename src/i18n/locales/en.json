@@ -93,7 +93,17 @@
     "referralCardCta": "Help others",
     "letter": "letter",
     "letters": "letters",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
+  },
+  "CreditPackStore": {
+    "title": "Tokens of Grattitude",
+    "subtitle": "Buy Ameelio+ tokens to help others families stay in touch for free. In exchange, you can use these tokens to send your loved one premium add-ons.",
+    "selectBtn": "Select"
+  },
+  "CreditPackPurchaseSuccess": {
+    "title": "Thank you for your purchase",
+    "body": "Thank you for trusting Ameelio and furthering our mission to provide free communication for all. .",
+    "buttonCta": "Go to store"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -415,6 +425,7 @@
     "contactInfo": "Contact Info",
     "contactInmateInfo": "Contact Details",
     "contacts": "Contacts",
+    "creditPackStore": "Ameelio+ Tokens of Gratitude",
     "home": "Home",
     "issues": "Issues",
     "letterDetails": "Letter Details",

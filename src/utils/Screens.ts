@@ -5,6 +5,7 @@ import {
   SupportFAQTypes,
   Image,
   PrisonTypes,
+  PremiumPack,
 } from 'types';
 
 export enum Screens {
@@ -24,6 +25,9 @@ export enum Screens {
   ComposeLetter = 'ComposeLetter',
   ComposePersonal = 'ComposePersonal',
   ComposePostcard = 'ComposePostcard',
+  CreditPackCheckoutWebView = 'CreditPackCheckoutWebView',
+  CreditPackStore = 'CreditPackStore',
+  CreditPackPurchaseSuccess = 'CreditPackPurchaseSuccess',
   ReferralDashboard = 'ReferralDashboard',
   ReviewLetter = 'ReviewLetter',
   ReviewPostcard = 'ReviewPostcard',
@@ -78,6 +82,9 @@ export type AppStackParamList = {
   ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
+  CreditPackStore: undefined;
+  CreditPackCheckoutWebView: { pack: PremiumPack };
+  CreditPackPurchaseSuccess: { pack: PremiumPack };
   FacilityDirectory: { phyState: string };
   InmateLocator: { uri: string };
   IntroContact: undefined;

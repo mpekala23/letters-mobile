@@ -250,3 +250,16 @@ export type TopbarRouteAction = {
 };
 
 export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
+
+// Premium
+export type PremiumPack = {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  coins: number;
+};
+
+export type StripeSession = {
+  id: string;
+};

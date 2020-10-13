@@ -15,6 +15,9 @@ import {
   ComposePersonalScreen,
   ComposePostcardScreen,
   ContactSelectorScreen,
+  CreditPackCheckoutWebViewScreen,
+  CreditPackStoreScreen,
+  CreditPackPurchaseSuccessScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
   IntroContactScreen,
@@ -56,6 +59,7 @@ import { Platform } from 'react-native';
 
 import i18n from '@i18n';
 import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
+import CreditPackPurchaseSuccess from '@views/Premium/CreditPackPurchaseSuccess';
 
 export { navigationRef, navigate };
 
@@ -81,6 +85,15 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
   ComposePostcard: { title: i18n.t('Screens.compose'), profile: false },
   ContactInfo: { title: i18n.t('Screens.contactInfo'), profile: false },
   ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
+  CreditPackStore: { title: i18n.t('Screens.creditPackStore'), profile: false },
+  CreditPackCheckout: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+  },
+  CreditPackPurchaseSuccess: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+  },
   FacilityDirectory: { title: '', profile: false },
   ContactInmateInfo: {
     title: i18n.t('Screens.contactInmateInfo'),
@@ -229,7 +242,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       <>
         <Stack.Screen
           name={Screens.ContactSelector}
-          component={ContactSelectorScreen}
+          component={CreditPackStoreScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
@@ -251,6 +264,18 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.ComposePostcard}
           component={ComposePostcardScreen}
+        />
+        <Stack.Screen
+          name={Screens.CreditPackCheckoutWebView}
+          component={CreditPackCheckoutWebViewScreen}
+        />
+        <Stack.Screen
+          name={Screens.CreditPackStore}
+          component={CreditPackStoreScreen}
+        />
+        <Stack.Screen
+          name={Screens.CreditPackPurchaseSuccess}
+          component={CreditPackPurchaseSuccessScreen}
         />
         <Stack.Screen
           name={Screens.ReviewLetter}

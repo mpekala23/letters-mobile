@@ -38,7 +38,6 @@ import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   getContact,
-  getUser,
   getTrackingEvents,
   getCategories,
   getMailByContact,
@@ -174,7 +173,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
           style={[
             Typography.BASE_TITLE,
             {
-              color: Colors.GRAY_500,
+              color: Colors.GRAY_400,
               paddingTop: 12,
             },
           ]}

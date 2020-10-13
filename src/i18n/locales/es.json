@@ -89,7 +89,12 @@
     "referralCardCta": "Ayude a otros",
     "letter": "carta",
     "letters": "cartas",
-    "lastHeard": "Last heard",
+    "lastHeard": "Last heard"
+  },
+  "CreditPackStore": {
+    "title": "Tokens of Grattitude",
+    "subtitle": "Pay it forward and fund free letters to other families by buying Ameelio+ tokens. In exchange, you can use these tokens to purchase larger postcards, entertainment packets, and more.",
+    "selectBtn": "Select"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -411,6 +416,7 @@
     "contactInfo": "Contactos",
     "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
+    "creditPackStore": "Ameelio+ Tokens of Gratitude",
     "firstLetter": "Primera Carta",
     "home": "Inicio",
     "issues": "Problemas",

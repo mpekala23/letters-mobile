@@ -541,8 +541,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 Typography.FONT_MEDIUM,
                 Styles.subcategoryText,
                 {
-                  color:
-                    subcategory === 'Library' ? 'white' : Colors.GRAY_MEDIUM,
+                  color: subcategory === 'Library' ? 'white' : Colors.GRAY_300,
                 },
               ]}
             >
