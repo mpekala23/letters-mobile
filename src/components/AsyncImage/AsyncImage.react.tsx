@@ -63,18 +63,18 @@ class AsyncImage extends React.Component<Props, State> {
       imageWidth: 200,
       imageHeight: 200,
     };
-    this.loadImage = this.loadImage.bind(this);
+    this.loadRemoteImage = this.loadRemoteImage.bind(this);
   }
 
   async componentDidMount(): Promise<void> {
     this.testTimeout();
-    if (!this.props.local) await this.loadImage();
+    if (!this.props.local) await this.loadRemoteImage();
   }
 
   componentDidUpdate(prevProps: Props): void {
     if (this.props.local) return;
     if (prevProps.source.uri === this.props.source.uri) return;
-    this.loadImage();
+    this.loadRemoteImage();
   }
 
   testTimeout = async (): Promise<void> => {
@@ -127,7 +127,8 @@ class AsyncImage extends React.Component<Props, State> {
     }).start();
   }
 
-  async loadImage(): Promise<void> {
+  async loadRemoteImage(): Promise<void> {
+    if (this.props.local) return;
     this.setState({
       loaded: false,
       timedOut: false,
@@ -267,7 +268,7 @@ class AsyncImage extends React.Component<Props, State> {
                 timedOut: false,
               });
               this.testTimeout();
-              if (!this.props.local) await this.loadImage();
+              if (!this.props.local) await this.loadRemoteImage();
             }}
           >
             <ImageComponent
@@ -303,8 +304,8 @@ class AsyncImage extends React.Component<Props, State> {
           });
         }}
       >
-        {(!!this.props.source.uri || this.props.local) &&
-          (!!this.state.imgURI || this.props.local) &&
+        {(this.props.local ||
+          (!!this.props.source.uri && !!this.state.imgURI)) &&
           renderedImage}
         {asyncFeedback}
       </View>
