@@ -1,6 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { createRef } from 'react';
-import { PanResponderInstance, Animated, PanResponder } from 'react-native';
+import {
+  PanResponderInstance,
+  Animated,
+  PanResponder,
+  Image as ImageComponent,
+} from 'react-native';
 import { Sticker } from 'types';
 import {
   PinchGestureHandler,
@@ -146,7 +151,10 @@ export default class StickerComponent extends React.Component<Props> {
               }}
               {...this.panResponder.panHandlers}
             >
-              {this.props.sticker.component}
+              <ImageComponent
+                source={this.props.sticker.image}
+                style={{ width: '100%', height: '100%' }}
+              />
             </Animated.View>
           </Animated.View>
         </PinchGestureHandler>
