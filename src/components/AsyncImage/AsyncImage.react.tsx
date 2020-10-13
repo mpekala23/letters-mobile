@@ -21,9 +21,11 @@ interface Props {
   loadingSize?: number;
   timeout: number;
   download?: boolean;
+  local?: boolean;
   accessibilityLabel?: string;
   onLoad?: () => void;
   autorotate?: boolean;
+  loadingBackgroundColor: string;
 }
 
 interface State {
@@ -44,7 +46,9 @@ class AsyncImage extends React.Component<Props, State> {
     loadingSize: 30,
     timeout: 10000,
     download: false,
+    local: false,
     autorotate: true,
+    loadingBackgroundColor: 'rgba(255,255,255,0.2)',
   };
 
   constructor(props: Props) {
@@ -64,10 +68,11 @@ class AsyncImage extends React.Component<Props, State> {
 
   async componentDidMount(): Promise<void> {
     this.testTimeout();
-    await this.loadImage();
+    if (!this.props.local) await this.loadImage();
   }
 
   componentDidUpdate(prevProps: Props): void {
+    if (this.props.local) return;
     if (prevProps.source.uri === this.props.source.uri) return;
     this.loadImage();
   }
@@ -87,8 +92,21 @@ class AsyncImage extends React.Component<Props, State> {
     return `${FileSystem.cacheDirectory}${hashed}`;
   };
 
-  loadFinished(imgURI: string): void {
+  loadFinished(imgURI?: string): void {
     if (this.props.onLoad) this.props.onLoad();
+    if (!imgURI || this.props.local) {
+      this.setState({
+        loaded: true,
+        timedOut: false,
+        imgURI,
+      });
+      Animated.timing(this.state.loadOpacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
     getImageDims(imgURI)
       .then(({ width, height }) => {
         this.setState({
@@ -156,9 +174,13 @@ class AsyncImage extends React.Component<Props, State> {
     ) {
       renderedImage = (
         <Animated.Image
-          source={{
-            uri: this.state.imgURI,
-          }}
+          source={
+            this.props.local
+              ? this.props.source
+              : {
+                  uri: this.state.imgURI,
+                }
+          }
           style={[
             this.props.imageStyle,
             {
@@ -168,6 +190,9 @@ class AsyncImage extends React.Component<Props, State> {
             },
           ]}
           loadingIndicatorSource={Loading}
+          onLoad={() => {
+            if (this.props.local) this.loadFinished();
+          }}
         />
       );
     } else {
@@ -192,6 +217,9 @@ class AsyncImage extends React.Component<Props, State> {
               },
             ]}
             loadingIndicatorSource={Loading}
+            onLoad={() => {
+              if (this.props.local) this.loadFinished();
+            }}
           />
         </View>
       );
@@ -207,7 +235,7 @@ class AsyncImage extends React.Component<Props, State> {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: this.props.loadingBackgroundColor,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -229,7 +257,7 @@ class AsyncImage extends React.Component<Props, State> {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: this.props.loadingBackgroundColor,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -239,7 +267,7 @@ class AsyncImage extends React.Component<Props, State> {
                 timedOut: false,
               });
               this.testTimeout();
-              await this.loadImage();
+              if (!this.props.local) await this.loadImage();
             }}
           >
             <ImageComponent
@@ -275,7 +303,9 @@ class AsyncImage extends React.Component<Props, State> {
           });
         }}
       >
-        {!!this.props.source.uri && !!this.state.imgURI && renderedImage}
+        {(!!this.props.source.uri || this.props.local) &&
+          (!!this.state.imgURI || this.props.local) &&
+          renderedImage}
         {asyncFeedback}
       </View>
     );
