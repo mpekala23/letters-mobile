@@ -38,10 +38,10 @@ import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   getContact,
-  getUser,
   getTrackingEvents,
   getCategories,
   getMailByContact,
+  createMail,
 } from '@api';
 import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -402,7 +402,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               }}
             />
             <MemoryLaneCountCard
-              letterCount={mail ? mail.length : 0}
+              letterCount={this.props.activeContact.totalSent}
               onPress={() => {
                 this.props.setActiveContact(contact);
                 this.props.navigation.navigate(Screens.MemoryLane);
