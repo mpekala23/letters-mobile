@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { View, TouchableOpacity, Keyboard } from 'react-native';
+import { View, TouchableOpacity, Keyboard, Linking } from 'react-native';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Icon, MailingAddressPreview } from '@components';
@@ -18,6 +18,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import * as Segment from 'expo-analytics-segment';
+import * as Sentry from 'sentry-expo';
 import Styles from './ReviewContact.styles';
 import CommonStyles from './AddContact.styles';
 
@@ -139,10 +140,27 @@ class ReviewContactScreenBase extends React.Component<Props, State> {
           ],
         });
       } else {
+        Sentry.captureException(err);
         Segment.trackWithProperties('Add Contact - Error', {
-          'Error Type': 'other',
+          'Error Type': err.message,
         });
         dropdownError({ message: i18n.t('Error.requestIncomplete') });
+        popupAlert({
+          title: i18n.t('Error.cantAddContactTitle'),
+          message: i18n.t('Error.cantAddContactBody'),
+          buttons: [
+            {
+              text: i18n.t('Error.reachOutToSupport'),
+              onPress: async () => {
+                await Linking.openURL('https://m.me/teamameelio');
+              },
+            },
+            {
+              text: i18n.t('Error.noThanks'),
+              reverse: true,
+            },
+          ],
+        });
       }
     }
   };
