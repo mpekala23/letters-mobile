@@ -49,52 +49,41 @@ const DisplayImage: React.FC<Props> = ({
     });
   }, [images]);
 
-  if (isPostcard) {
-    const aspectRatio = getAspectRatio(sizedImages[0]);
-    const padding = paddingPostcard ? 2 * paddingPostcard : 0;
-    return (
-      <AsyncImage
-        viewStyle={[
-          Styles.postcardImage,
-          {
-            height:
-              aspectRatio > 1
-                ? (WIDTH_POSTCARD - padding) / aspectRatio
-                : WIDTH_POSTCARD,
-            width:
-              aspectRatio > 1
-                ? WIDTH_POSTCARD - padding
-                : WIDTH_POSTCARD * aspectRatio,
-          },
-        ]}
-        loadingBackgroundColor={backgroundColor || Colors.GRAY_LIGHTER}
-        download={!local}
-        local={!!local}
-        autorotate={false}
-        source={sizedImages[0]}
-      />
-    );
-  }
-
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      {sizedImages.map((image) => (
-        <AsyncImage
-          key={image.uri}
-          viewStyle={[
-            Styles.letterImage,
-            {
-              height: heightLetter || HEIGHT_LETTER,
-              width: (heightLetter || HEIGHT_LETTER) * getAspectRatio(image),
-            },
-          ]}
-          loadingBackgroundColor={backgroundColor || Colors.GRAY_LIGHTER}
-          download={!local}
-          autorotate={false}
-          local={!!local}
-          source={image}
-        />
-      ))}
+      {sizedImages.map((image) => {
+        const aspectRatio = getAspectRatio(image);
+        const padding = paddingPostcard ? 2 * paddingPostcard : 0;
+        let height = heightLetter || HEIGHT_LETTER;
+        let width = height * aspectRatio;
+        if (isPostcard) {
+          height =
+            aspectRatio > 1
+              ? (WIDTH_POSTCARD - padding) / aspectRatio
+              : WIDTH_POSTCARD;
+          width =
+            aspectRatio > 1
+              ? WIDTH_POSTCARD - padding
+              : WIDTH_POSTCARD * aspectRatio;
+        }
+        return (
+          <AsyncImage
+            key={image.uri}
+            viewStyle={[
+              isPostcard ? Styles.postcardImage : Styles.letterImage,
+              {
+                height,
+                width,
+              },
+            ]}
+            loadingBackgroundColor={backgroundColor || Colors.GRAY_LIGHTER}
+            download={!local}
+            autorotate={false}
+            local={!!local}
+            source={image}
+          />
+        );
+      })}
     </View>
   );
 };
