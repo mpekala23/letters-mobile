@@ -21,6 +21,7 @@ interface Props {
   userPostal?: string;
   contactPostal?: string;
   backgroundColor?: string;
+  isLoadingMail: boolean;
 }
 
 const ContactSelectorCard: React.FC<Props> = (props: Props) => {
@@ -100,23 +101,27 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           {`\n`}
           {capitalize(props.lastName)}
         </AdjustableText>
-        <AdjustableText
-          numberOfLines={1}
-          style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
-        >
-          <Emoji name="calendar" />
-          {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
-        </AdjustableText>
-        <AdjustableText
-          style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
-          numberOfLines={1}
-        >
-          <Emoji name="love_letter" /> {props.numSent}{' '}
-          {props.numSent === 1
-            ? i18n.t('ContactSelectorScreen.letter')
-            : i18n.t('ContactSelectorScreen.letters')}
-        </AdjustableText>
-        {false && lettersTravelled > 0 && (
+        {!props.isLoadingMail && (
+          <AdjustableText
+            numberOfLines={1}
+            style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+          >
+            <Emoji name="calendar" />{' '}
+            {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
+          </AdjustableText>
+        )}
+        {!props.isLoadingMail && (
+          <AdjustableText
+            style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+            numberOfLines={1}
+          >
+            <Emoji name="love_letter" /> {props.numSent}{' '}
+            {props.numSent === 1
+              ? i18n.t('ContactSelectorScreen.letter')
+              : i18n.t('ContactSelectorScreen.letters')}
+          </AdjustableText>
+        )}
+        {!props.isLoadingMail && lettersTravelled > 0 && (
           <Text
             style={[
               Typography.FONT_REGULAR,

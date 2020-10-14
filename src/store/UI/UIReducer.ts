@@ -1,22 +1,23 @@
-import { UIState, START_ACTION, STOP_ACTION } from './UITypes';
+import { UIState, START_ACTION, STOP_ACTION, UIActionTypes } from './UITypes';
 
 // creates a data loader for different data entities
 const initialState: UIState = {
   loader: {
     actions: [],
+    refreshing: [],
   },
 };
 
-const uiReducer = (state = initialState, { type, payload }): UIState => {
+const UIReducer = (state = initialState, action: UIActionTypes): UIState => {
   const { loader } = state;
   const { actions } = loader;
-  switch (type) {
+  switch (action.type) {
     case START_ACTION:
       return {
         ...state,
         loader: {
           ...loader,
-          actions: [...actions, payload.action],
+          actions: [...actions, action.payload],
         },
       };
     case STOP_ACTION:
@@ -24,7 +25,7 @@ const uiReducer = (state = initialState, { type, payload }): UIState => {
         ...state,
         loader: {
           ...loader,
-          actions: actions.filter((action) => action.name !== payload.name),
+          actions: actions.filter((item) => item !== action.payload),
         },
       };
     default:
@@ -32,4 +33,4 @@ const uiReducer = (state = initialState, { type, payload }): UIState => {
   }
 };
 
-export default uiReducer;
+export default UIReducer;

@@ -20,6 +20,7 @@ import {
   MailTypes,
   Contact,
   ProfilePicTypes,
+  EntityTypes,
 } from 'types';
 import { format } from 'date-fns';
 import i18n from '@i18n';
@@ -29,7 +30,8 @@ import * as Segment from 'expo-analytics-segment';
 import { User } from '@store/User/UserTypes';
 import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
 import { differenceInBusinessDays } from 'date-fns/esm';
-
+import { checkIfLoading } from '@store/selectors';
+import TrackingEventsPlaceholder from '@components/Loaders/TrackingEventsPlaceholder';
 import Styles from './MailTracking.styles';
 
 type MailTrackingScreenNavigationProp = StackNavigationProp<
@@ -42,6 +44,7 @@ interface Props {
   mail: Mail | null;
   contact: Contact;
   user: User;
+  isLoadingMailDetail: boolean;
 }
 
 interface State {
@@ -61,7 +64,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
   }
 
   render() {
-    const { mail, user, contact } = this.props;
+    const { mail, user, contact, isLoadingMailDetail } = this.props;
     const getTruckStoppingPoint = (): number => {
       switch (mail?.status) {
         case MailStatus.Created:
@@ -210,6 +213,13 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
     const genTimelineComponent = (): JSX.Element => {
       if (returnedTrack) return <View />;
 
+      if (isLoadingMailDetail)
+        return (
+          <View style={[Styles.cardBackground]}>
+            <TrackingEventsPlaceholder />
+          </View>
+        );
+
       const createdTrack: TrackingEvent = {
         id: -1,
         name: 'Created',
@@ -355,6 +365,7 @@ const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
   mail: state.mail.active,
   user: state.user.user,
+  isLoadingMailDetail: checkIfLoading(state, EntityTypes.MailDetail),
 });
 const MailTrackingScreen = connect(mapStateToProps)(MailTrackingScreenBase);
 
