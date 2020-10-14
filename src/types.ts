@@ -31,6 +31,12 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
+export enum PostcardSize {
+  Small = '4x6',
+  Medium = '6x9',
+  Large = '6x11',
+}
+
 export interface PostcardDesign {
   image: Image;
   thumbnail?: Image;
@@ -54,6 +60,7 @@ interface LetterSpecific {
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
+  size: PostcardSize;
 }
 
 export enum MailStatus {

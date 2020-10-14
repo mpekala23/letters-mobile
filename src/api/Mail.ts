@@ -431,7 +431,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
     content: prepDraft.content,
     is_draft: false,
     type: prepDraft.type,
-    size: prepDraft.type === MailTypes.Postcard ? '4x6' : undefined,
+    size: prepDraft.type === MailTypes.Postcard ? prepDraft.size : undefined,
     ...imageExtension,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
