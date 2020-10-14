@@ -1,5 +1,11 @@
 import React, { createRef } from 'react';
-import { View, Animated, TouchableOpacity, PixelRatio } from 'react-native';
+import {
+  View,
+  Animated,
+  TouchableOpacity,
+  PixelRatio,
+  Image as ImageComponent,
+} from 'react-native';
 import {
   Contact,
   Image,
@@ -233,7 +239,10 @@ class DynamicPostcard extends React.Component<Props> {
                     }}
                     key={placedSticker.id}
                   >
-                    {placedSticker.sticker.component}
+                    <ImageComponent
+                      source={placedSticker.sticker.image}
+                      style={{ width: '100%', height: '100%' }}
+                    />
                   </View>
                 );
               })}

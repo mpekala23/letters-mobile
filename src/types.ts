@@ -6,8 +6,8 @@ export interface Image {
 }
 
 export interface Sticker {
-  component: JSX.Element;
   name: string;
+  image: Image;
 }
 
 export interface PlacedSticker {

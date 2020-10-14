@@ -630,7 +630,14 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           this.closeBottom();
         }}
       >
-        {sticker.component}
+        <AsyncImage
+          source={sticker.image}
+          imageStyle={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+          download={false}
+          local
+          autorotate={false}
+          loadingBackgroundColor="rgba(0,0,0,0)"
+        />
       </TouchableOpacity>
     );
   }

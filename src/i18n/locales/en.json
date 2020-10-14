@@ -26,8 +26,11 @@
     "uploadImageTimeout": "The request timed out while uploading the image. Ensure you are connected to the internet and try again.",
     "cantSendMailModalTitle": "Oops. Something went wrong.",
     "cantSendMailModalBody": "But don’t worry! Your draft is safe and sound. Our support team will help you fix the problem.",
+    "cantAddContactTitle": "Oops. Something went wrong.",
+    "cantAddContactBody": "But don’t worry! Our support team will help you fix the problem.",
     "reachOutToSupport": "Reach out to support",
-    "noThanks": "No thanks"
+    "noThanks": "No thanks",
+    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -39,7 +42,7 @@
     "forFree": "for free.",
     "sendEverything": "Send everything from a letter, photos, to art and games",
     "theyllReceive": "They'll receive memories they can hold on to",
-    "joinOurCommunity": "Join our community of 14,000+ families in this journey",
+    "joinOurCommunity": "Join our community of 15,000+ families in this journey",
     "signUp": "Sign up",
     "logIn": "Log in"
   },
@@ -395,7 +398,7 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport":"Reach out to support"
+    "reachOutToSupport": "Reach out to support"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
