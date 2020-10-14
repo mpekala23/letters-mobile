@@ -1,4 +1,4 @@
-import { MailTypes } from 'types';
+import { Mail, MailTypes } from 'types';
 import {
   SET_COMPOSING,
   SET_RECIPIENT_ID,
@@ -15,6 +15,7 @@ import {
   SET_EXISTING_MAIL,
   MailActionTypes,
   MailState,
+  SET_MAIL_IMAGES,
 } from './MailTypes';
 
 const initialState: MailState = {
@@ -33,6 +34,8 @@ export default function LetterReducer(
   action: MailActionTypes
 ): MailState {
   const currentState = { ...state };
+  let ix = -1;
+  let mailItem: Mail;
   switch (action.type) {
     case SET_COMPOSING:
       currentState.composing = action.payload;
@@ -76,7 +79,7 @@ export default function LetterReducer(
       if (!(action.payload.contactId in currentState.existing))
         return currentState;
       for (
-        let ix = 0;
+        ix = 0;
         ix < currentState.existing[action.payload.contactId].length;
         ix += 1
       ) {
@@ -95,7 +98,7 @@ export default function LetterReducer(
       if (!(action.payload.contactId in currentState.existing))
         return currentState;
       for (
-        let ix = 0;
+        ix = 0;
         ix < currentState.existing[action.payload.contactId].length;
         ix += 1
       ) {
@@ -115,7 +118,7 @@ export default function LetterReducer(
       if (!(action.payload.contactId in currentState.existing))
         return currentState;
       for (
-        let ix = 0;
+        ix = 0;
         ix < currentState.existing[action.payload.contactId].length;
         ix += 1
       ) {
@@ -130,6 +133,23 @@ export default function LetterReducer(
         }
       }
       currentState.existing = { ...currentState.existing };
+      return currentState;
+    case SET_MAIL_IMAGES:
+      if (!(action.payload.contactId in currentState.existing))
+        return currentState;
+      ix = currentState.existing[action.payload.contactId].findIndex(
+        (testMail) => testMail.id === action.payload.mailId
+      );
+      if (ix < 0) return currentState;
+      mailItem = currentState.existing[action.payload.contactId][ix];
+      if (mailItem.type === MailTypes.Postcard) {
+        if (!action.payload.images.length) return currentState;
+        [mailItem.design.image] = action.payload.images;
+        currentState.existing[action.payload.contactId][ix] = { ...mailItem };
+        return currentState;
+      }
+      mailItem.images = action.payload.images;
+      currentState.existing[action.payload.contactId][ix] = { ...mailItem };
       return currentState;
     case SET_CONTACTS_MAIL:
       currentState.existing[action.payload.contactId] = action.payload.mail;
