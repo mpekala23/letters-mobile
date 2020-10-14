@@ -28,8 +28,11 @@ import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
-import { updateContact } from '@store/Contact/ContactActions';
 import { startAction, stopAction } from '@store/UI/UIActions';
+import {
+  updateContact,
+  setActive as setActiveContact,
+} from '@store/Contact/ContactActions';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -293,6 +296,9 @@ export async function getMailByContact(
   updatedContact.mailPage = data.current_page + 1;
   updatedContact.hasNextPage = !!data.next_page_url;
   store.dispatch(updateContact(updatedContact));
+  if (updatedContact.id === store.getState().contact.active.id) {
+    store.dispatch(setActiveContact(updatedContact));
+  }
   return clean;
 }
 
@@ -446,6 +452,11 @@ export async function createMail(draft: Draft): Promise<Mail> {
   store.dispatch(addMail(createdMail));
   user.credit -= 1;
   store.dispatch(setUser(user));
+
+  const contact = store.getState().contact.active;
+  contact.totalSent += 1;
+  store.dispatch(updateContact(contact));
+
   return createdMail;
 }
 

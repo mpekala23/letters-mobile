@@ -12,7 +12,8 @@ export default StyleSheet.create({
     height: '100%',
   },
   padded: {
-    padding: 32,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
   },
   baseText: {
     fontSize: 18,

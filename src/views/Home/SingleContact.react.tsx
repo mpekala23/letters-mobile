@@ -346,7 +346,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               }}
             />
             <MemoryLaneCountCard
-              letterCount={mail ? mail.length : 0}
+              letterCount={this.props.activeContact.totalSent}
               onPress={() => {
                 this.props.setActiveContact(contact);
                 this.props.navigation.navigate(Screens.MemoryLane);

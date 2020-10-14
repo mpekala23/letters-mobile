@@ -72,7 +72,7 @@ export default function ContactReducer(
       return currentState;
     case SET_ACTIVE:
       currentState.active = action.payload;
-      return currentState;
+      return { ...currentState };
     case SET_EXISTING:
       currentState.existing = action.payload;
       return currentState;
@@ -83,7 +83,7 @@ export default function ContactReducer(
       if (ix >= 0) {
         currentState.existing[ix] = action.payload;
       }
-      return currentState;
+      return { ...currentState };
     case CLEAR_CONTACTS:
       currentState.adding = initialState.adding;
       currentState.existing = [];
