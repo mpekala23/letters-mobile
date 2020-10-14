@@ -14,7 +14,6 @@ import {
   Image,
   Contact,
   EntityTypes,
-  UIActions,
 } from 'types';
 import {
   addMail,
@@ -26,12 +25,11 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims, sleep } from '@utils';
+import { estimateDelivery, getImageDims } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import { updateContact } from '@store/Contact/ContactActions';
 import { startAction, stopAction } from '@store/UI/UIActions';
-import { STOP_ACTION } from '@store/UI/UITypes';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -543,11 +541,11 @@ export async function getSubcategoriesById(
       )
     );
   }
-  console.log(categoryId);
   return cleanData;
 }
 
 export async function getCategories(): Promise<Category[]> {
+  store.dispatch(startAction(EntityTypes.Categories));
   try {
     const categoryState = store.getState().category;
     if (
@@ -560,7 +558,6 @@ export async function getCategories(): Promise<Category[]> {
       // an hour ago, don't bother making this call
       return categoryState.categories;
     }
-    store.dispatch(startAction(EntityTypes.Categories));
     const body = await fetchAuthenticated(url.resolve(API_URL, 'categories'));
     if (body.status !== 'OK' || !body.data) throw body;
     const data = body.data as RawCategory[];

@@ -316,11 +316,10 @@ async function initializeData(
   token: string,
   remember: string
 ): Promise<void> {
-  // const userData = cleanUser;
   Segment.identify(userData.email);
   Segment.track('Login Success');
+  store.dispatch(setLoadingStatus(60));
   store.dispatch(authenticateUser(userData, token, remember));
-
   getCategories().catch((err) => {
     Sentry.captureException(err);
   });
@@ -338,7 +337,6 @@ async function initializeData(
     dropdownError({ message: i18n.t('Error.loadingUser') });
     store.dispatch(logoutUser());
   }
-  store.dispatch(setLoadingStatus(60));
   store.dispatch(setLoadingStatus(100));
   sleep(300).then(() => {
     store.dispatch(loginUser(userData));
@@ -402,7 +400,7 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   const body = await response.json();
   if (body.status !== 'OK') throw body;
-  store.dispatch(setLoadingStatus(30));
+  store.dispatch(setLoadingStatus(40));
   const userData = cleanUser(body.data as RawUser);
   const { token, remember } = body.data;
   await initializeData(userData, token, remember);
