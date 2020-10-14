@@ -260,6 +260,10 @@ export type PremiumPack = {
   coins: number;
 };
 
-export type StripeSession = {
-  id: string;
-};
+export enum EntityTypes {
+  Contacts = 'Contacts',
+  Mail = 'Mail',
+  Referrals = 'Referrals',
+  Categories = 'Categories',
+  MailDetail = 'MailDetail',
+}

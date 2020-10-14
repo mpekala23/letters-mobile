@@ -13,6 +13,7 @@ import {
   PostcardDesign,
   Image,
   Contact,
+  EntityTypes,
 } from 'types';
 import {
   addMail,
@@ -27,6 +28,7 @@ import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
+import { startAction, stopAction } from '@store/UI/UIActions';
 import {
   updateContact,
   setActive as setActiveContact,
@@ -194,7 +196,7 @@ export async function getSingleMail(id: number): Promise<Mail> {
 
 // cleans mail returned from getMail and defaults to getSingleMail if necessary
 async function cleanMassMail(mail: RawMail): Promise<Mail> {
-  if (!mail.lob_status || !mail.last_lob_status_update) {
+  if (!mail.lob_status) {
     return getSingleMail(mail.id);
   }
   const { type, content, id } = mail;
@@ -301,6 +303,7 @@ export async function getMailByContact(
 }
 
 export async function initMail(seedContacts?: Contact[]): Promise<void> {
+  store.dispatch(startAction(EntityTypes.Mail));
   const contacts =
     seedContacts?.slice(0, 10) || store.getState().contact.existing;
   await Promise.all(
@@ -313,6 +316,7 @@ export async function initMail(seedContacts?: Contact[]): Promise<void> {
       }
     })
   );
+  store.dispatch(stopAction(EntityTypes.Mail));
 }
 
 export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
@@ -358,6 +362,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
 }
 
 export async function getTrackingEvents(id: number): Promise<Mail> {
+  store.dispatch(startAction(EntityTypes.MailDetail));
   const mail = await getSingleMail(id);
   const contactId = store.getState().contact.active.id;
   const currentMail = [...store.getState().mail.existing[contactId]];
@@ -365,6 +370,7 @@ export async function getTrackingEvents(id: number): Promise<Mail> {
   currentMail[ix] = mail;
   store.dispatch(setActive(mail));
   store.dispatch(setContactsMail(contactId, currentMail));
+  store.dispatch(stopAction(EntityTypes.MailDetail));
   return mail;
 }
 
@@ -549,6 +555,7 @@ export async function getSubcategoriesById(
 }
 
 export async function getCategories(): Promise<Category[]> {
+  store.dispatch(startAction(EntityTypes.Categories));
   try {
     const categoryState = store.getState().category;
     if (
@@ -556,6 +563,7 @@ export async function getCategories(): Promise<Category[]> {
       differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
       categoryState.categories.length
     ) {
+      store.dispatch(stopAction(EntityTypes.Categories));
       // if categories are loaded into the store and were refreshed less than
       // an hour ago, don't bother making this call
       return categoryState.categories;
@@ -575,14 +583,17 @@ export async function getCategories(): Promise<Category[]> {
     if (personalIx < 0 || !categories.length) {
       store.dispatch(setCategories([]));
       store.dispatch(setLastUpdated(null));
+      store.dispatch(stopAction(EntityTypes.Categories));
       return [];
     }
     const personalCategory = categories.splice(personalIx, 1);
     categories.unshift(personalCategory[0]);
     store.dispatch(setCategories(categories));
     store.dispatch(setLastUpdated(new Date().toISOString()));
+    store.dispatch(stopAction(EntityTypes.Categories));
     return categories;
   } catch (err) {
+    store.dispatch(stopAction(EntityTypes.Categories));
     Sentry.captureException(err);
     throw err;
   }
