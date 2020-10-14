@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import i18n from '@i18n';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import { BOTTOM_HEIGHT } from '@utils/Constants';
 import { Animated, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { TextBottomDetails } from 'types';
 import { TriangleColorPicker } from 'react-native-color-picker';
 import { hsvToHex } from '@utils';
 import Styles from './TextBottom.styles';
+import AdjustableText from '../../Text/AdjustableText.react';
 
 interface Props {
   bottomSlide: Animated.Value;
@@ -34,21 +35,54 @@ function ColorSelector({ setColor }: { setColor: (color: string) => void }) {
 const FONT_OPTIONS = [
   'BebasNeue-Regular',
   'KumbhSans-Regular',
+  'Lobster-Regular',
+  'Montserrat-Regular',
   'NotoSerifJP-Regular',
+  'Poppins-Regular',
+  'ReenieBeanie-Regular',
+  'Satisfy-Regular',
 ];
 
 function FontSelector({ setFont }: { setFont: (font: string) => void }) {
   return (
-    <FlatList
-      data={FONT_OPTIONS}
-      renderItem={({ item }) => {
-        return (
-          <Text style={{ fontFamily: item, color: 'white' }}>
-            The quick brown fox jumped over the lazy dog.
-          </Text>
-        );
-      }}
-    />
+    <View style={{ flex: 1, paddingTop: 32, paddingHorizontal: 16 }}>
+      <FlatList
+        data={FONT_OPTIONS}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                paddingVertical: 8,
+              }}
+              onPress={() => setFont(item)}
+            >
+              <Text
+                style={[
+                  Typography.FONT_REGULAR,
+                  { color: Colors.GRAY_MEDIUM, fontSize: 18 },
+                ]}
+              >
+                {item.split('-')[0]}
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  height: '100%',
+                  fontFamily: item,
+                  color: 'white',
+                  fontSize: 24,
+                }}
+              >
+                The quick brown fox jumped over the lazy dog.
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item}
+      />
+    </View>
   );
 }
 

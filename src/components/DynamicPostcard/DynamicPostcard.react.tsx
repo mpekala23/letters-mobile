@@ -45,6 +45,8 @@ interface Props {
   bottomDetails: DesignBottomDetails | null;
   updateStickers: (stickers: PlacedSticker[]) => void;
   textColor: string;
+  fontFamily: string;
+  fontSize: number;
 }
 
 class DynamicPostcard extends React.Component<Props> {
@@ -281,8 +283,9 @@ class DynamicPostcard extends React.Component<Props> {
               parentStyle={{ flex: 1 }}
               inputStyle={{
                 flex: 1,
-                fontSize: 14,
                 color: this.props.textColor,
+                fontFamily: this.props.fontFamily,
+                fontSize: this.props.fontSize,
               }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
               onChangeText={this.props.onChangeText}

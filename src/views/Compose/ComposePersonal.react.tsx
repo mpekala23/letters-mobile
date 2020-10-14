@@ -99,6 +99,8 @@ interface State {
     buttonSlide: Animated.Value;
     writing: boolean;
     color: string;
+    fontFamily: string;
+    fontSize: number;
   };
 }
 
@@ -146,6 +148,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         buttonSlide: new Animated.Value(0),
         writing: false,
         color: '#000000',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 18,
       },
     };
 
@@ -316,6 +320,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       keyboardOpacity?: Animated.Value;
       writing?: boolean;
       color?: string;
+      fontFamily?: string;
+      fontSize?: number;
     },
     callback?: () => void
   ) {
@@ -617,6 +623,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                         });
                     }}
                     textColor={this.state.textState.color}
+                    fontFamily={this.state.textState.fontFamily}
+                    fontSize={this.state.textState.fontSize}
                   />
                 </Animated.View>
               </ScrollView>
@@ -648,6 +656,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                         }
                       });
                     }}
+                    fontSize={this.state.textState.fontSize}
+                    setFontSize={(fontSize) => this.setTextState({ fontSize })}
                     slide={this.state.textState.buttonSlide}
                     finishWriting={this.doneWriting}
                   />
@@ -707,6 +717,9 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 details={this.state.textState.bottomDetails}
                 onClose={this.closeTextBottom}
                 setColor={(color) => this.setTextState({ color })}
+                setFont={(fontFamily) => {
+                  this.setTextState({ fontFamily });
+                }}
               />
             </View>
           </KeyboardAvoider>

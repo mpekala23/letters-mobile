@@ -29,7 +29,11 @@ const customFonts = {
   'Poppins-Bold-Italic': require('./assets/fonts/Poppins-BoldItalic.ttf'),
   'BebasNeue-Regular': require('./assets/fonts/PostcardFonts/BebasNeue-Regular.ttf'),
   'KumbhSans-Regular': require('./assets/fonts/PostcardFonts/KumbhSans-Regular.ttf'),
+  'Lobster-Regular': require('./assets/fonts/PostcardFonts/Lobster-Regular.ttf'),
+  'Montserrat-Regular': require('./assets/fonts/PostcardFonts/Montserrat-Regular.ttf'),
   'NotoSerifJP-Regular': require('./assets/fonts/PostcardFonts/NotoSerifJP-Regular.otf'),
+  'ReenieBeanie-Regular': require('./assets/fonts/PostcardFonts/ReenieBeanie-Regular.ttf'),
+  'Satisfy-Regular': require('./assets/fonts/PostcardFonts/Satisfy-Regular.ttf'),
 };
 
 const customTextProps = {

@@ -16,5 +16,6 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });
