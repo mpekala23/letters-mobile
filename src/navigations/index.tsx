@@ -34,6 +34,7 @@ import {
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
+  SelectPostcardSizeScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
@@ -229,7 +230,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       <>
         <Stack.Screen
           name={Screens.ContactSelector}
-          component={ContactSelectorScreen}
+          component={SelectPostcardSizeScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen
@@ -300,6 +301,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
+        />
+        <Stack.Screen
+          name={Screens.SelectPostcardSize}
+          component={SelectPostcardSizeScreen}
         />
         <Stack.Screen
           name={Screens.SingleContact}

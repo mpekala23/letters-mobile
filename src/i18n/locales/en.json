@@ -388,7 +388,11 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport": "Reach out to support"
+    "reachOutToSupport": "Reach out to support",
+    "smallPostcardTitle": "Small photo",
+    "mediumPostcardTitle": "Medium photo",
+    "largePostcardTitle": "Large photo",
+    "words": "words"
   },
   "ComposeTools": {
     "wordsLeft": "words left"

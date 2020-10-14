@@ -389,7 +389,10 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales. Verifique su wi-fi e intente cargar nuevamente para usar nuestras postales.",
     "sendPersonalLettersOrPhotos": "Envíe cartas o fotografías personales",
-    "reachOutToSupport": "Contactar al soporte"
+    "reachOutToSupport": "Contactar al soporte",
+    "smallPostcardTitle": "Small photo",
+    "mediumPostcardTitle": "Medium photo",
+    "largePostcardTitle": "Large photo",
   },
   "ComposeTools": {
     "wordsLeft": "palabras"

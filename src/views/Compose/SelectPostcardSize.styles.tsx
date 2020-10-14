@@ -3,12 +3,13 @@ import { Colors } from '@styles';
 
 export default StyleSheet.create({
   trueBackground: {
-    backgroundColor: 'white',
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 16,
   },
-  fullWidth: {
-    width: '100%',
+  body: {
+    color: Colors.GRAY_500,
+    fontSize: 14,
   },
 });
