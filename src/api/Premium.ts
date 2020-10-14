@@ -25,6 +25,7 @@ function cleanPremiumPack(pack: RawPremiumPack): PremiumPack {
   };
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export async function getPremiumPacks(): Promise<PremiumPack[]> {
   const body = await fetchAuthenticated(url.resolve(API_URL, `packs`));
   const data = body.data as RawPremiumPack[];
@@ -34,9 +35,4 @@ export async function getPremiumPacks(): Promise<PremiumPack[]> {
   ) as PremiumPack[];
   store.dispatch(setPremiumPacks(packs));
   return packs;
-}
-
-// dummy line so that eslint stops complaining about default export. remove when we add another real function here
-export function dummyfunction(): void {
-  // nothing
 }

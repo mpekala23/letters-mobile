@@ -40,7 +40,10 @@ const CreditPackPurchaseSuccess = ({ navigation, route }: Props) => {
         onPress={() => {
           navigation.reset({
             index: 0,
-            routes: [{ name: Screens.SingleContact }],
+            routes: [
+              { name: Screens.ContactSelector },
+              { name: Screens.SingleContact },
+            ],
           });
         }}
       />
