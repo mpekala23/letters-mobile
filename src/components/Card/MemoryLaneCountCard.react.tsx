@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import LettersFilledIcon from '@assets/components/Card/LettersFilled';
 import i18n from '@i18n';
+import MemoryCardPlaceholder from '@components/Loaders/MemoryCardPlaceholder';
 import CardStyles from './Card.styles';
 import Icon from '../Icon/Icon.react';
 import AdjustableText from '../Text/AdjustableText.react';
@@ -11,6 +12,7 @@ interface Props {
   letterCount: number;
   onPress: () => void;
   style?: ViewStyle;
+  isLoading: boolean;
 }
 
 const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
@@ -40,24 +42,28 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
       <Text style={[Typography.FONT_MEDIUM, CardStyles.cardData]}>
         Memory Lane
       </Text>
-      <AdjustableText
-        style={
-          props.letterCount === 0
-            ? [
-                Typography.FONT_SEMIBOLD,
-                {
-                  fontSize: 26,
-                  color: Colors.AMEELIO_BLACK,
-                  width: '65%',
-                  paddingTop: 4,
-                },
-              ]
-            : [Typography.FONT_SEMIBOLD, CardStyles.cardTitle]
-        }
-        numberOfLines={1}
-      >
-        {cardMessage}
-      </AdjustableText>
+      {props.isLoading ? (
+        <MemoryCardPlaceholder />
+      ) : (
+        <AdjustableText
+          style={
+            props.letterCount === 0
+              ? [
+                  Typography.FONT_SEMIBOLD,
+                  {
+                    fontSize: 26,
+                    color: Colors.AMEELIO_BLACK,
+                    width: '65%',
+                    paddingTop: 4,
+                  },
+                ]
+              : [Typography.FONT_SEMIBOLD, CardStyles.cardTitle]
+          }
+          numberOfLines={1}
+        >
+          {cardMessage}
+        </AdjustableText>
+      )}
     </TouchableOpacity>
   );
 };
