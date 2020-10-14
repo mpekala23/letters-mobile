@@ -59,7 +59,6 @@ import { Platform } from 'react-native';
 
 import i18n from '@i18n';
 import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
-import CreditPackPurchaseSuccess from '@views/Premium/CreditPackPurchaseSuccess';
 
 export { navigationRef, navigate };
 
@@ -242,7 +241,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       <>
         <Stack.Screen
           name={Screens.ContactSelector}
-          component={CreditPackStoreScreen}
+          component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

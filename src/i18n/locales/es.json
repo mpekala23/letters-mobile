@@ -92,9 +92,14 @@
     "lastHeard": "Last heard"
   },
   "CreditPackStore": {
-    "title": "Tokens of Grattitude",
-    "subtitle": "Pay it forward and fund free letters to other families by buying Ameelio+ tokens. In exchange, you can use these tokens to purchase larger postcards, entertainment packets, and more.",
-    "selectBtn": "Select"
+    "title": "Tokens de gratitud",
+    "subtitle": "Compre tokens Ameelio + para ayudar a otros a mantenerse en contacto de forma gratuita. A cambio, use estos tokens para enviar paquetes especiales a su ser querido.",
+    "selectBtn": "Selecciona"
+  },
+  "CreditPackPurchaseSuccess": {
+    "title": "Gracias por tu aporte",
+    "body": "Gracias por confiar en Ameelio y promover nuestra misión de brindar comunicación gratuita para todos.",
+    "buttonCta": "Ir a la tienda"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -416,7 +421,7 @@
     "contactInfo": "Contactos",
     "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
-    "creditPackStore": "Ameelio+ Tokens of Gratitude",
+    "creditPackStore": "Ameelio+ Tokens",
     "firstLetter": "Primera Carta",
     "home": "Inicio",
     "issues": "Problemas",

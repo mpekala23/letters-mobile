@@ -97,12 +97,12 @@
   },
   "CreditPackStore": {
     "title": "Tokens of Grattitude",
-    "subtitle": "Buy Ameelio+ tokens to help others families stay in touch for free. In exchange, you can use these tokens to send your loved one premium add-ons.",
+    "subtitle": "Pay it forward and fund free letters to other families by buying Ameelio+ tokens. In exchange, you can use these tokens to purchase larger postcards, entertainment packets, and more.",
     "selectBtn": "Select"
   },
   "CreditPackPurchaseSuccess": {
-    "title": "Thank you for your purchase",
-    "body": "Thank you for trusting Ameelio and furthering our mission to provide free communication for all. .",
+    "title": "Thank you for your contribution",
+    "body": "Thank you for trusting Ameelio and furthering our mission to provide free communication for all.",
     "buttonCta": "Go to store"
   },
   "CreditsCard": {
@@ -425,7 +425,7 @@
     "contactInfo": "Contact Info",
     "contactInmateInfo": "Contact Details",
     "contacts": "Contacts",
-    "creditPackStore": "Ameelio+ Tokens of Gratitude",
+    "creditPackStore": "Ameelio+ Tokens",
     "home": "Home",
     "issues": "Issues",
     "letterDetails": "Letter Details",

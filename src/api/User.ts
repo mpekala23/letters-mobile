@@ -52,6 +52,7 @@ interface RawUser {
   state: string;
   postal: string;
   credit: number;
+  coins: number;
   s3_img_url?: string;
   profile_img_path?: string;
   phone: string;
@@ -63,7 +64,6 @@ interface RawUser {
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
-
   return {
     id: user.id,
     firstName: user.first_name,
@@ -78,6 +78,7 @@ function cleanUser(user: RawUser): User {
       uri: photoUri || '',
     },
     credit: user.credit,
+    coins: user.coins,
     joined: new Date(user.created_at),
     referralCode: user.referral_link,
   };

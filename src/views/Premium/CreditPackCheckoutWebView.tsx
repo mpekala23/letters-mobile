@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { View, Image as ImageComponent } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -10,6 +10,8 @@ import { GENERAL_URL } from '@api/Common';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { PremiumPack } from 'types';
+import { addPremiumCoins } from '@store/User/UserActions';
+import { UserActionTypes } from '@store/User/UserTypes';
 
 type CreditPackCheckoutWebViewNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -24,16 +26,23 @@ interface Props {
       pack: PremiumPack;
     };
   };
+  addCoins: (coins: number) => void;
 }
 
-const CreditPackCheckoutWebViewBase = ({ navigation, email, route }: Props) => {
+const CreditPackCheckoutWebViewBase = ({
+  addCoins,
+  navigation,
+  email,
+  route,
+}: Props) => {
   const [height, setHeight] = useState('0%');
-
+  const { pack } = route.params;
   const handleChange = (e: WebViewNavigation) => {
     if (
       !e.loading &&
       e.url.indexOf(url.resolve(GENERAL_URL, `stripe/success`)) !== -1
     ) {
+      addCoins(pack.coins);
       navigation.reset({
         index: 0,
         routes: [{ name: Screens.CreditPackPurchaseSuccess }],
@@ -88,8 +97,15 @@ const mapStateToProps = (state: AppState) => ({
   email: state.user.user.email,
 });
 
-const CreditPackCheckoutWebViewScreen = connect(mapStateToProps)(
-  CreditPackCheckoutWebViewBase
-);
+const mapDispatchToProps = (dispatch: Dispatch<UserActionTypes>) => {
+  return {
+    addCoins: (coins: number) => dispatch(addPremiumCoins(coins)),
+  };
+};
+
+const CreditPackCheckoutWebViewScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreditPackCheckoutWebViewBase);
 
 export default CreditPackCheckoutWebViewScreen;
