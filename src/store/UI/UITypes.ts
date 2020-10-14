@@ -8,7 +8,6 @@ export const REFRESH_ACTION_STOP = 'ui/refresh_action_stop';
 export interface UIState {
   loader: {
     actions: EntityTypes[];
-    refreshing: EntityTypes[];
   };
 }
 

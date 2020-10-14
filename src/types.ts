@@ -258,8 +258,3 @@ export enum EntityTypes {
   Categories = 'Categories',
   MailDetail = 'MailDetail',
 }
-
-export enum UIActions {
-  Fetch = 'Fetch',
-  Refresh = 'Refresh',
-}

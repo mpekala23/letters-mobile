@@ -306,7 +306,7 @@ export async function initMail(seedContacts?: Contact[]): Promise<void> {
   store.dispatch(startAction(EntityTypes.Mail));
   const contacts =
     seedContacts?.slice(0, 10) || store.getState().contact.existing;
-  Promise.all(
+  await Promise.all(
     contacts.map(async (contact) => {
       try {
         const pageOneMail = await getMailByContact(contact, 1);
@@ -315,9 +315,8 @@ export async function initMail(seedContacts?: Contact[]): Promise<void> {
         Sentry.captureException(err);
       }
     })
-  ).then(() => {
-    store.dispatch(stopAction(EntityTypes.Mail));
-  });
+  );
+  store.dispatch(stopAction(EntityTypes.Mail));
 }
 
 export async function getMail(page = 1): Promise<Record<string, Mail[]>> {

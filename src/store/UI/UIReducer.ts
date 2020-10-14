@@ -4,7 +4,6 @@ import { UIState, START_ACTION, STOP_ACTION, UIActionTypes } from './UITypes';
 const initialState: UIState = {
   loader: {
     actions: [],
-    refreshing: [],
   },
 };
 
