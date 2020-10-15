@@ -244,9 +244,8 @@
   "SingleContactScreen": {
     "received": "received",
     "sent": "sent",
-    "lastHeardFromYou": "last heard from you",
-    "lettersTraveled": "letters traveled",
-    "sendLetter": "Send",
+    "lettersTraveled": "traveled",
+    "sendLetter": "Send an Ameelio \u2661",
     "letterTracking": "Letter Tracking"
   },
   "UpdateContactScreen": {

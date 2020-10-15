@@ -7,7 +7,7 @@ import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { connect } from 'react-redux';
-import { Mail, Contact } from 'types';
+import { Mail, Contact, EntityTypes } from 'types';
 import i18n from '@i18n';
 import ContactSelectorCard from '@components/Card/ContactSelectorCard.react';
 import { setActive } from '@store/Contact/ContactActions';
@@ -20,6 +20,7 @@ import CardBackground from '@assets/views/Referrals/CardBackground';
 import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
+import { checkIfLoading } from '@store/selectors';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -38,6 +39,7 @@ interface Props {
   unrespondedNotifs: Notif[];
   setUnrespondedNotifs: (notifs: Notif[]) => void;
   setActiveMail: (mail: Mail) => void;
+  isLoadingMail: boolean;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props> {
@@ -114,6 +116,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
         contactPostal={item.facility.postal}
         key={`${item.inmateNumber}-${item.lastName}-${item.lastName}-${item.id}`}
         backgroundColor={item.backgroundColor}
+        isLoadingMail={this.props.isLoadingMail}
       />
     );
   };
@@ -188,7 +191,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
 
   renderListHeader() {
     return (
-      <View>
+      <View style={{ paddingTop: 16 }}>
         {this.renderReferralCard()}
         <Text
           style={[
@@ -237,6 +240,7 @@ const mapStateToProps = (state: AppState) => ({
   userId: state.user.user.id,
   lastUpdatedCategories: state.category.lastUpdated,
   unrespondedNotifs: state.notif.unrespondedNotifs,
+  isLoadingMail: checkIfLoading(state, EntityTypes.Mail),
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<ContactActionTypes | NotifActionTypes | MailActionTypes>

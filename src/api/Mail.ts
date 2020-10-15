@@ -13,6 +13,7 @@ import {
   PostcardDesign,
   Image,
   Contact,
+  EntityTypes,
 } from 'types';
 import {
   addMail,
@@ -25,8 +26,13 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
-import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
+import {
+  setCategories,
+  setDesignImage,
+  setLastUpdated,
+} from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
+import { startAction, stopAction } from '@store/UI/UIActions';
 import {
   updateContact,
   setActive as setActiveContact,
@@ -114,19 +120,11 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => {
+      return {
+        uri: rawImage.img_src,
+      };
+    });
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
 
@@ -194,26 +192,14 @@ export async function getSingleMail(id: number): Promise<Mail> {
 
 // cleans mail returned from getMail and defaults to getSingleMail if necessary
 async function cleanMassMail(mail: RawMail): Promise<Mail> {
-  if (!mail.lob_status || !mail.last_lob_status_update) {
+  if (!mail.lob_status) {
     return getSingleMail(mail.id);
   }
   const { type, content, id } = mail;
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
   const dateCreated = new Date(mail.created_at).toISOString();
@@ -301,6 +287,7 @@ export async function getMailByContact(
 }
 
 export async function initMail(seedContacts?: Contact[]): Promise<void> {
+  store.dispatch(startAction(EntityTypes.Mail));
   const contacts =
     seedContacts?.slice(0, 10) || store.getState().contact.existing;
   await Promise.all(
@@ -313,6 +300,7 @@ export async function initMail(seedContacts?: Contact[]): Promise<void> {
       }
     })
   );
+  store.dispatch(stopAction(EntityTypes.Mail));
 }
 
 export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
@@ -358,6 +346,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
 }
 
 export async function getTrackingEvents(id: number): Promise<Mail> {
+  store.dispatch(startAction(EntityTypes.MailDetail));
   const mail = await getSingleMail(id);
   const contactId = store.getState().contact.active.id;
   const currentMail = [...store.getState().mail.existing[contactId]];
@@ -365,6 +354,7 @@ export async function getTrackingEvents(id: number): Promise<Mail> {
   currentMail[ix] = mail;
   store.dispatch(setActive(mail));
   store.dispatch(setContactsMail(contactId, currentMail));
+  store.dispatch(stopAction(EntityTypes.MailDetail));
   return mail;
 }
 
@@ -489,41 +479,34 @@ interface RawDesign {
   content_researcher?: string;
 }
 
-async function cleanDesign(
+function cleanDesign(
   raw: RawDesign,
   categoryId?: number,
   subcategoryName?: string
-): Promise<PostcardDesign> {
-  try {
-    const imageDims = await getImageDims(raw.front_img_src);
-    const thumbnailDims = await getImageDims(raw.thumbnail_src);
-    return {
-      image: {
-        uri: raw.front_img_src,
-        ...imageDims,
-      },
-      thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
-  } catch (err) {
-    return {
-      image: {
-        uri: raw.front_img_src,
-      },
-      thumbnail: { uri: raw.thumbnail_src },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
+): PostcardDesign {
+  const design: PostcardDesign = {
+    image: {
+      uri: raw.front_img_src,
+    },
+    thumbnail: { uri: raw.thumbnail_src },
+    name: raw.name,
+    id: raw.id,
+    categoryId,
+    subcategoryName,
+    contentResearcher: raw.content_researcher,
+    designer: raw.designer,
+  };
+  if (categoryId && subcategoryName && design.id) {
+    getImageDims(design.image.uri).then((dims) => {
+      store.dispatch(
+        setDesignImage(categoryId, subcategoryName, raw.id, {
+          ...design.image,
+          ...dims,
+        })
+      );
+    });
   }
+  return design;
 }
 
 export async function getSubcategoriesById(
@@ -539,16 +522,15 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = await Promise.all(
-      data[subName].map((raw: RawDesign) =>
-        cleanDesign(raw, categoryId, subName)
-      )
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;
 }
 
 export async function getCategories(): Promise<Category[]> {
+  store.dispatch(startAction(EntityTypes.Categories));
   try {
     const categoryState = store.getState().category;
     if (
@@ -556,6 +538,7 @@ export async function getCategories(): Promise<Category[]> {
       differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
       categoryState.categories.length
     ) {
+      store.dispatch(stopAction(EntityTypes.Categories));
       // if categories are loaded into the store and were refreshed less than
       // an hour ago, don't bother making this call
       return categoryState.categories;
@@ -575,14 +558,17 @@ export async function getCategories(): Promise<Category[]> {
     if (personalIx < 0 || !categories.length) {
       store.dispatch(setCategories([]));
       store.dispatch(setLastUpdated(null));
+      store.dispatch(stopAction(EntityTypes.Categories));
       return [];
     }
     const personalCategory = categories.splice(personalIx, 1);
     categories.unshift(personalCategory[0]);
     store.dispatch(setCategories(categories));
     store.dispatch(setLastUpdated(new Date().toISOString()));
+    store.dispatch(stopAction(EntityTypes.Categories));
     return categories;
   } catch (err) {
+    store.dispatch(stopAction(EntityTypes.Categories));
     Sentry.captureException(err);
     throw err;
   }

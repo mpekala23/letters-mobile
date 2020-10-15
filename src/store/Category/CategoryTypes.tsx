@@ -1,4 +1,4 @@
-import { Category, PostcardDesign } from 'types';
+import { Category, Image, PostcardDesign } from 'types';
 
 export const SET_CATEGORIES = 'category/set_categories';
 export const ADD_CATEGORY = 'category/add_category';
@@ -8,6 +8,7 @@ export const REMOVE_CATEGORY = 'category/remove_category';
 export const SET_SUBCATEGORIES = 'category/set_subcategories';
 export const ADD_SUBCATEGORY = 'category/add_subcategory';
 export const SET_SUBCATEGORY = 'category/set_subcategory';
+export const SET_DESIGN_IMAGE = 'category/set_design_image';
 export const REMOVE_SUBCATEGORY = 'category/remove_subcategory';
 
 export const SET_LAST_UPDATED = 'cateogry/set_last_updated';
@@ -55,6 +56,16 @@ interface SetSubcategoryAction {
   payload: { categoryId: number; name: string; designs: PostcardDesign[] };
 }
 
+interface SetDesignImageAction {
+  type: typeof SET_DESIGN_IMAGE;
+  payload: {
+    categoryId: number;
+    subcategoryName: string;
+    designId: number;
+    image: Image;
+  };
+}
+
 interface RemoveSubcategoryAction {
   type: typeof REMOVE_SUBCATEGORY;
   payload: { categoryId: number; name: string };
@@ -73,5 +84,6 @@ export type CategoryActionTypes =
   | SetSubcategoriesAction
   | AddSubcategoryAction
   | SetSubcategoryAction
+  | SetDesignImageAction
   | RemoveSubcategoryAction
   | SetLastUpdatedAction;

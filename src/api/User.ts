@@ -6,6 +6,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   Storage,
   MailTypes,
@@ -23,6 +24,7 @@ import {
   setLoadingStatus,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
+
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE, sleep } from '@utils';
 import * as Segment from 'expo-analytics-segment';
@@ -99,7 +101,7 @@ export async function deleteDraft(): Promise<void> {
     deleteItemAsync(Storage.DraftDesignUri),
     deleteItemAsync(Storage.DraftCategoryId),
     deleteItemAsync(Storage.DraftSubcategoryName),
-    deleteItemAsync(Storage.DraftLayout),
+    AsyncStorage.removeItem(Storage.DraftLayout),
   ]);
 }
 
@@ -122,7 +124,10 @@ export async function saveDraft(draft: Draft): Promise<void> {
     if (draft.design.layout) {
       // personal postcard
       Promise.all([
-        setItemAsync(Storage.DraftLayout, JSON.stringify(draft.design.layout)),
+        AsyncStorage.setItem(
+          Storage.DraftLayout,
+          JSON.stringify(draft.design.layout)
+        ),
       ]);
     } else if (draft.design.image.uri && draft.design.subcategoryName) {
       Promise.all([
@@ -174,7 +179,7 @@ export async function loadDraft(): Promise<Draft> {
         draftCategoryId === PERSONAL_OVERRIDE_ID.toString()
       ) {
         // either this is a personal postcard, or there is no categoryId and we assume it is
-        const draftLayout = await getItemAsync(Storage.DraftLayout);
+        const draftLayout = await AsyncStorage.getItem(Storage.DraftLayout);
         const draft: Draft = {
           type: MailTypes.Postcard,
           recipientId: parseInt(draftRecipientId, 10),
@@ -308,6 +313,48 @@ export async function uploadPushToken(token: string): Promise<void> {
   if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
 }
 
+async function initializeData(
+  userData: User,
+  token: string,
+  remember: string
+): Promise<void> {
+  Segment.identify(userData.email);
+  Segment.track('Login Success');
+  store.dispatch(setLoadingStatus(60));
+  store.dispatch(authenticateUser(userData, token, remember));
+  getCategories().catch((err) => {
+    Sentry.captureException(err);
+  });
+  getUserReferrals().catch((err) => {
+    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    Sentry.captureException(err);
+  });
+  try {
+    const contacts = await getContacts();
+    initMail(contacts).catch((err) => {
+      Sentry.captureException(err);
+    });
+  } catch (err) {
+    Sentry.captureException(err);
+    dropdownError({ message: i18n.t('Error.loadingUser') });
+    store.dispatch(logoutUser());
+  }
+  store.dispatch(setLoadingStatus(100));
+  sleep(300).then(() => {
+    store.dispatch(loginUser(userData));
+  });
+  loadDraft();
+  getPushToken()
+    .then((pushToken) => {
+      uploadPushToken(pushToken).catch(() => {
+        dropdownError({ message: i18n.t('Permission.notifs') });
+      });
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+    });
+}
+
 export async function loginWithToken(): Promise<User> {
   store.dispatch(setLoadingStatus(0));
   try {
@@ -328,44 +375,10 @@ export async function loginWithToken(): Promise<User> {
     });
     store.dispatch(setLoadingStatus(40));
     const body = await response.json();
-    store.dispatch(setLoadingStatus(50));
     if (body.status !== 'OK') throw body;
     const userData = cleanUser(body.data as RawUser);
-    Segment.identify(userData.email);
-    Segment.track('Login Success');
-    store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
-    getCategories().catch((err) => {
-      Sentry.captureException(err);
-    });
-    getUserReferrals().catch((err) => {
-      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-      Sentry.captureException(err);
-    });
-    store.dispatch(setLoadingStatus(60));
-    try {
-      const contacts = await getContacts();
-      initMail(contacts).catch((err) => {
-        Sentry.captureException(err);
-      });
-    } catch (err) {
-      Sentry.captureException(err);
-      dropdownError({ message: i18n.t('Error.loadingUser') });
-      store.dispatch(logoutUser());
-    }
-    store.dispatch(setLoadingStatus(100));
-    sleep(300).then(() => {
-      store.dispatch(loginUser(userData));
-    });
-    loadDraft();
-    getPushToken()
-      .then((pushToken) => {
-        uploadPushToken(pushToken).catch(() => {
-          dropdownError({ message: i18n.t('Permission.notifs') });
-        });
-      })
-      .catch((err) => {
-        Sentry.captureException(err);
-      });
+    const { token, remember } = body.data;
+    await initializeData(userData, token, remember);
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -389,11 +402,10 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   const body = await response.json();
   if (body.status !== 'OK') throw body;
+  store.dispatch(setLoadingStatus(40));
   const userData = cleanUser(body.data as RawUser);
-  store.dispatch(
-    authenticateUser(userData, body.data.token, body.data.remember)
-  );
-  store.dispatch(setLoadingStatus(30));
+  const { token, remember } = body.data;
+  await initializeData(userData, token, remember);
   if (cred.remember) {
     saveToken(body.data.remember).catch((err) => {
       Sentry.captureException(err);
@@ -402,41 +414,6 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     });
   }
-  store.dispatch(setLoadingStatus(50));
-  Segment.identify(userData.email);
-  Segment.track('Login Success');
-  getCategories().catch((err) => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-    Sentry.captureException(err);
-  });
-  getUserReferrals().catch((err) => {
-    Sentry.captureException(err);
-  });
-  loadDraft();
-  store.dispatch(setLoadingStatus(60));
-  try {
-    const contacts = await getContacts();
-    initMail(contacts).catch((err) => {
-      Sentry.captureException(err);
-    });
-  } catch (err) {
-    Sentry.captureException(err);
-    dropdownError({ message: i18n.t('Error.loadingUser') });
-    store.dispatch(logoutUser());
-  }
-  store.dispatch(setLoadingStatus(100));
-  sleep(300).then(() => {
-    store.dispatch(loginUser(userData));
-  });
-  getPushToken()
-    .then((pushToken) => {
-      uploadPushToken(pushToken).catch(() => {
-        dropdownError({ message: i18n.t('Permission.notifs') });
-      });
-    })
-    .catch((err) => {
-      Sentry.captureException(err);
-    });
   return userData;
 }
 

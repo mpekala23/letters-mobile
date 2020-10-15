@@ -21,7 +21,13 @@ import {
   MailTypes,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, takeImage, capitalize, getNumWords } from '@utils';
+import {
+  WINDOW_WIDTH,
+  takeImage,
+  capitalize,
+  getNumWords,
+  getImageDims,
+} from '@utils';
 import {
   setBackOverride,
   setProfileOverride,
@@ -41,6 +47,8 @@ import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
 import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
+import { setDesignImage } from '@store/Category/CategoryActions';
+import { CategoryActionTypes } from '@store/Category/CategoryTypes';
 import Styles, { BOTTOM_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -63,6 +71,12 @@ interface Props {
   recipient: Contact;
   setContent: (content: string) => void;
   setDesign: (design: PostcardDesign) => void;
+  updateDesignImage: (
+    categoryId: number,
+    subcategoryName: string,
+    designId: number,
+    image: Image
+  ) => void;
 }
 
 interface State {
@@ -183,6 +197,25 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus = async (): Promise<void> => {
     const { content } = this.props.composing;
+
+    const { category } = this.props.route.params;
+    const subcategories = Object.keys(category.subcategories);
+    subcategories.forEach((subcategory) => {
+      const designs = category.subcategories[subcategory];
+      designs.forEach((design) => {
+        if (design.image.width && design.image.height) return;
+        getImageDims(design.image.uri).then((dims) => {
+          if (design.categoryId && design.id) {
+            this.props.updateDesignImage(
+              design.categoryId,
+              subcategory,
+              design.id,
+              { ...design.image, ...dims }
+            );
+          }
+        });
+      });
+    });
 
     if (this.editableRef.current) {
       if (!this.props.hasSentMail && !content) {
@@ -329,11 +362,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     if (
       design.image.width &&
       design.image.height &&
-      design.image.width > design.image.height
+      design.image.width < design.image.height
     ) {
-      this.setState({ horizontal: true });
-    } else {
       this.setState({ horizontal: false });
+    } else {
+      this.setState({ horizontal: true });
     }
     Segment.trackWithProperties('Compose - Add Image Success', {
       Option: 'Postcard',
@@ -538,7 +571,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           height: (WINDOW_WIDTH - 32) / 3,
           margin: 4,
         }}
-        onPress={() => this.changeDesign(design)}
+        onPress={() => {
+          this.changeDesign(design);
+        }}
       >
         <AsyncImage
           source={design.thumbnail ? design.thumbnail : design.image}
@@ -560,7 +595,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           borderRadius: 6,
           overflow: 'hidden',
         }}
-        onPress={() => this.changeDesign(design)}
+        onPress={() => {
+          this.changeDesign(design);
+        }}
       >
         <AsyncImage
           source={design.thumbnail ? design.thumbnail : design.image}
@@ -743,9 +780,17 @@ const mapStateToProps = (state: AppState) => ({
   recipient: state.contact.active,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<MailActionTypes | CategoryActionTypes>
+) => ({
   setContent: (content: string) => dispatch(setContent(content)),
   setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+  updateDesignImage: (
+    categoryId: number,
+    subcategoryName: string,
+    designId: number,
+    image: Image
+  ) => dispatch(setDesignImage(categoryId, subcategoryName, designId, image)),
 });
 
 const ComposePostcardScreen = connect(
