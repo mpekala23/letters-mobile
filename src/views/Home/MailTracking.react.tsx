@@ -153,23 +153,27 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               </View>
             </View>
           )}
-          <View style={[Styles.endpointsContainer]}>
-            <View>
-              <Text
-                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
-              >
-                {user.city}
-              </Text>
+          <View>
+            <View style={[Styles.endpointsContainer]}>
+              <View style={{ paddingRight: 8, maxWidth: '50%' }}>
+                <Text
+                  style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+                >
+                  {user.city}
+                </Text>
+              </View>
+
+              <View style={{ paddingLeft: 8, maxWidth: '50%' }}>
+                <Text
+                  style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+                >
+                  {contact.facility.name}
+                </Text>
+              </View>
+            </View>
+            <View style={[Styles.endpointsContainer]}>
               <Text style={[Styles.endpointDate]}>
                 {format(new Date(mail.dateCreated), 'MM/dd')}
-              </Text>
-            </View>
-
-            <View>
-              <Text
-                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
-              >
-                {contact.facility.name}
               </Text>
               <Text style={[{ textAlign: 'right' }, Styles.endpointDate]}>
                 {format(new Date(mail.expectedDelivery), 'MM/dd')}

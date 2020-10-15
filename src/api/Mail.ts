@@ -26,7 +26,11 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
-import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
+import {
+  setCategories,
+  setDesignImage,
+  setLastUpdated,
+} from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import { startAction, stopAction } from '@store/UI/UIActions';
 import {
@@ -475,38 +479,34 @@ interface RawDesign {
   content_researcher?: string;
 }
 
-async function cleanDesign(
+function cleanDesign(
   raw: RawDesign,
   categoryId?: number,
   subcategoryName?: string
-): Promise<PostcardDesign> {
-  try {
-    return {
-      image: {
-        uri: raw.front_img_src,
-      },
-      thumbnail: { uri: raw.thumbnail_src },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
-  } catch (err) {
-    return {
-      image: {
-        uri: raw.front_img_src,
-      },
-      thumbnail: { uri: raw.thumbnail_src },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
+): PostcardDesign {
+  const design: PostcardDesign = {
+    image: {
+      uri: raw.front_img_src,
+    },
+    thumbnail: { uri: raw.thumbnail_src },
+    name: raw.name,
+    id: raw.id,
+    categoryId,
+    subcategoryName,
+    contentResearcher: raw.content_researcher,
+    designer: raw.designer,
+  };
+  if (categoryId && subcategoryName && design.id) {
+    getImageDims(design.image.uri).then((dims) => {
+      store.dispatch(
+        setDesignImage(categoryId, subcategoryName, raw.id, {
+          ...design.image,
+          ...dims,
+        })
+      );
+    });
   }
+  return design;
 }
 
 export async function getSubcategoriesById(
@@ -522,10 +522,8 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = await Promise.all(
-      data[subName].map((raw: RawDesign) =>
-        cleanDesign(raw, categoryId, subName)
-      )
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;
