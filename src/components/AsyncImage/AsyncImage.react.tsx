@@ -16,8 +16,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   source: Image;
-  viewStyle?: ViewStyle;
-  imageStyle?: ImageStyle;
+  viewStyle?: ViewStyle | ViewStyle[];
+  imageStyle?: ImageStyle | ImageStyle[];
   loadingSize?: number;
   timeout: number;
   download?: boolean;

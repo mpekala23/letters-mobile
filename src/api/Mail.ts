@@ -116,19 +116,11 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => {
+      return {
+        uri: rawImage.img_src,
+      };
+    });
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
 
@@ -203,19 +195,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
   const dateCreated = new Date(mail.created_at).toISOString();
@@ -501,14 +481,11 @@ async function cleanDesign(
   subcategoryName?: string
 ): Promise<PostcardDesign> {
   try {
-    const imageDims = await getImageDims(raw.front_img_src);
-    const thumbnailDims = await getImageDims(raw.thumbnail_src);
     return {
       image: {
         uri: raw.front_img_src,
-        ...imageDims,
       },
-      thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
+      thumbnail: { uri: raw.thumbnail_src },
       name: raw.name,
       id: raw.id,
       categoryId,
