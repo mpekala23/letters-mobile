@@ -26,6 +26,7 @@ interface Props {
   onLoad?: () => void;
   autorotate?: boolean;
   loadingBackgroundColor: string;
+  updateDims?: ({ width, height }: { width: number; height: number }) => void;
 }
 
 interface State {
@@ -35,8 +36,8 @@ interface State {
   imgURI?: string;
   viewWidth: number;
   viewHeight: number;
-  imageWidth: number;
-  imageHeight: number;
+  imageWidth: number | null;
+  imageHeight: number | null;
 }
 
 class AsyncImage extends React.Component<Props, State> {
@@ -60,8 +61,8 @@ class AsyncImage extends React.Component<Props, State> {
       loadOpacity: new Animated.Value(0.3),
       viewWidth: 200,
       viewHeight: 200,
-      imageWidth: 200,
-      imageHeight: 200,
+      imageWidth: null,
+      imageHeight: null,
     };
     this.loadRemoteImage = this.loadRemoteImage.bind(this);
   }
@@ -107,14 +108,17 @@ class AsyncImage extends React.Component<Props, State> {
       }).start();
       return;
     }
-    getImageDims(imgURI)
-      .then(({ width, height }) => {
-        this.setState({
-          imageWidth: width,
-          imageHeight: height,
-        });
-      })
-      .catch(() => null);
+    if (!this.state.imageWidth || !this.state.imageHeight) {
+      getImageDims(imgURI)
+        .then(({ width, height }) => {
+          if (this.props.updateDims) this.props.updateDims({ width, height });
+          this.setState({
+            imageWidth: width,
+            imageHeight: height,
+          });
+        })
+        .catch(() => null);
+    }
     this.setState({
       loaded: true,
       timedOut: false,
@@ -165,7 +169,10 @@ class AsyncImage extends React.Component<Props, State> {
   render(): JSX.Element {
     let asyncFeedback: JSX.Element = <View />;
     const viewIsHorizontal = this.state.viewWidth >= this.state.viewHeight;
-    const imageIsHorizontal = this.state.imageWidth >= this.state.imageHeight;
+    const imageIsHorizontal =
+      this.state.imageWidth &&
+      this.state.imageHeight &&
+      this.state.imageWidth >= this.state.imageHeight;
 
     let renderedImage: JSX.Element;
     if (

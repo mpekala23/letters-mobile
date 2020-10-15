@@ -191,7 +191,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
 
   renderListHeader() {
     return (
-      <View>
+      <View style={{ paddingTop: 16 }}>
         {this.renderReferralCard()}
         <Text
           style={[

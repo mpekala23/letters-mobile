@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { View, Animated, Text } from 'react-native';
-import { PostcardDesign, Contact } from 'types';
+import { PostcardDesign, Contact, Image } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
@@ -68,15 +68,27 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const image = (
+    const image = this.props.horizontal ? (
       <AsyncImage
         viewStyle={{
-          width: '100%',
-          height: '100%',
+          width: this.props.width,
+          height: this.props.height,
         }}
         source={this.props.design.thumbnail || this.props.design.image}
         onLoad={this.props.onLoad}
         download={!!this.props.design.thumbnail}
+      />
+    ) : (
+      <AsyncImage
+        viewStyle={{
+          width: this.props.height,
+          height: this.props.width,
+          transform: [{ rotateZ: '270deg' }],
+        }}
+        source={this.props.design.thumbnail || this.props.design.image}
+        onLoad={this.props.onLoad}
+        download={!!this.props.design.thumbnail}
+        autorotate={false}
       />
     );
 
@@ -90,7 +102,7 @@ class EditablePostcard extends React.Component<Props, State> {
                   {
                     rotateZ: this.state.rotate.interpolate({
                       inputRange: [0, 1],
-                      outputRange: ['0rad', `${(3.1415926 / 2).toString()}rad`],
+                      outputRange: ['0deg', `90deg`],
                     }),
                   },
                   {

@@ -1,4 +1,4 @@
-import { Category } from 'types';
+import { Category, PostcardDesign } from 'types';
 import {
   SET_CATEGORIES,
   ADD_CATEGORY,
@@ -7,6 +7,7 @@ import {
   SET_SUBCATEGORIES,
   ADD_SUBCATEGORY,
   SET_SUBCATEGORY,
+  SET_DESIGN_IMAGE,
   REMOVE_SUBCATEGORY,
   CategoryActionTypes,
   CategoryState,
@@ -24,7 +25,9 @@ export default function CategoryReducer(
 ): CategoryState {
   const currentState = { ...state };
   let ix = -1;
+  let jx = -1;
   let categories: Category[] = [];
+  let newSubcategory: PostcardDesign[];
   switch (action.type) {
     case SET_CATEGORIES:
       currentState.categories = action.payload;
@@ -73,6 +76,31 @@ export default function CategoryReducer(
       if (ix < 0) return currentState;
       currentState.categories[ix].subcategories[action.payload.name] =
         action.payload.designs;
+      return currentState;
+    case SET_DESIGN_IMAGE:
+      ix = currentState.categories.findIndex(
+        (value) => value.id === action.payload.categoryId
+      );
+      if (ix < 0) return currentState;
+      if (
+        !(
+          action.payload.subcategoryName in
+          currentState.categories[ix].subcategories
+        )
+      )
+        return currentState;
+      newSubcategory =
+        currentState.categories[ix].subcategories[
+          action.payload.subcategoryName
+        ];
+      jx = newSubcategory.findIndex(
+        (design) => design.id === action.payload.designId
+      );
+      if (jx < 0) return currentState;
+      newSubcategory[jx].image = action.payload.image;
+      currentState.categories[ix].subcategories[
+        action.payload.subcategoryName
+      ] = [...newSubcategory];
       return currentState;
     case REMOVE_SUBCATEGORY:
       categories = currentState.categories.filter(
