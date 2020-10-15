@@ -30,7 +30,8 @@
     "cantAddContactBody": "But don’t worry! Our support team will help you fix the problem.",
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks",
-    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
+    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later.",
+    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -99,8 +100,8 @@
     "lastHeard": "Last heard"
   },
   "CreditPackStore": {
-    "title": "Tokens of Grattitude",
-    "subtitle": "Pay it forward and fund free letters to other families by buying Ameelio+ tokens. In exchange, you can use these tokens to purchase larger postcards, entertainment packets, and more.",
+    "title": "Tokens of Gratitude",
+    "subtitle": "Buy Ameelio+ tokens and help others stay in touch for free. In exchange, you can use them to send premium content to your loved one.",
     "selectBtn": "Select"
   },
   "CreditPackPurchaseSuccess": {

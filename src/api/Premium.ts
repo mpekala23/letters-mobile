@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import { setPremiumPacks } from '@store/Premium/PremiumActions';
+import { startAction, stopAction } from '@store/UI/UIActions';
 import store from '@store';
 import url from 'url';
-import { PremiumPack } from 'types';
+import { EntityTypes, PremiumPack } from 'types';
 import { API_URL, fetchAuthenticated } from './Common';
 
 interface RawPremiumPack {
@@ -21,18 +22,23 @@ function cleanPremiumPack(pack: RawPremiumPack): PremiumPack {
     coins: pack.coins,
     price: pack.price,
     name: pack.name,
-    image: pack.img_path,
+    image: { uri: pack.img_path },
   };
 }
 
 // eslint-disable-next-line import/prefer-default-export
 export async function getPremiumPacks(): Promise<PremiumPack[]> {
+  store.dispatch(startAction(EntityTypes.PremiumPacks));
   const body = await fetchAuthenticated(url.resolve(API_URL, `packs`));
   const data = body.data as RawPremiumPack[];
-  if (body.status !== 'OK' || !body.data) throw body;
+  if (body.status !== 'OK' || !body.data) {
+    store.dispatch(stopAction(EntityTypes.PremiumPacks));
+    throw body;
+  }
   const packs = data.map((item: RawPremiumPack) =>
     cleanPremiumPack(item)
   ) as PremiumPack[];
   store.dispatch(setPremiumPacks(packs));
+  store.dispatch(stopAction(EntityTypes.PremiumPacks));
   return packs;
 }

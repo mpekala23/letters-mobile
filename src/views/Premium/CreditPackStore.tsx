@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ImageComponent } from 'react-native';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
-import { PremiumPack } from 'types';
+import { EntityTypes, PremiumPack } from 'types';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { getPremiumPacks } from '@api/Premium';
 import Loading from '@assets/common/loading.gif';
@@ -13,6 +13,9 @@ import * as Segment from 'expo-analytics-segment';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import GoldenBirdCoin from '@assets/views/Premium/GoldenBirdCoin';
+import { checkIfLoading } from '@store/selectors';
+import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import PremiumPackStorePlaceholder from '@components/Loaders/PremiumPackStorePlaceholder';
 import Styles from './CreditPackStore.styles';
 
 type CreditPackStoreScreenNavigationProp = StackNavigationProp<
@@ -23,17 +26,26 @@ type CreditPackStoreScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: CreditPackStoreScreenNavigationProp;
   packs: PremiumPack[];
+  isLoadingPremiumPacks: boolean;
 }
 
-const CreditPackStoreBase = ({ packs, navigation }: Props) => {
+const CreditPackStoreBase = ({
+  packs,
+  navigation,
+  isLoadingPremiumPacks,
+}: Props) => {
   const [selected, setSelected] = useState<PremiumPack>();
 
   const FAMILY_MONTHLY_COST = 1.65;
   const PROFIT_COIN = 0.053;
 
   useEffect(() => {
-    if (packs.length === 0) {
-      getPremiumPacks();
+    if (packs.length === 0 && !isLoadingPremiumPacks) {
+      try {
+        getPremiumPacks();
+      } catch (err) {
+        dropdownError({ message: i18n.t('Error.cantLoadPremiumPacks') });
+      }
     }
   });
 
@@ -60,8 +72,11 @@ const CreditPackStoreBase = ({ packs, navigation }: Props) => {
       >
         <AsyncImage
           download
-          source={{ uri: item.image }}
-          viewStyle={{ height: 74, width: 74 }}
+          source={{ uri: item.image.uri }}
+          viewStyle={{
+            height: item.image.height || 74,
+            width: item.image.width || 74,
+          }}
           accessibilityLabel="Credit Pack Image"
           autorotate={false}
         />
@@ -90,24 +105,29 @@ const CreditPackStoreBase = ({ packs, navigation }: Props) => {
         {i18n.t('CreditPackStore.title')}
       </Text>
       <Text style={Styles.subtitle}>{i18n.t('CreditPackStore.subtitle')}</Text>
-      <FlatList
-        data={packs}
-        contentContainerStyle={{ marginVertical: 16 }}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => item.id.toString() + index.toString()}
-        ListEmptyComponent={() => {
-          return (
-            <ImageComponent
-              source={Loading}
-              style={{
-                width: 50,
-                height: 50,
-              }}
-            />
-          );
-        }}
-      />
+      {isLoadingPremiumPacks ? (
+        <PremiumPackStorePlaceholder />
+      ) : (
+        <FlatList
+          data={packs}
+          contentContainerStyle={{ marginVertical: 16 }}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => item.id.toString() + index.toString()}
+          ListEmptyComponent={() => {
+            return (
+              <ImageComponent
+                source={Loading}
+                style={{
+                  width: 50,
+                  height: 50,
+                }}
+              />
+            );
+          }}
+        />
+      )}
       <Button
+        containerStyle={{ marginVertical: 16 }}
         enabled={!!selected}
         buttonText={i18n.t('CreditPackStore.selectBtn')}
         onPress={() => {
@@ -125,6 +145,7 @@ const CreditPackStoreBase = ({ packs, navigation }: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   packs: state.premium.premiumPacks,
+  isLoadingPremiumPacks: checkIfLoading(state, EntityTypes.PremiumPacks),
 });
 
 const CreditPackStoreScreen = connect(mapStateToProps)(CreditPackStoreBase);

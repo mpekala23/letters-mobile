@@ -30,7 +30,8 @@
     "cantAddContactBody": "¡Pero no te preocupes! Nuestro equipo de soporte te ayudará a solucionar el problema.",
     "reachOutToSupport": "Contactar al soporte",
     "noThanks": "No gracias",
-    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde"
+    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde",
+    "cantLoadPremiumPacks": "No pudimos cargar los paquetes premium. Por favor, inténtalo de nuevo más tarde."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",

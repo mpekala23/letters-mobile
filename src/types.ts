@@ -255,7 +255,7 @@ export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
 export type PremiumPack = {
   id: number;
   name: string;
-  image: string;
+  image: Image;
   price: number;
   coins: number;
 };
@@ -266,4 +266,5 @@ export enum EntityTypes {
   Referrals = 'Referrals',
   Categories = 'Categories',
   MailDetail = 'MailDetail',
+  PremiumPacks = 'PremiumPacks',
 }
