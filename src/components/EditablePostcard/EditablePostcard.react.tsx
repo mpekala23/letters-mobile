@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { View, Animated, Text } from 'react-native';
-import { PostcardDesign, Contact } from 'types';
+import { PostcardDesign, Contact, Font } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
@@ -19,6 +19,7 @@ interface Props {
   onLoad?: () => void;
   width: number;
   height: number;
+  font: Font;
 }
 
 interface State {
@@ -164,7 +165,12 @@ class EditablePostcard extends React.Component<Props, State> {
             <Input
               numLines={1000}
               parentStyle={{ flex: 1 }}
-              inputStyle={{ flex: 1, fontSize: 14 }}
+              inputStyle={{
+                flex: 1,
+                fontSize: 16,
+                fontFamily: this.props.font.family,
+                color: this.props.font.color,
+              }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
               onChangeText={this.props.onChangeText}
               ref={this.inputRef}

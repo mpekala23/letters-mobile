@@ -27,6 +27,8 @@ import {
   MailTypes,
   PlacedSticker,
   TextBottomDetails,
+  CustomFontFamilies,
+  Font,
 } from 'types';
 import {
   setBackOverride,
@@ -37,12 +39,12 @@ import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { setContent, setDesign } from '@store/Mail/MailActions';
+import { setContent, setDesign, setFont } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
 import * as Segment from 'expo-analytics-segment';
-import { WINDOW_HEIGHT, STATUS_BAR_HEIGHT, getNumWords, sleep } from '@utils';
+import { WINDOW_HEIGHT, STATUS_BAR_HEIGHT, getNumWords } from '@utils';
 import { COMMON_LAYOUT, LAYOUTS } from '@utils/Layouts';
 import { popupAlert } from '@components/Alert/Alert.react';
 import {
@@ -70,6 +72,7 @@ interface Props {
   recipient: Contact;
   setContent: (content: string) => void;
   setDesign: (design: PostcardDesign) => void;
+  setFont: (font: Font) => void;
 }
 
 interface State {
@@ -98,9 +101,7 @@ interface State {
     bottomSlide: Animated.Value;
     buttonSlide: Animated.Value;
     writing: boolean;
-    color: string;
-    fontFamily: string;
-    fontSize: number;
+    font: Font;
   };
 }
 
@@ -147,9 +148,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         bottomSlide: new Animated.Value(0),
         buttonSlide: new Animated.Value(0),
         writing: false,
-        color: '#000000',
-        fontFamily: 'Montserrat-Regular',
-        fontSize: 18,
+        font: {
+          family: CustomFontFamilies.Montserrat,
+          color: '#000000',
+        },
       },
     };
 
@@ -319,9 +321,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       valid?: boolean;
       keyboardOpacity?: Animated.Value;
       writing?: boolean;
-      color?: string;
-      fontFamily?: string;
-      fontSize?: number;
+      font?: Font;
     },
     callback?: () => void
   ) {
@@ -487,6 +487,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       duration: FLIP_DURATION,
       useNativeDriver: false,
     }).start();
+    this.closeTextBottom();
     this.setDesignState({ animatingFlip: true });
     setBackOverride(undefined);
     setProfileOverride(undefined);
@@ -504,6 +505,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       });
       return;
     }
+    this.props.setFont(this.state.textState.font);
     this.props.navigation.navigate(Screens.ReviewPostcard, {
       category: 'New personal compose',
     });
@@ -622,9 +624,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                           stickers,
                         });
                     }}
-                    textColor={this.state.textState.color}
-                    fontFamily={this.state.textState.fontFamily}
-                    fontSize={this.state.textState.fontSize}
+                    font={this.state.textState.font}
                   />
                 </Animated.View>
               </ScrollView>
@@ -656,8 +656,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                         }
                       });
                     }}
-                    fontSize={this.state.textState.fontSize}
-                    setFontSize={(fontSize) => this.setTextState({ fontSize })}
                     slide={this.state.textState.buttonSlide}
                     finishWriting={this.doneWriting}
                   />
@@ -716,9 +714,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 bottomSlide={this.state.textState.bottomSlide}
                 details={this.state.textState.bottomDetails}
                 onClose={this.closeTextBottom}
-                setColor={(color) => this.setTextState({ color })}
-                setFont={(fontFamily) => {
-                  this.setTextState({ fontFamily });
+                setColor={(color) => {
+                  this.setTextState({
+                    font: { ...this.state.textState.font, color },
+                  });
+                }}
+                setFont={(family) => {
+                  this.setTextState({
+                    font: { ...this.state.textState.font, family },
+                  });
                 }}
               />
             </View>
@@ -740,6 +744,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDisptatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   setContent: (content: string) => dispatch(setContent(content)),
   setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+  setFont: (font: Font) => dispatch(setFont(font)),
 });
 
 const ComposePersonalScreen = connect(

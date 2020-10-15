@@ -3,9 +3,10 @@ import i18n from '@i18n';
 import { Colors, Typography } from '@styles';
 import { BOTTOM_HEIGHT } from '@utils/Constants';
 import { Animated, FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { TextBottomDetails } from 'types';
+import { CustomFontFamilies, TextBottomDetails } from 'types';
 import { TriangleColorPicker } from 'react-native-color-picker';
 import { hsvToHex } from '@utils';
+import { FONT_OPTIONS } from '@utils/Fonts';
 import Styles from './TextBottom.styles';
 import AdjustableText from '../../Text/AdjustableText.react';
 
@@ -14,7 +15,7 @@ interface Props {
   details: TextBottomDetails | null;
   onClose: () => void;
   setColor: (color: string) => void;
-  setFont: (font: string) => void;
+  setFont: (font: CustomFontFamilies) => void;
 }
 
 function ColorSelector({ setColor }: { setColor: (color: string) => void }) {
@@ -32,18 +33,11 @@ function ColorSelector({ setColor }: { setColor: (color: string) => void }) {
   );
 }
 
-const FONT_OPTIONS = [
-  'BebasNeue-Regular',
-  'KumbhSans-Regular',
-  'Lobster-Regular',
-  'Montserrat-Regular',
-  'NotoSerifJP-Regular',
-  'Poppins-Regular',
-  'ReenieBeanie-Regular',
-  'Satisfy-Regular',
-];
-
-function FontSelector({ setFont }: { setFont: (font: string) => void }) {
+function FontSelector({
+  setFont,
+}: {
+  setFont: (font: CustomFontFamilies) => void;
+}) {
   return (
     <View style={{ flex: 1, paddingTop: 32, paddingHorizontal: 16 }}>
       <FlatList

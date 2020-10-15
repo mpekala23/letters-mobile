@@ -11,7 +11,13 @@ import {
   Image as ImageComponent,
   ScrollView,
 } from 'react-native';
-import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
+import {
+  EditablePostcard,
+  ComposeTools,
+  KeyboardAvoider,
+  ComposeTextButtons,
+  ComposeTextBottom,
+} from '@components';
 import {
   PostcardDesign,
   Draft,
@@ -19,6 +25,9 @@ import {
   Category,
   Contact,
   MailTypes,
+  TextBottomDetails,
+  Font,
+  CustomFontFamilies,
 } from 'types';
 import { Typography, Colors } from '@styles';
 import { WINDOW_WIDTH, takeImage, capitalize, getNumWords } from '@utils';
@@ -31,7 +40,7 @@ import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import { setContent, setDesign } from '@store/Mail/MailActions';
+import { setContent, setDesign, setFont } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { saveDraft } from '@api';
 import * as MediaLibrary from 'expo-media-library';
@@ -40,10 +49,15 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import * as Segment from 'expo-analytics-segment';
 import Loading from '@assets/common/loading.gif';
-import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
-import Styles, { BOTTOM_HEIGHT } from './Compose.styles';
+import {
+  POSTCARD_WIDTH,
+  POSTCARD_HEIGHT,
+  BOTTOM_HEIGHT,
+} from '@utils/Constants';
+import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
+const SLIDE_DURATION = 300;
 
 type ComposePostcardScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -63,6 +77,7 @@ interface Props {
   recipient: Contact;
   setContent: (content: string) => void;
   setDesign: (design: PostcardDesign) => void;
+  setFont: (font: Font) => void;
 }
 
 interface State {
@@ -79,6 +94,10 @@ interface State {
   horizontal: boolean;
   endCursor: string;
   hasNextPage: boolean;
+  textBottomSlide: Animated.Value;
+  textButtonSlide: Animated.Value;
+  textBottomDetails: TextBottomDetails | null;
+  textFont: Font;
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
@@ -114,6 +133,13 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       loading: null,
       endCursor: '',
       hasNextPage: true,
+      textBottomSlide: new Animated.Value(0),
+      textButtonSlide: new Animated.Value(0),
+      textBottomDetails: null,
+      textFont: {
+        family: CustomFontFamilies.Montserrat,
+        color: '#000000',
+      },
     };
 
     this.beginWriting = this.beginWriting.bind(this);
@@ -127,6 +153,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
     this.loadMoreImages = this.loadMoreImages.bind(this);
+    this.openTextBottom = this.openTextBottom.bind(this);
+    this.closeTextBottom = this.closeTextBottom.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
@@ -274,11 +302,26 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       duration: 200,
       useNativeDriver: false,
     }).start();
+    Animated.timing(this.state.textBottomSlide, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.textButtonSlide, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
   }
 
   onKeyboardClose(): void {
     Animated.timing(this.state.keyboardOpacity, {
       toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.textButtonSlide, {
+      toValue: 1,
       duration: 200,
       useNativeDriver: false,
     }).start();
@@ -410,7 +453,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       toValue: 1,
       duration: FLIP_DURATION,
     }).start(() => {
-      if (this.editableRef.current) this.editableRef.current.focus();
       this.setState({ writing: true });
       setBackOverride({
         action: () => {
@@ -418,6 +460,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
+    Animated.timing(this.state.textButtonSlide, {
+      toValue: 1,
+      duration: FLIP_DURATION,
+      useNativeDriver: false,
+    }).start();
   }
 
   backWriting(): void {
@@ -443,6 +490,16 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
+    Animated.timing(this.state.textBottomSlide, {
+      toValue: 0,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.textButtonSlide, {
+      toValue: 0,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start();
   }
 
   doneWriting(): void {
@@ -454,6 +511,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       dropdownError({ message: i18n.t('Compose.letterMustHaveContent') });
       return;
     }
+    this.props.setFont(this.state.textFont);
     Segment.trackWithProperties('Compose - Click on Next', {
       type: 'postcard',
       category: this.props.route.params.category.name,
@@ -464,6 +522,26 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     });
     this.props.navigation.navigate(Screens.ReviewPostcard, {
       category: this.props.route.params.category.name,
+    });
+  }
+
+  openTextBottom(detail: TextBottomDetails) {
+    this.setState({ textBottomDetails: detail }, () => {
+      Animated.timing(this.state.textBottomSlide, {
+        toValue: 1,
+        duration: SLIDE_DURATION,
+        useNativeDriver: false,
+      }).start();
+    });
+  }
+
+  closeTextBottom() {
+    Animated.timing(this.state.textBottomSlide, {
+      toValue: 0,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start(() => {
+      this.setState({ textBottomDetails: null });
     });
   }
 
@@ -661,10 +739,53 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                     active
                     width={POSTCARD_WIDTH}
                     height={POSTCARD_HEIGHT}
+                    font={this.state.textFont}
                   />
                 </Animated.View>
               </View>
             </ScrollView>
+            <ComposeTextButtons
+              onAddColor={() => this.openTextBottom('color')}
+              onAddFont={() => this.openTextBottom('font')}
+              onAddText={() => {
+                Animated.timing(this.state.textButtonSlide, {
+                  toValue: 0,
+                  duration: 200,
+                  useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.textBottomSlide, {
+                  toValue: 0,
+                  duration: 200,
+                  useNativeDriver: false,
+                }).start(() => {
+                  if (this.editableRef.current)
+                    this.editableRef.current.focus();
+                });
+              }}
+              finishWriting={() => null}
+              slide={this.state.textButtonSlide}
+            />
+            <ComposeTextBottom
+              bottomSlide={this.state.textBottomSlide}
+              details={this.state.textBottomDetails}
+              onClose={this.closeTextBottom}
+              setColor={(color) => {
+                this.setState((prevState) => ({
+                  textFont: {
+                    ...prevState.textFont,
+                    color,
+                  },
+                }));
+              }}
+              setFont={(family) => {
+                this.setState((prevState) => ({
+                  textFont: {
+                    ...prevState.textFont,
+                    family,
+                  },
+                }));
+              }}
+            />
             <Animated.View
               style={[
                 Styles.gridOptionsBackground,
@@ -746,6 +867,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   setContent: (content: string) => dispatch(setContent(content)),
   setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+  setFont: (font: Font) => dispatch(setFont(font)),
 });
 
 const ComposePostcardScreen = connect(

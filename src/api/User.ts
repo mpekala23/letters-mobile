@@ -13,6 +13,7 @@ import {
   PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
+  CustomFontFamilies,
 } from 'types';
 import {
   loginUser,
@@ -185,6 +186,12 @@ export async function loadDraft(): Promise<Draft> {
             custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
           },
+          customization: {
+            font: {
+              family: CustomFontFamilies.Montserrat,
+              color: '#000000',
+            },
+          },
         };
         store.dispatch(setComposing(draft));
         return draft;
@@ -206,6 +213,12 @@ export async function loadDraft(): Promise<Draft> {
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
         design: findDesign,
+        customization: {
+          font: {
+            family: CustomFontFamilies.Montserrat,
+            color: '#000000',
+          },
+        },
       };
       store.dispatch(setComposing(draft));
       return draft;

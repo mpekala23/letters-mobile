@@ -431,7 +431,7 @@ export function hsvToRgb(
   return [r * 255, g * 255, b * 255];
 }
 
-export function rgbToHex(r, g, b): string {
+export function rgbToHex(r: number, g: number, b: number): string {
   // eslint-disable-next-line no-bitwise
   return `#${((1 << 24) + (r << 16) + (g << 8) + b)
     .toString(16)

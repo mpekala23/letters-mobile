@@ -7,6 +7,7 @@ import {
   Sticker,
   PlacedSticker,
   DesignBottomDetails,
+  Font,
 } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
@@ -44,9 +45,7 @@ interface Props {
   highlightActive: boolean;
   bottomDetails: DesignBottomDetails | null;
   updateStickers: (stickers: PlacedSticker[]) => void;
-  textColor: string;
-  fontFamily: string;
-  fontSize: number;
+  font: Font;
 }
 
 class DynamicPostcard extends React.Component<Props> {
@@ -283,9 +282,9 @@ class DynamicPostcard extends React.Component<Props> {
               parentStyle={{ flex: 1 }}
               inputStyle={{
                 flex: 1,
-                color: this.props.textColor,
-                fontFamily: this.props.fontFamily,
-                fontSize: this.props.fontSize,
+                color: this.props.font.color,
+                fontFamily: this.props.font.family,
+                fontSize: 16,
               }}
               placeholder={i18n.t('Compose.tapToAddMessage')}
               onChangeText={this.props.onChangeText}

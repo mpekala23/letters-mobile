@@ -39,4 +39,22 @@ export default StyleSheet.create({
     padding: 4,
   },
   gridDesignBackground: {},
+  subcategorySelectorBackground: {
+    height: 60,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 4,
+  },
+  subcategory: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 4,
+    borderBottomWidth: 4,
+  },
+  subcategoryText: {
+    color: 'white',
+    fontSize: 18,
+  },
 });

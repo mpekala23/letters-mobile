@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { TouchableOpacity, ViewStyle, View } from 'react-native';
-import { Category, Draft, MailTypes } from 'types';
+import { Category, CustomFontFamilies, Draft, MailTypes } from 'types';
 import { Typography, Colors } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import { capitalize } from '@utils';
@@ -44,6 +44,12 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               recipientId: props.recipientId,
               design: {
                 image: { uri: '' },
+              },
+              customization: {
+                font: {
+                  family: CustomFontFamilies.Montserrat,
+                  color: '#000000',
+                },
               },
             });
             props.navigate(Screens.ComposePostcard, {

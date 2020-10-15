@@ -13,6 +13,8 @@ import {
   PostcardDesign,
   Image,
   Contact,
+  PostcardCustomization,
+  CustomFontFamilies,
 } from 'types';
 import {
   addMail,
@@ -28,6 +30,7 @@ import { estimateDelivery, getImageDims } from '@utils';
 import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import { updateContact } from '@store/Contact/ContactActions';
+import { MAP_FONT_TO_SOURCE } from '@utils/Fonts';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -64,6 +67,13 @@ interface RawMail {
   tracking_events?: RawTrackingEvent[];
   estimated_arrival: string;
   delivered: boolean;
+  customization: {
+    font: {
+      family: CustomFontFamilies;
+      color: string;
+      src: string;
+    };
+  } | null;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -107,8 +117,21 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id } = mail;
+  const { type, content, id, customization } = mail;
   const recipientId = mail.contact_id;
+  const cleanCustomization: PostcardCustomization = customization
+    ? {
+        font: {
+          family: customization.font.family,
+          color: customization.font.color,
+        },
+      }
+    : {
+        font: {
+          family: CustomFontFamilies.Montserrat,
+          color: '#000000',
+        },
+      };
   let images: Image[] = [];
   if (mail.images.length) {
     try {
@@ -166,6 +189,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       trackingEvents,
     };
   }
+
   return {
     type,
     recipientId,
@@ -176,6 +200,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     expectedDelivery,
     design,
     trackingEvents,
+    customization: cleanCustomization,
   };
 }
 
@@ -194,7 +219,20 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   if (!mail.lob_status || !mail.last_lob_status_update) {
     return getSingleMail(mail.id);
   }
-  const { type, content, id } = mail;
+  const { type, content, id, customization } = mail;
+  const cleanCustomization: PostcardCustomization = customization
+    ? {
+        font: {
+          family: customization.font.family,
+          color: customization.font.color,
+        },
+      }
+    : {
+        font: {
+          family: CustomFontFamilies.Montserrat,
+          color: '#000000',
+        },
+      };
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
@@ -249,6 +287,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    customization: cleanCustomization,
   };
 }
 
@@ -426,6 +465,16 @@ export async function createMail(draft: Draft): Promise<Mail> {
     is_draft: false,
     type: prepDraft.type,
     size: prepDraft.type === MailTypes.Postcard ? '4x6' : undefined,
+    customization:
+      draft.type === MailTypes.Letter
+        ? undefined
+        : {
+            font: {
+              family: draft.customization.font.family,
+              color: draft.customization.font.color,
+              src: MAP_FONT_TO_SOURCE[draft.customization.font.family],
+            },
+          },
     ...imageExtension,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {

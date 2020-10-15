@@ -12,8 +12,6 @@ interface Props {
   onAddText: () => void;
   onAddColor: () => void;
   onAddFont: () => void;
-  fontSize: number;
-  setFontSize: (size: number) => void;
   finishWriting: () => void;
   slide: Animated.Value;
 }
@@ -23,8 +21,6 @@ const TextButtons: React.FC<Props> = ({
   onAddColor,
   onAddFont,
   finishWriting,
-  fontSize,
-  setFontSize,
   slide,
 }: Props) => {
   return (
@@ -41,26 +37,28 @@ const TextButtons: React.FC<Props> = ({
       ]}
     >
       <>
-        <View
-          style={{
-            marginVertical: 16,
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text>Font size</Text>
-          <Slider
-            style={{ width: '80%', height: 40, marginTop: 8 }}
-            minimumValue={12}
-            maximumValue={24}
-            onValueChange={setFontSize}
-            step={1}
-            value={fontSize}
-            minimumTrackTintColor={Colors.GREEN_600}
-            maximumTrackTintColor={Colors.PINK_600}
-          />
-        </View>
+        {false && (
+          <View
+            style={{
+              marginVertical: 16,
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text>Font size</Text>
+            <Slider
+              style={{ width: '80%', height: 40, marginTop: 8 }}
+              minimumValue={12}
+              maximumValue={24}
+              onValueChange={() => null}
+              step={1}
+              value={14}
+              minimumTrackTintColor={Colors.GREEN_600}
+              maximumTrackTintColor={Colors.PINK_600}
+            />
+          </View>
+        )}
         <TextTools
           onAddText={onAddText}
           onAddColor={onAddColor}

@@ -2,7 +2,6 @@ import React, { Dispatch } from 'react';
 import {
   TouchableOpacity,
   View,
-  Keyboard,
   Text,
   ScrollView,
   Linking,
@@ -10,7 +9,7 @@ import {
 import { StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Draft, Contact, MailTypes } from 'types';
+import { Draft, Contact, MailTypes, CustomFontFamilies, Font } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
@@ -169,6 +168,12 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   }
 
   render() {
+    let font: Font = {
+      family: CustomFontFamilies.Montserrat,
+      color: '#000000',
+    };
+    if (this.props.composing.type === MailTypes.Postcard)
+      font = this.props.composing.customization.font;
     return (
       <View style={Styles.screenBackground}>
         <ScrollView style={{ flex: 1 }}>
@@ -180,6 +185,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
               width={POSTCARD_WIDTH}
               height={POSTCARD_HEIGHT}
               style={{ marginBottom: 16 }}
+              font={font}
             />
             <StaticPostcard
               front={false}
@@ -187,6 +193,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
               recipient={this.props.recipient}
               width={POSTCARD_WIDTH}
               height={POSTCARD_HEIGHT}
+              font={font}
             />
             <View style={{ flex: 1 }} />
             <Text

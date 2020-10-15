@@ -46,6 +46,25 @@ export interface PostcardDesign {
   stickers?: PlacedSticker[];
 }
 
+export enum CustomFontFamilies {
+  BebasNeue = 'BebasNeue-Regular',
+  KumbhSans = 'KumbhSans-Regular',
+  Lobster = 'Lobster-Regular',
+  Montserrat = 'Montserrat-Regular',
+  NotoSerifJP = 'NotoSerifJP-Regular',
+  ReenieBeanie = 'ReenieBeanie-Regular',
+  Satisfy = 'Satisfy-Regular',
+}
+
+export interface Font {
+  family: CustomFontFamilies;
+  color: string;
+}
+
+export interface PostcardCustomization {
+  font: Font;
+}
+
 interface LetterSpecific {
   type: MailTypes.Letter;
   images: Image[];
@@ -54,6 +73,7 @@ interface LetterSpecific {
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
+  customization: PostcardCustomization;
 }
 
 export enum MailStatus {

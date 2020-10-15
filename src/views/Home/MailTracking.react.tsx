@@ -333,7 +333,21 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
             {i18n.t('MailTrackingScreen.letterContent')}
           </Text>
-          <Text style={{ fontSize: 15 }}>{mail.content}</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily:
+                mail.type === MailTypes.Letter
+                  ? undefined
+                  : mail.customization.font.family,
+              color:
+                mail.type === MailTypes.Letter
+                  ? undefined
+                  : mail.customization.font.color,
+            }}
+          >
+            {mail.content}
+          </Text>
           {mail.type === MailTypes.Letter && (
             <DisplayImage images={mail.images} heightLetter={160} />
           )}
