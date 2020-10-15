@@ -1,47 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  createStackNavigator,
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
 } from '@react-navigation/stack';
-import {
-  BeginScreen,
-  ChooseCategoryScreen,
-  ChooseOptionScreen,
-  ContactInfoScreen,
-  ContactInmateInfoScreen,
-  ComposeLetterScreen,
-  ComposePersonalScreen,
-  ComposePostcardScreen,
-  ContactSelectorScreen,
-  FacilityDirectoryScreen,
-  InmateLocatorScreen,
-  IntroContactScreen,
-  IssuesScreen,
-  IssuesDetailScreen,
-  IssuesDetailSecondaryScreen,
-  LoginScreen,
-  MailTrackingScreen,
-  MemoryLaneScreen,
-  MailDetailsScreen,
-  PrivacyScreen,
-  ReferralDashboardScreen,
-  ReferFriendsScreen,
-  RegisterCredsScreen,
-  RegisterPersonalScreen,
-  RegisterAddressScreen,
-  ReviewLetterScreen,
-  ReviewPostcardScreen,
-  ReviewContactScreen,
-  SingleContactScreen,
-  SplashScreen,
-  SupportFAQScreen,
-  SupportFAQDetailScreen,
-  TermsScreen,
-  UpdateContactScreen,
-  UpdateProfileScreen,
-} from '@views';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate, WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
@@ -52,10 +14,15 @@ import Topbar, {
   setShown,
 } from '@components/Topbar/Topbar.react';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform } from 'react-native';
 
 import i18n from '@i18n';
 import { Screens, AuthStackParamList, AppStackParamList } from '@utils/Screens';
+import { SplashScreen } from '@views';
+import { RootTab } from './Navigators';
+
+import Auth from './Auth';
+import Home from './Home';
+import Store from './Store';
 
 export { navigationRef, navigate };
 
@@ -110,8 +77,6 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 export interface Props {
   authInfo: AuthInfo;
@@ -196,149 +161,18 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     props.authInfo.isLoadingToken ||
     (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
   ) {
-    screens = (
-      <Stack.Screen
-        name={Screens.Splash}
-        component={SplashScreen}
-        options={{ cardStyleInterpolator: fadeTransition }}
-      />
-    );
+    screens = <RootTab.Screen name="Splash" component={SplashScreen} />;
   } else if (!props.authInfo.isLoggedIn) {
-    screens = (
-      <>
-        <Stack.Screen name={Screens.Begin} component={BeginScreen} />
-        <Stack.Screen name={Screens.Login} component={LoginScreen} />
-        <Stack.Screen name={Screens.Terms} component={TermsScreen} />
-        <Stack.Screen name={Screens.Privacy} component={PrivacyScreen} />
-        <Stack.Screen
-          name={Screens.RegisterCreds}
-          component={RegisterCredsScreen}
-        />
-        <Stack.Screen
-          name={Screens.RegisterPersonal}
-          component={RegisterPersonalScreen}
-        />
-        <Stack.Screen
-          name={Screens.RegisterAddress}
-          component={RegisterAddressScreen}
-        />
-      </>
-    );
+    screens = <RootTab.Screen name="Auth" component={Auth} />;
   } else {
     screens = (
       <>
-        <Stack.Screen
-          name={Screens.ContactSelector}
-          component={ContactSelectorScreen}
-          options={{ cardStyleInterpolator: fadeTransition }}
-        />
-        <Stack.Screen
-          name={Screens.ChooseCategory}
-          component={ChooseCategoryScreen}
-        />
-        <Stack.Screen
-          name={Screens.ChooseOption}
-          component={ChooseOptionScreen}
-        />
-        <Stack.Screen
-          name={Screens.ComposeLetter}
-          component={ComposeLetterScreen}
-        />
-        <Stack.Screen
-          name={Screens.ComposePersonal}
-          component={ComposePersonalScreen}
-        />
-        <Stack.Screen
-          name={Screens.ComposePostcard}
-          component={ComposePostcardScreen}
-        />
-        <Stack.Screen
-          name={Screens.ReviewLetter}
-          component={ReviewLetterScreen}
-        />
-        <Stack.Screen
-          name={Screens.ReviewPostcard}
-          component={ReviewPostcardScreen}
-        />
-        <Stack.Screen
-          name={Screens.ContactInfo}
-          component={ContactInfoScreen}
-          options={{
-            cardStyleInterpolator:
-              Platform.OS === 'ios' ? fadeTransition : bottomTopTransition,
-          }}
-        />
-        <Stack.Screen
-          name={Screens.FacilityDirectory}
-          component={FacilityDirectoryScreen}
-        />
-        <Stack.Screen
-          name={Screens.ContactInmateInfo}
-          component={ContactInmateInfoScreen}
-        />
-        <Stack.Screen
-          name={Screens.ReferFriends}
-          component={ReferFriendsScreen}
-        />
-        <Stack.Screen
-          name={Screens.ReferralDashboard}
-          component={ReferralDashboardScreen}
-        />
-        <Stack.Screen
-          name={Screens.ReviewContact}
-          component={ReviewContactScreen}
-        />
-        <Stack.Screen
-          name={Screens.IntroContact}
-          component={IntroContactScreen}
-        />
-        <Stack.Screen name={Screens.Issues} component={IssuesScreen} />
-        <Stack.Screen
-          name={Screens.IssuesDetail}
-          component={IssuesDetailScreen}
-        />
-        <Stack.Screen
-          name={Screens.IssuesDetailSecondary}
-          component={IssuesDetailSecondaryScreen}
-        />
-        <Stack.Screen
-          name={Screens.SingleContact}
-          component={SingleContactScreen}
-        />
-        <Stack.Screen
-          name={Screens.MailTracking}
-          component={MailTrackingScreen}
-        />
-        <Stack.Screen name={Screens.MemoryLane} component={MemoryLaneScreen} />
-        <Stack.Screen
-          name={Screens.MailDetails}
-          component={MailDetailsScreen}
-        />
-        <Stack.Screen name={Screens.SupportFAQ} component={SupportFAQScreen} />
-        <Stack.Screen
-          name={Screens.SupportFAQDetail}
-          component={SupportFAQDetailScreen}
-        />
-        <Stack.Screen
-          name={Screens.UpdateContact}
-          component={UpdateContactScreen}
-          options={{
-            cardStyleInterpolator:
-              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
-          }}
-        />
-        <Stack.Screen
-          name={Screens.UpdateProfile}
-          component={UpdateProfileScreen}
-          options={{
-            cardStyleInterpolator:
-              Platform.OS === 'ios' ? fadeTransition : topBottomTransition,
-          }}
-        />
-        <Stack.Screen name="InmateLocator" component={InmateLocatorScreen} />
+        <RootTab.Screen name="Home" component={Home} />
+        <RootTab.Screen name="Store" component={Store} />
       </>
     );
   }
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -362,15 +196,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       }}
     >
       {topbar}
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          cardStyleInterpolator:
-            Platform.OS === 'ios' ? fadeTransition : leftRightTransition,
-        }}
+      <RootTab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarVisible: route.name !== 'Auth',
+        })}
       >
         {screens}
-      </Stack.Navigator>
+      </RootTab.Navigator>
     </NavigationContainer>
   );
 };
