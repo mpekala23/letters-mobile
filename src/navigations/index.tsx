@@ -104,6 +104,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
     profile: false,
   },
   ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
+  SelectPostcardSize: { title: '', profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home'), profile: true },
   UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
@@ -230,7 +231,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       <>
         <Stack.Screen
           name={Screens.ContactSelector}
-          component={SelectPostcardSizeScreen}
+          component={ContactSelectorScreen}
           options={{ cardStyleInterpolator: fadeTransition }}
         />
         <Stack.Screen

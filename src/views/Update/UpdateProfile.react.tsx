@@ -15,7 +15,7 @@ import {
   PickerRef,
 } from '@components';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
-import { AppStackParamList } from '@utils/Screens';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -33,7 +33,7 @@ import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'UpdateProfile'
+  Screens.UpdateProfile
 >;
 
 export interface Props {

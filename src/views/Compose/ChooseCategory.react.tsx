@@ -1,14 +1,12 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { Text, View, Image as ImageComponent, Linking } from 'react-native';
 import { Button, CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Draft, Category } from 'types';
+import { Category } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setComposing } from '@store/Mail/MailActions';
-import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { getCategories } from '@api';
 import { FlatList } from 'react-native-gesture-handler';
@@ -28,7 +26,6 @@ type ChooseCategoryScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseCategoryScreenNavigationProp;
   recipientId: number;
-  setComposing: (draft: Draft) => void;
   categories: Category[];
   isTexas: boolean;
 }
@@ -203,14 +200,6 @@ const mapStateToProps = (state: AppState) => ({
   isTexas: state.contact.active.facility.state === 'Texas',
   categories: state.category.categories,
 });
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
-  return {
-    setComposing: (draft: Draft) => dispatch(setComposing(draft)),
-  };
-};
-const ChooseCategoryScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChooseCategoryScreenBase);
+const ChooseCategoryScreen = connect(mapStateToProps)(ChooseCategoryScreenBase);
 
 export default ChooseCategoryScreen;

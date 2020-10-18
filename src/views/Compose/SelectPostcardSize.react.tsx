@@ -1,58 +1,61 @@
 import { AsyncImage } from '@components';
-import React, { useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import SmallPostcard from '@assets/views/Compose/PostcardSizes/Small.png';
-import MediumPostcard from '@assets/views/Compose/PostcardSizes/Medium.png';
-import LargePostcard from '@assets/views/Compose/PostcardSizes/Large.png';
-
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList, Screens } from '@utils/Screens';
 import CardStyles from '@components/Card/Card.styles';
-import { Image } from 'types';
+import { Category, Draft, DraftPostcard, PostcardSizeOption } from 'types';
 import i18n from '@i18n';
 import { Typography } from '@styles';
+import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
+import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { connect } from 'react-redux';
+import { setComposing } from '@store/Mail/MailActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
+import { AppState } from '@store/types';
 import Styles from './SelectPostcardSize.styles';
 // interface Props {}
 
-interface PostcardSizeOption {
-  key: string;
-  image: Image;
-  title: string;
-  words: number;
-  cost: number;
-  isPremium: boolean;
+type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  Screens.SelectPostcardSize
+>;
+
+interface Props {
+  navigation: SelectPostcardSizeScreenNavigationProp;
+  route: {
+    params: { category: Category };
+  };
+  updateDraft: (draft: Draft) => void;
+  draft: Draft;
 }
 
-const SelectPostcardSizeScreen = () => {
-  const OPTIONS: PostcardSizeOption[] = [
-    {
-      key: '4x6',
-      image: SmallPostcard,
-      title: i18n.t('Compose.smallPostcardTitle'),
-      words: 100,
-      cost: 1,
-      isPremium: false,
-    },
-    {
-      key: '6x9',
-      image: MediumPostcard,
-      title: i18n.t('Compose.mediumPostcardTitle'),
-      words: 200,
-      cost: 10,
-      isPremium: true,
-    },
-    {
-      key: '6x11',
-      image: LargePostcard,
-      title: i18n.t('Compose.largePostcardTitle'),
-      words: 300,
-      cost: 15,
-      isPremium: true,
-    },
-  ];
+const SelectPostcardSizeBase = ({
+  navigation,
+  route,
+  updateDraft,
+  draft,
+}: Props) => {
+  const [selected, setSelected] = useState<PostcardSizeOption>(draft.size);
 
-  const [selected, setSelected] = useState<PostcardSizeOption>(OPTIONS[0]);
+  const updatePostcardOption = async () => {
+    navigation.navigate(Screens.ComposePostcard, {
+      category: route.params.category,
+    });
+  };
+
+  useEffect(() => {
+    updateDraft({ ...draft, size: selected } as DraftPostcard);
+    setProfileOverride({
+      enabled: !!selected,
+      text: i18n.t('UpdateProfileScreen.save'),
+      action: updatePostcardOption,
+      blocking: true,
+    });
+  });
 
   const renderItem = (option: PostcardSizeOption) => {
-    const { image, title, words, cost, isPremium } = option;
+    const { image, title, wordsLimit, cost, isPremium } = option;
     // const borderStyle =
     // selected.key === option.key
     //   ? Styles.cardSelectedBackground
@@ -79,7 +82,7 @@ const SelectPostcardSizeScreen = () => {
         <View style={{ flex: 1, marginLeft: 16 }}>
           <Text style={[Typography.FONT_BOLD]}>{title}</Text>
           <Text style={Styles.body}>
-            {words} {i18n.t('Compose.words')}
+            {wordsLimit} {i18n.t('Compose.words')}
           </Text>
           <View>
             <Text style={[Styles.body, { marginTop: 'auto' }]}>
@@ -93,9 +96,22 @@ const SelectPostcardSizeScreen = () => {
 
   return (
     <View style={Styles.trueBackground}>
-      {OPTIONS.map((option) => renderItem(option))}
+      {POSTCARD_SIZE_OPTIONS.map((option) => renderItem(option))}
     </View>
   );
 };
+
+const mapStateToProps = (state: AppState) => ({
+  draft: state.mail.composing,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  updateDraft: (draft: Draft) => dispatch(setComposing(draft)),
+});
+
+const SelectPostcardSizeScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectPostcardSizeBase);
 
 export default SelectPostcardSizeScreen;

@@ -31,12 +31,6 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
-export enum PostcardSize {
-  Small = '4x6',
-  Medium = '6x9',
-  Large = '6x11',
-}
-
 export interface PostcardDesign {
   image: Image;
   thumbnail?: Image;
@@ -60,7 +54,7 @@ interface LetterSpecific {
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
-  size: PostcardSize;
+  size: PostcardSizeOption;
 }
 
 export enum MailStatus {
@@ -116,6 +110,21 @@ export type MailLetter = MailInfo & LetterSpecific;
 export type MailPostcard = MailInfo & PostcardSpecific;
 
 export type Mail = MailLetter | MailPostcard;
+
+export enum PostcardSize {
+  Small = '4x6',
+  Medium = '6x9',
+  Large = '6x11',
+}
+
+export interface PostcardSizeOption {
+  key: string;
+  image: Image;
+  title: string;
+  wordsLimit: number;
+  cost: number;
+  isPremium: boolean;
+}
 
 // Facilities
 export enum PrisonTypes {

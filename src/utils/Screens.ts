@@ -96,7 +96,7 @@ export type AppStackParamList = {
   ReviewPostcard: { category: string };
   ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
-  SelectPostcardSize: undefined;
+  SelectPostcardSize: { category: Category };
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
