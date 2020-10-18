@@ -170,7 +170,12 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
     marginHorizontal: 16,
-    borderRadius: 6,
+    borderRadius: 8,
     marginVertical: 8,
+  },
+  cardSelectedBackground: {
+    borderWidth: 3,
+    borderRadius: 16,
+    borderColor: Colors.PINK_500,
   },
 });

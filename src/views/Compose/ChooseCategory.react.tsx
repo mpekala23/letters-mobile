@@ -3,7 +3,7 @@ import { Text, View, Image as ImageComponent, Linking } from 'react-native';
 import { Button, CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Category } from 'types';
+import { Category, EntityTypes } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -16,6 +16,8 @@ import {
 } from '@components/Dropdown/Dropdown.react';
 import Loading from '@assets/common/loading.gif';
 import * as Sentry from 'sentry-expo';
+import { checkIfLoading } from '@store/selectors';
+import CategoriesPlaceholder from '@components/Loaders/CategoriesPlaceholder';
 import Styles from './Compose.styles';
 
 type ChooseCategoryScreenNavigationProp = StackNavigationProp<
@@ -28,6 +30,7 @@ interface Props {
   recipientId: number;
   categories: Category[];
   isTexas: boolean;
+  isLoadingCategories: boolean;
 }
 
 interface State {
@@ -53,7 +56,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (this.props.categories.length === 0) {
+    if (this.props.categories.length === 0 && !this.props.isLoadingCategories) {
       this.refreshCategories();
     }
   }
@@ -115,6 +118,9 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
   }
 
   render() {
+    if (this.props.isLoadingCategories) {
+      return <CategoriesPlaceholder />;
+    }
     return (
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         {this.props.categories.length ? (
@@ -199,6 +205,7 @@ const mapStateToProps = (state: AppState) => ({
   recipientId: state.contact.active.id,
   isTexas: state.contact.active.facility.state === 'Texas',
   categories: state.category.categories,
+  isLoadingCategories: checkIfLoading(state, EntityTypes.Categories),
 });
 const ChooseCategoryScreen = connect(mapStateToProps)(ChooseCategoryScreenBase);
 

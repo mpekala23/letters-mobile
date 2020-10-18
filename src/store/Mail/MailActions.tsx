@@ -14,6 +14,7 @@ import {
   SET_CONTACTS_MAIL,
   SET_EXISTING_MAIL,
   MailActionTypes,
+  SET_MAIL_IMAGES,
 } from './MailTypes';
 
 export function setComposing(draft: Draft): MailActionTypes {
@@ -113,6 +114,21 @@ export function setExpectedDelivery(
       contactId,
       mailId,
       expectedDelivery,
+    },
+  };
+}
+
+export function setMailImages(
+  images: Image[],
+  contactId: number,
+  mailId: number
+): MailActionTypes {
+  return {
+    type: SET_MAIL_IMAGES,
+    payload: {
+      contactId,
+      mailId,
+      images,
     },
   };
 }

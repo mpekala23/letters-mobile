@@ -1,14 +1,19 @@
-import React from 'react';
-import { View, Image as ImageComponent } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { Image } from 'types';
-import { getAspectRatio } from '@utils';
+import { getAspectRatio, getImageDims } from '@utils';
+import { Colors } from '@styles';
 import Styles, { HEIGHT_LETTER, WIDTH_POSTCARD } from './DisplayImage.styles';
+import AsyncImage from '../AsyncImage/AsyncImage.react';
 
 export interface Props {
   images: Image[];
   isPostcard?: boolean;
   heightLetter?: number;
   paddingPostcard?: number; // additional padding to decrease width
+  updateImages?: (images: Image[]) => void;
+  local?: boolean;
+  backgroundColor?: string;
 }
 
 const DisplayImage: React.FC<Props> = ({
@@ -16,47 +21,69 @@ const DisplayImage: React.FC<Props> = ({
   isPostcard,
   heightLetter,
   paddingPostcard,
+  updateImages,
+  local,
+  backgroundColor,
 }: Props) => {
   if (!images.length) return null;
 
-  if (isPostcard) {
-    const aspectRatio = getAspectRatio(images[0]);
-    const padding = paddingPostcard ? 2 * paddingPostcard : 0;
-    return (
-      <ImageComponent
-        style={[
-          Styles.postcardImage,
-          {
-            height:
-              aspectRatio > 1
-                ? (WIDTH_POSTCARD - padding) / aspectRatio
-                : WIDTH_POSTCARD,
-            width:
-              aspectRatio > 1
-                ? WIDTH_POSTCARD - padding
-                : WIDTH_POSTCARD * aspectRatio,
-          },
-        ]}
-        source={images[0]}
-      />
-    );
-  }
+  const [sizedImages, setSizedImages] = useState(images);
+
+  useEffect(() => {
+    let changed = false;
+    Promise.all(
+      images.map(async (image) => {
+        if (image.width && image.height) return image;
+        changed = true;
+        const dims = await getImageDims(image.uri);
+        return {
+          uri: image.uri,
+          ...dims,
+        };
+      })
+    ).then((newImages) => {
+      setSizedImages(newImages);
+      if (changed && updateImages) {
+        updateImages(newImages);
+      }
+    });
+  }, [images]);
 
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      {images.map((image) => (
-        <ImageComponent
-          key={image.uri}
-          style={[
-            Styles.letterImage,
-            {
-              height: heightLetter || HEIGHT_LETTER,
-              width: (heightLetter || HEIGHT_LETTER) * getAspectRatio(image),
-            },
-          ]}
-          source={image}
-        />
-      ))}
+      {sizedImages.map((image) => {
+        const aspectRatio = getAspectRatio(image);
+        const padding = paddingPostcard ? 2 * paddingPostcard : 0;
+        let height = heightLetter || HEIGHT_LETTER;
+        let width = height * aspectRatio;
+        if (isPostcard) {
+          height =
+            aspectRatio > 1
+              ? (WIDTH_POSTCARD - padding) / aspectRatio
+              : WIDTH_POSTCARD;
+          width =
+            aspectRatio > 1
+              ? WIDTH_POSTCARD - padding
+              : WIDTH_POSTCARD * aspectRatio;
+        }
+        return (
+          <AsyncImage
+            key={image.uri}
+            viewStyle={[
+              isPostcard ? Styles.postcardImage : Styles.letterImage,
+              {
+                height,
+                width,
+              },
+            ]}
+            loadingBackgroundColor={backgroundColor || Colors.GRAY_LIGHTER}
+            download={!local}
+            autorotate={false}
+            local={!!local}
+            source={image}
+          />
+        );
+      })}
     </View>
   );
 };

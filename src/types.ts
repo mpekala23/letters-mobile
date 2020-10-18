@@ -118,7 +118,7 @@ export enum PostcardSize {
 }
 
 export interface PostcardSizeOption {
-  key: string;
+  key: PostcardSize;
   image: Image;
   title: string;
   wordsLimit: number;
@@ -266,3 +266,11 @@ export type TopbarRouteAction = {
 };
 
 export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
+
+export enum EntityTypes {
+  Contacts = 'Contacts',
+  Mail = 'Mail',
+  Referrals = 'Referrals',
+  Categories = 'Categories',
+  MailDetail = 'MailDetail',
+}

@@ -14,7 +14,6 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import Styles from './SelectPostcardSize.styles';
-// interface Props {}
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -36,30 +35,33 @@ const SelectPostcardSizeBase = ({
   updateDraft,
   draft,
 }: Props) => {
-  const [selected, setSelected] = useState<PostcardSizeOption>(draft.size);
+  const [selected, setSelected] = useState<PostcardSizeOption>(
+    (draft as DraftPostcard).size
+  );
 
   const updatePostcardOption = async () => {
+    updateDraft({ ...draft, size: selected } as DraftPostcard);
     navigation.navigate(Screens.ComposePostcard, {
       category: route.params.category,
     });
   };
 
   useEffect(() => {
-    updateDraft({ ...draft, size: selected } as DraftPostcard);
     setProfileOverride({
       enabled: !!selected,
-      text: i18n.t('UpdateProfileScreen.save'),
+      text: i18n.t('Compose.selectBtn'),
       action: updatePostcardOption,
       blocking: true,
     });
+    return () => {
+      setProfileOverride(undefined);
+    };
   });
 
   const renderItem = (option: PostcardSizeOption) => {
     const { image, title, wordsLimit, cost, isPremium } = option;
-    // const borderStyle =
-    // selected.key === option.key
-    //   ? Styles.cardSelectedBackground
-    //   : Styles.cardRegularBackground;
+    const borderStyle =
+      selected.key === option.key ? CardStyles.cardSelectedBackground : {};
     const costLabel = isPremium ? `${cost} Ameelio+` : `${cost} free Ameelio`;
 
     return (
@@ -68,18 +70,26 @@ const SelectPostcardSizeBase = ({
           CardStyles.shadow,
           CardStyles.selectPostcardSizeBase,
           CardStyles.horizontalCardLayout,
+          borderStyle,
           { height: 140 },
         ]}
         onPress={() => setSelected(option)}
+        key={option.key}
       >
         <AsyncImage
-          imageStyle={{ flex: 1, height: '100%', resizeMode: 'cover' }}
+          imageStyle={{
+            height: '100%',
+            width: '60%',
+            resizeMode: 'cover',
+            borderTopLeftRadius: 8,
+            borderBottomLeftRadius: 8,
+          }}
           download
           source={image}
           autorotate={false}
           local
         />
-        <View style={{ flex: 1, marginLeft: 16 }}>
+        <View style={{ marginLeft: 16, width: '40%' }}>
           <Text style={[Typography.FONT_BOLD]}>{title}</Text>
           <Text style={Styles.body}>
             {wordsLimit} {i18n.t('Compose.words')}

@@ -2,7 +2,7 @@ import React, { Dispatch, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Mail, MailTypes, Contact } from 'types';
+import { Mail, MailTypes, Contact, EntityTypes } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -10,6 +10,8 @@ import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import * as Segment from 'expo-analytics-segment';
+import { checkIfLoading } from '@store/selectors';
+import MemoriesPlaceholder from '@components/Loaders/MemoriesPlaceholder';
 import { getMailByContact } from '@api';
 import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
@@ -25,9 +27,11 @@ interface Props {
   contact: Contact;
   existingMail: Record<string, Mail[]>;
   setActiveMail: (mail: Mail) => void;
+  isMailLoading: boolean;
 }
 
 const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
+  if (props.isMailLoading) return <MemoriesPlaceholder />;
   const [gettingMore, setGettingMore] = useState(false);
 
   const mail = props.existingMail[props.contact.id];
@@ -92,10 +96,13 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  contact: state.contact.active,
-  existingMail: state.mail.existing,
-});
+const mapStateToProps = (state: AppState) => {
+  return {
+    contact: state.contact.active,
+    existingMail: state.mail.existing,
+    isMailLoading: checkIfLoading(state, EntityTypes.Mail),
+  };
+};
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
   return {
     setActiveMail: (mail: Mail) => dispatch(setActiveMail(mail)),
