@@ -19,6 +19,7 @@ import {
   Category,
   Contact,
   MailTypes,
+  DraftPostcard,
 } from 'types';
 import { Typography, Colors } from '@styles';
 import {
@@ -120,7 +121,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       writing: false,
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
-      wordsLeft: 100,
+      wordsLeft: (this.props.composing as DraftPostcard).size.wordsLimit,
       valid: true,
       mediaGranted: true,
       renderMethod: 'grid',
@@ -344,8 +345,13 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   updateWordsLeft(value: string): void {
     const numWords = getNumWords(value);
-    this.setState({ wordsLeft: 100 - numWords });
-    this.setValid(100 - numWords >= 0);
+    this.setState({
+      wordsLeft:
+        (this.props.composing as DraftPostcard).size.wordsLimit - numWords,
+    });
+    this.setValid(
+      (this.props.composing as DraftPostcard).size.wordsLimit - numWords >= 0
+    );
   }
 
   changeText(value: string): void {
