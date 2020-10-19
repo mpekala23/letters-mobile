@@ -18,7 +18,6 @@ const DisplayImage: React.FC<Props> = ({
   paddingPostcard,
 }: Props) => {
   if (!images.length) return null;
-
   if (isPostcard) {
     const aspectRatio = getAspectRatio(images[0]);
     const padding = paddingPostcard ? 2 * paddingPostcard : 0;
