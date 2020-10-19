@@ -41,6 +41,7 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
+import { getPremiumPacks } from './Premium';
 
 interface RawUser {
   id: number;
@@ -53,6 +54,7 @@ interface RawUser {
   state: string;
   postal: string;
   credit: number;
+  coins: number;
   s3_img_url?: string;
   profile_img_path?: string;
   phone: string;
@@ -64,7 +66,6 @@ interface RawUser {
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
-
   return {
     id: user.id,
     firstName: user.first_name,
@@ -79,6 +80,7 @@ function cleanUser(user: RawUser): User {
       uri: photoUri || '',
     },
     credit: user.credit,
+    coins: user.coins,
     joined: new Date(user.created_at),
     referralCode: user.referral_link,
   };
@@ -326,7 +328,9 @@ async function initializeData(
     Sentry.captureException(err);
   });
   getUserReferrals().catch((err) => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    Sentry.captureException(err);
+  });
+  getPremiumPacks().catch((err) => {
     Sentry.captureException(err);
   });
   try {

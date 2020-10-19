@@ -62,9 +62,9 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   endpointDate: {
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_400,
   },
   estimatedDeliveryLabel: {
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_400,
   },
 });

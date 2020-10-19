@@ -142,7 +142,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   categoryBlurb: {
-    color: Colors.GRAY_DARKER,
+    color: Colors.GRAY_700,
     fontSize: 14,
   },
   contactSelectorCardBackground: {

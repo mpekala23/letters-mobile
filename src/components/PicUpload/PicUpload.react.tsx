@@ -258,7 +258,7 @@ class PicUpload extends React.Component<Props, State> {
       <View
         style={
           this.props.type === PicUploadTypes.Profile
-            ? { backgroundColor: Colors.GRAY_LIGHTER, borderRadius: 100 }
+            ? { backgroundColor: Colors.GRAY_100, borderRadius: 100 }
             : {}
         }
       >

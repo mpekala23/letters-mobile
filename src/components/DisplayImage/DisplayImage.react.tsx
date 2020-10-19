@@ -76,7 +76,7 @@ const DisplayImage: React.FC<Props> = ({
                 width,
               },
             ]}
-            loadingBackgroundColor={backgroundColor || Colors.GRAY_LIGHTER}
+            loadingBackgroundColor={backgroundColor || Colors.GRAY_100}
             download={!local}
             autorotate={false}
             local={!!local}

@@ -101,6 +101,7 @@ export async function fetchAuthenticated(
       city: tokenBody.data.city,
       state: tokenBody.data.state,
       credit: tokenBody.data.credit,
+      coins: tokenBody.data.coins,
       joined: tokenBody.data.created_at,
       referralCode: tokenBody.data.referral_link,
     };

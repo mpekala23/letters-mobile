@@ -59,7 +59,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
           viewStyle={{
             width: '100%',
             height: 132,
-            backgroundColor: Colors.GRAY_MEDIUM,
+            backgroundColor: Colors.GRAY_300,
             borderTopLeftRadius: 4,
             borderTopRightRadius: 4,
             overflow: 'hidden',

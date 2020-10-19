@@ -251,10 +251,20 @@ export type TopbarRouteAction = {
 
 export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
 
+// Premium
+export type PremiumPack = {
+  id: number;
+  name: string;
+  image: Image;
+  price: number;
+  coins: number;
+};
+
 export enum EntityTypes {
   Contacts = 'Contacts',
   Mail = 'Mail',
   Referrals = 'Referrals',
   Categories = 'Categories',
   MailDetail = 'MailDetail',
+  PremiumPacks = 'PremiumPacks',
 }

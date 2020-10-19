@@ -7,6 +7,9 @@ import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
+import CreditPackCheckoutWebViewScreen from './Premium/CreditPackCheckoutWebView';
+import CreditPackStoreScreen from './Premium/CreditPackStore';
+import CreditPackPurchaseSuccessScreen from './Premium/CreditPackPurchaseSuccess';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import InmateLocatorScreen from './AddContact/InmateLocator.react';
 import IssuesScreen from './Report/Issues.react';
@@ -44,6 +47,9 @@ export {
   ContactInfoScreen,
   ContactInmateInfoScreen,
   ContactSelectorScreen,
+  CreditPackCheckoutWebViewScreen,
+  CreditPackStoreScreen,
+  CreditPackPurchaseSuccessScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
   IntroContactScreen,

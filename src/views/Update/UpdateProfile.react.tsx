@@ -139,6 +139,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         state: this.statePicker.current.value,
         photo: this.state.image ? this.state.image : undefined,
         credit: this.props.userState.user.credit,
+        coins: this.props.userState.user.coins,
         joined: this.props.userState.user.joined,
         referralCode: this.props.userState.user.referralCode,
       };
@@ -242,7 +243,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
                 <Text
                   style={[
                     Typography.FONT_MEDIUM,
-                    { color: Colors.GRAY_500, paddingBottom: 6 },
+                    { color: Colors.GRAY_400, paddingBottom: 6 },
                   ]}
                 >
                   {i18n.t('UpdateProfileScreen.joined')} {joinedDate}
