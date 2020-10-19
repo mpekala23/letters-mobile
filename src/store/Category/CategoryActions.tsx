@@ -1,4 +1,4 @@
-import { Category, PostcardDesign } from 'types';
+import { Category, Image, PostcardDesign } from 'types';
 import {
   SET_CATEGORIES,
   ADD_CATEGORY,
@@ -7,6 +7,7 @@ import {
   SET_SUBCATEGORIES,
   ADD_SUBCATEGORY,
   SET_SUBCATEGORY,
+  SET_DESIGN_IMAGE,
   REMOVE_SUBCATEGORY,
   CategoryActionTypes,
   SET_LAST_UPDATED,
@@ -69,6 +70,18 @@ export function setSubcategory(
   return {
     type: SET_SUBCATEGORY,
     payload: { categoryId, name, designs },
+  };
+}
+
+export function setDesignImage(
+  categoryId: number,
+  subcategoryName: string,
+  designId: number,
+  image: Image
+): CategoryActionTypes {
+  return {
+    type: SET_DESIGN_IMAGE,
+    payload: { categoryId, subcategoryName, designId, image },
   };
 }
 

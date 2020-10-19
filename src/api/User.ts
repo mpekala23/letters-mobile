@@ -6,6 +6,7 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   Storage,
   MailTypes,
@@ -13,7 +14,6 @@ import {
   PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
-  EntityTypes,
 } from 'types';
 import {
   loginUser,
@@ -24,7 +24,6 @@ import {
   setLoadingStatus,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
-import { startAction } from '@store/UI/UIActions';
 
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE, sleep } from '@utils';
@@ -104,7 +103,7 @@ export async function deleteDraft(): Promise<void> {
     deleteItemAsync(Storage.DraftDesignUri),
     deleteItemAsync(Storage.DraftCategoryId),
     deleteItemAsync(Storage.DraftSubcategoryName),
-    deleteItemAsync(Storage.DraftLayout),
+    AsyncStorage.removeItem(Storage.DraftLayout),
   ]);
 }
 
@@ -127,7 +126,10 @@ export async function saveDraft(draft: Draft): Promise<void> {
     if (draft.design.layout) {
       // personal postcard
       Promise.all([
-        setItemAsync(Storage.DraftLayout, JSON.stringify(draft.design.layout)),
+        AsyncStorage.setItem(
+          Storage.DraftLayout,
+          JSON.stringify(draft.design.layout)
+        ),
       ]);
     } else if (draft.design.image.uri && draft.design.subcategoryName) {
       Promise.all([
@@ -179,7 +181,7 @@ export async function loadDraft(): Promise<Draft> {
         draftCategoryId === PERSONAL_OVERRIDE_ID.toString()
       ) {
         // either this is a personal postcard, or there is no categoryId and we assume it is
-        const draftLayout = await getItemAsync(Storage.DraftLayout);
+        const draftLayout = await AsyncStorage.getItem(Storage.DraftLayout);
         const draft: Draft = {
           type: MailTypes.Postcard,
           recipientId: parseInt(draftRecipientId, 10),

@@ -8,8 +8,7 @@ export default StyleSheet.create({
     backgroundColor: '#EDEDED',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: 16,
-    paddingBottom: 0,
+    paddingHorizontal: 16,
   },
   contactCard: {
     backgroundColor: 'white',

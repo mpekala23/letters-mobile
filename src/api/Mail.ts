@@ -26,7 +26,11 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
 import { estimateDelivery, getImageDims } from '@utils';
-import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
+import {
+  setCategories,
+  setDesignImage,
+  setLastUpdated,
+} from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
 import { startAction, stopAction } from '@store/UI/UIActions';
 import {
@@ -116,19 +120,11 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => {
+      return {
+        uri: rawImage.img_src,
+      };
+    });
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
 
@@ -203,19 +199,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
   const design = { image: images.length ? images[0] : { uri: '' } };
   const dateCreated = new Date(mail.created_at).toISOString();
@@ -495,41 +479,34 @@ interface RawDesign {
   content_researcher?: string;
 }
 
-async function cleanDesign(
+function cleanDesign(
   raw: RawDesign,
   categoryId?: number,
   subcategoryName?: string
-): Promise<PostcardDesign> {
-  try {
-    const imageDims = await getImageDims(raw.front_img_src);
-    const thumbnailDims = await getImageDims(raw.thumbnail_src);
-    return {
-      image: {
-        uri: raw.front_img_src,
-        ...imageDims,
-      },
-      thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
-  } catch (err) {
-    return {
-      image: {
-        uri: raw.front_img_src,
-      },
-      thumbnail: { uri: raw.thumbnail_src },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
+): PostcardDesign {
+  const design: PostcardDesign = {
+    image: {
+      uri: raw.front_img_src,
+    },
+    thumbnail: { uri: raw.thumbnail_src },
+    name: raw.name,
+    id: raw.id,
+    categoryId,
+    subcategoryName,
+    contentResearcher: raw.content_researcher,
+    designer: raw.designer,
+  };
+  if (categoryId && subcategoryName && design.id) {
+    getImageDims(design.image.uri).then((dims) => {
+      store.dispatch(
+        setDesignImage(categoryId, subcategoryName, raw.id, {
+          ...design.image,
+          ...dims,
+        })
+      );
+    });
   }
+  return design;
 }
 
 export async function getSubcategoriesById(
@@ -545,10 +522,8 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = await Promise.all(
-      data[subName].map((raw: RawDesign) =>
-        cleanDesign(raw, categoryId, subName)
-      )
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;

@@ -50,6 +50,7 @@ export const SET_ACTIVE = 'mail/set_active';
 export const SET_STATUS = 'mail/set_status';
 export const SET_DATE_CREATED = 'mail/set_date_created';
 export const SET_EXPECTED_DELIVERY = 'mail/set_expected_delivery';
+export const SET_MAIL_IMAGES = 'mail/set_mail_images';
 export const SET_CONTACTS_MAIL = 'mail/set_contacts_mail';
 export const SET_EXISTING_MAIL = 'mail/set_existing_mail';
 
@@ -90,6 +91,15 @@ interface SetExpectedDeliveryAction {
   };
 }
 
+interface SetMailImagesAction {
+  type: typeof SET_MAIL_IMAGES;
+  payload: {
+    contactId: number;
+    mailId: number;
+    images: Image[];
+  };
+}
+
 interface SetContactsMailAction {
   type: typeof SET_CONTACTS_MAIL;
   payload: {
@@ -115,5 +125,6 @@ export type MailActionTypes =
   | SetStatusAction
   | SetDateCreatedAction
   | SetExpectedDeliveryAction
+  | SetMailImagesAction
   | SetContactsMailAction
   | SetExistingMailAction;

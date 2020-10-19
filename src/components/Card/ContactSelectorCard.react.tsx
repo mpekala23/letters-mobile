@@ -127,7 +127,8 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
                 : i18n.t('ContactSelectorScreen.letters')}
             </AdjustableText>
             {lettersTravelled > 0 && (
-              <Text
+              <AdjustableText
+                numberOfLines={1}
                 style={[
                   Typography.FONT_REGULAR,
                   { paddingBottom: 4, color: Colors.GRAY_400 },
@@ -136,7 +137,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
                 <Emoji name="airplane" />{' '}
                 {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
                 {lettersTravelled} {i18n.t('ContactSelectorScreen.miles')}
-              </Text>
+              </AdjustableText>
             )}
           </View>
         )}
