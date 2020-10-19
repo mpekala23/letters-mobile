@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, ViewStyle, TouchableOpacity } from 'react-native';
 import { Typography } from '@styles';
 import i18n from '@i18n';
+import AdjustableText from '@components/Text/AdjustableText.react';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -23,7 +24,8 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
           <View style={CardStyles.creditsContainer}>
-            <Text
+            <AdjustableText
+              numberOfLines={1}
               style={[
                 Typography.FONT_SEMIBOLD,
                 CardStyles.creditsTitle,
@@ -35,7 +37,7 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
                 : `${props.credits} ${creditsRemaining} ${i18n.t(
                     'CreditsCard.leftThisWeek'
                   )}`}
-            </Text>
+            </AdjustableText>
             {props.credits === 0 ? (
               <TouchableOpacity onPress={props.onPress}>
                 <Text style={CardStyles.creditsSendMoreText}>
@@ -44,11 +46,14 @@ const CreditsCard: React.FC<Props> = (props: Props) => {
               </TouchableOpacity>
             ) : null}
           </View>
-          <Text style={CardStyles.creditsResetMessage}>
+          <AdjustableText
+            numberOfLines={1}
+            style={CardStyles.creditsResetMessage}
+          >
             {props.credits === 0
               ? i18n.t('CreditsCard.comeBackOnMondayForMore')
               : i18n.t('CreditsCard.creditsResetDaily')}
-          </Text>
+          </AdjustableText>
         </View>
       </View>
     </View>

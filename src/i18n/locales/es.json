@@ -30,7 +30,8 @@
     "cantAddContactBody": "¡Pero no te preocupes! Nuestro equipo de soporte te ayudará a solucionar el problema.",
     "reachOutToSupport": "Contactar al soporte",
     "noThanks": "No gracias",
-    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde"
+    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde",
+    "cantLoadPremiumPacks": "No pudimos cargar los paquetes premium. Por favor, inténtalo de nuevo más tarde."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -97,6 +98,16 @@
     "letter": "carta",
     "letters": "cartas",
     "lastHeard": "Last heard"
+  },
+  "CreditPackStore": {
+    "title": "Tokens de gratitud",
+    "subtitle": "Compre tokens Ameelio + para ayudar a otros a mantenerse en contacto de forma gratuita. A cambio, use estos tokens para enviar paquetes especiales a su ser querido.",
+    "selectBtn": "Selecciona"
+  },
+  "CreditPackPurchaseSuccess": {
+    "title": "Gracias por tu aporte",
+    "body": "Gracias por confiar en Ameelio y promover nuestra misión de brindar comunicación gratuita para todos.",
+    "buttonCta": "Ir a la tienda"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -418,6 +429,7 @@
     "contactInfo": "Contactos",
     "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
+    "creditPackStore": "Ameelio+ Tokens",
     "firstLetter": "Primera Carta",
     "home": "Inicio",
     "issues": "Problemas",

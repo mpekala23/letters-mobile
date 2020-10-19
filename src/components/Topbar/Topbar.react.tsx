@@ -163,7 +163,7 @@ class Topbar extends React.Component<Props, State> {
         <Text
           style={[
             Typography.FONT_MEDIUM,
-            { fontSize: 16, color: Colors.GRAY_500, paddingTop: 10 },
+            { fontSize: 16, color: Colors.GRAY_400, paddingTop: 10 },
           ]}
         >
           {this.state.title}

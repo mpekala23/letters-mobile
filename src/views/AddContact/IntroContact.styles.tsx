@@ -17,7 +17,7 @@ export default StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     textAlign: 'center',
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_400,
   },
   imageStyle: {
     width: 250,

@@ -39,9 +39,12 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         svg={LettersFilledIcon}
         style={{ position: 'absolute', right: 0, bottom: 0 }}
       />
-      <Text style={[Typography.FONT_MEDIUM, CardStyles.cardData]}>
+      <AdjustableText
+        numberOfLines={1}
+        style={[Typography.FONT_MEDIUM, CardStyles.cardData]}
+      >
         Memory Lane
-      </Text>
+      </AdjustableText>
       {props.isLoading ? (
         <MemoryCardPlaceholder />
       ) : (

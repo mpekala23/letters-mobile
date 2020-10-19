@@ -98,7 +98,7 @@ class ComposeHeader extends React.Component<Props, State> {
           <Text
             style={[
               Typography.FONT_MEDIUM_ITALIC,
-              { marginTop: 8, paddingRight: 16, color: Colors.GRAY_MEDIUM },
+              { marginTop: 8, paddingRight: 16, color: Colors.GRAY_300 },
             ]}
           >
             {i18n.t('Compose.autosaved')}

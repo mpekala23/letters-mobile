@@ -551,7 +551,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                   color:
                     this.state.subcategory === subcategory
                       ? 'white'
-                      : Colors.GRAY_MEDIUM,
+                      : Colors.GRAY_300,
                 },
               ]}
             >

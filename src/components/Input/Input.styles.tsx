@@ -7,7 +7,7 @@ export default StyleSheet.create({
   parentStyle: {
     width: '100%',
     marginBottom: VERTICAL_MARGIN * 2,
-    backgroundColor: Colors.BLACK_200,
+    backgroundColor: Colors.GRAY_200,
     borderRadius: 8,
     overflow: 'hidden',
   },
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     width: '100%',
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: Colors.BLACK_200,
+    borderColor: Colors.GRAY_200,
     paddingHorizontal: 10,
     fontSize: 16,
     color: 'black',
@@ -38,13 +38,13 @@ export default StyleSheet.create({
     color: 'black',
   },
   invalidStyle: {
-    color: Colors.GRAY_MEDIUM,
+    color: Colors.GRAY_300,
     borderColor: Colors.PINK_400,
     backgroundColor: Colors.PINK_100,
   },
   disabledInputStyle: {
     opacity: 0.7,
-    color: Colors.GRAY_MEDIUM,
+    color: Colors.GRAY_300,
   },
   secureButtonsContainer: {
     position: 'absolute',
