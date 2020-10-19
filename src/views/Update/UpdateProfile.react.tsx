@@ -141,6 +141,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
         credit: this.props.userState.user.credit,
         joined: this.props.userState.user.joined,
         referralCode: this.props.userState.user.referralCode,
+        country: this.props.userState.user.country,
       };
       try {
         await updateProfile(user);

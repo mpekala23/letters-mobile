@@ -103,6 +103,7 @@ export async function fetchAuthenticated(
       credit: tokenBody.data.credit,
       joined: tokenBody.data.created_at,
       referralCode: tokenBody.data.referral_link,
+      country: tokenBody.data.country,
     };
     store.dispatch(
       authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)

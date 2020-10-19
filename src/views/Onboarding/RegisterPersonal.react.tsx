@@ -16,6 +16,7 @@ import { Image } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import * as Segment from 'expo-analytics-segment';
+import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
 import Styles from './Register.style';
 
 type RegisterPersonalScreenNavigationProp = StackNavigationProp<
@@ -47,6 +48,8 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
 
   private referrerPicker = createRef<PickerRef>();
 
+  private countryPicker = createRef<PickerRef>();
+
   private scrollView = createRef<ScrollView>();
 
   private unsubscribeFocus: () => void;
@@ -77,6 +80,8 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
 
   onNavigationFocus(): void {
     if (this.firstName.current) this.firstName.current.forceFocus();
+    if (this.countryPicker.current?.value === '')
+      this.countryPicker.current.setStoredValue(COUNTRIES_FULL_TO_ABBREVS.US);
     this.updateValid();
   }
 
@@ -98,6 +103,9 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
         ? this.referrerPicker.current.value
         : '',
       image: this.state.image,
+      country: this.countryPicker.current
+        ? this.countryPicker.current?.value
+        : '',
     });
   };
 
@@ -105,12 +113,14 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
     if (
       this.firstName.current &&
       this.lastName.current &&
-      this.referrerPicker.current
+      this.referrerPicker.current &&
+      this.countryPicker.current
     ) {
       const result =
         this.firstName.current.state.valid &&
         this.lastName.current.state.valid &&
-        this.referrerPicker.current.isValueSelected();
+        this.referrerPicker.current.isValueSelected() &&
+        this.countryPicker.current.isValueSelected();
       this.setState({ valid: result });
       setProfileOverride({
         enabled: result,
@@ -202,6 +212,14 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
                 onValid={this.updateValid}
                 onInvalid={this.updateValid}
                 blurOnSubmit={false}
+              />
+              <Picker
+                ref={this.countryPicker}
+                items={Object.values(COUNTRIES_FULL_TO_ABBREVS)}
+                placeholder={i18n.t('RegisterScreen.country')}
+                onValueChange={() => {
+                  this.updateValid();
+                }}
               />
               <Picker
                 ref={this.referrerPicker}

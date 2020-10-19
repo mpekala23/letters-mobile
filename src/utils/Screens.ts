@@ -67,6 +67,7 @@ export type AuthStackParamList = {
     lastName: string;
     referrer: string;
     image: Image | undefined;
+    country: string;
   };
 };
 

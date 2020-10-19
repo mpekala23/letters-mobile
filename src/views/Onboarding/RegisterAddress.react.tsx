@@ -15,6 +15,7 @@ import { NotifTypes } from '@store/Notif/NotifTypes';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
 import Styles from './Register.style';
 
 type RegisterAddressScreenNavigationProp = StackNavigationProp<
@@ -34,6 +35,7 @@ export interface Props {
       lastName: string;
       referrer: string;
       image: Image | undefined;
+      country: string;
     };
   };
 }
@@ -50,6 +52,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
   private city = createRef<Input>();
 
   private statePicker = createRef<PickerRef>();
+
+  private stateInput = createRef<Input>();
 
   private postal = createRef<Input>();
 
@@ -91,14 +95,16 @@ class RegisterAddressScreen extends React.Component<Props, State> {
       this.address1.current &&
       this.address2.current &&
       this.city.current &&
-      this.statePicker.current &&
+      (this.statePicker.current || this.stateInput.current) &&
       this.postal.current
     ) {
       const result =
         this.address1.current.state.valid &&
         this.address2.current.state.valid &&
         this.city.current.state.valid &&
-        this.statePicker.current.isValueSelected() &&
+        (this.statePicker.current?.isValueSelected() ||
+          this.stateInput.current?.state.valid ||
+          false) &&
         this.postal.current.state.valid;
       setProfileOverride({
         enabled: result,
@@ -111,12 +117,18 @@ class RegisterAddressScreen extends React.Component<Props, State> {
 
   doRegister = async (): Promise<void> => {
     Segment.track("Signup - Clicks 'Create Account'");
+    let stateInfo = '';
+    if (this.props.route.params.country === COUNTRIES_FULL_TO_ABBREVS.US) {
+      stateInfo = this.statePicker.current?.value || '';
+    } else {
+      stateInfo = this.stateInput.current?.state.value || '';
+    }
     const data: UserRegisterInfo = {
       ...this.props.route.params,
       address1: this.address1.current ? this.address1.current.state.value : '',
       address2: this.address2.current ? this.address2.current.state.value : '',
       city: this.city.current ? this.city.current.state.value : '',
-      phyState: this.statePicker.current ? this.statePicker.current.value : '',
+      phyState: stateInfo,
       postal: this.postal.current ? this.postal.current.state.value : '',
     };
     try {
@@ -225,21 +237,44 @@ class RegisterAddressScreen extends React.Component<Props, State> {
                 width: '100%',
               }}
             >
-              <Picker
-                ref={this.statePicker}
-                parentStyle={{ flex: 5, marginRight: 4 }}
-                items={STATES_DROPDOWN}
-                placeholder={i18n.t('RegisterScreen.state')}
-                onValueChange={() => {
-                  this.updateValid();
-                }}
-              />
+              {this.props.route.params.country ===
+              COUNTRIES_FULL_TO_ABBREVS.US ? (
+                <Picker
+                  ref={this.statePicker}
+                  parentStyle={{ flex: 5, marginRight: 4 }}
+                  items={STATES_DROPDOWN}
+                  placeholder={i18n.t('RegisterScreen.state')}
+                  onValueChange={() => {
+                    this.updateValid();
+                  }}
+                  disabled={
+                    this.props.route.params.country !==
+                    COUNTRIES_FULL_TO_ABBREVS.US
+                  }
+                />
+              ) : (
+                <Input
+                  ref={this.stateInput}
+                  placeholder={i18n.t('RegisterScreen.state')}
+                  parentStyle={{ flex: 5, marginRight: 4 }}
+                  required
+                  validate={Validation.State}
+                  onValid={this.updateValid}
+                  onInvalid={this.updateValid}
+                  blurOnSubmit={false}
+                />
+              )}
               <Input
                 ref={this.postal}
                 placeholder={i18n.t('RegisterScreen.zipcode')}
                 parentStyle={{ flex: 3, marginLeft: 4 }}
                 required
-                validate={Validation.Postal}
+                validate={
+                  this.props.route.params.country ===
+                  COUNTRIES_FULL_TO_ABBREVS.US
+                    ? Validation.Postal
+                    : Validation.InternationalPostal
+                }
                 onValid={this.updateValid}
                 onInvalid={this.updateValid}
                 blurOnSubmit={false}

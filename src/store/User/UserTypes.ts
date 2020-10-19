@@ -12,6 +12,7 @@ export interface UserRegisterInfo {
   firstName: string;
   lastName: string;
   email: string;
+  country: string;
   password: string;
   passwordConfirmation: string;
   address1: string;
@@ -35,6 +36,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  country: string;
   address1: string;
   address2?: string;
   postal: string;
