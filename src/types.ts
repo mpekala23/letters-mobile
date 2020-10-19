@@ -252,6 +252,7 @@ export enum Storage {
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
   DraftLayout = 'Ameelio-DraftLayout',
+  DraftPostcardSize = 'Ameelio-DraftPostcardSize',
 }
 
 export type TopbarBackAction = {
