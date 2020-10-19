@@ -40,23 +40,36 @@ const SelectPostcardSizeBase = ({
   );
 
   const updatePostcardOption = async () => {
-    updateDraft({ ...draft, size: selected } as DraftPostcard);
-    navigation.navigate(Screens.ComposePostcard, {
-      category: route.params.category,
-    });
+    setProfileOverride(undefined);
+    if (route.params.category.name === 'personal') {
+      navigation.navigate(Screens.ComposePersonal, {
+        category: route.params.category,
+      });
+    } else {
+      navigation.navigate(Screens.ComposePostcard, {
+        category: route.params.category,
+      });
+    }
   };
 
   useEffect(() => {
-    setProfileOverride({
-      enabled: !!selected,
-      text: i18n.t('Compose.selectBtn'),
-      action: updatePostcardOption,
-      blocking: true,
+    updateDraft({ ...draft, size: selected } as DraftPostcard);
+  }, [selected]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setProfileOverride({
+        enabled: !!selected,
+        text: i18n.t('Compose.selectBtn'),
+        action: updatePostcardOption,
+        blocking: true,
+      });
     });
     return () => {
       setProfileOverride(undefined);
+      unsubscribe();
     };
-  });
+  }, []);
 
   const renderItem = (option: PostcardSizeOption) => {
     const { image, title, wordsLimit, cost, isPremium } = option;
