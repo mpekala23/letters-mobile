@@ -40,14 +40,17 @@ const CreditPackStoreBase = ({
   const PROFIT_COIN = 0.053;
 
   useEffect(() => {
-    if (packs.length === 0 && !isLoadingPremiumPacks) {
+    async function fetchPremiumPacks() {
       try {
-        getPremiumPacks();
+        await getPremiumPacks();
       } catch (err) {
         dropdownError({ message: i18n.t('Error.cantLoadPremiumPacks') });
       }
     }
-  });
+    if (!isLoadingPremiumPacks) {
+      fetchPremiumPacks();
+    }
+  }, []);
 
   const calculateFamiliesHelped = (totalCoins: number): number => {
     return Math.round((totalCoins * PROFIT_COIN) / FAMILY_MONTHLY_COST);
