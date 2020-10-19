@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
+import { FlatList } from 'react-native-gesture-handler';
 import Styles from './SelectPostcardSize.styles';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
@@ -91,13 +92,12 @@ const SelectPostcardSizeBase = ({
       >
         <AsyncImage
           imageStyle={{
-            height: '100%',
+            minHeight: '100%',
             width: '60%',
             resizeMode: 'cover',
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
+            borderTopLeftRadius: 14,
+            borderBottomLeftRadius: 14,
           }}
-          download
           source={image}
           autorotate={false}
           local
@@ -118,9 +118,12 @@ const SelectPostcardSizeBase = ({
   };
 
   return (
-    <View style={Styles.trueBackground}>
-      {POSTCARD_SIZE_OPTIONS.map((option) => renderItem(option))}
-    </View>
+    <FlatList
+      style={Styles.trueBackground}
+      data={POSTCARD_SIZE_OPTIONS}
+      renderItem={({ item }) => renderItem(item)}
+      keyExtractor={(item) => item.key}
+    />
   );
 };
 

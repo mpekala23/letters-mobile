@@ -4,8 +4,7 @@ import { Colors } from '@styles';
 export default StyleSheet.create({
   trueBackground: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
+    marginTop: 16,
     paddingHorizontal: 16,
   },
   body: {

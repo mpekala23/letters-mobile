@@ -104,7 +104,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
     profile: false,
   },
   ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
-  SelectPostcardSize: { title: '', profile: false },
+  SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home'), profile: true },
   UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },

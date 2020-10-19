@@ -169,8 +169,7 @@ export default StyleSheet.create({
   selectPostcardSizeBase: {
     backgroundColor: 'white',
     width: '100%',
-    marginHorizontal: 16,
-    borderRadius: 8,
+    borderRadius: 16,
     marginVertical: 8,
   },
   cardSelectedBackground: {
