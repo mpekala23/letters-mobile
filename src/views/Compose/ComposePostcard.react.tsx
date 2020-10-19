@@ -28,10 +28,7 @@ import {
   getNumWords,
   getImageDims,
 } from '@utils';
-import {
-  setBackOverride,
-  setProfileOverride,
-} from '@components/Topbar/Topbar.react';
+import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';

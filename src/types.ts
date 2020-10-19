@@ -258,3 +258,10 @@ export enum EntityTypes {
   Categories = 'Categories',
   MailDetail = 'MailDetail',
 }
+
+export interface RouteDetails {
+  title: string;
+  profile: boolean;
+  shown?: boolean;
+  tabsVisible?: boolean;
+}

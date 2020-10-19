@@ -4,12 +4,12 @@ import { ProfilePicTypes, TopbarRouteAction, TopbarBackAction } from 'types';
 import { UserState } from '@store/User/UserTypes';
 import BackButton from '@assets/components/Topbar/BackButton';
 import { Colors, Typography } from '@styles';
-import { NavigationContainerRef } from '@react-navigation/native';
 import * as Segment from 'expo-analytics-segment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { WINDOW_WIDTH } from '@utils';
 import { Screens } from '@utils/Screens';
 import { BAR_HEIGHT } from '@utils/Constants';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import Styles from './Topbar.styles';
 import Icon from '../Icon/Icon.react';
@@ -17,7 +17,8 @@ import Button from '../Button/Button.react';
 
 interface Props {
   userState: UserState;
-  navigation: NavigationContainerRef | null;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  navigation: StackNavigationProp<Record<string, object | undefined>, string>;
   currentRoute: string;
 }
 
@@ -40,7 +41,7 @@ class Topbar extends React.Component<Props, State> {
     super(props);
     this.state = {
       shown: false,
-      shownAnim: new Animated.Value(0),
+      shownAnim: new Animated.Value(1),
       title: '',
       profile: true,
     };
@@ -74,7 +75,7 @@ class Topbar extends React.Component<Props, State> {
           onPress={() => {
             Keyboard.dismiss();
             if (this.props.navigation) {
-              const route = this.props.navigation.getCurrentRoute()?.name;
+              const route = this.props.currentRoute;
               if (route === Screens.Login || route === 'Register1') {
                 this.props.navigation.reset({
                   index: 0,
@@ -204,23 +205,6 @@ export const setShown = (val: boolean): void => {
 
 export const setTitle = (val: string): void => {
   if (topbarRef.current) topbarRef.current.setState({ title: val });
-};
-
-export const setProfile = (val: boolean): void => {
-  if (topbarRef.current) topbarRef.current.setState({ profile: val });
-};
-
-export const setProfileOverride = (
-  override: TopbarRouteAction | undefined
-): void => {
-  if (topbarRef.current)
-    topbarRef.current.setState({ profileOverride: override });
-};
-
-export const setBackOverride = (
-  backOverride: TopbarBackAction | undefined
-): void => {
-  if (topbarRef.current) topbarRef.current.setState({ backOverride });
 };
 
 export default Topbar;

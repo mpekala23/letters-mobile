@@ -14,7 +14,7 @@ import FacilityIcon from '@assets/views/AddContact/Facility';
 import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import { FacilityState } from '@store/Facility/FacilityTypes';
 import Styles from './FacilityDirectory.styles';

@@ -1,3 +1,4 @@
+import i18n from '@i18n';
 import {
   Category,
   DeliveryReportTypes,
@@ -5,6 +6,7 @@ import {
   SupportFAQTypes,
   Image,
   PrisonTypes,
+  RouteDetails,
 } from 'types';
 
 export enum Screens {
@@ -102,4 +104,98 @@ export type AppStackParamList = {
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   UpdateContact: { contactId: number } | undefined;
   UpdateProfile: undefined;
+};
+
+export const mapRouteNameToDetails: Record<string, RouteDetails> = {
+  Begin: { title: '', profile: false, shown: false },
+  Splash: { title: '', profile: false, shown: false },
+  Login: { title: i18n.t('Screens.login'), profile: false },
+  Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
+  Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
+  RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
+  RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
+  RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
+  ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
+  ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
+  ComposeLetter: {
+    title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ComposePersonal: {
+    title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ComposePostcard: {
+    title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ContactInfo: {
+    title: i18n.t('Screens.contactInfo'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ContactInmateInfo: {
+    title: i18n.t('Screens.contactInmateInfo'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
+  FacilityDirectory: { title: '', profile: false },
+  IntroContact: {
+    title: i18n.t('Screens.introContact'),
+    profile: false,
+    tabsVisible: false,
+  },
+  InmateLocator: {
+    title: i18n.t('Screens.inmateLocator'),
+    profile: false,
+    tabsVisible: false,
+  },
+  Issues: {
+    title: i18n.t('Screens.issues'),
+    profile: false,
+    tabsVisible: false,
+  },
+  MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
+  MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
+  MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
+  ReferralDashboardScreen: {
+    title: i18n.t('Screens.referralDashboard'),
+    profile: true,
+  },
+  ReferFriends: {
+    title: i18n.t('Screens.spreadTheWord'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ReviewLetter: {
+    title: i18n.t('Screens.lastStep'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ReviewPostcard: {
+    title: i18n.t('Screens.reviewPostcard'),
+    profile: false,
+    tabsVisible: false,
+  },
+  ReviewContact: {
+    title: i18n.t('Screens.reviewContact'),
+    profile: false,
+    tabsVisible: false,
+  },
+  Setup: { title: '', profile: false },
+  SingleContact: { title: i18n.t('Screens.home'), profile: true },
+  UpdateContact: {
+    title: i18n.t('Screens.updateContact'),
+    profile: false,
+    tabsVisible: false,
+  },
+  UpdateProfile: {
+    title: i18n.t('Screens.updateProfile'),
+    profile: false,
+    tabsVisible: false,
+  },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Screens } from '@utils/Screens';
+import { mapRouteNameToDetails, Screens } from '@utils/Screens';
 import {
   ChooseCategoryScreen,
   ChooseOptionScreen,
@@ -29,13 +29,98 @@ import {
   UpdateContactScreen,
   UpdateProfileScreen,
 } from '@views';
+import { HeaderLeft, HeaderRight, HeaderTitle } from '@components';
+import { BAR_HEIGHT, WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils/Constants';
+import {
+  StackCardInterpolationProps,
+  StackCardInterpolatedStyle,
+} from '@react-navigation/stack';
 import { HomeStack } from './Navigators';
 
-const Home: React.FC = () => {
+interface Props {
+  headerVisible: boolean;
+}
+
+const leftRightTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateX: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_WIDTH, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const topBottomTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const bottomTopTransition = (
+  data: StackCardInterpolationProps
+): StackCardInterpolatedStyle => {
+  return {
+    cardStyle: {
+      transform: [
+        {
+          translateY: data.current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [WINDOW_HEIGHT, 0],
+          }),
+        },
+      ],
+    },
+  };
+};
+
+const Home: React.FC<Props> = ({ headerVisible }: Props) => {
   return (
     <HomeStack.Navigator
-      screenOptions={() => ({
-        headerShown: false,
+      screenOptions={({ route }) => ({
+        headerShown: headerVisible,
+        headerStyle: { height: BAR_HEIGHT },
+        headerTitle: (titleProps) => {
+          return (
+            <HeaderTitle
+              title={
+                titleProps.children &&
+                titleProps.children in mapRouteNameToDetails
+                  ? mapRouteNameToDetails[titleProps.children].title
+                  : ''
+              }
+            />
+          );
+        },
+        headerLeft: (leftProps) => (
+          <HeaderLeft
+            canGoBack={!!leftProps.canGoBack}
+            onPress={leftProps.onPress}
+            route={route.name}
+          />
+        ),
+        headerRight: () => {
+          return <HeaderRight />;
+        },
+        cardStyleInterpolator: leftRightTransition,
       })}
     >
       <HomeStack.Screen
@@ -73,6 +158,7 @@ const Home: React.FC = () => {
       <HomeStack.Screen
         name={Screens.ContactInfo}
         component={ContactInfoScreen}
+        options={{ cardStyleInterpolator: bottomTopTransition }}
       />
       <HomeStack.Screen
         name={Screens.FacilityDirectory}
@@ -138,6 +224,7 @@ const Home: React.FC = () => {
       <HomeStack.Screen
         name={Screens.UpdateProfile}
         component={UpdateProfileScreen}
+        options={{ cardStyleInterpolator: topBottomTransition }}
       />
       <HomeStack.Screen name="InmateLocator" component={InmateLocatorScreen} />
     </HomeStack.Navigator>

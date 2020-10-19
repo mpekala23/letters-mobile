@@ -17,7 +17,7 @@ import { differenceInBusinessDays, format } from 'date-fns';
 import { Contact, MailTypes } from 'types';
 import { onNativeShare, estimateDelivery, requestReview } from '@utils';
 
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<

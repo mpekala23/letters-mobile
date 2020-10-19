@@ -24,7 +24,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { Draft, Image, MailTypes } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { getNumWords } from '@utils';
 import * as Segment from 'expo-analytics-segment';

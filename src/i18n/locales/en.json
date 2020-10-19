@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "home": "Home",
+    "store": "Store",
     "login": "Login",
     "register": "Register"
   },
