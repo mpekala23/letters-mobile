@@ -261,7 +261,7 @@ export enum EntityTypes {
 
 export interface RouteDetails {
   title: string;
-  profile: boolean;
-  shown?: boolean;
+  profile?: boolean;
+  headerVisible?: boolean;
   tabsVisible?: boolean;
 }

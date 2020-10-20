@@ -100,7 +100,11 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[
               Typography.FONT_SEMIBOLD,
-              { fontSize: 20, textAlign: 'center' },
+              {
+                fontSize: 20,
+                textAlign: 'center',
+                paddingTop: Platform.OS === 'android' ? 32 : undefined,
+              },
             ]}
           >
             {i18n.t('Common.possessivePronoun')} {mailType}{' '}

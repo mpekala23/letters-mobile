@@ -33,10 +33,12 @@ export enum Screens {
   FacilityDirectory = 'FacilityDirectory',
   ContactInmateInfo = 'ContactInmateInfo',
   ReviewContact = 'ReviewContact',
+  InmateLocator = 'InmateLocator',
   IntroContact = 'IntroContact',
   Issues = 'Issues',
   IssuesDetail = 'IssuesDetail',
   IssuesDetailSecondary = 'IssuesDetailSecondary',
+  Setup = 'Setup',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
@@ -106,9 +108,9 @@ export type AppStackParamList = {
   UpdateProfile: undefined;
 };
 
-export const mapRouteNameToDetails: Record<string, RouteDetails> = {
-  Begin: { title: '', profile: false, shown: false },
-  Splash: { title: '', profile: false, shown: false },
+export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
+  Begin: { title: '', profile: false, headerVisible: false },
+  Splash: { title: '', profile: false, headerVisible: false },
   Login: { title: i18n.t('Screens.login'), profile: false },
   Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
   Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
@@ -142,7 +144,8 @@ export const mapRouteNameToDetails: Record<string, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
-  ContactSelector: { title: i18n.t('Screens.contacts'), profile: true },
+  ContactSelector: { title: i18n.t('Screens.contacts') },
+  DeliveryReporting: { title: '', profile: false },
   FacilityDirectory: { title: '', profile: false },
   IntroContact: {
     title: i18n.t('Screens.introContact'),
@@ -159,12 +162,19 @@ export const mapRouteNameToDetails: Record<string, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
-  MailDetails: { title: i18n.t('Screens.letterDetails'), profile: true },
-  MailTracking: { title: i18n.t('Screens.tracking'), profile: true },
-  MemoryLane: { title: i18n.t('Screens.memoryLane'), profile: true },
-  ReferralDashboardScreen: {
+  IssuesDetail: {
+    title: '',
+    profile: false,
+  },
+  IssuesDetailSecondary: {
+    title: '',
+    profile: false,
+  },
+  MailDetails: { title: i18n.t('Screens.letterDetails') },
+  MailTracking: { title: i18n.t('Screens.tracking') },
+  MemoryLane: { title: i18n.t('Screens.memoryLane') },
+  ReferralDashboard: {
     title: i18n.t('Screens.referralDashboard'),
-    profile: true,
   },
   ReferFriends: {
     title: i18n.t('Screens.spreadTheWord'),
@@ -187,7 +197,9 @@ export const mapRouteNameToDetails: Record<string, RouteDetails> = {
     tabsVisible: false,
   },
   Setup: { title: '', profile: false },
-  SingleContact: { title: i18n.t('Screens.home'), profile: true },
+  SingleContact: { title: i18n.t('Screens.home') },
+  SupportFAQ: { title: '', profile: false },
+  SupportFAQDetail: { title: '', profile: false },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),
     profile: false,
@@ -199,3 +211,19 @@ export const mapRouteNameToDetails: Record<string, RouteDetails> = {
     tabsVisible: false,
   },
 };
+
+export function getDetailsFromRouteName(screen: string): RouteDetails {
+  if (screen in mapRouteNameToDetails)
+    return {
+      profile: true,
+      headerVisible: true,
+      tabsVisible: true,
+      ...mapRouteNameToDetails[screen as Screens],
+    };
+  return {
+    title: '',
+    profile: false,
+    headerVisible: true,
+    tabsVisible: true,
+  };
+}

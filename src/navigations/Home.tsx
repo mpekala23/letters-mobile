@@ -1,5 +1,5 @@
 import React from 'react';
-import { mapRouteNameToDetails, Screens } from '@utils/Screens';
+import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import {
   ChooseCategoryScreen,
   ChooseOptionScreen,
@@ -30,81 +30,26 @@ import {
   UpdateProfileScreen,
 } from '@views';
 import { HeaderLeft, HeaderRight, HeaderTitle } from '@components';
-import { BAR_HEIGHT, WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils/Constants';
-import {
-  StackCardInterpolationProps,
-  StackCardInterpolatedStyle,
-} from '@react-navigation/stack';
+import { BAR_HEIGHT } from '@utils/Constants';
 import { HomeStack } from './Navigators';
+import {
+  leftRightTransition,
+  topBottomTransition,
+  bottomTopTransition,
+} from './Transitions';
 
-interface Props {
-  headerVisible: boolean;
-}
-
-const leftRightTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateX: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [WINDOW_WIDTH, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
-
-const topBottomTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateY: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [-WINDOW_HEIGHT, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
-
-const bottomTopTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateY: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [WINDOW_HEIGHT, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
-
-const Home: React.FC<Props> = ({ headerVisible }: Props) => {
+const Home: React.FC = () => {
   return (
     <HomeStack.Navigator
       screenOptions={({ route }) => ({
-        headerShown: headerVisible,
+        headerShown: getDetailsFromRouteName(route.name).headerVisible,
         headerStyle: { height: BAR_HEIGHT },
         headerTitle: (titleProps) => {
           return (
             <HeaderTitle
               title={
-                titleProps.children &&
-                titleProps.children in mapRouteNameToDetails
-                  ? mapRouteNameToDetails[titleProps.children].title
+                titleProps.children
+                  ? getDetailsFromRouteName(titleProps.children).title
                   : ''
               }
             />
@@ -220,6 +165,7 @@ const Home: React.FC<Props> = ({ headerVisible }: Props) => {
       <HomeStack.Screen
         name={Screens.UpdateContact}
         component={UpdateContactScreen}
+        options={{ cardStyleInterpolator: bottomTopTransition }}
       />
       <HomeStack.Screen
         name={Screens.UpdateProfile}

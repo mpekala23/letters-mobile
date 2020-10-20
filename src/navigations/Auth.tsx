@@ -1,4 +1,7 @@
-import { Screens } from '@utils/Screens';
+import React from 'react';
+import { HeaderLeft, HeaderRight, HeaderTitle } from '@components';
+import { BAR_HEIGHT } from '@utils/Constants';
+import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import {
   BeginScreen,
   LoginScreen,
@@ -8,14 +11,37 @@ import {
   RegisterPersonalScreen,
   RegisterAddressScreen,
 } from '@views';
-import React from 'react';
 import { AuthStack } from './Navigators';
+import { leftRightTransition } from './Transitions';
 
 const Auth: React.FC = () => {
   return (
     <AuthStack.Navigator
-      screenOptions={() => ({
-        headerShown: false,
+      screenOptions={({ route }) => ({
+        headerShown: getDetailsFromRouteName(route.name).headerVisible,
+        headerStyle: { height: BAR_HEIGHT },
+        headerTitle: (titleProps) => {
+          return (
+            <HeaderTitle
+              title={
+                titleProps.children
+                  ? getDetailsFromRouteName(titleProps.children).title
+                  : ''
+              }
+            />
+          );
+        },
+        headerLeft: (leftProps) => (
+          <HeaderLeft
+            canGoBack={!!leftProps.canGoBack}
+            onPress={leftProps.onPress}
+            route={route.name}
+          />
+        ),
+        headerRight: () => {
+          return <HeaderRight />;
+        },
+        cardStyleInterpolator: leftRightTransition,
       })}
     >
       <AuthStack.Screen name={Screens.Begin} component={BeginScreen} />

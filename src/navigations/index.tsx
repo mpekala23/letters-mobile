@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  StackCardInterpolationProps,
-  StackCardInterpolatedStyle,
-} from '@react-navigation/stack';
 import { AppState } from '@store/types';
 import { AuthInfo, UserState } from '@store/User/UserTypes';
-import { navigationRef, navigate, WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
-import { setProfile, setShown } from '@components/Topbar';
+import { navigationRef, navigate } from '@utils';
+import { setProfile } from '@components/Topbar';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeIcon from '@assets/navigation/Home';
 import StoreIcon from '@assets/navigation/Store';
@@ -17,7 +13,7 @@ import {
   Screens,
   AuthStackParamList,
   AppStackParamList,
-  mapRouteNameToDetails,
+  getDetailsFromRouteName,
 } from '@utils/Screens';
 import { SplashScreen } from '@views';
 import { GestureResponderEvent } from 'react-native';
@@ -36,67 +32,6 @@ export interface Props {
   authInfo: AuthInfo;
   userState: UserState;
 }
-
-const fadeTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      opacity: data.current.progress,
-    },
-  };
-};
-
-const leftRightTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateX: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [WINDOW_WIDTH, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
-
-const topBottomTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateY: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [-WINDOW_HEIGHT, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
-
-const bottomTopTransition = (
-  data: StackCardInterpolationProps
-): StackCardInterpolatedStyle => {
-  return {
-    cardStyle: {
-      transform: [
-        {
-          translateY: data.current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [WINDOW_HEIGHT, 0],
-          }),
-        },
-      ],
-    },
-  };
-};
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
   const [tabsVisible, setTabsVisible] = useState(true);
@@ -160,11 +95,11 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name as Screens;
-        if (name && name in mapRouteNameToDetails) {
-          setProfile(mapRouteNameToDetails[name].profile);
+        if (name) {
+          setProfile(!!getDetailsFromRouteName(name).profile);
           if (
-            mapRouteNameToDetails[name].tabsVisible === undefined ||
-            mapRouteNameToDetails[name].tabsVisible === true
+            getDetailsFromRouteName(name).tabsVisible === undefined ||
+            getDetailsFromRouteName(name).tabsVisible === true
           )
             setTabsVisible(true);
           else setTabsVisible(false);
@@ -178,6 +113,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         screenOptions={({ route }) => ({
           tabBarVisible:
             route.name !== 'Auth' && route.name !== 'Splash' && tabsVisible,
+          tabBarVisibilityAnimationConfig: {},
         })}
         tabBarOptions={{
           style: { height: 64 },
