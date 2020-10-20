@@ -8,7 +8,7 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
   },
   body: {
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_600,
     fontSize: 14,
   },
 });

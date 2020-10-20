@@ -41,7 +41,7 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
-import { getPremiumPacks } from './Premium';
+import { getPremiumPacks, getPremiumStoreItems } from './Premium';
 
 interface RawUser {
   id: number;
@@ -337,13 +337,13 @@ async function initializeData(
   Segment.track('Login Success');
   store.dispatch(setLoadingStatus(60));
   store.dispatch(authenticateUser(userData, token, remember));
-  getCategories().catch((err) => {
-    Sentry.captureException(err);
-  });
-  getUserReferrals().catch((err) => {
-    Sentry.captureException(err);
-  });
-  getPremiumPacks().catch((err) => {
+
+  Promise.all([
+    getCategories(),
+    getUserReferrals(),
+    getPremiumPacks(),
+    getPremiumStoreItems(),
+  ]).catch((err) => {
     Sentry.captureException(err);
   });
   try {
