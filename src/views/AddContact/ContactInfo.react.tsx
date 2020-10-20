@@ -17,7 +17,7 @@ import { setAddingPersonal } from '@store/Contact/ContactActions';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import { ContactPersonal, ContactDraft } from 'types';
 import { getFacilities } from '@api';

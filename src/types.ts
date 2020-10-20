@@ -302,3 +302,10 @@ export enum EntityTypes {
   PremiumPacks = 'PremiumPacks',
   PremiumStoreItems = 'PremiumStoreItems',
 }
+
+export interface RouteDetails {
+  title: string;
+  profile?: boolean;
+  headerVisible?: boolean;
+  tabsVisible?: boolean;
+}

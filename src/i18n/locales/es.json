@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "home": "Inicio",
+    "store": "Tienda",
     "login": "Iniciar sesión",
     "register": "Regístrate"
   },

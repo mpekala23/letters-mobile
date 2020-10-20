@@ -35,6 +35,7 @@ export const GRAY_100 = '#FBFBFB';
 export const GRAY_200 = '#F2F2F2';
 export const GRAY_300 = '#9A9A9A';
 export const GRAY_400 = '#6D6D6D';
+export const GRAY_500 = '#626262';
 export const GRAY_600 = '#555555';
 export const GRAY_700 = '#393939';
 

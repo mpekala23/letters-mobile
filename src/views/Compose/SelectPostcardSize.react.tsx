@@ -8,7 +8,7 @@ import { Category, Draft, DraftPostcard, PostcardSizeOption } from 'types';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { connect } from 'react-redux';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';

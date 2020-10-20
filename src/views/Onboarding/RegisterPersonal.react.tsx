@@ -14,7 +14,7 @@ import { Typography } from '@styles';
 import { REFERRERS } from '@utils';
 import { Image } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 
