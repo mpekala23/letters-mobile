@@ -9,6 +9,7 @@ import {
   Icon,
   ProfilePic,
   DisplayImage,
+  AdjustableText,
 } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -116,10 +117,13 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       startAnimation();
       return (
         <View style={[Styles.cardBackground]}>
-          <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}>
+          <AdjustableText
+            numberOfLines={1}
+            style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}
+          >
             <Text>Status: </Text>
             {mail.status}
-          </Text>
+          </AdjustableText>
           {mail.status !== MailStatus.Delivered && (
             <View
               style={{
@@ -141,43 +145,51 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 </Text>
               </View>
               <View>
-                <Text style={[Styles.estimatedDeliveryLabel]}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Styles.estimatedDeliveryLabel]}
+                >
                   {i18n.t('MailTrackingScreen.estimatedArrival')}
-                </Text>
-                <Text
+                </AdjustableText>
+                <AdjustableText
+                  numberOfLines={1}
                   style={[Typography.FONT_SEMIBOLD, { fontSize: 16 }]}
-                  testID="deliveryDate"
                 >
                   {format(new Date(mail.expectedDelivery), 'MM/dd')}
-                </Text>
+                </AdjustableText>
               </View>
             </View>
           )}
           <View>
             <View style={[Styles.endpointsContainer]}>
               <View style={{ paddingRight: 8, maxWidth: '50%' }}>
-                <Text
+                <AdjustableText
+                  numberOfLines={1}
                   style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
                 >
                   {user.city}
-                </Text>
+                </AdjustableText>
               </View>
 
               <View style={{ paddingLeft: 8, maxWidth: '50%' }}>
-                <Text
+                <AdjustableText
+                  numberOfLines={1}
                   style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
                 >
                   {contact.facility.name}
-                </Text>
+                </AdjustableText>
               </View>
             </View>
             <View style={[Styles.endpointsContainer]}>
-              <Text style={[Styles.endpointDate]}>
+              <AdjustableText numberOfLines={1} style={[Styles.endpointDate]}>
                 {format(new Date(mail.dateCreated), 'MM/dd')}
-              </Text>
-              <Text style={[{ textAlign: 'right' }, Styles.endpointDate]}>
+              </AdjustableText>
+              <AdjustableText
+                numberOfLines={1}
+                style={[{ textAlign: 'right' }, Styles.endpointDate]}
+              >
                 {format(new Date(mail.expectedDelivery), 'MM/dd')}
-              </Text>
+              </AdjustableText>
             </View>
           </View>
           <View
@@ -290,7 +302,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 
     const body = returnedTrack ? (
       <View style={{ alignItems: 'center', paddingTop: 24 }}>
-        <Text
+        <AdjustableText
+          numberOfLines={1}
           style={[
             Typography.FONT_SEMIBOLD,
             Styles.headerText,
@@ -298,7 +311,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           ]}
         >
           {i18n.t('MailTrackingScreen.yourLetterWasReturnedToSender')}
-        </Text>
+        </AdjustableText>
         <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}>
           {i18n.t('MailTrackingScreen.possibleReason')}
         </Text>
@@ -325,9 +338,12 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               justifyContent: 'space-between',
             }}
           >
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
+            <AdjustableText
+              numberOfLines={1}
+              style={[Typography.FONT_SEMIBOLD, Styles.headerText]}
+            >
               {i18n.t('MailTrackingScreen.letterTracking')}
-            </Text>
+            </AdjustableText>
             <Button
               reverse
               onPress={() => {

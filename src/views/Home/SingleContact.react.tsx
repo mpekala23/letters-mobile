@@ -7,7 +7,7 @@ import {
   RefreshControl,
   Linking,
 } from 'react-native';
-import { Button, ProfilePic } from '@components';
+import { AdjustableText, Button, ProfilePic } from '@components';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
@@ -117,7 +117,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         : null;
 
     const letterTrackingTitle = (
-      <Text
+      <AdjustableText
+        numberOfLines={1}
         style={[
           Typography.BASE_TITLE,
           {
@@ -127,7 +128,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
         ]}
       >
         {i18n.t('SingleContactScreen.letterTracking')}
-      </Text>
+      </AdjustableText>
     );
 
     const refresh = (
@@ -192,7 +193,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               imageUri={contact.image?.uri}
               type={ProfilePicTypes.SingleContact}
             />
-            <Text
+            <AdjustableText
+              numberOfLines={1}
               style={[
                 Typography.FONT_SEMIBOLD,
                 {
@@ -202,14 +204,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               ]}
             >
               {contact.firstName} {contact.lastName}
-            </Text>
+            </AdjustableText>
             {contact.facility && (
               <View style={{ alignItems: 'center' }}>
-                <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}
+                >
                   {contact.facility.name}
-                </Text>
+                </AdjustableText>
 
-                <Text
+                <AdjustableText
+                  numberOfLines={1}
                   style={[
                     Typography.FONT_REGULAR,
                     Styles.profileCardInfo,
@@ -217,7 +223,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   ]}
                 >
                   {contact.facility.address}
-                </Text>
+                </AdjustableText>
               </View>
             )}
             <Button

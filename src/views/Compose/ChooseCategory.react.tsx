@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image as ImageComponent, Linking } from 'react-native';
-import { Button, CategoryCard } from '@components';
+import { AdjustableText, Button, CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { Category, EntityTypes } from 'types';
@@ -125,7 +125,8 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         {this.props.categories.length ? (
           <>
-            <Text
+            <AdjustableText
+              numberOfLines={1}
               style={[
                 Typography.FONT_SEMIBOLD,
                 Styles.headerText,
@@ -133,7 +134,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               ]}
             >
               {i18n.t('Compose.iWouldLikeToSend')}
-            </Text>
+            </AdjustableText>
             <FlatList
               style={{ flex: 1 }}
               data={this.props.categories.slice(1)}
