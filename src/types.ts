@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // Common
 export interface Image {
   uri: string;
@@ -31,6 +32,8 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
+export type DesignType = 'packet' | 'premade_postcard' | 'fallback';
+
 export interface PostcardDesign {
   image: Image;
   thumbnail?: Image;
@@ -44,6 +47,7 @@ export interface PostcardDesign {
   contentResearcher?: string;
   layout?: Layout;
   stickers?: PlacedSticker[];
+  type?: DesignType;
 }
 
 interface LetterSpecific {
@@ -69,12 +73,24 @@ export enum MailStatus {
   Rerouted = 'Re-Routed',
 }
 
+export interface RawCategory {
+  created_at: string;
+  id: 1;
+  img_src: string;
+  name: string;
+  updated_at: string;
+  blurb: string;
+  premium: boolean;
+  active: boolean;
+}
+
 export interface Category {
   id: number;
   name: string;
   image: Image;
   blurb: string;
   subcategories: Record<string, PostcardDesign[]>;
+  premium: boolean;
 }
 
 export interface Layout {
@@ -284,4 +300,5 @@ export enum EntityTypes {
   Categories = 'Categories',
   MailDetail = 'MailDetail',
   PremiumPacks = 'PremiumPacks',
+  PremiumStoreItems = 'PremiumStoreItems',
 }

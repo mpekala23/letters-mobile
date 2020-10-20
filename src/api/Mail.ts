@@ -5,6 +5,7 @@ import store from '@store';
 import url from 'url';
 import {
   Draft,
+  DesignType,
   Mail,
   TrackingEvent,
   MailTypes,
@@ -14,6 +15,7 @@ import {
   Image,
   Contact,
   EntityTypes,
+  RawCategory,
 } from 'types';
 import {
   addMail,
@@ -450,16 +452,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
   return createdMail;
 }
 
-interface RawCategory {
-  created_at: string;
-  id: 1;
-  img_src: string;
-  name: string;
-  updated_at: string;
-  blurb: string;
-}
-
-function cleanCategory(
+export function cleanCategory(
   raw: RawCategory,
   subcategories: Record<string, PostcardDesign[]>
 ): Category {
@@ -468,6 +461,7 @@ function cleanCategory(
     name: raw.name,
     image: { uri: raw.img_src },
     blurb: raw.blurb,
+    premium: raw.premium,
     subcategories,
   };
 }
@@ -479,11 +473,21 @@ interface RawDesign {
   name: string;
   front_img_src: string;
   thumbnail_src: string;
-  type: MailTypes;
+  type: string;
   back: null;
   subcategory_id: number;
   designer?: string;
   content_researcher?: string;
+}
+
+function cleanDesignType(type: string): DesignType {
+  switch (type) {
+    case 'packet':
+    case 'premade_postcard':
+      return type as DesignType;
+    default:
+      return 'fallback';
+  }
 }
 
 function cleanDesign(
@@ -502,6 +506,7 @@ function cleanDesign(
     subcategoryName,
     contentResearcher: raw.content_researcher,
     designer: raw.designer,
+    type: cleanDesignType(raw.type),
   };
   if (categoryId && subcategoryName && design.id) {
     getImageDims(design.image.uri).then((dims) => {

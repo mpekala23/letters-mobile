@@ -55,6 +55,7 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
               image: { uri: '' },
               blurb: '',
               subcategories: {},
+              premium: false,
             },
           });
         }}

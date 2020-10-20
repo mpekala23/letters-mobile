@@ -1,10 +1,12 @@
-import { PremiumPack } from 'types';
+import { Category, PremiumPack } from 'types';
 
 // Premium packs actions
 export const SET_PACKS = 'premium/set_packs';
+export const SET_PREMIUM_CATEGORIES = 'premium/set_categories';
 
 export interface PremiumState {
   premiumPacks: PremiumPack[];
+  premiumCategories: Category[];
 }
 
 interface SetPacksAction {
@@ -12,4 +14,9 @@ interface SetPacksAction {
   payload: PremiumPack[];
 }
 
-export type PremiumActionTypes = SetPacksAction;
+interface SetPremiumCategoriesAction {
+  type: typeof SET_PREMIUM_CATEGORIES;
+  payload: Category[];
+}
+
+export type PremiumActionTypes = SetPacksAction | SetPremiumCategoriesAction;

@@ -1,10 +1,14 @@
 /* eslint-disable camelcase */
-import { setPremiumPacks } from '@store/Premium/PremiumActions';
+import {
+  setPremiumCategories,
+  setPremiumPacks,
+} from '@store/Premium/PremiumActions';
 import { startAction, stopAction } from '@store/UI/UIActions';
 import store from '@store';
 import url from 'url';
-import { EntityTypes, PremiumPack } from 'types';
+import { Category, EntityTypes, PremiumPack, RawCategory } from 'types';
 import { API_URL, fetchAuthenticated } from './Common';
+import { cleanCategory, getSubcategoriesById } from './Mail';
 
 interface RawPremiumPack {
   name: string;
@@ -26,7 +30,6 @@ function cleanPremiumPack(pack: RawPremiumPack): PremiumPack {
   };
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export async function getPremiumPacks(): Promise<PremiumPack[]> {
   store.dispatch(startAction(EntityTypes.PremiumPacks));
   const body = await fetchAuthenticated(url.resolve(API_URL, `packs`));
@@ -41,4 +44,27 @@ export async function getPremiumPacks(): Promise<PremiumPack[]> {
   store.dispatch(setPremiumPacks(packs));
   store.dispatch(stopAction(EntityTypes.PremiumPacks));
   return packs;
+}
+
+export async function getPremiumStoreItems(): Promise<void> {
+  store.dispatch(startAction(EntityTypes.PremiumStoreItems));
+  const body = await fetchAuthenticated(
+    url.resolve(API_URL, `categories?premium=true`)
+  );
+
+  if (body.status !== 'OK' || !body.data) {
+    store.dispatch(stopAction(EntityTypes.PremiumPacks));
+    throw body;
+  }
+
+  const data = body.data as RawCategory[];
+
+  const categories: Category[] = await Promise.all(
+    data.map(async (raw: RawCategory) => {
+      const subcategories = await getSubcategoriesById(raw.id);
+      return cleanCategory(raw, subcategories);
+    })
+  );
+  store.dispatch(setPremiumCategories(categories));
+  store.dispatch(stopAction(EntityTypes.PremiumStoreItems));
 }
