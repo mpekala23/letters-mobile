@@ -14,6 +14,7 @@ import {
   AuthStackParamList,
   AppStackParamList,
   getDetailsFromRouteName,
+  Tabs,
 } from '@utils/Screens';
 import { SplashScreen } from '@views';
 import { GestureResponderEvent } from 'react-native';
@@ -42,14 +43,14 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
     props.authInfo.isLoadingToken ||
     (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
   ) {
-    screens = <RootTab.Screen name="Splash" component={SplashScreen} />;
+    screens = <RootTab.Screen name={Tabs.Splash} component={SplashScreen} />;
   } else if (!props.authInfo.isLoggedIn) {
-    screens = <RootTab.Screen name="Auth" component={Auth} />;
+    screens = <RootTab.Screen name={Tabs.Auth} component={Auth} />;
   } else {
     screens = (
       <>
         <RootTab.Screen
-          name="Home"
+          name={Tabs.Home}
           component={Home}
           options={{
             tabBarButton: (tabProps) => {
@@ -68,7 +69,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           }}
         />
         <RootTab.Screen
-          name="Store"
+          name={Tabs.Store}
           component={Store}
           options={{
             tabBarButton: (tabProps) => {
@@ -112,7 +113,9 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       <RootTab.Navigator
         screenOptions={({ route }) => ({
           tabBarVisible:
-            route.name !== 'Auth' && route.name !== 'Splash' && tabsVisible,
+            route.name !== Tabs.Auth &&
+            route.name !== Tabs.Splash &&
+            tabsVisible,
           tabBarVisibilityAnimationConfig: {},
         })}
         tabBarOptions={{

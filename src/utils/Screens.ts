@@ -10,6 +10,13 @@ import {
   PremiumPack,
 } from 'types';
 
+export enum Tabs {
+  Auth = 'Auth',
+  Home = 'Home',
+  Splash = 'Splash',
+  Store = 'Store',
+}
+
 export enum Screens {
   Begin = 'Begin',
   Splash = 'Splash',

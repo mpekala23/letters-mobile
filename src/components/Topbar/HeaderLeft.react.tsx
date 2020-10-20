@@ -31,26 +31,6 @@ class HeaderLeftBase extends React.Component<Props, State> {
         <TouchableOpacity
           onPress={() => {
             Keyboard.dismiss();
-            if (
-              this.props.route === Screens.ContactInfo ||
-              this.props.route === Screens.FacilityDirectory ||
-              this.props.route === Screens.ContactInmateInfo ||
-              this.props.route === Screens.ReviewContact
-            ) {
-              let logName = '';
-              if (this.props.route === Screens.ContactInfo) {
-                logName = 'info';
-              } else if (this.props.route === Screens.FacilityDirectory) {
-                logName = 'facility';
-              } else if (this.props.route === Screens.ContactInmateInfo) {
-                logName = 'inmate info';
-              } else {
-                logName = 'review';
-              }
-              Segment.trackWithProperties('Add Contact - Click on Back', {
-                page: logName,
-              });
-            }
             if (this.state.backOverride) {
               this.state.backOverride.action();
             } else if (this.props.onPress) this.props.onPress();
