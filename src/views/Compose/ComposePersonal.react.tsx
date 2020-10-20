@@ -513,41 +513,29 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   render() {
     let dynamicTop;
+    const outputRange = [
+      (WINDOW_HEIGHT -
+        DESIGN_BUTTONS_HEIGHT -
+        BAR_HEIGHT -
+        POSTCARD_HEIGHT -
+        STATUS_BAR_HEIGHT) /
+        2,
+      (WINDOW_HEIGHT -
+        BOTTOM_HEIGHT -
+        POSTCARD_HEIGHT -
+        BAR_HEIGHT -
+        STATUS_BAR_HEIGHT) /
+        2,
+    ];
     if (this.state.subscreen === 'Design') {
       dynamicTop = this.state.designState.bottomSlide.interpolate({
         inputRange: [0, 1],
-        outputRange: [
-          (WINDOW_HEIGHT -
-            DESIGN_BUTTONS_HEIGHT -
-            BAR_HEIGHT -
-            POSTCARD_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-          (WINDOW_HEIGHT -
-            BOTTOM_HEIGHT -
-            POSTCARD_HEIGHT -
-            BAR_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-        ],
+        outputRange,
       });
     } else if (!this.state.textState.writing) {
       dynamicTop = this.state.textState.bottomSlide.interpolate({
         inputRange: [0, 1],
-        outputRange: [
-          (WINDOW_HEIGHT -
-            DESIGN_BUTTONS_HEIGHT -
-            BAR_HEIGHT -
-            POSTCARD_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-          (WINDOW_HEIGHT -
-            BOTTOM_HEIGHT -
-            POSTCARD_HEIGHT -
-            BAR_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-        ],
+        outputRange,
       });
     } else {
       dynamicTop = this.state.textState.keyboardOpacity.interpolate({

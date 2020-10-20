@@ -338,11 +338,11 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               fontSize: 16,
               fontFamily:
                 mail.type === MailTypes.Letter
-                  ? undefined
+                  ? Typography.FONT_REGULAR.fontFamily
                   : mail.customization.font.family,
               color:
                 mail.type === MailTypes.Letter
-                  ? undefined
+                  ? Typography.FONT_REGULAR.fontFamily
                   : mail.customization.font.color,
             }}
           >

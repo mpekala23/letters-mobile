@@ -168,12 +168,13 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   }
 
   render() {
-    let font: Font = {
-      family: CustomFontFamilies.Montserrat,
-      color: '#000000',
-    };
-    if (this.props.composing.type === MailTypes.Postcard)
-      font = this.props.composing.customization.font;
+    const font =
+      this.props.composing.type === MailTypes.Postcard
+        ? this.props.composing.customization.font
+        : {
+            family: CustomFontFamilies.Montserrat,
+            color: '#000000',
+          };
     return (
       <View style={Styles.screenBackground}>
         <ScrollView style={{ flex: 1 }}>

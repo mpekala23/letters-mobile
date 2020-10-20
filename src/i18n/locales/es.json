@@ -382,10 +382,10 @@
     "yourOwnLettersAndPhotos": "Sus propios cartas y fotos",
     "stickers": "Stickers",
     "layouts": "Layouts",
-    "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
-    "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport": "Reach out to support",
-    "library": "Library"
+    "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales, pero intente verificar su wifi e intente cargar nuestra galería de postales nuevamente.",
+    "sendPersonalLettersOrPhotos": "Envia cartas o fotografías personales",
+    "reachOutToSupport": "Contactar al soporte",
+    "library": "Galería"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"

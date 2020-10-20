@@ -37,28 +37,26 @@ const TextButtons: React.FC<Props> = ({
       ]}
     >
       <>
-        {false && (
-          <View
-            style={{
-              marginVertical: 16,
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text>Font size</Text>
-            <Slider
-              style={{ width: '80%', height: 40, marginTop: 8 }}
-              minimumValue={12}
-              maximumValue={24}
-              onValueChange={() => null}
-              step={1}
-              value={14}
-              minimumTrackTintColor={Colors.GREEN_600}
-              maximumTrackTintColor={Colors.PINK_600}
-            />
-          </View>
-        )}
+        <View
+          style={{
+            marginVertical: 16,
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>Font size</Text>
+          <Slider
+            style={{ width: '80%', height: 40, marginTop: 8 }}
+            minimumValue={12}
+            maximumValue={24}
+            onValueChange={() => null}
+            step={1}
+            value={14}
+            minimumTrackTintColor={Colors.GREEN_600}
+            maximumTrackTintColor={Colors.PINK_600}
+          />
+        </View>
         <TextTools
           onAddText={onAddText}
           onAddColor={onAddColor}

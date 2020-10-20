@@ -352,6 +352,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     return false;
   };
 
+  animateSlide = (
+    animated: Animated.Value,
+    toValue: number,
+    callback?: () => void
+  ): void => {
+    Animated.timing(animated, {
+      toValue,
+      duration: SLIDE_DURATION,
+      useNativeDriver: false,
+    }).start(callback);
+  };
+
   updateWordsLeft(value: string): void {
     const numWords = getNumWords(value);
     this.setState({ wordsLeft: 100 - numWords });
@@ -460,11 +472,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
-    Animated.timing(this.state.textButtonSlide, {
-      toValue: 1,
-      duration: FLIP_DURATION,
-      useNativeDriver: false,
-    }).start();
+    this.animateSlide(this.state.textBottomSlide, 1);
   }
 
   backWriting(): void {
@@ -490,16 +498,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
-    Animated.timing(this.state.textBottomSlide, {
-      toValue: 0,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.textButtonSlide, {
-      toValue: 0,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start();
+    this.animateSlide(this.state.textBottomSlide, 0);
+    this.animateSlide(this.state.textButtonSlide, 0);
   }
 
   doneWriting(): void {
@@ -527,20 +527,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   openTextBottom(detail: TextBottomDetails) {
     this.setState({ textBottomDetails: detail }, () => {
-      Animated.timing(this.state.textBottomSlide, {
-        toValue: 1,
-        duration: SLIDE_DURATION,
-        useNativeDriver: false,
-      }).start();
+      this.animateSlide(this.state.textBottomSlide, 1);
     });
   }
 
   closeTextBottom() {
-    Animated.timing(this.state.textBottomSlide, {
-      toValue: 0,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start(() => {
+    this.animateSlide(this.state.textBottomSlide, 0, () => {
       this.setState({ textBottomDetails: null });
     });
   }
@@ -748,16 +740,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               onAddColor={() => this.openTextBottom('color')}
               onAddFont={() => this.openTextBottom('font')}
               onAddText={() => {
-                Animated.timing(this.state.textButtonSlide, {
-                  toValue: 0,
-                  duration: 200,
-                  useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.textBottomSlide, {
-                  toValue: 0,
-                  duration: 200,
-                  useNativeDriver: false,
-                }).start(() => {
+                this.animateSlide(this.state.textBottomSlide, 0);
+                this.animateSlide(this.state.textButtonSlide, 0, () => {
                   if (this.editableRef.current)
                     this.editableRef.current.focus();
                 });
