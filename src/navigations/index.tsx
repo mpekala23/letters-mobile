@@ -37,6 +37,7 @@ import {
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
+  SelectPostcardSizeScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,
@@ -115,6 +116,7 @@ const mapRouteNameToDetails: Record<string, RouteDetails> = {
     profile: false,
   },
   ReviewContact: { title: i18n.t('Screens.reviewContact'), profile: false },
+  SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home'), profile: true },
   UpdateContact: { title: i18n.t('Screens.updateContact'), profile: false },
@@ -324,6 +326,10 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
         <Stack.Screen
           name={Screens.IssuesDetailSecondary}
           component={IssuesDetailSecondaryScreen}
+        />
+        <Stack.Screen
+          name={Screens.SelectPostcardSize}
+          component={SelectPostcardSizeScreen}
         />
         <Stack.Screen
           name={Screens.SingleContact}

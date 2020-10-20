@@ -10,6 +10,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { Screens } from '@utils/Screens';
+import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import CardStyles from './Card.styles';
 import AdjustableText from '../Text/AdjustableText.react';
 
@@ -45,8 +46,9 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               design: {
                 image: { uri: '' },
               },
+              size: POSTCARD_SIZE_OPTIONS[0],
             });
-            props.navigate(Screens.ComposePostcard, {
+            props.navigate(Screens.SelectPostcardSize, {
               category: props.category,
             });
           }

@@ -31,7 +31,7 @@ import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
-import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
+import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import {
   uploadImage,
   fetchTimeout,
@@ -123,6 +123,7 @@ export async function saveDraft(draft: Draft): Promise<void> {
         ? draft.design.categoryId.toString()
         : PERSONAL_OVERRIDE_ID.toString()
     );
+    AsyncStorage.setItem(Storage.DraftPostcardSize, JSON.stringify(draft.size));
     if (draft.design.layout) {
       // personal postcard
       Promise.all([
@@ -171,8 +172,18 @@ export async function loadDraft(): Promise<Draft> {
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
-      const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
-      const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
+      const [
+        draftDesignUri,
+        draftCategoryId,
+        draftPostcardSize,
+      ] = await Promise.all([
+        getItemAsync(Storage.DraftDesignUri),
+        getItemAsync(Storage.DraftCategoryId),
+        AsyncStorage.getItem(Storage.DraftPostcardSize),
+      ]);
+      const postcardSize = draftPostcardSize
+        ? JSON.parse(draftPostcardSize)
+        : POSTCARD_SIZE_OPTIONS[0];
       let draftSubcategoryName = await getItemAsync(
         Storage.DraftSubcategoryName
       );
@@ -192,6 +203,7 @@ export async function loadDraft(): Promise<Draft> {
             custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
           },
+          size: postcardSize,
         };
         store.dispatch(setComposing(draft));
         return draft;
@@ -213,6 +225,7 @@ export async function loadDraft(): Promise<Draft> {
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
         design: findDesign,
+        size: postcardSize,
       };
       store.dispatch(setComposing(draft));
       return draft;

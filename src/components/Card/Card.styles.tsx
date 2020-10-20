@@ -28,6 +28,10 @@ export default StyleSheet.create({
     fontSize: 18,
     color: Colors.AMEELIO_GRAY,
   },
+  horizontalCardLayout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   letterStatusTitle: {
     fontSize: 20,
     color: Colors.AMEELIO_BLACK,
@@ -161,5 +165,16 @@ export default StyleSheet.create({
     top: 0,
     width: '100%',
     height: 64,
+  },
+  selectPostcardSizeBase: {
+    backgroundColor: 'white',
+    width: '100%',
+    borderRadius: 16,
+    marginVertical: 8,
+  },
+  cardSelectedBackground: {
+    borderWidth: 3,
+    borderRadius: 16,
+    borderColor: Colors.PINK_500,
   },
 });

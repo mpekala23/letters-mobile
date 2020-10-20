@@ -39,6 +39,7 @@ export enum Screens {
   Issues = 'Issues',
   IssuesDetail = 'IssuesDetail',
   IssuesDetailSecondary = 'IssuesDetailSecondary',
+  SelectPostcardSize = 'SelectPostcardSize',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
@@ -102,6 +103,7 @@ export type AppStackParamList = {
   ReviewPostcard: { category: string };
   ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
+  SelectPostcardSize: { category: Category };
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;

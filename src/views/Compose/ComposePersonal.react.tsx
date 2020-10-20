@@ -29,6 +29,7 @@ import {
   ComposeBottomDetails,
   MailTypes,
   PlacedSticker,
+  DraftPostcard,
 } from 'types';
 import {
   setBackOverride,
@@ -145,7 +146,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         snapshot: null,
       },
       textState: {
-        wordsLeft: 100,
+        wordsLeft: (this.props.composing as DraftPostcard).size.wordsLimit,
         valid: true,
         keyboardOpacity: new Animated.Value(0),
       },
@@ -841,7 +842,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                       this.props.setContent(text);
                       saveDraft(this.props.composing);
                       const numWords = getNumWords(text);
-                      this.setTextState({ wordsLeft: 100 - numWords });
+                      this.setTextState({
+                        wordsLeft:
+                          (this.props.composing as DraftPostcard).size
+                            .wordsLimit - numWords,
+                      });
                     }}
                     recipient={this.props.recipient}
                     width={POSTCARD_WIDTH}

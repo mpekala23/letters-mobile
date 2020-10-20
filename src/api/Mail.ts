@@ -25,7 +25,7 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims } from '@utils';
+import { estimateDelivery, findPostcardSizeOption, getImageDims } from '@utils';
 import {
   setCategories,
   setDesignImage,
@@ -73,6 +73,7 @@ interface RawMail {
   tracking_events?: RawTrackingEvent[];
   estimated_arrival: string;
   delivered: boolean;
+  size: string;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -152,7 +153,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       ).toISOString();
     }
   }
-
+  const rawSize = mail.size;
   if (mail.delivered) status = MailStatus.Delivered;
   if (type === MailTypes.Letter) {
     return {
@@ -167,6 +168,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       trackingEvents,
     };
   }
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -177,6 +179,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     expectedDelivery,
     design,
     trackingEvents,
+    size,
   };
 }
 
@@ -229,6 +232,8 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       images,
     };
   }
+  const rawSize = mail.size;
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -238,6 +243,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    size,
   };
 }
 
@@ -421,7 +427,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     content: prepDraft.content,
     is_draft: false,
     type: prepDraft.type,
-    size: prepDraft.type === MailTypes.Postcard ? '4x6' : undefined,
+    size:
+      prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
     ...imageExtension,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {

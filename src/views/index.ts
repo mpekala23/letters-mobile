@@ -29,6 +29,7 @@ import RegisterAddressScreen from './Onboarding/RegisterAddress.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
+import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
@@ -69,6 +70,7 @@ export {
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
+  SelectPostcardSizeScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,

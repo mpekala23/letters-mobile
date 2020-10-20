@@ -54,6 +54,7 @@ interface LetterSpecific {
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
+  size: PostcardSizeOption;
 }
 
 export enum MailStatus {
@@ -109,6 +110,21 @@ export type MailLetter = MailInfo & LetterSpecific;
 export type MailPostcard = MailInfo & PostcardSpecific;
 
 export type Mail = MailLetter | MailPostcard;
+
+export enum PostcardSize {
+  Small = '4x6',
+  Medium = '6x9',
+  Large = '6x11',
+}
+
+export interface PostcardSizeOption {
+  key: PostcardSize;
+  image: Image;
+  title: string;
+  wordsLimit: number;
+  cost: number;
+  isPremium: boolean;
+}
 
 // Facilities
 export enum PrisonTypes {
@@ -236,6 +252,7 @@ export enum Storage {
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
   DraftLayout = 'Ameelio-DraftLayout',
+  DraftPostcardSize = 'Ameelio-DraftPostcardSize',
 }
 
 export type TopbarBackAction = {
