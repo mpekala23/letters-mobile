@@ -23,6 +23,7 @@ import {
   ReviewContactScreen,
   ReviewLetterScreen,
   ReviewPostcardScreen,
+  SelectPostcardSizeScreen,
   SingleContactScreen,
   SupportFAQDetailScreen,
   SupportFAQScreen,
@@ -83,6 +84,10 @@ const Home: React.FC = () => {
       <HomeStack.Screen
         name={Screens.ComposeLetter}
         component={ComposeLetterScreen}
+      />
+      <HomeStack.Screen
+        name={Screens.SelectPostcardSize}
+        component={SelectPostcardSizeScreen}
       />
       <HomeStack.Screen
         name={Screens.ComposePersonal}

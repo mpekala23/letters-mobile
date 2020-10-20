@@ -31,7 +31,8 @@
     "cantAddContactBody": "But don’t worry! Our support team will help you fix the problem.",
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks",
-    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later."
+    "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later.",
+    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -98,6 +99,16 @@
     "letter": "letter",
     "letters": "letters",
     "lastHeard": "Last heard"
+  },
+  "CreditPackStore": {
+    "title": "Tokens of Gratitude",
+    "subtitle": "Buy Ameelio+ tokens and help others stay in touch for free. In exchange, you can use them to send premium content to your loved one.",
+    "selectBtn": "Select"
+  },
+  "CreditPackPurchaseSuccess": {
+    "title": "Thank you for your contribution",
+    "body": "Thank you for trusting Ameelio and furthering our mission to provide free communication for all.",
+    "buttonCta": "Go to store"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -388,7 +399,12 @@
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
-    "reachOutToSupport": "Reach out to support"
+    "reachOutToSupport": "Reach out to support",
+    "smallPostcardTitle": "Small photo",
+    "mediumPostcardTitle": "Medium photo",
+    "largePostcardTitle": "Large photo",
+    "words": "words",
+    "selectBtn": "Select"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
@@ -418,6 +434,7 @@
     "contactInfo": "Contact Info",
     "contactInmateInfo": "Contact Details",
     "contacts": "Contacts",
+    "creditPackStore": "Ameelio+ Tokens",
     "home": "Home",
     "issues": "Issues",
     "letterDetails": "Letter Details",

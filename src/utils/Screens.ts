@@ -7,6 +7,7 @@ import {
   Image,
   PrisonTypes,
   RouteDetails,
+  PremiumPack,
 } from 'types';
 
 export enum Screens {
@@ -26,6 +27,9 @@ export enum Screens {
   ComposeLetter = 'ComposeLetter',
   ComposePersonal = 'ComposePersonal',
   ComposePostcard = 'ComposePostcard',
+  CreditPackCheckoutWebView = 'CreditPackCheckoutWebView',
+  CreditPackStore = 'CreditPackStore',
+  CreditPackPurchaseSuccess = 'CreditPackPurchaseSuccess',
   ReferralDashboard = 'ReferralDashboard',
   ReviewLetter = 'ReviewLetter',
   ReviewPostcard = 'ReviewPostcard',
@@ -39,6 +43,7 @@ export enum Screens {
   IssuesDetail = 'IssuesDetail',
   IssuesDetailSecondary = 'IssuesDetailSecondary',
   Setup = 'Setup',
+  SelectPostcardSize = 'SelectPostcardSize',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
@@ -82,6 +87,9 @@ export type AppStackParamList = {
   ComposePostcard: { category: Category };
   ContactInfo: { addFromSelector?: boolean; phyState?: string };
   ContactSelector: undefined;
+  CreditPackStore: undefined;
+  CreditPackCheckoutWebView: { pack: PremiumPack };
+  CreditPackPurchaseSuccess: { pack: PremiumPack };
   FacilityDirectory: { phyState: string };
   InmateLocator: { uri: string };
   IntroContact: undefined;
@@ -99,6 +107,7 @@ export type AppStackParamList = {
   ReviewPostcard: { category: string };
   ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
+  SelectPostcardSize: { category: Category };
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
@@ -145,6 +154,15 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     tabsVisible: false,
   },
   ContactSelector: { title: i18n.t('Screens.contacts') },
+  CreditPackStore: { title: i18n.t('Screens.creditPackStore'), profile: false },
+  CreditPackCheckoutWebView: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+  },
+  CreditPackPurchaseSuccess: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+  },
   DeliveryReporting: { title: '', profile: false },
   FacilityDirectory: { title: '', profile: false },
   IntroContact: {
@@ -196,6 +214,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
+  SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home') },
   SupportFAQ: { title: '', profile: false },

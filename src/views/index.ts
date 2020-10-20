@@ -7,6 +7,9 @@ import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
+import CreditPackCheckoutWebViewScreen from './Premium/CreditPackCheckoutWebView';
+import CreditPackStoreScreen from './Premium/CreditPackStore';
+import CreditPackPurchaseSuccessScreen from './Premium/CreditPackPurchaseSuccess';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import InmateLocatorScreen from './AddContact/InmateLocator.react';
 import IssuesScreen from './Report/Issues.react';
@@ -26,6 +29,7 @@ import RegisterAddressScreen from './Onboarding/RegisterAddress.react';
 import ReviewContactScreen from './AddContact/ReviewContact.react';
 import ReviewLetterScreen from './Compose/ReviewLetter.react';
 import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
+import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
@@ -44,6 +48,9 @@ export {
   ContactInfoScreen,
   ContactInmateInfoScreen,
   ContactSelectorScreen,
+  CreditPackCheckoutWebViewScreen,
+  CreditPackStoreScreen,
+  CreditPackPurchaseSuccessScreen,
   FacilityDirectoryScreen,
   InmateLocatorScreen,
   IntroContactScreen,
@@ -63,6 +70,7 @@ export {
   ReviewLetterScreen,
   ReviewPostcardScreen,
   ReviewContactScreen,
+  SelectPostcardSizeScreen,
   SingleContactScreen,
   SplashScreen,
   SupportFAQScreen,

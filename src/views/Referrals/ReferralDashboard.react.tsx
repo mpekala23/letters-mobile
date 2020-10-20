@@ -113,7 +113,7 @@ const ReferralDashboardScreenBase: React.FC<Props> = ({
           <Text style={[Typography.FONT_BOLD, Styles.descHeader]}>
             {i18n.t('ReferralDashboardScreen.helpNowHeader')}
           </Text>
-          <Text style={[{ color: Colors.GRAY_500 }]}>
+          <Text style={[{ color: Colors.GRAY_400 }]}>
             {i18n.t('ReferralDashboardScreen.helpNowBody')}
           </Text>
         </View>

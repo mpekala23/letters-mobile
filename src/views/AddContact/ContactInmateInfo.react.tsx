@@ -340,7 +340,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   style={[
                     Typography.FONT_MEDIUM,
                     {
-                      color: Colors.GRAY_500,
+                      color: Colors.GRAY_400,
                       marginTop: 8,
                       fontSize: 15,
                     },

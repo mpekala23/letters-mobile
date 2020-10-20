@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, Image as ImageComponent } from 'react-native';
+import { View, Text } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { TrackingEvent, MailStatus } from 'types';
 import { format } from 'date-fns';
 import { estimateDelivery } from '@utils';
-import Loading from '@assets/common/loading.gif';
 
 export interface Props {
   trackingEvent?: TrackingEvent;
@@ -96,7 +95,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
               style={[
                 Typography.FONT_REGULAR,
                 {
-                  color: Colors.GRAY_DARKER,
+                  color: Colors.GRAY_700,
                   fontSize: 16,
                 },
               ]}
@@ -135,7 +134,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
               marginLeft: 14,
               height: 40,
               width: 7,
-              backgroundColor: Colors.BLACK_200,
+              backgroundColor: Colors.GRAY_200,
             }}
           />
         )}
@@ -157,7 +156,7 @@ function LetterTracker({ trackingEvent, type }: Props): React.ReactElement {
         <Text
           style={[
             {
-              color: Colors.GRAY_DARKER,
+              color: Colors.GRAY_700,
               fontSize: 14,
               paddingBottom: 4,
             },

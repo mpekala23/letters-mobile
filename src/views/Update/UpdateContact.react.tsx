@@ -400,7 +400,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 style={[
                   Typography.FONT_SEMIBOLD,
                   Styles.baseText,
-                  { color: Colors.GRAY_500 },
+                  { color: Colors.GRAY_400 },
                 ]}
               >
                 {i18n.t('UpdateContactScreen.optionalUnit')}
@@ -413,7 +413,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
                 style={[
                   Typography.FONT_SEMIBOLD,
                   Styles.baseText,
-                  { color: Colors.GRAY_500 },
+                  { color: Colors.GRAY_400 },
                 ]}
               >
                 {i18n.t('UpdateContactScreen.optionalDorm')}
