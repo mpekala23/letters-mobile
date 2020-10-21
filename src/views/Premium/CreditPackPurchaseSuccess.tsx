@@ -23,7 +23,10 @@ interface Props {
   };
 }
 
-const CreditPackPurchaseSuccess = ({ navigation, route }: Props) => {
+const CreditPackPurchaseSuccess: React.FC<Props> = ({
+  navigation,
+  route,
+}: Props) => {
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.contentBackground}>

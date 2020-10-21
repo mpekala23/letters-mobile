@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, ViewStyle } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import LettersFilledIcon from '@assets/components/Card/LettersFilled';
 import i18n from '@i18n';

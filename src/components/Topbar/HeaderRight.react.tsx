@@ -4,7 +4,7 @@ import { AppState } from '@store/types';
 import { UserState } from '@store/User/UserTypes';
 import { ProfilePicTypes, TopbarRouteAction } from 'types';
 import React, { createRef } from 'react';
-import { Keyboard, TouchableOpacity, View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import Styles from './Topbar.styles';
 
