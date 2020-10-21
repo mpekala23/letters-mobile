@@ -1,5 +1,6 @@
 import AdjustableText from './Text/AdjustableText.react';
 import Alert from './Alert/Alert.react';
+import AmeelioPlusCard from './Card/AmeelioPlusCard.react';
 import AsyncImage from './AsyncImage/AsyncImage.react';
 import Button from './Button/Button.react';
 import CategoryCard from './Card/CategoryCard.react';
@@ -38,6 +39,7 @@ import StickerManager from './StickerManager/StickerManager.react';
 export {
   AdjustableText,
   Alert,
+  AmeelioPlusCard,
   AsyncImage,
   Button,
   CategoryCard,

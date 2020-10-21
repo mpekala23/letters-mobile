@@ -3,6 +3,7 @@ import {
   CreditPackCheckoutWebViewScreen,
   CreditPackStoreScreen,
   CreditPackPurchaseSuccessScreen,
+  StoreScreen,
 } from '@views';
 import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import { HeaderTitle, HeaderLeft, HeaderRight } from '@components';
@@ -40,6 +41,7 @@ const Store: React.FC = () => {
         cardStyleInterpolator: leftRightTransition,
       })}
     >
+      <StoreStack.Screen name={Screens.Store} component={StoreScreen} />
       <StoreStack.Screen
         name={Screens.CreditPackStore}
         component={CreditPackStoreScreen}

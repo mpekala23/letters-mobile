@@ -177,4 +177,10 @@ export default StyleSheet.create({
     borderRadius: 16,
     borderColor: Colors.PINK_500,
   },
+  ameelioPlusBackground: {
+    flex: 1,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    marginTop: 16,
+  },
 });
