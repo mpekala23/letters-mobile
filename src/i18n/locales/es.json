@@ -477,6 +477,10 @@
     "noThanks": "No gracias"
   },
   "Premium": {
-    "ameelioPlusLeft": "Ameelio+ left"
+    "ameelioPlusLeft": "Ameelio+ left",
+    "yourAmeelioPlus": "Your Ameelio+",
+    "page": "page",
+    "pages": "pages",
+    "viewHistory": "View history"
   }
 }

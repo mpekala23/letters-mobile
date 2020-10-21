@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import i18n from '@i18n';
-import GoldBird from '@assets/common/GoldBird';
-import RedArrowForward from '@assets/components/Card/RedArrowForward';
+import GoldBird from '@assets/views/Premium/GoldenBirdCoin';
 import Icon from '@components/Icon/Icon.react';
 import CardStyles from './Card.styles';
 
@@ -33,13 +32,7 @@ const AmeelioPlusCard: React.FC<Props> = ({
       >
         {i18n.t('Premium.yourAmeelioPlus')}
       </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-        }}
-      >
+      <View style={CardStyles.tokensLeftContainer}>
         <View style={{ width: 40, height: 40 }}>
           <Icon svg={GoldBird} />
         </View>
@@ -58,21 +51,20 @@ const AmeelioPlusCard: React.FC<Props> = ({
           {tokensLeft}
         </Text>
       </View>
-      <View
-        style={{
-          position: 'absolute',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-          right: 16,
-        }}
-      >
+      <View style={CardStyles.buyHereContainer}>
         <Text style={[Typography.FONT_REGULAR, { color: 'red', fontSize: 16 }]}>
           Buy here
         </Text>
-        <View style={{ width: 10, height: 40, marginLeft: 4 }}>
-          <Icon svg={RedArrowForward} />
-        </View>
+        <Text
+          style={{
+            color: Colors.PINK_500,
+            fontSize: 32,
+            marginTop: 4,
+            marginLeft: 4,
+          }}
+        >
+          {'>'}
+        </Text>
       </View>
     </TouchableOpacity>
   );

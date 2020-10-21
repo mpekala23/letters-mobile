@@ -30,6 +30,7 @@ import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PostcardTools from './PostcardTools/PostcardTools.react';
+import PremiumSubcategorySelector from './Card/PremiumSubcategorySelector.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
@@ -69,6 +70,7 @@ export {
   Picker,
   PicUpload,
   PostcardTools,
+  PremiumSubcategorySelector,
   PrisonCard,
   ProfilePic,
   StaticPostcard,

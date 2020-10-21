@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Typography } from '@styles';
 import Next from '@assets/components/Button/Next';
+import Icon from '@components/Icon/Icon.react';
 import { SvgXml } from 'react-native-svg';
 import Loading from '@assets/common/loading.gif';
 import Styles from './Button.styles';
@@ -47,8 +48,11 @@ const Button: React.FC<Props> = (props: Props) => {
     showNextIcon,
   } = props;
   const nextIcon = showNextIcon ? (
-    <View style={{ position: 'absolute', right: 12 }} testID="nextIcon">
-      <SvgXml xml={Next} />
+    <View
+      style={{ position: 'absolute', right: 12, width: 24, height: 21 }}
+      testID="nextIcon"
+    >
+      <Icon svg={Next} />
     </View>
   ) : null;
   if (!link) {

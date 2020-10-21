@@ -183,4 +183,22 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginTop: 16,
   },
+  premiumCardBox: {
+    width: 120,
+    height: 144,
+    position: 'absolute',
+    borderRadius: 4,
+  },
+  buyHereContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    right: 16,
+  },
+  tokensLeftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
 });
