@@ -3,8 +3,6 @@ import { Keyboard, TouchableOpacity, View } from 'react-native';
 import BackButton from '@assets/components/Topbar/BackButton';
 import Icon from '@components/Icon/Icon.react';
 import { TopbarBackAction } from 'types';
-import { Screens } from '@utils/Screens';
-import * as Segment from 'expo-analytics-segment';
 import Styles from './Topbar.styles';
 
 interface Props {

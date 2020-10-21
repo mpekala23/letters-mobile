@@ -1,7 +1,6 @@
 import React, { Dispatch } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   RefreshControl,

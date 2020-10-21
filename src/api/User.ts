@@ -31,6 +31,7 @@ import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
+import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
 import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import {
   uploadImage,
@@ -83,6 +84,7 @@ function cleanUser(user: RawUser): User {
     coins: user.coins,
     joined: new Date(user.created_at),
     referralCode: user.referral_link,
+    country: user.country,
   };
 }
 
@@ -452,6 +454,14 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
+
+  const countryIx = Object.values(COUNTRIES_FULL_TO_ABBREVS).findIndex(
+    (country) => country === data.country
+  );
+  const countryCode =
+    countryIx !== 1 ? Object.keys(COUNTRIES_FULL_TO_ABBREVS)[countryIx] : 'US';
+  const state =
+    countryCode === 'US' ? STATE_TO_ABBREV[data.phyState] : data.phyState;
   const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
     method: 'POST',
     headers: {
@@ -467,8 +477,8 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_1: data.address1,
       address_line_2: data.address2,
       city: data.city,
-      country: 'US',
-      state: STATE_TO_ABBREV[data.phyState],
+      country: countryCode,
+      state,
       referer: data.referrer,
       postal: data.postal,
       ...photoExtension,

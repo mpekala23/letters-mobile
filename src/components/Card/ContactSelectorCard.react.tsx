@@ -7,7 +7,6 @@ import { ProfilePicTypes, Mail, MailStatus } from 'types';
 import { differenceInDays, format, formatDistance, subDays } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { capitalize, haversine } from '@utils';
-import MemoryCardPlaceholder from '@components/Loaders/MemoryCardPlaceholder';
 import ContactCardPlaceholder from '@components/Loaders/ContactCardPlaceholder';
 import CardStyles from './Card.styles';
 import ProfilePic from '../ProfilePic/ProfilePic.react';

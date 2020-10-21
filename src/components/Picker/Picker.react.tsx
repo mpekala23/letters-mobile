@@ -15,6 +15,7 @@ export interface Props {
   items: string[];
   placeholder: string;
   onValueChange: (v: string) => void;
+  disabled?: boolean;
 }
 
 export interface PickerRef {
@@ -74,6 +75,7 @@ const Picker = forwardRef((props: Props, ref: Ref<PickerRef>) => {
           setDirty(!styleIgnoresValueChange);
           if (styleIgnoresValueChange) setStyleIgnoresValueChange(false);
         }}
+        disabled={props.disabled}
         Icon={() => {
           return <Entypo name="chevron-thin-down" size={16} color="gray" />;
         }}
@@ -87,6 +89,7 @@ Picker.defaultProps = {
   items: [],
   placeholder: '',
   onValueChange: () => null,
+  disabled: false,
 };
 
 export default Picker;
