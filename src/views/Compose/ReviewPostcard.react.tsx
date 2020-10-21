@@ -2,7 +2,6 @@ import React, { Dispatch } from 'react';
 import {
   TouchableOpacity,
   View,
-  Keyboard,
   Text,
   ScrollView,
   Linking,
@@ -20,7 +19,7 @@ import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { Typography, Colors } from '@styles';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import { popupAlert } from '@components/Alert/Alert.react';
@@ -199,7 +198,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
                 Typography.FONT_REGULAR,
                 {
                   fontSize: 16,
-                  color: Colors.GRAY_MEDIUM,
+                  color: Colors.GRAY_300,
                   textAlign: 'center',
                   margin: 10,
                 },

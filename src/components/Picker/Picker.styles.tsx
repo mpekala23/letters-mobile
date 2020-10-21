@@ -6,15 +6,15 @@ export default StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     borderWidth: 2,
-    backgroundColor: Colors.BLACK_200,
-    borderColor: Colors.BLACK_200,
+    backgroundColor: Colors.GRAY_200,
+    borderColor: Colors.GRAY_200,
   },
   valueSelected: {
     backgroundColor: Colors.GREEN_100,
     borderColor: Colors.GREEN_300,
   },
   noValueSelected: {
-    color: Colors.GRAY_MEDIUM,
+    color: Colors.GRAY_300,
     backgroundColor: Colors.PINK_100,
     borderColor: Colors.PINK_400,
   },

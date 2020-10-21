@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, ViewStyle } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import LettersFilledIcon from '@assets/components/Card/LettersFilled';
 import i18n from '@i18n';
@@ -39,9 +39,12 @@ const MemoryLaneCardCount: React.FC<Props> = (props: Props) => {
         svg={LettersFilledIcon}
         style={{ position: 'absolute', right: 0, bottom: 0 }}
       />
-      <Text style={[Typography.FONT_MEDIUM, CardStyles.cardData]}>
+      <AdjustableText
+        numberOfLines={1}
+        style={[Typography.FONT_MEDIUM, CardStyles.cardData]}
+      >
         Memory Lane
-      </Text>
+      </AdjustableText>
       {props.isLoading ? (
         <MemoryCardPlaceholder />
       ) : (

@@ -31,8 +31,8 @@ import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
-import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
+import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import {
   uploadImage,
   fetchTimeout,
@@ -42,6 +42,7 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
+import { getPremiumPacks, getPremiumStoreItems } from './Premium';
 
 interface RawUser {
   id: number;
@@ -54,6 +55,7 @@ interface RawUser {
   state: string;
   postal: string;
   credit: number;
+  coins: number;
   s3_img_url?: string;
   profile_img_path?: string;
   phone: string;
@@ -65,7 +67,6 @@ interface RawUser {
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
-
   return {
     id: user.id,
     firstName: user.first_name,
@@ -80,6 +81,7 @@ function cleanUser(user: RawUser): User {
       uri: photoUri || '',
     },
     credit: user.credit,
+    coins: user.coins,
     joined: new Date(user.created_at),
     referralCode: user.referral_link,
     country: user.country,
@@ -123,6 +125,7 @@ export async function saveDraft(draft: Draft): Promise<void> {
         ? draft.design.categoryId.toString()
         : PERSONAL_OVERRIDE_ID.toString()
     );
+    AsyncStorage.setItem(Storage.DraftPostcardSize, JSON.stringify(draft.size));
     if (draft.design.layout) {
       // personal postcard
       Promise.all([
@@ -171,8 +174,18 @@ export async function loadDraft(): Promise<Draft> {
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
-      const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
-      const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
+      const [
+        draftDesignUri,
+        draftCategoryId,
+        draftPostcardSize,
+      ] = await Promise.all([
+        getItemAsync(Storage.DraftDesignUri),
+        getItemAsync(Storage.DraftCategoryId),
+        AsyncStorage.getItem(Storage.DraftPostcardSize),
+      ]);
+      const postcardSize = draftPostcardSize
+        ? JSON.parse(draftPostcardSize)
+        : POSTCARD_SIZE_OPTIONS[0];
       let draftSubcategoryName = await getItemAsync(
         Storage.DraftSubcategoryName
       );
@@ -192,6 +205,7 @@ export async function loadDraft(): Promise<Draft> {
             custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
           },
+          size: postcardSize,
         };
         store.dispatch(setComposing(draft));
         return draft;
@@ -213,6 +227,7 @@ export async function loadDraft(): Promise<Draft> {
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
         design: findDesign,
+        size: postcardSize,
       };
       store.dispatch(setComposing(draft));
       return draft;
@@ -324,11 +339,13 @@ async function initializeData(
   Segment.track('Login Success');
   store.dispatch(setLoadingStatus(60));
   store.dispatch(authenticateUser(userData, token, remember));
-  getCategories().catch((err) => {
-    Sentry.captureException(err);
-  });
-  getUserReferrals().catch((err) => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+
+  Promise.all([
+    getCategories(),
+    getUserReferrals(),
+    getPremiumPacks(),
+    getPremiumStoreItems(),
+  ]).catch((err) => {
     Sentry.captureException(err);
   });
   try {

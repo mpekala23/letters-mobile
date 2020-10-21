@@ -1,14 +1,12 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { Text, View, Image as ImageComponent, Linking } from 'react-native';
-import { Button, CategoryCard } from '@components';
+import { AdjustableText, Button, CategoryCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Draft, Category, EntityTypes } from 'types';
+import { Category, EntityTypes } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { setComposing } from '@store/Mail/MailActions';
-import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { getCategories } from '@api';
 import { FlatList } from 'react-native-gesture-handler';
@@ -30,7 +28,6 @@ type ChooseCategoryScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: ChooseCategoryScreenNavigationProp;
   recipientId: number;
-  setComposing: (draft: Draft) => void;
   categories: Category[];
   isTexas: boolean;
   isLoadingCategories: boolean;
@@ -128,7 +125,8 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
       <View style={[Styles.screenBackground, { paddingBottom: 0 }]}>
         {this.props.categories.length ? (
           <>
-            <Text
+            <AdjustableText
+              numberOfLines={1}
               style={[
                 Typography.FONT_SEMIBOLD,
                 Styles.headerText,
@@ -136,7 +134,7 @@ class ChooseCategoryScreenBase extends React.Component<Props, State> {
               ]}
             >
               {i18n.t('Compose.iWouldLikeToSend')}
-            </Text>
+            </AdjustableText>
             <FlatList
               style={{ flex: 1 }}
               data={this.props.categories.slice(1)}
@@ -210,14 +208,6 @@ const mapStateToProps = (state: AppState) => ({
   categories: state.category.categories,
   isLoadingCategories: checkIfLoading(state, EntityTypes.Categories),
 });
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
-  return {
-    setComposing: (draft: Draft) => dispatch(setComposing(draft)),
-  };
-};
-const ChooseCategoryScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChooseCategoryScreenBase);
+const ChooseCategoryScreen = connect(mapStateToProps)(ChooseCategoryScreenBase);
 
 export default ChooseCategoryScreen;

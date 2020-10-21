@@ -29,11 +29,9 @@ import {
   ComposeBottomDetails,
   MailTypes,
   PlacedSticker,
+  DraftPostcard,
 } from 'types';
-import {
-  setBackOverride,
-  setProfileOverride,
-} from '@components/Topbar/Topbar.react';
+import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -145,7 +143,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         snapshot: null,
       },
       textState: {
-        wordsLeft: 100,
+        wordsLeft: (this.props.composing as DraftPostcard).size.wordsLimit,
         valid: true,
         keyboardOpacity: new Animated.Value(0),
       },
@@ -541,8 +539,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                 Typography.FONT_MEDIUM,
                 Styles.subcategoryText,
                 {
-                  color:
-                    subcategory === 'Library' ? 'white' : Colors.GRAY_MEDIUM,
+                  color: subcategory === 'Library' ? 'white' : Colors.GRAY_300,
                 },
               ]}
             >
@@ -842,7 +839,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                       this.props.setContent(text);
                       saveDraft(this.props.composing);
                       const numWords = getNumWords(text);
-                      this.setTextState({ wordsLeft: 100 - numWords });
+                      this.setTextState({
+                        wordsLeft:
+                          (this.props.composing as DraftPostcard).size
+                            .wordsLimit - numWords,
+                      });
                     }}
                     recipient={this.props.recipient}
                     width={POSTCARD_WIDTH}

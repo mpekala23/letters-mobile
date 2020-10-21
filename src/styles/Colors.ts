@@ -31,11 +31,13 @@ export const DROPDOWN_WARNING_TEXT = '#826C38';
 export const DROPDOWN_ERROR_BACKGROUND = '#FFF5F5';
 export const DROPDOWN_ERROR_TEXT = '#762B2B';
 
-export const GRAY_LIGHTER = '#FBFBFB';
-export const BLACK_200 = '#F2F2F2';
-export const GRAY_MEDIUM = '#9A9A9A';
-export const GRAY_500 = '#6D6D6D';
-export const GRAY_DARKER = '#393939';
+export const GRAY_100 = '#FBFBFB';
+export const GRAY_200 = '#F2F2F2';
+export const GRAY_300 = '#9A9A9A';
+export const GRAY_400 = '#6D6D6D';
+export const GRAY_500 = '#626262';
+export const GRAY_600 = '#555555';
+export const GRAY_700 = '#393939';
 
 export const PINK_100 = '#FFF5F5';
 export const PINK_200 = '#FFE8E8';

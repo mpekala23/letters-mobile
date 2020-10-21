@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
@@ -7,7 +7,6 @@ import { ProfilePicTypes, Mail, MailStatus } from 'types';
 import { differenceInDays, format, formatDistance, subDays } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { capitalize, haversine } from '@utils';
-import MemoryCardPlaceholder from '@components/Loaders/MemoryCardPlaceholder';
 import ContactCardPlaceholder from '@components/Loaders/ContactCardPlaceholder';
 import CardStyles from './Card.styles';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
@@ -111,14 +110,14 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           <View style={{ alignItems: 'center' }}>
             <AdjustableText
               numberOfLines={1}
-              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}
             >
               <Emoji name="calendar" />{' '}
               {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
             </AdjustableText>
 
             <AdjustableText
-              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}
               numberOfLines={1}
             >
               <Emoji name="love_letter" /> {props.numSent}{' '}
@@ -131,7 +130,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
                 numberOfLines={1}
                 style={[
                   Typography.FONT_REGULAR,
-                  { paddingBottom: 4, color: Colors.GRAY_500 },
+                  { paddingBottom: 4, color: Colors.GRAY_400 },
                 ]}
               >
                 <Emoji name="airplane" />{' '}

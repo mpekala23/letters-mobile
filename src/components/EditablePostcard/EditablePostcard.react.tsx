@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { View, Animated, Text } from 'react-native';
-import { PostcardDesign, Contact, Image } from 'types';
+import { PostcardDesign, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
@@ -141,7 +141,7 @@ class EditablePostcard extends React.Component<Props, State> {
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: Colors.BLACK_200,
+                backgroundColor: Colors.GRAY_200,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}

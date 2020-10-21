@@ -14,8 +14,8 @@ import * as Notifs from '@notifications';
 import { NotifTypes } from '@store/Notif/NotifTypes';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
 import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
+import { setProfileOverride } from '@components/Topbar';
 import Styles from './Register.style';
 
 type RegisterAddressScreenNavigationProp = StackNavigationProp<

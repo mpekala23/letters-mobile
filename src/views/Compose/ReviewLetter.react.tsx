@@ -14,7 +14,7 @@ import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
 
@@ -176,7 +176,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             Typography.FONT_REGULAR,
             {
               fontSize: 16,
-              color: Colors.GRAY_MEDIUM,
+              color: Colors.GRAY_300,
               textAlign: 'center',
               margin: 10,
             },

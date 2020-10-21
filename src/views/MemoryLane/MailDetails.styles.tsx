@@ -9,7 +9,7 @@ export default StyleSheet.create({
     padding: 16,
   },
   letterDate: {
-    borderColor: Colors.BLACK_200,
+    borderColor: Colors.GRAY_200,
     borderBottomWidth: 2,
     paddingBottom: 16,
   },

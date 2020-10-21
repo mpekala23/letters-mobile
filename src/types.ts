@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // Common
 export interface Image {
   uri: string;
@@ -31,6 +32,8 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
+export type DesignType = 'packet' | 'premade_postcard' | 'fallback';
+
 export interface PostcardDesign {
   image: Image;
   thumbnail?: Image;
@@ -44,6 +47,7 @@ export interface PostcardDesign {
   contentResearcher?: string;
   layout?: Layout;
   stickers?: PlacedSticker[];
+  type?: DesignType;
 }
 
 interface LetterSpecific {
@@ -54,6 +58,7 @@ interface LetterSpecific {
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
+  size: PostcardSizeOption;
 }
 
 export enum MailStatus {
@@ -68,12 +73,24 @@ export enum MailStatus {
   Rerouted = 'Re-Routed',
 }
 
+export interface RawCategory {
+  created_at: string;
+  id: 1;
+  img_src: string;
+  name: string;
+  updated_at: string;
+  blurb: string;
+  premium: boolean;
+  active: boolean;
+}
+
 export interface Category {
   id: number;
   name: string;
   image: Image;
   blurb: string;
   subcategories: Record<string, PostcardDesign[]>;
+  premium: boolean;
 }
 
 export interface Layout {
@@ -109,6 +126,21 @@ export type MailLetter = MailInfo & LetterSpecific;
 export type MailPostcard = MailInfo & PostcardSpecific;
 
 export type Mail = MailLetter | MailPostcard;
+
+export enum PostcardSize {
+  Small = '4x6',
+  Medium = '6x9',
+  Large = '6x11',
+}
+
+export interface PostcardSizeOption {
+  key: PostcardSize;
+  image: Image;
+  title: string;
+  wordsLimit: number;
+  cost: number;
+  isPremium: boolean;
+}
 
 // Facilities
 export enum PrisonTypes {
@@ -236,6 +268,7 @@ export enum Storage {
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
   DraftLayout = 'Ameelio-DraftLayout',
+  DraftPostcardSize = 'Ameelio-DraftPostcardSize',
 }
 
 export type TopbarBackAction = {
@@ -251,10 +284,28 @@ export type TopbarRouteAction = {
 
 export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
 
+// Premium
+export type PremiumPack = {
+  id: number;
+  name: string;
+  image: Image;
+  price: number;
+  coins: number;
+};
+
 export enum EntityTypes {
   Contacts = 'Contacts',
   Mail = 'Mail',
   Referrals = 'Referrals',
   Categories = 'Categories',
   MailDetail = 'MailDetail',
+  PremiumPacks = 'PremiumPacks',
+  PremiumStoreItems = 'PremiumStoreItems',
+}
+
+export interface RouteDetails {
+  title: string;
+  profile?: boolean;
+  headerVisible?: boolean;
+  tabsVisible?: boolean;
 }

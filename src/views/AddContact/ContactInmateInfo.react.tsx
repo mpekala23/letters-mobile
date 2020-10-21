@@ -34,7 +34,7 @@ import {
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 
 import {
   STATES_DROPDOWN,
@@ -340,7 +340,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                   style={[
                     Typography.FONT_MEDIUM,
                     {
-                      color: Colors.GRAY_500,
+                      color: Colors.GRAY_400,
                       marginTop: 8,
                       fontSize: 15,
                     },

@@ -17,7 +17,7 @@ import { differenceInBusinessDays, format } from 'date-fns';
 import { Contact, MailTypes } from 'types';
 import { onNativeShare, estimateDelivery, requestReview } from '@utils';
 
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -100,7 +100,11 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
           <Text
             style={[
               Typography.FONT_SEMIBOLD,
-              { fontSize: 20, textAlign: 'center' },
+              {
+                fontSize: 20,
+                textAlign: 'center',
+                paddingTop: Platform.OS === 'android' ? 32 : undefined,
+              },
             ]}
           >
             {i18n.t('Common.possessivePronoun')} {mailType}{' '}

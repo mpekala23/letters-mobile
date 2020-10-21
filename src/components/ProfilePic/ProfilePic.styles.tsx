@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   initials: {
     fontSize: 18,
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_400,
   },
   initialsBig: {
     fontSize: 36,

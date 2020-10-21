@@ -5,6 +5,7 @@ import store from '@store';
 import url from 'url';
 import {
   Draft,
+  DesignType,
   Mail,
   TrackingEvent,
   MailTypes,
@@ -14,6 +15,7 @@ import {
   Image,
   Contact,
   EntityTypes,
+  RawCategory,
 } from 'types';
 import {
   addMail,
@@ -25,7 +27,7 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims } from '@utils';
+import { estimateDelivery, findPostcardSizeOption, getImageDims } from '@utils';
 import {
   setCategories,
   setDesignImage,
@@ -73,6 +75,7 @@ interface RawMail {
   tracking_events?: RawTrackingEvent[];
   estimated_arrival: string;
   delivered: boolean;
+  size: string;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -152,7 +155,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       ).toISOString();
     }
   }
-
+  const rawSize = mail.size;
   if (mail.delivered) status = MailStatus.Delivered;
   if (type === MailTypes.Letter) {
     return {
@@ -167,6 +170,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       trackingEvents,
     };
   }
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -177,6 +181,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     expectedDelivery,
     design,
     trackingEvents,
+    size,
   };
 }
 
@@ -229,6 +234,8 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       images,
     };
   }
+  const rawSize = mail.size;
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -238,6 +245,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     dateCreated,
     expectedDelivery,
     design,
+    size,
   };
 }
 
@@ -421,7 +429,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     content: prepDraft.content,
     is_draft: false,
     type: prepDraft.type,
-    size: prepDraft.type === MailTypes.Postcard ? '4x6' : undefined,
+    size:
+      prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
     ...imageExtension,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
@@ -443,16 +452,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
   return createdMail;
 }
 
-interface RawCategory {
-  created_at: string;
-  id: 1;
-  img_src: string;
-  name: string;
-  updated_at: string;
-  blurb: string;
-}
-
-function cleanCategory(
+export function cleanCategory(
   raw: RawCategory,
   subcategories: Record<string, PostcardDesign[]>
 ): Category {
@@ -461,6 +461,7 @@ function cleanCategory(
     name: raw.name,
     image: { uri: raw.img_src },
     blurb: raw.blurb,
+    premium: raw.premium,
     subcategories,
   };
 }
@@ -472,11 +473,21 @@ interface RawDesign {
   name: string;
   front_img_src: string;
   thumbnail_src: string;
-  type: MailTypes;
+  type: string;
   back: null;
   subcategory_id: number;
   designer?: string;
   content_researcher?: string;
+}
+
+function cleanDesignType(type: string): DesignType {
+  switch (type) {
+    case 'packet':
+    case 'premade_postcard':
+      return type as DesignType;
+    default:
+      return 'fallback';
+  }
 }
 
 function cleanDesign(
@@ -495,6 +506,7 @@ function cleanDesign(
     subcategoryName,
     contentResearcher: raw.content_researcher,
     designer: raw.designer,
+    type: cleanDesignType(raw.type),
   };
   if (categoryId && subcategoryName && design.id) {
     getImageDims(design.image.uri).then((dims) => {

@@ -14,6 +14,9 @@ import DynamicPostcard from './DynamicPostcard/DynamicPostcard.react';
 import EditablePostcard from './EditablePostcard/EditablePostcard.react';
 import GenericCard from './Card/GenericCard.react';
 import GrayBar from './GrayBar/GrayBar.react';
+import HeaderLeft from './Topbar/HeaderLeft.react';
+import HeaderTitle from './Topbar/HeaderTitle.react';
+import HeaderRight from './Topbar/HeaderRight.react';
 import Icon from './Icon/Icon.react';
 import Input from './Input/Input.react';
 import KeyboardAvoider from './KeyboardAvoider/KeyboardAvoider.react';
@@ -31,7 +34,6 @@ import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import StickerManager from './StickerManager/StickerManager.react';
-import Topbar from './Topbar/Topbar.react';
 
 export {
   AdjustableText,
@@ -50,6 +52,9 @@ export {
   EditablePostcard,
   GenericCard,
   GrayBar,
+  HeaderLeft,
+  HeaderTitle,
+  HeaderRight,
   Icon,
   Input,
   KeyboardAvoider,
@@ -67,7 +72,6 @@ export {
   StaticPostcard,
   Statusbar,
   StickerManager,
-  Topbar,
 };
 
 export type { PickerRef };

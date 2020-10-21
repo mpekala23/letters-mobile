@@ -144,7 +144,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
         style={[
           Typography.FONT_MEDIUM,
           {
-            color: Colors.GRAY_500,
+            color: Colors.GRAY_400,
             fontSize: 16,
           },
         ]}
@@ -197,7 +197,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
           style={[
             Typography.FONT_SEMIBOLD,
             {
-              color: Colors.GRAY_500,
+              color: Colors.GRAY_400,
               fontSize: 20,
               paddingTop: 8,
               paddingBottom: 4,
