@@ -22,14 +22,5 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 16,
     top: 136,
-    borderWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
   },
 });

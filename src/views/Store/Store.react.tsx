@@ -9,7 +9,7 @@ import { Colors, Typography } from '@styles';
 import { Category, PremiumPack } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import React from 'react';
-import { View, Text, ScrollView, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
 import Styles from './Store.styles';
