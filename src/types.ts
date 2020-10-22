@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 // Common
-export interface Image {
-  uri: string;
+export interface Image extends Asset {
   width?: number;
   height?: number;
+}
+
+export interface Asset {
+  uri: string;
 }
 
 export interface Sticker {
@@ -53,6 +56,7 @@ export interface PersonalDesign extends BaseDesign {
 export interface BasePremadeDesign extends BaseDesign {
   id: number;
   name: string;
+  blurb: string;
   designer?: string;
   contentResearcher?: string;
   author?: string;
@@ -61,7 +65,7 @@ export interface BasePremadeDesign extends BaseDesign {
 }
 
 interface PacketSpecific {
-  asset: string;
+  image: Asset;
   type: 'packet';
 }
 
@@ -71,25 +75,10 @@ interface PostcardDesignSpecific {
 }
 
 export type PremadePostcardDesign = BasePremadeDesign & PostcardDesignSpecific;
+export type DesignPacket = BasePremadeDesign & PacketSpecific;
+
+export type PremadeDesign = PremadePostcardDesign | DesignPacket;
 export type PostcardDesign = PremadePostcardDesign | PersonalDesign;
-
-export type PacketDesign = BasePremadeDesign & PacketSpecific;
-
-// export interface PostcardDesign {
-//   image: Image;
-//   thumbnail?: Image;
-//   id?: number;
-//   categoryId?: number;
-//   subcategoryName?: string;
-//   name?: string;
-//   author?: string;
-//   custom?: boolean;
-//   designer?: string;
-//   contentResearcher?: string;
-//   layout?: Layout;
-//   stickers?: PlacedSticker[];
-//   type?: DesignType;
-// }
 
 interface LetterSpecific {
   type: MailTypes.Letter;
@@ -130,7 +119,7 @@ export interface Category {
   name: string;
   image: Image;
   blurb: string;
-  subcategories: Record<string, PostcardDesign[]>;
+  subcategories: Record<string, PremadeDesign[]>;
   premium: boolean;
 }
 

@@ -16,6 +16,8 @@ import {
   Contact,
   EntityTypes,
   RawCategory,
+  PremadeDesign,
+  PremadePostcardDesign,
 } from 'types';
 import {
   addMail,
@@ -39,6 +41,7 @@ import {
   updateContact,
   setActive as setActiveContact,
 } from '@store/Contact/ContactActions';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -129,7 +132,11 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       };
     });
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    image: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor so we don't need to do this
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
 
   const dateCreated = new Date(mail.created_at).toISOString();
   let status: MailStatus;
@@ -454,7 +461,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
 
 export function cleanCategory(
   raw: RawCategory,
-  subcategories: Record<string, PostcardDesign[]>
+  subcategories: Record<string, PremadeDesign[]>
 ): Category {
   return {
     id: raw.id,
@@ -473,6 +480,7 @@ interface RawDesign {
   name: string;
   front_img_src: string;
   thumbnail_src: string;
+  blurb: string;
   type: string;
   back: null;
   subcategory_id: number;
@@ -480,58 +488,74 @@ interface RawDesign {
   content_researcher?: string;
 }
 
-function cleanDesignType(type: string): DesignType {
-  switch (type) {
-    case 'packet':
-    case 'premade_postcard':
-      return type as DesignType;
-    default:
-      return 'fallback';
-  }
-}
-
 function cleanDesign(
   raw: RawDesign,
   categoryId: number,
   subcategoryName: string
-): PostcardDesign {
-  const design: PostcardDesign = {
+): PremadeDesign {
+  const {
+    type,
+    id,
+    name,
+    blurb,
+    designer,
+    content_researcher,
+    thumbnail_src,
+    front_img_src,
+  } = raw;
+  if (type === 'premade_postcard') {
+    const design: PremadePostcardDesign = {
+      image: {
+        uri: front_img_src,
+      },
+      thumbnail: { uri: thumbnail_src },
+      name,
+      id,
+      categoryId,
+      subcategoryName,
+      contentResearcher: content_researcher,
+      designer,
+      blurb,
+      type,
+    };
+    if (categoryId && subcategoryName && design.id) {
+      getImageDims(design.image.uri).then((dims) => {
+        store.dispatch(
+          setDesignImage(categoryId, subcategoryName, raw.id, {
+            ...design.image,
+            ...dims,
+          })
+        );
+      });
+    }
+    return design;
+  }
+  return {
     image: {
-      uri: raw.front_img_src,
+      uri: front_img_src,
     },
-    thumbnail: { uri: raw.thumbnail_src },
-    name: raw.name,
-    id: raw.id,
+    thumbnail: { uri: thumbnail_src },
+    name,
+    id,
     categoryId,
     subcategoryName,
-    contentResearcher: raw.content_researcher,
-    designer: raw.designer,
-    type: 'premade_postcard',
-    // type: cleanDesignType(raw.type),
+    contentResearcher: content_researcher,
+    designer,
+    blurb,
+    type: 'packet',
   };
-  if (categoryId && subcategoryName && design.id) {
-    getImageDims(design.image.uri).then((dims) => {
-      store.dispatch(
-        setDesignImage(categoryId, subcategoryName, raw.id, {
-          ...design.image,
-          ...dims,
-        })
-      );
-    });
-  }
-  return design;
 }
 
 export async function getSubcategoriesById(
   categoryId: number
-): Promise<Record<string, PostcardDesign[]>> {
+): Promise<Record<string, PremadeDesign[]>> {
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `categories/${categoryId}/designs`),
     { method: 'GET' }
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;
-  const cleanData: Record<string, PostcardDesign[]> = {};
+  const cleanData: Record<string, PremadeDesign[]> = {};
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];

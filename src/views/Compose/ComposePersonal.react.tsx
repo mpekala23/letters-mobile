@@ -346,7 +346,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       };
       const design: PersonalDesign = {
         image,
-        thumbnail: image,
         type: 'personal_design',
       };
       return design;
@@ -373,10 +372,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           : { uri: '' },
       layout: this.state.designState.layout,
       categoryId: PERSONAL_OVERRIDE_ID,
-      thumbnail:
-        this.props.composing.type === MailTypes.Postcard
-          ? this.props.composing.design.image
-          : { uri: '' },
       type: 'personal_design',
     });
     saveDraft(this.props.composing);
@@ -404,7 +399,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
             layout: this.state.designState.layout,
             categoryId: PERSONAL_OVERRIDE_ID,
             type: 'personal_design',
-            thumbnail: snapshot,
           });
           saveDraft(this.props.composing);
         }

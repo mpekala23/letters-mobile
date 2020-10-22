@@ -200,7 +200,6 @@ export async function loadDraft(): Promise<Draft> {
           content: draftContent || '',
           design: {
             image: { uri: '' },
-            thumbnail: { uri: '' },
             layout: draftLayout ? JSON.parse(draftLayout) : undefined,
             categoryId: PERSONAL_OVERRIDE_ID,
             type: 'personal_design',

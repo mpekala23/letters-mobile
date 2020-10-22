@@ -169,7 +169,11 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     tabsVisible: false,
   },
   ContactSelector: { title: i18n.t('Screens.contacts') },
-  CreditPackStore: { title: i18n.t('Screens.creditPackStore'), profile: false },
+  CreditPackStore: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+    tabsVisible: false,
+  },
   CreditPackCheckoutWebView: {
     title: i18n.t('Screens.creditPackStore'),
     profile: false,

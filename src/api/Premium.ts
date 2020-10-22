@@ -51,6 +51,7 @@ export async function getPremiumStoreItems(): Promise<void> {
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `categories?premium=true`)
   );
+  console.log(body);
 
   if (body.status !== 'OK' || !body.data) {
     store.dispatch(stopAction(EntityTypes.PremiumPacks));
