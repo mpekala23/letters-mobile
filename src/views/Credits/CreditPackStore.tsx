@@ -85,10 +85,11 @@ const CreditPackStoreBase = ({
         />
         <View style={{ marginLeft: 24 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon
-              svg={GoldenBirdCoin}
-              style={{ marginRight: 8, height: 16, width: 16 }}
-            />
+            <View
+              style={{ width: 16, height: 16, marginRight: 8, marginBottom: 4 }}
+            >
+              <Icon svg={GoldenBirdCoin} style={{ height: 16, width: 16 }} />
+            </View>
             <Text style={[Typography.FONT_BOLD, Styles.cardTitle]}>
               {item.name}
             </Text>

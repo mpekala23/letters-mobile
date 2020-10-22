@@ -177,4 +177,53 @@ export default StyleSheet.create({
     borderRadius: 16,
     borderColor: Colors.PINK_500,
   },
+  ameelioPlusBackground: {
+    flex: 1,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  premiumCardBox: {
+    width: 120,
+    height: 144,
+    position: 'absolute',
+    borderRadius: 4,
+  },
+  premiumCardBox2: {
+    elevation: 5,
+    backgroundColor: Colors.GRAY_100,
+    top: 12,
+    left: 12,
+  },
+  premiumCardBox3: {
+    elevation: 4,
+    backgroundColor: Colors.GRAY_200,
+    top: 16,
+    left: 16,
+  },
+  buyHereContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    right: 16,
+  },
+  tokensLeftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  arrowText: {
+    color: Colors.PINK_500,
+    fontSize: 32,
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  tokensLeftText: {
+    fontSize: 36,
+    color: Colors.AMEELIO_BLACK,
+    height: 52,
+    paddingLeft: 8,
+    justifyContent: 'center',
+  },
 });

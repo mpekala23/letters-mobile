@@ -1,5 +1,6 @@
 import AdjustableText from './Text/AdjustableText.react';
 import Alert from './Alert/Alert.react';
+import AmeelioPlusCard from './Card/AmeelioPlusCard.react';
 import AsyncImage from './AsyncImage/AsyncImage.react';
 import Button from './Button/Button.react';
 import CategoryCard from './Card/CategoryCard.react';
@@ -29,6 +30,7 @@ import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PostcardTools from './PostcardTools/PostcardTools.react';
+import PremiumSubcategorySelector from './Card/PremiumSubcategorySelector.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
@@ -38,6 +40,7 @@ import StickerManager from './StickerManager/StickerManager.react';
 export {
   AdjustableText,
   Alert,
+  AmeelioPlusCard,
   AsyncImage,
   Button,
   CategoryCard,
@@ -67,6 +70,7 @@ export {
   Picker,
   PicUpload,
   PostcardTools,
+  PremiumSubcategorySelector,
   PrisonCard,
   ProfilePic,
   StaticPostcard,
