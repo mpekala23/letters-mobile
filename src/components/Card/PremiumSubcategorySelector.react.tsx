@@ -86,14 +86,14 @@ const PremiumSubcategorySelector: React.FC<Props> = ({
         style={[
           CardStyles.shadow,
           CardStyles.premiumCardBox,
-          { elevation: 5, backgroundColor: Colors.GRAY_100, top: 12, left: 12 },
+          CardStyles.premiumCardBox2,
         ]}
       />
       <View
         style={[
           CardStyles.shadow,
           CardStyles.premiumCardBox,
-          { elevation: 4, backgroundColor: Colors.GRAY_200, top: 16, left: 16 },
+          CardStyles.premiumCardBox3,
         ]}
       />
     </TouchableOpacity>

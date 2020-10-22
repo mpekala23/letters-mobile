@@ -36,18 +36,7 @@ const AmeelioPlusCard: React.FC<Props> = ({
         <View style={{ width: 40, height: 40 }}>
           <Icon svg={GoldBird} />
         </View>
-        <Text
-          style={[
-            Typography.FONT_REGULAR,
-            {
-              fontSize: 36,
-              color: Colors.AMEELIO_BLACK,
-              height: 52,
-              paddingLeft: 8,
-              justifyContent: 'center',
-            },
-          ]}
-        >
+        <Text style={[Typography.FONT_REGULAR, CardStyles.tokensLeftText]}>
           {tokensLeft}
         </Text>
       </View>
@@ -55,16 +44,7 @@ const AmeelioPlusCard: React.FC<Props> = ({
         <Text style={[Typography.FONT_REGULAR, { color: 'red', fontSize: 16 }]}>
           Buy here
         </Text>
-        <Text
-          style={{
-            color: Colors.PINK_500,
-            fontSize: 32,
-            marginTop: 4,
-            marginLeft: 4,
-          }}
-        >
-          {'>'}
-        </Text>
+        <Text style={CardStyles.arrowText}>{'>'}</Text>
       </View>
     </TouchableOpacity>
   );

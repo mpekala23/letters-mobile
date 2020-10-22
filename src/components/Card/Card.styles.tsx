@@ -189,6 +189,18 @@ export default StyleSheet.create({
     position: 'absolute',
     borderRadius: 4,
   },
+  premiumCardBox2: {
+    elevation: 5,
+    backgroundColor: Colors.GRAY_100,
+    top: 12,
+    left: 12,
+  },
+  premiumCardBox3: {
+    elevation: 4,
+    backgroundColor: Colors.GRAY_200,
+    top: 16,
+    left: 16,
+  },
   buyHereContainer: {
     position: 'absolute',
     justifyContent: 'center',
@@ -200,5 +212,18 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  arrowText: {
+    color: Colors.PINK_500,
+    fontSize: 32,
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  tokensLeftText: {
+    fontSize: 36,
+    color: Colors.AMEELIO_BLACK,
+    height: 52,
+    paddingLeft: 8,
+    justifyContent: 'center',
   },
 });
