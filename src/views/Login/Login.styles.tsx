@@ -22,7 +22,6 @@ export default StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.PINK_500,
-    borderRadius: 15,
     width: '100%',
     height: 50,
   },

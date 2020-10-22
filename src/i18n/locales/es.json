@@ -454,7 +454,8 @@
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Vista previa",
     "inmateLocator": " Localizador de Presos",
-    "introContact": "Bienvenido"
+    "introContact": "Bienvenido",
+    "store": "Tienda"
   },
   "Sharing": {
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
@@ -476,5 +477,12 @@
     "message": "¡Ayúdanos dejando un comentario!",
     "takeMeToPlayStore": "Llévame a Play Store",
     "noThanks": "No gracias"
+  },
+  "Premium": {
+    "ameelioPlusLeft": "Ameelio+ left",
+    "yourAmeelioPlus": "Your Ameelio+",
+    "page": "page",
+    "pages": "pages",
+    "viewHistory": "View history"
   }
 }

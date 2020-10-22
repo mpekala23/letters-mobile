@@ -453,7 +453,8 @@
     "updateProfile": "Update Profile",
     "reviewPostcard": "Preview",
     "inmateLocator": "Inmate Locator",
-    "introContact": "Welcome"
+    "introContact": "Welcome",
+    "store": "Store"
   },
   "Sharing": {
     "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
@@ -479,5 +480,12 @@
     "message": "Help us out by leaving a review!",
     "takeMeToPlayStore": "Take me to the Play Store",
     "noThanks": "No thanks"
+  },
+  "Premium": {
+    "ameelioPlusLeft": "Ameelio+ left",
+    "yourAmeelioPlus": "Your Ameelio+",
+    "page": "page",
+    "pages": "pages",
+    "viewHistory": "View history"
   }
 }

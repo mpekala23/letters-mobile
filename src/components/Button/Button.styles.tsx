@@ -26,9 +26,16 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: Colors.PINK_500,
     marginVertical: 5,
+    shadowColor: Colors.GRAY_100,
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.01,
+    elevation: 3,
+    borderWidth: 2,
+    borderColor: Colors.GRAY_200,
   },
   buttonBackgroundDisabled: {
     flexDirection: 'row',

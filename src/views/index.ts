@@ -7,9 +7,9 @@ import ComposePostcardScreen from './Compose/ComposePostcard.react';
 import ContactInfoScreen from './AddContact/ContactInfo.react';
 import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
-import CreditPackCheckoutWebViewScreen from './Premium/CreditPackCheckoutWebView';
-import CreditPackStoreScreen from './Premium/CreditPackStore';
-import CreditPackPurchaseSuccessScreen from './Premium/CreditPackPurchaseSuccess';
+import CreditPackCheckoutWebViewScreen from './Credits/CreditPackCheckoutWebView';
+import CreditPackStoreScreen from './Credits/CreditPackStore';
+import CreditPackPurchaseSuccessScreen from './Credits/CreditPackPurchaseSuccess';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import GenericWebViewScreen from './AddContact/GenericWebView.react';
 import IssuesScreen from './Report/Issues.react';
@@ -33,6 +33,7 @@ import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
 import StoreItemScreen from './Store/StoreItem.react';
+import StoreScreen from './Store/Store.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
 import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import TermsScreen from './Login/Terms.react';
@@ -75,6 +76,7 @@ export {
   SingleContactScreen,
   SplashScreen,
   StoreItemScreen,
+  StoreScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,
