@@ -4,6 +4,7 @@ import { PostcardDesign, Contact } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
+import { getPostcardDesignImage } from '@utils';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -74,9 +75,9 @@ class EditablePostcard extends React.Component<Props, State> {
           width: this.props.width,
           height: this.props.height,
         }}
-        source={this.props.design.thumbnail || this.props.design.image}
+        source={getPostcardDesignImage(this.props.design)}
         onLoad={this.props.onLoad}
-        download={!!this.props.design.thumbnail}
+        download={this.props.design.type === 'premade_postcard'}
       />
     ) : (
       <AsyncImage
@@ -85,9 +86,9 @@ class EditablePostcard extends React.Component<Props, State> {
           height: this.props.width,
           transform: [{ rotateZ: '270deg' }],
         }}
-        source={this.props.design.thumbnail || this.props.design.image}
+        source={getPostcardDesignImage(this.props.design)}
         onLoad={this.props.onLoad}
-        download={!!this.props.design.thumbnail}
+        download={this.props.design.type === 'premade_postcard'}
         autorotate={false}
       />
     );

@@ -479,7 +479,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         }}
       >
         <AsyncImage
-          source={design.thumbnail ? design.thumbnail : design.image}
+          source={design.thumbnail}
           imageStyle={{ flex: 1, aspectRatio: 1 }}
         />
       </TouchableOpacity>

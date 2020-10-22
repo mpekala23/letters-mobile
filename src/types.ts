@@ -39,10 +39,8 @@ export type DesignType =
   | 'fallback';
 
 interface BaseDesign {
-  id?: number;
-  categoryId?: number;
+  categoryId: number;
   subcategoryName?: string;
-  thumbnail: Image;
 }
 
 export interface PersonalDesign extends BaseDesign {
@@ -53,12 +51,13 @@ export interface PersonalDesign extends BaseDesign {
 }
 
 export interface BasePremadeDesign extends BaseDesign {
-  // id: number;
+  id: number;
   name: string;
   designer?: string;
   contentResearcher?: string;
   author?: string;
   type: DesignType;
+  thumbnail: Image;
 }
 
 interface PacketSpecific {

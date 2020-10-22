@@ -9,7 +9,13 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, MailStatus, Image, PostcardSizeOption } from 'types';
+import {
+  ZipcodeInfo,
+  MailStatus,
+  Image,
+  PostcardSizeOption,
+  PostcardDesign,
+} from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
@@ -396,4 +402,8 @@ export function findPostcardSizeOption(key: string): PostcardSizeOption {
     POSTCARD_SIZE_OPTIONS.find((option) => key === option.key) ||
     POSTCARD_SIZE_OPTIONS[0]
   );
+}
+
+export function getPostcardDesignImage(design: PostcardDesign): Image {
+  return design.type === 'premade_postcard' ? design.thumbnail : design.image;
 }
