@@ -4,6 +4,7 @@ import {
   CreditPackStoreScreen,
   CreditPackPurchaseSuccessScreen,
   StoreScreen,
+  TransactionHistoryScreen,
 } from '@views';
 import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import { HeaderTitle, HeaderLeft, HeaderRight } from '@components';
@@ -53,6 +54,10 @@ const Store: React.FC = () => {
       <StoreStack.Screen
         name={Screens.CreditPackPurchaseSuccess}
         component={CreditPackPurchaseSuccessScreen}
+      />
+      <StoreStack.Screen
+        name={Screens.TransactionHistory}
+        component={TransactionHistoryScreen}
       />
     </StoreStack.Navigator>
   );

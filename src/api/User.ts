@@ -42,7 +42,11 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
-import { getPremiumPacks, getPremiumStoreItems } from './Premium';
+import {
+  getPremiumPacks,
+  getPremiumStoreItems,
+  getPremiumTransactions,
+} from './Premium';
 
 interface RawUser {
   id: number;
@@ -398,6 +402,9 @@ export async function loginWithToken(): Promise<User> {
     const userData = cleanUser(body.data as RawUser);
     const { token, remember } = body.data;
     await initializeData(userData, token, remember);
+    getPremiumTransactions().catch((err) => {
+      Sentry.captureException(err);
+    });
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -425,6 +432,9 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   const userData = cleanUser(body.data as RawUser);
   const { token, remember } = body.data;
   await initializeData(userData, token, remember);
+  getPremiumTransactions().catch((err) => {
+    Sentry.captureException(err);
+  });
   if (cred.remember) {
     saveToken(body.data.remember).catch((err) => {
       Sentry.captureException(err);

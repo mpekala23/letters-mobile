@@ -58,6 +58,7 @@ export enum Screens {
   Store = 'Store',
   SupportFAQ = 'SupportFAQ',
   SupportFAQDetail = 'SupportFAQDetail',
+  TransactionHistory = 'TransactionHistory',
   UpdateContact = 'UpdateContact',
   UpdateProfile = 'UpdateProfile',
 }
@@ -123,6 +124,7 @@ export type AppStackParamList = {
   Store: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
+  TransactionHistory: undefined;
   UpdateContact: { contactId: number } | undefined;
   UpdateProfile: undefined;
 };
@@ -230,6 +232,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   Store: { title: i18n.t('Screens.store'), profile: true },
   SupportFAQ: { title: '', profile: false },
   SupportFAQDetail: { title: '', profile: false },
+  TransactionHistory: { title: i18n.t('Screens.transactionHistory') },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),
     profile: false,

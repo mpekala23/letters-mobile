@@ -36,6 +36,7 @@ import ProfilePic from './ProfilePic/ProfilePic.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import StickerManager from './StickerManager/StickerManager.react';
+import TransactionHistoryCard from './Card/TransactionHistoryCard.react';
 
 export {
   AdjustableText,
@@ -76,6 +77,7 @@ export {
   StaticPostcard,
   Statusbar,
   StickerManager,
+  TransactionHistoryCard,
 };
 
 export type { PickerRef };

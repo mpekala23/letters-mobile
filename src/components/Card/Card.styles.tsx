@@ -226,4 +226,7 @@ export default StyleSheet.create({
     paddingLeft: 8,
     justifyContent: 'center',
   },
+  transactionHistoryBackground: {
+    flexDirection: 'row',
+  },
 });
