@@ -383,7 +383,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           )}
           {mail.type === MailTypes.Postcard && (
             <DisplayImage
-              images={[mail.design.image]}
+              images={[mail.design.asset]}
               isPostcard
               paddingPostcard={20}
               updateImages={(images) => {

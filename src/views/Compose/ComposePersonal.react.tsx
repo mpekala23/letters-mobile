@@ -368,7 +368,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     this.props.setDesign({
       image:
         this.props.composing.type === MailTypes.Postcard
-          ? this.props.composing.design.image
+          ? this.props.composing.design.asset
           : { uri: '' },
       layout: this.state.designState.layout,
       categoryId: PERSONAL_OVERRIDE_ID,

@@ -47,7 +47,7 @@ interface BaseDesign {
 }
 
 export interface PersonalDesign extends BaseDesign {
-  image: Image;
+  asset: Image;
   layout?: Layout;
   stickers?: PlacedSticker[];
   type: 'personal_design';
@@ -65,12 +65,12 @@ export interface BasePremadeDesign extends BaseDesign {
 }
 
 interface PacketSpecific {
-  image: Asset;
+  asset: Asset;
   type: 'packet';
 }
 
 interface PostcardDesignSpecific {
-  image: Image;
+  asset: Image;
   type: 'premade_postcard';
 }
 

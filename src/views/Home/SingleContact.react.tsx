@@ -240,16 +240,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                         : 'blank',
                   }
                 );
-                console.log(
-                  this.props.composing.type === MailTypes.Postcard &&
-                    this.props.composing.design.image.uri.length
-                );
                 if (
                   this.props.composing.content.length ||
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
-                    (this.props.composing.design.image.uri.length ||
+                    (this.props.composing.design.asset.uri.length ||
                       (this.props.composing.design.type === 'personal_design' &&
                         (this.props.composing.design.layout ||
                           this.props.composing.design.stickers))))

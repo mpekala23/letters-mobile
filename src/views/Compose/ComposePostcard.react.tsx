@@ -104,7 +104,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.state = {
       subcategory: props.initialSubcategory,
       design: {
-        image: { uri: '' },
+        asset: { uri: '' },
         thumbnail: { uri: '' },
         name: '',
         type: 'premade_postcard',
@@ -159,7 +159,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     if (
       composing.type === MailTypes.Postcard &&
       composing.design.type === 'premade_postcard' &&
-      composing.design.image.uri.length
+      composing.design.asset.uri.length
     ) {
       if (composing.design.subcategoryName) {
         this.setState({
@@ -192,14 +192,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     subcategories.forEach((subcategory) => {
       const designs = category.subcategories[subcategory];
       designs.forEach((design) => {
-        if (design.image.width && design.image.height) return;
-        getImageDims(design.image.uri).then((dims) => {
+        if (design.asset.width && design.asset.height) return;
+        getImageDims(design.asset.uri).then((dims) => {
           if (design.categoryId && design.id) {
             this.props.updateDesignImage(
               design.categoryId,
               subcategory,
               design.id,
-              { ...design.image, ...dims }
+              { ...design.asset, ...dims }
             );
           }
         });
@@ -280,8 +280,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   designIsHorizontal = (): boolean => {
-    const designWidth = this.state.design.image.width;
-    const designHeight = this.state.design.image.height;
+    const designWidth = this.state.design.asset.width;
+    const designHeight = this.state.design.asset.height;
     if (!designWidth || !designHeight) {
       return true;
     }
@@ -314,9 +314,9 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.props.setDesign(design);
     this.setState({ design, loading: design });
     if (
-      design.image.width &&
-      design.image.height &&
-      design.image.width < design.image.height
+      design.asset.width &&
+      design.asset.height &&
+      design.asset.width < design.asset.height
     ) {
       this.setState({ horizontal: false });
     } else {
@@ -338,7 +338,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       designer: this.state.design.designer,
       step: 'image',
     });
-    if (!this.state.design.image.uri.length) {
+    if (!this.state.design.asset.uri.length) {
       popupAlert({
         title: i18n.t('Alert.noDesignSelected'),
         message: i18n.t('Alert.selectADesign'),

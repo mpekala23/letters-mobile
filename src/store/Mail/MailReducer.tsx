@@ -144,7 +144,7 @@ export default function LetterReducer(
       mailItem = currentState.existing[action.payload.contactId][ix];
       if (mailItem.type === MailTypes.Postcard) {
         if (!action.payload.images.length) return currentState;
-        [mailItem.design.image] = action.payload.images;
+        [mailItem.design.asset] = action.payload.images;
         currentState.existing[action.payload.contactId][ix] = { ...mailItem };
         return currentState;
       }

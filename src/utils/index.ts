@@ -405,5 +405,5 @@ export function findPostcardSizeOption(key: string): PostcardSizeOption {
 }
 
 export function getPostcardDesignImage(design: PostcardDesign): Image {
-  return design.type === 'premade_postcard' ? design.thumbnail : design.image;
+  return design.type === 'premade_postcard' ? design.thumbnail : design.asset;
 }

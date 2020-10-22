@@ -44,7 +44,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               content: '',
               recipientId: props.recipientId,
               design: {
-                image: { uri: '' },
+                asset: { uri: '' },
               },
               size: POSTCARD_SIZE_OPTIONS[0],
             });

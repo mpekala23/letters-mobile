@@ -42,10 +42,9 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             recipientId: props.recipientId,
             content: '',
             design: {
-              image: { uri: '' },
+              asset: { uri: '' },
               categoryId: PERSONAL_OVERRIDE_ID,
               type: 'personal_design',
-              thumbnail: { uri: '' },
             },
             size: POSTCARD_SIZE_OPTIONS[0],
           });

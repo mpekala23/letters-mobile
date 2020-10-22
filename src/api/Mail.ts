@@ -388,13 +388,13 @@ export async function createMail(draft: Draft): Promise<Mail> {
   if (prepDraft.type === MailTypes.Postcard) {
     try {
       if (prepDraft.design.custom) {
-        prepDraft.design.image = await uploadImage(
-          prepDraft.design.image,
+        prepDraft.design.asset = await uploadImage(
+          prepDraft.design.asset,
           'letter'
         );
       }
       imageExtension = {
-        s3_img_urls: [prepDraft.design.image.uri],
+        s3_img_urls: [prepDraft.design.asset.uri],
       };
     } catch (err) {
       Sentry.captureException(err);
@@ -519,10 +519,10 @@ function cleanDesign(
       type,
     };
     if (categoryId && subcategoryName && design.id) {
-      getImageDims(design.image.uri).then((dims) => {
+      getImageDims(design.asset.uri).then((dims) => {
         store.dispatch(
           setDesignImage(categoryId, subcategoryName, raw.id, {
-            ...design.image,
+            ...design.asset,
             ...dims,
           })
         );
@@ -531,7 +531,7 @@ function cleanDesign(
     return design;
   }
   return {
-    image: {
+    asset: {
       uri: front_img_src,
     },
     thumbnail: { uri: thumbnail_src },
