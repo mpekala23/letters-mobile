@@ -240,7 +240,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
     if (this.state.images.length < MAX_NUM_IMAGES) {
       images.push(null);
     }
-    return images.map((image) => {
+    return images.map((image, index) => {
       if (image) {
         return (
           <PicUpload
@@ -267,6 +267,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
           width={LETTER_COMPOSE_IMAGE_HEIGHT}
           height={LETTER_COMPOSE_IMAGE_HEIGHT}
           allowsEditing={false}
+          oneCreditWarning={index > 0}
           shapeBackground={{
             margin: 4,
             borderWidth: 2,

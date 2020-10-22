@@ -31,6 +31,7 @@ import PicUpload from './PicUpload/PicUpload.react';
 import PostcardTools from './PostcardTools/PostcardTools.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
+import ReviewCredits from './ReviewCredits/ReviewCredits.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import StickerManager from './StickerManager/StickerManager.react';
@@ -69,6 +70,7 @@ export {
   PostcardTools,
   PrisonCard,
   ProfilePic,
+  ReviewCredits,
   StaticPostcard,
   Statusbar,
   StickerManager,

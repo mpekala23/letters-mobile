@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   profileBackground: {
@@ -20,5 +21,16 @@ export default StyleSheet.create({
   mediaDelete: {
     top: 3,
     right: 3,
+  },
+  oneCreditWarningText: {
+    position: 'absolute',
+    width: 100,
+    height: 40,
+    textAlign: 'center',
+    zIndex: 9,
+    top: 32,
+    left: 46,
+    fontSize: 21,
+    color: Colors.GRAY_300,
   },
 });

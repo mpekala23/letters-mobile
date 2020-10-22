@@ -5,6 +5,7 @@ import {
   View,
   Linking,
   Keyboard,
+  Text,
 } from 'react-native';
 import i18n from '@i18n';
 import { pickImage, takeImage } from '@utils';
@@ -14,7 +15,7 @@ import Placeholder from '@assets/components/PicUpload/Placeholder';
 import Delete from '@assets/components/PicUpload/Delete';
 import Avatar from '@assets/components/ProfilePic/Avatar';
 import { popupAlert } from '@components/Alert/Alert.react';
-import { Colors } from '@styles';
+import { Colors, Typography } from '@styles';
 import * as Segment from 'expo-analytics-segment';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import Icon from '../Icon/Icon.react';
@@ -42,6 +43,7 @@ export interface Props {
   segmentErrorLogEvent?: string;
   avatarPlaceholder?: boolean;
   maintainStateImage: boolean;
+  oneCreditWarning?: boolean;
 }
 
 export interface State {
@@ -59,6 +61,7 @@ class PicUpload extends React.Component<Props, State> {
     initial: null,
     avatarPlaceholder: false,
     maintainStateImage: true,
+    oneCreditWarning: false,
   };
 
   constructor(props: Props) {
@@ -248,8 +251,25 @@ class PicUpload extends React.Component<Props, State> {
             <Icon svg={this.props.avatarPlaceholder ? Avatar : Camera} />
           </View>
         ) : (
-          <View testID="media placeholder">
-            <Icon svg={Placeholder} />
+          <View
+            testID="media placeholder"
+            style={{
+              width: 200,
+              height: 200,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {this.props.oneCreditWarning && (
+              <Text
+                style={[Typography.FONT_REGULAR, Styles.oneCreditWarningText]}
+              >
+                {i18n.t('Compose.oneCredit')}
+              </Text>
+            )}
+            <View style={{ position: 'absolute', width: 200, height: 200 }}>
+              <Icon svg={Placeholder} />
+            </View>
           </View>
         );
     }

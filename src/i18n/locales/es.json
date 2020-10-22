@@ -404,7 +404,8 @@
     "smallPostcardTitle": "Small photo",
     "mediumPostcardTitle": "Medium photo",
     "largePostcardTitle": "Large photo",
-    "selectBtn": "Seleccionar"
+    "selectBtn": "Seleccionar",
+    "oneCredit": "1 credit"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"

@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, Linking } from 'react-native';
-import { GrayBar, DisplayImage } from '@components';
+import { GrayBar, DisplayImage, ReviewCredits } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
@@ -28,6 +28,8 @@ interface Props {
   activeContact: Contact;
   composing: Draft;
   clearComposing: () => void;
+  ameelioBalance: number;
+  plusBalance: number;
 }
 
 class ReviewLetterScreenBase extends React.Component<Props> {
@@ -184,6 +186,12 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         >
           {i18n.t('Compose.warningCantCancel')}
         </Text>
+        <ReviewCredits
+          ameelioCost={Math.max(1, this.props.composing.images.length)}
+          ameelioBalance={this.props.ameelioBalance}
+          plusCost={1}
+          plusBalance={1}
+        />
       </View>
     );
   }
@@ -192,12 +200,12 @@ class ReviewLetterScreenBase extends React.Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   activeContact: state.contact.active,
+  ameelioBalance: state.user.user.credit,
+  plusBalance: state.user.user.coins,
 });
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
-  return {
-    clearComposing: () => dispatch(clearComposing()),
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  clearComposing: () => dispatch(clearComposing()),
+});
 const LetterPreviewScreen = connect(
   mapStateToProps,
   mapDispatchToProps

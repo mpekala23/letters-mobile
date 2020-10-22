@@ -404,7 +404,8 @@
     "mediumPostcardTitle": "Medium photo",
     "largePostcardTitle": "Large photo",
     "words": "words",
-    "selectBtn": "Select"
+    "selectBtn": "Select",
+    "oneCredit": "1 credit"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
@@ -473,5 +474,11 @@
     "message": "Help us out by leaving a review!",
     "takeMeToPlayStore": "Take me to the Play Store",
     "noThanks": "No thanks"
+  },
+  "Premium": {
+    "ameelio": "Ameelio",
+    "ameelios": "Ameelios",
+    "balance": "Balance",
+    "ameelioPlus": "Ameelio+"
   }
 }

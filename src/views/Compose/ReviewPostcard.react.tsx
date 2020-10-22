@@ -6,7 +6,7 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
-import { StaticPostcard } from '@components';
+import { ReviewCredits, StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { Draft, Contact, MailTypes } from 'types';
@@ -41,6 +41,8 @@ export interface Props {
       category: string;
     };
   };
+  ameelioBalance: number;
+  plusBalance: number;
 }
 
 class ReviewPostcardScreenBase extends React.Component<Props> {
@@ -206,6 +208,14 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             >
               {i18n.t('Compose.warningCantCancel')}
             </Text>
+            <ReviewCredits
+              ameelioBalance={this.props.ameelioBalance}
+              ameelioCost={
+                this.props.composing.type === MailTypes.Postcard
+                  ? this.props.composing.size.cost
+                  : 1
+              }
+            />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -216,6 +226,8 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   recipient: state.contact.active,
+  ameelioBalance: state.user.user.credit,
+  plusBalance: state.user.user.coins,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
