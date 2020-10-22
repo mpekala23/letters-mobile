@@ -36,15 +36,6 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
   'ComposeLetter'
 >;
 
-interface State {
-  keyboardOpacity: Animated.Value;
-  wordsLeft: number;
-  open: boolean;
-  valid: boolean;
-  text: string;
-  images: Image[];
-}
-
 interface Props {
   navigation: ComposeLetterScreenNavigationProp;
   composing: Draft;
@@ -52,6 +43,16 @@ interface Props {
   hasSentMail: boolean;
   setContent: (content: string) => void;
   setImages: (images: Image[]) => void;
+  credits: number;
+}
+
+interface State {
+  keyboardOpacity: Animated.Value;
+  wordsLeft: number;
+  open: boolean;
+  valid: boolean;
+  text: string;
+  images: Image[];
 }
 
 const MAX_NUM_IMAGES = 2;
@@ -237,7 +238,9 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   renderImages = (): JSX.Element[] => {
     const images: (Image | null)[] = [...this.state.images];
-    if (this.state.images.length < MAX_NUM_IMAGES) {
+    if (
+      this.state.images.length < Math.min(MAX_NUM_IMAGES, this.props.credits)
+    ) {
       images.push(null);
     }
     return images.map((image, index) => {
@@ -356,7 +359,8 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
               picRef={
-                this.state.images.length < MAX_NUM_IMAGES
+                this.state.images.length <
+                Math.min(MAX_NUM_IMAGES, this.props.credits)
                   ? this.imageUploadRef
                   : undefined
               }
@@ -375,6 +379,7 @@ const mapStateToProps = (state: AppState) => ({
   hasSentMail: Object.values(state.mail.existing).some(
     (mail) => mail.length > 0
   ),
+  credits: state.user.user.credit,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {

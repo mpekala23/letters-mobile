@@ -479,6 +479,9 @@
     "ameelio": "Ameelio",
     "ameelios": "Ameelios",
     "balance": "Balance",
-    "ameelioPlus": "Ameelio+"
+    "ameelioPlus": "Ameelio+",
+    "notEnoughAmeelioPlus": "Not enough Ameelio+",
+    "buyMoreAmeelioPlus": "Buy more Ameelio+",
+    "noThanks": "No thanks"
   }
 }

@@ -19,7 +19,7 @@ const ReviewCredits: React.FC<Props> = ({
 }: Props) => {
   return (
     <View style={Styles.background}>
-      {ameelioCost && ameelioBalance && (
+      {ameelioCost !== undefined && ameelioBalance !== undefined ? (
         <View style={Styles.currencyContainer}>
           <View style={Styles.numContainer}>
             <Text style={[Typography.FONT_REGULAR, Styles.bigNum]}>
@@ -40,8 +40,8 @@ const ReviewCredits: React.FC<Props> = ({
             </Text>
           </View>
         </View>
-      )}
-      {plusCost && plusBalance && (
+      ) : null}
+      {plusCost !== undefined && plusBalance !== undefined ? (
         <View style={Styles.currencyContainer}>
           <View style={Styles.numContainer}>
             <Text style={[Typography.FONT_REGULAR, Styles.bigNum]}>
@@ -58,7 +58,7 @@ const ReviewCredits: React.FC<Props> = ({
             </Text>
           </View>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

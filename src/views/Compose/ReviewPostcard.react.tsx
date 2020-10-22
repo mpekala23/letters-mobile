@@ -175,6 +175,12 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   }
 
   render() {
+    const plusCost =
+      this.props.composing.type === MailTypes.Postcard &&
+      this.props.composing.size.isPremium
+        ? this.props.composing.size.cost
+        : 0;
+
     return (
       <View style={Styles.screenBackground}>
         <ScrollView style={{ flex: 1 }}>
@@ -209,12 +215,12 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
               {i18n.t('Compose.warningCantCancel')}
             </Text>
             <ReviewCredits
-              ameelioBalance={this.props.ameelioBalance}
-              ameelioCost={
-                this.props.composing.type === MailTypes.Postcard
-                  ? this.props.composing.size.cost
-                  : 1
+              ameelioBalance={
+                plusCost > 0 ? undefined : this.props.ameelioBalance
               }
+              ameelioCost={plusCost > 0 ? undefined : 1}
+              plusBalance={plusCost > 0 ? this.props.plusBalance : undefined}
+              plusCost={plusCost > 0 ? plusCost : undefined}
             />
           </TouchableOpacity>
         </ScrollView>
