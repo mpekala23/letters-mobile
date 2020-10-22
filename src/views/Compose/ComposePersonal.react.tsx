@@ -20,7 +20,6 @@ import {
   ComposeTools,
 } from '@components';
 import {
-  PostcardDesign,
   Contact,
   Layout,
   Draft,
@@ -30,6 +29,7 @@ import {
   MailTypes,
   PlacedSticker,
   DraftPostcard,
+  PersonalDesign,
 } from 'types';
 import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -79,7 +79,7 @@ interface Props {
   hasSentMail: boolean;
   recipient: Contact;
   setContent: (content: string) => void;
-  setDesign: (design: PostcardDesign) => void;
+  setDesign: (design: PersonalDesign) => void;
 }
 
 interface State {
@@ -96,7 +96,7 @@ interface State {
     mediaGranted: boolean;
     endCursor: string;
     hasNextPage: boolean;
-    library: PostcardDesign[];
+    library: PersonalDesign[];
     activePosition: number;
     snapshot: Image | null;
   };
@@ -127,6 +127,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         bottomSlide: new Animated.Value(0),
         layout:
           props.composing.type === MailTypes.Postcard &&
+          props.composing.design.type === 'personal_design' &&
           props.composing.design.layout
             ? props.composing.design.layout
             : { ...LAYOUTS[0] },
@@ -220,9 +221,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
             width: value.width,
             height: value.height,
           };
-          const design: PostcardDesign = {
+          const design: PersonalDesign = {
             image,
-            custom: true,
+            thumbnail: image,
+            type: 'personal_design',
           };
           return design;
         });
@@ -275,7 +277,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       mediaGranted?: boolean;
       endCursor?: string;
       hasNextPage?: boolean;
-      library?: PostcardDesign[];
+      library?: PersonalDesign[];
       activePosition?: number;
       snapshot?: Image | null;
     },
@@ -342,9 +344,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         width: value.width,
         height: value.height,
       };
-      const design: PostcardDesign = {
+      const design: PersonalDesign = {
         image,
-        custom: true,
+        thumbnail: image,
+        type: 'personal_design',
       };
       return design;
     });
@@ -368,9 +371,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         this.props.composing.type === MailTypes.Postcard
           ? this.props.composing.design.image
           : { uri: '' },
-      custom: true,
       layout: this.state.designState.layout,
       categoryId: PERSONAL_OVERRIDE_ID,
+      thumbnail:
+        this.props.composing.type === MailTypes.Postcard
+          ? this.props.composing.design.image
+          : { uri: '' },
+      type: 'personal_design',
     });
     saveDraft(this.props.composing);
   }
@@ -394,9 +401,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         if (snapshot) {
           this.props.setDesign({
             image: snapshot,
-            custom: true,
             layout: this.state.designState.layout,
             categoryId: PERSONAL_OVERRIDE_ID,
+            type: 'personal_design',
+            thumbnail: snapshot,
           });
           saveDraft(this.props.composing);
         }
@@ -520,8 +528,16 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                     const layout = { ...this.state.designState.layout };
                     const commonLayout = { ...this.state.designState.layout };
                     const { activePosition } = this.state.designState;
-                    layout.designs[activePosition] = { image };
-                    commonLayout.designs[activePosition] = { image };
+                    layout.designs[activePosition] = {
+                      image,
+                      type: 'personal_design',
+                      thumbnail: image,
+                    };
+                    commonLayout.designs[activePosition] = {
+                      image,
+                      type: 'personal_design',
+                      thumbnail: image,
+                    };
                     this.setDesignState({
                       layout,
                       commonLayout,
@@ -551,7 +567,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     );
   };
 
-  renderGridItem(design: PostcardDesign): JSX.Element {
+  renderGridItem(design: PersonalDesign): JSX.Element {
     return (
       <TouchableOpacity
         style={{
@@ -575,7 +591,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         }}
       >
         <AsyncImage
-          source={design.thumbnail ? design.thumbnail : design.image}
+          source={design.thumbnail}
           imageStyle={{ flex: 1, aspectRatio: 1 }}
           autorotate={false}
         />
@@ -712,7 +728,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         <FlatList
           data={this.state.designState.library}
           renderItem={({ item }) => this.renderGridItem(item)}
-          keyExtractor={(item: PostcardDesign, index: number) => {
+          keyExtractor={(item: PersonalDesign, index: number) => {
             return `${item.image.uri} ${index.toString()}`;
           }}
           numColumns={3}
@@ -855,6 +871,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                         this.props.setDesign({
                           ...this.props.composing.design,
                           stickers,
+                          type: 'personal_design',
                         });
                     }}
                   />
@@ -884,7 +901,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDisptatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   setContent: (content: string) => dispatch(setContent(content)),
-  setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+  setDesign: (design: PersonalDesign) => dispatch(setDesign(design)),
 });
 
 const ComposePersonalScreen = connect(

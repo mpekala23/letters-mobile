@@ -8,6 +8,7 @@ import {
   PrisonTypes,
   RouteDetails,
   PremiumPack,
+  PacketDesign,
 } from 'types';
 
 export enum Tabs {
@@ -51,6 +52,8 @@ export enum Screens {
   IssuesDetailSecondary = 'IssuesDetailSecondary',
   Setup = 'Setup',
   SelectPostcardSize = 'SelectPostcardSize',
+  StoreItem = 'StoreItem',
+  StoreItemPreview = 'StoreItemPreview',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
@@ -118,6 +121,8 @@ export type AppStackParamList = {
   SelectPostcardSize: { category: Category };
   Setup: undefined;
   SingleContact: undefined;
+  StoreItem: { design: PacketDesign };
+  StoreItemPreview: { uri: string };
   Splash: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
@@ -222,11 +227,25 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
-  SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
+  SelectPostcardSize: {
+    title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home') },
   SupportFAQ: { title: '', profile: false },
   SupportFAQDetail: { title: '', profile: false },
+  StoreItem: {
+    title: i18n.t('Screens.storeItem'),
+    profile: false,
+    tabsVisible: false,
+  },
+  StoreItemPreview: {
+    title: i18n.t('Screens.inmateLocator'),
+    profile: false,
+    tabsVisible: false,
+  },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),
     profile: false,

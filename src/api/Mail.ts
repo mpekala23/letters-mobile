@@ -492,8 +492,8 @@ function cleanDesignType(type: string): DesignType {
 
 function cleanDesign(
   raw: RawDesign,
-  categoryId?: number,
-  subcategoryName?: string
+  categoryId: number,
+  subcategoryName: string
 ): PostcardDesign {
   const design: PostcardDesign = {
     image: {
@@ -506,7 +506,8 @@ function cleanDesign(
     subcategoryName,
     contentResearcher: raw.content_researcher,
     designer: raw.designer,
-    type: cleanDesignType(raw.type),
+    type: 'premade_postcard',
+    // type: cleanDesignType(raw.type),
   };
   if (categoryId && subcategoryName && design.id) {
     getImageDims(design.image.uri).then((dims) => {

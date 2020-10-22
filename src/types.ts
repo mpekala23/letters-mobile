@@ -32,23 +32,65 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
-export type DesignType = 'packet' | 'premade_postcard' | 'fallback';
+export type DesignType =
+  | 'packet'
+  | 'premade_postcard'
+  | 'personal_design'
+  | 'fallback';
 
-export interface PostcardDesign {
-  image: Image;
-  thumbnail?: Image;
+interface BaseDesign {
   id?: number;
   categoryId?: number;
   subcategoryName?: string;
-  name?: string;
-  author?: string;
-  custom?: boolean;
-  designer?: string;
-  contentResearcher?: string;
+  thumbnail: Image;
+}
+
+export interface PersonalDesign extends BaseDesign {
+  image: Image;
   layout?: Layout;
   stickers?: PlacedSticker[];
-  type?: DesignType;
+  type: 'personal_design';
 }
+
+export interface BasePremadeDesign extends BaseDesign {
+  // id: number;
+  name: string;
+  designer?: string;
+  contentResearcher?: string;
+  author?: string;
+  type: DesignType;
+}
+
+interface PacketSpecific {
+  asset: string;
+  type: 'packet';
+}
+
+interface PostcardDesignSpecific {
+  image: Image;
+  type: 'premade_postcard';
+}
+
+export type PremadePostcardDesign = BasePremadeDesign & PostcardDesignSpecific;
+export type PostcardDesign = PremadePostcardDesign | PersonalDesign;
+
+export type PacketDesign = BasePremadeDesign & PacketSpecific;
+
+// export interface PostcardDesign {
+//   image: Image;
+//   thumbnail?: Image;
+//   id?: number;
+//   categoryId?: number;
+//   subcategoryName?: string;
+//   name?: string;
+//   author?: string;
+//   custom?: boolean;
+//   designer?: string;
+//   contentResearcher?: string;
+//   layout?: Layout;
+//   stickers?: PlacedSticker[];
+//   type?: DesignType;
+// }
 
 interface LetterSpecific {
   type: MailTypes.Letter;
@@ -95,7 +137,7 @@ export interface Category {
 
 export interface Layout {
   id: number;
-  designs: Record<number, PostcardDesign | null>;
+  designs: Record<number, PersonalDesign | null>;
   svg: string;
 }
 

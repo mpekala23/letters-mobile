@@ -126,8 +126,7 @@ export async function saveDraft(draft: Draft): Promise<void> {
         : PERSONAL_OVERRIDE_ID.toString()
     );
     AsyncStorage.setItem(Storage.DraftPostcardSize, JSON.stringify(draft.size));
-    if (draft.design.layout) {
-      // personal postcard
+    if (draft.design.type === 'personal_design' && draft.design.layout) {
       Promise.all([
         AsyncStorage.setItem(
           Storage.DraftLayout,
@@ -201,9 +200,10 @@ export async function loadDraft(): Promise<Draft> {
           content: draftContent || '',
           design: {
             image: { uri: '' },
+            thumbnail: { uri: '' },
             layout: draftLayout ? JSON.parse(draftLayout) : undefined,
-            custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
+            type: 'personal_design',
           },
           size: postcardSize,
         };

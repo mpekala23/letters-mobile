@@ -11,7 +11,7 @@ import CreditPackCheckoutWebViewScreen from './Premium/CreditPackCheckoutWebView
 import CreditPackStoreScreen from './Premium/CreditPackStore';
 import CreditPackPurchaseSuccessScreen from './Premium/CreditPackPurchaseSuccess';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
-import InmateLocatorScreen from './AddContact/InmateLocator.react';
+import GenericWebViewScreen from './AddContact/GenericWebView.react';
 import IssuesScreen from './Report/Issues.react';
 import IntroContactScreen from './AddContact/IntroContact.react';
 import IssuesDetailScreen from './Report/IssuesDetail.react';
@@ -32,6 +32,7 @@ import ReviewPostcardScreen from './Compose/ReviewPostcard.react';
 import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
+import StoreItemScreen from './Store/StoreItem.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
 import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import TermsScreen from './Login/Terms.react';
@@ -52,7 +53,7 @@ export {
   CreditPackStoreScreen,
   CreditPackPurchaseSuccessScreen,
   FacilityDirectoryScreen,
-  InmateLocatorScreen,
+  GenericWebViewScreen,
   IntroContactScreen,
   IssuesScreen,
   IssuesDetailScreen,
@@ -73,6 +74,7 @@ export {
   SelectPostcardSizeScreen,
   SingleContactScreen,
   SplashScreen,
+  StoreItemScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,

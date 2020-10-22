@@ -20,7 +20,6 @@ interface Props {
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
   if (props.composing.type !== MailTypes.Postcard) return <View />;
-
   return (
     <View
       style={[

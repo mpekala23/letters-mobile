@@ -442,10 +442,12 @@
     "tracking": "Tracking",
     "memoryLane": "Memory Lane",
     "postcardPreview": "Photo Preview",
+    "previewItem": "Preview Item",
     "letterPreview": "Letter Preview",
     "spreadTheWord": "Spread the Word",
     "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
+    "storeItem": "Purchase",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
@@ -457,6 +459,10 @@
     "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
     "title": "Ameelio: Free Photos and Letters to Prison",
     "subjectLine": "Send free letters and photos to prison!"
+  },
+  "StoreItem": {
+    "description": "Description",
+    "viewBtn": "View",
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Help others now!",

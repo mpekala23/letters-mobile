@@ -14,6 +14,7 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import { FlatList } from 'react-native-gesture-handler';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import Styles from './SelectPostcardSize.styles';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
@@ -40,6 +41,8 @@ const SelectPostcardSizeBase = ({
     (draft as DraftPostcard).size
   );
 
+  const isFocused = useIsFocused();
+
   const updatePostcardOption = async () => {
     setProfileOverride(undefined);
     if (route.params.category.name === 'personal') {
@@ -57,20 +60,20 @@ const SelectPostcardSizeBase = ({
     updateDraft({ ...draft, size: selected } as DraftPostcard);
   }, [selected]);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+  useFocusEffect(
+    React.useCallback(() => {
       setProfileOverride({
         enabled: !!selected,
         text: i18n.t('Compose.selectBtn'),
         action: updatePostcardOption,
         blocking: true,
       });
-    });
-    return () => {
-      setProfileOverride(undefined);
-      unsubscribe();
-    };
-  }, []);
+
+      return () => {
+        setProfileOverride(undefined);
+      };
+    }, [])
+  );
 
   const renderItem = (option: PostcardSizeOption) => {
     const { image, title, wordsLimit, cost, isPremium } = option;

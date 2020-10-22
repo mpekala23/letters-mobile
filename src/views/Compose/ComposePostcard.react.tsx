@@ -13,22 +13,17 @@ import {
 } from 'react-native';
 import { EditablePostcard, ComposeTools, KeyboardAvoider } from '@components';
 import {
-  PostcardDesign,
   Draft,
   Image,
   Category,
   Contact,
   MailTypes,
   DraftPostcard,
+  PremadePostcardDesign,
+  PostcardDesign,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import {
-  WINDOW_WIDTH,
-  takeImage,
-  capitalize,
-  getNumWords,
-  getImageDims,
-} from '@utils';
+import { WINDOW_WIDTH, capitalize, getNumWords, getImageDims } from '@utils';
 import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -38,7 +33,6 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { setContent, setDesign } from '@store/Mail/MailActions';
 import { connect } from 'react-redux';
 import { saveDraft } from '@api';
-import * as MediaLibrary from 'expo-media-library';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
@@ -68,7 +62,7 @@ interface Props {
   hasSentMail: boolean;
   recipient: Contact;
   setContent: (content: string) => void;
-  setDesign: (design: PostcardDesign) => void;
+  setDesign: (design: PremadePostcardDesign) => void;
   updateDesignImage: (
     categoryId: number,
     subcategoryName: string,
@@ -79,18 +73,15 @@ interface Props {
 
 interface State {
   subcategory: string;
-  design: PostcardDesign;
-  loading: PostcardDesign | null;
+  design: PremadePostcardDesign;
+  loading: PremadePostcardDesign | null;
   writing: boolean;
   flip: Animated.Value;
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
   valid: boolean;
-  mediaGranted: boolean;
   renderMethod: 'grid' | 'bars';
   horizontal: boolean;
-  endCursor: string;
-  hasNextPage: boolean;
 }
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
@@ -114,18 +105,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       subcategory: props.initialSubcategory,
       design: {
         image: { uri: '' },
+        thumbnail: { uri: '' },
+        name: '',
+        type: 'premade_postcard',
       },
       writing: false,
       flip: new Animated.Value(0),
       keyboardOpacity: new Animated.Value(0),
       wordsLeft: (this.props.composing as DraftPostcard).size.wordsLimit,
       valid: true,
-      mediaGranted: true,
       renderMethod: 'grid',
       horizontal: true,
       loading: null,
-      endCursor: '',
-      hasNextPage: true,
     };
 
     this.beginWriting = this.beginWriting.bind(this);
@@ -138,7 +129,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     this.changeText = this.changeText.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
-    this.loadMoreImages = this.loadMoreImages.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
@@ -168,6 +158,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     const { composing } = this.props;
     if (
       composing.type === MailTypes.Postcard &&
+      composing.design.type === 'premade_postcard' &&
       composing.design.image.uri.length
     ) {
       if (composing.design.subcategoryName) {
@@ -246,52 +237,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       });
     }
 
-    if (this.props.route.params.category.name === 'personal') {
-      this.setState({ renderMethod: 'grid' });
-      let finalStatus = (await MediaLibrary.getPermissionsAsync()).status;
-      if (finalStatus !== 'granted') {
-        finalStatus = (await MediaLibrary.requestPermissionsAsync()).status;
-      }
-      this.setState({ mediaGranted: finalStatus === 'granted' });
-      if (finalStatus === 'granted') {
-        const {
-          assets,
-          hasNextPage,
-          endCursor,
-        } = await MediaLibrary.getAssetsAsync({
-          sortBy: [[MediaLibrary.SortBy.creationTime, false]],
-        });
-        const library = assets.map((value) => {
-          const image: Image = {
-            uri: value.uri,
-            width: value.width,
-            height: value.height,
-          };
-          const design: PostcardDesign = {
-            image,
-            custom: true,
-          };
-          return design;
-        });
-        this.setState({ subcategory: 'Library', hasNextPage, endCursor });
-        this.props.navigation.setParams({
-          category: {
-            ...this.props.route.params.category,
-            subcategories: {
-              Library: library,
-              'Take Photo': [],
-            },
-          },
-        });
-      }
-    } else {
-      this.setState({
-        renderMethod: 'bars',
-        subcategory: Object.keys(
-          this.props.route.params.category.subcategories
-        )[0],
-      });
-    }
+    this.setState({
+      renderMethod: 'grid',
+      subcategory: Object.keys(
+        this.props.route.params.category.subcategories
+      )[0],
+    });
   };
 
   onNavigationBlur = (): void => {
@@ -357,7 +308,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     saveDraft(this.props.composing);
   }
 
-  changeDesign(design: PostcardDesign): void {
+  changeDesign(design: PremadePostcardDesign): void {
     if (design === this.state.design) return;
     saveDraft(this.props.composing);
     this.props.setDesign(design);
@@ -374,47 +325,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     Segment.trackWithProperties('Compose - Add Image Success', {
       Option: 'Postcard',
       orientation: this.state.horizontal ? 'horizontal' : 'vertical',
-    });
-  }
-
-  async loadMoreImages(): Promise<void> {
-    if (this.props.route.params.category.name !== 'personal') return;
-    if (!this.state.hasNextPage) return;
-    const {
-      assets,
-      hasNextPage,
-      endCursor,
-    } = await MediaLibrary.getAssetsAsync({
-      after: this.state.endCursor,
-      sortBy: [[MediaLibrary.SortBy.creationTime, false]],
-    });
-    const library = this.props.route.params.category.subcategories.Library;
-    if (!library) return;
-    const designs = assets.map((value) => {
-      const image: Image = {
-        uri: value.uri,
-        width: value.width,
-        height: value.height,
-      };
-      const design: PostcardDesign = {
-        image,
-        custom: true,
-      };
-      return design;
-    });
-    const newLibrary = library.concat(designs);
-    this.props.navigation.setParams({
-      category: {
-        ...this.props.route.params.category,
-        subcategories: {
-          Library: newLibrary,
-          'Take Photo': [],
-        },
-      },
-    });
-    this.setState({
-      hasNextPage,
-      endCursor,
     });
   }
 
@@ -503,6 +413,15 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     });
   }
 
+  narrowData(): PremadePostcardDesign[] {
+    const data = this.props.route.params.category.subcategories[
+      this.state.subcategory
+    ];
+    return data && data.length && data[0].type === 'premade_postcard'
+      ? (data as PremadePostcardDesign[])
+      : [];
+  }
+
   renderSubcategorySelector(): JSX.Element {
     const subcategories = Object.keys(
       this.props.route.params.category.subcategories
@@ -523,26 +442,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 'Compose - Click on Subcategory Option',
                 { subcategory }
               );
-              if (subcategory === 'Take Photo') {
-                try {
-                  const image = await takeImage({
-                    aspect: [6, 4],
-                    allowsEditing: true,
-                  });
-                  if (image) {
-                    this.changeDesign({
-                      image,
-                      custom: true,
-                      name: 'Personal Photo',
-                      subcategoryName: 'Selfie',
-                    });
-                  }
-                } catch (err) {
-                  dropdownError({ message: i18n.t('Permission.camera') });
-                }
-              } else {
-                this.setState({ subcategory });
-              }
+              this.setState({ subcategory });
             }}
             key={subcategory}
           >
@@ -566,12 +466,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     );
   }
 
-  renderGridItem(design: PostcardDesign): JSX.Element {
+  renderGridItem(design: PremadePostcardDesign): JSX.Element {
     return (
       <TouchableOpacity
         style={{
-          width: (WINDOW_WIDTH - 32) / 3,
-          height: (WINDOW_WIDTH - 32) / 3,
+          width: (WINDOW_WIDTH - 32) / 2,
+          height: (WINDOW_WIDTH - 32) / 2,
           margin: 4,
         }}
         onPress={() => {
@@ -586,7 +486,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     );
   }
 
-  renderBarItem(design: PostcardDesign): JSX.Element {
+  renderBarItem(design: PremadePostcardDesign): JSX.Element {
     const width = WINDOW_WIDTH - 24;
     const height = width / 2.5;
     return (
@@ -603,7 +503,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         }}
       >
         <AsyncImage
-          source={design.thumbnail ? design.thumbnail : design.image}
+          source={design.thumbnail}
           imageStyle={{
             flex: 1,
             aspectRatio: width / height,
@@ -631,7 +531,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     );
   }
 
-  renderItem(design: PostcardDesign): JSX.Element {
+  renderItem(design: PremadePostcardDesign): JSX.Element {
     if (this.state.renderMethod === 'grid') {
       return this.renderGridItem(design);
     }
@@ -642,19 +542,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const emptyLoading = (
-      <View
-        style={{
-          flex: 1,
-          height: 300,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
-      </View>
-    );
-
+    const data = this.narrowData();
     return (
       <TouchableOpacity
         activeOpacity={1.0}
@@ -719,50 +607,19 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               ]}
             >
               {this.renderSubcategorySelector()}
-              {this.state.mediaGranted && (
-                <FlatList
-                  data={
-                    this.props.route.params.category.subcategories[
-                      this.state.subcategory
-                    ]
-                  }
-                  renderItem={({ item }) => this.renderItem(item)}
-                  keyExtractor={(item: PostcardDesign, index: number) => {
-                    return item.image.uri + index.toString();
-                  }}
-                  numColumns={
-                    this.state.renderMethod === 'grid' ? 3 : undefined
-                  }
-                  contentContainerStyle={Styles.gridBackground}
-                  key={this.state.renderMethod}
-                  onEndReached={this.loadMoreImages}
-                  ListEmptyComponent={emptyLoading}
-                />
-              )}
-              {this.props.route.params.category.name === 'personal' &&
-                !this.state.mediaGranted && (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Text
-                      style={[
-                        Typography.FONT_REGULAR,
-                        {
-                          fontSize: 18,
-                          paddingHorizontal: 10,
-                          color: 'white',
-                          textAlign: 'center',
-                        },
-                      ]}
-                    >
-                      {i18n.t('Permission.photos')}
-                    </Text>
-                  </View>
-                )}
+
+              <FlatList
+                data={data}
+                renderItem={({ item }) => this.renderItem(item)}
+                keyExtractor={(item: PremadePostcardDesign, index: number) => {
+                  return item.image.uri + index.toString();
+                }}
+                numColumns={this.state.renderMethod === 'grid' ? 2 : undefined}
+                contentContainerStyle={Styles.gridBackground}
+                key={this.state.renderMethod}
+                // onEndReached={this.loadMoreImages}
+                // ListEmptyComponent={emptyLoading}
+              />
             </Animated.View>
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
@@ -787,7 +644,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch<MailActionTypes | CategoryActionTypes>
 ) => ({
   setContent: (content: string) => dispatch(setContent(content)),
-  setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
+  setDesign: (design: PremadePostcardDesign) => dispatch(setDesign(design)),
   updateDesignImage: (
     categoryId: number,
     subcategoryName: string,
