@@ -33,7 +33,6 @@ export type Subscription = {
 export enum MailTypes {
   Letter = 'letter',
   Postcard = 'postcard',
-  Packet = 'packet',
 }
 
 export type DesignType =
@@ -87,6 +86,7 @@ export type PostcardDesign = PremadePostcardDesign | PersonalDesign;
 interface LetterSpecific {
   type: MailTypes.Letter;
   images: Image[];
+  pdf?: string;
 }
 
 interface PostcardSpecific {
@@ -144,9 +144,7 @@ export type DraftLetter = DraftInfo & LetterSpecific;
 
 export type DraftPostcard = DraftInfo & PostcardSpecific;
 
-export type DraftPacket = DraftInfo & { type: MailTypes.Packet; asset: string };
-
-export type Draft = DraftLetter | DraftPostcard | DraftPacket;
+export type Draft = DraftLetter | DraftPostcard;
 
 // Letters and Postcards (Mail)
 interface MailInfo extends DraftInfo {

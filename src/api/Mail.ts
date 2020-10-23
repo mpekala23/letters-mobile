@@ -414,8 +414,8 @@ export async function createMail(
       };
       throw uploadError;
     }
-  } else if (prepDraft.type === MailTypes.Packet) {
-    pdf_path = prepDraft.asset;
+  } else if (prepDraft.pdf) {
+    pdf_path = prepDraft.pdf;
   } else if (prepDraft.images.length) {
     try {
       const uris = await Promise.all(

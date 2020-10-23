@@ -35,10 +35,11 @@ const SelectRecipientBase = ({ contacts, navigation, route }: Props) => {
     try {
       await createMail(
         {
-          type: MailTypes.Packet,
+          type: MailTypes.Letter,
           recipientId: recipient.id,
           content: '',
-          asset: item.asset.uri,
+          images: [],
+          pdf: item.asset.uri,
         },
         item.productId
       );

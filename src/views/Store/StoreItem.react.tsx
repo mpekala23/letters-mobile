@@ -62,10 +62,8 @@ const StoreItemBase: React.FC<Props> = ({
             {capitalize(item.name)}
           </Text>
           <Button
-            containerStyle={{ alignSelf: 'center' }}
             reverse
             buttonText={i18n.t('StoreItem.viewBtn')}
-            showNextIcon
             onPress={() => {
               navigation.navigate(Screens.StoreItemPreview, {
                 uri: item.asset.uri,
@@ -76,7 +74,7 @@ const StoreItemBase: React.FC<Props> = ({
         <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
           {i18n.t('StoreItem.description')}
         </Text>
-        <Text style={Typography.FONT_BOLD}>{item.blurb}</Text>
+        <Text style={{ marginBottom: 16 }}>{item.blurb}</Text>
         <Button
           buttonText={i18n.t('StoreItem.purchaseBtn')}
           onPress={initiatePurchase}
