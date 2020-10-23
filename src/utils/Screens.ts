@@ -55,6 +55,7 @@ export enum Screens {
   MailTracking = 'MailTracking',
   MemoryLane = 'MemoryLane',
   MailDetails = 'MailDetails',
+  Store = 'Store',
   SupportFAQ = 'SupportFAQ',
   SupportFAQDetail = 'SupportFAQDetail',
   UpdateContact = 'UpdateContact',
@@ -119,6 +120,7 @@ export type AppStackParamList = {
   Setup: undefined;
   SingleContact: undefined;
   Splash: undefined;
+  Store: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
   UpdateContact: { contactId: number } | undefined;
@@ -225,6 +227,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home') },
+  Store: { title: i18n.t('Screens.store'), profile: true },
   SupportFAQ: { title: '', profile: false },
   SupportFAQDetail: { title: '', profile: false },
   UpdateContact: {

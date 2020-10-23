@@ -1,4 +1,4 @@
-const GoldenBirdCoin = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+const GoldenBirdCoin = `<svg width="100%" height="100%" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="7" cy="7" r="7" fill="#FFB600"/>
 <circle cx="7" cy="7.00023" r="5.92308" fill="#FFDE55"/>
 <g clip-path="url(#clip0)">
