@@ -447,7 +447,8 @@
     "spreadTheWord": "Spread the Word",
     "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
-    "storeItem": "Purchase",
+    "storeItem": "Trinket",
+    "storeItemPreview": "Preview",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
@@ -464,6 +465,7 @@
   "StoreItem": {
     "description": "Description",
     "viewBtn": "View",
+    "purchaseBtn": "Purchase"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Help others now!",
@@ -484,8 +486,6 @@
   "Premium": {
     "ameelioPlusLeft": "Ameelio+ left",
     "yourAmeelioPlus": "Your Ameelio+",
-    "page": "page",
-    "pages": "pages",
     "viewHistory": "View history"
   }
 }

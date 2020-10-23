@@ -5,7 +5,6 @@ import store from '@store';
 import url from 'url';
 import {
   Draft,
-  DesignType,
   Mail,
   TrackingEvent,
   MailTypes,
@@ -133,7 +132,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     });
   }
   const design: PostcardDesign = {
-    image: images.length ? images[0] : { uri: '' },
+    asset: images.length ? images[0] : { uri: '' },
     type: 'personal_design', // TODO: refactor so we don't need to do this
     categoryId: PERSONAL_OVERRIDE_ID,
   };
@@ -213,7 +212,11 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   if (mail.images.length) {
     images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    asset: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor this so that we dont need to pass a type
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
   const dateCreated = new Date(mail.created_at).toISOString();
 
   let status;
@@ -486,6 +489,8 @@ interface RawDesign {
   subcategory_id: number;
   designer?: string;
   content_researcher?: string;
+  color: boolean;
+  price: number;
 }
 
 function cleanDesign(
@@ -502,10 +507,12 @@ function cleanDesign(
     content_researcher,
     thumbnail_src,
     front_img_src,
+    price,
+    color,
   } = raw;
   if (type === 'premade_postcard') {
     const design: PremadePostcardDesign = {
-      image: {
+      asset: {
         uri: front_img_src,
       },
       thumbnail: { uri: thumbnail_src },
@@ -517,6 +524,8 @@ function cleanDesign(
       designer,
       blurb,
       type,
+      color,
+      price,
     };
     if (categoryId && subcategoryName && design.id) {
       getImageDims(design.asset.uri).then((dims) => {
@@ -543,6 +552,8 @@ function cleanDesign(
     designer,
     blurb,
     type: 'packet',
+    color,
+    price,
   };
 }
 

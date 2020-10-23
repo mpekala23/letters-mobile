@@ -62,6 +62,8 @@ export interface BasePremadeDesign extends BaseDesign {
   author?: string;
   type: DesignType;
   thumbnail: Image;
+  price: number;
+  color: boolean;
 }
 
 interface PacketSpecific {

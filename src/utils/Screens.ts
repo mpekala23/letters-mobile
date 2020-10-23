@@ -8,7 +8,7 @@ import {
   PrisonTypes,
   RouteDetails,
   PremiumPack,
-  PacketDesign,
+  PremadeDesign,
 } from 'types';
 
 export enum Tabs {
@@ -122,7 +122,7 @@ export type AppStackParamList = {
   SelectPostcardSize: { category: Category };
   Setup: undefined;
   SingleContact: undefined;
-  StoreItem: { design: PacketDesign };
+  StoreItem: { item: PremadeDesign };
   StoreItemPreview: { uri: string };
   Splash: undefined;
   Store: undefined;
@@ -249,7 +249,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     tabsVisible: false,
   },
   StoreItemPreview: {
-    title: i18n.t('Screens.inmateLocator'),
+    title: i18n.t('Screens.storeItemPreview'),
     profile: false,
     tabsVisible: false,
   },

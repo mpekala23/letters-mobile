@@ -25,6 +25,7 @@ import {
   ReviewPostcardScreen,
   SelectPostcardSizeScreen,
   SingleContactScreen,
+  StoreItemScreen,
   SupportFAQDetailScreen,
   SupportFAQScreen,
   UpdateContactScreen,
@@ -181,6 +182,7 @@ const Home: React.FC = () => {
         name={Screens.InmateLocator}
         component={GenericWebViewScreen}
       />
+      <HomeStack.Screen name={Screens.StoreItem} component={StoreItemScreen} />
       <HomeStack.Screen
         name={Screens.StoreItemPreview}
         component={GenericWebViewScreen}

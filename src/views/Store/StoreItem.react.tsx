@@ -4,11 +4,12 @@ import i18n from '@i18n';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppState } from '@store/types';
 import { Typography } from '@styles';
-import { PacketDesign } from 'types';
+import { DesignPacket } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { capitalize } from '@utils';
 import Styles from './StoreItem.styles';
 
 type StoreItemScreenNavigationProp = StackNavigationProp<
@@ -19,7 +20,7 @@ type StoreItemScreenNavigationProp = StackNavigationProp<
 interface Props {
   coins: number;
   navigation: StoreItemScreenNavigationProp;
-  route: { params: { item: PacketDesign } };
+  route: { params: { item: DesignPacket } };
 }
 
 const StoreItemBase: React.FC<Props> = ({
@@ -29,48 +30,59 @@ const StoreItemBase: React.FC<Props> = ({
 }: Props) => {
   const { item } = route.params;
 
-  const initiatePurchase = () => {
-    //   TODO: if we dont have enough coins display modal
-    // if (!coins) {
-    //   popupAlert({
-    //     title: i18n.t('Compose.uploadAnImage'),
-    //     buttons: [
-    //       {
-    //         text: i18n.t('Compose.takePhoto'),
-    //         onPress: async () => {},
-    //       },
-    //       {
-    //         text: i18n.t('Compose.uploadExistingPhoto'),
-    //         reverse: true,
-    //         onPress: async () => {},
-    //       },
-    //     ],
-    //   });
-    // }
+  const initiatePurchase = (): void => {
+    if (coins < item.price) {
+      popupAlert({
+        title: i18n.t('Premium.notEnoughAmeelioPlus'),
+        buttons: [
+          {
+            text: i18n.t('Premium.buyMoreAmeelioPlus'),
+            onPress: () => {
+              navigation.navigate(Screens.CreditPackStore);
+            },
+          },
+          { text: i18n.t('Premium.noThanks'), reverse: true },
+        ],
+      });
+      return;
+    }
+    navigation.navigate(Screens.CreditPackStore);
   };
   return (
-    <View style={Styles.trueBackground}>
-      <Text style={Typography.FONT_BOLD}>{item.name}</Text>
+    <View style={Styles.wrapper}>
       <AsyncImage
         download
         source={item.thumbnail}
         autorotate={false}
-        viewStyle={{ width: '100%', height: '100%' }}
+        viewStyle={{ width: '100%', height: '30%' }}
       />
-      <Button
-        reverse
-        buttonText={i18n.t('StoreItem.viewBtn')}
-        onPress={() => {
-          navigation.navigate(Screens.StoreItemPreview, { uri: item.asset });
-        }}
-      />
-      <Text style={Typography.FONT_BOLD}>
-        {i18n.t('StoreItem.description')}
-      </Text>
-      <Button
-        buttonText={i18n.t('StoreItem.viewBtn')}
-        onPress={initiatePurchase}
-      />
+      <View style={Styles.container}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
+            {capitalize(item.name)}
+          </Text>
+          <Button
+            containerStyle={{ alignSelf: 'center' }}
+            reverse
+            buttonText={i18n.t('StoreItem.viewBtn')}
+            showNextIcon
+            onPress={() => {
+              navigation.navigate(Screens.StoreItemPreview, {
+                uri: item.asset.uri,
+              });
+            }}
+          />
+        </View>
+
+        <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
+          {i18n.t('StoreItem.description')}
+        </Text>
+        <Text style={Typography.FONT_BOLD}>{item.blurb}</Text>
+        <Button
+          buttonText={i18n.t('StoreItem.purchaseBtn')}
+          onPress={initiatePurchase}
+        />
+      </View>
     </View>
   );
 };
