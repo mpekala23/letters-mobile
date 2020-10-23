@@ -55,8 +55,6 @@ interface State {
   images: Image[];
 }
 
-const MAX_NUM_IMAGES = 2;
-
 class ComposeLetterScreenBase extends React.Component<Props, State> {
   private textRef = createRef<TextInput>();
 
@@ -238,9 +236,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   renderImages = (): JSX.Element[] => {
     const images: (Image | null)[] = [...this.state.images];
-    if (
-      this.state.images.length < Math.min(MAX_NUM_IMAGES, this.props.credits)
-    ) {
+    if (this.state.images.length < this.props.credits) {
       images.push(null);
     }
     return images.map((image, index) => {
@@ -359,8 +355,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
               picRef={
-                this.state.images.length <
-                Math.min(MAX_NUM_IMAGES, this.props.credits)
+                this.state.images.length < this.props.credits
                   ? this.imageUploadRef
                   : undefined
               }

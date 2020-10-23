@@ -187,10 +187,9 @@ class ReviewLetterScreenBase extends React.Component<Props> {
           {i18n.t('Compose.warningCantCancel')}
         </Text>
         <ReviewCredits
-          ameelioCost={Math.max(1, this.props.composing.images.length)}
-          ameelioBalance={this.props.ameelioBalance}
-          plusCost={1}
-          plusBalance={1}
+          type="free"
+          cost={Math.max(1, this.props.composing.images.length)}
+          balance={this.props.ameelioBalance}
         />
       </View>
     );

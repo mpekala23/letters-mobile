@@ -18,6 +18,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Colors, Typography } from '@styles';
 import * as Segment from 'expo-analytics-segment';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
+import AdjustableText from '@components/Text/AdjustableText.react';
 import Icon from '../Icon/Icon.react';
 import Styles from './PicUpload.style';
 import AsyncImage from '../AsyncImage/AsyncImage.react';
@@ -261,11 +262,12 @@ class PicUpload extends React.Component<Props, State> {
             }}
           >
             {this.props.oneCreditWarning && (
-              <Text
+              <AdjustableText
+                numberOfLines={1}
                 style={[Typography.FONT_REGULAR, Styles.oneCreditWarningText]}
               >
                 {i18n.t('Compose.oneCredit')}
-              </Text>
+              </AdjustableText>
             )}
             <View style={{ position: 'absolute', width: 200, height: 200 }}>
               <Icon svg={Placeholder} />

@@ -215,12 +215,13 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
               {i18n.t('Compose.warningCantCancel')}
             </Text>
             <ReviewCredits
-              ameelioBalance={
-                plusCost > 0 ? undefined : this.props.ameelioBalance
+              type={plusCost > 0 ? 'premium' : 'free'}
+              cost={plusCost > 0 ? plusCost : 1}
+              balance={
+                plusCost > 0
+                  ? this.props.plusBalance
+                  : this.props.ameelioBalance
               }
-              ameelioCost={plusCost > 0 ? undefined : 1}
-              plusBalance={plusCost > 0 ? this.props.plusBalance : undefined}
-              plusCost={plusCost > 0 ? plusCost : undefined}
             />
           </TouchableOpacity>
         </ScrollView>
