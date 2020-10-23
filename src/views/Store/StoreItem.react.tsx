@@ -46,7 +46,7 @@ const StoreItemBase: React.FC<Props> = ({
       });
       return;
     }
-    navigation.navigate(Screens.CreditPackStore);
+    navigation.navigate(Screens.SelectRecipient, { item });
   };
   return (
     <View style={Styles.wrapper}>
@@ -73,7 +73,6 @@ const StoreItemBase: React.FC<Props> = ({
             }}
           />
         </View>
-
         <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
           {i18n.t('StoreItem.description')}
         </Text>
@@ -89,6 +88,7 @@ const StoreItemBase: React.FC<Props> = ({
 
 const mapStateToProps = (state: AppState) => {
   return {
+    contacts: state.contact.existing,
     coins: state.user.user.coins,
   };
 };

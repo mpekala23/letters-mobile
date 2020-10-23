@@ -33,6 +33,7 @@ import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
 import StoreItemScreen from './Store/StoreItem.react';
+import SelectRecipientScreen from './Store/SelectRecipient.react';
 import StoreScreen from './Store/Store.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
 import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
@@ -73,6 +74,7 @@ export {
   ReviewPostcardScreen,
   ReviewContactScreen,
   SelectPostcardSizeScreen,
+  SelectRecipientScreen,
   SingleContactScreen,
   SplashScreen,
   StoreItemScreen,

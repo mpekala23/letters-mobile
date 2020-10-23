@@ -52,6 +52,7 @@ export enum Screens {
   IssuesDetailSecondary = 'IssuesDetailSecondary',
   Setup = 'Setup',
   SelectPostcardSize = 'SelectPostcardSize',
+  SelectRecipient = 'SelectRecipient',
   StoreItem = 'StoreItem',
   StoreItemPreview = 'StoreItemPreview',
   SingleContact = 'SingleContact',
@@ -120,6 +121,7 @@ export type AppStackParamList = {
   ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
   SelectPostcardSize: { category: Category };
+  SelectRecipient: { item: PremadeDesign };
   Setup: undefined;
   SingleContact: undefined;
   StoreItem: { item: PremadeDesign };
@@ -235,6 +237,11 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   SelectPostcardSize: {
     title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
+  SelectRecipient: {
+    title: i18n.t('Screens.selectRecipient'),
     profile: false,
     tabsVisible: false,
   },

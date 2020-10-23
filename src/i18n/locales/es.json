@@ -198,7 +198,7 @@
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
-  },
+  },  
   "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
@@ -252,6 +252,9 @@
     "invalidInmateNumber": "Número de preso inválido",
     "contactAlreadyExists": "Contacto ya existe",
     "addContact": "Agregar contacto"
+  },
+  "SelectRecipient": {
+    "header": "Select recipient" 
   },
   "SingleContactScreen": {
     "received": "recibido",
@@ -448,7 +451,9 @@
     "spreadTheWord": "Correr la voz",
     "referralDashboard": "Tu impacto",
     "reviewContact": "Revisar contacto",
-    "storeItem": "Purchase",
+    "storeItem": "Trinket",
+    "selectRecipient": "Recipient",
+    "storeItemPreview": "Preview",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",

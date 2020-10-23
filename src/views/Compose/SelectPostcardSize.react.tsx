@@ -14,7 +14,7 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import { FlatList } from 'react-native-gesture-handler';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import Styles from './SelectPostcardSize.styles';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
@@ -40,8 +40,6 @@ const SelectPostcardSizeBase = ({
   const [selected, setSelected] = useState<PostcardSizeOption>(
     (draft as DraftPostcard).size
   );
-
-  const isFocused = useIsFocused();
 
   const updatePostcardOption = async () => {
     setProfileOverride(undefined);

@@ -376,7 +376,10 @@ export async function getTrackingEvents(id: number): Promise<Mail> {
   return mail;
 }
 
-export async function createMail(draft: Draft): Promise<Mail> {
+export async function createMail(
+  draft: Draft,
+  productId?: number
+): Promise<Mail> {
   const { user } = store.getState().user;
   if (user.credit <= 0) {
     popupAlert({
@@ -388,9 +391,10 @@ export async function createMail(draft: Draft): Promise<Mail> {
 
   const prepDraft = { ...draft };
   let imageExtension = {};
+  let pdf_path = null;
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      if (prepDraft.design.custom) {
+      if (prepDraft.design.type === 'personal_design') {
         prepDraft.design.asset = await uploadImage(
           prepDraft.design.asset,
           'letter'
@@ -410,6 +414,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
+  } else if (prepDraft.type === MailTypes.Packet) {
+    pdf_path = prepDraft.asset;
   } else if (prepDraft.images.length) {
     try {
       const uris = await Promise.all(
@@ -442,6 +448,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     size:
       prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
     ...imageExtension,
+    product_id: productId,
+    pdf_path,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
@@ -487,6 +495,7 @@ interface RawDesign {
   type: string;
   back: null;
   subcategory_id: number;
+  product_id: number;
   designer?: string;
   content_researcher?: string;
   color: boolean;
@@ -509,6 +518,7 @@ function cleanDesign(
     front_img_src,
     price,
     color,
+    product_id,
   } = raw;
   if (type === 'premade_postcard') {
     const design: PremadePostcardDesign = {
@@ -526,6 +536,7 @@ function cleanDesign(
       type,
       color,
       price,
+      productId: product_id,
     };
     if (categoryId && subcategoryName && design.id) {
       getImageDims(design.asset.uri).then((dims) => {
@@ -554,6 +565,7 @@ function cleanDesign(
     type: 'packet',
     color,
     price,
+    productId: product_id,
   };
 }
 

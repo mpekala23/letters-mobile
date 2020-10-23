@@ -32,7 +32,7 @@
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks",
     "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later.",
-    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later."
+    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later.",
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -253,6 +253,9 @@
     "contactAlreadyExists": "Contact already exists",
     "addContact": "Add Contact"
   },
+  "SelectRecipient": {
+    "header": "Select recipient" 
+  },
   "SingleContactScreen": {
     "received": "received",
     "sent": "sent",
@@ -448,6 +451,7 @@
     "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
     "storeItem": "Trinket",
+    "selectRecipient": "Recipient",
     "storeItemPreview": "Preview",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
@@ -465,7 +469,7 @@
   "StoreItem": {
     "description": "Description",
     "viewBtn": "View",
-    "purchaseBtn": "Purchase"
+    "purchaseBtn": "Checkout"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Help others now!",

@@ -33,6 +33,7 @@ export type Subscription = {
 export enum MailTypes {
   Letter = 'letter',
   Postcard = 'postcard',
+  Packet = 'packet',
 }
 
 export type DesignType =
@@ -64,6 +65,7 @@ export interface BasePremadeDesign extends BaseDesign {
   thumbnail: Image;
   price: number;
   color: boolean;
+  productId: number;
 }
 
 interface PacketSpecific {
@@ -142,7 +144,9 @@ export type DraftLetter = DraftInfo & LetterSpecific;
 
 export type DraftPostcard = DraftInfo & PostcardSpecific;
 
-export type Draft = DraftLetter | DraftPostcard;
+export type DraftPacket = DraftInfo & { type: MailTypes.Packet; asset: string };
+
+export type Draft = DraftLetter | DraftPostcard | DraftPacket;
 
 // Letters and Postcards (Mail)
 interface MailInfo extends DraftInfo {
@@ -157,7 +161,9 @@ export type MailLetter = MailInfo & LetterSpecific;
 
 export type MailPostcard = MailInfo & PostcardSpecific;
 
-export type Mail = MailLetter | MailPostcard;
+export type MailPacket = MailInfo & DesignPacket;
+
+export type Mail = MailLetter | MailPostcard | MailPacket;
 
 export enum PostcardSize {
   Small = '4x6',

@@ -4,6 +4,9 @@ import {
   CreditPackStoreScreen,
   CreditPackPurchaseSuccessScreen,
   StoreScreen,
+  StoreItemScreen,
+  SelectRecipientScreen,
+  GenericWebViewScreen,
 } from '@views';
 import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import { HeaderTitle, HeaderLeft, HeaderRight } from '@components';
@@ -42,6 +45,15 @@ const Store: React.FC = () => {
       })}
     >
       <StoreStack.Screen name={Screens.Store} component={StoreScreen} />
+      <StoreStack.Screen name={Screens.StoreItem} component={StoreItemScreen} />
+      <StoreStack.Screen
+        name={Screens.StoreItemPreview}
+        component={GenericWebViewScreen}
+      />
+      <StoreStack.Screen
+        name={Screens.SelectRecipient}
+        component={SelectRecipientScreen}
+      />
       <StoreStack.Screen
         name={Screens.CreditPackStore}
         component={CreditPackStoreScreen}
