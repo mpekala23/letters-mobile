@@ -47,6 +47,7 @@ interface ClearComposingAction {
 // Mail actions
 export const ADD_MAIL = 'mail/add_mail';
 export const SET_ACTIVE = 'mail/set_active';
+export const SET_ACTIVE_BY_ID = 'mail/set_active_by_id';
 export const SET_STATUS = 'mail/set_status';
 export const SET_DATE_CREATED = 'mail/set_date_created';
 export const SET_EXPECTED_DELIVERY = 'mail/set_expected_delivery';
@@ -62,6 +63,14 @@ interface AddMailAction {
 interface SetActiveAction {
   type: typeof SET_ACTIVE;
   payload: Mail | null;
+}
+
+interface SetActiveByIdAction {
+  type: typeof SET_ACTIVE_BY_ID;
+  payload: {
+    contactId: number;
+    mailId: number;
+  };
 }
 
 interface SetStatusAction {
@@ -122,6 +131,7 @@ export type MailActionTypes =
   | ClearComposingAction
   | AddMailAction
   | SetActiveAction
+  | SetActiveByIdAction
   | SetStatusAction
   | SetDateCreatedAction
   | SetExpectedDeliveryAction

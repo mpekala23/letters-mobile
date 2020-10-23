@@ -8,6 +8,7 @@ import {
   CLEAR_COMPOSING,
   ADD_MAIL,
   SET_ACTIVE,
+  SET_ACTIVE_BY_ID,
   SET_STATUS,
   SET_DATE_CREATED,
   SET_EXPECTED_DELIVERY,
@@ -70,6 +71,19 @@ export function setActive(mail: Mail | null): MailActionTypes {
   return {
     type: SET_ACTIVE,
     payload: mail,
+  };
+}
+
+export function setActiveById(
+  contactId: number,
+  mailId: number
+): MailActionTypes {
+  return {
+    type: SET_ACTIVE_BY_ID,
+    payload: {
+      contactId,
+      mailId,
+    },
   };
 }
 

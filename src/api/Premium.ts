@@ -85,25 +85,49 @@ interface RawTransaction {
   letter_id: number;
   price: number;
   status: 'error' | 'completed' | 'refund';
-  contact: string;
+  contact: {
+    id: number;
+    first_name: string;
+    last_name: string;
+  };
   product: {
     id: number;
     price: number;
     name: string;
+    thumbnail_src: string;
   };
+  premium: boolean;
 }
 
 function cleanTransaction(raw: RawTransaction): Transaction {
+  let status;
+  switch (raw.status) {
+    case 'completed':
+      status = TransactionStatus.Completed;
+      break;
+    case 'error':
+      status = TransactionStatus.Error;
+      break;
+    case 'refund':
+      status = TransactionStatus.Refund;
+      break;
+    default:
+      status = TransactionStatus.Error;
+      break;
+  }
   return {
     id: raw.id,
     date: new Date(raw.created_at).toISOString(),
-    contactFullName: raw.contact,
-    contactId: -1,
+    contactFullName: `${raw.contact.first_name} ${raw.contact.last_name}`,
+    contactId: raw.contact.id,
     productName: raw.product.name,
     productId: raw.product.id,
     mailId: raw.letter_id,
     price: raw.price,
-    status: raw.status as TransactionStatus,
+    status,
+    thumbnail: {
+      uri: raw.product.thumbnail_src,
+    },
   };
 }
 
@@ -119,10 +143,20 @@ export async function getPremiumTransactions(): Promise<Transaction[]> {
     store.dispatch(stopAction(EntityTypes.Transactions));
     throw body;
   }
-  const transactions = (body.data as RawTransaction[]).map((raw) =>
-    cleanTransaction(raw)
-  );
+  const transactions = (body.data as RawTransaction[])
+    .filter((raw) => raw.premium)
+    .map((raw) => cleanTransaction(raw));
   store.dispatch(setTransactions(transactions));
   store.dispatch(stopAction(EntityTypes.Transactions));
   return transactions;
+}
+
+export async function getStripeTransactions(): Promise<any> {
+  const body = await fetchAuthenticated(
+    url.resolve(
+      API_URL,
+      `user/${store.getState().user.user.id}/stripe-transactions`
+    )
+  );
+  return body;
 }

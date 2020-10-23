@@ -294,8 +294,8 @@ export type PremiumPack = {
 };
 
 export enum TransactionStatus {
-  Success = 'success',
   Completed = 'completed',
+  Error = 'error',
   Refund = 'refund',
 }
 
@@ -309,6 +309,7 @@ export type Transaction = {
   mailId: number;
   price: number;
   status: TransactionStatus;
+  thumbnail: Image;
 };
 
 export enum EntityTypes {

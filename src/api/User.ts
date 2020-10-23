@@ -349,6 +349,7 @@ async function initializeData(
     getUserReferrals(),
     getPremiumPacks(),
     getPremiumStoreItems(),
+    getPremiumTransactions(),
   ]).catch((err) => {
     Sentry.captureException(err);
   });
@@ -402,9 +403,7 @@ export async function loginWithToken(): Promise<User> {
     const userData = cleanUser(body.data as RawUser);
     const { token, remember } = body.data;
     await initializeData(userData, token, remember);
-    getPremiumTransactions().catch((err) => {
-      Sentry.captureException(err);
-    });
+
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -432,9 +431,6 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   const userData = cleanUser(body.data as RawUser);
   const { token, remember } = body.data;
   await initializeData(userData, token, remember);
-  getPremiumTransactions().catch((err) => {
-    Sentry.captureException(err);
-  });
   if (cred.remember) {
     saveToken(body.data.remember).catch((err) => {
       Sentry.captureException(err);

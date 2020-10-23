@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import ContentLoader, { Rect } from 'react-content-loader/native';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import CardStyles from '@components/Card/Card.styles';
 
-const TransactionPlaceholder = (): ReactElement => (
+const TransactionPlaceholderItem = (): ReactElement => (
   <View
     style={[
       CardStyles.cardBase,
@@ -30,6 +30,17 @@ const TransactionPlaceholder = (): ReactElement => (
       </ContentLoader>
     </View>
   </View>
+);
+
+const TransactionPlaceholder = (): ReactElement => (
+  <FlatList
+    contentContainerStyle={{ paddingHorizontal: 16 }}
+    data={['dummy1', 'dummy2', 'dummy3']}
+    renderItem={() => {
+      return <TransactionPlaceholderItem />;
+    }}
+    keyExtractor={(item) => item}
+  />
 );
 
 export default TransactionPlaceholder;

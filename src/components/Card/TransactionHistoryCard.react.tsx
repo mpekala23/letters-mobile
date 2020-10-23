@@ -6,6 +6,7 @@ import i18n from '@i18n';
 import Icon from '@components/Icon/Icon.react';
 import GoldenBirdCoin from '@assets/views/Premium/GoldenBirdCoin';
 import { format } from 'date-fns';
+import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -27,14 +28,10 @@ const TransactionHistoryCard: React.FC<Props> = ({
       ]}
     >
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View
-          style={{
-            width: 64,
-            height: 64,
-            backgroundColor: 'green',
-            marginRight: 16,
-            borderRadius: 4,
-          }}
+        <AsyncImage
+          source={transaction.thumbnail}
+          viewStyle={CardStyles.transactionHistoryThumbnail}
+          download
         />
         <View style={{ justifyContent: 'center' }}>
           <Text
@@ -43,7 +40,7 @@ const TransactionHistoryCard: React.FC<Props> = ({
               { color: Colors.GRAY_700, fontSize: 18 },
             ]}
           >
-            Test
+            {transaction.productName}
           </Text>
           <Text
             style={[
@@ -68,7 +65,7 @@ const TransactionHistoryCard: React.FC<Props> = ({
             { fontSize: 18, color: Colors.GRAY_400 },
           ]}
         >
-          -{transaction.price}
+          {transaction.price.toString()}
         </Text>
       </View>
     </TouchableOpacity>

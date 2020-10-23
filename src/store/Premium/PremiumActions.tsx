@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { Category, PremiumPack, Transaction } from 'types';
 import {
   SET_PACKS,

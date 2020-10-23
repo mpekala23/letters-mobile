@@ -3,6 +3,7 @@ import {
   CreditPackCheckoutWebViewScreen,
   CreditPackStoreScreen,
   CreditPackPurchaseSuccessScreen,
+  MailTrackingScreen,
   StoreScreen,
   TransactionHistoryScreen,
 } from '@views';
@@ -58,6 +59,10 @@ const Store: React.FC = () => {
       <StoreStack.Screen
         name={Screens.TransactionHistory}
         component={TransactionHistoryScreen}
+      />
+      <StoreStack.Screen
+        name={Screens.MailTrackingStore}
+        component={MailTrackingScreen}
       />
     </StoreStack.Navigator>
   );

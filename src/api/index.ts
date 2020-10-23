@@ -38,6 +38,7 @@ import {
   getPremiumPacks,
   getPremiumStoreItems,
   getPremiumTransactions,
+  getStripeTransactions,
 } from './Premium';
 
 export {
@@ -70,4 +71,5 @@ export {
   getPremiumPacks,
   getPremiumStoreItems,
   getPremiumTransactions,
+  getStripeTransactions,
 };

@@ -229,4 +229,10 @@ export default StyleSheet.create({
   transactionHistoryBackground: {
     flexDirection: 'row',
   },
+  transactionHistoryThumbnail: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
+    borderRadius: 4,
+  },
 });

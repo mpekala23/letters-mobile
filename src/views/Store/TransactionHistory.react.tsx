@@ -1,7 +1,7 @@
 import i18n from '@i18n';
 import { AppState } from '@store/types';
 import { Typography } from '@styles';
-import React, { useEffect } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getPremiumTransactions } from '@api';
@@ -9,21 +9,42 @@ import { TransactionHistoryCard } from '@components';
 import TransactionPlaceholder from '@components/Loaders/TransactionPlaceholder';
 import { EntityTypes, Transaction } from 'types';
 import { checkIfLoading } from '@store/selectors';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList, Screens } from '@utils/Screens';
+import { setActiveById as setActiveContactById } from '@store/Contact/ContactActions';
+import { setActiveById as setActiveMailById } from '@store/Mail/MailActions';
+import { MailActionTypes } from '@store/Mail/MailTypes';
+import { ContactActionTypes } from '@store/Contact/ContactTypes';
+import Sentry from 'sentry-expo';
 import Styles from './TransactionHistory.styles';
+
+type TransactionHistoryScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  Screens.TransactionHistory
+>;
 
 interface Props {
   familiesHelped: number;
   transactions: Transaction[];
   isLoadingTransactions: boolean;
+  navigation: TransactionHistoryScreenNavigationProp;
+  setActiveContact: (id: number) => void;
+  setActiveMail: (contactId: number, mailId: number) => void;
 }
 
 const TransactionHistoryBase: React.FC<Props> = ({
   familiesHelped,
   transactions,
   isLoadingTransactions,
+  navigation,
+  setActiveContact,
+  setActiveMail,
 }: Props) => {
   useEffect(() => {
-    if (!transactions.length) getPremiumTransactions();
+    if (!isLoadingTransactions && !transactions.length)
+      getPremiumTransactions().catch((err) => {
+        Sentry.captureException(err);
+      });
   }, []);
   return (
     <View style={Styles.trueBackground}>
@@ -44,21 +65,16 @@ const TransactionHistoryBase: React.FC<Props> = ({
               <TransactionHistoryCard
                 transaction={item}
                 onPress={() => {
-                  /* do nothing */
+                  setActiveContact(item.contactId);
+                  setActiveMail(item.contactId, item.mailId);
+                  navigation.navigate(Screens.MailTrackingStore);
                 }}
               />
             );
           }}
         />
       ) : (
-        <FlatList
-          contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={['dummy1', 'dummy2', 'dummy3']}
-          renderItem={() => {
-            return <TransactionPlaceholder />;
-          }}
-          keyExtractor={(item) => item}
-        />
+        <TransactionPlaceholder />
       )}
     </View>
   );
@@ -70,6 +86,17 @@ const mapStateToProps = (state: AppState) => ({
   isLoadingTransactions: checkIfLoading(state, EntityTypes.Transactions),
 });
 
-const TransactionHistory = connect(mapStateToProps)(TransactionHistoryBase);
+const mapDispatchToProps = (
+  dispatch: Dispatch<ContactActionTypes | MailActionTypes>
+) => ({
+  setActiveContact: (id: number) => dispatch(setActiveContactById(id)),
+  setActiveMail: (contactId: number, mailId: number) =>
+    dispatch(setActiveMailById(contactId, mailId)),
+});
+
+const TransactionHistory = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionHistoryBase);
 
 export default TransactionHistory;
