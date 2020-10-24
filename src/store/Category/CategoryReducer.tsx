@@ -44,7 +44,7 @@ export default function CategoryReducer(
         (design) => 'id' in design && design.id === action.payload.designId
       );
       if (jx < 0) return currentState;
-      newSubcategory[jx].image = action.payload.image;
+      newSubcategory[jx].asset = action.payload.image;
       currentState.categories[ix].subcategories[
         action.payload.subcategoryName
       ] = [...newSubcategory];

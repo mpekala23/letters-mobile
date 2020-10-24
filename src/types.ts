@@ -63,7 +63,6 @@ export interface BasePremadeDesign extends BaseDesign {
   type: DesignType;
   thumbnail: Image;
   price: number;
-  color: boolean;
   productId: number;
 }
 

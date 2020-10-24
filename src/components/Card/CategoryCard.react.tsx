@@ -10,7 +10,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { Screens } from '@utils/Screens';
-import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
+import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import CardStyles from './Card.styles';
 import AdjustableText from '../Text/AdjustableText.react';
 
@@ -45,6 +45,8 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               recipientId: props.recipientId,
               design: {
                 asset: { uri: '' },
+                type: 'personal_design',
+                categoryId: props.category.id,
               },
               size: POSTCARD_SIZE_OPTIONS[0],
             });

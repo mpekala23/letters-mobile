@@ -514,23 +514,23 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
               );
               if (subcategory === 'Take Photo') {
                 try {
-                  const image = await takeImage({
+                  const asset = await takeImage({
                     aspect: [6, 4],
                     allowsEditing: true,
                   });
-                  if (image) {
+                  if (asset) {
                     const layout = { ...this.state.designState.layout };
                     const commonLayout = { ...this.state.designState.layout };
                     const { activePosition } = this.state.designState;
                     layout.designs[activePosition] = {
-                      image,
+                      asset,
                       type: 'personal_design',
-                      thumbnail: image,
+                      categoryId: PERSONAL_OVERRIDE_ID,
                     };
                     commonLayout.designs[activePosition] = {
-                      image,
+                      asset,
                       type: 'personal_design',
-                      thumbnail: image,
+                      categoryId: PERSONAL_OVERRIDE_ID,
                     };
                     this.setDesignState({
                       layout,
