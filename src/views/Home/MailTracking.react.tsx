@@ -115,15 +115,34 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 
     const genDeliveryTruckCard = (): JSX.Element => {
       startAnimation();
+      const pdf = mail ? mail.lobPdfUrl : null;
       return (
         <View style={[Styles.cardBackground]}>
-          <AdjustableText
-            numberOfLines={1}
-            style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            <Text>Status: </Text>
-            {mail.status}
-          </AdjustableText>
+            <AdjustableText
+              numberOfLines={1}
+              style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}
+            >
+              <Text>Status: </Text>
+              {mail.status}
+            </AdjustableText>
+            {pdf && (
+              <Button
+                link
+                buttonText={i18n.t('MailTrackingScreen.viewPdf')}
+                onPress={() => {
+                  this.props.navigation.navigate(
+                    Screens.MailTrackingPdfWebview,
+                    {
+                      uri: pdf,
+                    }
+                  );
+                }}
+              />
+            )}
+          </View>
           {mail.status !== MailStatus.Delivered && (
             <View
               style={{
@@ -367,32 +386,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         style={Styles.trueBackground}
       >
         {body}
-        <View style={[Styles.cardBackground, { marginTop: 16 }]}>
-          <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
-            {i18n.t('MailTrackingScreen.letterContent')}
-          </Text>
-          <Text style={{ fontSize: 15 }}>{mail.content}</Text>
-          {mail.type === MailTypes.Letter && (
-            <DisplayImage
-              images={mail.images}
-              heightLetter={160}
-              updateImages={(images) => {
-                this.props.updateMailImages(images, contact.id, mail.id);
-              }}
-            />
-          )}
-          {mail.type === MailTypes.Postcard && (
-            <DisplayImage
-              images={[mail.design.asset]}
-              isPostcard
-              paddingPostcard={20}
-              updateImages={(images) => {
-                this.props.updateMailImages(images, contact.id, mail.id);
-              }}
-            />
-          )}
-          <View style={{ height: 40 }} />
-        </View>
       </ScrollView>
     );
   }

@@ -170,7 +170,8 @@
     "letterContent": "Mail content",
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
-    "possibleReason": "Possible reason: Wrong mailing address"
+    "possibleReason": "Possible reason: Wrong mailing address",
+    "viewPdf": "View"
   },
   "LoginScreen": {
     "welcomeBack": "Welcome back",

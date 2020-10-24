@@ -57,6 +57,7 @@ export enum Screens {
   StoreItemPreview = 'StoreItemPreview',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
+  MailTrackingPdfWebview = 'MailTrackingPdfWebview',
   MemoryLane = 'MemoryLane',
   MailDetails = 'MailDetails',
   Store = 'Store',
@@ -113,6 +114,7 @@ export type AppStackParamList = {
   PostcardPreview: undefined;
   MailDetails: undefined;
   MailTracking: undefined;
+  MailTrackingPdfWebview: { uri: string };
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
   ReferralDashboard: undefined;
@@ -211,6 +213,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   MailDetails: { title: i18n.t('Screens.letterDetails') },
   MailTracking: { title: i18n.t('Screens.tracking') },
+  MailTrackingPdfWebview: { title: i18n.t('Screens.tracking') },
   MemoryLane: { title: i18n.t('Screens.memoryLane') },
   ReferralDashboard: {
     title: i18n.t('Screens.referralDashboard'),

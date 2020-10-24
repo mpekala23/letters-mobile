@@ -170,7 +170,8 @@
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
     "yourLetterWasReturnedToSender": "Tu carta fue devuelta al remitente.",
-    "possibleReason": "Posible motivo: dirección de correo incorrecta"
+    "possibleReason": "Posible motivo: dirección de correo incorrecta",
+    "viewPdf": "Ver Ameelio"
   },
   "LoginScreen": {
     "welcomeBack": "Bienvenido de regreso",

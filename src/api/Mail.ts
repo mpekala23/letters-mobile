@@ -78,6 +78,7 @@ interface RawMail {
   estimated_arrival: string;
   delivered: boolean;
   size: string;
+  pdf_url: string;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -121,7 +122,7 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id } = mail;
+  const { type, content, id, pdf_url } = mail;
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
@@ -174,6 +175,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       expectedDelivery,
       images,
       trackingEvents,
+      lobPdfUrl: pdf_url,
     };
   }
   const size = findPostcardSizeOption(rawSize);
@@ -188,6 +190,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     design,
     trackingEvents,
     size,
+    lobPdfUrl: pdf_url,
   };
 }
 

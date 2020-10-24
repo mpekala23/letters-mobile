@@ -153,6 +153,10 @@ const Home: React.FC = () => {
         component={MailTrackingScreen}
       />
       <HomeStack.Screen
+        name={Screens.MailTrackingPdfWebview}
+        component={GenericWebViewScreen}
+      />
+      <HomeStack.Screen
         name={Screens.MemoryLane}
         component={MemoryLaneScreen}
       />
