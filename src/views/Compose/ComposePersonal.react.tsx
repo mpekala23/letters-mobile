@@ -366,7 +366,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   updateComposing() {
     this.props.setDesign({
-      image:
+      asset:
         this.props.composing.type === MailTypes.Postcard
           ? this.props.composing.design.asset
           : { uri: '' },
@@ -395,7 +395,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         this.setDesignState({ snapshot });
         if (snapshot) {
           this.props.setDesign({
-            image: snapshot,
+            asset: snapshot,
             layout: this.state.designState.layout,
             categoryId: PERSONAL_OVERRIDE_ID,
             type: 'personal_design',

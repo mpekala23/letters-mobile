@@ -537,7 +537,6 @@ function cleanDesign(
       designer,
       blurb,
       type,
-      color,
       price,
       productId: product_id,
     };
@@ -566,7 +565,6 @@ function cleanDesign(
     designer,
     blurb,
     type: 'packet',
-    color,
     price,
     productId: product_id,
   };
