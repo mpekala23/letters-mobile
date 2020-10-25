@@ -55,6 +55,7 @@ export enum Screens {
   SelectRecipient = 'SelectRecipient',
   StoreItem = 'StoreItem',
   StoreItemPreview = 'StoreItemPreview',
+  StoreItemPurchaseSuccess = 'StoreItemPurchaseSuccess',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
   MailTrackingPdfWebview = 'MailTrackingPdfWebview',
@@ -128,6 +129,7 @@ export type AppStackParamList = {
   SingleContact: undefined;
   StoreItem: { item: PremadeDesign };
   StoreItemPreview: { uri: string };
+  StoreItemPurchaseSuccess: undefined;
   Splash: undefined;
   Store: undefined;
   SupportFAQ: undefined;
@@ -259,6 +261,11 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     tabsVisible: false,
   },
   StoreItemPreview: {
+    title: i18n.t('Screens.storeItemPreview'),
+    profile: false,
+    tabsVisible: false,
+  },
+  StoreItemPurchaseSuccess: {
     title: i18n.t('Screens.storeItemPreview'),
     profile: false,
     tabsVisible: false,

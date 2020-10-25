@@ -7,6 +7,7 @@ export const SET_USER = 'user/set_user';
 export const SET_USER_REFERRALS = 'user/set_user_referrals';
 export const SET_LOADING_STATUS = 'user/set_loading_status';
 export const ADD_PREMIUM_COINS = 'user/add_premium_credits';
+export const DEDUCT_PREMIUM_COINS = 'user/deduct_premium_credits';
 
 // state types
 export interface UserRegisterInfo {
@@ -111,6 +112,11 @@ interface AddPremiumCoinsAction {
   payload: number;
 }
 
+interface DeductPremiumCoinsAction {
+  type: typeof DEDUCT_PREMIUM_COINS;
+  payload: number;
+}
+
 export type UserActionTypes =
   | AuthenticateUserAction
   | LoginUserAction
@@ -118,4 +124,5 @@ export type UserActionTypes =
   | SetUserAction
   | SetUserReferralsAction
   | SetLoadingStatusAction
-  | AddPremiumCoinsAction;
+  | AddPremiumCoinsAction
+  | DeductPremiumCoinsAction;

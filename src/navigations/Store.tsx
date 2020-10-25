@@ -7,6 +7,7 @@ import {
   StoreItemScreen,
   SelectRecipientScreen,
   GenericWebViewScreen,
+  StoreItemPurchaseSuccessScreen,
 } from '@views';
 import { getDetailsFromRouteName, Screens } from '@utils/Screens';
 import { HeaderTitle, HeaderLeft, HeaderRight } from '@components';
@@ -49,6 +50,10 @@ const Store: React.FC = () => {
       <StoreStack.Screen
         name={Screens.StoreItemPreview}
         component={GenericWebViewScreen}
+      />
+      <StoreStack.Screen
+        name={Screens.StoreItemPurchaseSuccess}
+        component={StoreItemPurchaseSuccessScreen}
       />
       <StoreStack.Screen
         name={Screens.SelectRecipient}

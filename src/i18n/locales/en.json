@@ -40,11 +40,12 @@
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
   "BeginScreen": {
-    "connectWithYour": "Connect with your incarcerated loved ones, ",
+    "connectWithYour": "Connect with your incarcerated loved ones, for free",
+    "andCounting": "20,000+ families and counting",
     "forFree": "for free.",
-    "sendEverything": "Send everything from a letter, photos, to art and games",
+    "sendEverything": "Send letters, photos, art and games",
     "theyllReceive": "They'll receive memories they can hold on to",
-    "joinOurCommunity": "Join our community of 15,000+ families in this journey",
+    "joinOurCommunity": "Join our community of 20,000+ families in this journey",
     "signUp": "Sign up",
     "logIn": "Log in"
   },
@@ -255,7 +256,11 @@
     "addContact": "Add Contact"
   },
   "SelectRecipient": {
-    "header": "Select recipient" 
+    "header": "Select recipient",
+    "modalHeader": "Confirm Purchase",
+    "modalMessage": "We cannot cancel the order once created.",
+    "confirmBtn": "Confirm",
+    "cancel": "Go back"
   },
   "SingleContactScreen": {
     "received": "received",
@@ -471,6 +476,11 @@
     "description": "Description",
     "viewBtn": "View",
     "purchaseBtn": "Checkout"
+  },
+  "StoreItemPurchaseSuccess": {
+    "title": "Thank you for your purchase",
+    "body": "We hoped your loved one enjoys this extra special trinket. The proceeds will be used to help us keep our services free for families.",
+    "buttonCta": "Return to Store"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Help others now!",

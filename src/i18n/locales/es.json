@@ -255,7 +255,11 @@
     "addContact": "Agregar contacto"
   },
   "SelectRecipient": {
-    "header": "Select recipient" 
+    "header": "Seleccionar destinatario",
+    "modalHeader": "Confirmar compra",
+    "modalMessage": "No podemos cancelar el pedido una vez creado.",
+    "confirmBtn": "Confirmar",
+    "cancel": "Volver"
   },
   "SingleContactScreen": {
     "received": "recibido",
@@ -467,6 +471,16 @@
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
     "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
     "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
+  },
+  "StoreItem": {
+    "description": "Descripción",
+    "viewBtn": "Ver",
+    "purchaseBtn": "Checkout"
+  },
+  "StoreItemPurchaseSuccess": {
+    "title": "Gracias por tu compra",
+    "body": "Esperamos que tu ser querido disfrute de este artículo muy especial. Las ganacias serán utilizarán para ayudarnos a mantener nuestros servicios gratuitos para todas las familias.",
+    "buttonCta": "Volver a la tienda"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Ayude a otros ahor!",

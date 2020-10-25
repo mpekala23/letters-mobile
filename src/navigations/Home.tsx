@@ -25,7 +25,6 @@ import {
   ReviewPostcardScreen,
   SelectPostcardSizeScreen,
   SingleContactScreen,
-  StoreItemScreen,
   SupportFAQDetailScreen,
   SupportFAQScreen,
   UpdateContactScreen,

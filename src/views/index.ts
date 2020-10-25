@@ -9,7 +9,7 @@ import ContactInmateInfoScreen from './AddContact/ContactInmateInfo.react';
 import ContactSelectorScreen from './Home/ContactSelector.react';
 import CreditPackCheckoutWebViewScreen from './Credits/CreditPackCheckoutWebView';
 import CreditPackStoreScreen from './Credits/CreditPackStore';
-import CreditPackPurchaseSuccessScreen from './Credits/CreditPackPurchaseSuccess';
+import CreditPackPurchaseSuccessScreen from './Confirmation/CreditPackPurchaseSuccess';
 import FacilityDirectoryScreen from './AddContact/FacilityDirectory.react';
 import GenericWebViewScreen from './AddContact/GenericWebView.react';
 import IssuesScreen from './Report/Issues.react';
@@ -33,6 +33,7 @@ import SelectPostcardSizeScreen from './Compose/SelectPostcardSize.react';
 import SingleContactScreen from './Home/SingleContact.react';
 import SplashScreen from './Login/Splash.react';
 import StoreItemScreen from './Store/StoreItem.react';
+import StoreItemPurchaseSuccessScreen from './Confirmation/StoreItemPurchaseSuccess.react';
 import SelectRecipientScreen from './Store/SelectRecipient.react';
 import StoreScreen from './Store/Store.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
@@ -78,6 +79,7 @@ export {
   SingleContactScreen,
   SplashScreen,
   StoreItemScreen,
+  StoreItemPurchaseSuccessScreen,
   StoreScreen,
   SupportFAQScreen,
   SupportFAQDetailScreen,
