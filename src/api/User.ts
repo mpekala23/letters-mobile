@@ -403,7 +403,6 @@ export async function loginWithToken(): Promise<User> {
     const userData = cleanUser(body.data as RawUser);
     const { token, remember } = body.data;
     await initializeData(userData, token, remember);
-
     return userData;
   } catch (err) {
     Sentry.captureException(err);

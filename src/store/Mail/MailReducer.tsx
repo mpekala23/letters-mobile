@@ -82,6 +82,7 @@ export default function LetterReducer(
       [mailItem] = currentState.existing[action.payload.contactId].filter(
         (testMail) => testMail.id === action.payload.mailId
       );
+      if (!mailItem) return currentState;
       currentState.active = { ...mailItem };
       return currentState;
     case SET_STATUS:
