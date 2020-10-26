@@ -46,6 +46,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { checkIfLoading } from '@store/selectors';
 import { deleteDraft } from '@api/User';
 import LetterTrackerPlaceholder from '@components/Loaders/LetterTrackerPlaceholder';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -244,9 +245,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
-                    (this.props.composing.design.image.uri.length ||
-                      this.props.composing.design.layout ||
-                      this.props.composing.design.stickers))
+                    (this.props.composing.design.asset.uri.length ||
+                      (this.props.composing.design.type === 'personal_design' &&
+                        (this.props.composing.design.layout ||
+                          this.props.composing.design.stickers))))
                 ) {
                   popupAlert({
                     title: i18n.t('Compose.letterInProgress'),
@@ -272,9 +274,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               this.props.composing.type === MailTypes.Postcard
                             ) {
                               if (
-                                this.props.composing.design.custom ||
-                                this.props.composing.design.subcategoryName ===
-                                  'Library'
+                                this.props.composing.design.categoryId ===
+                                PERSONAL_OVERRIDE_ID
                               ) {
                                 this.props.navigation.navigate(
                                   Screens.ComposePersonal

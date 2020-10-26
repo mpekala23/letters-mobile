@@ -32,7 +32,7 @@
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks",
     "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later.",
-    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later."
+    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later.",
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -40,11 +40,12 @@
     "camera": "Can't take a photo. Ensure that this is enabled in settings."
   },
   "BeginScreen": {
-    "connectWithYour": "Connect with your incarcerated loved ones, ",
+    "connectWithYour": "Connect with your incarcerated loved ones, for free",
+    "andCounting": "20,000+ families and counting",
     "forFree": "for free.",
-    "sendEverything": "Send everything from a letter, photos, to art and games",
+    "sendEverything": "Send letters, photos, art and games",
     "theyllReceive": "They'll receive memories they can hold on to",
-    "joinOurCommunity": "Join our community of 15,000+ families in this journey",
+    "joinOurCommunity": "Join our community of 20,000+ families in this journey",
     "signUp": "Sign up",
     "logIn": "Log in"
   },
@@ -170,7 +171,8 @@
     "letterContent": "Mail content",
     "contactSupport": "Contact Support",
     "yourLetterWasReturnedToSender": "Your letter was returned to sender.",
-    "possibleReason": "Possible reason: Wrong mailing address"
+    "possibleReason": "Possible reason: Wrong mailing address",
+    "viewPdf": "View"
   },
   "LoginScreen": {
     "welcomeBack": "Welcome back",
@@ -252,6 +254,13 @@
     "invalidInmateNumber": "Invalid inmate number",
     "contactAlreadyExists": "Contact already exists",
     "addContact": "Add Contact"
+  },
+  "SelectRecipient": {
+    "header": "Select recipient",
+    "modalHeader": "Confirm Purchase",
+    "modalMessage": "We cannot cancel the order once created.",
+    "confirmBtn": "Confirm",
+    "cancelBtn": "Go back"
   },
   "SingleContactScreen": {
     "received": "received",
@@ -443,10 +452,14 @@
     "tracking": "Tracking",
     "memoryLane": "Memory Lane",
     "postcardPreview": "Photo Preview",
+    "previewItem": "Preview Item",
     "letterPreview": "Letter Preview",
     "spreadTheWord": "Spread the Word",
     "referralDashboard": "Your Impact",
     "reviewContact": "Review Contact",
+    "storeItem": "Trinket",
+    "selectRecipient": "Recipient",
+    "storeItemPreview": "Preview",
     "thanks": "Thanks",
     "updateContact": "Update Contact",
     "updateProfile": "Update Profile",
@@ -460,6 +473,16 @@
     "message": "Hey! I've been using Ameelio to send FREE photos, letters and postcards to my incarcerated loved one.  You can try it out here:",
     "title": "Ameelio: Free Photos and Letters to Prison",
     "subjectLine": "Send free letters and photos to prison!"
+  },
+  "StoreItem": {
+    "description": "Description",
+    "viewBtn": "View",
+    "purchaseBtn": "Checkout"
+  },
+  "StoreItemPurchaseSuccess": {
+    "title": "Thank you for your purchase",
+    "body": "We hoped your loved one enjoys this extra special trinket. The proceeds will be used to help us keep our services free for families.",
+    "buttonCta": "Return to Store"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Help others now!",
@@ -487,8 +510,6 @@
     "noThanks": "No thanks",
     "ameelioPlusLeft": "Ameelio+ left",
     "yourAmeelioPlus": "Your Ameelio+",
-    "page": "page",
-    "pages": "pages",
     "viewHistory": "View history",
     "familiesHelped": "Families helped"
   }

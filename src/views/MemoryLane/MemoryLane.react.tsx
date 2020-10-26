@@ -47,7 +47,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
           if (item.type === MailTypes.Letter && item.images.length)
             imageUri = item.images[0].uri;
           else if (item.type === MailTypes.Postcard)
-            imageUri = item.design.image.uri;
+            imageUri = item.design.asset.uri;
           return (
             <MemoryLaneCard
               type={item.type}

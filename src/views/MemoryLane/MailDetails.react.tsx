@@ -60,7 +60,7 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         )}
         {mail.type === MailTypes.Postcard && (
           <DisplayImage
-            images={[mail.design.image]}
+            images={[mail.design.asset]}
             isPostcard
             paddingPostcard={5}
             updateImages={(images) => {

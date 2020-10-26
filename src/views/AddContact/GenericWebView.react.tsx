@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-const InmateLocatorScreen: React.FC<Props> = (props: Props) => {
+const GenericWebViewScreen: React.FC<Props> = (props: Props) => {
   const [height, setHeight] = useState('0%');
   return (
     <>
@@ -43,4 +43,4 @@ const InmateLocatorScreen: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default InmateLocatorScreen;
+export default GenericWebViewScreen;

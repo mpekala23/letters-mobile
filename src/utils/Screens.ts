@@ -8,6 +8,7 @@ import {
   PrisonTypes,
   RouteDetails,
   PremiumPack,
+  PremadeDesign,
 } from 'types';
 
 export enum Tabs {
@@ -51,8 +52,13 @@ export enum Screens {
   IssuesDetailSecondary = 'IssuesDetailSecondary',
   Setup = 'Setup',
   SelectPostcardSize = 'SelectPostcardSize',
+  SelectRecipient = 'SelectRecipient',
+  StoreItem = 'StoreItem',
+  StoreItemPreview = 'StoreItemPreview',
+  StoreItemPurchaseSuccess = 'StoreItemPurchaseSuccess',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
+  MailTrackingPdfWebview = 'MailTrackingPdfWebview',
   MailTrackingStore = 'MailTrackingStore',
   MemoryLane = 'MemoryLane',
   MailDetails = 'MailDetails',
@@ -111,6 +117,7 @@ export type AppStackParamList = {
   PostcardPreview: undefined;
   MailDetails: undefined;
   MailTracking: undefined;
+  MailTrackingPdfWebview: { uri: string };
   MailTrackingStore: undefined;
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
@@ -120,8 +127,12 @@ export type AppStackParamList = {
   ContactInmateInfo: { manual: boolean; prisonType: PrisonTypes };
   ReviewContact: { manual: boolean };
   SelectPostcardSize: { category: Category };
+  SelectRecipient: { item: PremadeDesign };
   Setup: undefined;
   SingleContact: undefined;
+  StoreItem: { item: PremadeDesign };
+  StoreItemPreview: { uri: string };
+  StoreItemPurchaseSuccess: undefined;
   Splash: undefined;
   Store: undefined;
   SupportFAQ: undefined;
@@ -168,7 +179,11 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     tabsVisible: false,
   },
   ContactSelector: { title: i18n.t('Screens.contacts') },
-  CreditPackStore: { title: i18n.t('Screens.creditPackStore'), profile: false },
+  CreditPackStore: {
+    title: i18n.t('Screens.creditPackStore'),
+    profile: false,
+    tabsVisible: false,
+  },
   CreditPackCheckoutWebView: {
     title: i18n.t('Screens.creditPackStore'),
     profile: false,
@@ -204,6 +219,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   MailDetails: { title: i18n.t('Screens.letterDetails') },
   MailTracking: { title: i18n.t('Screens.tracking') },
+  MailTrackingPdfWebview: { title: i18n.t('Screens.tracking') },
   MailTrackingStore: { title: i18n.t('Screens.tracking') },
   MemoryLane: { title: i18n.t('Screens.memoryLane') },
   ReferralDashboard: {
@@ -229,12 +245,36 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
-  SelectPostcardSize: { title: i18n.t('Screens.compose'), profile: false },
+  SelectPostcardSize: {
+    title: i18n.t('Screens.compose'),
+    profile: false,
+    tabsVisible: false,
+  },
+  SelectRecipient: {
+    title: i18n.t('Screens.selectRecipient'),
+    profile: false,
+    tabsVisible: false,
+  },
   Setup: { title: '', profile: false },
   SingleContact: { title: i18n.t('Screens.home') },
   Store: { title: i18n.t('Screens.store'), profile: true },
   SupportFAQ: { title: '', profile: false },
   SupportFAQDetail: { title: '', profile: false },
+  StoreItem: {
+    title: i18n.t('Screens.storeItem'),
+    profile: false,
+    tabsVisible: false,
+  },
+  StoreItemPreview: {
+    title: i18n.t('Screens.storeItemPreview'),
+    profile: false,
+    tabsVisible: false,
+  },
+  StoreItemPurchaseSuccess: {
+    title: i18n.t('Screens.storeItemPreview'),
+    profile: false,
+    tabsVisible: false,
+  },
   TransactionHistory: { title: i18n.t('Screens.transactionHistory') },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),

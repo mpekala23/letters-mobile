@@ -9,6 +9,7 @@ import {
   SET_USER_REFERRALS,
   SET_LOADING_STATUS,
   ADD_PREMIUM_COINS,
+  DEDUCT_PREMIUM_COINS,
 } from './UserTypes';
 
 export function authenticateUser(
@@ -68,6 +69,13 @@ export function setLoadingStatus(loadingStatus: number): UserActionTypes {
 export function addPremiumCoins(credits: number): UserActionTypes {
   return {
     type: ADD_PREMIUM_COINS,
+    payload: credits,
+  };
+}
+
+export function deductPremiumCoins(credits: number): UserActionTypes {
+  return {
+    type: DEDUCT_PREMIUM_COINS,
     payload: credits,
   };
 }

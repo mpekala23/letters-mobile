@@ -14,6 +14,8 @@ import {
   PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
+  PremadeDesign,
+  PremadePostcardDesign,
 } from 'types';
 import {
   loginUser,
@@ -130,17 +132,16 @@ export async function saveDraft(draft: Draft): Promise<void> {
         : PERSONAL_OVERRIDE_ID.toString()
     );
     AsyncStorage.setItem(Storage.DraftPostcardSize, JSON.stringify(draft.size));
-    if (draft.design.layout) {
-      // personal postcard
+    if (draft.design.type === 'personal_design' && draft.design.layout) {
       Promise.all([
         AsyncStorage.setItem(
           Storage.DraftLayout,
           JSON.stringify(draft.design.layout)
         ),
       ]);
-    } else if (draft.design.image.uri && draft.design.subcategoryName) {
+    } else if (draft.design.asset.uri && draft.design.subcategoryName) {
       Promise.all([
-        setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
+        setItemAsync(Storage.DraftDesignUri, draft.design.asset.uri),
         setItemAsync(
           Storage.DraftSubcategoryName,
           draft.design.subcategoryName
@@ -204,10 +205,10 @@ export async function loadDraft(): Promise<Draft> {
           recipientId: parseInt(draftRecipientId, 10),
           content: draftContent || '',
           design: {
-            image: { uri: '' },
+            asset: { uri: '' },
             layout: draftLayout ? JSON.parse(draftLayout) : undefined,
-            custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
+            type: 'personal_design',
           },
           size: postcardSize,
         };
@@ -221,7 +222,7 @@ export async function loadDraft(): Promise<Draft> {
         [draftSubcategoryName] = Object.keys(subcategories);
       }
       let findDesign = subcategories[draftSubcategoryName].find(
-        (testDesign: PostcardDesign) => testDesign.image.uri === draftDesignUri
+        (testDesign: PremadeDesign) => testDesign.asset.uri === draftDesignUri
       );
       if (!findDesign) {
         [findDesign] = subcategories[draftSubcategoryName];
@@ -230,7 +231,7 @@ export async function loadDraft(): Promise<Draft> {
         type: MailTypes.Postcard,
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
-        design: findDesign,
+        design: findDesign as PremadePostcardDesign,
         size: postcardSize,
       };
       store.dispatch(setComposing(draft));

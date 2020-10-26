@@ -10,7 +10,7 @@ import {
   ContactInmateInfoScreen,
   ContactSelectorScreen,
   FacilityDirectoryScreen,
-  InmateLocatorScreen,
+  GenericWebViewScreen,
   IntroContactScreen,
   IssuesDetailScreen,
   IssuesDetailSecondaryScreen,
@@ -152,6 +152,10 @@ const Home: React.FC = () => {
         component={MailTrackingScreen}
       />
       <HomeStack.Screen
+        name={Screens.MailTrackingPdfWebview}
+        component={GenericWebViewScreen}
+      />
+      <HomeStack.Screen
         name={Screens.MemoryLane}
         component={MemoryLaneScreen}
       />
@@ -177,7 +181,10 @@ const Home: React.FC = () => {
         component={UpdateProfileScreen}
         options={{ cardStyleInterpolator: topBottomTransition }}
       />
-      <HomeStack.Screen name="InmateLocator" component={InmateLocatorScreen} />
+      <HomeStack.Screen
+        name={Screens.InmateLocator}
+        component={GenericWebViewScreen}
+      />
     </HomeStack.Navigator>
   );
 };

@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 // Common
-export interface Image {
-  uri: string;
+export interface Image extends Asset {
   width?: number;
   height?: number;
+}
+
+export interface Asset {
+  uri: string;
 }
 
 export interface Sticker {
@@ -32,27 +35,57 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
-export type DesignType = 'packet' | 'premade_postcard' | 'fallback';
+export type DesignType =
+  | 'packet'
+  | 'premade_postcard'
+  | 'personal_design'
+  | 'fallback';
 
-export interface PostcardDesign {
-  image: Image;
-  thumbnail?: Image;
-  id?: number;
-  categoryId?: number;
+interface BaseDesign {
+  categoryId: number;
   subcategoryName?: string;
-  name?: string;
-  author?: string;
-  custom?: boolean;
-  designer?: string;
-  contentResearcher?: string;
+}
+
+export interface PersonalDesign extends BaseDesign {
+  asset: Image;
   layout?: Layout;
   stickers?: PlacedSticker[];
-  type?: DesignType;
+  type: 'personal_design';
 }
+
+export interface BasePremadeDesign extends BaseDesign {
+  id: number;
+  name: string;
+  blurb: string;
+  designer?: string;
+  contentResearcher?: string;
+  author?: string;
+  type: DesignType;
+  thumbnail: Image;
+  price: number;
+  productId: number;
+}
+
+interface PacketSpecific {
+  asset: Asset;
+  type: 'packet';
+}
+
+interface PostcardDesignSpecific {
+  asset: Image;
+  type: 'premade_postcard';
+}
+
+export type PremadePostcardDesign = BasePremadeDesign & PostcardDesignSpecific;
+export type DesignPacket = BasePremadeDesign & PacketSpecific;
+
+export type PremadeDesign = PremadePostcardDesign | DesignPacket;
+export type PostcardDesign = PremadePostcardDesign | PersonalDesign;
 
 interface LetterSpecific {
   type: MailTypes.Letter;
   images: Image[];
+  pdf?: string;
 }
 
 interface PostcardSpecific {
@@ -89,13 +122,13 @@ export interface Category {
   name: string;
   image: Image;
   blurb: string;
-  subcategories: Record<string, PostcardDesign[]>;
+  subcategories: Record<string, PremadeDesign[]>;
   premium: boolean;
 }
 
 export interface Layout {
   id: number;
-  designs: Record<number, PostcardDesign | null>;
+  designs: Record<number, PersonalDesign | null>;
   svg: string;
 }
 
@@ -119,13 +152,16 @@ interface MailInfo extends DraftInfo {
   dateCreated: string;
   expectedDelivery: string;
   trackingEvents?: TrackingEvent[];
+  lobPdfUrl?: string;
 }
 
 export type MailLetter = MailInfo & LetterSpecific;
 
 export type MailPostcard = MailInfo & PostcardSpecific;
 
-export type Mail = MailLetter | MailPostcard;
+export type MailPacket = MailInfo & DesignPacket;
+
+export type Mail = MailLetter | MailPostcard | MailPacket;
 
 export enum PostcardSize {
   Small = '4x6',

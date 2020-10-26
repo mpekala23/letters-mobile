@@ -5,7 +5,6 @@ import store from '@store';
 import url from 'url';
 import {
   Draft,
-  DesignType,
   Mail,
   TrackingEvent,
   MailTypes,
@@ -16,6 +15,8 @@ import {
   Contact,
   EntityTypes,
   RawCategory,
+  PremadeDesign,
+  PremadePostcardDesign,
 } from 'types';
 import {
   addMail,
@@ -39,6 +40,7 @@ import {
   updateContact,
   setActive as setActiveContact,
 } from '@store/Contact/ContactActions';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -76,6 +78,7 @@ interface RawMail {
   estimated_arrival: string;
   delivered: boolean;
   size: string;
+  pdf_url: string;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -119,7 +122,7 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id } = mail;
+  const { type, content, id, pdf_url } = mail;
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
@@ -129,7 +132,11 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       };
     });
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    asset: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor so we don't need to do this
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
 
   const dateCreated = new Date(mail.created_at).toISOString();
   let status: MailStatus;
@@ -168,6 +175,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       expectedDelivery,
       images,
       trackingEvents,
+      lobPdfUrl: pdf_url,
     };
   }
   const size = findPostcardSizeOption(rawSize);
@@ -182,6 +190,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     design,
     trackingEvents,
     size,
+    lobPdfUrl: pdf_url,
   };
 }
 
@@ -206,7 +215,11 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   if (mail.images.length) {
     images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    asset: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor this so that we dont need to pass a type
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
   const dateCreated = new Date(mail.created_at).toISOString();
 
   let status;
@@ -366,7 +379,10 @@ export async function getTrackingEvents(id: number): Promise<Mail> {
   return mail;
 }
 
-export async function createMail(draft: Draft): Promise<Mail> {
+export async function createMail(
+  draft: Draft,
+  productId?: number
+): Promise<Mail> {
   const { user } = store.getState().user;
   if (user.credit <= 0) {
     popupAlert({
@@ -378,16 +394,17 @@ export async function createMail(draft: Draft): Promise<Mail> {
 
   const prepDraft = { ...draft };
   let imageExtension = {};
+  let pdf_path = null;
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      if (prepDraft.design.custom) {
-        prepDraft.design.image = await uploadImage(
-          prepDraft.design.image,
+      if (prepDraft.design.type === 'personal_design') {
+        prepDraft.design.asset = await uploadImage(
+          prepDraft.design.asset,
           'letter'
         );
       }
       imageExtension = {
-        s3_img_urls: [prepDraft.design.image.uri],
+        s3_img_urls: [prepDraft.design.asset.uri],
       };
     } catch (err) {
       Sentry.captureException(err);
@@ -400,6 +417,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
+  } else if (prepDraft.pdf) {
+    pdf_path = prepDraft.pdf;
   } else if (prepDraft.images.length) {
     try {
       const uris = await Promise.all(
@@ -432,6 +451,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     size:
       prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
     ...imageExtension,
+    product_id: productId,
+    pdf_path,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
@@ -455,7 +476,7 @@ export async function createMail(draft: Draft): Promise<Mail> {
 
 export function cleanCategory(
   raw: RawCategory,
-  subcategories: Record<string, PostcardDesign[]>
+  subcategories: Record<string, PremadeDesign[]>
 ): Category {
   return {
     id: raw.id,
@@ -474,64 +495,91 @@ interface RawDesign {
   name: string;
   front_img_src: string;
   thumbnail_src: string;
+  blurb: string;
   type: string;
   back: null;
   subcategory_id: number;
+  product_id: number;
   designer?: string;
   content_researcher?: string;
-}
-
-function cleanDesignType(type: string): DesignType {
-  switch (type) {
-    case 'packet':
-    case 'premade_postcard':
-      return type as DesignType;
-    default:
-      return 'fallback';
-  }
+  color: boolean;
+  price: number;
 }
 
 function cleanDesign(
   raw: RawDesign,
-  categoryId?: number,
-  subcategoryName?: string
-): PostcardDesign {
-  const design: PostcardDesign = {
-    image: {
-      uri: raw.front_img_src,
+  categoryId: number,
+  subcategoryName: string
+): PremadeDesign {
+  const {
+    type,
+    id,
+    name,
+    blurb,
+    designer,
+    content_researcher,
+    thumbnail_src,
+    front_img_src,
+    price,
+    product_id,
+  } = raw;
+  if (type === 'postcard') {
+    const design: PremadePostcardDesign = {
+      asset: {
+        uri: front_img_src,
+      },
+      thumbnail: { uri: thumbnail_src },
+      name,
+      id,
+      categoryId,
+      subcategoryName,
+      contentResearcher: content_researcher,
+      designer,
+      blurb,
+      type: 'premade_postcard',
+      price,
+      productId: product_id,
+    };
+    if (categoryId && subcategoryName && design.id) {
+      getImageDims(design.asset.uri).then((dims) => {
+        store.dispatch(
+          setDesignImage(categoryId, subcategoryName, raw.id, {
+            ...design.asset,
+            ...dims,
+          })
+        );
+      });
+    }
+    return design;
+  }
+  return {
+    asset: {
+      uri: front_img_src,
     },
-    thumbnail: { uri: raw.thumbnail_src },
-    name: raw.name,
-    id: raw.id,
+    thumbnail: { uri: thumbnail_src },
+    name,
+    id,
     categoryId,
     subcategoryName,
-    contentResearcher: raw.content_researcher,
-    designer: raw.designer,
-    type: cleanDesignType(raw.type),
+    contentResearcher: content_researcher,
+    designer,
+    blurb,
+    type: 'packet',
+    price,
+    productId: product_id,
   };
-  if (categoryId && subcategoryName && design.id) {
-    getImageDims(design.image.uri).then((dims) => {
-      store.dispatch(
-        setDesignImage(categoryId, subcategoryName, raw.id, {
-          ...design.image,
-          ...dims,
-        })
-      );
-    });
-  }
-  return design;
 }
 
 export async function getSubcategoriesById(
   categoryId: number
-): Promise<Record<string, PostcardDesign[]>> {
+): Promise<Record<string, PremadeDesign[]>> {
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `categories/${categoryId}/designs`),
     { method: 'GET' }
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;
-  const cleanData: Record<string, PostcardDesign[]> = {};
+  const cleanData: Record<string, PremadeDesign[]> = {};
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];

@@ -6,7 +6,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppState } from '@store/types';
 import { Colors, Typography } from '@styles';
-import { Category, PremiumPack } from 'types';
+import { Category } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
@@ -23,12 +23,13 @@ interface Props {
   navigation: StoreScreenNavigationProp;
   coins: number;
   categories: Category[];
-  packs: PremiumPack[];
 }
 
-function renderCategory(category: Category): JSX.Element {
-  const subcategoryNames = Object.keys(category.subcategories);
-
+function renderCategory(
+  category: Category,
+  navigation: StoreScreenNavigationProp
+): JSX.Element {
+  const designs = Object.values(category.subcategories).flat();
   return (
     <View>
       <Text
@@ -41,16 +42,18 @@ function renderCategory(category: Category): JSX.Element {
       </Text>
       <FlatList
         horizontal
-        data={subcategoryNames}
+        data={designs}
         renderItem={({ item }) => {
           return (
             <PremiumSubcategorySelector
-              subcategoryName={item}
-              subcategoryLength={category.subcategories[item].length}
+              design={item}
+              handlePress={() => {
+                navigation.navigate(Screens.StoreItem, { item });
+              }}
             />
           );
         }}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => `${item.id}`}
         ListHeaderComponent={<View style={{ width: 16 }} />}
         ListFooterComponent={<View style={{ width: 16 }} />}
       />
@@ -62,7 +65,6 @@ const StoreScreenBase: React.FC<Props> = ({
   navigation,
   coins,
   categories,
-  packs,
 }: Props) => {
   return (
     <View>
@@ -80,7 +82,7 @@ const StoreScreenBase: React.FC<Props> = ({
           );
         }}
         data={categories}
-        renderItem={({ item }) => renderCategory(item)}
+        renderItem={({ item }) => renderCategory(item, navigation)}
         keyExtractor={(item) => item.name}
       />
       <Button
@@ -98,7 +100,6 @@ const StoreScreenBase: React.FC<Props> = ({
 const mapStateToProps = (state: AppState) => ({
   coins: state.user.user.coins,
   categories: state.premium.premiumCategories,
-  packs: state.premium.premiumPacks,
 });
 const StoreScreen = connect(mapStateToProps)(StoreScreenBase);
 

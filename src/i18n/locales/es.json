@@ -170,7 +170,8 @@
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
     "yourLetterWasReturnedToSender": "Tu carta fue devuelta al remitente.",
-    "possibleReason": "Posible motivo: dirección de correo incorrecta"
+    "possibleReason": "Posible motivo: dirección de correo incorrecta",
+    "viewPdf": "Ver Ameelio"
   },
   "LoginScreen": {
     "welcomeBack": "Bienvenido de regreso",
@@ -198,7 +199,7 @@
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
-  },
+  },  
   "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
@@ -252,6 +253,13 @@
     "invalidInmateNumber": "Número de preso inválido",
     "contactAlreadyExists": "Contacto ya existe",
     "addContact": "Agregar contacto"
+  },
+  "SelectRecipient": {
+    "header": "Seleccionar destinatario",
+    "modalHeader": "Confirmar compra",
+    "modalMessage": "No podemos cancelar el pedido una vez creado.",
+    "confirmBtn": "Confirmar",
+    "cancelBtn": "Volver"
   },
   "SingleContactScreen": {
     "received": "recibido",
@@ -444,10 +452,14 @@
     "tracking": "Rastreo",
     "memoryLane": "Carril de Memoria",
     "postcardPreview": "Vista previa de la postal",
+    "previewItem": "Preview Item",
     "letterPreview": "Vista previa de la carta",
     "spreadTheWord": "Correr la voz",
     "referralDashboard": "Tu impacto",
     "reviewContact": "Revisar contacto",
+    "storeItem": "Trinket",
+    "selectRecipient": "Recipient",
+    "storeItemPreview": "Preview",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
@@ -461,6 +473,16 @@
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
     "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
     "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
+  },
+  "StoreItem": {
+    "description": "Descripción",
+    "viewBtn": "Ver",
+    "purchaseBtn": "Checkout"
+  },
+  "StoreItemPurchaseSuccess": {
+    "title": "Gracias por tu compra",
+    "body": "Esperamos que tu ser querido disfrute de este artículo muy especial. Las ganacias serán utilizarán para ayudarnos a mantener nuestros servicios gratuitos para todas las familias.",
+    "buttonCta": "Volver a la tienda"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Ayude a otros ahor!",

@@ -11,7 +11,6 @@ import {
 import { Typography } from '@styles';
 import Next from '@assets/components/Button/Next';
 import Icon from '@components/Icon/Icon.react';
-import { SvgXml } from 'react-native-svg';
 import Loading from '@assets/common/loading.gif';
 import Styles from './Button.styles';
 
@@ -59,6 +58,7 @@ const Button: React.FC<Props> = (props: Props) => {
     return (
       <TouchableOpacity
         style={[
+          Styles.shadow,
           reverse ? Styles.buttonBackgroundReverse : Styles.buttonBackground,
           enabled && !blocked ? {} : Styles.buttonBackgroundDisabled,
           containerStyle,

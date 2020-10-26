@@ -5,11 +5,11 @@ import { Button } from '@components';
 import { Colors, Typography } from '@styles';
 import { AuthStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Screen1Background from '@assets/views/Begin/Screen1Background.png';
+import Screen1Background from '@assets/views/Begin/Screen1Background.jpeg';
 import Screen1EnglishTag from '@assets/views/Begin/Screen1EnglishTag.png';
-import Screen2Image from '@assets/views/Begin/Screen2Image.png';
-import Screen3Image from '@assets/views/Begin/Screen3Image.png';
-import Screen4Image from '@assets/views/Begin/Screen4Image.png';
+import Screen2Image from '@assets/views/Begin/Screen2Image.jpeg';
+import Screen3Image from '@assets/views/Begin/Screen3Image.jpeg';
+import Screen4Image from '@assets/views/Begin/Screen4Image.jpeg';
 import * as Segment from 'expo-analytics-segment';
 import ViewPager from '@react-native-community/viewpager';
 import { WINDOW_HEIGHT } from '@utils';
@@ -47,7 +47,7 @@ const BeginScreen: React.FC<Props> = (props: Props) => {
             source={Screen1Background}
             style={{
               width: '100%',
-              height: WINDOW_HEIGHT * 0.5,
+              height: WINDOW_HEIGHT * 0.45,
               resizeMode: 'cover',
             }}
           />

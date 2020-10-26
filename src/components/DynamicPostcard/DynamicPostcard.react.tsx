@@ -121,7 +121,7 @@ class DynamicPostcard extends React.Component<Props> {
         ) : (
           <AsyncImage
             viewStyle={{ width: '100%', height: '100%' }}
-            source={design.image}
+            source={design.asset}
           />
         )}
       </TouchableOpacity>

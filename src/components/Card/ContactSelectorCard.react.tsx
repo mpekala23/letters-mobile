@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
@@ -13,6 +13,7 @@ import ProfilePic from '../ProfilePic/ProfilePic.react';
 import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
+  style?: ViewStyle | ViewStyle[];
   firstName: string;
   lastName: string;
   numSent: number;
@@ -70,7 +71,11 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 
   return (
     <TouchableOpacity
-      style={[CardStyles.shadow, CardStyles.contactSelectorCardBackground]}
+      style={[
+        CardStyles.shadow,
+        CardStyles.contactSelectorCardBackground,
+        props.style,
+      ]}
       onPress={props.onPress}
       testID="ContactSelectorCard"
     >
@@ -146,6 +151,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 };
 
 ContactSelectorCard.defaultProps = {
+  style: {},
   imageUri: '',
   mail: [],
   userPostal: '',

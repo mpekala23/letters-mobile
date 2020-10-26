@@ -8,6 +8,7 @@ import {
   SET_USER_REFERRALS,
   SET_LOADING_STATUS,
   ADD_PREMIUM_COINS,
+  DEDUCT_PREMIUM_COINS,
 } from './UserTypes';
 
 const initialState: UserState = {
@@ -119,6 +120,9 @@ export default function UserReducer(
       return currentState;
     case ADD_PREMIUM_COINS:
       currentState.user.coins += action.payload;
+      return currentState;
+    case DEDUCT_PREMIUM_COINS:
+      currentState.user.coins -= action.payload;
       return currentState;
     default:
       return state;
