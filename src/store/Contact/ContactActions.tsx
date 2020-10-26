@@ -10,6 +10,7 @@ import {
   SET_ADDING_PERSONAL,
   SET_ADDING_FACILITY,
   SET_ACTIVE,
+  SET_ACTIVE_BY_ID,
   SET_EXISTING,
   UPDATE_CONTACT,
   CLEAR_CONTACTS,
@@ -55,6 +56,13 @@ export function setActive(contact: Contact): ContactActionTypes {
   return {
     type: SET_ACTIVE,
     payload: contact,
+  };
+}
+
+export function setActiveById(id: number): ContactActionTypes {
+  return {
+    type: SET_ACTIVE_BY_ID,
+    payload: id,
   };
 }
 

@@ -1,9 +1,9 @@
-/* eslint-disable import/prefer-default-export */
-import { Category, PremiumPack } from 'types';
+import { Category, PremiumPack, Transaction } from 'types';
 import {
   SET_PACKS,
-  PremiumActionTypes,
   SET_PREMIUM_CATEGORIES,
+  SET_TRANSACTIONS,
+  PremiumActionTypes,
 } from './PremiumTypes';
 
 export function setPremiumPacks(
@@ -21,5 +21,14 @@ export function setPremiumCategories(
   return {
     type: SET_PREMIUM_CATEGORIES,
     payload: categories,
+  };
+}
+
+export function setTransactions(
+  transactions: Transaction[]
+): PremiumActionTypes {
+  return {
+    type: SET_TRANSACTIONS,
+    payload: transactions,
   };
 }

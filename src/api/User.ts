@@ -44,7 +44,11 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
-import { getPremiumPacks, getPremiumStoreItems } from './Premium';
+import {
+  getPremiumPacks,
+  getPremiumStoreItems,
+  getPremiumTransactions,
+} from './Premium';
 
 interface RawUser {
   id: number;
@@ -346,6 +350,7 @@ async function initializeData(
     getUserReferrals(),
     getPremiumPacks(),
     getPremiumStoreItems(),
+    getPremiumTransactions(),
   ]).catch((err) => {
     Sentry.captureException(err);
   });

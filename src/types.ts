@@ -329,6 +329,25 @@ export type PremiumPack = {
   coins: number;
 };
 
+export enum TransactionStatus {
+  Completed = 'completed',
+  Error = 'error',
+  Refund = 'refund',
+}
+
+export type Transaction = {
+  id: number;
+  date: string;
+  contactFullName: string;
+  contactId: number;
+  productName: string;
+  productId: number;
+  mailId: number;
+  price: number;
+  status: TransactionStatus;
+  thumbnail: Image;
+};
+
 export enum EntityTypes {
   Contacts = 'Contacts',
   Mail = 'Mail',
@@ -337,6 +356,7 @@ export enum EntityTypes {
   MailDetail = 'MailDetail',
   PremiumPacks = 'PremiumPacks',
   PremiumStoreItems = 'PremiumStoreItems',
+  Transactions = 'Transactions',
 }
 
 export interface RouteDetails {

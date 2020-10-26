@@ -90,7 +90,7 @@ const StoreScreenBase: React.FC<Props> = ({
         containerStyle={Styles.viewHistoryButton}
         reverse
         onPress={() => {
-          /* do nothing */
+          navigation.navigate(Screens.TransactionHistory);
         }}
       />
     </View>

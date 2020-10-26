@@ -39,6 +39,7 @@ import StoreScreen from './Store/Store.react';
 import SupportFAQScreen from './Report/SupportFAQ.react';
 import SupportFAQDetailScreen from './Report/SupportFAQDetail.react';
 import TermsScreen from './Login/Terms.react';
+import TransactionHistoryScreen from './Store/TransactionHistory.react';
 import UpdateContactScreen from './Update/UpdateContact.react';
 import UpdateProfileScreen from './Update/UpdateProfile.react';
 
@@ -84,6 +85,7 @@ export {
   SupportFAQScreen,
   SupportFAQDetailScreen,
   TermsScreen,
+  TransactionHistoryScreen,
   UpdateContactScreen,
   UpdateProfileScreen,
 };

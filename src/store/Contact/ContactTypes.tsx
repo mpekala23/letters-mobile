@@ -11,6 +11,7 @@ export const SET_ADDING_PERSONAL = 'contact/set_adding_personal';
 export const SET_ADDING_FACILITY = 'contact/set_adding_facility';
 export const SET_ADDING_INMATE_INFO = 'contact/set_adding_inmate_info';
 export const SET_ACTIVE = 'contact/set_active';
+export const SET_ACTIVE_BY_ID = 'contact/set_adding_by_id';
 export const SET_EXISTING = 'contact/set_existing';
 export const UPDATE_CONTACT = 'contact/update_contact';
 export const CLEAR_CONTACTS = 'contact/clear_contacts';
@@ -46,6 +47,11 @@ interface SetActiveAction {
   payload: Contact;
 }
 
+interface SetActiveByIdAction {
+  type: typeof SET_ACTIVE_BY_ID;
+  payload: number;
+}
+
 interface SetExistingAction {
   type: typeof SET_EXISTING;
   payload: Contact[];
@@ -66,6 +72,7 @@ export type ContactActionTypes =
   | SetAddingPersonalAction
   | SetAddingFacilityAction
   | SetActiveAction
+  | SetActiveByIdAction
   | SetExistingAction
   | UpdateContactAction
   | ClearContactsAction

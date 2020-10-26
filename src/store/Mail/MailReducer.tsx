@@ -16,6 +16,7 @@ import {
   MailActionTypes,
   MailState,
   SET_MAIL_IMAGES,
+  SET_ACTIVE_BY_ID,
 } from './MailTypes';
 
 const initialState: MailState = {
@@ -74,6 +75,15 @@ export default function LetterReducer(
       return currentState;
     case SET_ACTIVE:
       currentState.active = action.payload;
+      return currentState;
+    case SET_ACTIVE_BY_ID:
+      if (!(action.payload.contactId in currentState.existing))
+        return currentState;
+      [mailItem] = currentState.existing[action.payload.contactId].filter(
+        (testMail) => testMail.id === action.payload.mailId
+      );
+      if (!mailItem) return currentState;
+      currentState.active = { ...mailItem };
       return currentState;
     case SET_STATUS:
       if (!(action.payload.contactId in currentState.existing))

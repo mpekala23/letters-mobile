@@ -62,6 +62,7 @@ const SelectRecipientBase = ({
                 item.productId
               );
               deduct(item.price);
+              setProcessingPurchase(false);
               navigation.reset({
                 index: 0,
                 routes: [{ name: Screens.StoreItemPurchaseSuccess }],
@@ -73,6 +74,7 @@ const SelectRecipientBase = ({
                 action: confirmPurchase,
                 blocking: true,
               });
+              setProcessingPurchase(false);
               popupAlert({
                 title: i18n.t('Error.cantSendMailModalTitle'),
                 message: i18n.t('Error.cantSendMailModalBody'),
