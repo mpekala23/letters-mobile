@@ -32,7 +32,7 @@
     "reachOutToSupport": "Reach out to support",
     "noThanks": "No thanks",
     "tooManyAttempts": "We're receiving a lot of requests right now. Please try again later.",
-    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later.",
+    "cantLoadPremiumPacks": "We could not load the premium packs. Please try again later."
   },
   "Permission": {
     "photos": "Can't access photo library. Ensure that this is enabled in settings.",
@@ -370,7 +370,11 @@
     "noDesignSelected": "No design selected",
     "selectADesign": "Select a design to continue.",
     "imagesNotFilled": "Images not filled",
-    "fillAllImages": "You must choose an image for each slot in the layout to continue"
+    "fillAllImages": "You must choose an image for each slot in the layout to continue",
+    "lookingToBrighten": "Looking to brighten up your loved one's day?",
+    "welcomeToTheStore": "Welcome to the Ameelio+ store! Here, you can send game packs, short stories and more using Ameelio+ tokens. \n\nWe gifted you 10 free tokens to start off, but more can be purchased. We hope you enjoy!",
+    "exploreStoreNow": "Explore store now",
+    "noThanks": "No thanks"
   },
   "Compose": {
     "chooseAnOption": "Choose an option",

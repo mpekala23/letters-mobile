@@ -4,12 +4,14 @@ import {
   SET_TRANSACTIONS,
   PremiumActionTypes,
   PremiumState,
+  SET_SHOWN_PROMPT,
 } from './PremiumTypes';
 
 const initialState: PremiumState = {
   premiumPacks: [],
   premiumCategories: [],
   transactions: [],
+  hasShownPrompt: false,
 };
 
 export default function PremiumReducer(
@@ -31,6 +33,11 @@ export default function PremiumReducer(
       return {
         ...state,
         transactions: action.payload,
+      };
+    case SET_SHOWN_PROMPT:
+      return {
+        ...state,
+        hasShownPrompt: action.payload,
       };
     default:
       return state;

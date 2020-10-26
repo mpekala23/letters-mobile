@@ -4,11 +4,13 @@ import { Category, PremiumPack, Transaction } from 'types';
 export const SET_PACKS = 'premium/set_packs';
 export const SET_PREMIUM_CATEGORIES = 'premium/set_categories';
 export const SET_TRANSACTIONS = 'premium/set_transactions';
+export const SET_SHOWN_PROMPT = 'premium/set_shown_prompt';
 
 export interface PremiumState {
   premiumPacks: PremiumPack[];
   premiumCategories: Category[];
   transactions: Transaction[];
+  hasShownPrompt: boolean;
 }
 
 interface SetPacksAction {
@@ -26,7 +28,13 @@ interface SetTransactionsAction {
   payload: Transaction[];
 }
 
+interface SetShownPromptAction {
+  type: typeof SET_SHOWN_PROMPT;
+  payload: boolean;
+}
+
 export type PremiumActionTypes =
   | SetPacksAction
   | SetPremiumCategoriesAction
-  | SetTransactionsAction;
+  | SetTransactionsAction
+  | SetShownPromptAction;

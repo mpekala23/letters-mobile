@@ -199,7 +199,7 @@
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
-  },  
+  },
   "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
@@ -369,7 +369,11 @@
     "noDesignSelected": "Ningún diseño seleccionado",
     "selectADesign": "Seleccione imágenes para todos los espacios.",
     "imagesNotFilled": "Algunos espacios están incompletos",
-    "fillAllImages": "Debes elegir una imagen para cada espacio para continuar."
+    "fillAllImages": "Debes elegir una imagen para cada espacio para continuar.",
+    "lookingToBrighten": "Looking to brighten up your loved one's day?",
+    "welcomeToTheStore": "Welcome to the Ameelio+ store! Here, you can send game packs, short stories and more using Ameelio+ tokens. \n\nWe gifted you 10 free tokens to start off, but more can be purchased. We hope you enjoy!",
+    "exploreStoreNow": "Explore store now",
+    "noThanks": "No thanks"
   },
   "Compose": {
     "chooseAnOption": "Elige una opción",

@@ -23,6 +23,7 @@ interface AlertButton {
 
 interface AlertInfo {
   title?: string;
+  dynamicTitle?: JSX.Element;
   message?: string;
   buttons?: AlertButton[];
 }
@@ -68,14 +69,17 @@ class Alert extends React.Component<Record<string, unknown>, State> {
           activeOpacity={1.0}
         >
           <View style={Styles.alertBackground}>
-            <Text
-              style={[
-                Typography.FONT_SEMIBOLD,
-                { fontSize: 20, textAlign: 'center', marginBottom: 18 },
-              ]}
-            >
-              {this.state.current.title}
-            </Text>
+            {this.state.current.title && (
+              <Text
+                style={[
+                  Typography.FONT_SEMIBOLD,
+                  { fontSize: 20, textAlign: 'center', marginBottom: 18 },
+                ]}
+              >
+                {this.state.current.title}
+              </Text>
+            )}
+            {this.state.current.dynamicTitle}
             {this.state.current.message && (
               <>
                 <Text
@@ -131,6 +135,7 @@ export function popupAlert(pop: AlertInfo): void {
       title: pop.title,
       message: pop.message,
       buttons: pop.buttons,
+      dynamicTitle: pop.dynamicTitle,
     });
   } else {
     setStatusBackground('white');
