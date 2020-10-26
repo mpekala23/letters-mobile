@@ -37,7 +37,7 @@ const TextButtons: React.FC<Props> = ({
       ]}
     >
       <>
-        {false && (
+        {false /* TODO: Add font size support */ && (
           <View
             style={{
               marginVertical: 16,
