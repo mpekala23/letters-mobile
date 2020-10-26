@@ -1,4 +1,4 @@
-import { Draft, Mail, MailStatus, Image, PostcardDesign } from 'types';
+import { Draft, Mail, MailStatus, Image, PostcardDesign, Font } from 'types';
 import {
   SET_COMPOSING,
   SET_RECIPIENT_ID,
@@ -15,6 +15,7 @@ import {
   SET_CONTACTS_MAIL,
   SET_EXISTING_MAIL,
   MailActionTypes,
+  SET_FONT,
   SET_MAIL_IMAGES,
 } from './MailTypes';
 
@@ -50,6 +51,13 @@ export function setDesign(design: PostcardDesign): MailActionTypes {
   return {
     type: SET_DESIGN,
     payload: design,
+  };
+}
+
+export function setFont(font: Font): MailActionTypes {
+  return {
+    type: SET_FONT,
+    payload: font,
   };
 }
 

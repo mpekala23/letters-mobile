@@ -15,6 +15,7 @@ import {
   SET_EXISTING_MAIL,
   MailActionTypes,
   MailState,
+  SET_FONT,
   SET_MAIL_IMAGES,
   SET_ACTIVE_BY_ID,
 } from './MailTypes';
@@ -55,6 +56,11 @@ export default function LetterReducer(
       if (currentState.composing.type !== MailTypes.Postcard)
         return currentState;
       currentState.composing.design = action.payload;
+      return currentState;
+    case SET_FONT:
+      if (currentState.composing.type !== MailTypes.Postcard)
+        return currentState;
+      currentState.composing.customization.font = action.payload;
       return currentState;
     case CLEAR_COMPOSING:
       currentState.composing = {

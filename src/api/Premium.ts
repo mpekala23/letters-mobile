@@ -150,12 +150,11 @@ export async function getPremiumTransactions(): Promise<Transaction[]> {
   return transactions;
 }
 
-export async function getStripeTransactions(): Promise<any> {
-  const body = await fetchAuthenticated(
+export async function getStripeTransactions(): Promise<void> {
+  await fetchAuthenticated(
     url.resolve(
       API_URL,
       `user/${store.getState().user.user.id}/stripe-transactions`
     )
   );
-  return body;
 }

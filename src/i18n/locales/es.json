@@ -98,7 +98,7 @@
     "referralCardCta": "Ayude a otros",
     "letter": "carta",
     "letters": "cartas",
-    "lastHeard": "Last heard"
+    "lastHeard": "Ultimo mensaje"
   },
   "CreditPackStore": {
     "title": "Tokens de gratitud",
@@ -406,9 +406,10 @@
     "yourOwnLettersAndPhotos": "Sus propios cartas y fotos",
     "stickers": "Stickers",
     "layouts": "Layouts",
-    "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales. Verifique su wi-fi e intente cargar nuevamente para usar nuestras postales.",
-    "sendPersonalLettersOrPhotos": "Envíe cartas o fotografías personales",
+    "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales, pero intente verificar su wifi e intente cargar nuestra galería de postales nuevamente.",
+    "sendPersonalLettersOrPhotos": "Envia cartas o fotografías personales",
     "reachOutToSupport": "Contactar al soporte",
+    "library": "Galería",
     "smallPostcardTitle": "Small photo",
     "mediumPostcardTitle": "Medium photo",
     "largePostcardTitle": "Large photo",

@@ -1,14 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '@utils';
-import {
-  BAR_HEIGHT,
-  POSTCARD_HEIGHT,
-  STATUS_BAR_HEIGHT,
-} from '@utils/Constants';
+import { WINDOW_WIDTH } from '@utils';
+import { BOTTOM_HEIGHT, POSTCARD_HEIGHT } from '@utils/Constants';
 
-export const BOTTOM_HEIGHT =
-  WINDOW_HEIGHT - POSTCARD_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - 16;
-export const DESIGN_BUTTONS_HEIGHT = 200;
 export const LETTER_COMPOSE_IMAGE_HEIGHT = 150;
 
 export default StyleSheet.create({
@@ -42,6 +35,10 @@ export default StyleSheet.create({
     height: BOTTOM_HEIGHT,
     backgroundColor: '#323334',
   },
+  gridBackground: {
+    padding: 4,
+  },
+  gridDesignBackground: {},
   subcategorySelectorBackground: {
     height: 60,
     flexDirection: 'row',
@@ -59,24 +56,5 @@ export default StyleSheet.create({
   subcategoryText: {
     color: 'white',
     fontSize: 18,
-  },
-  gridBackground: {
-    padding: 4,
-  },
-  gridDesignBackground: {},
-  designButtons: {
-    position: 'absolute',
-    height:
-      WINDOW_HEIGHT - BAR_HEIGHT - STATUS_BAR_HEIGHT - POSTCARD_HEIGHT - 32,
-    width: WINDOW_WIDTH,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    justifyContent: 'flex-end',
-  },
-  bottom: {
-    position: 'absolute',
-    height: BOTTOM_HEIGHT,
-    width: WINDOW_WIDTH,
-    backgroundColor: '#323334',
   },
 });

@@ -8,7 +8,6 @@ import {
   GrayBar,
   Icon,
   ProfilePic,
-  DisplayImage,
   AdjustableText,
 } from '@components';
 import { connect } from 'react-redux';
@@ -18,7 +17,6 @@ import {
   TrackingEvent,
   MailStatus,
   Mail,
-  MailTypes,
   Contact,
   ProfilePicTypes,
   EntityTypes,
@@ -113,9 +111,10 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       return <View />;
     }
 
+    const pdf = mail ? mail.lobPdfUrl : null;
+
     const genDeliveryTruckCard = (): JSX.Element => {
       startAnimation();
-      const pdf = mail ? mail.lobPdfUrl : null;
       return (
         <View style={[Styles.cardBackground]}>
           <View
@@ -130,7 +129,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
             </AdjustableText>
             {pdf && (
               <Button
-                link
+                reverse
                 buttonText={i18n.t('MailTrackingScreen.viewPdf')}
                 onPress={() => {
                   this.props.navigation.navigate(
@@ -140,6 +139,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                     }
                   );
                 }}
+                containerStyle={{ height: 32 }}
+                textStyle={{ fontSize: 14 }}
               />
             )}
           </View>
@@ -318,7 +319,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         </View>
       );
     };
-
     const body = returnedTrack ? (
       <View style={{ alignItems: 'center', paddingTop: 24 }}>
         <AdjustableText

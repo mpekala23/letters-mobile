@@ -3,7 +3,7 @@ import { Text, ScrollView } from 'react-native';
 import { LetterOptionCard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { MailTypes, Draft } from 'types';
+import { MailTypes, Draft, CustomFontFamilies } from 'types';
 import { Typography } from '@styles';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
@@ -45,6 +45,12 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
               asset: { uri: '' },
               categoryId: PERSONAL_OVERRIDE_ID,
               type: 'personal_design',
+            },
+            customization: {
+              font: {
+                family: CustomFontFamilies.Montserrat,
+                color: '#000000',
+              },
             },
             size: POSTCARD_SIZE_OPTIONS[0],
           });

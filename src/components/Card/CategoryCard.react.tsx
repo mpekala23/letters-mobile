@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { TouchableOpacity, ViewStyle, View } from 'react-native';
-import { Category, Draft, MailTypes } from 'types';
+import { Category, CustomFontFamilies, Draft, MailTypes } from 'types';
 import { Typography, Colors } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import { capitalize } from '@utils';
@@ -53,6 +53,12 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
                 id: -1,
                 productId: -1,
                 price: 0,
+              },
+              customization: {
+                font: {
+                  family: CustomFontFamilies.Montserrat,
+                  color: '#000000',
+                },
               },
               size: POSTCARD_SIZE_OPTIONS[0],
             });

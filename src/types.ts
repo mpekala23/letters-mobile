@@ -53,6 +53,25 @@ export interface PersonalDesign extends BaseDesign {
   type: 'personal_design';
 }
 
+export enum CustomFontFamilies {
+  BebasNeue = 'BebasNeue-Regular',
+  KumbhSans = 'KumbhSans-Regular',
+  Lobster = 'Lobster-Regular',
+  Montserrat = 'Montserrat-Regular',
+  NotoSerifJP = 'NotoSerifJP-Regular',
+  ReenieBeanie = 'ReenieBeanie-Regular',
+  Satisfy = 'Satisfy-Regular',
+}
+
+export interface Font {
+  family: CustomFontFamilies;
+  color: string;
+}
+
+export interface Customization {
+  font: Font;
+}
+
 export interface BasePremadeDesign extends BaseDesign {
   id: number;
   name: string;
@@ -92,6 +111,7 @@ interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
   size: PostcardSizeOption;
+  customization: Customization;
 }
 
 export enum MailStatus {
@@ -317,6 +337,10 @@ export type TopbarRouteAction = {
   action: () => void | Promise<void>;
   blocking?: boolean;
 };
+
+export type DesignBottomDetails = 'layout' | 'design' | 'stickers';
+
+export type TextBottomDetails = 'color' | 'font';
 
 export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
 

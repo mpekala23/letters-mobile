@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
-import { Draft, MailTypes, Contact } from 'types';
+import { Draft, MailTypes, Contact, Font } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import { Typography } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
@@ -17,6 +17,7 @@ interface Props {
   width: number;
   height: number;
   style?: ViewStyle;
+  font: Font;
 }
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
@@ -75,6 +76,8 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
                   fontSize: 16,
                   paddingHorizontal: 10,
                   alignItems: 'center',
+                  fontFamily: props.font.family,
+                  color: props.font.color,
                 },
               ]}
               numberOfLines={12}

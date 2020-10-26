@@ -47,7 +47,22 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
         </Text>
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Text style={[Typography.FONT_REGULAR, Styles.letterText]}>
+        <Text
+          style={[
+            Typography.FONT_REGULAR,
+            Styles.letterText,
+            {
+              fontFamily:
+                mail.type === MailTypes.Letter
+                  ? undefined
+                  : mail.customization.font.family,
+              color:
+                mail.type === MailTypes.Letter
+                  ? undefined
+                  : mail.customization.font.color,
+            },
+          ]}
+        >
           {mail.content}
         </Text>
         {mail.type === MailTypes.Letter && (
