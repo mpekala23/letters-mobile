@@ -54,11 +54,20 @@ import {
   PERSONAL_OVERRIDE_ID,
   DESIGN_BUTTONS_HEIGHT,
   BOTTOM_HEIGHT,
+  TRAY_CLOSED,
+  BUTTONS_HIDDEN,
+  FLIP_DURATION,
 } from '@utils/Constants';
+import {
+  closeTray,
+  flip,
+  hideButtons,
+  openTray,
+  showButtons,
+  showKeyboardItem,
+  unflip,
+} from '@utils/Animations';
 import Styles from './Compose.styles';
-
-const FLIP_DURATION = 500;
-const SLIDE_DURATION = 300;
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -255,32 +264,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   onKeyboardOpen(): void {
     this.setTextState({ writing: true }, () => {
-      this.state.textState.bottomSlide.setValue(0);
-      Animated.timing(this.state.textState.keyboardOpacity, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: false,
-      }).start();
-      Animated.timing(this.state.textState.buttonSlide, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: false,
-      }).start();
+      this.state.textState.bottomSlide.setValue(TRAY_CLOSED);
+      this.state.textState.bottomSlide.setValue(BUTTONS_HIDDEN);
+      showKeyboardItem(this.state.textState.keyboardOpacity);
     });
   }
 
   onKeyboardClose(): void {
     this.setTextState({ writing: false });
-    Animated.timing(this.state.textState.keyboardOpacity, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.textState.buttonSlide, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    showButtons(this.state.textState.buttonSlide);
   }
 
   setDesignState(
@@ -339,36 +331,24 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   openDesignBottom(details: DesignBottomDetails) {
     this.setDesignState({ bottomDetails: details });
-    Animated.timing(this.state.designState.bottomSlide, {
-      toValue: 1,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start();
+    openTray(this.state.designState.bottomSlide);
   }
 
   closeDesignBottom() {
-    Animated.timing(this.state.designState.bottomSlide, {
-      toValue: 0,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start(() => this.setDesignState({ bottomDetails: null }));
+    closeTray(this.state.designState.bottomSlide, () =>
+      this.setDesignState({ bottomDetails: null })
+    );
   }
 
   openTextBottom(details: TextBottomDetails) {
     this.setTextState({ bottomDetails: details });
-    Animated.timing(this.state.textState.bottomSlide, {
-      toValue: 1,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start();
+    openTray(this.state.textState.bottomSlide);
   }
 
   closeTextBottom() {
-    Animated.timing(this.state.textState.bottomSlide, {
-      toValue: 0,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start(() => this.setTextState({ bottomDetails: null }));
+    closeTray(this.state.textState.bottomSlide, () =>
+      this.setTextState({ bottomDetails: null })
+    );
   }
 
   async loadMoreImages(): Promise<void> {
@@ -450,19 +430,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       });
     }
     this.setDesignState({ animatingFlip: true });
-    Animated.timing(this.state.designState.flip, {
-      toValue: 1,
-      duration: FLIP_DURATION,
-      useNativeDriver: false,
-    }).start(() => {
+    flip(this.state.designState.flip, () => {
       this.setState({ subscreen: 'Text' });
       this.setDesignState({ animatingFlip: false });
     });
-    Animated.timing(this.state.textState.buttonSlide, {
-      toValue: 1,
+    showButtons(this.state.textState.buttonSlide, undefined, {
       duration: FLIP_DURATION,
-      useNativeDriver: false,
-    }).start();
+    });
     setBackOverride({
       action: this.backWriting,
     });
@@ -474,19 +448,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   backWriting() {
-    Animated.timing(this.state.designState.flip, {
-      toValue: 0,
-      duration: FLIP_DURATION,
-      useNativeDriver: false,
-    }).start(() => {
+    unflip(this.state.designState.flip, () => {
       this.setState({ subscreen: 'Design' });
       this.setDesignState({ animatingFlip: false });
     });
-    Animated.timing(this.state.textState.buttonSlide, {
-      toValue: 0,
-      duration: FLIP_DURATION,
-      useNativeDriver: false,
-    }).start();
+    hideButtons(this.state.textState.buttonSlide);
     this.closeTextBottom();
     this.setDesignState({ animatingFlip: true });
     setBackOverride(undefined);
@@ -532,28 +498,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         inputRange: [0, 1],
         outputRange,
       });
-    } else if (!this.state.textState.writing) {
-      dynamicTop = this.state.textState.bottomSlide.interpolate({
+    } else {
+      dynamicTop = (this.state.textState.writing
+        ? this.state.textState.keyboardOpacity
+        : this.state.textState.bottomSlide
+      ).interpolate({
         inputRange: [0, 1],
         outputRange,
-      });
-    } else {
-      dynamicTop = this.state.textState.keyboardOpacity.interpolate({
-        inputRange: [0, 1],
-        outputRange: [
-          (WINDOW_HEIGHT -
-            DESIGN_BUTTONS_HEIGHT -
-            BAR_HEIGHT -
-            POSTCARD_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-          (WINDOW_HEIGHT -
-            BOTTOM_HEIGHT -
-            POSTCARD_HEIGHT -
-            BAR_HEIGHT -
-            STATUS_BAR_HEIGHT) /
-            2,
-        ],
       });
     }
     return (

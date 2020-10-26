@@ -53,7 +53,19 @@ import {
   POSTCARD_WIDTH,
   POSTCARD_HEIGHT,
   BOTTOM_HEIGHT,
+  TRAY_CLOSED,
+  BUTTONS_HIDDEN,
 } from '@utils/Constants';
+import {
+  closeTray,
+  flip,
+  hideButtons,
+  hideKeyboardItem,
+  openTray,
+  showButtons,
+  showKeyboardItem,
+  unflip,
+} from '@utils/Animations';
 import Styles from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -297,34 +309,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   };
 
   onKeyboardOpen(): void {
-    Animated.timing(this.state.keyboardOpacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.textBottomSlide, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.textButtonSlide, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    this.state.textBottomSlide.setValue(TRAY_CLOSED);
+    this.state.textButtonSlide.setValue(BUTTONS_HIDDEN);
+    showKeyboardItem(this.state.keyboardOpacity);
   }
 
   onKeyboardClose(): void {
-    Animated.timing(this.state.keyboardOpacity, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.textButtonSlide, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    hideKeyboardItem(this.state.keyboardOpacity);
+    showButtons(this.state.textButtonSlide);
   }
 
   setValid(val: boolean): void {
@@ -350,18 +342,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       return true;
     }
     return false;
-  };
-
-  animateSlide = (
-    animated: Animated.Value,
-    toValue: number,
-    callback?: () => void
-  ): void => {
-    Animated.timing(animated, {
-      toValue,
-      duration: SLIDE_DURATION,
-      useNativeDriver: false,
-    }).start(callback);
   };
 
   updateWordsLeft(value: string): void {
@@ -460,11 +440,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       text: i18n.t('Compose.done'),
       action: this.doneWriting,
     });
-    Animated.timing(this.state.flip, {
-      useNativeDriver: false,
-      toValue: 1,
-      duration: FLIP_DURATION,
-    }).start(() => {
+    flip(this.state.flip, () => {
       this.setState({ writing: true });
       setBackOverride({
         action: () => {
@@ -472,7 +448,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
-    this.animateSlide(this.state.textBottomSlide, 1);
+    closeTray(this.state.textBottomSlide);
+    showButtons(this.state.textButtonSlide);
   }
 
   backWriting(): void {
@@ -484,11 +461,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       Option: 'Postcard',
       Step: 'Caption',
     });
-    Animated.timing(this.state.flip, {
-      useNativeDriver: false,
-      toValue: 0,
-      duration: FLIP_DURATION,
-    }).start(() => {
+    unflip(this.state.flip, () => {
       this.setState({ writing: false });
       setProfileOverride({
         enabled: true,
@@ -498,8 +471,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         },
       });
     });
-    this.animateSlide(this.state.textBottomSlide, 0);
-    this.animateSlide(this.state.textButtonSlide, 0);
+    closeTray(this.state.textBottomSlide);
+    hideButtons(this.state.textButtonSlide);
   }
 
   doneWriting(): void {
@@ -527,12 +500,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   openTextBottom(detail: TextBottomDetails) {
     this.setState({ textBottomDetails: detail }, () => {
-      this.animateSlide(this.state.textBottomSlide, 1);
+      openTray(this.state.textBottomSlide);
     });
   }
 
   closeTextBottom() {
-    this.animateSlide(this.state.textBottomSlide, 0, () => {
+    closeTray(this.state.textBottomSlide, () => {
       this.setState({ textBottomDetails: null });
     });
   }
@@ -740,8 +713,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               onAddColor={() => this.openTextBottom('color')}
               onAddFont={() => this.openTextBottom('font')}
               onAddText={() => {
-                this.animateSlide(this.state.textBottomSlide, 0);
-                this.animateSlide(this.state.textButtonSlide, 0, () => {
+                closeTray(this.state.textBottomSlide);
+                hideButtons(this.state.textButtonSlide, () => {
                   if (this.editableRef.current)
                     this.editableRef.current.focus();
                 });
