@@ -10,6 +10,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { capitalize } from '@utils';
+import PriceTag from '@components/PriceTag/PriceTag.react';
 import Styles from './StoreItem.styles';
 
 type StoreItemScreenNavigationProp = StackNavigationProp<
@@ -57,7 +58,7 @@ const StoreItemBase: React.FC<Props> = ({
         viewStyle={{ width: '100%', height: '30%' }}
       />
       <View style={Styles.container}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={Styles.title}>
           <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
             {capitalize(item.name)}
           </Text>
@@ -75,6 +76,14 @@ const StoreItemBase: React.FC<Props> = ({
           {i18n.t('StoreItem.description')}
         </Text>
         <Text style={{ marginBottom: 16 }}>{item.blurb}</Text>
+        <View style={Styles.line} />
+        <PriceTag
+          price={item.price}
+          containerStyle={{ marginVertical: 8 }}
+          iconStyle={{ width: 30, height: 30 }}
+          textStyle={{ fontSize: 32 }}
+          hasLabel
+        />
         <Button
           buttonText={i18n.t('StoreItem.purchaseBtn')}
           onPress={initiatePurchase}

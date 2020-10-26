@@ -23,7 +23,13 @@ import {
   PostcardDesign,
 } from 'types';
 import { Typography, Colors } from '@styles';
-import { WINDOW_WIDTH, capitalize, getNumWords, getImageDims } from '@utils';
+import {
+  WINDOW_WIDTH,
+  capitalize,
+  getNumWords,
+  getImageDims,
+  getPostcardDesignImage,
+} from '@utils';
 import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -86,7 +92,7 @@ interface State {
 
 class ComposePostcardScreenBase extends React.Component<Props, State> {
   static defaultProps = {
-    initialSubcategory: 'Prison Art',
+    initialSubcategory: 'prison art',
   };
 
   private unsubscribeFocus: () => void;
@@ -108,6 +114,11 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         thumbnail: { uri: '' },
         name: '',
         type: 'premade_postcard',
+        id: -1,
+        price: -1,
+        categoryId: -1,
+        blurb: '',
+        productId: -1,
       },
       writing: false,
       flip: new Animated.Value(0),
@@ -158,8 +169,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     const { composing } = this.props;
     if (
       composing.type === MailTypes.Postcard &&
-      composing.design.type === 'premade_postcard' &&
-      composing.design.asset.uri.length
+      composing.design.type === 'premade_postcard'
     ) {
       if (composing.design.subcategoryName) {
         this.setState({
@@ -172,8 +182,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
           this.beginWriting();
         });
       }
-    } else {
-      this.changeDesign(this.state.design);
     }
   }
 
@@ -192,6 +200,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     subcategories.forEach((subcategory) => {
       const designs = category.subcategories[subcategory];
       designs.forEach((design) => {
+        if (design.type !== 'premade_postcard') return;
         if (design.asset.width && design.asset.height) return;
         getImageDims(design.asset.uri).then((dims) => {
           if (design.categoryId && design.id) {
@@ -236,7 +245,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         action: this.doneWriting,
       });
     }
-
     this.setState({
       renderMethod: 'grid',
       subcategory: Object.keys(
@@ -417,6 +425,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     const data = this.props.route.params.category.subcategories[
       this.state.subcategory
     ];
+    console.log(data);
+
     return data && data.length && data[0].type === 'premade_postcard'
       ? (data as PremadePostcardDesign[])
       : [];
@@ -479,7 +489,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         }}
       >
         <AsyncImage
-          source={design.thumbnail}
+          source={getPostcardDesignImage(design)}
           imageStyle={{ flex: 1, aspectRatio: 1 }}
         />
       </TouchableOpacity>
@@ -503,7 +513,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         }}
       >
         <AsyncImage
-          source={design.thumbnail}
+          source={getPostcardDesignImage(design)}
           imageStyle={{
             flex: 1,
             aspectRatio: width / height,
@@ -543,6 +553,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const data = this.narrowData();
+    const emptyLoading = (
+      <View
+        style={{
+          flex: 1,
+          height: 300,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
+      </View>
+    );
     return (
       <TouchableOpacity
         activeOpacity={1.0}
@@ -612,13 +634,12 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 data={data}
                 renderItem={({ item }) => this.renderItem(item)}
                 keyExtractor={(item: PremadePostcardDesign, index: number) => {
-                  return item.image.uri + index.toString();
+                  return item.asset.uri + index.toString();
                 }}
                 numColumns={this.state.renderMethod === 'grid' ? 2 : undefined}
                 contentContainerStyle={Styles.gridBackground}
                 key={this.state.renderMethod}
-                // onEndReached={this.loadMoreImages}
-                // ListEmptyComponent={emptyLoading}
+                ListEmptyComponent={emptyLoading}
               />
             </Animated.View>
             <ComposeTools

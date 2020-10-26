@@ -96,17 +96,17 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.type === 'premade_postcard'
             ? this.props.composing.design.name
-            : null,
+            : undefined,
         contentResearcher:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.type === 'premade_postcard'
             ? this.props.composing.design.contentResearcher
-            : null,
+            : undefined,
         designer:
           this.props.composing.type === MailTypes.Postcard &&
           this.props.composing.design.type === 'premade_postcard'
             ? this.props.composing.design.designer
-            : null,
+            : undefined,
       });
       this.props.clearComposing();
       cleanupAfterSend(this.props.recipient);

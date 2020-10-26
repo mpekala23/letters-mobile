@@ -8,6 +8,19 @@ export default StyleSheet.create({
     flexDirection: 'column',
   },
   container: {
-    padding: 16,
+    flex: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  line: {
+    borderWidth: 0.4,
+    borderColor: Colors.GRAY_300,
+    marginTop: 'auto',
   },
 });

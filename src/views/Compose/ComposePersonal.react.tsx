@@ -216,15 +216,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           sortBy: [[MediaLibrary.SortBy.creationTime, false]],
         });
         const library = assets.map((value) => {
-          const image: Image = {
+          const asset: Image = {
             uri: value.uri,
             width: value.width,
             height: value.height,
           };
           const design: PersonalDesign = {
-            image,
-            thumbnail: image,
+            asset,
             type: 'personal_design',
+            categoryId: PERSONAL_OVERRIDE_ID,
           };
           return design;
         });
@@ -339,14 +339,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     const { library } = this.state.designState;
     if (!library) return;
     const designs = assets.map((value) => {
-      const image: Image = {
+      const asset: Image = {
         uri: value.uri,
         width: value.width,
         height: value.height,
       };
       const design: PersonalDesign = {
-        image,
+        asset,
         type: 'personal_design',
+        categoryId: PERSONAL_OVERRIDE_ID,
       };
       return design;
     });

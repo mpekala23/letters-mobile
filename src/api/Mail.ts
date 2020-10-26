@@ -520,10 +520,9 @@ function cleanDesign(
     thumbnail_src,
     front_img_src,
     price,
-    color,
     product_id,
   } = raw;
-  if (type === 'premade_postcard') {
+  if (type === 'postcard') {
     const design: PremadePostcardDesign = {
       asset: {
         uri: front_img_src,
@@ -536,7 +535,7 @@ function cleanDesign(
       contentResearcher: content_researcher,
       designer,
       blurb,
-      type,
+      type: 'premade_postcard',
       price,
       productId: product_id,
     };

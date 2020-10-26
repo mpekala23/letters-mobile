@@ -45,8 +45,14 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               recipientId: props.recipientId,
               design: {
                 asset: { uri: '' },
-                type: 'personal_design',
+                type: 'premade_postcard',
                 categoryId: props.category.id,
+                name: '',
+                blurb: '',
+                thumbnail: { uri: '' },
+                id: -1,
+                productId: -1,
+                price: 0,
               },
               size: POSTCARD_SIZE_OPTIONS[0],
             });
