@@ -15,6 +15,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import { FlatList } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
+import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './SelectPostcardSize.styles';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
@@ -29,6 +30,7 @@ interface Props {
   };
   updateDraft: (draft: Draft) => void;
   draft: Draft;
+  coins: number;
 }
 
 const SelectPostcardSizeBase = ({
@@ -36,13 +38,28 @@ const SelectPostcardSizeBase = ({
   route,
   updateDraft,
   draft,
+  coins,
 }: Props) => {
   const [selected, setSelected] = useState<PostcardSizeOption>(
     (draft as DraftPostcard).size
   );
 
   const updatePostcardOption = async () => {
-    setProfileOverride(undefined);
+    if (selected.isPremium && selected.cost > coins) {
+      popupAlert({
+        title: i18n.t('Premium.notEnoughAmeelioPlus'),
+        buttons: [
+          {
+            text: i18n.t('Premium.buyMoreAmeelioPlus'),
+            onPress: () => {
+              navigation.navigate(Screens.CreditPackStore);
+            },
+          },
+          { text: i18n.t('Premium.noThanks'), reverse: true },
+        ],
+      });
+      return;
+    }
     if (route.params.category.name === 'personal') {
       navigation.navigate(Screens.ComposePersonal, {
         category: route.params.category,
@@ -130,6 +147,7 @@ const SelectPostcardSizeBase = ({
 
 const mapStateToProps = (state: AppState) => ({
   draft: state.mail.composing,
+  coins: state.user.user.coins,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({

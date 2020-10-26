@@ -463,7 +463,8 @@ export async function createMail(
   const data = body.data as RawMail;
   const createdMail = await cleanMassMail(data);
   store.dispatch(addMail(createdMail));
-  user.credit -= 1;
+  user.credit -=
+    draft.type === MailTypes.Letter ? Math.max(1, draft.images.length) : 1;
   store.dispatch(setUser(user));
 
   const contact = store.getState().contact.active;

@@ -33,6 +33,7 @@ import PostcardTools from './PostcardTools/PostcardTools.react';
 import PremiumSubcategorySelector from './Card/PremiumSubcategorySelector.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
+import ReviewCredits from './ReviewCredits/ReviewCredits.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import StickerManager from './StickerManager/StickerManager.react';
@@ -74,6 +75,7 @@ export {
   PremiumSubcategorySelector,
   PrisonCard,
   ProfilePic,
+  ReviewCredits,
   StaticPostcard,
   Statusbar,
   StickerManager,
