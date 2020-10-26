@@ -260,7 +260,7 @@
     "modalHeader": "Confirm Purchase",
     "modalMessage": "We cannot cancel the order once created.",
     "confirmBtn": "Confirm",
-    "cancel": "Go back"
+    "cancelBtn": "Go back"
   },
   "SingleContactScreen": {
     "received": "received",

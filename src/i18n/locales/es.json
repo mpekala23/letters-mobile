@@ -259,7 +259,7 @@
     "modalHeader": "Confirmar compra",
     "modalMessage": "No podemos cancelar el pedido una vez creado.",
     "confirmBtn": "Confirmar",
-    "cancel": "Volver"
+    "cancelBtn": "Volver"
   },
   "SingleContactScreen": {
     "received": "recibido",

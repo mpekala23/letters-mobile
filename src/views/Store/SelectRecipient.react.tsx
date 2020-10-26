@@ -6,7 +6,7 @@ import { AppState } from '@store/types';
 import { Contact, MailTypes, PremadeDesign } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import React, { Dispatch, useEffect, useState } from 'react';
-import { View, Text, Linking } from 'react-native';
+import { View, Text, Linking, Image as ImageComponent } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import CardStyles from '@components/Card/Card.styles';
@@ -15,6 +15,7 @@ import { popupAlert } from '@components/Alert/Alert.react';
 import { Typography } from '@styles';
 import { UserActionTypes } from '@store/User/UserTypes';
 import { deductPremiumCoins } from '@store/User/UserActions';
+import Loading from '@assets/common/loading.gif';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -35,17 +36,19 @@ const SelectRecipientBase = ({
   deduct,
 }: Props) => {
   const [recipient, setRecipient] = useState<Contact>();
+  const [processingPurchase, setProcessingPurchase] = useState(false);
 
   const confirmPurchase = async () => {
     const { item } = route.params;
     if (!recipient) return;
-
+    setProcessingPurchase(true);
+    setProfileOverride(undefined);
     popupAlert({
       title: i18n.t('SelectRecipient.modalHeader'),
       message: i18n.t('SelectRecipient.modalMessage'),
       buttons: [
         {
-          text: i18n.t('SelectRecipient.confirm'),
+          text: i18n.t('SelectRecipient.confirmBtn'),
           onPress: async () => {
             try {
               await createMail(
@@ -59,12 +62,17 @@ const SelectRecipientBase = ({
                 item.productId
               );
               deduct(item.price);
-              setProfileOverride(undefined);
               navigation.reset({
                 index: 0,
                 routes: [{ name: Screens.StoreItemPurchaseSuccess }],
               });
             } catch (err) {
+              setProfileOverride({
+                enabled: !!recipient,
+                text: i18n.t('Compose.selectBtn'),
+                action: confirmPurchase,
+                blocking: true,
+              });
               popupAlert({
                 title: i18n.t('Error.cantSendMailModalTitle'),
                 message: i18n.t('Error.cantSendMailModalBody'),
@@ -85,7 +93,7 @@ const SelectRecipientBase = ({
           },
         },
         {
-          text: i18n.t('SelectRecipient.cancel'),
+          text: i18n.t('SelectRecipient.cancelBtn'),
           reverse: true,
         },
       ],
@@ -129,6 +137,32 @@ const SelectRecipientBase = ({
     );
   };
 
+  const emptyLoading = (
+    <View
+      style={{
+        flex: 1,
+        height: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
+    </View>
+  );
+
+  if (processingPurchase)
+    return (
+      <View
+        style={{
+          flex: 1,
+          height: 300,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
+      </View>
+    );
   return (
     <View style={{ padding: 16 }}>
       <Text style={[Typography.FONT_BOLD, { fontSize: 18, marginBottom: 8 }]}>
