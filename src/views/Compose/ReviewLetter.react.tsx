@@ -29,7 +29,6 @@ interface Props {
   composing: Draft;
   clearComposing: () => void;
   ameelioBalance: number;
-  plusBalance: number;
 }
 
 class ReviewLetterScreenBase extends React.Component<Props> {
@@ -200,7 +199,6 @@ const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   activeContact: state.contact.active,
   ameelioBalance: state.user.user.credit,
-  plusBalance: state.user.user.coins,
 });
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   clearComposing: () => dispatch(clearComposing()),
