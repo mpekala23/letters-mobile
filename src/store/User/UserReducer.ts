@@ -7,6 +7,8 @@ import {
   AUTHENTICATE_USER,
   SET_USER_REFERRALS,
   SET_LOADING_STATUS,
+  ADD_PREMIUM_COINS,
+  DEDUCT_PREMIUM_COINS,
 } from './UserTypes';
 
 const initialState: UserState = {
@@ -29,8 +31,10 @@ const initialState: UserState = {
     city: '',
     state: '',
     credit: 0,
+    coins: 0,
     joined: new Date(Date.now()),
     referralCode: '',
+    country: '',
   },
   userReferrals: {
     families: [],
@@ -97,8 +101,10 @@ export default function UserReducer(
           city: '',
           state: '',
           credit: 0,
+          coins: 0,
           joined: new Date(Date.now()),
           referralCode: '',
+          country: '',
         },
       };
     case SET_USER:
@@ -111,6 +117,12 @@ export default function UserReducer(
       };
     case SET_LOADING_STATUS:
       currentState.authInfo.loadingStatus = action.payload;
+      return currentState;
+    case ADD_PREMIUM_COINS:
+      currentState.user.coins += action.payload;
+      return currentState;
+    case DEDUCT_PREMIUM_COINS:
+      currentState.user.coins -= action.payload;
       return currentState;
     default:
       return state;

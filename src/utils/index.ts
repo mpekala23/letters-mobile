@@ -9,7 +9,13 @@ import PhoneNumber from 'awesome-phonenumber';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-import { ZipcodeInfo, MailStatus, Image } from 'types';
+import {
+  ZipcodeInfo,
+  MailStatus,
+  Image,
+  PostcardSizeOption,
+  PostcardDesign,
+} from 'types';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
 import { addBusinessDays } from 'date-fns';
@@ -34,6 +40,7 @@ import {
   WINDOW_HEIGHT,
   ETA_CREATED_TO_DELIVERED,
   ETA_PROCESSED_TO_DELIVERED,
+  POSTCARD_SIZE_OPTIONS,
 } from './Constants';
 
 export {
@@ -141,10 +148,12 @@ export enum Validation {
   Phone = 'Phone',
   Password = 'Password',
   Postal = 'Postal',
+  InternationalPostal = 'InternationalPostal',
   CreditCard = 'CreditCard',
   InmateNumber = 'InmateNumber',
   Address = 'Address',
   City = 'City',
+  State = 'State',
 }
 
 export function isValidEmail(email: string): boolean {
@@ -166,6 +175,10 @@ export function isValidPostal(postal: string): boolean {
   return /^[0-9]{5}(?:-[0-9]{4})?$/.test(postal);
 }
 
+export function isValidInternationalPostal(postal: string): boolean {
+  return postal.length > 0;
+}
+
 export function isValidCreditCard(card: string): boolean {
   return /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(
     card
@@ -184,6 +197,10 @@ export function isValidCity(city: string): boolean {
   return /^[a-zA-ZÀ-ÖØ-öø-ÿ.-\s]*$/.test(city);
 }
 
+export function isValidState(state: string): boolean {
+  return state.length > 0;
+}
+
 export function validateFormat(format: Validation, value: string): boolean {
   switch (format) {
     case Validation.Email:
@@ -194,6 +211,8 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidPassword(value);
     case Validation.Postal:
       return isValidPostal(value);
+    case Validation.InternationalPostal:
+      return isValidInternationalPostal(value);
     case Validation.CreditCard:
       return isValidCreditCard(value);
     case Validation.InmateNumber:
@@ -202,6 +221,8 @@ export function validateFormat(format: Validation, value: string): boolean {
       return isValidAddress(value);
     case Validation.City:
       return isValidCity(value);
+    case Validation.State:
+      return isValidState(value);
     default:
       return false;
   }
@@ -441,4 +462,15 @@ export function rgbToHex(r: number, g: number, b: number): string {
 export function hsvToHex(h: number, s: number, v: number): string {
   const rgb = hsvToRgb(h, s, v);
   return rgbToHex(rgb[0], rgb[1], rgb[2]);
+}
+
+export function findPostcardSizeOption(key: string): PostcardSizeOption {
+  return (
+    POSTCARD_SIZE_OPTIONS.find((option) => key === option.key) ||
+    POSTCARD_SIZE_OPTIONS[0]
+  );
+}
+
+export function getPostcardDesignImage(design: PostcardDesign): Image {
+  return design.type === 'premade_postcard' ? design.thumbnail : design.asset;
 }

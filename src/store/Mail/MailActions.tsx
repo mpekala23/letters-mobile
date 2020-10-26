@@ -8,6 +8,7 @@ import {
   CLEAR_COMPOSING,
   ADD_MAIL,
   SET_ACTIVE,
+  SET_ACTIVE_BY_ID,
   SET_STATUS,
   SET_DATE_CREATED,
   SET_EXPECTED_DELIVERY,
@@ -15,6 +16,7 @@ import {
   SET_EXISTING_MAIL,
   MailActionTypes,
   SET_FONT,
+  SET_MAIL_IMAGES,
 } from './MailTypes';
 
 export function setComposing(draft: Draft): MailActionTypes {
@@ -80,6 +82,19 @@ export function setActive(mail: Mail | null): MailActionTypes {
   };
 }
 
+export function setActiveById(
+  contactId: number,
+  mailId: number
+): MailActionTypes {
+  return {
+    type: SET_ACTIVE_BY_ID,
+    payload: {
+      contactId,
+      mailId,
+    },
+  };
+}
+
 export function setStatus(
   status: MailStatus,
   contactId: number,
@@ -121,6 +136,21 @@ export function setExpectedDelivery(
       contactId,
       mailId,
       expectedDelivery,
+    },
+  };
+}
+
+export function setMailImages(
+  images: Image[],
+  contactId: number,
+  mailId: number
+): MailActionTypes {
+  return {
+    type: SET_MAIL_IMAGES,
+    payload: {
+      contactId,
+      mailId,
+      images,
     },
   };
 }

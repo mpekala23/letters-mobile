@@ -12,13 +12,18 @@ export default StyleSheet.create({
     elevation: 5,
     zIndex: 10,
   },
-  backContainer: {
+  sideContainer: {
     position: 'absolute',
-    left: 19,
-    width: 30,
+    width: 160,
     height: BAR_HEIGHT,
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 10,
+  },
+  leftContainer: {
+    left: 19,
+    alignItems: 'flex-start',
+  },
+  rightContainer: {
+    right: 19,
+    alignItems: 'flex-end',
   },
 });

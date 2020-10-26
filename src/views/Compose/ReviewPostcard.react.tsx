@@ -6,7 +6,7 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
-import { StaticPostcard } from '@components';
+import { ReviewCredits, StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { Draft, Contact, MailTypes, CustomFontFamilies, Font } from 'types';
@@ -19,7 +19,7 @@ import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { Typography, Colors } from '@styles';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import { popupAlert } from '@components/Alert/Alert.react';
@@ -41,6 +41,8 @@ export interface Props {
       category: string;
     };
   };
+  ameelioBalance: number;
+  plusBalance: number;
 }
 
 class ReviewPostcardScreenBase extends React.Component<Props> {
@@ -94,13 +96,19 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
           this.props.composing.design.subcategoryName,
         option:
           this.props.composing.type === MailTypes.Postcard &&
-          this.props.composing.design.name,
+          this.props.composing.design.type === 'premade_postcard'
+            ? this.props.composing.design.name
+            : undefined,
         contentResearcher:
           this.props.composing.type === MailTypes.Postcard &&
-          this.props.composing.design.contentResearcher,
+          this.props.composing.design.type === 'premade_postcard'
+            ? this.props.composing.design.contentResearcher
+            : undefined,
         designer:
           this.props.composing.type === MailTypes.Postcard &&
-          this.props.composing.design.designer,
+          this.props.composing.design.type === 'premade_postcard'
+            ? this.props.composing.design.designer
+            : undefined,
       });
       this.props.clearComposing();
       cleanupAfterSend(this.props.recipient);
@@ -118,6 +126,22 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         Option: 'postcard',
         'Error Type': err,
       });
+      if (
+        err.data &&
+        err.data.content ===
+          'The content may not be greater than 16000 characters.'
+      ) {
+        dropdownError({
+          message: i18n.t('Error.letterTooLong'),
+        });
+        return;
+      }
+      if (err.data && err.data.content === 'The content field is required.') {
+        dropdownError({
+          message: i18n.t('Compose.letterMustHaveContent'),
+        });
+        return;
+      }
       if (err.message === 'Image upload timeout') {
         // timeout that occurred during image upload
         dropdownError({
@@ -128,42 +152,31 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
         dropdownError({
           message: i18n.t('Error.requestTimedOut'),
         });
-      } else if (
-        err.data &&
-        err.data.content ===
-          'The content may not be greater than 16000 characters.'
-      ) {
+      } else if (err.message === 'Too Many Attempts.') {
         dropdownError({
-          message: i18n.t('Error.letterTooLong'),
-        });
-      } else if (
-        err.data &&
-        err.data.content === 'The content field is required.'
-      ) {
-        dropdownError({
-          message: i18n.t('Compose.letterMustHaveContent'),
+          message: i18n.t('Error.tooManyAttempts'),
         });
       } else {
-        popupAlert({
-          title: i18n.t('Error.cantSendMailModalTitle'),
-          message: i18n.t('Error.cantSendMailModalBody'),
-          buttons: [
-            {
-              text: i18n.t('Error.reachOutToSupport'),
-              onPress: async () => {
-                await Linking.openURL('https://m.me/teamameelio');
-              },
-            },
-            {
-              text: i18n.t('Error.noThanks'),
-              reverse: true,
-            },
-          ],
-        });
         dropdownError({
           message: i18n.t('Error.requestIncomplete'),
         });
       }
+      popupAlert({
+        title: i18n.t('Error.cantSendMailModalTitle'),
+        message: i18n.t('Error.cantSendMailModalBody'),
+        buttons: [
+          {
+            text: i18n.t('Error.reachOutToSupport'),
+            onPress: async () => {
+              await Linking.openURL('https://m.me/teamameelio');
+            },
+          },
+          {
+            text: i18n.t('Error.noThanks'),
+            reverse: true,
+          },
+        ],
+      });
     }
   }
 
@@ -175,6 +188,12 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             family: CustomFontFamilies.Montserrat,
             color: '#000000',
           };
+    const plusCost =
+      this.props.composing.type === MailTypes.Postcard &&
+      this.props.composing.size.isPremium
+        ? this.props.composing.size.cost
+        : 0;
+
     return (
       <View style={Styles.screenBackground}>
         <ScrollView style={{ flex: 1 }}>
@@ -202,7 +221,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
                 Typography.FONT_REGULAR,
                 {
                   fontSize: 16,
-                  color: Colors.GRAY_MEDIUM,
+                  color: Colors.GRAY_300,
                   textAlign: 'center',
                   margin: 10,
                 },
@@ -210,6 +229,15 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
             >
               {i18n.t('Compose.warningCantCancel')}
             </Text>
+            <ReviewCredits
+              type={plusCost > 0 ? 'premium' : 'free'}
+              cost={plusCost > 0 ? plusCost : 1}
+              balance={
+                plusCost > 0
+                  ? this.props.plusBalance
+                  : this.props.ameelioBalance
+              }
+            />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -220,6 +248,8 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   recipient: state.contact.active,
+  ameelioBalance: state.user.user.credit,
+  plusBalance: state.user.user.coins,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({

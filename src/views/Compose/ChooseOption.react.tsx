@@ -11,7 +11,7 @@ import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import * as Segment from 'expo-analytics-segment';
-import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
+import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import Styles from './Compose.styles';
 
 type ChooseOptionsScreenNavigationProp = StackNavigationProp<
@@ -42,9 +42,9 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
             recipientId: props.recipientId,
             content: '',
             design: {
-              image: { uri: '' },
-              custom: true,
+              asset: { uri: '' },
               categoryId: PERSONAL_OVERRIDE_ID,
+              type: 'personal_design',
             },
             customization: {
               font: {
@@ -52,14 +52,16 @@ const ChooseOptionScreenBase: React.FC<Props> = (props: Props) => {
                 color: '#000000',
               },
             },
+            size: POSTCARD_SIZE_OPTIONS[0],
           });
-          props.navigation.navigate(Screens.ComposePersonal, {
+          props.navigation.navigate(Screens.SelectPostcardSize, {
             category: {
               name: 'personal',
               id: -1,
               image: { uri: '' },
               blurb: '',
               subcategories: {},
+              premium: false,
             },
           });
         }}

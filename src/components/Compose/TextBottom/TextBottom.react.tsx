@@ -8,7 +8,6 @@ import { TriangleColorPicker } from 'react-native-color-picker';
 import { hsvToHex } from '@utils';
 import { FONT_OPTIONS } from '@utils/Fonts';
 import Styles from './TextBottom.styles';
-import AdjustableText from '../../Text/AdjustableText.react';
 
 interface Props {
   bottomSlide: Animated.Value;
@@ -55,7 +54,7 @@ function FontSelector({
               <Text
                 style={[
                   Typography.FONT_REGULAR,
-                  { color: Colors.GRAY_MEDIUM, fontSize: 18 },
+                  { color: Colors.GRAY_300, fontSize: 18 },
                 ]}
               >
                 {item.split('-')[0]}

@@ -18,11 +18,10 @@ export default StyleSheet.create({
     fontSize: 14,
     paddingTop: 6,
     paddingBottom: 28,
-    color: Colors.GRAY_500,
+    color: Colors.GRAY_400,
   },
   button: {
     backgroundColor: Colors.PINK_500,
-    borderRadius: 15,
     width: '100%',
     height: 50,
   },

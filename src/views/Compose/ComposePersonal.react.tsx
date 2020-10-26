@@ -18,7 +18,6 @@ import {
   ComposeTextBottom,
 } from '@components';
 import {
-  PostcardDesign,
   Contact,
   Layout,
   Draft,
@@ -29,11 +28,10 @@ import {
   TextBottomDetails,
   CustomFontFamilies,
   Font,
+  DraftPostcard,
+  PersonalDesign,
 } from 'types';
-import {
-  setBackOverride,
-  setProfileOverride,
-} from '@components/Topbar/Topbar.react';
+import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -57,11 +55,14 @@ import {
   TRAY_CLOSED,
   BUTTONS_HIDDEN,
   FLIP_DURATION,
+  KEYBOARD_HIDDEN,
+  KEYBOARD_OPEN,
 } from '@utils/Constants';
 import {
   closeTray,
   flip,
   hideButtons,
+  hideKeyboardItem,
   openTray,
   showButtons,
   showKeyboardItem,
@@ -80,8 +81,8 @@ interface Props {
   hasSentMail: boolean;
   recipient: Contact;
   setContent: (content: string) => void;
-  setDesign: (design: PostcardDesign) => void;
   setFont: (font: Font) => void;
+  setDesign: (design: PersonalDesign) => void;
 }
 
 interface State {
@@ -98,7 +99,7 @@ interface State {
     mediaGranted: boolean;
     endCursor: string;
     hasNextPage: boolean;
-    library: PostcardDesign[];
+    library: Image[];
     activePosition: number;
     snapshot: Image | null;
   };
@@ -134,6 +135,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         bottomSlide: new Animated.Value(0),
         layout:
           props.composing.type === MailTypes.Postcard &&
+          props.composing.design.type === 'personal_design' &&
           props.composing.design.layout
             ? props.composing.design.layout
             : { ...LAYOUTS[0] },
@@ -151,7 +153,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       },
       textState: {
         bottomDetails: null,
-        wordsLeft: 100,
+        wordsLeft: (this.props.composing as DraftPostcard).size.wordsLimit,
         valid: true,
         keyboardOpacity: new Animated.Value(0),
         bottomSlide: new Animated.Value(0),
@@ -231,16 +233,12 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           sortBy: [[MediaLibrary.SortBy.creationTime, false]],
         });
         const library = assets.map((value) => {
-          const image: Image = {
+          const asset: Image = {
             uri: value.uri,
             width: value.width,
             height: value.height,
           };
-          const design: PostcardDesign = {
-            image,
-            custom: true,
-          };
-          return design;
+          return asset;
         });
         this.setDesignState({ library, hasNextPage, endCursor });
       }
@@ -264,8 +262,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   onKeyboardOpen(): void {
     this.setTextState({ writing: true }, () => {
-      this.state.textState.bottomSlide.setValue(TRAY_CLOSED);
-      this.state.textState.bottomSlide.setValue(BUTTONS_HIDDEN);
+      this.state.textState.buttonSlide.setValue(BUTTONS_HIDDEN);
+      closeTray(this.state.textState.bottomSlide);
       showKeyboardItem(this.state.textState.keyboardOpacity);
     });
   }
@@ -273,6 +271,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   onKeyboardClose(): void {
     this.setTextState({ writing: false });
     showButtons(this.state.textState.buttonSlide);
+    hideKeyboardItem(this.state.textState.keyboardOpacity);
   }
 
   setDesignState(
@@ -288,7 +287,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       mediaGranted?: boolean;
       endCursor?: string;
       hasNextPage?: boolean;
-      library?: PostcardDesign[];
+      library?: Image[];
       activePosition?: number;
       snapshot?: Image | null;
     },
@@ -363,19 +362,15 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     });
     const { library } = this.state.designState;
     if (!library) return;
-    const designs = assets.map((value) => {
-      const image: Image = {
+    const images = assets.map((value) => {
+      const asset: Image = {
         uri: value.uri,
         width: value.width,
         height: value.height,
       };
-      const design: PostcardDesign = {
-        image,
-        custom: true,
-      };
-      return design;
+      return asset;
     });
-    const newLibrary = library.concat(designs);
+    const newLibrary = library.concat(images);
     this.setDesignState({
       library: newLibrary,
       hasNextPage,
@@ -391,13 +386,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   updateComposing() {
     this.props.setDesign({
-      image:
+      asset:
         this.props.composing.type === MailTypes.Postcard
-          ? this.props.composing.design.image
+          ? this.props.composing.design.asset
           : { uri: '' },
-      custom: true,
       layout: this.state.designState.layout,
       categoryId: PERSONAL_OVERRIDE_ID,
+      type: 'personal_design',
     });
     saveDraft(this.props.composing);
   }
@@ -420,10 +415,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         this.setDesignState({ snapshot });
         if (snapshot) {
           this.props.setDesign({
-            image: snapshot,
-            custom: true,
+            asset: snapshot,
             layout: this.state.designState.layout,
             categoryId: PERSONAL_OVERRIDE_ID,
+            type: 'personal_design',
           });
           saveDraft(this.props.composing);
         }
@@ -498,11 +493,13 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
         inputRange: [0, 1],
         outputRange,
       });
+    } else if (this.state.textState.writing) {
+      dynamicTop = this.state.textState.keyboardOpacity.interpolate({
+        inputRange: [KEYBOARD_HIDDEN, KEYBOARD_OPEN],
+        outputRange,
+      });
     } else {
-      dynamicTop = (this.state.textState.writing
-        ? this.state.textState.keyboardOpacity
-        : this.state.textState.bottomSlide
-      ).interpolate({
+      dynamicTop = this.state.textState.bottomSlide.interpolate({
         inputRange: [0, 1],
         outputRange,
       });
@@ -549,7 +546,11 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                       this.props.setContent(text);
                       saveDraft(this.props.composing);
                       const numWords = getNumWords(text);
-                      this.setTextState({ wordsLeft: 100 - numWords });
+                      this.setTextState({
+                        wordsLeft:
+                          (this.props.composing as DraftPostcard).size
+                            .wordsLimit - numWords,
+                      });
                     }}
                     recipient={this.props.recipient}
                     width={POSTCARD_WIDTH}
@@ -561,6 +562,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                         this.props.setDesign({
                           ...this.props.composing.design,
                           stickers,
+                          type: 'personal_design',
                         });
                     }}
                     font={this.state.textState.font}
@@ -633,7 +635,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
                   this.closeDesignBottom();
                 }}
                 library={this.state.designState.library}
-                onDesignSelected={(design: PostcardDesign) => {
+                onDesignSelected={(design: PersonalDesign) => {
                   const layout = { ...this.state.designState.layout };
                   const commonLayout = { ...this.state.designState.layout };
                   const { activePosition } = this.state.designState;
@@ -682,8 +684,8 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDisptatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
   setContent: (content: string) => dispatch(setContent(content)),
-  setDesign: (design: PostcardDesign) => dispatch(setDesign(design)),
   setFont: (font: Font) => dispatch(setFont(font)),
+  setDesign: (design: PersonalDesign) => dispatch(setDesign(design)),
 });
 
 const ComposePersonalScreen = connect(

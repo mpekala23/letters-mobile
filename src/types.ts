@@ -1,13 +1,17 @@
+/* eslint-disable camelcase */
 // Common
-export interface Image {
-  uri: string;
+export interface Image extends Asset {
   width?: number;
   height?: number;
 }
 
+export interface Asset {
+  uri: string;
+}
+
 export interface Sticker {
-  component: JSX.Element;
   name: string;
+  image: Image;
 }
 
 export interface PlacedSticker {
@@ -31,19 +35,22 @@ export enum MailTypes {
   Postcard = 'postcard',
 }
 
-export interface PostcardDesign {
-  image: Image;
-  thumbnail?: Image;
-  id?: number;
-  categoryId?: number;
+export type DesignType =
+  | 'packet'
+  | 'premade_postcard'
+  | 'personal_design'
+  | 'fallback';
+
+interface BaseDesign {
+  categoryId: number;
   subcategoryName?: string;
-  name?: string;
-  author?: string;
-  custom?: boolean;
-  designer?: string;
-  contentResearcher?: string;
+}
+
+export interface PersonalDesign extends BaseDesign {
+  asset: Image;
   layout?: Layout;
   stickers?: PlacedSticker[];
+  type: 'personal_design';
 }
 
 export enum CustomFontFamilies {
@@ -61,19 +68,50 @@ export interface Font {
   color: string;
 }
 
-export interface PostcardCustomization {
+export interface Customization {
   font: Font;
 }
+
+export interface BasePremadeDesign extends BaseDesign {
+  id: number;
+  name: string;
+  blurb: string;
+  designer?: string;
+  contentResearcher?: string;
+  author?: string;
+  type: DesignType;
+  thumbnail: Image;
+  price: number;
+  productId: number;
+}
+
+interface PacketSpecific {
+  asset: Asset;
+  type: 'packet';
+}
+
+interface PostcardDesignSpecific {
+  asset: Image;
+  type: 'premade_postcard';
+}
+
+export type PremadePostcardDesign = BasePremadeDesign & PostcardDesignSpecific;
+export type DesignPacket = BasePremadeDesign & PacketSpecific;
+
+export type PremadeDesign = PremadePostcardDesign | DesignPacket;
+export type PostcardDesign = PremadePostcardDesign | PersonalDesign;
 
 interface LetterSpecific {
   type: MailTypes.Letter;
   images: Image[];
+  pdf?: string;
 }
 
 interface PostcardSpecific {
   type: MailTypes.Postcard;
   design: PostcardDesign;
-  customization: PostcardCustomization;
+  size: PostcardSizeOption;
+  customization: Customization;
 }
 
 export enum MailStatus {
@@ -88,17 +126,29 @@ export enum MailStatus {
   Rerouted = 'Re-Routed',
 }
 
+export interface RawCategory {
+  created_at: string;
+  id: 1;
+  img_src: string;
+  name: string;
+  updated_at: string;
+  blurb: string;
+  premium: boolean;
+  active: boolean;
+}
+
 export interface Category {
   id: number;
   name: string;
   image: Image;
   blurb: string;
-  subcategories: Record<string, PostcardDesign[]>;
+  subcategories: Record<string, PremadeDesign[]>;
+  premium: boolean;
 }
 
 export interface Layout {
   id: number;
-  designs: Record<number, PostcardDesign | null>;
+  designs: Record<number, PersonalDesign | null>;
   svg: string;
 }
 
@@ -122,13 +172,31 @@ interface MailInfo extends DraftInfo {
   dateCreated: string;
   expectedDelivery: string;
   trackingEvents?: TrackingEvent[];
+  lobPdfUrl?: string;
 }
 
 export type MailLetter = MailInfo & LetterSpecific;
 
 export type MailPostcard = MailInfo & PostcardSpecific;
 
-export type Mail = MailLetter | MailPostcard;
+export type MailPacket = MailInfo & DesignPacket;
+
+export type Mail = MailLetter | MailPostcard | MailPacket;
+
+export enum PostcardSize {
+  Small = '4x6',
+  Medium = '6x9',
+  Large = '6x11',
+}
+
+export interface PostcardSizeOption {
+  key: PostcardSize;
+  image: Image;
+  title: string;
+  wordsLimit: number;
+  cost: number;
+  isPremium: boolean;
+}
 
 // Facilities
 export enum PrisonTypes {
@@ -256,6 +324,7 @@ export enum Storage {
   DraftSubcategoryName = 'Ameelio-DraftSubcategoryName',
   DraftDesignUri = 'Ameelio-DraftDesignUri',
   DraftLayout = 'Ameelio-DraftLayout',
+  DraftPostcardSize = 'Ameelio-DraftPostcardSize',
 }
 
 export type TopbarBackAction = {
@@ -272,3 +341,51 @@ export type TopbarRouteAction = {
 export type DesignBottomDetails = 'layout' | 'design' | 'stickers';
 
 export type TextBottomDetails = 'color' | 'font';
+
+export type ComposeBottomDetails = 'layout' | 'design' | 'stickers';
+
+// Premium
+export type PremiumPack = {
+  id: number;
+  name: string;
+  image: Image;
+  price: number;
+  coins: number;
+};
+
+export enum TransactionStatus {
+  Completed = 'completed',
+  Error = 'error',
+  Refund = 'refund',
+}
+
+export type Transaction = {
+  id: number;
+  date: string;
+  contactFullName: string;
+  contactId: number;
+  productName: string;
+  productId: number;
+  mailId: number;
+  price: number;
+  status: TransactionStatus;
+  thumbnail: Image;
+};
+
+export enum EntityTypes {
+  Contacts = 'Contacts',
+  Mail = 'Mail',
+  Referrals = 'Referrals',
+  Categories = 'Categories',
+  MailDetail = 'MailDetail',
+  PremiumPacks = 'PremiumPacks',
+  PremiumStoreItems = 'PremiumStoreItems',
+  Transactions = 'Transactions',
+}
+
+export interface RouteDetails {
+  title: string;
+  profile?: boolean;
+  headerVisible?: boolean;
+  tabsVisible?: boolean;
+}

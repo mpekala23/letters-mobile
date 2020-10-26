@@ -7,10 +7,11 @@ import {
   loginUser,
   authenticateUser,
 } from '@store/User/UserActions';
-import { Image, ZipcodeInfo } from 'types';
+import { Image, Storage, ZipcodeInfo } from 'types';
 import { Platform } from 'react-native';
 import { ABBREV_TO_STATE, isProduction } from '@utils';
 import { setZipcode } from '@store/Zip/ZipActions';
+import { getItemAsync } from 'expo-secure-store';
 
 export const GENERAL_URL = isProduction()
   ? 'https://api.ameelio.org/'
@@ -60,10 +61,14 @@ export async function fetchAuthenticated(
   };
   const response = await fetchTimeout(fetchUrl, requestOptions, timeout);
   const body = await response.json();
-  const { rememberToken } = store.getState().user.authInfo;
+  let { rememberToken } = store.getState().user.authInfo;
+  if (rememberToken === '' || !rememberToken) {
+    rememberToken = (await getItemAsync(Storage.RememberToken)) || '';
+  }
   if (
     body.message &&
     body.message === 'Unauthenticated.' &&
+    rememberToken &&
     rememberToken !== ''
   ) {
     // attempt to refresh the api token using the remember token
@@ -96,8 +101,10 @@ export async function fetchAuthenticated(
       city: tokenBody.data.city,
       state: tokenBody.data.state,
       credit: tokenBody.data.credit,
+      coins: tokenBody.data.coins,
       joined: tokenBody.data.created_at,
       referralCode: tokenBody.data.referral_link,
+      country: tokenBody.data.country,
     };
     store.dispatch(
       authenticateUser(userData, tokenBody.data.token, tokenBody.data.remember)

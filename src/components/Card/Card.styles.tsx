@@ -28,6 +28,10 @@ export default StyleSheet.create({
     fontSize: 18,
     color: Colors.AMEELIO_GRAY,
   },
+  horizontalCardLayout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   letterStatusTitle: {
     fontSize: 20,
     color: Colors.AMEELIO_BLACK,
@@ -142,7 +146,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   categoryBlurb: {
-    color: Colors.GRAY_DARKER,
+    color: Colors.GRAY_700,
     fontSize: 14,
   },
   contactSelectorCardBackground: {
@@ -161,5 +165,83 @@ export default StyleSheet.create({
     top: 0,
     width: '100%',
     height: 64,
+  },
+  selectPostcardSizeBase: {
+    backgroundColor: 'white',
+    width: '100%',
+    borderRadius: 16,
+    marginVertical: 8,
+  },
+  cardSelectedBackground: {
+    borderWidth: 3,
+    borderRadius: 16,
+    borderColor: Colors.PINK_500,
+  },
+  ameelioPlusBackground: {
+    flex: 1,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  premiumCardBox: {
+    width: 120,
+    height: 144,
+    position: 'absolute',
+    borderRadius: 4,
+    zIndex: 3,
+    borderColor: '#DCDCDC',
+    borderWidth: 1,
+  },
+  premiumCardBox2: {
+    backgroundColor: Colors.AMEELIO_WHITE,
+    elevation: 5,
+    top: 18,
+    left: 18,
+    zIndex: 1,
+    borderColor: '#DCDCDC',
+    borderWidth: 1,
+  },
+  premiumCardBox3: {
+    backgroundColor: Colors.AMEELIO_WHITE,
+    elevation: 4,
+    top: 12,
+    left: 12,
+    zIndex: 2,
+    borderColor: '#DCDCDC',
+    borderWidth: 1,
+  },
+  buyHereContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    right: 16,
+  },
+  tokensLeftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  arrowText: {
+    color: Colors.PINK_500,
+    fontSize: 32,
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  tokensLeftText: {
+    fontSize: 36,
+    color: Colors.AMEELIO_BLACK,
+    height: 52,
+    paddingLeft: 8,
+    justifyContent: 'center',
+  },
+  transactionHistoryBackground: {
+    flexDirection: 'row',
+  },
+  transactionHistoryThumbnail: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
+    borderRadius: 4,
   },
 });

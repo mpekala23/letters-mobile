@@ -6,6 +6,7 @@ import { Typography } from '@styles';
 import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import AdjustableText from '@components/Text/AdjustableText.react';
 import MailingAddressPreview from '@components/MailingAddressPreview/MailingAddressPreview.react';
+import { getPostcardDesignImage } from '@utils';
 import Styles from './StaticPostcard.styles';
 import Icon from '../Icon/Icon.react';
 
@@ -21,7 +22,6 @@ interface Props {
 
 const StaticPostcard: React.FC<Props> = (props: Props) => {
   if (props.composing.type !== MailTypes.Postcard) return <View />;
-
   return (
     <View
       style={[
@@ -46,11 +46,7 @@ const StaticPostcard: React.FC<Props> = (props: Props) => {
               width: '100%',
               height: '100%',
             }}
-            source={
-              props.composing.design.thumbnail
-                ? props.composing.design.thumbnail
-                : props.composing.design.image
-            }
+            source={getPostcardDesignImage(props.composing.design)}
           />
         </View>
       ) : (

@@ -4,6 +4,7 @@ import { PostcardDesign, Contact, Font } from 'types';
 import Stamp from '@assets/views/Compose/Stamp';
 import i18n from '@i18n';
 import { Typography, Colors } from '@styles';
+import { getPostcardDesignImage } from '@utils';
 import MailingAddressPreview from '../MailingAddressPreview/MailingAddressPreview.react';
 import Styles from './EditablePostcard.styles';
 import Icon from '../Icon/Icon.react';
@@ -69,15 +70,27 @@ class EditablePostcard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const image = (
+    const image = this.props.horizontal ? (
       <AsyncImage
         viewStyle={{
-          width: '100%',
-          height: '100%',
+          width: this.props.width,
+          height: this.props.height,
         }}
-        source={this.props.design.thumbnail || this.props.design.image}
+        source={getPostcardDesignImage(this.props.design)}
         onLoad={this.props.onLoad}
-        download={!!this.props.design.thumbnail}
+        download={this.props.design.type === 'premade_postcard'}
+      />
+    ) : (
+      <AsyncImage
+        viewStyle={{
+          width: this.props.height,
+          height: this.props.width,
+          transform: [{ rotateZ: '270deg' }],
+        }}
+        source={getPostcardDesignImage(this.props.design)}
+        onLoad={this.props.onLoad}
+        download={this.props.design.type === 'premade_postcard'}
+        autorotate={false}
       />
     );
 
@@ -91,7 +104,7 @@ class EditablePostcard extends React.Component<Props, State> {
                   {
                     rotateZ: this.state.rotate.interpolate({
                       inputRange: [0, 1],
-                      outputRange: ['0rad', `${(3.1415926 / 2).toString()}rad`],
+                      outputRange: ['0deg', `90deg`],
                     }),
                   },
                   {
@@ -123,14 +136,14 @@ class EditablePostcard extends React.Component<Props, State> {
             alignItems: 'center',
           }}
         >
-          {this.props.design.image.uri !== '' ? (
+          {this.props.design.asset.uri !== '' ? (
             image
           ) : (
             <View
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: Colors.BLACK_200,
+                backgroundColor: Colors.GRAY_200,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}

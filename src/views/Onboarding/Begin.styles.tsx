@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@styles';
 import { WINDOW_HEIGHT } from '@utils/Constants';
+import { Colors } from '@styles';
 
 export default StyleSheet.create({
   trueBackground: {
@@ -12,7 +12,8 @@ export default StyleSheet.create({
     height: '100%',
   },
   padded: {
-    padding: 32,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
   },
   baseText: {
     fontSize: 18,
@@ -37,9 +38,10 @@ export default StyleSheet.create({
   },
   screenTitle: {
     fontSize: 21,
-    padding: 32,
-    alignItems: 'center',
-    textAlign: 'center',
+    paddingTop: 32,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    color: Colors.AMEELIO_BLACK,
   },
   screenImage: {
     width: '100%',

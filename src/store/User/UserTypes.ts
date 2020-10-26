@@ -6,12 +6,15 @@ export const LOGOUT_USER = 'user/logout_user';
 export const SET_USER = 'user/set_user';
 export const SET_USER_REFERRALS = 'user/set_user_referrals';
 export const SET_LOADING_STATUS = 'user/set_loading_status';
+export const ADD_PREMIUM_COINS = 'user/add_premium_credits';
+export const DEDUCT_PREMIUM_COINS = 'user/deduct_premium_credits';
 
 // state types
 export interface UserRegisterInfo {
   firstName: string;
   lastName: string;
   email: string;
+  country: string;
   password: string;
   passwordConfirmation: string;
   address1: string;
@@ -35,6 +38,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  country: string;
   address1: string;
   address2?: string;
   postal: string;
@@ -42,6 +46,7 @@ export interface User {
   state: string;
   photo?: Image;
   credit: number;
+  coins: number;
   joined: Date;
   referralCode: string;
 }
@@ -102,10 +107,22 @@ interface SetLoadingStatusAction {
   payload: number;
 }
 
+interface AddPremiumCoinsAction {
+  type: typeof ADD_PREMIUM_COINS;
+  payload: number;
+}
+
+interface DeductPremiumCoinsAction {
+  type: typeof DEDUCT_PREMIUM_COINS;
+  payload: number;
+}
+
 export type UserActionTypes =
   | AuthenticateUserAction
   | LoginUserAction
   | LogoutUserAction
   | SetUserAction
   | SetUserReferralsAction
-  | SetLoadingStatusAction;
+  | SetLoadingStatusAction
+  | AddPremiumCoinsAction
+  | DeductPremiumCoinsAction;

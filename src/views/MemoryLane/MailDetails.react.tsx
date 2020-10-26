@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Mail, MailTypes, MailStatus } from 'types';
+import { Mail, MailTypes, MailStatus, Image } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { format } from 'date-fns';
 import { Typography } from '@styles';
 import { DisplayImage } from '@components';
+import { MailActionTypes } from '@store/Mail/MailTypes';
+import { setMailImages } from '@store/Mail/MailActions';
 import Styles from './MailDetails.styles';
 
 type MailDetailsScreenNavigationProp = StackNavigationProp<
@@ -18,6 +20,11 @@ type MailDetailsScreenNavigationProp = StackNavigationProp<
 interface Props {
   navigation: MailDetailsScreenNavigationProp;
   mail: Mail;
+  updateMailImages: (
+    images: Image[],
+    contactId: number,
+    mailId: number
+  ) => void;
 }
 
 const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
@@ -59,13 +66,21 @@ const MailDetailsScreenBase: React.FC<Props> = (props: Props) => {
           {mail.content}
         </Text>
         {mail.type === MailTypes.Letter && (
-          <DisplayImage images={mail.images} />
+          <DisplayImage
+            images={mail.images}
+            updateImages={(images) => {
+              props.updateMailImages(images, mail.recipientId, mail.id);
+            }}
+          />
         )}
         {mail.type === MailTypes.Postcard && (
           <DisplayImage
-            images={[mail.design.image]}
+            images={[mail.design.asset]}
             isPostcard
             paddingPostcard={5}
+            updateImages={(images) => {
+              props.updateMailImages(images, mail.recipientId, mail.id);
+            }}
           />
         )}
       </ScrollView>
@@ -88,6 +103,14 @@ const mapStateToProps = (state: AppState) => ({
   mail: state.mail.active ? state.mail.active : blankMail,
 });
 
-const MailDetailsScreen = connect(mapStateToProps)(MailDetailsScreenBase);
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  updateMailImages: (images: Image[], contactId: number, mailId: number) =>
+    dispatch(setMailImages(images, contactId, mailId)),
+});
+
+const MailDetailsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MailDetailsScreenBase);
 
 export default MailDetailsScreen;

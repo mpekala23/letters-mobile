@@ -24,7 +24,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
 import { Draft, Image, MailTypes } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { getNumWords } from '@utils';
 import * as Segment from 'expo-analytics-segment';
@@ -36,6 +36,16 @@ type ComposeLetterScreenNavigationProp = StackNavigationProp<
   'ComposeLetter'
 >;
 
+interface Props {
+  navigation: ComposeLetterScreenNavigationProp;
+  composing: Draft;
+  recipientName: string;
+  hasSentMail: boolean;
+  setContent: (content: string) => void;
+  setImages: (images: Image[]) => void;
+  credits: number;
+}
+
 interface State {
   keyboardOpacity: Animated.Value;
   wordsLeft: number;
@@ -44,17 +54,6 @@ interface State {
   text: string;
   images: Image[];
 }
-
-interface Props {
-  navigation: ComposeLetterScreenNavigationProp;
-  composing: Draft;
-  recipientName: string;
-  hasSentMail: boolean;
-  setContent: (content: string) => void;
-  setImages: (images: Image[]) => void;
-}
-
-const MAX_NUM_IMAGES = 2;
 
 class ComposeLetterScreenBase extends React.Component<Props, State> {
   private textRef = createRef<TextInput>();
@@ -237,10 +236,10 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   renderImages = (): JSX.Element[] => {
     const images: (Image | null)[] = [...this.state.images];
-    if (this.state.images.length < MAX_NUM_IMAGES) {
+    if (this.state.images.length < this.props.credits) {
       images.push(null);
     }
-    return images.map((image) => {
+    return images.map((image, index) => {
       if (image) {
         return (
           <PicUpload
@@ -267,6 +266,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
           width={LETTER_COMPOSE_IMAGE_HEIGHT}
           height={LETTER_COMPOSE_IMAGE_HEIGHT}
           allowsEditing={false}
+          oneCreditWarning={index > 0}
           shapeBackground={{
             margin: 4,
             borderWidth: 2,
@@ -355,7 +355,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
             <ComposeTools
               keyboardOpacity={this.state.keyboardOpacity}
               picRef={
-                this.state.images.length < MAX_NUM_IMAGES
+                this.state.images.length < this.props.credits
                   ? this.imageUploadRef
                   : undefined
               }
@@ -374,6 +374,7 @@ const mapStateToProps = (state: AppState) => ({
   hasSentMail: Object.values(state.mail.existing).some(
     (mail) => mail.length > 0
   ),
+  credits: state.user.user.credit,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {

@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "home": "Inicio",
+    "store": "Tienda",
     "login": "Iniciar sesión",
     "register": "Regístrate"
   },
@@ -26,8 +27,12 @@
     "uploadImageTimeout": "The request timed out while uploading the image. Asegúrese de estar conectado Internet y inténtelo de nuevo.",
     "cantSendMailModalTitle": "¡Ups! Algo salió mal.",
     "cantSendMailModalBody": "¡Pero no te preocupes! El borrador fue salvo. Nuestro equipo de soporte te ayudará a solucionar el problema.",
+    "cantAddContactTitle": "¡Ups! Algo salió mal.",
+    "cantAddContactBody": "¡Pero no te preocupes! Nuestro equipo de soporte te ayudará a solucionar el problema.",
     "reachOutToSupport": "Contactar al soporte",
-    "noThanks": "No gracias"
+    "noThanks": "No gracias",
+    "tooManyAttempts": "Estamos recibiendo muchos pedidos en este momento. Por favor, inténtalo de nuevo más tarde",
+    "cantLoadPremiumPacks": "No pudimos cargar los paquetes premium. Por favor, inténtalo de nuevo más tarde."
   },
   "Permission": {
     "photos": "No se pudo acceder la librería fotográfica. Ensure that this is enabled in settings.",
@@ -35,9 +40,13 @@
     "camera": "No puede tomar una foto. Asegúrese de que está habilitado en la configuración."
   },
   "BeginScreen": {
-    "connectWithYourLovedOnes": "Conéctese con sus seres queridos encarcelados gratis.",
-    "signUp": "Registrarte",
-    "logIn": "Acceder"
+    "connectWithYour": "Conéctate con tus seres queridos encarcelados",
+    "forFree": "gratis.",
+    "sendEverything": "Envíe toda, desde una carta, fotos, hasta arte y juegos",
+    "theyllReceive": "Recibirán recuerdos a los que puedan aferrarse",
+    "joinOurCommunity": "Únete a nuestra comunidad de más de 15,000 familias en este viaje",
+    "signUp": "Regístrate",
+    "logIn": "Iniciar sesión"
   },
   "Common": {
     "possessivePronoun": "Tu",
@@ -90,6 +99,16 @@
     "letter": "carta",
     "letters": "cartas",
     "lastHeard": "Ultimo mensaje"
+  },
+  "CreditPackStore": {
+    "title": "Tokens de gratitud",
+    "subtitle": "Compre tokens Ameelio + para ayudar a otros a mantenerse en contacto de forma gratuita. A cambio, use estos tokens para enviar paquetes especiales a su ser querido.",
+    "selectBtn": "Selecciona"
+  },
+  "CreditPackPurchaseSuccess": {
+    "title": "Gracias por tu aporte",
+    "body": "Gracias por confiar en Ameelio y promover nuestra misión de brindar comunicación gratuita para todos.",
+    "buttonCta": "Ir a la tienda"
   },
   "CreditsCard": {
     "letter": "Ameelio",
@@ -151,7 +170,8 @@
     "letterContent": "Contenido de la carta",
     "contactSupport": "Necesito ayuda",
     "yourLetterWasReturnedToSender": "Tu carta fue devuelta al remitente.",
-    "possibleReason": "Posible motivo: dirección de correo incorrecta"
+    "possibleReason": "Posible motivo: dirección de correo incorrecta",
+    "viewPdf": "Ver Ameelio"
   },
   "LoginScreen": {
     "welcomeBack": "Bienvenido de regreso",
@@ -179,7 +199,7 @@
   "MemoryLaneScreen": {
     "youDoNotHaveLettersYet": "¡No tienes ninguna carta todavía!",
     "goSendYourFirstLetter": "Envía tu primera carta."
-  },
+  },  
   "Referrers": {
     "ambassador": "Lo oí de un Ameelio Ambassador",
     "recommendation": "Recommendación de Amigos o Familia",
@@ -234,12 +254,18 @@
     "contactAlreadyExists": "Contacto ya existe",
     "addContact": "Agregar contacto"
   },
+  "SelectRecipient": {
+    "header": "Seleccionar destinatario",
+    "modalHeader": "Confirmar compra",
+    "modalMessage": "No podemos cancelar el pedido una vez creado.",
+    "confirmBtn": "Confirmar",
+    "cancelBtn": "Volver"
+  },
   "SingleContactScreen": {
     "received": "recibido",
     "sent": "expedido",
-    "lastHeardFromYou": "lo último sabido de ti",
     "lettersTraveled": "cartas enviadas",
-    "sendLetter": "Enviar carta",
+    "sendLetter": "Enviar un Ameelio \u2661",
     "letterTracking": "Rastreo de Cartas"
   },
   "UpdateContactScreen": {
@@ -374,8 +400,6 @@
     "done": "Listo",
     "noDesignSelected": "Ningún diseño seleccionado. Haz clic a continuación para empezar.",
     "iWouldLikeToSend": "Me gustaría enviar un mensaje:",
-    "registerAccount": "Crea una cuenta",
-    "enterBasic": "Llene información básica",
     "dueToTDCJ": "Debido a una política de TDCJ, seres queridos en prisiones estatales de Tejas no son permitidos recibir postales. Solo",
     "willBeAccepted": "cartas serán aceptadas.",
     "weWillOnly": "Solo usaremos la información de tu dirección como la dirección de retorno de la carta enviada.",
@@ -385,7 +409,12 @@
     "havingTroubleWithCategories": "Tenemos problemas para cargar las categorías disponibles. Aún puede enviar cartas y fotos personales, pero intente verificar su wifi e intente cargar nuestra galería de postales nuevamente.",
     "sendPersonalLettersOrPhotos": "Envia cartas o fotografías personales",
     "reachOutToSupport": "Contactar al soporte",
-    "library": "Galería"
+    "library": "Galería",
+    "smallPostcardTitle": "Small photo",
+    "mediumPostcardTitle": "Medium photo",
+    "largePostcardTitle": "Large photo",
+    "selectBtn": "Seleccionar",
+    "oneCredit": "+1 Ameelio"
   },
   "ComposeTools": {
     "wordsLeft": "palabras"
@@ -415,6 +444,7 @@
     "contactInfo": "Contactos",
     "contactInmateInfo": "Detalles",
     "contacts": "Contactos",
+    "creditPackStore": "Ameelio+ Tokens",
     "firstLetter": "Primera Carta",
     "home": "Inicio",
     "issues": "Problemas",
@@ -423,21 +453,37 @@
     "tracking": "Rastreo",
     "memoryLane": "Carril de Memoria",
     "postcardPreview": "Vista previa de la postal",
+    "previewItem": "Preview Item",
     "letterPreview": "Vista previa de la carta",
     "spreadTheWord": "Correr la voz",
     "referralDashboard": "Tu impacto",
     "reviewContact": "Revisar contacto",
+    "storeItem": "Trinket",
+    "selectRecipient": "Recipient",
+    "storeItemPreview": "Preview",
     "thanks": "Gracias",
     "updateContact": "Actualizar Contacto",
     "updateProfile": "Actualizar Perfil",
     "reviewPostcard": "Vista previa",
     "inmateLocator": " Localizador de Presos",
-    "introContact": "Bienvenido"
+    "introContact": "Bienvenido",
+    "store": "Tienda",
+    "transactionHistory": "Historia"
   },
   "Sharing": {
     "message": "¡Oye! He estado usando Ameelio para enviar fotos, cartas y postales GRATIS a mi ser querido encarcelado. Puede descargar la app aquí: ",
     "title": "Ameelio: Fotos y Cartas Gratis a La Cárcel",
     "subjectLine": "¡Envía cartas y fotos gratis a la prisión!"
+  },
+  "StoreItem": {
+    "description": "Descripción",
+    "viewBtn": "Ver",
+    "purchaseBtn": "Checkout"
+  },
+  "StoreItemPurchaseSuccess": {
+    "title": "Gracias por tu compra",
+    "body": "Esperamos que tu ser querido disfrute de este artículo muy especial. Las ganacias serán utilizarán para ayudarnos a mantener nuestros servicios gratuitos para todas las familias.",
+    "buttonCta": "Volver a la tienda"
   },
   "ReferralDashboardScreen": {
     "helpNowHeader": "Ayude a otros ahor!",
@@ -450,9 +496,24 @@
     "nullStateThankYou": "Verás tu impacto aquí cuando la gente use tu link de embajador."
   },
   "ReviewApp": {
-    "title": "Enjoying Ameelio?",
-    "message": "Help us out by leaving a review!",
-    "takeMeToPlayStore": "Take me to the Play Store",
-    "noThanks": "No thanks"
+    "title": "¿Estás disfrutando de Ameelio?",
+    "message": "¡Ayúdanos dejando un comentario!",
+    "takeMeToPlayStore": "Llévame a Play Store",
+    "noThanks": "No gracias"
+  },
+  "Premium": {
+    "ameelio": "Ameelio",
+    "ameelios": "Ameelios",
+    "balance": "Saldo",
+    "ameelioPlus": "Ameelio+",
+    "notEnoughAmeelioPlus": "Ameelio+ insuficientes",
+    "buyMoreAmeelioPlus": "Comprar más",
+    "noThanks": "No gracias",
+    "ameelioPlusLeft": "Ameelio+ sobrante",
+    "yourAmeelioPlus": "Tu Ameelio+",
+    "page": "página",
+    "pages": "páginas",
+    "viewHistory": "Ver historial",
+    "familiesHelped": "Familias que ayudaste"
   }
 }

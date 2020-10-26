@@ -7,23 +7,27 @@ import ContactReducer from './Contact/ContactReducer';
 import FacilityReducer from './Facility/FacilityReducer';
 import MailReducer from './Mail/MailReducer';
 import NotifReducer from './Notif/NotifReducer';
+import UIReducer from './UI/UIReducer';
 import UserReducer from './User/UserReducer';
 import ZipReducer from './Zip/ZipReducer';
+import PremiumReducer from './Premium/PremiumReducer';
 
 const config = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: ['user', 'facility'],
-  whitelist: ['category', 'contact', 'mail', 'zip', 'notif'],
+  whitelist: ['category', 'contact', 'mail', 'zip', 'notif', 'premium'],
 };
 
 const combinedReducers = combineReducers<AppState>({
-  user: UserReducer,
   category: CategoryReducer,
   contact: ContactReducer,
   facility: FacilityReducer,
   mail: MailReducer,
   notif: NotifReducer,
+  premium: PremiumReducer,
+  ui: UIReducer,
+  user: UserReducer,
   zip: ZipReducer,
 });
 

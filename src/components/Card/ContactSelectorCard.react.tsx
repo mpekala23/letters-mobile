@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';
@@ -7,11 +7,13 @@ import { ProfilePicTypes, Mail, MailStatus } from 'types';
 import { differenceInDays, format, formatDistance, subDays } from 'date-fns';
 import { getZipcode } from '@api/Common';
 import { capitalize, haversine } from '@utils';
+import ContactCardPlaceholder from '@components/Loaders/ContactCardPlaceholder';
 import CardStyles from './Card.styles';
 import ProfilePic from '../ProfilePic/ProfilePic.react';
 import AdjustableText from '../Text/AdjustableText.react';
 
 interface Props {
+  style?: ViewStyle | ViewStyle[];
   firstName: string;
   lastName: string;
   numSent: number;
@@ -21,6 +23,7 @@ interface Props {
   userPostal?: string;
   contactPostal?: string;
   backgroundColor?: string;
+  isLoadingMail: boolean;
 }
 
 const ContactSelectorCard: React.FC<Props> = (props: Props) => {
@@ -34,8 +37,10 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
     const updateLettersTravelled = async (): Promise<void> => {
       try {
         if (props.userPostal && props.contactPostal && props.mail) {
-          const loc1 = await getZipcode(props.userPostal);
-          const loc2 = await getZipcode(props.contactPostal);
+          const [loc1, loc2] = await Promise.all([
+            getZipcode(props.userPostal),
+            getZipcode(props.contactPostal),
+          ]);
           setLettersTravelled(haversine(loc1, loc2) * deliveredLetters.length);
         }
       } catch (err) {
@@ -66,7 +71,11 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 
   return (
     <TouchableOpacity
-      style={[CardStyles.shadow, CardStyles.contactSelectorCardBackground]}
+      style={[
+        CardStyles.shadow,
+        CardStyles.contactSelectorCardBackground,
+        props.style,
+      ]}
       onPress={props.onPress}
       testID="ContactSelectorCard"
     >
@@ -100,33 +109,41 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
           {`\n`}
           {capitalize(props.lastName)}
         </AdjustableText>
-        <AdjustableText
-          numberOfLines={1}
-          style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
-        >
-          <Emoji name="calendar" />
-          {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
-        </AdjustableText>
-        <AdjustableText
-          style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}
-          numberOfLines={1}
-        >
-          <Emoji name="love_letter" /> {props.numSent}{' '}
-          {props.numSent === 1
-            ? i18n.t('ContactSelectorScreen.letter')
-            : i18n.t('ContactSelectorScreen.letters')}
-        </AdjustableText>
-        {false && lettersTravelled > 0 && (
-          <Text
-            style={[
-              Typography.FONT_REGULAR,
-              { paddingBottom: 4, color: Colors.GRAY_500 },
-            ]}
-          >
-            <Emoji name="airplane" />{' '}
-            {i18n.t('SingleContactScreen.lettersTraveled')}: {lettersTravelled}{' '}
-            {i18n.t('ContactSelectorScreen.miles')}
-          </Text>
+        {props.isLoadingMail ? (
+          <ContactCardPlaceholder />
+        ) : (
+          <View style={{ alignItems: 'center' }}>
+            <AdjustableText
+              numberOfLines={1}
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}
+            >
+              <Emoji name="calendar" />{' '}
+              {i18n.t('ContactSelectorScreen.lastHeard')}: {heardString}
+            </AdjustableText>
+
+            <AdjustableText
+              style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}
+              numberOfLines={1}
+            >
+              <Emoji name="love_letter" /> {props.numSent}{' '}
+              {props.numSent === 1
+                ? i18n.t('ContactSelectorScreen.letter')
+                : i18n.t('ContactSelectorScreen.letters')}
+            </AdjustableText>
+            {lettersTravelled > 0 && (
+              <AdjustableText
+                numberOfLines={1}
+                style={[
+                  Typography.FONT_REGULAR,
+                  { paddingBottom: 4, color: Colors.GRAY_400 },
+                ]}
+              >
+                <Emoji name="airplane" />{' '}
+                {i18n.t('SingleContactScreen.lettersTraveled')}:{' '}
+                {lettersTravelled} {i18n.t('ContactSelectorScreen.miles')}
+              </AdjustableText>
+            )}
+          </View>
         )}
       </View>
     </TouchableOpacity>
@@ -134,6 +151,7 @@ const ContactSelectorCard: React.FC<Props> = (props: Props) => {
 };
 
 ContactSelectorCard.defaultProps = {
+  style: {},
   imageUri: '',
   mail: [],
   userPostal: '',

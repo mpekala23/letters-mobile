@@ -1,13 +1,12 @@
 import React, { Dispatch } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   RefreshControl,
   Linking,
 } from 'react-native';
-import { Button, ProfilePic } from '@components';
+import { AdjustableText, Button, ProfilePic } from '@components';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
@@ -19,8 +18,8 @@ import {
   MailTypes,
   Draft,
   Contact,
-  TrackingEvent,
   Category,
+  EntityTypes,
 } from 'types';
 import CreditsCard from '@components/Card/CreditsCard.react';
 import LetterStatusCard from '@components/Card/LetterStatusCard.react';
@@ -36,13 +35,7 @@ import Icon from '@components/Icon/Icon.react';
 import { connect } from 'react-redux';
 import { setActive as setActiveContact } from '@store/Contact/ContactActions';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  getContact,
-  getUser,
-  getTrackingEvents,
-  getCategories,
-  getMailByContact,
-} from '@api';
+import { getContact, getTrackingEvents, getMailByContact } from '@api';
 import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { UserState } from '@store/User/UserTypes';
@@ -50,7 +43,10 @@ import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { differenceInBusinessDays } from 'date-fns';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { checkIfLoading } from '@store/selectors';
 import { deleteDraft } from '@api/User';
+import LetterTrackerPlaceholder from '@components/Loaders/LetterTrackerPlaceholder';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import Styles from './SingleContact.styles';
 
 type SingleContactScreenNavigationProp = StackNavigationProp<
@@ -73,6 +69,7 @@ interface Props {
   setActiveContact: (contact: Contact) => void;
   composing: Draft;
   categories: Category[];
+  isMailLoading: boolean;
 }
 
 class SingleContactScreenBase extends React.Component<Props, State> {
@@ -89,57 +86,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
     const letterCards =
       mail && mail.length > 0
         ? mail.map((item: Mail) => {
-            if (item.trackingEvents) {
-              let processedForDelivery = false;
-              let processedForDeliveryDate = new Date();
-              const processedEvent = item.trackingEvents.find(
-                (event: TrackingEvent) =>
-                  event.name === MailStatus.ProcessedForDelivery
-              );
-              processedForDelivery = !!processedEvent;
-              if (processedEvent) {
-                processedForDeliveryDate = processedEvent.date;
-              }
-              if (
-                item.status !== MailStatus.Draft &&
-                (!processedForDelivery ||
-                  differenceInBusinessDays(
-                    processedForDeliveryDate,
-                    new Date()
-                  ) <= 5)
-              ) {
-                return (
-                  <LetterStatusCard
-                    status={item.status}
-                    date={new Date(item.dateCreated)}
-                    description={item.content}
-                    onPress={async () => {
-                      this.props.setActiveMail(item);
-                      Segment.track('Contact View - Click on Letter Tracking');
-                      getTrackingEvents(item.id).catch((err) => {
-                        Sentry.captureException(err);
-                        Segment.trackWithProperties(
-                          'Letter Tracking - Loading Error',
-                          { error: err }
-                        );
-                        dropdownError({
-                          message: i18n.t('Error.cantLoadMail'),
-                        });
-                      });
-                      this.props.navigation.navigate(Screens.MailTracking);
-                    }}
-                    key={item.id}
-                  />
-                );
-              }
-              return null;
-            }
             if (
               item.status !== MailStatus.Draft &&
               differenceInBusinessDays(
-                item.dateCreated ? new Date(item.dateCreated) : new Date(),
+                new Date(item.dateCreated),
                 new Date()
-              ) <= 11
+              ) <= 12
             )
               return (
                 <LetterStatusCard
@@ -151,10 +103,6 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                     Segment.track('Contact View - Click on Letter Tracking');
                     getTrackingEvents(item.id).catch((err) => {
                       Sentry.captureException(err);
-                      Segment.trackWithProperties(
-                        'Letter Tracking - Loading Error',
-                        { error: err }
-                      );
                       dropdownError({
                         message: i18n.t('Error.cantLoadMail'),
                       });
@@ -168,20 +116,20 @@ class SingleContactScreenBase extends React.Component<Props, State> {
           })
         : null;
 
-    const letterTrackingTitle =
-      mail && mail.length > 0 ? (
-        <Text
-          style={[
-            Typography.BASE_TITLE,
-            {
-              color: Colors.GRAY_500,
-              paddingTop: 12,
-            },
-          ]}
-        >
-          {i18n.t('SingleContactScreen.letterTracking')}
-        </Text>
-      ) : null;
+    const letterTrackingTitle = (
+      <AdjustableText
+        numberOfLines={1}
+        style={[
+          Typography.BASE_TITLE,
+          {
+            color: Colors.GRAY_400,
+            paddingTop: 12,
+          },
+        ]}
+      >
+        {i18n.t('SingleContactScreen.letterTracking')}
+      </AdjustableText>
+    );
 
     const refresh = (
       <RefreshControl
@@ -245,7 +193,8 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               imageUri={contact.image?.uri}
               type={ProfilePicTypes.SingleContact}
             />
-            <Text
+            <AdjustableText
+              numberOfLines={1}
               style={[
                 Typography.FONT_SEMIBOLD,
                 {
@@ -255,14 +204,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               ]}
             >
               {contact.firstName} {contact.lastName}
-            </Text>
+            </AdjustableText>
             {contact.facility && (
               <View style={{ alignItems: 'center' }}>
-                <Text style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Typography.FONT_REGULAR, Styles.profileCardInfo]}
+                >
                   {contact.facility.name}
-                </Text>
+                </AdjustableText>
 
-                <Text
+                <AdjustableText
+                  numberOfLines={1}
                   style={[
                     Typography.FONT_REGULAR,
                     Styles.profileCardInfo,
@@ -270,7 +223,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   ]}
                 >
                   {contact.facility.address}
-                </Text>
+                </AdjustableText>
               </View>
             )}
             <Button
@@ -292,9 +245,10 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   (this.props.composing.type === MailTypes.Letter &&
                     this.props.composing.images.length) ||
                   (this.props.composing.type === MailTypes.Postcard &&
-                    (this.props.composing.design.image.uri.length ||
-                      this.props.composing.design.layout ||
-                      this.props.composing.design.stickers))
+                    (this.props.composing.design.asset.uri.length ||
+                      (this.props.composing.design.type === 'personal_design' &&
+                        (this.props.composing.design.layout ||
+                          this.props.composing.design.stickers))))
                 ) {
                   popupAlert({
                     title: i18n.t('Compose.letterInProgress'),
@@ -320,16 +274,12 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                               this.props.composing.type === MailTypes.Postcard
                             ) {
                               if (
-                                this.props.composing.design.custom ||
-                                this.props.composing.design.subcategoryName ===
-                                  'Library'
+                                this.props.composing.design.categoryId ===
+                                PERSONAL_OVERRIDE_ID
                               ) {
                                 this.props.navigation.navigate(
                                   Screens.ComposePersonal
                                 );
-                              }
-                              if (!this.props.categories.length) {
-                                await getCategories();
                               }
                               const category = this.props.categories.find(
                                 (testCategory) =>
@@ -402,12 +352,13 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               }}
             />
             <MemoryLaneCountCard
-              letterCount={mail ? mail.length : 0}
+              letterCount={this.props.activeContact.totalSent}
               onPress={() => {
                 this.props.setActiveContact(contact);
                 this.props.navigation.navigate(Screens.MemoryLane);
               }}
               style={{ height: 100 }}
+              isLoading={this.props.isMailLoading}
             >
               <Icon
                 svg={PencilIcon}
@@ -415,7 +366,18 @@ class SingleContactScreenBase extends React.Component<Props, State> {
               />
             </MemoryLaneCountCard>
             {letterTrackingTitle}
-            {letterCards}
+            {this.props.isMailLoading ? (
+              <View>
+                <View>
+                  <LetterTrackerPlaceholder />
+                </View>
+                <View style={{ marginTop: 16 }}>
+                  <LetterTrackerPlaceholder />
+                </View>
+              </View>
+            ) : (
+              letterCards
+            )}
           </View>
         </ScrollView>
       </View>
@@ -431,6 +393,7 @@ const mapStateToProps = (state: AppState) => ({
   userState: state.user,
   composing: state.mail.composing,
   categories: state.category.categories,
+  isMailLoading: checkIfLoading(state, EntityTypes.Mail),
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<MailActionTypes | ContactActionTypes>

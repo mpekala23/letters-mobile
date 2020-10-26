@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { View, Text, ScrollView, Linking } from 'react-native';
-import { GrayBar, DisplayImage } from '@components';
+import { GrayBar, DisplayImage, ReviewCredits } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import Styles from './Compose.styles';
 
@@ -28,6 +28,7 @@ interface Props {
   activeContact: Contact;
   composing: Draft;
   clearComposing: () => void;
+  ameelioBalance: number;
 }
 
 class ReviewLetterScreenBase extends React.Component<Props> {
@@ -89,9 +90,25 @@ class ReviewLetterScreenBase extends React.Component<Props> {
       });
     } catch (err) {
       Segment.trackWithProperties('Review - Send Letter Failure', {
-        type: 'letter',
+        Option: 'postcard',
         'Error Type': err,
       });
+      if (
+        err.data &&
+        err.data.content ===
+          'The content may not be greater than 16000 characters.'
+      ) {
+        dropdownError({
+          message: i18n.t('Error.letterTooLong'),
+        });
+        return;
+      }
+      if (err.data && err.data.content === 'The content field is required.') {
+        dropdownError({
+          message: i18n.t('Compose.letterMustHaveContent'),
+        });
+        return;
+      }
       if (err.message === 'Image upload timeout') {
         // timeout that occurred during image upload
         dropdownError({
@@ -102,35 +119,31 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         dropdownError({
           message: i18n.t('Error.requestTimedOut'),
         });
-      } else if (
-        err.data &&
-        err.data.content ===
-          'The content may not be greater than 16000 characters.'
-      ) {
+      } else if (err.message === 'Too Many Attempts.') {
         dropdownError({
-          message: i18n.t('Error.letterTooLong'),
+          message: i18n.t('Error.tooManyAttempts'),
         });
       } else {
-        popupAlert({
-          title: i18n.t('Error.cantSendMailModalTitle'),
-          message: i18n.t('Error.cantSendMailModalBody'),
-          buttons: [
-            {
-              text: i18n.t('Error.reachOutToSupport'),
-              onPress: async () => {
-                await Linking.openURL('https://m.me/teamameelio');
-              },
-            },
-            {
-              text: i18n.t('Error.noThanks'),
-              reverse: true,
-            },
-          ],
-        });
         dropdownError({
           message: i18n.t('Error.requestIncomplete'),
         });
       }
+      popupAlert({
+        title: i18n.t('Error.cantSendMailModalTitle'),
+        message: i18n.t('Error.cantSendMailModalBody'),
+        buttons: [
+          {
+            text: i18n.t('Error.reachOutToSupport'),
+            onPress: async () => {
+              await Linking.openURL('https://m.me/teamameelio');
+            },
+          },
+          {
+            text: i18n.t('Error.noThanks'),
+            reverse: true,
+          },
+        ],
+      });
     }
   }
 
@@ -156,7 +169,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             >
               {this.props.composing.content}
             </Text>
-            <DisplayImage images={this.props.composing.images} />
+            <DisplayImage images={this.props.composing.images} local />
           </ScrollView>
         </View>
         <Text
@@ -164,7 +177,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             Typography.FONT_REGULAR,
             {
               fontSize: 16,
-              color: Colors.GRAY_MEDIUM,
+              color: Colors.GRAY_300,
               textAlign: 'center',
               margin: 10,
             },
@@ -172,6 +185,11 @@ class ReviewLetterScreenBase extends React.Component<Props> {
         >
           {i18n.t('Compose.warningCantCancel')}
         </Text>
+        <ReviewCredits
+          type="free"
+          cost={Math.max(1, this.props.composing.images.length)}
+          balance={this.props.ameelioBalance}
+        />
       </View>
     );
   }
@@ -180,12 +198,11 @@ class ReviewLetterScreenBase extends React.Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   composing: state.mail.composing,
   activeContact: state.contact.active,
+  ameelioBalance: state.user.user.credit,
 });
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
-  return {
-    clearComposing: () => dispatch(clearComposing()),
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  clearComposing: () => dispatch(clearComposing()),
+});
 const LetterPreviewScreen = connect(
   mapStateToProps,
   mapDispatchToProps

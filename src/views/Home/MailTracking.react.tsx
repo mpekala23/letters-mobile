@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { Linking, Text, ScrollView, View, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -8,7 +8,7 @@ import {
   GrayBar,
   Icon,
   ProfilePic,
-  DisplayImage,
+  AdjustableText,
 } from '@components';
 import { connect } from 'react-redux';
 import { Colors, Typography } from '@styles';
@@ -17,9 +17,10 @@ import {
   TrackingEvent,
   MailStatus,
   Mail,
-  MailTypes,
   Contact,
   ProfilePicTypes,
+  EntityTypes,
+  Image,
 } from 'types';
 import { format } from 'date-fns';
 import i18n from '@i18n';
@@ -29,7 +30,10 @@ import * as Segment from 'expo-analytics-segment';
 import { User } from '@store/User/UserTypes';
 import { WINDOW_WIDTH, ETA_PROCESSED_TO_DELIVERED } from '@utils';
 import { differenceInBusinessDays } from 'date-fns/esm';
-
+import { checkIfLoading } from '@store/selectors';
+import TrackingEventsPlaceholder from '@components/Loaders/TrackingEventsPlaceholder';
+import { MailActionTypes } from '@store/Mail/MailTypes';
+import { setMailImages } from '@store/Mail/MailActions';
 import Styles from './MailTracking.styles';
 
 type MailTrackingScreenNavigationProp = StackNavigationProp<
@@ -42,6 +46,12 @@ interface Props {
   mail: Mail | null;
   contact: Contact;
   user: User;
+  isLoadingMailDetail: boolean;
+  updateMailImages: (
+    images: Image[],
+    contactId: number,
+    mailId: number
+  ) => void;
 }
 
 interface State {
@@ -61,7 +71,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
   }
 
   render() {
-    const { mail, user, contact } = this.props;
+    const { mail, user, contact, isLoadingMailDetail } = this.props;
     const getTruckStoppingPoint = (): number => {
       switch (mail?.status) {
         case MailStatus.Created:
@@ -101,14 +111,39 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       return <View />;
     }
 
+    const pdf = mail ? mail.lobPdfUrl : null;
+
     const genDeliveryTruckCard = (): JSX.Element => {
       startAnimation();
       return (
         <View style={[Styles.cardBackground]}>
-          <Text style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}>
-            <Text>Status: </Text>
-            {mail.status}
-          </Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <AdjustableText
+              numberOfLines={1}
+              style={[Typography.FONT_SEMIBOLD, { fontSize: 18 }]}
+            >
+              <Text>Status: </Text>
+              {mail.status}
+            </AdjustableText>
+            {pdf && (
+              <Button
+                reverse
+                buttonText={i18n.t('MailTrackingScreen.viewPdf')}
+                onPress={() => {
+                  this.props.navigation.navigate(
+                    Screens.MailTrackingPdfWebview,
+                    {
+                      uri: pdf,
+                    }
+                  );
+                }}
+                containerStyle={{ height: 32 }}
+                textStyle={{ fontSize: 14 }}
+              />
+            )}
+          </View>
           {mail.status !== MailStatus.Delivered && (
             <View
               style={{
@@ -130,39 +165,51 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 </Text>
               </View>
               <View>
-                <Text style={[Styles.estimatedDeliveryLabel]}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Styles.estimatedDeliveryLabel]}
+                >
                   {i18n.t('MailTrackingScreen.estimatedArrival')}
-                </Text>
-                <Text
+                </AdjustableText>
+                <AdjustableText
+                  numberOfLines={1}
                   style={[Typography.FONT_SEMIBOLD, { fontSize: 16 }]}
-                  testID="deliveryDate"
                 >
                   {format(new Date(mail.expectedDelivery), 'MM/dd')}
-                </Text>
+                </AdjustableText>
               </View>
             </View>
           )}
-          <View style={[Styles.endpointsContainer]}>
-            <View>
-              <Text
-                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
-              >
-                {user.city}
-              </Text>
-              <Text style={[Styles.endpointDate]}>
-                {format(new Date(mail.dateCreated), 'MM/dd')}
-              </Text>
-            </View>
+          <View>
+            <View style={[Styles.endpointsContainer]}>
+              <View style={{ paddingRight: 8, maxWidth: '50%' }}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+                >
+                  {user.city}
+                </AdjustableText>
+              </View>
 
-            <View>
-              <Text
-                style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+              <View style={{ paddingLeft: 8, maxWidth: '50%' }}>
+                <AdjustableText
+                  numberOfLines={1}
+                  style={[Typography.FONT_SEMIBOLD, Styles.endpointCityLabel]}
+                >
+                  {contact.facility.name}
+                </AdjustableText>
+              </View>
+            </View>
+            <View style={[Styles.endpointsContainer]}>
+              <AdjustableText numberOfLines={1} style={[Styles.endpointDate]}>
+                {format(new Date(mail.dateCreated), 'MM/dd')}
+              </AdjustableText>
+              <AdjustableText
+                numberOfLines={1}
+                style={[{ textAlign: 'right' }, Styles.endpointDate]}
               >
-                {contact.facility.name}
-              </Text>
-              <Text style={[{ textAlign: 'right' }, Styles.endpointDate]}>
                 {format(new Date(mail.expectedDelivery), 'MM/dd')}
-              </Text>
+              </AdjustableText>
             </View>
           </View>
           <View
@@ -188,7 +235,7 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 marginHorizontal: 8,
                 width: '75%',
                 height: 4,
-                backgroundColor: Colors.BLACK_200,
+                backgroundColor: Colors.GRAY_200,
               }}
             />
             <ProfilePic
@@ -209,6 +256,13 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
 
     const genTimelineComponent = (): JSX.Element => {
       if (returnedTrack) return <View />;
+
+      if (isLoadingMailDetail)
+        return (
+          <View style={[Styles.cardBackground]}>
+            <TrackingEventsPlaceholder />
+          </View>
+        );
 
       const createdTrack: TrackingEvent = {
         id: -1,
@@ -265,10 +319,10 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         </View>
       );
     };
-
     const body = returnedTrack ? (
       <View style={{ alignItems: 'center', paddingTop: 24 }}>
-        <Text
+        <AdjustableText
+          numberOfLines={1}
           style={[
             Typography.FONT_SEMIBOLD,
             Styles.headerText,
@@ -276,8 +330,8 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
           ]}
         >
           {i18n.t('MailTrackingScreen.yourLetterWasReturnedToSender')}
-        </Text>
-        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_500 }]}>
+        </AdjustableText>
+        <Text style={[Typography.FONT_REGULAR, { color: Colors.GRAY_400 }]}>
           {i18n.t('MailTrackingScreen.possibleReason')}
         </Text>
         <Icon svg={ReturnedToSender} style={{ paddingTop: 240 }} />
@@ -303,9 +357,12 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
               justifyContent: 'space-between',
             }}
           >
-            <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
+            <AdjustableText
+              numberOfLines={1}
+              style={[Typography.FONT_SEMIBOLD, Styles.headerText]}
+            >
               {i18n.t('MailTrackingScreen.letterTracking')}
-            </Text>
+            </AdjustableText>
             <Button
               reverse
               onPress={() => {
@@ -329,37 +386,6 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
         style={Styles.trueBackground}
       >
         {body}
-        <View style={[Styles.cardBackground, { marginTop: 16 }]}>
-          <Text style={[Typography.FONT_SEMIBOLD, Styles.headerText]}>
-            {i18n.t('MailTrackingScreen.letterContent')}
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily:
-                mail.type === MailTypes.Letter
-                  ? Typography.FONT_REGULAR.fontFamily
-                  : mail.customization.font.family,
-              color:
-                mail.type === MailTypes.Letter
-                  ? Typography.FONT_REGULAR.fontFamily
-                  : mail.customization.font.color,
-            }}
-          >
-            {mail.content}
-          </Text>
-          {mail.type === MailTypes.Letter && (
-            <DisplayImage images={mail.images} heightLetter={160} />
-          )}
-          {mail.type === MailTypes.Postcard && (
-            <DisplayImage
-              images={[mail.design.image]}
-              isPostcard
-              paddingPostcard={20}
-            />
-          )}
-          <View style={{ height: 40 }} />
-        </View>
       </ScrollView>
     );
   }
@@ -369,7 +395,17 @@ const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
   mail: state.mail.active,
   user: state.user.user,
+  isLoadingMailDetail: checkIfLoading(state, EntityTypes.MailDetail),
 });
-const MailTrackingScreen = connect(mapStateToProps)(MailTrackingScreenBase);
+
+const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+  updateMailImages: (images: Image[], contactId: number, mailId: number) =>
+    dispatch(setMailImages(images, contactId, mailId)),
+});
+
+const MailTrackingScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MailTrackingScreenBase);
 
 export default MailTrackingScreen;

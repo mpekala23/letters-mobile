@@ -10,6 +10,7 @@ import {
   SET_EXISTING,
   UPDATE_CONTACT,
   CLEAR_CONTACTS,
+  SET_ACTIVE_BY_ID,
 } from './ContactTypes';
 
 const initialState: ContactState = {
@@ -57,6 +58,7 @@ export default function ContactReducer(
 ): ContactState {
   const currentState = { ...state };
   let ix = -1;
+  let contact: Contact;
   switch (action.type) {
     case SET_ADDING:
       currentState.adding = action.payload;
@@ -72,18 +74,25 @@ export default function ContactReducer(
       return currentState;
     case SET_ACTIVE:
       currentState.active = action.payload;
+      return { ...currentState };
+    case SET_ACTIVE_BY_ID:
+      [contact] = currentState.existing.filter(
+        (testContact) => testContact.id === action.payload
+      );
+      if (!contact) return currentState;
+      currentState.active = { ...contact };
       return currentState;
     case SET_EXISTING:
       currentState.existing = action.payload;
       return currentState;
     case UPDATE_CONTACT:
       ix = currentState.existing.findIndex(
-        (contact: Contact) => contact.id === action.payload.id
+        (testContact: Contact) => testContact.id === action.payload.id
       );
       if (ix >= 0) {
         currentState.existing[ix] = action.payload;
       }
-      return currentState;
+      return { ...currentState };
     case CLEAR_CONTACTS:
       currentState.adding = initialState.adding;
       currentState.existing = [];

@@ -10,6 +10,34 @@ const MAP_FONT_TO_SOURCE: Record<CustomFontFamilies, string> = {
   'Satisfy-Regular': 'https://fonts.google.com/specimen/Satisfy',
 };
 
+export function mapNameToFont(name: string): CustomFontFamilies {
+  switch (name) {
+    case 'BabasNeue':
+    case 'BebasNeue-Regular':
+      return CustomFontFamilies.BebasNeue;
+    case 'KumbhSans':
+    case 'KumbhSans-Regular':
+      return CustomFontFamilies.KumbhSans;
+    case 'Lobster':
+    case 'Lobster-Regular':
+      return CustomFontFamilies.Lobster;
+    case 'Montserrat':
+    case 'Montserrat-Regular':
+      return CustomFontFamilies.Montserrat;
+    case 'NotoSerifJP':
+    case 'NotoSerifJP-Regular':
+      return CustomFontFamilies.NotoSerifJP;
+    case 'ReenieBeanie':
+    case 'ReenieBeanie-Regular':
+      return CustomFontFamilies.ReenieBeanie;
+    case 'Satisfy':
+    case 'Satisfy-Regular':
+      return CustomFontFamilies.Satisfy;
+    default:
+      return CustomFontFamilies.Montserrat;
+  }
+}
+
 const FONT_OPTIONS: CustomFontFamilies[] = [
   CustomFontFamilies.BebasNeue,
   CustomFontFamilies.KumbhSans,

@@ -16,14 +16,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   source: Image;
-  viewStyle?: ViewStyle;
-  imageStyle?: ImageStyle;
+  viewStyle?: ViewStyle | ViewStyle[];
+  imageStyle?: ImageStyle | ImageStyle[];
   loadingSize?: number;
   timeout: number;
   download?: boolean;
+  local?: boolean;
   accessibilityLabel?: string;
   onLoad?: () => void;
   autorotate?: boolean;
+  loadingBackgroundColor: string;
+  updateDims?: ({ width, height }: { width: number; height: number }) => void;
 }
 
 interface State {
@@ -33,8 +36,8 @@ interface State {
   imgURI?: string;
   viewWidth: number;
   viewHeight: number;
-  imageWidth: number;
-  imageHeight: number;
+  imageWidth: number | null;
+  imageHeight: number | null;
 }
 
 class AsyncImage extends React.Component<Props, State> {
@@ -44,7 +47,9 @@ class AsyncImage extends React.Component<Props, State> {
     loadingSize: 30,
     timeout: 10000,
     download: false,
+    local: false,
     autorotate: true,
+    loadingBackgroundColor: 'rgba(255,255,255,0.2)',
   };
 
   constructor(props: Props) {
@@ -56,20 +61,21 @@ class AsyncImage extends React.Component<Props, State> {
       loadOpacity: new Animated.Value(0.3),
       viewWidth: 200,
       viewHeight: 200,
-      imageWidth: 200,
-      imageHeight: 200,
+      imageWidth: null,
+      imageHeight: null,
     };
-    this.loadImage = this.loadImage.bind(this);
+    this.loadRemoteImage = this.loadRemoteImage.bind(this);
   }
 
   async componentDidMount(): Promise<void> {
     this.testTimeout();
-    await this.loadImage();
+    if (!this.props.local) await this.loadRemoteImage();
   }
 
   componentDidUpdate(prevProps: Props): void {
+    if (this.props.local) return;
     if (prevProps.source.uri === this.props.source.uri) return;
-    this.loadImage();
+    this.loadRemoteImage();
   }
 
   testTimeout = async (): Promise<void> => {
@@ -87,16 +93,32 @@ class AsyncImage extends React.Component<Props, State> {
     return `${FileSystem.cacheDirectory}${hashed}`;
   };
 
-  loadFinished(imgURI: string): void {
+  loadFinished(imgURI?: string): void {
     if (this.props.onLoad) this.props.onLoad();
-    getImageDims(imgURI)
-      .then(({ width, height }) => {
-        this.setState({
-          imageWidth: width,
-          imageHeight: height,
-        });
-      })
-      .catch(() => null);
+    if (!imgURI || this.props.local) {
+      this.setState({
+        loaded: true,
+        timedOut: false,
+        imgURI,
+      });
+      Animated.timing(this.state.loadOpacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+    if (!this.state.imageWidth || !this.state.imageHeight) {
+      getImageDims(imgURI)
+        .then(({ width, height }) => {
+          if (this.props.updateDims) this.props.updateDims({ width, height });
+          this.setState({
+            imageWidth: width,
+            imageHeight: height,
+          });
+        })
+        .catch(() => null);
+    }
     this.setState({
       loaded: true,
       timedOut: false,
@@ -109,7 +131,8 @@ class AsyncImage extends React.Component<Props, State> {
     }).start();
   }
 
-  async loadImage(): Promise<void> {
+  async loadRemoteImage(): Promise<void> {
+    if (this.props.local) return;
     this.setState({
       loaded: false,
       timedOut: false,
@@ -146,7 +169,10 @@ class AsyncImage extends React.Component<Props, State> {
   render(): JSX.Element {
     let asyncFeedback: JSX.Element = <View />;
     const viewIsHorizontal = this.state.viewWidth >= this.state.viewHeight;
-    const imageIsHorizontal = this.state.imageWidth >= this.state.imageHeight;
+    const imageIsHorizontal =
+      this.state.imageWidth &&
+      this.state.imageHeight &&
+      this.state.imageWidth >= this.state.imageHeight;
 
     let renderedImage: JSX.Element;
     if (
@@ -156,9 +182,13 @@ class AsyncImage extends React.Component<Props, State> {
     ) {
       renderedImage = (
         <Animated.Image
-          source={{
-            uri: this.state.imgURI,
-          }}
+          source={
+            this.props.local
+              ? this.props.source
+              : {
+                  uri: this.state.imgURI,
+                }
+          }
           style={[
             this.props.imageStyle,
             {
@@ -168,6 +198,9 @@ class AsyncImage extends React.Component<Props, State> {
             },
           ]}
           loadingIndicatorSource={Loading}
+          onLoad={() => {
+            if (this.props.local) this.loadFinished();
+          }}
         />
       );
     } else {
@@ -192,6 +225,9 @@ class AsyncImage extends React.Component<Props, State> {
               },
             ]}
             loadingIndicatorSource={Loading}
+            onLoad={() => {
+              if (this.props.local) this.loadFinished();
+            }}
           />
         </View>
       );
@@ -207,7 +243,7 @@ class AsyncImage extends React.Component<Props, State> {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: this.props.loadingBackgroundColor,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -229,7 +265,7 @@ class AsyncImage extends React.Component<Props, State> {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: this.props.loadingBackgroundColor,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -239,7 +275,7 @@ class AsyncImage extends React.Component<Props, State> {
                 timedOut: false,
               });
               this.testTimeout();
-              await this.loadImage();
+              if (!this.props.local) await this.loadRemoteImage();
             }}
           >
             <ImageComponent
@@ -275,7 +311,9 @@ class AsyncImage extends React.Component<Props, State> {
           });
         }}
       >
-        {!!this.props.source.uri && !!this.state.imgURI && renderedImage}
+        {(this.props.local ||
+          (!!this.props.source.uri && !!this.state.imgURI)) &&
+          renderedImage}
         {asyncFeedback}
       </View>
     );

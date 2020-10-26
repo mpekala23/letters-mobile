@@ -1,7 +1,12 @@
 import React from 'react';
 import i18n from '@i18n';
 import { Colors, Typography } from '@styles';
-import { BOTTOM_HEIGHT, WINDOW_HEIGHT, WINDOW_WIDTH } from '@utils/Constants';
+import {
+  BOTTOM_HEIGHT,
+  PERSONAL_OVERRIDE_ID,
+  WINDOW_HEIGHT,
+  WINDOW_WIDTH,
+} from '@utils/Constants';
 import {
   Animated,
   FlatList,
@@ -10,7 +15,13 @@ import {
   View,
   Image as ImageComponent,
 } from 'react-native';
-import { DesignBottomDetails, Layout, PostcardDesign, Sticker } from 'types';
+import {
+  DesignBottomDetails,
+  Image,
+  Layout,
+  PersonalDesign,
+  Sticker,
+} from 'types';
 import { takeImage } from '@utils';
 import { LAYOUTS } from '@utils/Layouts';
 import STICKERS from '@assets/stickers';
@@ -27,8 +38,8 @@ interface Props {
   onClose: () => void;
   onLayoutSelected: (layout: Layout) => void;
   onStickerSelected: (sticker: Sticker) => void;
-  library: PostcardDesign[];
-  onDesignSelected: (design: PostcardDesign) => void;
+  library: Image[];
+  onDesignSelected: (design: PersonalDesign) => void;
   loadMoreImages: () => void;
 }
 
@@ -103,7 +114,10 @@ function StickerSelector({
               }}
               onPress={() => onStickerSelected(item)}
             >
-              {item.component}
+              <ImageComponent
+                source={item.image}
+                style={{ width: '100%', height: '100%' }}
+              />
             </TouchableOpacity>
           );
         }}
@@ -123,8 +137,8 @@ function DesignSelector({
   onDesignSelected,
   loadMoreImages,
 }: {
-  library: PostcardDesign[];
-  onDesignSelected: (design: PostcardDesign) => void;
+  library: Image[];
+  onDesignSelected: (design: PersonalDesign) => void;
   loadMoreImages: () => void;
 }) {
   return (
@@ -176,7 +190,11 @@ function DesignSelector({
                 allowsEditing: true,
               });
               if (image) {
-                onDesignSelected({ image, custom: true });
+                onDesignSelected({
+                  asset: image,
+                  type: 'personal_design',
+                  categoryId: PERSONAL_OVERRIDE_ID,
+                });
               }
             } catch (err) {
               dropdownError({ message: i18n.t('Permission.camera') });
@@ -189,7 +207,7 @@ function DesignSelector({
               Typography.FONT_MEDIUM,
               Styles.subcategoryText,
               {
-                color: Colors.GRAY_MEDIUM,
+                color: Colors.GRAY_500,
               },
             ]}
           >
@@ -207,18 +225,24 @@ function DesignSelector({
                 height: (WINDOW_WIDTH - 32) / 3,
                 margin: 4,
               }}
-              onPress={() => onDesignSelected(item)}
+              onPress={() => {
+                onDesignSelected({
+                  asset: item,
+                  type: 'personal_design',
+                  categoryId: PERSONAL_OVERRIDE_ID,
+                });
+              }}
             >
               <AsyncImage
-                source={item.thumbnail ? item.thumbnail : item.image}
+                source={item}
                 imageStyle={{ flex: 1, aspectRatio: 1 }}
                 autorotate={false}
               />
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item: PostcardDesign, index: number) => {
-          return `${item.image.uri} ${index.toString()}`;
+        keyExtractor={(item, index: number) => {
+          return `${item.uri} ${index.toString()}`;
         }}
         numColumns={3}
         contentContainerStyle={Styles.gridBackground}

@@ -6,14 +6,16 @@ import { User, UserLoginInfo, UserRegisterInfo } from '@store/User/UserTypes';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import url from 'url';
 import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   Storage,
   MailTypes,
   Draft,
-  PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
   CustomFontFamilies,
+  PremadeDesign,
+  PremadePostcardDesign,
 } from 'types';
 import {
   loginUser,
@@ -24,13 +26,15 @@ import {
   setLoadingStatus,
 } from '@store/User/UserActions';
 import { clearContacts } from '@store/Contact/ContactActions';
+
 import i18n from '@i18n';
 import { STATE_TO_ABBREV, ABBREV_TO_STATE, sleep } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { setComposing } from '@store/Mail/MailActions';
 import * as Sentry from 'sentry-expo';
 import { getPushToken } from '@notifications';
-import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
+import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
+import { PERSONAL_OVERRIDE_ID, POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import {
   uploadImage,
   fetchTimeout,
@@ -40,6 +44,11 @@ import {
 } from './Common';
 import { getContacts } from './Contacts';
 import { getSubcategoriesById, getCategories, initMail } from './Mail';
+import {
+  getPremiumPacks,
+  getPremiumStoreItems,
+  getPremiumTransactions,
+} from './Premium';
 
 interface RawUser {
   id: number;
@@ -52,6 +61,7 @@ interface RawUser {
   state: string;
   postal: string;
   credit: number;
+  coins: number;
   s3_img_url?: string;
   profile_img_path?: string;
   phone: string;
@@ -63,7 +73,6 @@ interface RawUser {
 
 function cleanUser(user: RawUser): User {
   const photoUri = user.s3_img_url || user.profile_img_path;
-
   return {
     id: user.id,
     firstName: user.first_name,
@@ -78,8 +87,10 @@ function cleanUser(user: RawUser): User {
       uri: photoUri || '',
     },
     credit: user.credit,
+    coins: user.coins,
     joined: new Date(user.created_at),
     referralCode: user.referral_link,
+    country: user.country,
   };
 }
 
@@ -100,7 +111,7 @@ export async function deleteDraft(): Promise<void> {
     deleteItemAsync(Storage.DraftDesignUri),
     deleteItemAsync(Storage.DraftCategoryId),
     deleteItemAsync(Storage.DraftSubcategoryName),
-    deleteItemAsync(Storage.DraftLayout),
+    AsyncStorage.removeItem(Storage.DraftLayout),
   ]);
 }
 
@@ -120,14 +131,17 @@ export async function saveDraft(draft: Draft): Promise<void> {
         ? draft.design.categoryId.toString()
         : PERSONAL_OVERRIDE_ID.toString()
     );
-    if (draft.design.layout) {
-      // personal postcard
+    AsyncStorage.setItem(Storage.DraftPostcardSize, JSON.stringify(draft.size));
+    if (draft.design.type === 'personal_design' && draft.design.layout) {
       Promise.all([
-        setItemAsync(Storage.DraftLayout, JSON.stringify(draft.design.layout)),
+        AsyncStorage.setItem(
+          Storage.DraftLayout,
+          JSON.stringify(draft.design.layout)
+        ),
       ]);
-    } else if (draft.design.image.uri && draft.design.subcategoryName) {
+    } else if (draft.design.asset.uri && draft.design.subcategoryName) {
       Promise.all([
-        setItemAsync(Storage.DraftDesignUri, draft.design.image.uri),
+        setItemAsync(Storage.DraftDesignUri, draft.design.asset.uri),
         setItemAsync(
           Storage.DraftSubcategoryName,
           draft.design.subcategoryName
@@ -165,8 +179,18 @@ export async function loadDraft(): Promise<Draft> {
       return draft;
     }
     if (draftType === MailTypes.Postcard) {
-      const draftDesignUri = await getItemAsync(Storage.DraftDesignUri);
-      const draftCategoryId = await getItemAsync(Storage.DraftCategoryId);
+      const [
+        draftDesignUri,
+        draftCategoryId,
+        draftPostcardSize,
+      ] = await Promise.all([
+        getItemAsync(Storage.DraftDesignUri),
+        getItemAsync(Storage.DraftCategoryId),
+        AsyncStorage.getItem(Storage.DraftPostcardSize),
+      ]);
+      const postcardSize = draftPostcardSize
+        ? JSON.parse(draftPostcardSize)
+        : POSTCARD_SIZE_OPTIONS[0];
       let draftSubcategoryName = await getItemAsync(
         Storage.DraftSubcategoryName
       );
@@ -175,16 +199,16 @@ export async function loadDraft(): Promise<Draft> {
         draftCategoryId === PERSONAL_OVERRIDE_ID.toString()
       ) {
         // either this is a personal postcard, or there is no categoryId and we assume it is
-        const draftLayout = await getItemAsync(Storage.DraftLayout);
+        const draftLayout = await AsyncStorage.getItem(Storage.DraftLayout);
         const draft: Draft = {
           type: MailTypes.Postcard,
           recipientId: parseInt(draftRecipientId, 10),
           content: draftContent || '',
           design: {
-            image: { uri: '' },
+            asset: { uri: '' },
             layout: draftLayout ? JSON.parse(draftLayout) : undefined,
-            custom: true,
             categoryId: PERSONAL_OVERRIDE_ID,
+            type: 'personal_design',
           },
           customization: {
             font: {
@@ -192,6 +216,7 @@ export async function loadDraft(): Promise<Draft> {
               color: '#000000',
             },
           },
+          size: postcardSize,
         };
         store.dispatch(setComposing(draft));
         return draft;
@@ -203,7 +228,7 @@ export async function loadDraft(): Promise<Draft> {
         [draftSubcategoryName] = Object.keys(subcategories);
       }
       let findDesign = subcategories[draftSubcategoryName].find(
-        (testDesign: PostcardDesign) => testDesign.image.uri === draftDesignUri
+        (testDesign: PremadeDesign) => testDesign.asset.uri === draftDesignUri
       );
       if (!findDesign) {
         [findDesign] = subcategories[draftSubcategoryName];
@@ -212,7 +237,8 @@ export async function loadDraft(): Promise<Draft> {
         type: MailTypes.Postcard,
         recipientId: parseInt(draftRecipientId, 10),
         content: draftContent || '',
-        design: findDesign,
+        design: findDesign as PremadePostcardDesign,
+        size: postcardSize,
         customization: {
           font: {
             family: CustomFontFamilies.Montserrat,
@@ -321,6 +347,51 @@ export async function uploadPushToken(token: string): Promise<void> {
   if (body.status !== 'OK' && body.status !== 'succeeded') throw body;
 }
 
+async function initializeData(
+  userData: User,
+  token: string,
+  remember: string
+): Promise<void> {
+  Segment.identify(userData.email);
+  Segment.track('Login Success');
+  store.dispatch(setLoadingStatus(60));
+  store.dispatch(authenticateUser(userData, token, remember));
+
+  Promise.all([
+    getCategories(),
+    getUserReferrals(),
+    getPremiumPacks(),
+    getPremiumStoreItems(),
+    getPremiumTransactions(),
+  ]).catch((err) => {
+    Sentry.captureException(err);
+  });
+  try {
+    const contacts = await getContacts();
+    initMail(contacts).catch((err) => {
+      Sentry.captureException(err);
+    });
+  } catch (err) {
+    Sentry.captureException(err);
+    dropdownError({ message: i18n.t('Error.loadingUser') });
+    store.dispatch(logoutUser());
+  }
+  store.dispatch(setLoadingStatus(100));
+  sleep(300).then(() => {
+    store.dispatch(loginUser(userData));
+  });
+  loadDraft();
+  getPushToken()
+    .then((pushToken) => {
+      uploadPushToken(pushToken).catch(() => {
+        dropdownError({ message: i18n.t('Permission.notifs') });
+      });
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+    });
+}
+
 export async function loginWithToken(): Promise<User> {
   store.dispatch(setLoadingStatus(0));
   try {
@@ -341,44 +412,10 @@ export async function loginWithToken(): Promise<User> {
     });
     store.dispatch(setLoadingStatus(40));
     const body = await response.json();
-    store.dispatch(setLoadingStatus(50));
     if (body.status !== 'OK') throw body;
     const userData = cleanUser(body.data as RawUser);
-    Segment.identify(userData.email);
-    Segment.track('Login Success');
-    store.dispatch(authenticateUser(userData, body.data.token, rememberToken));
-    getCategories().catch((err) => {
-      Sentry.captureException(err);
-    });
-    getUserReferrals().catch((err) => {
-      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-      Sentry.captureException(err);
-    });
-    store.dispatch(setLoadingStatus(60));
-    try {
-      const contacts = await getContacts();
-      initMail(contacts).catch((err) => {
-        Sentry.captureException(err);
-      });
-    } catch (err) {
-      Sentry.captureException(err);
-      dropdownError({ message: i18n.t('Error.loadingUser') });
-      store.dispatch(logoutUser());
-    }
-    store.dispatch(setLoadingStatus(100));
-    sleep(300).then(() => {
-      store.dispatch(loginUser(userData));
-    });
-    loadDraft();
-    getPushToken()
-      .then((pushToken) => {
-        uploadPushToken(pushToken).catch(() => {
-          dropdownError({ message: i18n.t('Permission.notifs') });
-        });
-      })
-      .catch((err) => {
-        Sentry.captureException(err);
-      });
+    const { token, remember } = body.data;
+    await initializeData(userData, token, remember);
     return userData;
   } catch (err) {
     Sentry.captureException(err);
@@ -402,11 +439,10 @@ export async function login(cred: UserLoginInfo): Promise<User> {
   });
   const body = await response.json();
   if (body.status !== 'OK') throw body;
+  store.dispatch(setLoadingStatus(40));
   const userData = cleanUser(body.data as RawUser);
-  store.dispatch(
-    authenticateUser(userData, body.data.token, body.data.remember)
-  );
-  store.dispatch(setLoadingStatus(30));
+  const { token, remember } = body.data;
+  await initializeData(userData, token, remember);
   if (cred.remember) {
     saveToken(body.data.remember).catch((err) => {
       Sentry.captureException(err);
@@ -415,41 +451,6 @@ export async function login(cred: UserLoginInfo): Promise<User> {
       });
     });
   }
-  store.dispatch(setLoadingStatus(50));
-  Segment.identify(userData.email);
-  Segment.track('Login Success');
-  getCategories().catch((err) => {
-    dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-    Sentry.captureException(err);
-  });
-  getUserReferrals().catch((err) => {
-    Sentry.captureException(err);
-  });
-  loadDraft();
-  store.dispatch(setLoadingStatus(60));
-  try {
-    const contacts = await getContacts();
-    initMail(contacts).catch((err) => {
-      Sentry.captureException(err);
-    });
-  } catch (err) {
-    Sentry.captureException(err);
-    dropdownError({ message: i18n.t('Error.loadingUser') });
-    store.dispatch(logoutUser());
-  }
-  store.dispatch(setLoadingStatus(100));
-  sleep(300).then(() => {
-    store.dispatch(loginUser(userData));
-  });
-  getPushToken()
-    .then((pushToken) => {
-      uploadPushToken(pushToken).catch(() => {
-        dropdownError({ message: i18n.t('Permission.notifs') });
-      });
-    })
-    .catch((err) => {
-      Sentry.captureException(err);
-    });
   return userData;
 }
 
@@ -471,6 +472,14 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       dropdownError({ message: i18n.t('Error.unableToUploadProfilePicture') });
     }
   }
+
+  const countryIx = Object.values(COUNTRIES_FULL_TO_ABBREVS).findIndex(
+    (country) => country === data.country
+  );
+  const countryCode =
+    countryIx !== 1 ? Object.keys(COUNTRIES_FULL_TO_ABBREVS)[countryIx] : 'US';
+  const state =
+    countryCode === 'US' ? STATE_TO_ABBREV[data.phyState] : data.phyState;
   const response = await fetchTimeout(url.resolve(API_URL, 'register'), {
     method: 'POST',
     headers: {
@@ -486,8 +495,8 @@ export async function register(data: UserRegisterInfo): Promise<User> {
       address_line_1: data.address1,
       address_line_2: data.address2,
       city: data.city,
-      country: 'US',
-      state: STATE_TO_ABBREV[data.phyState],
+      country: countryCode,
+      state,
       referer: data.referrer,
       postal: data.postal,
       ...photoExtension,

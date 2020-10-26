@@ -10,15 +10,17 @@ export default StyleSheet.create({
     backgroundColor: Colors.PINK_500,
     marginVertical: 5,
     paddingHorizontal: 14,
+    paddingVertical: 2,
   },
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 5,
+      width: 4,
+      height: 4,
     },
-    shadowOpacity: 0.22,
-    elevation: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   buttonBackgroundReverse: {
     flexDirection: 'row',
@@ -26,9 +28,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: Colors.PINK_500,
     marginVertical: 5,
+    borderWidth: 2,
+    borderColor: Colors.GRAY_200,
   },
   buttonBackgroundDisabled: {
     flexDirection: 'row',

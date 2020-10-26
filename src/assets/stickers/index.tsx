@@ -1,5 +1,3 @@
-import React from 'react';
-import { Image as ImageComponent } from 'react-native';
 import { Sticker } from 'types';
 
 import Ameelio from './Ameelio.png';
@@ -13,91 +11,45 @@ import Stars from './Stars.png';
 import Sunshine from './Sunshine.png';
 import TwoPeas from './TwoPeas.png';
 
-const AmeelioComponent = (
-  <ImageComponent source={Ameelio} style={{ width: '100%', height: '100%' }} />
-);
-
-const BestDadComponent = (
-  <ImageComponent source={BestDad} style={{ width: '100%', height: '100%' }} />
-);
-
-const EggcelentComponent = (
-  <ImageComponent
-    source={Eggcelent}
-    style={{ width: '100%', height: '100%' }}
-  />
-);
-
-const HappyBirthdayComponent = (
-  <ImageComponent
-    source={HappyBirthday}
-    style={{ width: '100%', height: '100%' }}
-  />
-);
-
-const HeartsComponent = (
-  <ImageComponent source={Hearts} style={{ width: '100%', height: '100%' }} />
-);
-
-const LoveYouComponent = (
-  <ImageComponent source={LoveYou} style={{ width: '100%', height: '100%' }} />
-);
-
-const MissYouComponent = (
-  <ImageComponent source={MissYou} style={{ width: '100%', height: '100%' }} />
-);
-
-const StarsComponent = (
-  <ImageComponent source={Stars} style={{ width: '100%', height: '100%' }} />
-);
-
-const SunshineComponent = (
-  <ImageComponent source={Sunshine} style={{ width: '100%', height: '100%' }} />
-);
-
-const TwoPeasComponent = (
-  <ImageComponent source={TwoPeas} style={{ width: '100%', height: '100%' }} />
-);
-
 const STICKERS: Sticker[] = [
   {
-    component: AmeelioComponent,
+    image: Ameelio,
     name: 'Sent by Ameelio',
   },
   {
-    component: BestDadComponent,
+    image: BestDad,
     name: '#1 Dad',
   },
   {
-    component: EggcelentComponent,
+    image: Eggcelent,
     name: 'Eggcelent',
   },
   {
-    component: HappyBirthdayComponent,
+    image: HappyBirthday,
     name: 'Happy Birthday',
   },
   {
-    component: HeartsComponent,
+    image: Hearts,
     name: 'Hearts',
   },
   {
-    component: LoveYouComponent,
+    image: LoveYou,
     name: 'Love You',
   },
   {
-    component: MissYouComponent,
+    image: MissYou,
     name: 'Miss You',
   },
   {
-    component: StarsComponent,
+    image: Stars,
     name: 'Stars',
   },
   {
-    component: SunshineComponent,
+    image: Sunshine,
     name: 'Sunshine',
   },
   {
-    component: TwoPeasComponent,
+    image: TwoPeas,
     name: 'Two Peas',
   },
 ];

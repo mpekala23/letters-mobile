@@ -13,8 +13,9 @@ import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
 import { isProduction } from '@utils';
 import { cleanupNotifs, setupNotifs } from '@notifications';
-
 import { Subscription } from 'types';
+import { AppLoading } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 
 const customFonts = {
   'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
@@ -100,7 +101,9 @@ export default class App extends React.Component<null, State> {
   async loadFontsAsync(): Promise<void> {
     await Font.loadAsync(customFonts);
     setCustomText(customTextProps);
-    this.setState({ fontsLoaded: true });
+    this.setState({ fontsLoaded: true }, () => {
+      SplashScreen.hideAsync();
+    });
   }
 
   render(): JSX.Element {
@@ -116,6 +119,6 @@ export default class App extends React.Component<null, State> {
         </Provider>
       );
     }
-    return <></>;
+    return <AppLoading />;
   }
 }

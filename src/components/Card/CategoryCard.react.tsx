@@ -10,6 +10,7 @@ import { MailActionTypes } from '@store/Mail/MailTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
 import { Screens } from '@utils/Screens';
+import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
 import CardStyles from './Card.styles';
 import AdjustableText from '../Text/AdjustableText.react';
 
@@ -43,7 +44,15 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
               content: '',
               recipientId: props.recipientId,
               design: {
-                image: { uri: '' },
+                asset: { uri: '' },
+                type: 'premade_postcard',
+                categoryId: props.category.id,
+                name: '',
+                blurb: '',
+                thumbnail: { uri: '' },
+                id: -1,
+                productId: -1,
+                price: 0,
               },
               customization: {
                 font: {
@@ -51,8 +60,9 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
                   color: '#000000',
                 },
               },
+              size: POSTCARD_SIZE_OPTIONS[0],
             });
-            props.navigate(Screens.ComposePostcard, {
+            props.navigate(Screens.SelectPostcardSize, {
               category: props.category,
             });
           }
@@ -65,7 +75,7 @@ const CategoryCardBase: React.FC<Props> = (props: Props) => {
           viewStyle={{
             width: '100%',
             height: 132,
-            backgroundColor: Colors.GRAY_MEDIUM,
+            backgroundColor: Colors.GRAY_300,
             borderTopLeftRadius: 4,
             borderTopRightRadius: 4,
             overflow: 'hidden',

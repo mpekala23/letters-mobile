@@ -9,7 +9,7 @@ import { Validation } from '@utils';
 import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import { CheckBox } from 'react-native-elements';
-import { setProfileOverride } from '@components/Topbar/Topbar.react';
+import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import Styles from './Register.style';
 

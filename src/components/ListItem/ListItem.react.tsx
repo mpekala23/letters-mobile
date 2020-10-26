@@ -34,7 +34,7 @@ const ListItem: React.FC<Props> = (props: Props) => {
   return (
     <TouchableHighlight
       style={[Styles.itemContainer, containerStyle]}
-      underlayColor={Colors.BLACK_200}
+      underlayColor={Colors.GRAY_200}
       onPress={onPress}
     >
       <View style={Styles.itemView}>

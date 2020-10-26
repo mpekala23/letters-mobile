@@ -13,8 +13,12 @@ import {
   PostcardDesign,
   Image,
   Contact,
-  PostcardCustomization,
+  Customization,
   CustomFontFamilies,
+  EntityTypes,
+  RawCategory,
+  PremadeDesign,
+  PremadePostcardDesign,
 } from 'types';
 import {
   addMail,
@@ -26,11 +30,20 @@ import { setUser } from '@store/User/UserActions';
 import { popupAlert } from '@components/Alert/Alert.react';
 import i18n from '@i18n';
 import { addBusinessDays, differenceInHours } from 'date-fns';
-import { estimateDelivery, getImageDims } from '@utils';
-import { setCategories, setLastUpdated } from '@store/Category/CategoryActions';
+import { estimateDelivery, findPostcardSizeOption, getImageDims } from '@utils';
+import {
+  setCategories,
+  setDesignImage,
+  setLastUpdated,
+} from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
-import { updateContact } from '@store/Contact/ContactActions';
-import { MAP_FONT_TO_SOURCE } from '@utils/Fonts';
+import { mapNameToFont, MAP_FONT_TO_SOURCE } from '@utils/Fonts';
+import { startAction, stopAction } from '@store/UI/UIActions';
+import {
+  updateContact,
+  setActive as setActiveContact,
+} from '@store/Contact/ContactActions';
+import { PERSONAL_OVERRIDE_ID } from '@utils/Constants';
 import {
   getZipcode,
   fetchAuthenticated,
@@ -74,6 +87,8 @@ interface RawMail {
       src: string;
     };
   } | null;
+  size: string;
+  pdf_url: string;
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -117,12 +132,12 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id, customization } = mail;
+  const { type, content, id, customization, pdf_url } = mail;
   const recipientId = mail.contact_id;
-  const cleanCustomization: PostcardCustomization = customization
+  const cleanCustomization: Customization = customization
     ? {
         font: {
-          family: customization.font.family,
+          family: mapNameToFont(customization.font.family),
           color: customization.font.color,
         },
       }
@@ -134,21 +149,17 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       };
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => {
+      return {
+        uri: rawImage.img_src,
+      };
+    });
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    asset: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor so we don't need to do this
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
 
   const dateCreated = new Date(mail.created_at).toISOString();
   let status: MailStatus;
@@ -174,7 +185,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       ).toISOString();
     }
   }
-
+  const rawSize = mail.size;
   if (mail.delivered) status = MailStatus.Delivered;
   if (type === MailTypes.Letter) {
     return {
@@ -187,9 +198,10 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       expectedDelivery,
       images,
       trackingEvents,
+      lobPdfUrl: pdf_url,
     };
   }
-
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -201,6 +213,8 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     design,
     trackingEvents,
     customization: cleanCustomization,
+    size,
+    lobPdfUrl: pdf_url,
   };
 }
 
@@ -216,11 +230,11 @@ export async function getSingleMail(id: number): Promise<Mail> {
 
 // cleans mail returned from getMail and defaults to getSingleMail if necessary
 async function cleanMassMail(mail: RawMail): Promise<Mail> {
-  if (!mail.lob_status || !mail.last_lob_status_update) {
+  if (!mail.lob_status) {
     return getSingleMail(mail.id);
   }
   const { type, content, id, customization } = mail;
-  const cleanCustomization: PostcardCustomization = customization
+  const cleanCustomization: Customization = customization
     ? {
         font: {
           family: customization.font.family,
@@ -236,21 +250,13 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
-    try {
-      images = await Promise.all(
-        mail.images.map(async (rawImage) => {
-          const dimensions = await getImageDims(rawImage.img_src);
-          return {
-            uri: rawImage.img_src,
-            ...dimensions,
-          };
-        })
-      );
-    } catch {
-      images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
-    }
+    images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
   }
-  const design = { image: images.length ? images[0] : { uri: '' } };
+  const design: PostcardDesign = {
+    asset: images.length ? images[0] : { uri: '' },
+    type: 'personal_design', // TODO: refactor this so that we dont need to pass a type
+    categoryId: PERSONAL_OVERRIDE_ID,
+  };
   const dateCreated = new Date(mail.created_at).toISOString();
 
   let status;
@@ -278,6 +284,8 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       images,
     };
   }
+  const rawSize = mail.size;
+  const size = findPostcardSizeOption(rawSize);
   return {
     type,
     recipientId,
@@ -286,8 +294,9 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     status,
     dateCreated,
     expectedDelivery,
-    design,
     customization: cleanCustomization,
+    design,
+    size,
   };
 }
 
@@ -330,10 +339,14 @@ export async function getMailByContact(
   updatedContact.mailPage = data.current_page + 1;
   updatedContact.hasNextPage = !!data.next_page_url;
   store.dispatch(updateContact(updatedContact));
+  if (updatedContact.id === store.getState().contact.active.id) {
+    store.dispatch(setActiveContact(updatedContact));
+  }
   return clean;
 }
 
 export async function initMail(seedContacts?: Contact[]): Promise<void> {
+  store.dispatch(startAction(EntityTypes.Mail));
   const contacts =
     seedContacts?.slice(0, 10) || store.getState().contact.existing;
   await Promise.all(
@@ -346,6 +359,7 @@ export async function initMail(seedContacts?: Contact[]): Promise<void> {
       }
     })
   );
+  store.dispatch(stopAction(EntityTypes.Mail));
 }
 
 export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
@@ -391,6 +405,7 @@ export async function getMail(page = 1): Promise<Record<string, Mail[]>> {
 }
 
 export async function getTrackingEvents(id: number): Promise<Mail> {
+  store.dispatch(startAction(EntityTypes.MailDetail));
   const mail = await getSingleMail(id);
   const contactId = store.getState().contact.active.id;
   const currentMail = [...store.getState().mail.existing[contactId]];
@@ -398,10 +413,14 @@ export async function getTrackingEvents(id: number): Promise<Mail> {
   currentMail[ix] = mail;
   store.dispatch(setActive(mail));
   store.dispatch(setContactsMail(contactId, currentMail));
+  store.dispatch(stopAction(EntityTypes.MailDetail));
   return mail;
 }
 
-export async function createMail(draft: Draft): Promise<Mail> {
+export async function createMail(
+  draft: Draft,
+  productId?: number
+): Promise<Mail> {
   const { user } = store.getState().user;
   if (user.credit <= 0) {
     popupAlert({
@@ -413,16 +432,17 @@ export async function createMail(draft: Draft): Promise<Mail> {
 
   const prepDraft = { ...draft };
   let imageExtension = {};
+  let pdf_path = null;
   if (prepDraft.type === MailTypes.Postcard) {
     try {
-      if (prepDraft.design.custom) {
-        prepDraft.design.image = await uploadImage(
-          prepDraft.design.image,
+      if (prepDraft.design.type === 'personal_design') {
+        prepDraft.design.asset = await uploadImage(
+          prepDraft.design.asset,
           'letter'
         );
       }
       imageExtension = {
-        s3_img_urls: [prepDraft.design.image.uri],
+        s3_img_urls: [prepDraft.design.asset.uri],
       };
     } catch (err) {
       Sentry.captureException(err);
@@ -435,6 +455,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
       };
       throw uploadError;
     }
+  } else if (prepDraft.pdf) {
+    pdf_path = prepDraft.pdf;
   } else if (prepDraft.images.length) {
     try {
       const uris = await Promise.all(
@@ -464,7 +486,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
     content: prepDraft.content,
     is_draft: false,
     type: prepDraft.type,
-    size: prepDraft.type === MailTypes.Postcard ? '4x6' : undefined,
+    size:
+      prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
     customization:
       draft.type === MailTypes.Letter
         ? undefined
@@ -476,6 +499,8 @@ export async function createMail(draft: Draft): Promise<Mail> {
             },
           },
     ...imageExtension,
+    product_id: productId,
+    pdf_path,
   };
   const body = await fetchAuthenticated(url.resolve(API_URL, 'letter'), {
     method: 'POST',
@@ -486,29 +511,27 @@ export async function createMail(draft: Draft): Promise<Mail> {
   const data = body.data as RawMail;
   const createdMail = await cleanMassMail(data);
   store.dispatch(addMail(createdMail));
-  user.credit -= 1;
+  user.credit -=
+    draft.type === MailTypes.Letter ? Math.max(1, draft.images.length) : 1;
   store.dispatch(setUser(user));
+
+  const contact = store.getState().contact.active;
+  contact.totalSent += 1;
+  store.dispatch(updateContact(contact));
+
   return createdMail;
 }
 
-interface RawCategory {
-  created_at: string;
-  id: 1;
-  img_src: string;
-  name: string;
-  updated_at: string;
-  blurb: string;
-}
-
-function cleanCategory(
+export function cleanCategory(
   raw: RawCategory,
-  subcategories: Record<string, PostcardDesign[]>
+  subcategories: Record<string, PremadeDesign[]>
 ): Category {
   return {
     id: raw.id,
     name: raw.name,
     image: { uri: raw.img_src },
     blurb: raw.blurb,
+    premium: raw.premium,
     subcategories,
   };
 }
@@ -520,73 +543,103 @@ interface RawDesign {
   name: string;
   front_img_src: string;
   thumbnail_src: string;
-  type: MailTypes;
+  blurb: string;
+  type: string;
   back: null;
   subcategory_id: number;
+  product_id: number;
   designer?: string;
   content_researcher?: string;
+  color: boolean;
+  price: number;
 }
 
-async function cleanDesign(
+function cleanDesign(
   raw: RawDesign,
-  categoryId?: number,
-  subcategoryName?: string
-): Promise<PostcardDesign> {
-  try {
-    const imageDims = await getImageDims(raw.front_img_src);
-    const thumbnailDims = await getImageDims(raw.thumbnail_src);
-    return {
-      image: {
-        uri: raw.front_img_src,
-        ...imageDims,
+  categoryId: number,
+  subcategoryName: string
+): PremadeDesign {
+  const {
+    type,
+    id,
+    name,
+    blurb,
+    designer,
+    content_researcher,
+    thumbnail_src,
+    front_img_src,
+    price,
+    product_id,
+  } = raw;
+  if (type === 'postcard') {
+    const design: PremadePostcardDesign = {
+      asset: {
+        uri: front_img_src,
       },
-      thumbnail: { uri: raw.thumbnail_src, ...thumbnailDims },
-      name: raw.name,
-      id: raw.id,
+      thumbnail: { uri: thumbnail_src },
+      name,
+      id,
       categoryId,
       subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
+      contentResearcher: content_researcher,
+      designer,
+      blurb,
+      type: 'premade_postcard',
+      price,
+      productId: product_id,
     };
-  } catch (err) {
-    return {
-      image: {
-        uri: raw.front_img_src,
-      },
-      thumbnail: { uri: raw.thumbnail_src },
-      name: raw.name,
-      id: raw.id,
-      categoryId,
-      subcategoryName,
-      contentResearcher: raw.content_researcher,
-      designer: raw.designer,
-    };
+    if (categoryId && subcategoryName && design.id) {
+      getImageDims(design.asset.uri).then((dims) => {
+        store.dispatch(
+          setDesignImage(categoryId, subcategoryName, raw.id, {
+            ...design.asset,
+            ...dims,
+          })
+        );
+      });
+    }
+    return design;
   }
+  return {
+    asset: {
+      uri: front_img_src,
+    },
+    thumbnail: { uri: thumbnail_src },
+    name,
+    id,
+    categoryId,
+    subcategoryName,
+    contentResearcher: content_researcher,
+    designer,
+    blurb,
+    type: 'packet',
+    price,
+    productId: product_id,
+  };
 }
 
 export async function getSubcategoriesById(
   categoryId: number
-): Promise<Record<string, PostcardDesign[]>> {
+): Promise<Record<string, PremadeDesign[]>> {
   const body = await fetchAuthenticated(
     url.resolve(API_URL, `categories/${categoryId}/designs`),
     { method: 'GET' }
   );
   if (body.status !== 'OK' || !body.data) throw body;
   const data = body.data as Record<string, RawDesign[]>;
-  const cleanData: Record<string, PostcardDesign[]> = {};
+  const cleanData: Record<string, PremadeDesign[]> = {};
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = await Promise.all(
-      data[subName].map((raw: RawDesign) =>
-        cleanDesign(raw, categoryId, subName)
-      )
+    cleanData[subName] = data[subName].map((raw: RawDesign) =>
+      cleanDesign(raw, categoryId, subName)
     );
   }
   return cleanData;
 }
 
 export async function getCategories(): Promise<Category[]> {
+  store.dispatch(startAction(EntityTypes.Categories));
   try {
     const categoryState = store.getState().category;
     if (
@@ -594,6 +647,7 @@ export async function getCategories(): Promise<Category[]> {
       differenceInHours(new Date(), new Date(categoryState.lastUpdated)) < 1 &&
       categoryState.categories.length
     ) {
+      store.dispatch(stopAction(EntityTypes.Categories));
       // if categories are loaded into the store and were refreshed less than
       // an hour ago, don't bother making this call
       return categoryState.categories;
@@ -613,14 +667,17 @@ export async function getCategories(): Promise<Category[]> {
     if (personalIx < 0 || !categories.length) {
       store.dispatch(setCategories([]));
       store.dispatch(setLastUpdated(null));
+      store.dispatch(stopAction(EntityTypes.Categories));
       return [];
     }
     const personalCategory = categories.splice(personalIx, 1);
     categories.unshift(personalCategory[0]);
     store.dispatch(setCategories(categories));
     store.dispatch(setLastUpdated(new Date().toISOString()));
+    store.dispatch(stopAction(EntityTypes.Categories));
     return categories;
   } catch (err) {
+    store.dispatch(stopAction(EntityTypes.Categories));
     Sentry.captureException(err);
     throw err;
   }

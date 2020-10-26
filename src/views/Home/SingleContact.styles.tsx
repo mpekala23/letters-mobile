@@ -29,7 +29,7 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   profileCardInfo: {
-    color: Colors.GRAY_DARKER,
+    color: Colors.GRAY_700,
     fontSize: 14,
   },
   actionItems: {
