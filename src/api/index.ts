@@ -34,6 +34,13 @@ import {
   getUserReferrals,
 } from './User';
 
+import {
+  getPremiumPacks,
+  getPremiumStoreItems,
+  getPremiumTransactions,
+  getStripeTransactions,
+} from './Premium';
+
 export {
   uploadPushToken,
   getZipcode,
@@ -61,4 +68,8 @@ export {
   saveDraft,
   deleteDraft,
   loadDraft,
+  getPremiumPacks,
+  getPremiumStoreItems,
+  getPremiumTransactions,
+  getStripeTransactions,
 };

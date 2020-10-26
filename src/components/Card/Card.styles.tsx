@@ -226,4 +226,13 @@ export default StyleSheet.create({
     paddingLeft: 8,
     justifyContent: 'center',
   },
+  transactionHistoryBackground: {
+    flexDirection: 'row',
+  },
+  transactionHistoryThumbnail: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
+    borderRadius: 4,
+  },
 });

@@ -53,11 +53,13 @@ export enum Screens {
   SelectPostcardSize = 'SelectPostcardSize',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
+  MailTrackingStore = 'MailTrackingStore',
   MemoryLane = 'MemoryLane',
   MailDetails = 'MailDetails',
   Store = 'Store',
   SupportFAQ = 'SupportFAQ',
   SupportFAQDetail = 'SupportFAQDetail',
+  TransactionHistory = 'TransactionHistory',
   UpdateContact = 'UpdateContact',
   UpdateProfile = 'UpdateProfile',
 }
@@ -109,6 +111,7 @@ export type AppStackParamList = {
   PostcardPreview: undefined;
   MailDetails: undefined;
   MailTracking: undefined;
+  MailTrackingStore: undefined;
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
   ReferralDashboard: undefined;
@@ -123,6 +126,7 @@ export type AppStackParamList = {
   Store: undefined;
   SupportFAQ: undefined;
   SupportFAQDetail: { issue: SupportFAQTypes } | undefined;
+  TransactionHistory: undefined;
   UpdateContact: { contactId: number } | undefined;
   UpdateProfile: undefined;
 };
@@ -200,6 +204,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   MailDetails: { title: i18n.t('Screens.letterDetails') },
   MailTracking: { title: i18n.t('Screens.tracking') },
+  MailTrackingStore: { title: i18n.t('Screens.tracking') },
   MemoryLane: { title: i18n.t('Screens.memoryLane') },
   ReferralDashboard: {
     title: i18n.t('Screens.referralDashboard'),
@@ -230,6 +235,7 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   Store: { title: i18n.t('Screens.store'), profile: true },
   SupportFAQ: { title: '', profile: false },
   SupportFAQDetail: { title: '', profile: false },
+  TransactionHistory: { title: i18n.t('Screens.transactionHistory') },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),
     profile: false,
