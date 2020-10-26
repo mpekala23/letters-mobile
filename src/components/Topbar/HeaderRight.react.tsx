@@ -26,7 +26,7 @@ class HeaderRightBase extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      profile: true,
+      profile: false,
     };
   }
 

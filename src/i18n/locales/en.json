@@ -404,7 +404,8 @@
     "mediumPostcardTitle": "Medium photo",
     "largePostcardTitle": "Large photo",
     "words": "words",
-    "selectBtn": "Select"
+    "selectBtn": "Select",
+    "oneCredit": "+1 Ameelio"
   },
   "ComposeTools": {
     "wordsLeft": "words left"
@@ -477,6 +478,13 @@
     "noThanks": "No thanks"
   },
   "Premium": {
+    "ameelio": "Ameelio",
+    "ameelios": "Ameelios",
+    "balance": "Balance",
+    "ameelioPlus": "Ameelio+",
+    "notEnoughAmeelioPlus": "Not enough Ameelio+",
+    "buyMoreAmeelioPlus": "Buy more Ameelio+",
+    "noThanks": "No thanks",
     "ameelioPlusLeft": "Ameelio+ left",
     "yourAmeelioPlus": "Your Ameelio+",
     "page": "page",
