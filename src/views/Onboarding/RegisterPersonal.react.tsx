@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, Screens } from '@utils/Screens';
@@ -12,11 +12,13 @@ import {
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { REFERRERS } from '@utils';
-import { Image } from 'types';
+import { Image, TopbarRight } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
+import { UIActionTypes } from '@store/UI/UITypes';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { connect } from 'react-redux';
 import Styles from './Register.style';
 
 type RegisterPersonalScreenNavigationProp = StackNavigationProp<
@@ -34,6 +36,7 @@ export interface Props {
       remember: boolean;
     };
   };
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -41,7 +44,7 @@ export interface State {
   image: Image | undefined;
 }
 
-class RegisterPersonalScreen extends React.Component<Props, State> {
+class RegisterPersonalScreenBase extends React.Component<Props, State> {
   private firstName = createRef<Input>();
 
   private lastName = createRef<Input>();
@@ -86,7 +89,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
   }
 
   onNavigationBlur = (): void => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   goForward = (): void => {
@@ -122,7 +125,7 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
         this.referrerPicker.current.isValueSelected() &&
         this.countryPicker.current.isValueSelected();
       this.setState({ valid: result });
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: result,
         text: i18n.t('RegisterScreen.next'),
         action: this.goForward,
@@ -239,5 +242,14 @@ class RegisterPersonalScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<UIActionTypes>) => ({
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
+const RegisterPersonalScreen = connect(
+  null,
+  mapDispatchToProps
+)(RegisterPersonalScreenBase);
 
 export default RegisterPersonalScreen;

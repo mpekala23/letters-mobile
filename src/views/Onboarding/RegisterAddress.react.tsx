@@ -6,7 +6,7 @@ import { Input, KeyboardAvoider, Picker, PickerRef } from '@components';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { Validation, STATES_DROPDOWN } from '@utils';
-import { Image } from 'types';
+import { Image, TopbarRight } from 'types';
 import * as Segment from 'expo-analytics-segment';
 import { UserRegisterInfo } from '@store/User/UserTypes';
 import { register } from '@api';
@@ -15,7 +15,7 @@ import { NotifTypes } from '@store/Notif/NotifTypes';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import COUNTRIES_FULL_TO_ABBREVS from '@utils/Countries';
-import { setProfileOverride } from '@components/Topbar';
+import { setTopbarRight } from '@store/UI/UIActions';
 import Styles from './Register.style';
 
 type RegisterAddressScreenNavigationProp = StackNavigationProp<
@@ -38,6 +38,7 @@ export interface Props {
       country: string;
     };
   };
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -87,7 +88,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
   }
 
   onNavigationBlur = (): void => {
-    setProfileOverride(undefined);
+    setTopbarRight(null);
   };
 
   updateValid = (): void => {
@@ -106,7 +107,7 @@ class RegisterAddressScreen extends React.Component<Props, State> {
           this.stateInput.current?.state.valid ||
           false) &&
         this.postal.current.state.valid;
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: result,
         text: i18n.t('RegisterScreen.register'),
         action: this.doRegister,

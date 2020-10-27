@@ -26,6 +26,7 @@ const PremiumSubcategorySelector: React.FC<Props> = ({
           CardStyles.premiumCardBox,
           {
             elevation: 6,
+            zIndex: 6,
             backgroundColor: 'white',
             top: 8,
             left: 8,

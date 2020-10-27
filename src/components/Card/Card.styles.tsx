@@ -189,7 +189,7 @@ export default StyleSheet.create({
     height: 144,
     position: 'absolute',
     borderRadius: 4,
-    zIndex: 3,
+    zIndex: 6,
     borderColor: '#DCDCDC',
     borderWidth: 1,
   },

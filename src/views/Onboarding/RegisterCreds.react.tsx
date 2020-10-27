@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, Screens } from '@utils/Screens';
@@ -9,8 +9,11 @@ import { Validation } from '@utils';
 import CheckedIcon from '@assets/views/Onboarding/Checked';
 import UncheckedIcon from '@assets/views/Onboarding/Unchecked';
 import { CheckBox } from 'react-native-elements';
-import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
+import { TopbarRight } from 'types';
+import { connect } from 'react-redux';
+import { UIActionTypes } from '@store/UI/UITypes';
+import { setTopbarRight } from '@store/UI/UIActions';
 import Styles from './Register.style';
 
 type RegisterCredsScreenNavigationProp = StackNavigationProp<
@@ -23,6 +26,7 @@ export interface Props {
   route: {
     params: Record<string, unknown>;
   };
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -32,7 +36,7 @@ export interface State {
   remember: boolean;
 }
 
-class RegisterCredsScreen extends React.Component<Props, State> {
+class RegisterCredsScreenBase extends React.Component<Props, State> {
   private email = createRef<Input>();
 
   private password = createRef<Input>();
@@ -73,7 +77,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
   }
 
   onNavigationBlur = (): void => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   goForward = (): void => {
@@ -102,7 +106,7 @@ class RegisterCredsScreen extends React.Component<Props, State> {
         this.password.current.state.value ===
           this.passwordConfirmation.current.state.value;
       this.setState({ valid: result });
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: result,
         text: i18n.t('RegisterScreen.next'),
         action: this.goForward,
@@ -250,5 +254,14 @@ class RegisterCredsScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<UIActionTypes>) => ({
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
+const RegisterCredsScreen = connect(
+  null,
+  mapDispatchToProps
+)(RegisterCredsScreenBase);
 
 export default RegisterCredsScreen;

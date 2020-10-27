@@ -4,11 +4,16 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import CardStyles from '@components/Card/Card.styles';
-import { Category, Draft, DraftPostcard, PostcardSizeOption } from 'types';
+import {
+  Category,
+  Draft,
+  DraftPostcard,
+  PostcardSizeOption,
+  TopbarRight,
+} from 'types';
 import i18n from '@i18n';
 import { Typography } from '@styles';
 import { POSTCARD_SIZE_OPTIONS } from '@utils/Constants';
-import { setProfileOverride } from '@components/Topbar';
 import { connect } from 'react-redux';
 import { setComposing } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
@@ -16,6 +21,8 @@ import { AppState } from '@store/types';
 import { FlatList } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { setTopbarRight as setTopbarRightImported } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './SelectPostcardSize.styles';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
@@ -31,6 +38,7 @@ interface Props {
   updateDraft: (draft: Draft) => void;
   draft: Draft;
   coins: number;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 const SelectPostcardSizeBase = ({
@@ -39,6 +47,7 @@ const SelectPostcardSizeBase = ({
   updateDraft,
   draft,
   coins,
+  setTopbarRight,
 }: Props) => {
   const [selected, setSelected] = useState<PostcardSizeOption>(
     (draft as DraftPostcard).size
@@ -77,7 +86,7 @@ const SelectPostcardSizeBase = ({
 
   useFocusEffect(
     React.useCallback(() => {
-      setProfileOverride({
+      setTopbarRight({
         enabled: !!selected,
         text: i18n.t('Compose.selectBtn'),
         action: updatePostcardOption,
@@ -85,7 +94,7 @@ const SelectPostcardSizeBase = ({
       });
 
       return () => {
-        setProfileOverride(undefined);
+        setTopbarRight(null);
       };
     }, [])
   );
@@ -150,8 +159,12 @@ const mapStateToProps = (state: AppState) => ({
   coins: state.user.user.coins,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<MailActionTypes | UIActionTypes>
+) => ({
   updateDraft: (draft: Draft) => dispatch(setComposing(draft)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRightImported(details)),
 });
 
 const SelectPostcardSizeScreen = connect(

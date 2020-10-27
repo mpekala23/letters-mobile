@@ -1,9 +1,8 @@
 import { ContactSelectorCard } from '@components';
-import { setProfileOverride } from '@components/Topbar';
 import i18n from '@i18n';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppState } from '@store/types';
-import { Contact, MailTypes, PremadeDesign } from 'types';
+import { Contact, MailTypes, PremadeDesign, TopbarRight } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import React, { Dispatch, useEffect, useState } from 'react';
 import { View, Text, Linking, Image as ImageComponent } from 'react-native';
@@ -16,6 +15,8 @@ import { Typography } from '@styles';
 import { UserActionTypes } from '@store/User/UserTypes';
 import { deductPremiumCoins } from '@store/User/UserActions';
 import Loading from '@assets/common/loading.gif';
+import { setTopbarRight as setTopbarRightImported } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 
 type SelectPostcardSizeScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -27,6 +28,7 @@ interface Props {
   navigation: SelectPostcardSizeScreenNavigationProp;
   route: { params: { item: PremadeDesign } };
   deduct: (coins: number) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 const SelectRecipientBase = ({
@@ -34,6 +36,7 @@ const SelectRecipientBase = ({
   navigation,
   route,
   deduct,
+  setTopbarRight,
 }: Props) => {
   const [recipient, setRecipient] = useState<Contact>();
   const [processingPurchase, setProcessingPurchase] = useState(false);
@@ -42,7 +45,7 @@ const SelectRecipientBase = ({
     const { item } = route.params;
     if (!recipient) return;
     setProcessingPurchase(true);
-    setProfileOverride(undefined);
+    setTopbarRight(null);
     popupAlert({
       title: i18n.t('SelectRecipient.modalHeader'),
       message: i18n.t('SelectRecipient.modalMessage'),
@@ -68,7 +71,7 @@ const SelectRecipientBase = ({
                 routes: [{ name: Screens.StoreItemPurchaseSuccess }],
               });
             } catch (err) {
-              setProfileOverride({
+              setTopbarRight({
                 enabled: !!recipient,
                 text: i18n.t('Compose.selectBtn'),
                 action: confirmPurchase,
@@ -103,7 +106,7 @@ const SelectRecipientBase = ({
   };
 
   useEffect(() => {
-    setProfileOverride({
+    setTopbarRight({
       enabled: !!recipient,
       text: i18n.t('Compose.selectBtn'),
       action: confirmPurchase,
@@ -111,7 +114,7 @@ const SelectRecipientBase = ({
     });
 
     return () => {
-      setProfileOverride(undefined);
+      setTopbarRight(null);
     };
   }, [recipient]);
 
@@ -138,19 +141,6 @@ const SelectRecipientBase = ({
       />
     );
   };
-
-  const emptyLoading = (
-    <View
-      style={{
-        flex: 1,
-        height: 300,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <ImageComponent style={{ width: 40, height: 40 }} source={Loading} />
-    </View>
-  );
 
   if (processingPurchase)
     return (
@@ -190,11 +180,13 @@ const mapStateToProps = (state: AppState) => ({
   contacts: state.contact.existing,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<UserActionTypes>) => {
-  return {
-    deduct: (coins: number) => dispatch(deductPremiumCoins(coins)),
-  };
-};
+const mapDispatchToProps = (
+  dispatch: Dispatch<UserActionTypes | UIActionTypes>
+) => ({
+  deduct: (coins: number) => dispatch(deductPremiumCoins(coins)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRightImported(details)),
+});
 
 const SelectRecipientScreen = connect(
   mapStateToProps,

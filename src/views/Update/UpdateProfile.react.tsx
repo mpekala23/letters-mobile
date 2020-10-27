@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   Keyboard,
@@ -14,13 +14,12 @@ import {
   Picker,
   PickerRef,
 } from '@components';
-import { setProfileOverride } from '@components/Topbar';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { UserState, User } from '@store/User/UserTypes';
-import { Image } from 'types';
+import { Image, TopbarRight } from 'types';
 import { Colors, Typography } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { logout, updateProfile } from '@api';
@@ -29,6 +28,8 @@ import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { format } from 'date-fns';
 import { STATES_DROPDOWN, Validation } from '@utils';
 import * as Segment from 'expo-analytics-segment';
+import { UIActionTypes } from '@store/UI/UITypes';
+import { setTopbarRight } from '@store/UI/UIActions';
 import Styles from './UpdateProfile.styles';
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
@@ -39,6 +40,7 @@ type UpdateProfileScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: UpdateProfileScreenNavigationProp;
   userState: UserState;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -96,7 +98,7 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     this.loadValuesFromStore();
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: true,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
@@ -105,11 +107,11 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   setValid(val: boolean) {
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('UpdateProfileScreen.save'),
       action: this.doUpdateProfile,
@@ -349,12 +351,16 @@ class UpdateProfileScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    userState: state.user,
-  };
-};
-
-const UpdateProfileScreen = connect(mapStateToProps)(UpdateProfileScreenBase);
+const mapStateToProps = (state: AppState) => ({
+  userState: state.user,
+});
+const mapDispatchToProps = (dispatch: Dispatch<UIActionTypes>) => ({
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
+const UpdateProfileScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdateProfileScreenBase);
 
 export default UpdateProfileScreen;

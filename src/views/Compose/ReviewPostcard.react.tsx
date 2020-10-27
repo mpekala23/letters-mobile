@@ -9,7 +9,13 @@ import {
 import { ReviewCredits, StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Draft, Contact, MailTypes, CustomFontFamilies } from 'types';
+import {
+  Draft,
+  Contact,
+  MailTypes,
+  CustomFontFamilies,
+  TopbarRight,
+} from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
@@ -22,6 +28,8 @@ import { clearComposing } from '@store/Mail/MailActions';
 import { Typography, Colors } from '@styles';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './Compose.styles';
 
 type ReviewPostcardScreenNavigationProp = StackNavigationProp<
@@ -42,6 +50,7 @@ export interface Props {
   };
   ameelioBalance: number;
   plusBalance: number;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 class ReviewPostcardScreenBase extends React.Component<Props> {
@@ -68,7 +77,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   }
 
   onNavigationFocus = (): void => {
-    setProfileOverride({
+    this.props.setTopbarRight({
       text: i18n.t('Compose.send'),
       action: this.doSend,
       enabled: true,
@@ -77,7 +86,7 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
   };
 
   onNavigationBlur = (): void => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   async doSend(): Promise<void> {
@@ -251,8 +260,12 @@ const mapStateToProps = (state: AppState) => ({
   plusBalance: state.user.user.coins,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<MailActionTypes | UIActionTypes>
+) => ({
   clearComposing: () => dispatch(clearComposing()),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
 });
 
 const ReviewPostcardScreen = connect(

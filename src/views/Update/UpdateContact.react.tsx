@@ -14,12 +14,11 @@ import {
   Picker,
   PickerRef,
 } from '@components';
-import { setProfileOverride } from '@components/Topbar';
 import { AppStackParamList } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Facility, Image, Contact } from 'types';
+import { Facility, Image, Contact, TopbarRight } from 'types';
 import { Typography, Colors } from '@styles';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { updateContact, deleteContact } from '@api';
@@ -39,6 +38,7 @@ type UpdateContactScreenNavigationProp = StackNavigationProp<
 export interface Props {
   navigation: UpdateContactScreenNavigationProp;
   contact: Contact;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -108,7 +108,7 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     this.loadValuesFromStore();
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: true,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
@@ -117,11 +117,11 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   setValid(val: boolean) {
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('UpdateContactScreen.save'),
       action: this.doUpdateContact,
@@ -461,11 +461,9 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    contact: state.contact.active,
-  };
-};
+const mapStateToProps = (state: AppState) => ({
+  contact: state.contact.active,
+});
 
 const UpdateContactScreen = connect(mapStateToProps)(UpdateContactScreenBase);
 
