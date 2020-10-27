@@ -33,11 +33,6 @@ import {
 
 export async function getPushToken(): Promise<string> {
   if (!Constants.isDevice) {
-    popupAlert({
-      title: i18n.t('Alert.emulatorDetected'),
-      message: i18n.t('Alert.mustUsePhysical'),
-      buttons: [{ text: i18n.t('Alert.okay') }],
-    });
     return '';
   }
   const { status: existingStatus } = await Permissions.getAsync(

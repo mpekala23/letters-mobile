@@ -21,6 +21,10 @@ import { Notif, NotifActionTypes, NotifTypes } from '@store/Notif/NotifTypes';
 import { setUnrespondedNotifs } from '@store/Notif/NotifiActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { checkIfLoading } from '@store/selectors';
+import { popupAlert } from '@components/Alert/Alert.react';
+import Emoji from 'react-native-emoji';
+import { setShownPrompt } from '@store/Premium/PremiumActions';
+import { PremiumActionTypes } from '@store/Premium/PremiumTypes';
 import Styles from './ContactSelector.styles';
 
 type ContactSelectorScreenNavigationProp = StackNavigationProp<
@@ -40,6 +44,8 @@ interface Props {
   setUnrespondedNotifs: (notifs: Notif[]) => void;
   setActiveMail: (mail: Mail) => void;
   isLoadingMail: boolean;
+  hasShownPrompt: boolean;
+  setShownPrompt: (val: boolean) => void;
 }
 
 class ContactSelectorScreenBase extends React.Component<Props> {
@@ -84,6 +90,34 @@ class ContactSelectorScreenBase extends React.Component<Props> {
       Segment.track('Notifications - Delivery Check-In ');
       this.props.setUnrespondedNotifs([]);
       this.props.navigation.navigate(Screens.Issues);
+    }
+
+    if (!this.props.hasShownPrompt) {
+      popupAlert({
+        dynamicTitle: (
+          <Text
+            style={[
+              Typography.FONT_SEMIBOLD,
+              { fontSize: 20, textAlign: 'center', marginBottom: 18 },
+            ]}
+          >
+            {i18n.t('Alert.lookingToBrighten')} <Emoji name="tada" />{' '}
+          </Text>
+        ),
+        message: i18n.t('Alert.welcomeToTheStore'),
+        buttons: [
+          {
+            text: i18n.t('Alert.exploreStoreNow'),
+            onPress: () => this.props.navigation.navigate('Store'),
+          },
+          {
+            text: i18n.t('Alert.noThanks'),
+            onPress: () => null,
+            reverse: true,
+          },
+        ],
+      });
+      this.props.setShownPrompt(true);
     }
   }
 
@@ -241,15 +275,19 @@ const mapStateToProps = (state: AppState) => ({
   lastUpdatedCategories: state.category.lastUpdated,
   unrespondedNotifs: state.notif.unrespondedNotifs,
   isLoadingMail: checkIfLoading(state, EntityTypes.Mail),
+  hasShownPrompt: state.premium.hasShownPrompt,
 });
 const mapDispatchToProps = (
-  dispatch: Dispatch<ContactActionTypes | NotifActionTypes | MailActionTypes>
+  dispatch: Dispatch<
+    ContactActionTypes | NotifActionTypes | MailActionTypes | PremiumActionTypes
+  >
 ) => {
   return {
     setActiveContact: (contact: Contact) => dispatch(setActive(contact)),
     setUnrespondedNotifs: (notifs: Notif[]) =>
       dispatch(setUnrespondedNotifs(notifs)),
     setActiveMail: (mail: Mail) => dispatch(setActiveMail(mail)),
+    setShownPrompt: (val: boolean) => dispatch(setShownPrompt(val)),
   };
 };
 const ContactSelectorScreen = connect(

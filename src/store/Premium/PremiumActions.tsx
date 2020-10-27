@@ -4,6 +4,7 @@ import {
   SET_PREMIUM_CATEGORIES,
   SET_TRANSACTIONS,
   PremiumActionTypes,
+  SET_SHOWN_PROMPT,
 } from './PremiumTypes';
 
 export function setPremiumPacks(
@@ -30,5 +31,12 @@ export function setTransactions(
   return {
     type: SET_TRANSACTIONS,
     payload: transactions,
+  };
+}
+
+export function setShownPrompt(val: boolean): PremiumActionTypes {
+  return {
+    type: SET_SHOWN_PROMPT,
+    payload: val,
   };
 }
