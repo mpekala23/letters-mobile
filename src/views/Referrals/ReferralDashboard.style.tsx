@@ -1,3 +1,4 @@
+import { Colors } from '@styles';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -6,15 +7,16 @@ export default StyleSheet.create({
     flexDirection: 'column',
     paddingHorizontal: 16,
     paddingTop: 8,
+    backgroundColor: Colors.AMEELIO_WHITE,
   },
   headerWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    paddingTop: 8,
+    paddingVertical: 8,
   },
   gradientBackground: {
-    height: 200,
+    height: 215,
     width: '100%',
     borderRadius: 10,
     position: 'absolute',
@@ -25,6 +27,7 @@ export default StyleSheet.create({
     marginTop: 16,
   },
   impactRowWrapper: {
+    marginTop: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -56,6 +59,7 @@ export default StyleSheet.create({
     flexShrink: 1,
     flexDirection: 'column',
     marginLeft: 16,
+    marginVertical: 16,
   },
   thanksToYouWrapper: {
     marginTop: 16,

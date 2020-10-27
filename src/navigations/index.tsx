@@ -7,6 +7,8 @@ import { setProfile } from '@components/Topbar';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeIcon from '@assets/navigation/Home';
 import StoreIcon from '@assets/navigation/Store';
+import ActiveStoreIcon from '@assets/navigation/ActiveStore';
+import ActiveHomeIcon from '@assets/navigation/ActiveHome';
 
 import i18n from '@i18n';
 import {
@@ -36,6 +38,7 @@ export interface Props {
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
   const [tabsVisible, setTabsVisible] = useState(true);
+  const [active, setActive] = useState(Tabs.Home);
 
   // Determine which views should be accessible
   let screens;
@@ -57,11 +60,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               return (
                 <TabIcon
                   name={i18n.t('Navigation.home')}
-                  svg={HomeIcon}
+                  svg={active === Tabs.Home ? ActiveHomeIcon : HomeIcon}
+                  active={Tabs.Home === active}
                   onPress={(e: GestureResponderEvent) => {
                     if (tabProps.onPress) {
                       tabProps.onPress(e);
                     }
+                    setActive(Tabs.Home);
                   }}
                 />
               );
@@ -76,11 +81,13 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
               return (
                 <TabIcon
                   name={i18n.t('Navigation.store')}
-                  svg={StoreIcon}
+                  svg={active === Tabs.Store ? ActiveStoreIcon : StoreIcon}
+                  active={Tabs.Store === active}
                   onPress={(e: GestureResponderEvent) => {
                     if (tabProps.onPress) {
                       tabProps.onPress(e);
                     }
+                    setActive(Tabs.Store);
                   }}
                 />
               );

@@ -70,6 +70,7 @@ import {
   unflip,
 } from '@utils/Animations';
 import { CategoryActionTypes } from '@store/Category/CategoryTypes';
+import CardStyles from '@components/Card/Card.styles';
 import { setDesignImage } from '@store/Category/CategoryActions';
 import Styles from './Compose.styles';
 
@@ -628,6 +629,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 <Animated.View
                   style={[
                     Styles.gridPreviewBackground,
+                    CardStyles.shadow,
                     {
                       alignItems: 'center',
                       justifyContent: 'center',

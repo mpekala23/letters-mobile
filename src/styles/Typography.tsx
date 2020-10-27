@@ -60,7 +60,7 @@ export const FONT_BOLD_ITALIC: TextStyle = {
 
 // BASE STYLE
 export const BASE_TITLE: TextStyle = {
-  fontFamily: FONT_FAMILY_BOLD,
+  fontFamily: FONT_FAMILY_SEMIBOLD,
   fontSize: 20,
 };
 
