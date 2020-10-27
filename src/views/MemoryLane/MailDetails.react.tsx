@@ -97,6 +97,7 @@ const blankMail: Mail = {
   expectedDelivery: new Date().toISOString(),
   content: '',
   images: [],
+  premium: false,
 };
 
 const mapStateToProps = (state: AppState) => ({
