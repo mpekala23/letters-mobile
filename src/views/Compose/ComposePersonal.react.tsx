@@ -724,7 +724,7 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
           data={this.state.designState.library}
           renderItem={({ item }) => this.renderGridItem(item)}
           keyExtractor={(item: PersonalDesign, index: number) => {
-            return `${item.image.uri} ${index.toString()}`;
+            return `${item.asset.uri} ${index.toString()}`;
           }}
           numColumns={3}
           contentContainerStyle={Styles.gridBackground}

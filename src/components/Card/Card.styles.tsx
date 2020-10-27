@@ -6,12 +6,13 @@ export default StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 4,
-      height: 4,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 2.62,
-    elevation: 4,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   cardBase: {
     backgroundColor: 'white',
@@ -47,7 +48,7 @@ export default StyleSheet.create({
     width: 6,
     height: '100%',
     borderRadius: 8,
-    marginRight: 15,
+    marginRight: 8,
   },
   statusAndDateContainer: {
     flexDirection: 'row',
@@ -56,7 +57,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   date: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.AMEELIO_GRAY,
     marginBottom: 8,
   },

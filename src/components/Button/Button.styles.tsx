@@ -15,12 +15,13 @@ export default StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 4,
+      width: 0,
       height: 4,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 2.62,
-    elevation: 4,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   buttonBackgroundReverse: {
     flexDirection: 'row',
@@ -43,7 +44,8 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: 'white',
-    padding: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 3,
   },
   buttonTextReverse: {
     fontSize: 18,

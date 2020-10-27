@@ -81,7 +81,7 @@ const Button: React.FC<Props> = (props: Props) => {
         {buttonText ? (
           <Text
             style={[
-              Typography.FONT_BOLD,
+              Typography.FONT_SEMIBOLD,
               props.reverse ? Styles.buttonTextReverse : Styles.buttonText,
               enabled ? {} : Styles.buttonTextDisabled,
               textStyle,

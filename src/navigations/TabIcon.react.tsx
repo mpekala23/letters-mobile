@@ -1,5 +1,5 @@
 import { Icon } from '@components';
-import { Typography } from '@styles';
+import { Colors, Typography } from '@styles';
 import React from 'react';
 import { GestureResponderEvent, Text, TouchableOpacity } from 'react-native';
 
@@ -7,9 +7,10 @@ interface Props {
   name: string;
   svg: string;
   onPress: (e: GestureResponderEvent) => void;
+  active: boolean;
 }
 
-const TabIcon: React.FC<Props> = ({ name, svg, onPress }: Props) => {
+const TabIcon: React.FC<Props> = ({ name, svg, onPress, active }: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -17,7 +18,14 @@ const TabIcon: React.FC<Props> = ({ name, svg, onPress }: Props) => {
       onPress={onPress}
     >
       <Icon svg={svg} />
-      <Text style={Typography.FONT_REGULAR}>{name}</Text>
+      <Text
+        style={[
+          active ? Typography.FONT_SEMIBOLD : Typography.FONT_REGULAR,
+          { color: active ? Colors.AMEELIO_BLACK : Colors.GRAY_400 },
+        ]}
+      >
+        {name}
+      </Text>
     </TouchableOpacity>
   );
 };

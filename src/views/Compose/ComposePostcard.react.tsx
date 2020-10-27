@@ -20,7 +20,6 @@ import {
   MailTypes,
   DraftPostcard,
   PremadePostcardDesign,
-  PostcardDesign,
 } from 'types';
 import { Typography, Colors } from '@styles';
 import {
@@ -47,6 +46,7 @@ import Loading from '@assets/common/loading.gif';
 import { POSTCARD_WIDTH, POSTCARD_HEIGHT } from '@utils/Constants';
 import { setDesignImage } from '@store/Category/CategoryActions';
 import { CategoryActionTypes } from '@store/Category/CategoryTypes';
+import CardStyles from '@components/Card/Card.styles';
 import Styles, { BOTTOM_HEIGHT } from './Compose.styles';
 
 const FLIP_DURATION = 500;
@@ -425,7 +425,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     const data = this.props.route.params.category.subcategories[
       this.state.subcategory
     ];
-    console.log(data);
 
     return data && data.length && data[0].type === 'premade_postcard'
       ? (data as PremadePostcardDesign[])
@@ -590,6 +589,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
                 <Animated.View
                   style={[
                     Styles.gridPreviewBackground,
+                    CardStyles.shadow,
                     {
                       alignItems: 'center',
                       justifyContent: 'center',

@@ -135,7 +135,7 @@ class EditablePostcard extends React.Component<Props, State> {
             alignItems: 'center',
           }}
         >
-          {this.props.design.asset.uri !== '' ? (
+          {this.props.design.asset.uri && this.props.design.asset.uri !== '' ? (
             image
           ) : (
             <View
