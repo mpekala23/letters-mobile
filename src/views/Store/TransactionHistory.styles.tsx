@@ -18,4 +18,8 @@ export default StyleSheet.create({
     color: Colors.GRAY_700,
     fontSize: 40,
   },
+  sectionHeadingText: {
+    paddingLeft: 16,
+    fontSize: 21,
+  },
 });

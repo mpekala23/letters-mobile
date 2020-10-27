@@ -1,8 +1,14 @@
-import { Category, PremiumPack, Transaction } from 'types';
+import {
+  Category,
+  PremiumPack,
+  PremiumTransaction,
+  StripeTransaction,
+} from 'types';
 import {
   SET_PACKS,
   SET_PREMIUM_CATEGORIES,
-  SET_TRANSACTIONS,
+  SET_PREMIUM_TRANSACTIONS,
+  SET_STRIPE_TRANSACTIONS,
   PremiumActionTypes,
   SET_SHOWN_PROMPT,
 } from './PremiumTypes';
@@ -25,11 +31,20 @@ export function setPremiumCategories(
   };
 }
 
-export function setTransactions(
-  transactions: Transaction[]
+export function setPremiumTransactions(
+  transactions: PremiumTransaction[]
 ): PremiumActionTypes {
   return {
-    type: SET_TRANSACTIONS,
+    type: SET_PREMIUM_TRANSACTIONS,
+    payload: transactions,
+  };
+}
+
+export function setStripeTransactions(
+  transactions: StripeTransaction[]
+): PremiumActionTypes {
+  return {
+    type: SET_STRIPE_TRANSACTIONS,
     payload: transactions,
   };
 }
