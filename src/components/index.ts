@@ -34,13 +34,14 @@ import MemoryLaneCard from './Card/MemoryLaneCard.react';
 import Picker, { PickerRef } from './Picker/Picker.react';
 import PicUpload from './PicUpload/PicUpload.react';
 import PremiumSubcategorySelector from './Card/PremiumSubcategorySelector.react';
+import PremiumTransactionHistoryCard from './Card/PremiumTransactionHistoryCard.react';
 import PrisonCard from './Card/PrisonCard.react';
 import ProfilePic from './ProfilePic/ProfilePic.react';
 import ReviewCredits from './ReviewCredits/ReviewCredits.react';
 import StaticPostcard from './StaticPostcard/StaticPostcard.react';
 import Statusbar from './Statusbar/Statusbar.react';
 import StickerManager from './StickerManager/StickerManager.react';
-import TransactionHistoryCard from './Card/TransactionHistoryCard.react';
+import StripeTransactionHistoryCard from './Card/StripeTransactionHistoryCard.react';
 
 export {
   AdjustableText,
@@ -79,13 +80,14 @@ export {
   Picker,
   PicUpload,
   PremiumSubcategorySelector,
+  PremiumTransactionHistoryCard,
   PrisonCard,
   ProfilePic,
   ReviewCredits,
   StaticPostcard,
   Statusbar,
   StickerManager,
-  TransactionHistoryCard,
+  StripeTransactionHistoryCard,
 };
 
 export type { PickerRef };
