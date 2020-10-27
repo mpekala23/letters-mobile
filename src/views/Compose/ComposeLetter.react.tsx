@@ -22,13 +22,14 @@ import { AppState } from '@store/types';
 import { setContent, setImages } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import i18n from '@i18n';
-import { Draft, Image, MailTypes } from 'types';
+import { Draft, Image, MailTypes, TopbarRight } from 'types';
 import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
-import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { getNumWords } from '@utils';
 import * as Segment from 'expo-analytics-segment';
 import { saveDraft } from '@api';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles, { LETTER_COMPOSE_IMAGE_HEIGHT } from './Compose.styles';
 
 type ComposeLetterScreenNavigationProp = StackNavigationProp<
@@ -44,6 +45,7 @@ interface Props {
   setContent: (content: string) => void;
   setImages: (images: Image[]) => void;
   credits: number;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 interface State {
@@ -130,7 +132,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
     if (this.textRef.current) this.textRef.current.focus();
 
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: this.state.valid,
       text: i18n.t('Compose.next'),
       action: this.onNextPress,
@@ -161,7 +163,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   onKeyboardOpen() {
@@ -185,7 +187,7 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
   setValid(val: boolean) {
     if (val === this.state.valid) return;
     this.setState({ valid: val });
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('Compose.next'),
       action: this.onNextPress,
@@ -377,12 +379,14 @@ const mapStateToProps = (state: AppState) => ({
   credits: state.user.user.credit,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => {
-  return {
-    setContent: (content: string) => dispatch(setContent(content)),
-    setImages: (images: Image[]) => dispatch(setImages(images)),
-  };
-};
+const mapDispatchToProps = (
+  dispatch: Dispatch<MailActionTypes | UIActionTypes>
+) => ({
+  setContent: (content: string) => dispatch(setContent(content)),
+  setImages: (images: Image[]) => dispatch(setImages(images)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
 const ComposeLetterScreen = connect(
   mapStateToProps,
   mapDispatchToProps

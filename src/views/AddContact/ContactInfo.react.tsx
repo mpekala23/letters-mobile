@@ -17,11 +17,12 @@ import { setAddingPersonal } from '@store/Contact/ContactActions';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import i18n from '@i18n';
 import Letter from '@assets/views/AddContact/Letter';
-import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
-import { ContactPersonal, ContactDraft } from 'types';
+import { ContactPersonal, ContactDraft, TopbarRight } from 'types';
 import { getFacilities } from '@api';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import CommonStyles from './AddContact.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -36,6 +37,7 @@ export interface Props {
     params?: { addFromSelector?: boolean; phyState?: string };
   };
   setAddingPersonal: (contactPersonal: ContactPersonal) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -90,7 +92,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     this.loadValuesFromStore();
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: this.state.valid,
       text: i18n.t('ContactInfoScreen.next'),
       action: this.onNextPress,
@@ -98,7 +100,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   onNextPress() {
@@ -128,7 +130,7 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   setValid(val: boolean) {
     this.setState({ valid: val });
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('ContactInfoScreen.next'),
       action: this.onNextPress,
@@ -312,12 +314,14 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   contactDraft: state.contact.adding,
 });
-const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
-  return {
-    setAddingPersonal: (contactPersonal: ContactPersonal) =>
-      dispatch(setAddingPersonal(contactPersonal)),
-  };
-};
+const mapDispatchToProps = (
+  dispatch: Dispatch<ContactActionTypes | UIActionTypes>
+) => ({
+  setAddingPersonal: (contactPersonal: ContactPersonal) =>
+    dispatch(setAddingPersonal(contactPersonal)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
 const ContactInfoScreen = connect(
   mapStateToProps,
   mapDispatchToProps

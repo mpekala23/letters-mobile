@@ -29,6 +29,8 @@ import {
   CustomFontFamilies,
   DraftPostcard,
   PremadePostcardDesign,
+  TopbarRight,
+  TopbarLeft,
 } from 'types';
 import { Typography, Colors } from '@styles';
 import {
@@ -38,7 +40,6 @@ import {
   getImageDims,
   getPostcardDesignImage,
 } from '@utils';
-import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -72,6 +73,8 @@ import {
 import { CategoryActionTypes } from '@store/Category/CategoryTypes';
 import CardStyles from '@components/Card/Card.styles';
 import { setDesignImage } from '@store/Category/CategoryActions';
+import { setTopbarLeft, setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './Compose.styles';
 
 type ComposePostcardScreenNavigationProp = StackNavigationProp<
@@ -99,6 +102,8 @@ interface Props {
     designId: number,
     image: Image
   ) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
+  setTopbarLeft: (details: TopbarLeft | null) => void;
 }
 
 interface State {
@@ -198,7 +203,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: true,
       text: 'Next',
       action: this.beginWriting,
@@ -265,18 +270,18 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     }
 
     if (!this.state.writing) {
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: true,
         text: 'Next',
         action: this.beginWriting,
       });
     } else {
-      setBackOverride({
+      this.props.setTopbarLeft({
         action: () => {
           this.backWriting();
         },
       });
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: this.state.valid,
         text: i18n.t('Compose.done'),
         action: this.doneWriting,
@@ -291,8 +296,8 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
   };
 
   onNavigationBlur = (): void => {
-    setBackOverride(undefined);
-    setProfileOverride(undefined);
+    this.props.setTopbarLeft(null);
+    this.props.setTopbarRight(null);
   };
 
   onKeyboardOpen(): void {
@@ -310,7 +315,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     if (val !== this.state.valid) {
       this.setState({ valid: val });
       if (this.state.writing) {
-        setProfileOverride({
+        this.props.setTopbarRight({
           enabled: val,
           text: i18n.t('Compose.done'),
           action: this.doneWriting,
@@ -386,14 +391,14 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       });
       return;
     }
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: true,
       text: i18n.t('Compose.done'),
       action: this.doneWriting,
     });
     flip(this.state.flip, () => {
       this.setState({ writing: true });
-      setBackOverride({
+      this.props.setTopbarLeft({
         action: () => {
           this.backWriting();
         },
@@ -405,7 +410,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   backWriting(): void {
     Keyboard.dismiss();
-    setBackOverride(undefined);
+    this.props.setTopbarLeft(null);
     this.changeDesign(this.state.design);
     this.setState({ horizontal: this.designIsHorizontal() });
     Segment.trackWithProperties('Compose - Click on Back', {
@@ -414,7 +419,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
     });
     unflip(this.state.flip, () => {
       this.setState({ writing: false });
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: true,
         text: i18n.t('Compose.next'),
         action: () => {
@@ -737,7 +742,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<MailActionTypes | CategoryActionTypes>
+  dispatch: Dispatch<MailActionTypes | CategoryActionTypes | UIActionTypes>
 ) => ({
   setContent: (content: string) => dispatch(setContent(content)),
   setFont: (font: Font) => dispatch(setFont(font)),
@@ -748,6 +753,10 @@ const mapDispatchToProps = (
     designId: number,
     image: Image
   ) => dispatch(setDesignImage(categoryId, subcategoryName, designId, image)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+  setTopbarLeft: (details: TopbarLeft | null) =>
+    dispatch(setTopbarLeft(details)),
 });
 
 const ComposePostcardScreen = connect(

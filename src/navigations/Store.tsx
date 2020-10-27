@@ -38,7 +38,6 @@ const Store: React.FC = () => {
           <HeaderLeft
             canGoBack={!!leftProps.canGoBack}
             onPress={leftProps.onPress}
-            route={route.name}
           />
         ),
         headerRight: () => {

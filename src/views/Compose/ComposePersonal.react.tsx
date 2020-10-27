@@ -30,8 +30,9 @@ import {
   Font,
   DraftPostcard,
   PersonalDesign,
+  TopbarRight,
+  TopbarLeft,
 } from 'types';
-import { setBackOverride, setProfileOverride } from '@components/Topbar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import i18n from '@i18n';
@@ -52,7 +53,6 @@ import {
   PERSONAL_OVERRIDE_ID,
   DESIGN_BUTTONS_HEIGHT,
   BOTTOM_HEIGHT,
-  TRAY_CLOSED,
   BUTTONS_HIDDEN,
   FLIP_DURATION,
   KEYBOARD_HIDDEN,
@@ -68,6 +68,8 @@ import {
   showKeyboardItem,
   unflip,
 } from '@utils/Animations';
+import { setTopbarLeft, setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './Compose.styles';
 
 type ComposePersonalScreenNavigationProp = StackNavigationProp<
@@ -83,6 +85,8 @@ interface Props {
   setContent: (content: string) => void;
   setFont: (font: Font) => void;
   setDesign: (design: PersonalDesign) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
+  setTopbarLeft: (details: TopbarLeft | null) => void;
 }
 
 interface State {
@@ -244,10 +248,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       }
     }
     if (this.state.subscreen === 'Text') {
-      setBackOverride({
+      this.props.setTopbarLeft({
         action: this.backWriting,
       });
-      setProfileOverride({
+      this.props.setTopbarRight({
         enabled: true,
         text: i18n.t('Compose.done'),
         action: this.doneWriting,
@@ -256,8 +260,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setBackOverride(undefined);
-    setProfileOverride(undefined);
+    this.props.setTopbarLeft(null);
+    this.props.setTopbarRight(null);
   };
 
   onKeyboardOpen(): void {
@@ -432,10 +436,10 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     showButtons(this.state.textState.buttonSlide, undefined, {
       duration: FLIP_DURATION,
     });
-    setBackOverride({
+    this.props.setTopbarLeft({
       action: this.backWriting,
     });
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: true,
       text: i18n.t('Compose.done'),
       action: this.doneWriting,
@@ -450,8 +454,8 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     hideButtons(this.state.textState.buttonSlide);
     this.closeTextBottom();
     this.setDesignState({ animatingFlip: true });
-    setBackOverride(undefined);
-    setProfileOverride(undefined);
+    this.props.setTopbarLeft(null);
+    this.props.setTopbarRight(null);
   }
 
   doneWriting(): void {
@@ -682,10 +686,16 @@ const mapStateToProps = (state: AppState) => ({
   recipient: state.contact.active,
 });
 
-const mapDisptatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+const mapDisptatchToProps = (
+  dispatch: Dispatch<MailActionTypes | UIActionTypes>
+) => ({
   setContent: (content: string) => dispatch(setContent(content)),
   setFont: (font: Font) => dispatch(setFont(font)),
   setDesign: (design: PersonalDesign) => dispatch(setDesign(design)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+  setTopbarLeft: (details: TopbarLeft | null) =>
+    dispatch(setTopbarLeft(details)),
 });
 
 const ComposePersonalScreen = connect(

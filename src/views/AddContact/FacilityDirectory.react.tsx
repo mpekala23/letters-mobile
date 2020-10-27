@@ -4,7 +4,7 @@ import { Colors, Typography } from '@styles';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Input, Icon, KeyboardAvoider } from '@components';
-import { Facility, ContactFacility, PrisonTypes } from 'types';
+import { Facility, ContactFacility, PrisonTypes, TopbarRight } from 'types';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setAddingFacility } from '@store/Contact/ContactActions';
@@ -14,9 +14,10 @@ import FacilityIcon from '@assets/views/AddContact/Facility';
 import { getFacilities } from '@api';
 import { STATE_TO_ABBREV } from '@utils';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
-import { setProfileOverride } from '@components/Topbar';
 import * as Segment from 'expo-analytics-segment';
 import { FacilityState } from '@store/Facility/FacilityTypes';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './FacilityDirectory.styles';
 
 type ContactInfoScreenNavigationProp = StackNavigationProp<
@@ -31,6 +32,7 @@ export interface Props {
   };
   contactState: ContactState;
   setAddingFacility: (contactFacility: ContactFacility) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
   facilityState: FacilityState;
 }
 
@@ -82,7 +84,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   onNavigationFocus() {
@@ -90,7 +92,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       this.refreshFacilities();
     }
     this.loadValuesFromStore();
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: this.state.selected !== null,
       text: i18n.t('ContactInfoScreen.next'),
       action: () => {
@@ -108,7 +110,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   }
 
   setValid(val: boolean) {
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('ContactInfoScreen.next'),
       action: () => {
@@ -319,12 +321,14 @@ const mapStateToProps = (state: AppState) => ({
   contactState: state.contact,
   facilityState: state.facility,
 });
-const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
-  return {
-    setAddingFacility: (contactFacility: ContactFacility) =>
-      dispatch(setAddingFacility(contactFacility)),
-  };
-};
+const mapDispatchToProps = (
+  dispatch: Dispatch<ContactActionTypes | UIActionTypes>
+) => ({
+  setAddingFacility: (contactFacility: ContactFacility) =>
+    dispatch(setAddingFacility(contactFacility)),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
 const FacilityDirectoryScreen = connect(
   mapStateToProps,
   mapDispatchToProps

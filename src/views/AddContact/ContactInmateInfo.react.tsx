@@ -30,11 +30,11 @@ import {
   ContactInmateInfo,
   Facility,
   PrisonTypes,
+  TopbarRight,
 } from 'types';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import { AppState } from '@store/types';
 import * as Segment from 'expo-analytics-segment';
-import { setProfileOverride } from '@components/Topbar';
 
 import {
   STATES_DROPDOWN,
@@ -42,6 +42,7 @@ import {
   STATE_TO_INMATE_DB,
   Validation,
 } from '@utils';
+import { setTopbarRight } from '@store/UI/UIActions';
 import CommonStyles from './AddContact.styles';
 
 type ContactInmateInfoScreenNavigationProp = StackNavigationProp<
@@ -55,6 +56,7 @@ export interface Props {
   route: { params: { manual: boolean; prisonType: PrisonTypes } };
   setAddingInmateInfo: (contactInmateInfo: ContactInmateInfo) => void;
   setAddingFacility: (contactFacility: ContactFacility) => void;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 export interface State {
@@ -116,7 +118,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 
   onNavigationFocus() {
     this.loadValuesFromStore();
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: this.state.valid,
       text: i18n.t('ContactInmateInfoScreen.next'),
       action: this.onNextPress,
@@ -124,7 +126,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
   }
 
   onNavigationBlur = () => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   onNextPress() {
@@ -220,7 +222,7 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 
   setValid(val: boolean) {
     this.setState({ valid: val });
-    setProfileOverride({
+    this.props.setTopbarRight({
       enabled: val,
       text: i18n.t('ContactInmateInfoScreen.next'),
       action: this.onNextPress,
@@ -469,12 +471,16 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   contactDraft: state.contact.adding,
 });
-const mapDispatchToProps = (dispatch: Dispatch<ContactActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<ContactActionTypes | UIActionTypes>
+) => {
   return {
     setAddingInmateInfo: (contactInmateInfo: ContactInmateInfo) =>
       dispatch(setAddingInmateInfo(contactInmateInfo)),
     setAddingFacility: (contactFacility: ContactFacility) =>
       dispatch(setAddingFacility(contactFacility)),
+    setTopbarRight: (details: TopbarRight | null) =>
+      dispatch(setTopbarRight(details)),
   };
 };
 const ContactInmateInfoScreen = connect(

@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { Draft, MailTypes, Contact } from 'types';
+import { Draft, MailTypes, Contact, TopbarRight } from 'types';
 import { Typography, Colors } from '@styles';
 import { clearComposing } from '@store/Mail/MailActions';
 import { createMail } from '@api';
@@ -14,8 +14,9 @@ import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { cleanupAfterSend } from '@utils/Notifications';
 import * as Segment from 'expo-analytics-segment';
-import { setProfileOverride } from '@components/Topbar';
 import { popupAlert } from '@components/Alert/Alert.react';
+import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import Styles from './Compose.styles';
 
 type ReviewLetterScreenNavigationProp = StackNavigationProp<
@@ -29,6 +30,7 @@ interface Props {
   composing: Draft;
   clearComposing: () => void;
   ameelioBalance: number;
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 class ReviewLetterScreenBase extends React.Component<Props> {
@@ -55,7 +57,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
   }
 
   onNavigationFocus = (): void => {
-    setProfileOverride({
+    this.props.setTopbarRight({
       text: i18n.t('Compose.send'),
       action: this.doSend,
       enabled: true,
@@ -64,7 +66,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
   };
 
   onNavigationBlur = (): void => {
-    setProfileOverride(undefined);
+    this.props.setTopbarRight(null);
   };
 
   async doSend() {
@@ -200,8 +202,12 @@ const mapStateToProps = (state: AppState) => ({
   activeContact: state.contact.active,
   ameelioBalance: state.user.user.credit,
 });
-const mapDispatchToProps = (dispatch: Dispatch<MailActionTypes>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<MailActionTypes | UIActionTypes>
+) => ({
   clearComposing: () => dispatch(clearComposing()),
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
 });
 const LetterPreviewScreen = connect(
   mapStateToProps,

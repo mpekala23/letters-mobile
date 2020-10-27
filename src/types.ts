@@ -327,17 +327,6 @@ export enum Storage {
   DraftPostcardSize = 'Ameelio-DraftPostcardSize',
 }
 
-export type TopbarBackAction = {
-  action: () => void | Promise<void>;
-};
-
-export type TopbarRouteAction = {
-  enabled: boolean;
-  text: string;
-  action: () => void | Promise<void>;
-  blocking?: boolean;
-};
-
 export type DesignBottomDetails = 'layout' | 'design' | 'stickers';
 
 export type TextBottomDetails = 'color' | 'font';
@@ -384,6 +373,19 @@ export enum EntityTypes {
   PremiumStoreItems = 'PremiumStoreItems',
   PremiumTransactions = 'PremiumTransactions',
   StripeTransactions = 'StripeTransactions',
+}
+
+// UI
+export interface TopbarRight {
+  enabled: boolean;
+  text: string;
+  action: () => void | Promise<void>;
+  blocking?: boolean;
+}
+
+export interface TopbarLeft {
+  canGoBack?: boolean;
+  action?: () => void | Promise<void>;
 }
 
 export interface RouteDetails {

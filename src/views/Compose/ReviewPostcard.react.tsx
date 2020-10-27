@@ -9,7 +9,7 @@ import {
 import { ReviewCredits, StaticPostcard } from '@components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import { Draft, Contact, MailTypes, CustomFontFamilies, Font } from 'types';
+import { Draft, Contact, MailTypes, CustomFontFamilies } from 'types';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
 import { createMail } from '@api';
@@ -19,7 +19,6 @@ import i18n from '@i18n';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { clearComposing } from '@store/Mail/MailActions';
-import { setProfileOverride } from '@components/Topbar';
 import { Typography, Colors } from '@styles';
 import { POSTCARD_HEIGHT, POSTCARD_WIDTH } from '@utils/Constants';
 import { popupAlert } from '@components/Alert/Alert.react';

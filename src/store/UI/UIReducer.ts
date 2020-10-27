@@ -1,10 +1,19 @@
-import { UIState, START_ACTION, STOP_ACTION, UIActionTypes } from './UITypes';
+import {
+  UIState,
+  START_ACTION,
+  STOP_ACTION,
+  UIActionTypes,
+  SET_TOPBAR_RIGHT,
+  SET_TOPBAR_LEFT,
+} from './UITypes';
 
 // creates a data loader for different data entities
 const initialState: UIState = {
   loader: {
     actions: [],
   },
+  topbarRight: null,
+  topbarLeft: null,
 };
 
 const UIReducer = (state = initialState, action: UIActionTypes): UIState => {
@@ -26,6 +35,16 @@ const UIReducer = (state = initialState, action: UIActionTypes): UIState => {
           ...loader,
           actions: actions.filter((item) => item !== action.payload),
         },
+      };
+    case SET_TOPBAR_RIGHT:
+      return {
+        ...state,
+        topbarRight: action.payload,
+      };
+    case SET_TOPBAR_LEFT:
+      return {
+        ...state,
+        topbarLeft: action.payload,
       };
     default:
       return state;

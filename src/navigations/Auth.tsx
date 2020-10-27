@@ -34,8 +34,7 @@ const Auth: React.FC = () => {
         headerLeft: (leftProps) => (
           <HeaderLeft
             canGoBack={!!leftProps.canGoBack}
-            onPress={leftProps.onPress}
-            route={route.name}
+            onPress={leftProps.onPress ? leftProps.onPress : () => null}
           />
         ),
         headerRight: () => {

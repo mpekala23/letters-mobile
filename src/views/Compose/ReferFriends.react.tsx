@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import { Text, View, Platform, ScrollView } from 'react-native';
 import { Button, KeyboardAvoider } from '@components';
 import { Typography } from '@styles';
@@ -14,10 +14,11 @@ import PostcardLottie from '@assets/views/ReferFriends/Postcard.json';
 import Icon from '@components/Icon/Icon.react';
 import Truck from '@assets/views/ReferFriends/Truck';
 import { differenceInBusinessDays, format } from 'date-fns';
-import { Contact, MailTypes } from 'types';
+import { Contact, MailTypes, TopbarRight } from 'types';
 import { onNativeShare, estimateDelivery, requestReview } from '@utils';
 
-import { setProfileOverride } from '@components/Topbar';
+import { UIActionTypes } from '@store/UI/UITypes';
+import { setTopbarRight } from '@store/UI/UIActions';
 import Styles from './ReferFriends.style';
 
 type ReferFriendsScreenNavigationProp = StackNavigationProp<
@@ -34,6 +35,7 @@ export interface Props {
   route: {
     params: { mailType: MailTypes };
   };
+  setTopbarRight: (details: TopbarRight | null) => void;
 }
 
 const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
@@ -45,7 +47,7 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
     ) {
       requestReview();
     }
-    setProfileOverride(undefined);
+    props.setTopbarRight(null);
   }, []);
 
   const genLottieView = () => {
@@ -151,17 +153,22 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    contact: state.contact.active,
-    referralCode: state.user.user.referralCode,
-    numMailSent: Object.keys(state.mail.existing)
-      .map((key) => state.mail.existing[key].length)
-      .reduce((acc, curr) => acc + curr, 0),
-    joined: state.user.user.joined,
-  };
-};
+const mapStateToProps = (state: AppState) => ({
+  contact: state.contact.active,
+  referralCode: state.user.user.referralCode,
+  numMailSent: Object.keys(state.mail.existing)
+    .map((key) => state.mail.existing[key].length)
+    .reduce((acc, curr) => acc + curr, 0),
+  joined: state.user.user.joined,
+});
+const mapDispatchToProps = (dispatch: Dispatch<UIActionTypes>) => ({
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
 
-const ReferFriendsScreen = connect(mapStateToProps)(ReferFriendsScreenBase);
+const ReferFriendsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReferFriendsScreenBase);
 
 export default ReferFriendsScreen;
