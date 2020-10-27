@@ -202,6 +202,5 @@ export async function getStripeTransactions(): Promise<StripeTransaction[]> {
   );
   store.dispatch(setStripeTransactions(transactions));
   store.dispatch(stopAction(EntityTypes.StripeTransactions));
-  console.log(transactions);
   return transactions;
 }
