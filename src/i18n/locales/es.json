@@ -518,6 +518,8 @@
     "page": "página",
     "pages": "páginas",
     "viewHistory": "Ver historial",
-    "familiesHelped": "Familias que ayudaste"
+    "familiesHelped": "Familias que ayudaste",
+    "purchases": "Purchases",
+    "transactions": "Transactions"
   }
 }

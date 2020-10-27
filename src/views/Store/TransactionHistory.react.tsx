@@ -4,10 +4,13 @@ import { Typography } from '@styles';
 import React, { Dispatch, useEffect } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { getPremiumTransactions } from '@api';
-import { TransactionHistoryCard } from '@components';
+import { getPremiumTransactions, getStripeTransactions } from '@api';
+import {
+  PremiumTransactionHistoryCard,
+  StripeTransactionHistoryCard,
+} from '@components';
 import TransactionPlaceholder from '@components/Loaders/TransactionPlaceholder';
-import { EntityTypes, Transaction } from 'types';
+import { EntityTypes, PremiumTransaction, StripeTransaction } from 'types';
 import { checkIfLoading } from '@store/selectors';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -25,8 +28,10 @@ type TransactionHistoryScreenNavigationProp = StackNavigationProp<
 
 interface Props {
   familiesHelped: number;
-  transactions: Transaction[];
-  isLoadingTransactions: boolean;
+  premiumTransactions: PremiumTransaction[];
+  stripeTransactions: StripeTransaction[];
+  isLoadingPremiumTransactions: boolean;
+  isLoadingStripeTransactions: boolean;
   navigation: TransactionHistoryScreenNavigationProp;
   setActiveContact: (id: number) => void;
   setActiveMail: (contactId: number, mailId: number) => void;
@@ -34,15 +39,21 @@ interface Props {
 
 const TransactionHistoryBase: React.FC<Props> = ({
   familiesHelped,
-  transactions,
-  isLoadingTransactions,
+  premiumTransactions,
+  stripeTransactions,
+  isLoadingPremiumTransactions,
+  isLoadingStripeTransactions,
   navigation,
   setActiveContact,
   setActiveMail,
 }: Props) => {
   useEffect(() => {
-    if (!isLoadingTransactions && !transactions.length)
+    if (!isLoadingPremiumTransactions && !premiumTransactions.length)
       getPremiumTransactions().catch((err) => {
+        Sentry.captureException(err);
+      });
+    if (!isLoadingStripeTransactions && !stripeTransactions.length)
+      getStripeTransactions().catch((err) => {
         Sentry.captureException(err);
       });
   }, []);
@@ -56,13 +67,17 @@ const TransactionHistoryBase: React.FC<Props> = ({
           {familiesHelped.toString()}
         </Text>
       </View>
-      {!isLoadingTransactions ? (
+      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+        {i18n.t('Premium.purchases')}
+      </Text>
+      {!isLoadingPremiumTransactions ? (
         <FlatList
+          style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={transactions}
+          data={premiumTransactions}
           renderItem={({ item }) => {
             return (
-              <TransactionHistoryCard
+              <PremiumTransactionHistoryCard
                 transaction={item}
                 onPress={() => {
                   setActiveContact(item.contactId);
@@ -76,14 +91,37 @@ const TransactionHistoryBase: React.FC<Props> = ({
       ) : (
         <TransactionPlaceholder />
       )}
+      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+        {i18n.t('Premium.transactions')}
+      </Text>
+      {!isLoadingStripeTransactions ? (
+        <FlatList
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          data={stripeTransactions}
+          renderItem={({ item }) => {
+            return <StripeTransactionHistoryCard transaction={item} />;
+          }}
+        />
+      ) : (
+        <TransactionPlaceholder />
+      )}
     </View>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
   familiesHelped: 10,
-  transactions: state.premium.transactions,
-  isLoadingTransactions: checkIfLoading(state, EntityTypes.Transactions),
+  premiumTransactions: state.premium.premiumTransactions,
+  stripeTransactions: state.premium.stripeTransactions,
+  isLoadingPremiumTransactions: checkIfLoading(
+    state,
+    EntityTypes.PremiumTransactions
+  ),
+  isLoadingStripeTransactions: checkIfLoading(
+    state,
+    EntityTypes.StripeTransactions
+  ),
 });
 
 const mapDispatchToProps = (

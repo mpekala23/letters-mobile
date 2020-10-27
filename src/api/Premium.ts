@@ -2,7 +2,8 @@
 import {
   setPremiumCategories,
   setPremiumPacks,
-  setTransactions,
+  setPremiumTransactions,
+  setStripeTransactions,
 } from '@store/Premium/PremiumActions';
 import { startAction, stopAction } from '@store/UI/UIActions';
 import store from '@store';
@@ -11,9 +12,9 @@ import {
   Category,
   EntityTypes,
   PremiumPack,
+  PremiumTransaction,
   RawCategory,
-  Transaction,
-  TransactionStatus,
+  StripeTransaction,
 } from 'types';
 import { API_URL, fetchAuthenticated } from './Common';
 import { cleanCategory, getSubcategoriesById } from './Mail';
@@ -76,7 +77,7 @@ export async function getPremiumStoreItems(): Promise<void> {
   store.dispatch(stopAction(EntityTypes.PremiumStoreItems));
 }
 
-interface RawTransaction {
+interface RawPremiumTransaction {
   id: number;
   created_at: string;
   user_id: number;
@@ -98,20 +99,22 @@ interface RawTransaction {
   premium: boolean;
 }
 
-function cleanTransaction(raw: RawTransaction): Transaction {
-  let status;
+function cleanPremiumTransaction(
+  raw: RawPremiumTransaction
+): PremiumTransaction {
+  let status: 'completed' | 'error' | 'refund';
   switch (raw.status) {
     case 'completed':
-      status = TransactionStatus.Completed;
+      status = 'completed';
       break;
     case 'error':
-      status = TransactionStatus.Error;
+      status = 'error';
       break;
     case 'refund':
-      status = TransactionStatus.Refund;
+      status = 'refund';
       break;
     default:
-      status = TransactionStatus.Error;
+      status = 'error';
       break;
   }
   return {
@@ -130,8 +133,8 @@ function cleanTransaction(raw: RawTransaction): Transaction {
   };
 }
 
-export async function getPremiumTransactions(): Promise<Transaction[]> {
-  store.dispatch(startAction(EntityTypes.Transactions));
+export async function getPremiumTransactions(): Promise<PremiumTransaction[]> {
+  store.dispatch(startAction(EntityTypes.PremiumTransactions));
   const body = await fetchAuthenticated(
     url.resolve(
       API_URL,
@@ -139,22 +142,66 @@ export async function getPremiumTransactions(): Promise<Transaction[]> {
     )
   );
   if (body.status !== 'OK' || !body.data) {
-    store.dispatch(stopAction(EntityTypes.Transactions));
+    store.dispatch(stopAction(EntityTypes.PremiumTransactions));
     throw body;
   }
-  const transactions = (body.data as RawTransaction[])
+  const transactions = (body.data as RawPremiumTransaction[])
     .filter((raw) => raw.premium)
-    .map((raw) => cleanTransaction(raw));
-  store.dispatch(setTransactions(transactions));
-  store.dispatch(stopAction(EntityTypes.Transactions));
+    .map((raw) => cleanPremiumTransaction(raw));
+  store.dispatch(setPremiumTransactions(transactions));
+  store.dispatch(stopAction(EntityTypes.PremiumTransactions));
   return transactions;
 }
 
-export async function getStripeTransactions(): Promise<void> {
-  await fetchAuthenticated(
+interface RawStripeTransaction {
+  created_at: string;
+  id: number;
+  pack: {
+    coins: number;
+    id: number;
+    img_path: string;
+    name: string;
+    price: number;
+  };
+  status: 'success';
+  failed_reason: string | null;
+}
+
+function cleanStripeTransaction(raw: RawStripeTransaction): StripeTransaction {
+  return {
+    id: raw.id,
+    date: new Date(raw.created_at).toISOString(),
+    failedReason: raw.failed_reason,
+    pack: {
+      id: raw.pack.id,
+      name: raw.pack.name,
+      image: {
+        uri: raw.pack.img_path,
+      },
+      price: raw.pack.price / 100,
+      coins: raw.pack.coins,
+    },
+    status: raw.status,
+  };
+}
+
+export async function getStripeTransactions(): Promise<StripeTransaction[]> {
+  store.dispatch(startAction(EntityTypes.StripeTransactions));
+  const body = await fetchAuthenticated(
     url.resolve(
       API_URL,
       `user/${store.getState().user.user.id}/stripe-transactions`
     )
   );
+  if (body.status !== 'OK' || !body.data) {
+    store.dispatch(stopAction(EntityTypes.StripeTransactions));
+    throw body;
+  }
+  const transactions = (body.data as RawStripeTransaction[]).map((raw) =>
+    cleanStripeTransaction(raw)
+  );
+  store.dispatch(setStripeTransactions(transactions));
+  store.dispatch(stopAction(EntityTypes.StripeTransactions));
+  console.log(transactions);
+  return transactions;
 }

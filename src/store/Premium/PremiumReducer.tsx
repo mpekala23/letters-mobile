@@ -1,7 +1,8 @@
 import {
   SET_PACKS,
   SET_PREMIUM_CATEGORIES,
-  SET_TRANSACTIONS,
+  SET_PREMIUM_TRANSACTIONS,
+  SET_STRIPE_TRANSACTIONS,
   PremiumActionTypes,
   PremiumState,
   SET_SHOWN_PROMPT,
@@ -10,7 +11,8 @@ import {
 const initialState: PremiumState = {
   premiumPacks: [],
   premiumCategories: [],
-  transactions: [],
+  premiumTransactions: [],
+  stripeTransactions: [],
   hasShownPrompt: false,
 };
 
@@ -29,10 +31,15 @@ export default function PremiumReducer(
         ...state,
         premiumCategories: action.payload,
       };
-    case SET_TRANSACTIONS:
+    case SET_PREMIUM_TRANSACTIONS:
       return {
         ...state,
-        transactions: action.payload,
+        premiumTransactions: action.payload,
+      };
+    case SET_STRIPE_TRANSACTIONS:
+      return {
+        ...state,
+        stripeTransactions: action.payload,
       };
     case SET_SHOWN_PROMPT:
       return {

@@ -48,6 +48,7 @@ import {
   getPremiumPacks,
   getPremiumStoreItems,
   getPremiumTransactions,
+  getStripeTransactions,
 } from './Premium';
 
 interface RawUser {
@@ -363,6 +364,7 @@ async function initializeData(
     getPremiumPacks(),
     getPremiumStoreItems(),
     getPremiumTransactions(),
+    getStripeTransactions(),
   ]).catch((err) => {
     Sentry.captureException(err);
   });

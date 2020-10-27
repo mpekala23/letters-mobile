@@ -353,13 +353,7 @@ export type PremiumPack = {
   coins: number;
 };
 
-export enum TransactionStatus {
-  Completed = 'completed',
-  Error = 'error',
-  Refund = 'refund',
-}
-
-export type Transaction = {
+export type PremiumTransaction = {
   id: number;
   date: string;
   contactFullName: string;
@@ -368,8 +362,16 @@ export type Transaction = {
   productId: number;
   mailId: number;
   price: number;
-  status: TransactionStatus;
+  status: 'completed' | 'error' | 'refund';
   thumbnail: Image;
+};
+
+export type StripeTransaction = {
+  id: number;
+  date: string;
+  failedReason: string | null;
+  pack: PremiumPack;
+  status: 'success' | string;
 };
 
 export enum EntityTypes {
@@ -380,7 +382,8 @@ export enum EntityTypes {
   MailDetail = 'MailDetail',
   PremiumPacks = 'PremiumPacks',
   PremiumStoreItems = 'PremiumStoreItems',
-  Transactions = 'Transactions',
+  PremiumTransactions = 'PremiumTransactions',
+  StripeTransactions = 'StripeTransactions',
 }
 
 export interface RouteDetails {

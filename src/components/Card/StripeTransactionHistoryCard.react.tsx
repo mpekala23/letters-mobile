@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Colors, Typography } from '@styles';
-import { Transaction } from 'types';
+import { StripeTransaction } from 'types';
 import Icon from '@components/Icon/Icon.react';
 import GoldenBirdCoin from '@assets/views/Premium/GoldenBirdCoin';
 import { format } from 'date-fns';
@@ -9,26 +9,19 @@ import AsyncImage from '@components/AsyncImage/AsyncImage.react';
 import CardStyles from './Card.styles';
 
 interface Props {
-  transaction: Transaction;
-  onPress: () => void | Promise<void>;
+  transaction: StripeTransaction;
 }
 
-const TransactionHistoryCard: React.FC<Props> = ({
-  onPress,
+const StripeTransactionHistoryCard: React.FC<Props> = ({
   transaction,
 }: Props) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[
-        CardStyles.cardBase,
-        CardStyles.shadow,
-        CardStyles.transactionHistoryBackground,
-      ]}
+    <View
+      style={[CardStyles.cardBase, CardStyles.transactionHistoryBackground]}
     >
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <AsyncImage
-          source={transaction.thumbnail}
+          source={transaction.pack.image}
           viewStyle={CardStyles.transactionHistoryThumbnail}
           download
         />
@@ -39,7 +32,7 @@ const TransactionHistoryCard: React.FC<Props> = ({
               { color: Colors.GRAY_700, fontSize: 18 },
             ]}
           >
-            {transaction.productName}
+            {transaction.pack.name}
           </Text>
           <Text
             style={[
@@ -48,27 +41,44 @@ const TransactionHistoryCard: React.FC<Props> = ({
             ]}
           >
             {format(new Date(transaction.date), 'M/d')}{' '}
-            {transaction.contactFullName}
           </Text>
         </View>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View
-          style={{ width: 24, height: 24, paddingRight: 4, paddingBottom: 4 }}
-        >
-          <Icon svg={GoldenBirdCoin} />
-        </View>
+      <View style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <Text
           style={[
             Typography.FONT_MEDIUM,
             { fontSize: 18, color: Colors.GRAY_400 },
           ]}
         >
-          {transaction.price.toString()}
+          -${transaction.pack.price.toString()}
         </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text
+            style={[
+              Typography.FONT_MEDIUM,
+              { fontSize: 18, color: Colors.GRAY_400, paddingRight: 4 },
+            ]}
+          >
+            +
+          </Text>
+          <View
+            style={{ width: 24, height: 24, paddingRight: 4, paddingBottom: 4 }}
+          >
+            <Icon svg={GoldenBirdCoin} />
+          </View>
+          <Text
+            style={[
+              Typography.FONT_MEDIUM,
+              { fontSize: 18, color: Colors.GRAY_400 },
+            ]}
+          >
+            {transaction.pack.coins.toString()}
+          </Text>
+        </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-export default TransactionHistoryCard;
+export default StripeTransactionHistoryCard;
