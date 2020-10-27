@@ -10,6 +10,8 @@ import {
 import { format } from 'date-fns';
 import { MailTypes } from 'types';
 import { Typography } from '@styles';
+import Icon from '@components/Icon/Icon.react';
+import GoldBird from '@assets/views/Premium/GoldenBirdCoin';
 import CardStyles from './Card.styles';
 
 interface Props {
@@ -19,6 +21,7 @@ interface Props {
   imageUri: string;
   onPress: () => void;
   style?: ViewStyle;
+  premium: boolean;
 }
 
 const MemoryLaneCard: React.FC<Props> = (props: Props) => {
@@ -81,9 +84,19 @@ const MemoryLaneCard: React.FC<Props> = (props: Props) => {
             </Text>
           </View>
           <View style={CardStyles.memoryLaneTextBackground}>
-            <Text style={[CardStyles.date, { marginTop: 6 }]}>
+            <Text style={[CardStyles.date, { marginVertical: 4 }]}>
               {letterDate}
             </Text>
+            {props.premium && (
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              >
+                <Icon svg={GoldBird} />
+              </View>
+            )}
           </View>
         </View>
       )}

@@ -7,7 +7,7 @@ export default StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -67,7 +67,10 @@ export default StyleSheet.create({
     borderRadius: 6,
   },
   memoryLaneTextBackground: {
+    flexDirection: 'row',
     paddingHorizontal: 8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   memoryLanePicture: {
     height: '50%',
@@ -79,6 +82,7 @@ export default StyleSheet.create({
   memoryLaneText: {
     fontSize: 18,
     overflow: 'hidden',
+    marginTop: 8,
   },
   memoryLanePostcardBackground: {
     backgroundColor: 'rgba(0,0,0, 0.30)',

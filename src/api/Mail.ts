@@ -89,6 +89,8 @@ interface RawMail {
   } | null;
   size: string;
   pdf_url: string;
+  premium: boolean;
+  product?: { thumbnail_src: string; name: string };
 }
 
 function cleanLobStatus(status: string): MailStatus {
@@ -132,7 +134,8 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id, customization, pdf_url } = mail;
+  const { type, id, customization, pdf_url, premium, product } = mail;
+  let { content } = mail;
   const recipientId = mail.contact_id;
   const cleanCustomization: Customization = customization
     ? {
@@ -154,6 +157,10 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
         uri: rawImage.img_src,
       };
     });
+  } else if (type === MailTypes.Letter && product?.thumbnail_src) {
+    // premium packets
+    images = [{ uri: product.thumbnail_src }];
+    content = product.name;
   }
   const design: PostcardDesign = {
     asset: images.length ? images[0] : { uri: '' },
@@ -199,6 +206,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
       images,
       trackingEvents,
       lobPdfUrl: pdf_url,
+      premium,
     };
   }
   const size = findPostcardSizeOption(rawSize);
@@ -215,6 +223,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     customization: cleanCustomization,
     size,
     lobPdfUrl: pdf_url,
+    premium,
   };
 }
 
@@ -233,7 +242,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   if (!mail.lob_status) {
     return getSingleMail(mail.id);
   }
-  const { type, content, id, customization } = mail;
+  const { type, content, id, customization, premium, product } = mail;
   const cleanCustomization: Customization = customization
     ? {
         font: {
@@ -251,6 +260,9 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   let images: Image[] = [];
   if (mail.images.length) {
     images = mail.images.map((rawImage) => ({ uri: rawImage.img_src }));
+  } else if (type === MailTypes.Letter && product?.thumbnail_src) {
+    // premium packets
+    images = [{ uri: product.thumbnail_src }];
   }
   const design: PostcardDesign = {
     asset: images.length ? images[0] : { uri: '' },
@@ -282,6 +294,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
       dateCreated,
       expectedDelivery,
       images,
+      premium,
     };
   }
   const rawSize = mail.size;
@@ -297,6 +310,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     customization: cleanCustomization,
     design,
     size,
+    premium,
   };
 }
 

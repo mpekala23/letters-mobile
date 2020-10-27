@@ -173,6 +173,7 @@ interface MailInfo extends DraftInfo {
   expectedDelivery: string;
   trackingEvents?: TrackingEvent[];
   lobPdfUrl?: string;
+  premium: boolean;
 }
 
 export type MailLetter = MailInfo & LetterSpecific;

@@ -27,7 +27,6 @@ type TransactionHistoryScreenNavigationProp = StackNavigationProp<
 >;
 
 interface Props {
-  familiesHelped: number;
   premiumTransactions: PremiumTransaction[];
   stripeTransactions: StripeTransaction[];
   isLoadingPremiumTransactions: boolean;
@@ -38,7 +37,6 @@ interface Props {
 }
 
 const TransactionHistoryBase: React.FC<Props> = ({
-  familiesHelped,
   premiumTransactions,
   stripeTransactions,
   isLoadingPremiumTransactions,
@@ -57,6 +55,17 @@ const TransactionHistoryBase: React.FC<Props> = ({
         Sentry.captureException(err);
       });
   }, []);
+
+  const calculateFamiliesHelped = () => {
+    // TODO refactor this after stripe transactions are incorporated
+    const PROFIT_PER_COIN = 0.05;
+    const FAMILY_WEEKLY_COST = 0.9;
+    const totalSpent = premiumTransactions
+      .map((transaction) => transaction.price)
+      .reduce((prev, curr) => prev + curr);
+    return Math.round((totalSpent * PROFIT_PER_COIN) / FAMILY_WEEKLY_COST);
+  };
+
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.helpedContainer}>
@@ -64,7 +73,7 @@ const TransactionHistoryBase: React.FC<Props> = ({
           {i18n.t('Premium.familiesHelped')}
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.familiesHelpedNumber]}>
-          {familiesHelped.toString()}
+          {calculateFamiliesHelped()}
         </Text>
       </View>
       <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
@@ -111,7 +120,6 @@ const TransactionHistoryBase: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  familiesHelped: 10,
   premiumTransactions: state.premium.premiumTransactions,
   stripeTransactions: state.premium.stripeTransactions,
   isLoadingPremiumTransactions: checkIfLoading(

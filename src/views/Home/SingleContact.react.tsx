@@ -98,6 +98,7 @@ class SingleContactScreenBase extends React.Component<Props, State> {
                   status={item.status}
                   date={new Date(item.dateCreated)}
                   description={item.content}
+                  premium={item.premium}
                   onPress={async () => {
                     this.props.setActiveMail(item);
                     Segment.track('Contact View - Click on Letter Tracking');

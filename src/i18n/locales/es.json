@@ -44,7 +44,7 @@
     "forFree": "gratis.",
     "sendEverything": "Envíe toda, desde una carta, fotos, hasta arte y juegos",
     "theyllReceive": "Recibirán recuerdos a los que puedan aferrarse",
-    "joinOurCommunity": "Únete a nuestra comunidad de más de 15,000 familias en este viaje",
+    "joinOurCommunity": "Únete a nuestra comunidad de más de 20,000 familias en este viaje",
     "signUp": "Regístrate",
     "logIn": "Iniciar sesión"
   },
@@ -455,6 +455,7 @@
     "letterDetails": "Detalles de Carta",
     "lastStep": "Última Paso",
     "tracking": "Rastreo",
+    "mailPdfWebview": "Recuerdo",
     "memoryLane": "Carril de Memoria",
     "postcardPreview": "Vista previa de la postal",
     "previewItem": "Preview Item",

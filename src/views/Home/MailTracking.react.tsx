@@ -118,7 +118,11 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
       return (
         <View style={[Styles.cardBackground]}>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
             <AdjustableText
               numberOfLines={1}
@@ -132,12 +136,9 @@ class MailTrackingScreenBase extends React.Component<Props, State> {
                 reverse
                 buttonText={i18n.t('MailTrackingScreen.viewPdf')}
                 onPress={() => {
-                  this.props.navigation.navigate(
-                    Screens.MailTrackingPdfWebview,
-                    {
-                      uri: pdf,
-                    }
-                  );
+                  this.props.navigation.navigate(Screens.MailPdfWebview, {
+                    uri: pdf,
+                  });
                 }}
                 containerStyle={{ height: 32 }}
                 textStyle={{ fontSize: 14 }}
