@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors, Typography } from '@styles';
 import Emoji from 'react-native-emoji';
 import i18n from '@i18n';

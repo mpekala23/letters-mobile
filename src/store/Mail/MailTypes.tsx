@@ -1,4 +1,4 @@
-import { Draft, Mail, MailStatus, Image, PostcardDesign } from 'types';
+import { Draft, Mail, MailStatus, Image, PostcardDesign, Font } from 'types';
 
 // Draft actions
 export const SET_COMPOSING = 'mail/set_composing';
@@ -6,6 +6,7 @@ export const SET_RECIPIENT_ID = 'mail/set_recipient_id';
 export const SET_CONTENT = 'mail/set_content';
 export const SET_IMAGES = 'mail/set_images';
 export const SET_DESIGN = 'mail/set_design';
+export const SET_FONT = 'mail/set_font';
 export const CLEAR_COMPOSING = 'mail/clear_composing';
 
 export interface MailState {
@@ -37,6 +38,11 @@ interface SetImagesAction {
 interface SetDesignAction {
   type: typeof SET_DESIGN;
   payload: PostcardDesign;
+}
+
+interface SetFontAction {
+  type: typeof SET_FONT;
+  payload: Font;
 }
 
 interface ClearComposingAction {
@@ -128,6 +134,7 @@ export type MailActionTypes =
   | SetContentAction
   | SetImagesAction
   | SetDesignAction
+  | SetFontAction
   | ClearComposingAction
   | AddMailAction
   | SetActiveAction

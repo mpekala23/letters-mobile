@@ -13,6 +13,8 @@ import {
   PostcardDesign,
   Image,
   Contact,
+  Customization,
+  CustomFontFamilies,
   EntityTypes,
   RawCategory,
   PremadeDesign,
@@ -35,6 +37,7 @@ import {
   setLastUpdated,
 } from '@store/Category/CategoryActions';
 import * as Sentry from 'sentry-expo';
+import { mapNameToFont, MAP_FONT_TO_SOURCE } from '@utils/Fonts';
 import { startAction, stopAction } from '@store/UI/UIActions';
 import {
   updateContact,
@@ -77,6 +80,13 @@ interface RawMail {
   tracking_events?: RawTrackingEvent[];
   estimated_arrival: string;
   delivered: boolean;
+  customization: {
+    font: {
+      family: CustomFontFamilies;
+      color: string;
+      src: string;
+    };
+  } | null;
   size: string;
   pdf_url: string;
 }
@@ -122,8 +132,21 @@ export function mapTrackingEventsToMailStatus(
 
 // cleans mail returned from getSingleMail
 async function cleanMail(mail: RawMail): Promise<Mail> {
-  const { type, content, id, pdf_url } = mail;
+  const { type, content, id, customization, pdf_url } = mail;
   const recipientId = mail.contact_id;
+  const cleanCustomization: Customization = customization
+    ? {
+        font: {
+          family: mapNameToFont(customization.font.family),
+          color: customization.font.color,
+        },
+      }
+    : {
+        font: {
+          family: CustomFontFamilies.Montserrat,
+          color: '#000000',
+        },
+      };
   let images: Image[] = [];
   if (mail.images.length) {
     images = mail.images.map((rawImage) => {
@@ -189,6 +212,7 @@ async function cleanMail(mail: RawMail): Promise<Mail> {
     expectedDelivery,
     design,
     trackingEvents,
+    customization: cleanCustomization,
     size,
     lobPdfUrl: pdf_url,
   };
@@ -209,7 +233,20 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
   if (!mail.lob_status) {
     return getSingleMail(mail.id);
   }
-  const { type, content, id } = mail;
+  const { type, content, id, customization } = mail;
+  const cleanCustomization: Customization = customization
+    ? {
+        font: {
+          family: customization.font.family,
+          color: customization.font.color,
+        },
+      }
+    : {
+        font: {
+          family: CustomFontFamilies.Montserrat,
+          color: '#000000',
+        },
+      };
   const recipientId = mail.contact_id;
   let images: Image[] = [];
   if (mail.images.length) {
@@ -257,6 +294,7 @@ async function cleanMassMail(mail: RawMail): Promise<Mail> {
     status,
     dateCreated,
     expectedDelivery,
+    customization: cleanCustomization,
     design,
     size,
   };
@@ -450,6 +488,16 @@ export async function createMail(
     type: prepDraft.type,
     size:
       prepDraft.type === MailTypes.Postcard ? prepDraft.size.key : undefined,
+    customization:
+      draft.type === MailTypes.Letter
+        ? undefined
+        : {
+            font: {
+              family: draft.customization.font.family,
+              color: draft.customization.font.color,
+              src: MAP_FONT_TO_SOURCE[draft.customization.font.family],
+            },
+          },
     ...imageExtension,
     product_id: productId,
     pdf_path,

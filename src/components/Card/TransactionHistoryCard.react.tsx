@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Colors, Typography } from '@styles';
 import { Transaction } from 'types';
-import i18n from '@i18n';
 import Icon from '@components/Icon/Icon.react';
 import GoldenBirdCoin from '@assets/views/Premium/GoldenBirdCoin';
 import { format } from 'date-fns';

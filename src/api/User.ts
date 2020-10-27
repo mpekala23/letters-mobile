@@ -11,9 +11,9 @@ import {
   Storage,
   MailTypes,
   Draft,
-  PostcardDesign,
   FamilyConnection,
   UserReferralsInfo,
+  CustomFontFamilies,
   PremadeDesign,
   PremadePostcardDesign,
 } from 'types';
@@ -210,6 +210,12 @@ export async function loadDraft(): Promise<Draft> {
             categoryId: PERSONAL_OVERRIDE_ID,
             type: 'personal_design',
           },
+          customization: {
+            font: {
+              family: CustomFontFamilies.Montserrat,
+              color: '#000000',
+            },
+          },
           size: postcardSize,
         };
         store.dispatch(setComposing(draft));
@@ -233,6 +239,12 @@ export async function loadDraft(): Promise<Draft> {
         content: draftContent || '',
         design: findDesign as PremadePostcardDesign,
         size: postcardSize,
+        customization: {
+          font: {
+            family: CustomFontFamilies.Montserrat,
+            color: '#000000',
+          },
+        },
       };
       store.dispatch(setComposing(draft));
       return draft;
