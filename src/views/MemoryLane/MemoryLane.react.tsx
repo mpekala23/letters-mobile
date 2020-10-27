@@ -2,17 +2,16 @@ import React, { Dispatch, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { AppStackParamList, Screens } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Mail, MailTypes, Contact, EntityTypes } from 'types';
+import { Mail, MailTypes, Contact, EntityTypes, MailStatus } from 'types';
 import MemoryLaneCard from '@components/Card/MemoryLaneCard.react';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
 import { setActive as setActiveMail } from '@store/Mail/MailActions';
 import i18n from '@i18n';
 import { MailActionTypes } from '@store/Mail/MailTypes';
-import * as Segment from 'expo-analytics-segment';
 import { checkIfLoading } from '@store/selectors';
 import MemoriesPlaceholder from '@components/Loaders/MemoriesPlaceholder';
-import { getMailByContact } from '@api';
+import { getMailByContact, getTrackingEvents } from '@api';
 import * as Sentry from 'sentry-expo';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import Styles from './MemoryLane.styles';
@@ -39,7 +38,7 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
   return (
     <View style={Styles.background}>
       <FlatList
-        data={mail}
+        data={mail.filter((m) => m.status !== MailStatus.Draft)}
         numColumns={2}
         contentContainerStyle={{ padding: 8, justifyContent: 'space-between' }}
         renderItem={({ item }) => {
@@ -55,10 +54,29 @@ const MemoryLaneScreenBase: React.FC<Props> = (props: Props) => {
               text={item.content}
               date={new Date(item.dateCreated)}
               imageUri={imageUri}
-              onPress={() => {
+              premium={item.premium}
+              onPress={async () => {
                 props.setActiveMail(item);
-                Segment.track('Memory Lane - Click on Memory Card');
-                props.navigation.navigate(Screens.MailDetails);
+                if (item.lobPdfUrl) {
+                  props.navigation.navigate(Screens.MailPdfWebview, {
+                    uri: item.lobPdfUrl,
+                  });
+                } else {
+                  try {
+                    // TODO improve loading feedback by refactoring UI actions
+                    const mailDetails = await getTrackingEvents(item.id);
+                    if (mailDetails.lobPdfUrl) {
+                      props.navigation.navigate(Screens.MailPdfWebview, {
+                        uri: mailDetails.lobPdfUrl,
+                      });
+                    } else {
+                      props.navigation.navigate(Screens.MailDetails);
+                    }
+                  } catch (err) {
+                    Sentry.captureException(err);
+                    dropdownError({ message: i18n.t('Error.cantLoadMail') });
+                  }
+                }
               }}
               style={{ flex: 1, margin: 8 }}
             />

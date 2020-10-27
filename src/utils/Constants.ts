@@ -11,7 +11,7 @@ export const STATUS_BAR_WIDTH = 100;
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 export const ETA_CREATED_TO_DELIVERED = 6;
-export const ETA_PROCESSED_TO_DELIVERED = 3;
+export const ETA_PROCESSED_TO_DELIVERED = 1;
 export const BAR_HEIGHT = 64;
 
 // Compose constants

@@ -58,7 +58,7 @@ export enum Screens {
   StoreItemPurchaseSuccess = 'StoreItemPurchaseSuccess',
   SingleContact = 'SingleContact',
   MailTracking = 'MailTracking',
-  MailTrackingPdfWebview = 'MailTrackingPdfWebview',
+  MailPdfWebview = 'MailPdfWebview',
   MailTrackingStore = 'MailTrackingStore',
   MemoryLane = 'MemoryLane',
   MailDetails = 'MailDetails',
@@ -117,7 +117,7 @@ export type AppStackParamList = {
   PostcardPreview: undefined;
   MailDetails: undefined;
   MailTracking: undefined;
-  MailTrackingPdfWebview: { uri: string };
+  MailPdfWebview: { uri: string };
   MailTrackingStore: undefined;
   MemoryLane: undefined;
   ReferFriends: { mailType: MailTypes };
@@ -187,10 +187,12 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   CreditPackCheckoutWebView: {
     title: i18n.t('Screens.creditPackStore'),
     profile: false,
+    tabsVisible: false,
   },
   CreditPackPurchaseSuccess: {
     title: i18n.t('Screens.creditPackStore'),
     profile: false,
+    tabsVisible: false,
   },
   DeliveryReporting: { title: '', profile: false },
   FacilityDirectory: { title: '', profile: false },
@@ -219,7 +221,10 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   MailDetails: { title: i18n.t('Screens.letterDetails') },
   MailTracking: { title: i18n.t('Screens.tracking') },
-  MailTrackingPdfWebview: { title: i18n.t('Screens.tracking') },
+  MailPdfWebview: {
+    title: i18n.t('Screens.mailPdfWebview'),
+    tabsVisible: false,
+  },
   MailTrackingStore: { title: i18n.t('Screens.tracking') },
   MemoryLane: { title: i18n.t('Screens.memoryLane') },
   ReferralDashboard: {

@@ -102,8 +102,8 @@
     "lastHeard": "Last heard"
   },
   "CreditPackStore": {
-    "title": "Tokens of Gratitude",
-    "subtitle": "Buy Ameelio+ tokens and help others stay in touch for free. In exchange, you can use them to send premium content to your loved one.",
+    "title": "Ameelio+ Tokens of Gratitude",
+    "subtitle": "All the money you spend on Ameelio+ goes directly toward helping other families connect with their loved ones for free.",
     "selectBtn": "Select"
   },
   "CreditPackPurchaseSuccess": {
@@ -135,7 +135,7 @@
   "IntroContactScreen": {
     "welcomePre": "Welcome,",
     "welcomePost": "Time to locate your loved one.",
-    "body": "Add your first contact and join 15,000+ others families in the Ameelio community.",
+    "body": "Add your first contact and join 20,000+ others families in the Ameelio community.",
     "continueButton": "Get started"
   },
   "IssuesScreen": {
@@ -455,6 +455,7 @@
     "letterDetails": "Letter Details",
     "lastStep": "Last Step",
     "tracking": "Tracking",
+    "mailPdfWebview": "Memory",
     "memoryLane": "Memory Lane",
     "postcardPreview": "Photo Preview",
     "previewItem": "Preview Item",
