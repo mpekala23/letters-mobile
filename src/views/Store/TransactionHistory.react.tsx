@@ -69,21 +69,21 @@ const TransactionHistoryBase: React.FC<Props> = ({
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.helpedContainer}>
-        <Text style={[Typography.FONT_MEDIUM, Styles.familiesHelpedText]}>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.familiesHelpedText]}>
           {i18n.t('Premium.familiesHelped')}
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.familiesHelpedNumber]}>
           {calculateFamiliesHelped()}
         </Text>
       </View>
-      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.sectionHeadingText]}>
         {i18n.t('Premium.purchases')}
       </Text>
       {!isLoadingPremiumTransactions ? (
         <FlatList
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={premiumTransactions}
+          data={premiumTransactions.reverse()}
           renderItem={({ item }) => {
             return (
               <PremiumTransactionHistoryCard
@@ -100,14 +100,14 @@ const TransactionHistoryBase: React.FC<Props> = ({
       ) : (
         <TransactionPlaceholder />
       )}
-      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.sectionHeadingText]}>
         {i18n.t('Premium.transactions')}
       </Text>
       {!isLoadingStripeTransactions ? (
         <FlatList
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={stripeTransactions}
+          data={stripeTransactions.reverse()}
           renderItem={({ item }) => {
             return <StripeTransactionHistoryCard transaction={item} />;
           }}
