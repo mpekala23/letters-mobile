@@ -47,7 +47,7 @@ const CreditPackStoreBase = ({
         dropdownError({ message: i18n.t('Error.cantLoadPremiumPacks') });
       }
     }
-    if (!isLoadingPremiumPacks) {
+    if (!isLoadingPremiumPacks && packs.length === 0) {
       fetchPremiumPacks();
     }
   }, []);
