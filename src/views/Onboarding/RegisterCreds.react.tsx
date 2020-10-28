@@ -45,8 +45,6 @@ class RegisterCredsScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -60,25 +58,16 @@ class RegisterCredsScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
   }
 
   componentWillUnmount(): void {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus(): void {
     if (this.email.current) this.email.current.forceFocus();
     this.updateValid();
   }
-
-  onNavigationBlur = (): void => {
-    this.props.setTopbarRight(null);
-  };
 
   goForward = (): void => {
     Segment.trackWithProperties('Signup - Clicks on Next', { step: 'Account' });

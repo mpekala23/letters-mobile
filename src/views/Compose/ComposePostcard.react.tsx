@@ -130,8 +130,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   private unsubscribeKeyboardOpen: EmitterSubscription;
 
   private unsubscribeKeyboardClose: EmitterSubscription;
@@ -187,10 +185,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
 
     this.unsubscribeKeyboardOpen = Keyboard.addListener(
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
@@ -229,7 +223,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount(): void {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
     this.unsubscribeKeyboardOpen.remove();
     this.unsubscribeKeyboardClose.remove();
   }
@@ -293,11 +286,6 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
         this.props.route.params.category.subcategories
       )[0],
     });
-  };
-
-  onNavigationBlur = (): void => {
-    this.props.setTopbarLeft(null);
-    this.props.setTopbarRight(null);
   };
 
   onKeyboardOpen(): void {
@@ -711,7 +699,7 @@ class ComposePostcardScreenBase extends React.Component<Props, State> {
               {this.renderSubcategorySelector()}
 
               <FlatList
-                data={data.reverse()}
+                data={data}
                 renderItem={({ item }) => this.renderItem(item)}
                 keyExtractor={(item: PremadePostcardDesign, index: number) => {
                   return item.asset.uri + index.toString();

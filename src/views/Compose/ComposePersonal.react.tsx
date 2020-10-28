@@ -122,8 +122,6 @@ interface State {
 class ComposePersonalScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   private unsubscribeKeyboardOpen: EmitterSubscription;
 
   private unsubscribeKeyboardClose: EmitterSubscription;
@@ -171,7 +169,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
     };
 
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
-    this.onNavigationBlur = this.onNavigationBlur.bind(this);
     this.onKeyboardOpen = this.onKeyboardOpen.bind(this);
     this.onKeyboardClose = this.onKeyboardClose.bind(this);
     this.openDesignBottom = this.openDesignBottom.bind(this);
@@ -188,10 +185,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
     this.unsubscribeKeyboardOpen = Keyboard.addListener(
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
       this.onKeyboardOpen
@@ -204,7 +197,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
     this.unsubscribeKeyboardOpen.remove();
     this.unsubscribeKeyboardClose.remove();
   }
@@ -258,11 +250,6 @@ class ComposePersonalScreenBase extends React.Component<Props, State> {
       });
     }
   }
-
-  onNavigationBlur = () => {
-    this.props.setTopbarLeft(null);
-    this.props.setTopbarRight(null);
-  };
 
   onKeyboardOpen(): void {
     this.setTextState({ writing: true }, () => {

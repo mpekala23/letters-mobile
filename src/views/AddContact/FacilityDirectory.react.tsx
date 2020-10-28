@@ -47,8 +47,6 @@ export interface State {
 class FacilityDirectoryScreenBase extends React.Component<Props, State> {
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -67,11 +65,6 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.onNavigationBlur = this.onNavigationBlur.bind(this);
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
   }
 
   async componentDidMount() {
@@ -80,12 +73,7 @@ class FacilityDirectoryScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
-
-  onNavigationBlur = () => {
-    this.props.setTopbarRight(null);
-  };
 
   onNavigationFocus() {
     if (!this.props.facilityState.loaded) {

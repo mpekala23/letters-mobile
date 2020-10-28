@@ -56,8 +56,6 @@ export interface Props {
 class ReviewPostcardScreenBase extends React.Component<Props> {
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   constructor(props: Props) {
     super(props);
     this.doSend = this.doSend.bind(this);
@@ -65,15 +63,10 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
   }
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus = (): void => {
@@ -83,10 +76,6 @@ class ReviewPostcardScreenBase extends React.Component<Props> {
       enabled: true,
       blocking: true,
     });
-  };
-
-  onNavigationBlur = (): void => {
-    this.props.setTopbarRight(null);
   };
 
   async doSend(): Promise<void> {

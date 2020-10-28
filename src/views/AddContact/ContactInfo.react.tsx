@@ -57,8 +57,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   private scrollView = createRef<ScrollView>();
 
   constructor(props: Props) {
@@ -73,11 +71,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.onNavigationBlur = this.onNavigationBlur.bind(this);
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
     this.isExceedsNameCharLimit = this.isExceedsNameCharLimit.bind(this);
   }
 
@@ -87,7 +80,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
@@ -98,10 +90,6 @@ class ContactInfoScreenBase extends React.Component<Props, State> {
       action: this.onNextPress,
     });
   }
-
-  onNavigationBlur = () => {
-    this.props.setTopbarRight(null);
-  };
 
   onNextPress() {
     Segment.trackWithProperties('Add Contact - Click on Next', {

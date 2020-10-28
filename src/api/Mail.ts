@@ -631,9 +631,9 @@ export async function getSubcategoriesById(
   const subNames = Object.keys(data);
   for (let ix = 0; ix < subNames.length; ix += 1) {
     const subName = subNames[ix];
-    cleanData[subName] = data[subName].map((raw: RawDesign) =>
-      cleanDesign(raw, categoryId, subName)
-    );
+    cleanData[subName] = data[subName]
+      .map((raw: RawDesign) => cleanDesign(raw, categoryId, subName))
+      .reverse();
   }
   return cleanData;
 }

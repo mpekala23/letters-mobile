@@ -62,8 +62,6 @@ class RegisterAddressScreen extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   constructor(props: Props) {
     super(props);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
@@ -71,25 +69,16 @@ class RegisterAddressScreen extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
   }
 
   componentWillUnmount(): void {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus(): void {
     if (this.address1.current) this.address1.current.forceFocus();
     this.updateValid();
   }
-
-  onNavigationBlur = (): void => {
-    setTopbarRight(null);
-  };
 
   updateValid = (): void => {
     if (

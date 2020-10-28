@@ -112,10 +112,6 @@ const SelectRecipientBase = ({
       action: confirmPurchase,
       blocking: true,
     });
-
-    return () => {
-      setTopbarRight(null);
-    };
   }, [recipient]);
 
   const renderItem = ({

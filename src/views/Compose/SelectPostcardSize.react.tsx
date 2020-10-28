@@ -92,10 +92,6 @@ const SelectPostcardSizeBase = ({
         action: updatePostcardOption,
         blocking: true,
       });
-
-      return () => {
-        setTopbarRight(null);
-      };
     }, [])
   );
 

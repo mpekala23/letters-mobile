@@ -64,8 +64,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   private unsubscribeKeyboardOpen: EmitterSubscription;
 
   private unsubscribeKeyboardClose: EmitterSubscription;
@@ -92,10 +90,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       'focus',
       this.onNavigationFocus
     );
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
-    );
     this.unsubscribeKeyboardOpen = Keyboard.addListener(
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
       this.onKeyboardOpen
@@ -108,7 +102,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
     this.unsubscribeKeyboardOpen.remove();
     this.unsubscribeKeyboardClose.remove();
   }
@@ -161,10 +154,6 @@ class ComposeLetterScreenBase extends React.Component<Props, State> {
       this.props.navigation.navigate(Screens.ReviewLetter);
     }
   }
-
-  onNavigationBlur = () => {
-    this.props.setTopbarRight(null);
-  };
 
   onKeyboardOpen() {
     Animated.timing(this.state.keyboardOpacity, {

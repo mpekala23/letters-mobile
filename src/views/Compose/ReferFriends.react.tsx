@@ -47,7 +47,6 @@ const ReferFriendsScreenBase: React.FC<Props> = (props: Props) => {
     ) {
       requestReview();
     }
-    props.setTopbarRight(null);
   }, []);
 
   const genLottieView = () => {

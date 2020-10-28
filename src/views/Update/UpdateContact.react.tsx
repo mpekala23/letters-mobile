@@ -72,8 +72,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   private unsubscribeFocus: () => void;
 
-  private unsubscribeBlur: () => void;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -86,16 +84,10 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
     this.doDeleteContact = this.doDeleteContact.bind(this);
     this.doUpdateContact = this.doUpdateContact.bind(this);
     this.onNavigationFocus = this.onNavigationFocus.bind(this);
-    this.onNavigationBlur = this.onNavigationBlur.bind(this);
 
     this.unsubscribeFocus = this.props.navigation.addListener(
       'focus',
       this.onNavigationFocus
-    );
-
-    this.unsubscribeBlur = this.props.navigation.addListener(
-      'blur',
-      this.onNavigationBlur
     );
   }
 
@@ -105,7 +97,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.unsubscribeFocus();
-    this.unsubscribeBlur();
   }
 
   onNavigationFocus() {
@@ -117,10 +108,6 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
       blocking: true,
     });
   }
-
-  onNavigationBlur = () => {
-    this.props.setTopbarRight(null);
-  };
 
   setValid(val: boolean) {
     this.props.setTopbarRight({
