@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Dispatch } from 'react';
 import {
   Text,
   Keyboard,
@@ -28,6 +28,8 @@ import { PicUploadTypes } from '@components/PicUpload/PicUpload.react';
 import { popupAlert } from '@components/Alert/Alert.react';
 import { Validation, STATES_DROPDOWN } from '@utils';
 import * as Segment from 'expo-analytics-segment';
+import { UIActionTypes } from '@store/UI/UITypes';
+import { setTopbarRight } from '@store/UI/UIActions';
 import Styles from './UpdateContact.styles';
 
 type UpdateContactScreenNavigationProp = StackNavigationProp<
@@ -464,7 +466,13 @@ class UpdateContactScreenBase extends React.Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   contact: state.contact.active,
 });
-
-const UpdateContactScreen = connect(mapStateToProps)(UpdateContactScreenBase);
+const mapDispatchToProps = (dispatch: Dispatch<UIActionTypes>) => ({
+  setTopbarRight: (details: TopbarRight | null) =>
+    dispatch(setTopbarRight(details)),
+});
+const UpdateContactScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdateContactScreenBase);
 
 export default UpdateContactScreen;

@@ -9,4 +9,6 @@ const HomeStack = createStackNavigator();
 
 const StoreStack = createStackNavigator();
 
-export { RootTab, AuthStack, HomeStack, StoreStack };
+const ProfileStack = createStackNavigator();
+
+export { RootTab, AuthStack, HomeStack, StoreStack, ProfileStack };

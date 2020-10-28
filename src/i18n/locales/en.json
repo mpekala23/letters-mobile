@@ -3,7 +3,8 @@
     "home": "Home",
     "store": "Store",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "profile": "Profile"
   },
   "Error": {
     "network": "Network Error",

@@ -43,6 +43,7 @@ import {
   Validation,
 } from '@utils';
 import { setTopbarRight } from '@store/UI/UIActions';
+import { UIActionTypes } from '@store/UI/UITypes';
 import CommonStyles from './AddContact.styles';
 
 type ContactInmateInfoScreenNavigationProp = StackNavigationProp<

@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@styles';
 
-const userSize = 46;
+const userSize = 24;
+const referralSize = 42;
 const contactSize = 80;
 const singleContactSize = 130;
 const avatarSize = 30;
@@ -37,6 +38,15 @@ export default StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
   },
+  referralBackground: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: referralSize,
+    height: referralSize,
+    borderRadius: userSize / 2,
+    overflow: 'hidden',
+    backgroundColor: Colors.AMEELIO_LIGHT_GRAY,
+  },
   avatarBackground: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -66,6 +76,10 @@ export default StyleSheet.create({
   userPic: {
     width: userSize,
     height: userSize,
+  },
+  referralPic: {
+    width: referralSize,
+    height: referralSize,
   },
   avatarPic: {
     width: avatarSize,

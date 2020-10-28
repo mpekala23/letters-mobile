@@ -3,7 +3,8 @@
     "home": "Inicio",
     "store": "Tienda",
     "login": "Iniciar sesión",
-    "register": "Regístrate"
+    "register": "Regístrate",
+    "profile": "Perfil"
   },
   "Error": {
     "network": "Error de red",

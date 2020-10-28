@@ -2,11 +2,12 @@ import React from 'react';
 import { Text, View, Linking } from 'react-native';
 import { Typography } from '@styles';
 import { Button } from '@components';
-import { AppStackParamList, Screens } from '@utils/Screens';
+import { AppStackParamList, Screens, Tabs } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import i18n from '@i18n';
 import { SupportFAQTypes } from 'types';
 import Emoji from 'react-native-emoji';
+import { navigate } from '@utils';
 import Styles from './SupportFAQ.styles';
 
 type SupportFAQDetailScreenNavigationProp = StackNavigationProp<

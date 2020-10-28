@@ -16,6 +16,7 @@ export enum Tabs {
   Home = 'Home',
   Splash = 'Splash',
   Store = 'Store',
+  Profile = 'Profile',
 }
 
 export enum Screens {
@@ -143,79 +144,74 @@ export type AppStackParamList = {
 };
 
 export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
-  Begin: { title: '', profile: false, headerVisible: false },
-  Splash: { title: '', profile: false, headerVisible: false },
-  Login: { title: i18n.t('Screens.login'), profile: false },
-  Terms: { title: i18n.t('Screens.termsOfService'), profile: false },
-  Privacy: { title: i18n.t('Screens.privacyPolicy'), profile: false },
-  RegisterCreds: { title: i18n.t('Screens.register'), profile: false },
-  RegisterPersonal: { title: i18n.t('Screens.register'), profile: false },
-  RegisterAddress: { title: i18n.t('Screens.register'), profile: false },
-  ChooseCategory: { title: i18n.t('Screens.compose'), profile: false },
-  ChooseOption: { title: i18n.t('Screens.compose'), profile: false },
+  Begin: { title: '', headerVisible: false },
+  Splash: { title: '', headerVisible: false },
+  Login: { title: i18n.t('Screens.login') },
+  Terms: { title: i18n.t('Screens.termsOfService') },
+  Privacy: { title: i18n.t('Screens.privacyPolicy') },
+  RegisterCreds: { title: i18n.t('Screens.register'), customTopRight: true },
+  RegisterPersonal: { title: i18n.t('Screens.register'), customTopRight: true },
+  RegisterAddress: { title: i18n.t('Screens.register'), customTopRight: true },
+  ChooseCategory: { title: i18n.t('Screens.compose') },
+  ChooseOption: { title: i18n.t('Screens.compose') },
   ComposeLetter: {
     title: i18n.t('Screens.compose'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   ComposePersonal: {
     title: i18n.t('Screens.compose'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
+    customTopLeft: true,
   },
   ComposePostcard: {
     title: i18n.t('Screens.compose'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
+    customTopLeft: true,
   },
   ContactInfo: {
     title: i18n.t('Screens.contactInfo'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   ContactInmateInfo: {
     title: i18n.t('Screens.contactInmateInfo'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   ContactSelector: { title: i18n.t('Screens.contacts') },
   CreditPackStore: {
     title: i18n.t('Screens.creditPackStore'),
-    profile: false,
     tabsVisible: false,
   },
   CreditPackCheckoutWebView: {
     title: i18n.t('Screens.creditPackStore'),
-    profile: false,
   },
   CreditPackPurchaseSuccess: {
     title: i18n.t('Screens.creditPackStore'),
-    profile: false,
   },
-  DeliveryReporting: { title: '', profile: false },
-  FacilityDirectory: { title: '', profile: false },
+  DeliveryReporting: { title: '' },
+  FacilityDirectory: { title: '', tabsVisible: false, customTopRight: true },
   IntroContact: {
     title: i18n.t('Screens.introContact'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   InmateLocator: {
     title: i18n.t('Screens.inmateLocator'),
-    profile: false,
     tabsVisible: false,
   },
   Issues: {
     title: i18n.t('Screens.issues'),
-    profile: false,
     tabsVisible: false,
   },
   IssuesDetail: {
     title: '',
-    profile: false,
   },
   IssuesDetailSecondary: {
     title: '',
-    profile: false,
   },
   MailDetails: { title: i18n.t('Screens.letterDetails') },
   MailTracking: { title: i18n.t('Screens.tracking') },
@@ -227,79 +223,74 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
   },
   ReferFriends: {
     title: i18n.t('Screens.spreadTheWord'),
-    profile: false,
     tabsVisible: false,
   },
   ReviewLetter: {
     title: i18n.t('Screens.lastStep'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   ReviewPostcard: {
     title: i18n.t('Screens.reviewPostcard'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   ReviewContact: {
     title: i18n.t('Screens.reviewContact'),
-    profile: false,
     tabsVisible: false,
   },
   SelectPostcardSize: {
     title: i18n.t('Screens.compose'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   SelectRecipient: {
     title: i18n.t('Screens.selectRecipient'),
-    profile: false,
     tabsVisible: false,
   },
-  Setup: { title: '', profile: false },
+  Setup: { title: '' },
   SingleContact: { title: i18n.t('Screens.home') },
-  Store: { title: i18n.t('Screens.store'), profile: true },
-  SupportFAQ: { title: '', profile: false },
-  SupportFAQDetail: { title: '', profile: false },
+  Store: { title: i18n.t('Screens.store') },
+  SupportFAQ: { title: '' },
+  SupportFAQDetail: { title: '' },
   StoreItem: {
     title: i18n.t('Screens.storeItem'),
-    profile: false,
     tabsVisible: false,
   },
   StoreItemPreview: {
     title: i18n.t('Screens.storeItemPreview'),
-    profile: false,
     tabsVisible: false,
   },
   StoreItemPurchaseSuccess: {
     title: i18n.t('Screens.storeItemPreview'),
-    profile: false,
     tabsVisible: false,
   },
   TransactionHistory: { title: i18n.t('Screens.transactionHistory') },
   UpdateContact: {
     title: i18n.t('Screens.updateContact'),
-    profile: false,
     tabsVisible: false,
+    customTopRight: true,
   },
   UpdateProfile: {
     title: i18n.t('Screens.updateProfile'),
-    profile: false,
-    tabsVisible: false,
+    customTopRight: true,
   },
 };
 
 export function getDetailsFromRouteName(screen: string): RouteDetails {
   if (screen in mapRouteNameToDetails)
     return {
-      profile: true,
       headerVisible: true,
       tabsVisible: true,
+      customTopLeft: false,
+      customTopRight: false,
       ...mapRouteNameToDetails[screen as Screens],
     };
   return {
     title: '',
-    profile: false,
     headerVisible: true,
     tabsVisible: true,
+    customTopLeft: false,
+    customTopRight: false,
   };
 }

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '@store/types';
-import { AuthInfo, UserState } from '@store/User/UserTypes';
-import { navigationRef, navigate } from '@utils';
-import { setProfile } from '@components/Topbar';
+import { AuthInfo } from '@store/User/UserTypes';
+import { navigationRef, navigate, sleep } from '@utils';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeIcon from '@assets/navigation/Home';
 import StoreIcon from '@assets/navigation/Store';
 import ActiveStoreIcon from '@assets/navigation/ActiveStore';
 import ActiveHomeIcon from '@assets/navigation/ActiveHome';
+import { ProfilePic } from '@components';
+import { ProfilePicTypes } from 'types';
+import { Colors, Typography } from '@styles';
 
 import i18n from '@i18n';
 import {
@@ -19,12 +21,20 @@ import {
   Tabs,
 } from '@utils/Screens';
 import { SplashScreen } from '@views';
-import { GestureResponderEvent } from 'react-native';
+import store from '@store';
+import { setTopbarLeft, setTopbarRight } from '@store/UI/UIActions';
+import {
+  GestureResponderEvent,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { RootTab } from './Navigators';
 
 import Auth from './Auth';
 import Home from './Home';
 import Store from './Store';
+import Profile from './Profile';
 import TabIcon from './TabIcon.react';
 
 export { navigationRef, navigate };
@@ -33,21 +43,26 @@ export type RootStackParamList = AuthStackParamList & AppStackParamList;
 
 export interface Props {
   authInfo: AuthInfo;
-  userState: UserState;
+  firstName: string;
+  lastName: string;
+  profilePicUri?: string;
 }
 
-const NavigatorBase: React.FC<Props> = (props: Props) => {
+const NavigatorBase: React.FC<Props> = ({
+  authInfo,
+  firstName,
+  lastName,
+  profilePicUri,
+}: Props) => {
   const [tabsVisible, setTabsVisible] = useState(true);
   const [active, setActive] = useState(Tabs.Home);
+  const [authed, setAuthed] = useState(false);
 
   // Determine which views should be accessible
   let screens;
-  if (
-    props.authInfo.isLoadingToken ||
-    (props.authInfo.isLoggedIn && !props.authInfo.isLoaded)
-  ) {
+  if (authInfo.isLoadingToken || (authInfo.isLoggedIn && !authInfo.isLoaded)) {
     screens = <RootTab.Screen name={Tabs.Splash} component={SplashScreen} />;
-  } else if (!props.authInfo.isLoggedIn) {
+  } else if (!authInfo.isLoggedIn) {
     screens = <RootTab.Screen name={Tabs.Auth} component={Auth} />;
   } else {
     screens = (
@@ -58,17 +73,28 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           options={{
             tabBarButton: (tabProps) => {
               return (
-                <TabIcon
-                  name={i18n.t('Navigation.home')}
-                  svg={active === Tabs.Home ? ActiveHomeIcon : HomeIcon}
-                  active={Tabs.Home === active}
-                  onPress={(e: GestureResponderEvent) => {
-                    if (tabProps.onPress) {
-                      tabProps.onPress(e);
-                    }
-                    setActive(Tabs.Home);
-                  }}
-                />
+                <>
+                  <TabIcon
+                    name={i18n.t('Navigation.store')}
+                    svg={active === Tabs.Store ? ActiveStoreIcon : StoreIcon}
+                    active={Tabs.Store === active}
+                    onPress={() => {
+                      navigate(Tabs.Store);
+                      setActive(Tabs.Store);
+                    }}
+                  />
+                  <TabIcon
+                    name={i18n.t('Navigation.home')}
+                    svg={active === Tabs.Home ? ActiveHomeIcon : HomeIcon}
+                    active={Tabs.Home === active}
+                    onPress={(e: GestureResponderEvent) => {
+                      if (tabProps.onPress) {
+                        tabProps.onPress(e);
+                      }
+                      setActive(Tabs.Home);
+                    }}
+                  />
+                </>
               );
             },
           }}
@@ -77,19 +103,61 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           name={Tabs.Store}
           component={Store}
           options={{
+            tabBarButton: () => {
+              return null;
+            },
+          }}
+        />
+        <RootTab.Screen
+          name={Tabs.Profile}
+          component={Profile}
+          options={{
             tabBarButton: (tabProps) => {
               return (
-                <TabIcon
-                  name={i18n.t('Navigation.store')}
-                  svg={active === Tabs.Store ? ActiveStoreIcon : StoreIcon}
-                  active={Tabs.Store === active}
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
                   onPress={(e: GestureResponderEvent) => {
                     if (tabProps.onPress) {
                       tabProps.onPress(e);
                     }
-                    setActive(Tabs.Store);
+                    setActive(Tabs.Profile);
                   }}
-                />
+                >
+                  <View
+                    style={{
+                      borderWidth: active === Tabs.Profile ? 2 : 0,
+                      borderRadius: 24,
+                      borderColor: Colors.PINK_500,
+                      padding: 1,
+                    }}
+                  >
+                    <ProfilePic
+                      firstName={firstName}
+                      lastName={lastName}
+                      imageUri={profilePicUri}
+                      type={ProfilePicTypes.TabBar}
+                    />
+                  </View>
+                  <Text
+                    style={[
+                      active === Tabs.Profile
+                        ? Typography.FONT_SEMIBOLD
+                        : Typography.FONT_REGULAR,
+                      {
+                        color:
+                          active === Tabs.Profile
+                            ? Colors.AMEELIO_BLACK
+                            : Colors.GRAY_400,
+                      },
+                    ]}
+                  >
+                    {i18n.t('Navigation.profile')}
+                  </Text>
+                </TouchableOpacity>
               );
             },
           }}
@@ -97,23 +165,26 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
       </>
     );
   }
-
   return (
     <NavigationContainer
       ref={navigationRef}
       onStateChange={() => {
         const name = navigationRef.current?.getCurrentRoute()?.name as Screens;
         if (name) {
-          setProfile(!!getDetailsFromRouteName(name).profile);
           if (
             getDetailsFromRouteName(name).tabsVisible === undefined ||
             getDetailsFromRouteName(name).tabsVisible === true
           )
             setTabsVisible(true);
           else setTabsVisible(false);
+          if (!getDetailsFromRouteName(name).customTopLeft)
+            store.dispatch(setTopbarLeft(null));
+          if (!getDetailsFromRouteName(name).customTopRight)
+            store.dispatch(setTopbarRight(null));
         } else {
-          setProfile(true);
           setTabsVisible(true);
+          store.dispatch(setTopbarLeft(null));
+          store.dispatch(setTopbarRight(null));
         }
       }}
     >
@@ -129,6 +200,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           style: { height: 64 },
           keyboardHidesTabBar: true,
         }}
+        initialRouteName={Tabs.Splash}
       >
         {screens}
       </RootTab.Navigator>
@@ -138,7 +210,9 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   authInfo: state.user.authInfo,
-  userState: state.user,
+  firstName: state.user.user.firstName,
+  lastName: state.user.user.lastName,
+  profilePicUri: state.user.user.photo?.uri,
 });
 const Navigator = connect(mapStateToProps)(NavigatorBase);
 

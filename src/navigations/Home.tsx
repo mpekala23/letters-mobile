@@ -28,16 +28,11 @@ import {
   SupportFAQDetailScreen,
   SupportFAQScreen,
   UpdateContactScreen,
-  UpdateProfileScreen,
 } from '@views';
 import { HeaderLeft, HeaderRight, HeaderTitle } from '@components';
 import { BAR_HEIGHT } from '@utils/Constants';
 import { HomeStack } from './Navigators';
-import {
-  leftRightTransition,
-  topBottomTransition,
-  bottomTopTransition,
-} from './Transitions';
+import { leftRightTransition, bottomTopTransition } from './Transitions';
 
 const Home: React.FC = () => {
   return (
@@ -174,11 +169,6 @@ const Home: React.FC = () => {
         name={Screens.UpdateContact}
         component={UpdateContactScreen}
         options={{ cardStyleInterpolator: bottomTopTransition }}
-      />
-      <HomeStack.Screen
-        name={Screens.UpdateProfile}
-        component={UpdateProfileScreen}
-        options={{ cardStyleInterpolator: topBottomTransition }}
       />
       <HomeStack.Screen
         name={Screens.InmateLocator}

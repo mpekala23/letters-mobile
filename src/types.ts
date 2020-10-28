@@ -306,7 +306,7 @@ export interface UserReferralsInfo {
 
 // Miscelaneous
 export enum ProfilePicTypes {
-  Topbar = 'Topbar',
+  TabBar = 'TabBar',
   Contact = 'Contact',
   SingleContact = 'SingleContact',
   Avatar = 'Avatar',
@@ -390,7 +390,8 @@ export interface TopbarLeft {
 
 export interface RouteDetails {
   title: string;
-  profile?: boolean;
   headerVisible?: boolean;
   tabsVisible?: boolean;
+  customTopRight?: boolean;
+  customTopLeft?: boolean;
 }

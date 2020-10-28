@@ -18,7 +18,11 @@ export interface Props {
 function mapProfileTypeToStyle(type: ProfilePicTypes) {
   switch (type) {
     case ProfilePicTypes.ReferralDashboardConnection:
-    case ProfilePicTypes.Topbar:
+      return {
+        image: Styles.referralPic,
+        background: Styles.referralBackground,
+      };
+    case ProfilePicTypes.TabBar:
       return { image: Styles.userPic, background: Styles.userBackground };
     case ProfilePicTypes.ReferralDashboard:
       return {
@@ -93,19 +97,26 @@ const ProfilePic: React.FC<Props> = (props: Props) => {
       }
       style={mapProfileTypeToStyle(props.type).background}
     >
-      <TouchableOpacity
-        style={mapProfileTypeToStyle(props.type).background}
-        onPress={async () => {
-          if (props.disabled) return;
-          if (props.type === ProfilePicTypes.SingleContact)
-            navigate(Screens.UpdateContact);
-          else if (props.type === ProfilePicTypes.Topbar)
-            navigate(Screens.UpdateProfile);
-        }}
-        testID="profilePicture"
-      >
-        {insideCircle}
-      </TouchableOpacity>
+      {props.type === ProfilePicTypes.TabBar ? (
+        <View
+          style={mapProfileTypeToStyle(props.type).background}
+          testID="profilePicture"
+        >
+          {insideCircle}
+        </View>
+      ) : (
+        <TouchableOpacity
+          style={mapProfileTypeToStyle(props.type).background}
+          onPress={async () => {
+            if (props.disabled) return;
+            if (props.type === ProfilePicTypes.SingleContact)
+              navigate(Screens.UpdateContact);
+          }}
+          testID="profilePicture"
+        >
+          {insideCircle}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
