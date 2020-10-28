@@ -91,7 +91,6 @@ class ContactSelectorScreenBase extends React.Component<Props> {
       this.props.setUnrespondedNotifs([]);
       this.props.navigation.navigate(Screens.Issues);
     }
-
     if (!this.props.hasShownPrompt) {
       popupAlert({
         dynamicTitle: (
@@ -129,9 +128,6 @@ class ContactSelectorScreenBase extends React.Component<Props> {
     if (this.props.existingContacts.length === 0) {
       this.props.navigation.replace(Screens.IntroContact);
     }
-    getCategories().catch(() => {
-      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-    });
   }
 
   renderItem = ({ item }: { item: Contact; index: number }): JSX.Element => {

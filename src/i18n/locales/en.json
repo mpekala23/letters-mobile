@@ -229,6 +229,7 @@
     "zipcode": "Zip Code",
     "city": "City",
     "state": "State",
+    "stateOptional": "State (Optional)",
     "emailAddress": "E-mail Address",
     "password": "Password",
     "register": "Register",

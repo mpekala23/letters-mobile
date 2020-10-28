@@ -228,6 +228,7 @@
     "zipcode": "Código Postal",
     "city": "Ciudad",
     "state": "Estado",
+    "stateOptional": "Estado (Opcional)",
     "emailAddress": "Correo Electrónico",
     "password": "Contraseña",
     "register": "Regístrate",
