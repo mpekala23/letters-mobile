@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Text, FlatList, View } from 'react-native';
 import { Button, Icon, KeyboardAvoider } from '@components';
-import { AppStackParamList, Screens } from '@utils/Screens';
+import { AppStackParamList, Screens, Tabs } from '@utils/Screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors, Typography } from '@styles';
 import { AppState } from '@store/types';
@@ -91,6 +91,20 @@ class ContactSelectorScreenBase extends React.Component<Props> {
       this.props.setUnrespondedNotifs([]);
       this.props.navigation.navigate(Screens.Issues);
     }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  async onNavigationFocus() {
+    if (this.props.existingContacts.length === 0) {
+      this.props.navigation.replace(Screens.IntroContact);
+    }
+
+    getCategories().catch(() => {
+      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
+    });
 
     if (!this.props.hasShownPrompt) {
       popupAlert({
@@ -108,7 +122,7 @@ class ContactSelectorScreenBase extends React.Component<Props> {
         buttons: [
           {
             text: i18n.t('Alert.exploreStoreNow'),
-            onPress: () => this.props.navigation.navigate('Store'),
+            onPress: () => this.props.navigation.navigate(Tabs.Store),
           },
           {
             text: i18n.t('Alert.noThanks'),
@@ -119,19 +133,6 @@ class ContactSelectorScreenBase extends React.Component<Props> {
       });
       this.props.setShownPrompt(true);
     }
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFocus();
-  }
-
-  async onNavigationFocus() {
-    if (this.props.existingContacts.length === 0) {
-      this.props.navigation.replace(Screens.IntroContact);
-    }
-    getCategories().catch(() => {
-      dropdownError({ message: i18n.t('Error.cantRefreshCategories') });
-    });
   }
 
   renderItem = ({ item }: { item: Contact; index: number }): JSX.Element => {

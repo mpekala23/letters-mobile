@@ -5,12 +5,6 @@ import { AuthInfo, UserState } from '@store/User/UserTypes';
 import { navigationRef, navigate } from '@utils';
 import { setProfile } from '@components/Topbar';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeIcon from '@assets/navigation/Home';
-import StoreIcon from '@assets/navigation/Store';
-import ActiveStoreIcon from '@assets/navigation/ActiveStore';
-import ActiveHomeIcon from '@assets/navigation/ActiveHome';
-
-import i18n from '@i18n';
 import {
   Screens,
   AuthStackParamList,
@@ -19,9 +13,10 @@ import {
   Tabs,
 } from '@utils/Screens';
 import { SplashScreen } from '@views';
-import { GestureResponderEvent } from 'react-native';
-import { RootTab } from './Navigators';
+import { Text } from 'react-native';
+import { Colors, Typography } from '@styles';
 
+import { RootTab } from './Navigators';
 import Auth from './Auth';
 import Home from './Home';
 import Store from './Store';
@@ -38,9 +33,7 @@ export interface Props {
 
 const NavigatorBase: React.FC<Props> = (props: Props) => {
   const [tabsVisible, setTabsVisible] = useState(true);
-  const [active, setActive] = useState(Tabs.Home);
 
-  // Determine which views should be accessible
   let screens;
   if (
     props.authInfo.isLoadingToken ||
@@ -52,48 +45,8 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
   } else {
     screens = (
       <>
-        <RootTab.Screen
-          name={Tabs.Home}
-          component={Home}
-          options={{
-            tabBarButton: (tabProps) => {
-              return (
-                <TabIcon
-                  name={i18n.t('Navigation.home')}
-                  svg={active === Tabs.Home ? ActiveHomeIcon : HomeIcon}
-                  active={Tabs.Home === active}
-                  onPress={(e: GestureResponderEvent) => {
-                    if (tabProps.onPress) {
-                      tabProps.onPress(e);
-                    }
-                    setActive(Tabs.Home);
-                  }}
-                />
-              );
-            },
-          }}
-        />
-        <RootTab.Screen
-          name={Tabs.Store}
-          component={Store}
-          options={{
-            tabBarButton: (tabProps) => {
-              return (
-                <TabIcon
-                  name={i18n.t('Navigation.store')}
-                  svg={active === Tabs.Store ? ActiveStoreIcon : StoreIcon}
-                  active={Tabs.Store === active}
-                  onPress={(e: GestureResponderEvent) => {
-                    if (tabProps.onPress) {
-                      tabProps.onPress(e);
-                    }
-                    setActive(Tabs.Store);
-                  }}
-                />
-              );
-            },
-          }}
-        />
+        <RootTab.Screen name={Tabs.Home} component={Home} />
+        <RootTab.Screen name={Tabs.Store} component={Store} />
       </>
     );
   }
@@ -124,9 +77,29 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
             route.name !== Tabs.Splash &&
             tabsVisible,
           tabBarVisibilityAnimationConfig: {},
+          tabBarIcon: ({ focused }: { focused: boolean }) => {
+            return <TabIcon name={route.name} active={focused} />;
+          },
+          tabBarLabel: ({ focused }: { focused: boolean }) => {
+            return (
+              <Text
+                style={[
+                  focused ? Typography.FONT_SEMIBOLD : Typography.FONT_REGULAR,
+                  {
+                    color: focused ? Colors.AMEELIO_BLACK : Colors.GRAY_400,
+                    bottom: 4,
+                  },
+                ]}
+              >
+                {route.name}
+              </Text>
+            );
+          },
         })}
         tabBarOptions={{
-          style: { height: 64 },
+          style: {
+            height: 64,
+          },
           keyboardHidesTabBar: true,
         }}
       >
