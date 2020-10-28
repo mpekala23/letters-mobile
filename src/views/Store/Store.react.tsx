@@ -8,11 +8,10 @@ import { AppState } from '@store/types';
 import { Colors, Typography } from '@styles';
 import { Category } from 'types';
 import { AppStackParamList, Screens } from '@utils/Screens';
-import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
-import Styles from './Store.styles';
 
 type StoreScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -30,6 +29,7 @@ function renderCategory(
   navigation: StoreScreenNavigationProp
 ): JSX.Element {
   const designs = Object.values(category.subcategories).flat();
+
   return (
     <View>
       <Text
@@ -66,9 +66,16 @@ const StoreScreenBase: React.FC<Props> = ({
   coins,
   categories,
 }: Props) => {
+  const [scrollPos] = useState(new Animated.Value(136));
+
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollPos } } }],
+    { useNativeDriver: true }
+  );
+
   return (
     <View>
-      <FlatList
+      <Animated.FlatList
         ListHeaderComponent={() => {
           return (
             <View style={{ marginHorizontal: 16, paddingBottom: 16 }}>
@@ -81,18 +88,35 @@ const StoreScreenBase: React.FC<Props> = ({
             </View>
           );
         }}
+        onScroll={onScroll}
         data={categories}
         renderItem={({ item }) => renderCategory(item, navigation)}
         keyExtractor={(item) => item.name}
       />
-      <Button
-        buttonText={i18n.t('Premium.viewHistory')}
-        containerStyle={Styles.viewHistoryButton}
-        reverse
-        onPress={() => {
-          navigation.navigate(Screens.TransactionHistory);
+      <Animated.View
+        style={{
+          transform: [
+            {
+              translateY: scrollPos.interpolate({
+                inputRange: [0, 1000],
+                outputRange: [136, -1000 + 136],
+              }),
+            },
+          ],
+          right: 16,
+          width: 129,
+          position: 'absolute',
+          elevation: 0,
         }}
-      />
+      >
+        <Button
+          buttonText={i18n.t('Premium.viewHistory')}
+          reverse
+          onPress={() => {
+            navigation.navigate(Screens.TransactionHistory);
+          }}
+        />
+      </Animated.View>
     </View>
   );
 };

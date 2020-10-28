@@ -96,6 +96,7 @@ const TransactionHistoryBase: React.FC<Props> = ({
               />
             );
           }}
+          keyExtractor={(item) => item.date + item.id.toString()}
         />
       ) : (
         <TransactionPlaceholder />
@@ -111,6 +112,7 @@ const TransactionHistoryBase: React.FC<Props> = ({
           renderItem={({ item }) => {
             return <StripeTransactionHistoryCard transaction={item} />;
           }}
+          keyExtractor={(item) => item.date + item.id.toString()}
         />
       ) : (
         <TransactionPlaceholder />

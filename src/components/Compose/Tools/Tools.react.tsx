@@ -72,7 +72,9 @@ const ComposeTools: React.FC<Props> = (props: Props) => {
           style={[Styles.keyboardButtonItem, { flex: 1 }]}
           onPress={Keyboard.dismiss}
         >
-          <Icon svg={CheckIcon} />
+          <Text style={[Typography.FONT_BOLD, { fontSize: 16 }]}>
+            {i18n.t('Compose.done')}
+          </Text>
         </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>

@@ -126,7 +126,7 @@ const NavigatorBase: React.FC<Props> = (props: Props) => {
           tabBarVisibilityAnimationConfig: {},
         })}
         tabBarOptions={{
-          style: { height: 64 },
+          style: { height: 64, elevation: 1000 },
           keyboardHidesTabBar: true,
         }}
       >

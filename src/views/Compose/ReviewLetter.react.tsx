@@ -160,7 +160,7 @@ class ReviewLetterScreenBase extends React.Component<Props> {
             {i18n.t('Compose.preview')}
           </Text>
           <GrayBar />
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text
               style={[
                 Typography.FONT_REGULAR,

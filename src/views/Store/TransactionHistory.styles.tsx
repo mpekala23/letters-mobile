@@ -5,7 +5,7 @@ export default StyleSheet.create({
   trueBackground: {
     flex: 1,
     backgroundColor: 'white',
-    paddingVertical: 16,
+    paddingTop: 16,
   },
   helpedContainer: {
     paddingHorizontal: 16,
