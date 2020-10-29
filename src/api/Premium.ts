@@ -147,7 +147,8 @@ export async function getPremiumTransactions(): Promise<PremiumTransaction[]> {
   }
   const transactions = (body.data as RawPremiumTransaction[])
     .filter((raw) => raw.premium)
-    .map((raw) => cleanPremiumTransaction(raw));
+    .map((raw) => cleanPremiumTransaction(raw))
+    .reverse();
   store.dispatch(setPremiumTransactions(transactions));
   store.dispatch(stopAction(EntityTypes.PremiumTransactions));
   return transactions;
@@ -197,9 +198,9 @@ export async function getStripeTransactions(): Promise<StripeTransaction[]> {
     store.dispatch(stopAction(EntityTypes.StripeTransactions));
     throw body;
   }
-  const transactions = (body.data as RawStripeTransaction[]).map((raw) =>
-    cleanStripeTransaction(raw)
-  );
+  const transactions = (body.data as RawStripeTransaction[])
+    .map((raw) => cleanStripeTransaction(raw))
+    .reverse();
   store.dispatch(setStripeTransactions(transactions));
   store.dispatch(stopAction(EntityTypes.StripeTransactions));
   return transactions;

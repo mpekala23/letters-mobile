@@ -83,7 +83,7 @@ const TransactionHistoryBase: React.FC<Props> = ({
         <FlatList
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={premiumTransactions.reverse()}
+          data={premiumTransactions}
           renderItem={({ item }) => {
             return (
               <PremiumTransactionHistoryCard
@@ -107,7 +107,7 @@ const TransactionHistoryBase: React.FC<Props> = ({
         <FlatList
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          data={stripeTransactions.reverse()}
+          data={stripeTransactions}
           renderItem={({ item }) => {
             return <StripeTransactionHistoryCard transaction={item} />;
           }}
