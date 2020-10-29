@@ -19,6 +19,7 @@ import { setActiveById as setActiveMailById } from '@store/Mail/MailActions';
 import { MailActionTypes } from '@store/Mail/MailTypes';
 import { ContactActionTypes } from '@store/Contact/ContactTypes';
 import Sentry from 'sentry-expo';
+import { calculateFamiliesHelped } from '@utils';
 import Styles from './TransactionHistory.styles';
 
 type TransactionHistoryScreenNavigationProp = StackNavigationProp<
@@ -56,27 +57,25 @@ const TransactionHistoryBase: React.FC<Props> = ({
       });
   }, []);
 
-  const calculateFamiliesHelped = () => {
+  const getTotalFamiliesHelped = () => {
     // TODO refactor this after stripe transactions are incorporated
-    const PROFIT_PER_COIN = 0.05;
-    const FAMILY_WEEKLY_COST = 0.9;
-    const totalSpent = premiumTransactions
-      .map((transaction) => transaction.price)
-      .reduce((prev, curr) => prev + curr);
-    return Math.round((totalSpent * PROFIT_PER_COIN) / FAMILY_WEEKLY_COST);
+    const totalCoins = stripeTransactions
+      .map((transaction) => transaction.pack.coins)
+      .reduce((prev, curr) => prev + curr, 0);
+    return calculateFamiliesHelped(totalCoins);
   };
 
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.helpedContainer}>
-        <Text style={[Typography.FONT_MEDIUM, Styles.familiesHelpedText]}>
+        <Text style={[Typography.FONT_SEMIBOLD, Styles.familiesHelpedText]}>
           {i18n.t('Premium.familiesHelped')}
         </Text>
         <Text style={[Typography.FONT_MEDIUM, Styles.familiesHelpedNumber]}>
-          {calculateFamiliesHelped()}
+          {getTotalFamiliesHelped()}
         </Text>
       </View>
-      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.sectionHeadingText]}>
         {i18n.t('Premium.purchases')}
       </Text>
       {!isLoadingPremiumTransactions ? (
@@ -96,11 +95,18 @@ const TransactionHistoryBase: React.FC<Props> = ({
               />
             );
           }}
+          ListEmptyComponent={() => {
+            return (
+              <View>
+                <Text>{i18n.t('Premium.emptyListPurchases')}</Text>
+              </View>
+            );
+          }}
         />
       ) : (
         <TransactionPlaceholder />
       )}
-      <Text style={[Typography.FONT_BOLD, Styles.sectionHeadingText]}>
+      <Text style={[Typography.FONT_SEMIBOLD, Styles.sectionHeadingText]}>
         {i18n.t('Premium.transactions')}
       </Text>
       {!isLoadingStripeTransactions ? (
@@ -110,6 +116,13 @@ const TransactionHistoryBase: React.FC<Props> = ({
           data={stripeTransactions}
           renderItem={({ item }) => {
             return <StripeTransactionHistoryCard transaction={item} />;
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <View>
+                <Text>{i18n.t('Premium.emptyListTransactions')}</Text>
+              </View>
+            );
           }}
         />
       ) : (

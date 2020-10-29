@@ -43,10 +43,7 @@ const CreditPackPurchaseSuccess: React.FC<Props> = ({
         onPress={() => {
           navigation.reset({
             index: 0,
-            routes: [
-              { name: Screens.ContactSelector },
-              { name: Screens.SingleContact },
-            ],
+            routes: [{ name: Screens.Store }],
           });
         }}
       />

@@ -5,6 +5,7 @@ import {
   StripeTransaction,
 } from 'types';
 import {
+  ADD_STRIPE_TRANSACTION,
   SET_PACKS,
   SET_PREMIUM_CATEGORIES,
   SET_PREMIUM_TRANSACTIONS,
@@ -46,6 +47,15 @@ export function setStripeTransactions(
   return {
     type: SET_STRIPE_TRANSACTIONS,
     payload: transactions,
+  };
+}
+
+export function addStripeTransaction(
+  transaction: StripeTransaction
+): PremiumActionTypes {
+  return {
+    type: ADD_STRIPE_TRANSACTION,
+    payload: transaction,
   };
 }
 

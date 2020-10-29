@@ -194,8 +194,8 @@ export const mapRouteNameToDetails: Record<Screens, RouteDetails> = {
     profile: false,
     tabsVisible: false,
   },
-  DeliveryReporting: { title: '', profile: false },
-  FacilityDirectory: { title: '', profile: false },
+  DeliveryReporting: { title: '', profile: false, tabsVisible: false },
+  FacilityDirectory: { title: '', profile: false, tabsVisible: false },
   IntroContact: {
     title: i18n.t('Screens.introContact'),
     profile: false,
