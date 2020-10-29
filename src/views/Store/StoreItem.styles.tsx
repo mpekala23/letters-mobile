@@ -19,8 +19,8 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   line: {
-    borderWidth: 0.4,
-    borderColor: Colors.GRAY_300,
+    borderWidth: 1,
+    borderColor: Colors.GRAY_200,
     marginTop: 'auto',
   },
 });

@@ -190,7 +190,7 @@ export default StyleSheet.create({
   },
   premiumCardBox: {
     width: 120,
-    height: 144,
+    height: 160,
     position: 'absolute',
     borderRadius: 4,
     zIndex: 3,

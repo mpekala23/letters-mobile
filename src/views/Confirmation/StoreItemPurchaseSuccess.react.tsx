@@ -37,7 +37,10 @@ const StoreItemPurchaseSuccessScreen: React.FC<Props> = ({
           // TODO: redirect to Mark's transaction history page
           navigation.reset({
             index: 0,
-            routes: [{ name: Screens.Store }],
+            routes: [
+              { name: Screens.Store },
+              { name: Screens.TransactionHistory },
+            ],
           });
         }}
       />

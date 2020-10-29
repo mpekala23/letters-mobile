@@ -36,19 +36,19 @@ const CreditPackCheckoutWebViewBase = ({
   route,
 }: Props) => {
   const [height, setHeight] = useState('0%');
+
   const { pack } = route.params;
-  const handleChange = (e: WebViewNavigation) => {
-    if (
-      !e.loading &&
-      e.url.indexOf(url.resolve(GENERAL_URL, `stripe/success`)) !== -1
-    ) {
+  const handleChange = (e: WebViewNavigation): void => {
+    if (e.loading) {
+      return;
+    }
+    if (e.url.indexOf(url.resolve(GENERAL_URL, `stripe/success`)) !== -1) {
       addCoins(pack.coins);
       navigation.reset({
         index: 0,
         routes: [{ name: Screens.CreditPackPurchaseSuccess }],
       });
     } else if (
-      !e.loading &&
       e.url.indexOf(url.resolve(GENERAL_URL, `stripe/cancel`)) !== -1
     ) {
       navigation.goBack();

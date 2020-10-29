@@ -521,6 +521,8 @@
     "viewHistory": "Ver historial",
     "familiesHelped": "Familias que ayudaste",
     "purchases": "Compras",
-    "transactions": "Contribuciones"
+    "emptyListPurchases": "Aún no has realizado ninguna compra.",
+    "transactions": "Contribuciones",
+    "emptyListTransactions": "Aún no has realizado ninguna contribución."
   }
 }

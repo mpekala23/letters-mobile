@@ -482,7 +482,7 @@
   },
   "StoreItem": {
     "description": "Description",
-    "viewBtn": "View",
+    "viewBtn": "Preview Item",
     "purchaseBtn": "Checkout"
   },
   "StoreItemPurchaseSuccess": {
@@ -519,6 +519,8 @@
     "viewHistory": "View history",
     "familiesHelped": "Families helped",
     "purchases": "Purchases",
-    "transactions": "Transactions"
+    "emptyListPurchases": "You have not made any purchases yet.",
+    "transactions": "Contributions",
+    "emptyListTransactions": "You have not made any contributions yet."
   }
 }
