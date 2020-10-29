@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import i18n from '@i18n';
+import Styles from './Store.styles';
 
 type StoreScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -94,20 +95,19 @@ const StoreScreenBase: React.FC<Props> = ({
         keyExtractor={(item) => item.name}
       />
       <Animated.View
-        style={{
-          transform: [
-            {
-              translateY: scrollPos.interpolate({
-                inputRange: [0, 1000],
-                outputRange: [136, -1000 + 136],
-              }),
-            },
-          ],
-          right: 16,
-          width: 129,
-          position: 'absolute',
-          elevation: 0,
-        }}
+        style={[
+          {
+            transform: [
+              {
+                translateY: scrollPos.interpolate({
+                  inputRange: [0, 1000],
+                  outputRange: [136, -1000 + 136],
+                }),
+              },
+            ],
+          },
+          Styles.animatedScrollContainer,
+        ]}
       >
         <Button
           buttonText={i18n.t('Premium.viewHistory')}

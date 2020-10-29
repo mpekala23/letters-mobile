@@ -6,4 +6,10 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     overflow: 'hidden',
   },
+  animatedScrollContainer: {
+    right: 16,
+    width: 129,
+    position: 'absolute',
+    elevation: 0,
+  },
 });
