@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList, Screens } from '@utils/Screens';
@@ -20,7 +20,6 @@ interface Props {
 const StoreItemPurchaseSuccessScreen: React.FC<Props> = ({
   navigation,
 }: Props) => {
-  useEffect(() => console.log('here'));
   return (
     <View style={Styles.trueBackground}>
       <View style={Styles.contentBackground}>
