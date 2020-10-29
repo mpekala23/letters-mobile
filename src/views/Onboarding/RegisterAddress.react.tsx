@@ -255,9 +255,8 @@ class RegisterAddressScreen extends React.Component<Props, State> {
               ) : (
                 <Input
                   ref={this.stateInput}
-                  placeholder={i18n.t('RegisterScreen.state')}
+                  placeholder={i18n.t('RegisterScreen.stateOptional')}
                   parentStyle={{ flex: 5, marginRight: 4 }}
-                  required
                   validate={Validation.State}
                   onValid={this.updateValid}
                   onInvalid={this.updateValid}

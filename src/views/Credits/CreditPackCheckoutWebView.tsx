@@ -9,9 +9,11 @@ import url from 'url';
 import { GENERAL_URL } from '@api/Common';
 import { AppState } from '@store/types';
 import { connect } from 'react-redux';
-import { PremiumPack } from 'types';
+import { PremiumPack, StripeTransaction } from 'types';
 import { addPremiumCoins } from '@store/User/UserActions';
 import { UserActionTypes } from '@store/User/UserTypes';
+import { addStripeTransaction } from '@store/Premium/PremiumActions';
+import { PremiumActionTypes } from '@store/Premium/PremiumTypes';
 
 type CreditPackCheckoutWebViewNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -27,6 +29,7 @@ interface Props {
     };
   };
   addCoins: (coins: number) => void;
+  addTransaction: (transaction: StripeTransaction) => void;
 }
 
 const CreditPackCheckoutWebViewBase = ({
@@ -34,21 +37,29 @@ const CreditPackCheckoutWebViewBase = ({
   navigation,
   email,
   route,
+  addTransaction,
 }: Props) => {
   const [height, setHeight] = useState('0%');
+
   const { pack } = route.params;
-  const handleChange = (e: WebViewNavigation) => {
-    if (
-      !e.loading &&
-      e.url.indexOf(url.resolve(GENERAL_URL, `stripe/success`)) !== -1
-    ) {
+  const handleChange = (e: WebViewNavigation): void => {
+    if (e.loading) {
+      return;
+    }
+    if (e.url.indexOf(url.resolve(GENERAL_URL, `stripe/success`)) !== -1) {
       addCoins(pack.coins);
+      addTransaction({
+        id: 99,
+        date: new Date().toISOString(),
+        failedReason: null,
+        pack: { ...pack, price: pack.price / 100 },
+        status: 'success',
+      } as StripeTransaction);
       navigation.reset({
         index: 0,
         routes: [{ name: Screens.CreditPackPurchaseSuccess }],
       });
     } else if (
-      !e.loading &&
       e.url.indexOf(url.resolve(GENERAL_URL, `stripe/cancel`)) !== -1
     ) {
       navigation.goBack();
@@ -97,9 +108,13 @@ const mapStateToProps = (state: AppState) => ({
   email: state.user.user.email,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<UserActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<UserActionTypes | PremiumActionTypes>
+) => {
   return {
     addCoins: (coins: number) => dispatch(addPremiumCoins(coins)),
+    addTransaction: (transaction: StripeTransaction) =>
+      dispatch(addStripeTransaction(transaction)),
   };
 };
 

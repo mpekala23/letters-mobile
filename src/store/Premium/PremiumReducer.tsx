@@ -6,6 +6,7 @@ import {
   PremiumActionTypes,
   PremiumState,
   SET_SHOWN_PROMPT,
+  ADD_STRIPE_TRANSACTION,
 } from './PremiumTypes';
 
 const initialState: PremiumState = {
@@ -21,6 +22,11 @@ export default function PremiumReducer(
   action: PremiumActionTypes
 ): PremiumState {
   switch (action.type) {
+    case ADD_STRIPE_TRANSACTION:
+      return {
+        ...state,
+        stripeTransactions: [action.payload, ...state.stripeTransactions],
+      };
     case SET_PACKS:
       return {
         ...state,

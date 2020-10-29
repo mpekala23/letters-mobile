@@ -18,7 +18,7 @@ const MailingAddressPreview = ({ recipient, style }: Props): ReactElement => {
         style={[Typography.FONT_REGULAR, { fontSize: 14 }]}
         numberOfLines={5}
       >
-        {recipient.firstName} {recipient.lastName}, {recipient.inmateNumber}{' '}
+        To: {recipient.firstName} {recipient.lastName}, {recipient.inmateNumber}{' '}
         {'\n'}
         {recipient.facility.name}
         {unitInfo}

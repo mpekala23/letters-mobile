@@ -11,6 +11,7 @@ export const SET_PREMIUM_CATEGORIES = 'premium/set_categories';
 export const SET_PREMIUM_TRANSACTIONS = 'premium/set_premium_transactions';
 export const SET_STRIPE_TRANSACTIONS = 'premium/set_stripe_transactions';
 export const SET_SHOWN_PROMPT = 'premium/set_shown_prompt';
+export const ADD_STRIPE_TRANSACTION = 'premium/add_stripe_transactions';
 
 export interface PremiumState {
   premiumPacks: PremiumPack[];
@@ -40,12 +41,18 @@ interface SetStripeTransactionsAction {
   payload: StripeTransaction[];
 }
 
+interface AddStripeTransactionsAction {
+  type: typeof ADD_STRIPE_TRANSACTION;
+  payload: StripeTransaction;
+}
+
 interface SetShownPromptAction {
   type: typeof SET_SHOWN_PROMPT;
   payload: boolean;
 }
 
 export type PremiumActionTypes =
+  | AddStripeTransactionsAction
   | SetPacksAction
   | SetPremiumCategoriesAction
   | SetPremiumTransactionsAction

@@ -16,6 +16,7 @@ import GoldenBirdCoin from '@assets/views/Premium/GoldenBirdCoin';
 import { checkIfLoading } from '@store/selectors';
 import { dropdownError } from '@components/Dropdown/Dropdown.react';
 import PremiumPackStorePlaceholder from '@components/Loaders/PremiumPackStorePlaceholder';
+import { calculateFamiliesHelped } from '@utils';
 import Styles from './CreditPackStore.styles';
 
 type CreditPackStoreScreenNavigationProp = StackNavigationProp<
@@ -36,9 +37,6 @@ const CreditPackStoreBase = ({
 }: Props) => {
   const [selected, setSelected] = useState<PremiumPack>();
 
-  const FAMILY_MONTHLY_COST = 1.65;
-  const PROFIT_COIN = 0.053;
-
   useEffect(() => {
     async function fetchPremiumPacks() {
       try {
@@ -47,14 +45,10 @@ const CreditPackStoreBase = ({
         dropdownError({ message: i18n.t('Error.cantLoadPremiumPacks') });
       }
     }
-    if (!isLoadingPremiumPacks) {
+    if (!isLoadingPremiumPacks && packs.length === 0) {
       fetchPremiumPacks();
     }
   }, []);
-
-  const calculateFamiliesHelped = (totalCoins: number): number => {
-    return Math.round((totalCoins * PROFIT_COIN) / FAMILY_MONTHLY_COST);
-  };
 
   const renderItem = ({
     item,

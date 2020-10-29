@@ -35,7 +35,7 @@ function renderCategory(
     <View>
       <Text
         style={[
-          Typography.FONT_BOLD,
+          Typography.FONT_SEMIBOLD,
           { fontSize: 24, color: Colors.AMEELIO_BLACK, paddingLeft: 16 },
         ]}
       >

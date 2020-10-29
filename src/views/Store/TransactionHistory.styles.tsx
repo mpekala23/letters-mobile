@@ -21,5 +21,6 @@ export default StyleSheet.create({
   sectionHeadingText: {
     paddingLeft: 16,
     fontSize: 21,
+    marginTop: 16,
   },
 });

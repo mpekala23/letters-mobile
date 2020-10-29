@@ -1,7 +1,6 @@
 import i18n from '@i18n';
 
 const REFERRERS = [
-  i18n.t('Referrers.ambassador'),
   i18n.t('Referrers.recommendation'),
   i18n.t('Referrers.lovedOne'),
   i18n.t('Referrers.socialMedia'),

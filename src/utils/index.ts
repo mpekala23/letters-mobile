@@ -474,3 +474,10 @@ export function findPostcardSizeOption(key: string): PostcardSizeOption {
 export function getPostcardDesignImage(design: PostcardDesign): Image {
   return design.type === 'premade_postcard' ? design.thumbnail : design.asset;
 }
+
+const FAMILY_MONTHLY_COST = 2;
+const PROFIT_COIN = 0.05;
+
+export function calculateFamiliesHelped(totalCoins: number): number {
+  return Math.round((totalCoins * PROFIT_COIN) / FAMILY_MONTHLY_COST);
+}

@@ -59,9 +59,11 @@ const StoreItemBase: React.FC<Props> = ({
       />
       <View style={Styles.container}>
         <View style={Styles.title}>
-          <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
-            {capitalize(item.name)}
-          </Text>
+          <View style={{ flex: 1 }}>
+            <Text style={[Typography.FONT_BOLD, { fontSize: 18 }]}>
+              {capitalize(item.name)}
+            </Text>
+          </View>
           <Button
             reverse
             buttonText={i18n.t('StoreItem.viewBtn')}

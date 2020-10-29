@@ -19,7 +19,7 @@ const PremiumSubcategorySelector: React.FC<Props> = ({
   handlePress,
 }: Props) => {
   return (
-    <TouchableOpacity style={{ width: 142, height: 180 }} onPress={handlePress}>
+    <TouchableOpacity style={{ width: 142, height: 195 }} onPress={handlePress}>
       <View
         style={[
           CardStyles.shadow,
@@ -38,10 +38,10 @@ const PremiumSubcategorySelector: React.FC<Props> = ({
           source={design.thumbnail}
           viewStyle={{ height: 84 }}
         />
-        <View style={{ padding: 8, flex: 1 }}>
+        <View style={{ padding: 8, flex: 1, justifyContent: 'space-between' }}>
           <AdjustableText
-            numberOfLines={1}
-            style={[Typography.FONT_BOLD, { fontSize: 14 }]}
+            numberOfLines={2}
+            style={[Typography.FONT_SEMIBOLD, { fontSize: 14 }]}
           >
             {capitalize(design.name)}
           </AdjustableText>
@@ -49,7 +49,6 @@ const PremiumSubcategorySelector: React.FC<Props> = ({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginTop: 2,
             }}
           >
             <View style={{ width: 12, height: 12, marginRight: 3 }}>

@@ -1,7 +1,7 @@
 {
   "Navigation": {
     "home": "Home",
-    "store": "Store",
+    "store": "Gift Shop",
     "login": "Login",
     "register": "Register"
   },
@@ -202,7 +202,6 @@
     "goSendYourFirstLetter": "Go send your first letter."
   },
   "Referrers": {
-    "ambassador": "Heard from an Ameelio Ambassador",
     "recommendation": "Recommendation from Friends or Family",
     "lovedOne": "Incarcerated Loved-One",
     "socialMedia": "Facebook/Instagram",
@@ -230,6 +229,7 @@
     "zipcode": "Zip Code",
     "city": "City",
     "state": "State",
+    "stateOptional": "State (Optional)",
     "emailAddress": "E-mail Address",
     "password": "Password",
     "register": "Register",
@@ -408,7 +408,7 @@
     "yourOwnLettersAndPhotos": "Your own letters and photos.",
     "dueToTDCJ": "Due to a TDCJ policy, loved ones in Texas state prisons are not allowed to receive postcards. Only",
     "willBeAccepted": "letters will be accepted.",
-    "stickers": "Stickers",
+    "stickers": "Emojis",
     "layouts": "Layouts",
     "havingTroubleWithCategories": "We're having trouble loading the available categories. You can still send Personal letters and photos, but may want to check your wifi and try again to load our postcard library.",
     "sendPersonalLettersOrPhotos": "Send personal letters or photos",
@@ -482,7 +482,7 @@
   },
   "StoreItem": {
     "description": "Description",
-    "viewBtn": "View",
+    "viewBtn": "Preview Item",
     "purchaseBtn": "Checkout"
   },
   "StoreItemPurchaseSuccess": {
@@ -519,6 +519,8 @@
     "viewHistory": "View history",
     "familiesHelped": "Families helped",
     "purchases": "Purchases",
-    "transactions": "Transactions"
+    "emptyListPurchases": "You have not made any purchases yet.",
+    "transactions": "Contributions",
+    "emptyListTransactions": "You have not made any contributions yet."
   }
 }

@@ -275,10 +275,12 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
   }
 
   render() {
-    const { state } = this.props.contactDraft.facility;
+    const { state, type } = this.props.contactDraft.facility;
     const inmateDatabaseLink = STATE_TO_INMATE_DB[STATE_TO_ABBREV[state]]?.link;
     const tapHereToSearchStateDatabase =
-      inmateDatabaseLink && inmateDatabaseLink !== '' ? (
+      type === PrisonTypes.State &&
+      inmateDatabaseLink &&
+      inmateDatabaseLink !== '' ? (
         <Button
           link
           containerStyle={{ marginBottom: 20, alignSelf: 'flex-start' }}
@@ -350,34 +352,37 @@ class InmateInfoScreenBase extends React.Component<Props, State> {
                     'ContactInmateInfoScreen.needHelpFindingYourInmateID'
                   )}
                 </Text>
-                <Button
-                  link
-                  containerStyle={{
-                    marginTop: 12,
-                    marginBottom: 12,
-                    alignSelf: 'flex-start',
-                  }}
-                  onPress={() => {
-                    Segment.track('Add Contact - Click on Federal Search');
-                    this.setStoreValues();
-                    this.props.navigation.navigate('InmateLocator', {
-                      uri: 'https://www.bop.gov/mobile/find_inmate/byname.jsp',
-                    });
-                  }}
-                >
-                  <Text style={{ color: Colors.PINK_500 }}>
-                    {i18n.t('ContactInmateInfoScreen.tapHereToSearch')}{' '}
-                    <Text
-                      style={[
-                        Typography.FONT_SEMIBOLD,
-                        { color: Colors.PINK_500 },
-                      ]}
-                    >
-                      {i18n.t('ContactInmateInfoScreen.federal')}
-                    </Text>{' '}
-                    {i18n.t('ContactInmateInfoScreen.database')}.
-                  </Text>
-                </Button>
+                {type === PrisonTypes.Federal && (
+                  <Button
+                    link
+                    containerStyle={{
+                      marginTop: 12,
+                      marginBottom: 12,
+                      alignSelf: 'flex-start',
+                    }}
+                    onPress={() => {
+                      Segment.track('Add Contact - Click on Federal Search');
+                      this.setStoreValues();
+                      this.props.navigation.navigate('InmateLocator', {
+                        uri:
+                          'https://www.bop.gov/mobile/find_inmate/byname.jsp',
+                      });
+                    }}
+                  >
+                    <Text style={{ color: Colors.PINK_500 }}>
+                      {i18n.t('ContactInmateInfoScreen.tapHereToSearch')}{' '}
+                      <Text
+                        style={[
+                          Typography.FONT_SEMIBOLD,
+                          { color: Colors.PINK_500 },
+                        ]}
+                      >
+                        {i18n.t('ContactInmateInfoScreen.federal')}
+                      </Text>{' '}
+                      {i18n.t('ContactInmateInfoScreen.database')}.
+                    </Text>
+                  </Button>
+                )}
                 {tapHereToSearchStateDatabase}
                 <Input
                   ref={this.facilityName}
